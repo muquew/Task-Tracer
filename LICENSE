@@ -1,21 +1,26 @@
-MIT License
+# 个人非商业使用许可 (Personal Non-Commercial License)
 
-Copyright (c) 2025 muquew
+版权所有 (c) 2025 muquew
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+特此授予任何获得本软件及相关文档文件（以下简称“软件”）副本的个人用户，
+在遵守以下条款的前提下使用本软件的权利：
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. 许可范围
+   - 仅允许个人使用，包括学习、研究或个人任务管理。
+   - 禁止任何形式的商业用途，包括但不限于销售、盈利性服务或商业分发。
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+2. 权利
+   - 可以自由下载、使用和修改本软件用于非商业目的。
+   - 可以备份、复制、分享本软件给其他个人用户。
+
+3. 限制
+   - 不得将本软件用于任何直接或间接的商业活动。
+   - 不得以盈利为目的分发或出售本软件或其修改版本。
+
+4. 免责声明
+   - 本软件按“现状”提供，不附带任何明示或暗示的保证。
+   - 作者不对因使用本软件产生的任何损失或责任承担责任。
+
+---
+
+**注意**：从本仓库下载或使用本软件即表示你同意遵守以上条款。
