@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>任务跟踪器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        header {
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            padding: 15px 30px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header-actions-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+
+        .tasks-section {
+            margin-bottom: 25px;
+        }
+
+        .add-task-btn {
+            background: #4b6cb7;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .add-task-btn:hover {
+            background: #3a5aa0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-item {
+            background: white;
+            border-left: 5px solid #4CAF50;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .task-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-item.warning {
+            border-left-color: #FFC107;
+        }
+
+        .task-item.danger {
+            border-left-color: #F44336;
+        }
+
+        .task-item.no-deadline {
+            border-left-color: #9E9E9E;
+        }
+
+        .task-item.completed {
+            border-left-color: #4CAF50;
+            opacity: 0.7;
+            background-color: #f9f9f9;
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .task-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .task-date {
+            font-size: 12px;
+            color: #666;
+            background: #f1f1f1;
+            padding: 3px 8px;
+            border-radius: 15px;
+            white-space: nowrap;
+        }
+
+        .task-desc {
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            font-size: 14px;
+        }
+
+        .task-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .status-safe .status-dot {
+            background: #4CAF50;
+        }
+
+        .status-warning .status-dot {
+            background: #FFC107;
+        }
+
+        .status-danger .status-dot {
+            background: #F44336;
+        }
+
+        .status-no-deadline .status-dot {
+            background: #9E9E9E;
+        }
+
+        .status-completed .status-dot {
+            background: #4CAF50;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: color 0.2s;
+            padding: 5px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .edit-btn {
+            color: #4b6cb7;
+        }
+
+        .edit-btn:hover {
+            color: #3a5aa0;
+            background: rgba(75, 108, 183, 0.1);
+        }
+
+        .delete-btn {
+            color: #999;
+        }
+
+        .delete-btn:hover {
+            color: #F44336;
+            background: rgba(244, 67, 54, 0.1);
+        }
+
+        .complete-btn {
+            color: #4CAF50;
+        }
+
+        .complete-btn:hover {
+            color: #388E3C;
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 20px;
+            color: #777;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 2px dashed #ddd;
+        }
+
+        .empty-state svg {
+            margin-bottom: 15px;
+            opacity: 0.6;
+        }
+
+        .empty-state h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background: #f0f0f0;
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: modalAppear 0.3s ease;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #4b6cb7;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(75, 108, 183, 0.2);
+        }
+
+        textarea {
+            min-height: 70px;
+            resize: vertical;
+        }
+
+        .datetime-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .date-input, .time-input {
+            flex: 1;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .time-display {
+            font-size: 11px;
+            color: #888;
+            margin-left: 5px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: background 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: #4b6cb7;
+            color: white;
+        }
+
+        .filter-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .filter-btn.active:hover {
+            background: #3a5aa0;
+        }
+
+        .search-box {
+            margin-bottom: 15px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .completed-task .task-title {
+            text-decoration: line-through;
+        }
+
+        .task-item.animate-complete {
+            animation: completeAnimation 0.5s ease;
+        }
+
+        @keyframes completeAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: #F44336;
+        }
+
+        .notification.warning {
+            background: #FFC107;
+            color: #333;
+        }
+
+        .svg-no-fill {
+            fill: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 8px;
+            }
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .task-date {
+                margin-top: 5px;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+
+            .datetime-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            header {
+                padding: 15px 20px;
+                flex-direction: row;
+                align-items: flex-start;
+            }
+
+            .header-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                align-items: flex-end;
+            }
+
+            .icon-btn, .add-task-btn {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+
+            .header-actions-row {
+                gap: 6px;
+            }
+
+            .filters {
+                flex-direction: row;
+            }
+
+            .filter-btn {
+                padding: 6px 6px;
+            }
+            .task-actions {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div>
+            <h1>任务跟踪器</h1>
+            <p class="subtitle">基于截止日期的任务管理</p>
+        </div>
+        <div class="header-actions">
+            <!-- 第一行：导入导出 -->
+            <div class="header-actions-row">
+                <!-- 导出（箭头向上） -->
+                <button class="icon-btn" onclick="exportTasks()" title="导出数据">
+                    <svg width="14" height="14" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 向上箭头 -->
+                        <path d="M12 4V16M12 4L8 8M12 4L16 8" stroke="currentColor" stroke-width="2"/>
+                        <!-- 底部横线 -->
+                        <path d="M4 20H20" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    导出
+                </button>
+
+                <!-- 导入（箭头向下） -->
+                <button class="icon-btn" onclick="document.getElementById('importFile').click()" title="导入数据">
+                    <svg width="14" height="14" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 向下箭头 -->
+                        <path d="M12 20V8M12 20L8 16M12 20L16 16" stroke="currentColor" stroke-width="2"/>
+                        <!-- 顶部横线 -->
+                        <path d="M4 4H20" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    导入
+                </button>
+            </div>
+            <!-- 第二行：添加任务 -->
+            <div class="header-actions-row">
+                <button class="add-task-btn" id="openModalBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    添加任务
+                </button>
+            </div>
+        </div>
+        <input type="file" id="importFile" class="file-input" accept=".json" onchange="importTasks(this.files[0])">
+    </header>
+    <div class="main-content">
+        <!-- 搜索框 -->
+        <div class="search-box">
+            <label for="searchInput"></label><input type="text" id="searchInput" class="search-input" placeholder="搜索任务..." onkeyup="filterTasks()">
+        </div>
+
+        <!-- 筛选器 -->
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">全部</button>
+            <button class="filter-btn" data-filter="active" onclick="setFilter('active')">进行中</button>
+            <button class="filter-btn" data-filter="completed" onclick="setFilter('completed')">已完成</button>
+            <button class="filter-btn" data-filter="overdue" onclick="setFilter('overdue')">已过期</button>
+            <button class="filter-btn" data-filter="no-deadline" onclick="setFilter('no-deadline')">无截止日期</button>
+        </div>
+
+        <!-- 统计信息 -->
+        <div class="stats" id="statsContainer">
+            <!-- 统计信息将通过JavaScript动态生成 -->
+        </div>
+
+        <!-- 任务展示区域 -->
+        <div class="tasks-section">
+            <div id="taskList">
+                <!-- 任务将通过JavaScript动态添加 -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加/编辑任务弹窗 -->
+<div class="modal" id="taskModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modalTitle">添加新任务</h3>
+            <button class="close-btn" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="taskName">任务名称 *</label>
+                    <input type="text" id="taskName" placeholder="输入任务名称" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="taskDesc">任务描述 (可选)</label>
+                    <textarea id="taskDesc" placeholder="输入任务描述"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="dueDate">截止日期 (可选)</label>
+                    <div class="datetime-group">
+                        <input type="date" id="dueDate" class="date-input">
+                        <label for="dueTime"></label><input type="time" id="dueTime" class="time-input" value="23:59">
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="noDeadline">
+                        <label for="noDeadline">无截止日期</label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">取消</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">添加任务</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 通知 -->
+<div class="notification" id="notification">
+    <svg width="18" height="18" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span id="notificationText">操作成功</span>
+</div>
+
+<script>
+    // IndexedDB 配置
+    const DB_NAME = 'TaskTrackerDB';
+    const DB_VERSION = 2;
+    const STORE_NAME = 'tasks';
+    const CONFIG_STORE_NAME = 'config'; // 新增配置存储
+
+    // 全局变量
+    let db = null;
+    let tasks = [];
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let editingTaskId = null;
+    let progressUpdateInterval = null;
+
+    // DOM 元素
+    const taskForm = document.getElementById('taskForm');
+    const taskList = document.getElementById('taskList');
+    const taskModal = document.getElementById('taskModal');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const noDeadlineCheckbox = document.getElementById('noDeadline');
+    const dueDateInput = document.getElementById('dueDate');
+    const dueTimeInput = document.getElementById('dueTime');
+    const modalTitle = document.getElementById('modalTitle');
+    const submitBtn = document.getElementById('submitBtn');
+    const searchInput = document.getElementById('searchInput');
+    const notification = document.getElementById('notification');
+    const notificationText = document.getElementById('notificationText');
+
+    // 显示通知
+    function showNotification(message, type = 'success') {
+        notificationText.textContent = message;
+        notification.className = 'notification';
+        notification.classList.add(type);
+        notification.classList.add('show');
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+
+    // 初始化 IndexedDB
+    function initDB() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+            request.onerror = () => reject(request.error);
+            request.onsuccess = () => {
+                db = request.result;
+                resolve(db);
+            };
+
+            request.onupgradeneeded = (event) => {
+                const db = event.target.result;
+
+                // 创建任务存储
+                if (!db.objectStoreNames.contains(STORE_NAME)) {
+                    const store = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+                    store.createIndex('dueDate', 'dueDate', { unique: false });
+                }
+
+                // 创建配置存储
+                if (!db.objectStoreNames.contains(CONFIG_STORE_NAME)) {
+                    const configStore = db.createObjectStore(CONFIG_STORE_NAME, { keyPath: 'key' });
+                }
+
+            };
+        });
+    }
+
+    // 获取所有任务
+    async function getAllTasks() {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.getAll();
+
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    // 添加任务到 IndexedDB
+    async function addTaskToDB(task) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+
+            const taskToStore = {
+                ...task,
+                dueDate: task.dueDate || null  // 明确设置为 null
+            };
+
+            const request = store.add(taskToStore);
+
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    // 更新任务到 IndexedDB
+    async function updateTaskInDB(task) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.put(task);
+
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    // 从 IndexedDB 删除任务
+    async function deleteTaskFromDB(id) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.delete(id);
+
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    // 从IndexedDB读取配置
+    async function getConfig(key) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([CONFIG_STORE_NAME], 'readonly');
+            const store = transaction.objectStore(CONFIG_STORE_NAME);
+            const request = store.get(key);
+
+            request.onsuccess = () => resolve(request.result ? request.result.value : null);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    // 保存配置到IndexedDB
+    async function setConfig(key, value) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([CONFIG_STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(CONFIG_STORE_NAME);
+            const request = store.put({ key, value });
+
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    // 初始化应用
+    document.addEventListener('DOMContentLoaded', async function() {
+        try {
+            await initDB();
+            tasks = await getAllTasks();
+            renderStats();
+            renderTasks();
+
+            // 设置最小日期为今天
+            const today = new Date();
+            const timezoneOffset = today.getTimezoneOffset() * 60000;
+            const localDate = new Date(today.getTime() - timezoneOffset);
+            dueDateInput.min = localDate.toISOString().split('T')[0];
+
+            // 使用IndexedDB检查是否已添加示例任务
+            const sampleTasksAdded = await getConfig('sampleTasksAdded');
+            if (tasks.length === 0 && !sampleTasksAdded) {
+                await addSampleTasks();
+                await setConfig('sampleTasksAdded', true);
+            }
+
+            // 启动进度条更新定时器
+            startProgressUpdate();
+        } catch (error) {
+            console.error('初始化失败:', error);
+            showNotification('数据库初始化失败，请刷新页面重试', 'error');
+        }
+    });
+
+    // 启动进度条更新定时器
+    function startProgressUpdate() {
+        progressUpdateInterval = setInterval(() => {
+            renderTasks();
+        }, 60000); // 60000毫秒 = 1分钟
+    }
+
+    // 渲染统计信息
+    function renderStats() {
+        const statsContainer = document.getElementById('statsContainer');
+        const totalTasks = tasks.length;
+        const completedTasks = tasks.filter(task => task.completed).length;
+        const tasksWithDeadline = tasks.filter(task => task.dueDate).length;
+        const tasksWithoutDeadline = tasks.filter(task => !task.dueDate).length;
+        const overdueTasks = tasks.filter(task => {
+            if (!task.dueDate || task.completed) return false;
+            return new Date(task.dueDate) < new Date();
+        }).length;
+
+        statsContainer.innerHTML = `
+            <div class="stat-item">
+                <div class="stat-value">${totalTasks}</div>
+                <div class="stat-label">总任务</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">${completedTasks}</div>
+                <div class="stat-label">已完成</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">${tasksWithDeadline}</div>
+                <div class="stat-label">有截止日期</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">${overdueTasks}</div>
+                <div class="stat-label">已过期</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">${tasksWithoutDeadline}</div>
+                <div class="stat-label">无截止日期</div>
+            </div>
+        `;
+    }
+
+    // 无截止日期复选框事件
+    noDeadlineCheckbox.addEventListener('change', function() {
+        dueDateInput.disabled = this.checked;
+        dueTimeInput.disabled = this.checked;
+
+        if (this.checked) {
+            const today = new Date();
+            const timezoneOffset = today.getTimezoneOffset() * 60000;
+            const localDate = new Date(today.getTime() - timezoneOffset);
+            dueDateInput.value = localDate.toISOString().split('T')[0];
+            dueTimeInput.value = '23:59';
+        }
+    });
+
+    // 弹窗控制
+    openModalBtn.addEventListener('click', function() {
+        editingTaskId = null;
+        modalTitle.textContent = '添加新任务';
+        submitBtn.textContent = '添加任务';
+        taskForm.reset();
+
+        // 重置表单状态
+        noDeadlineCheckbox.checked = false;
+        dueDateInput.disabled = false;
+        dueTimeInput.disabled = false;
+
+        // 设置默认时间为今天23:59
+        const today = new Date();
+        const timezoneOffset = today.getTimezoneOffset() * 60000;
+        const localDate = new Date(today.getTime() - timezoneOffset);
+        dueDateInput.value = localDate.toISOString().split('T')[0];
+
+        taskModal.style.display = 'flex';
+        document.getElementById('taskName').focus();
+    });
+
+    closeModalBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+
+    // 点击弹窗外部关闭
+    taskModal.addEventListener('click', function(e) {
+        if (e.target === taskModal) {
+            closeModal();
+        }
+    });
+
+    function closeModal() {
+        taskModal.style.display = 'none';
+        taskForm.reset();
+        editingTaskId = null;
+    }
+
+    // 添加示例任务
+    async function addSampleTasks() {
+        const today = new Date();
+        const timezoneOffset = today.getTimezoneOffset() * 60000;
+        const localDate = new Date(today.getTime() - timezoneOffset);
+
+        const sampleTasks = [
+            {
+                id: Date.now() + 1,
+                name: "完成项目报告",
+                description: "编写并提交季度项目总结报告",
+                dueDate: new Date(localDate.getTime() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+                createdAt: new Date().toISOString(),
+                completed: false
+            },
+            {
+                id: Date.now() + 2,
+                name: "团队会议准备",
+                description: "准备下周团队会议的演示材料",
+                dueDate: new Date(localDate.getTime() + 10 * 24 * 60 * 60 * 1000).toISOString(),
+                createdAt: new Date().toISOString(),
+                completed: false
+            },
+            {
+                id: Date.now() + 3,
+                name: "学习计划制定",
+                description: "制定下个月的个人学习计划",
+                dueDate: null,
+                createdAt: new Date().toISOString(),
+                completed: false
+            }
+        ];
+
+        for (const task of sampleTasks) {
+            await addTaskToDB(task);
+        }
+
+        tasks = await getAllTasks();
+        renderStats();
+        renderTasks();
+        showNotification('示例任务已添加');
+    }
+
+    // 添加/更新任务
+    taskForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const taskName = document.getElementById('taskName').value;
+        const taskDesc = document.getElementById('taskDesc').value;
+        const hasDeadline = !noDeadlineCheckbox.checked;
+
+        let dueDateTime = null;
+        if (hasDeadline && dueDateInput.value) {
+            const localDateTime = new Date(`${dueDateInput.value}T${dueTimeInput.value}`);
+            // 转换为UTC时间存储
+            dueDateTime = new Date(localDateTime.getTime() + (localDateTime.getTimezoneOffset() * 60000)).toISOString();
+        }
+
+        const taskData = {
+            name: taskName,
+            description: taskDesc,
+            dueDate: dueDateTime,
+            createdAt: new Date().toISOString(),
+            completed: false
+        };
+
+        try {
+            if (editingTaskId) {
+                const existingTask = tasks.find(t => t.id === editingTaskId);
+                const updatedTask = {
+                    ...existingTask,
+                    ...taskData
+                };
+                await updateTaskInDB(updatedTask);
+                showNotification('任务更新成功');
+            } else {
+                const newTask = {
+                    id: Date.now(),
+                    ...taskData
+                };
+                await addTaskToDB(newTask);
+                showNotification('任务添加成功');
+            }
+
+            tasks = await getAllTasks();
+            renderStats();
+            renderTasks();
+            closeModal();
+        } catch (error) {
+            console.error('保存任务失败:', error);
+            showNotification('保存任务失败，请重试', 'error');
+        }
+    });
+
+    // 编辑任务
+    function editTask(id) {
+        const task = tasks.find(t => t.id === id);
+        if (!task) return;
+
+        editingTaskId = id;
+        modalTitle.textContent = '编辑任务';
+        submitBtn.textContent = '更新任务';
+
+        document.getElementById('taskName').value = task.name;
+        document.getElementById('taskDesc').value = task.description || '';
+
+        if (task.dueDate) {
+            const dueDate = new Date(task.dueDate);
+            const localDate = new Date(dueDate.getTime() - (dueDate.getTimezoneOffset() * 60000));
+
+            document.getElementById('dueDate').value = localDate.toISOString().split('T')[0];
+            document.getElementById('dueTime').value =
+                `${localDate.getHours().toString().padStart(2, '0')}:${localDate.getMinutes().toString().padStart(2, '0')}`;
+            noDeadlineCheckbox.checked = false;
+            dueDateInput.disabled = false;
+            dueTimeInput.disabled = false;
+        } else {
+            noDeadlineCheckbox.checked = true;
+            dueDateInput.disabled = true;
+            dueTimeInput.disabled = true;
+        }
+
+        taskModal.style.display = 'flex';
+        document.getElementById('taskName').focus();
+    }
+
+    // 删除任务
+    async function deleteTask(id) {
+        if (confirm('确定要删除这个任务吗？')) {
+            try {
+                await deleteTaskFromDB(id);
+                tasks = tasks.filter(task => task.id !== id);
+                renderStats();
+                renderTasks();
+                showNotification('任务删除成功');
+            } catch (error) {
+                console.error('删除任务失败:', error);
+                showNotification('删除任务失败，请重试', 'error');
+            }
+        }
+    }
+
+    // 切换任务完成状态
+    async function toggleTaskComplete(id) {
+        const task = tasks.find(t => t.id === id);
+        if (!task) return;
+
+        const updatedTask = {
+            ...task,
+            completed: !task.completed
+        };
+
+        try {
+            await updateTaskInDB(updatedTask);
+            tasks = await getAllTasks();
+            renderStats();
+
+            // 添加完成动画
+            const taskElement = document.querySelector(`[onclick="toggleTaskComplete(${id})"]`).closest('.task-item');
+            if (updatedTask.completed) {
+                taskElement.classList.add('animate-complete');
+                setTimeout(() => {
+                    taskElement.classList.remove('animate-complete');
+                }, 500);
+                showNotification('任务标记为已完成');
+            } else {
+                showNotification('任务标记为未完成');
+            }
+
+            renderTasks();
+        } catch (error) {
+            console.error('更新任务状态失败:', error);
+            showNotification('更新任务状态失败，请重试', 'error');
+        }
+    }
+
+    // 设置筛选器
+    function setFilter(filter) {
+        currentFilter = filter;
+
+        // 更新按钮状态
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector(`.filter-btn[data-filter="${filter}"]`).classList.add('active');
+
+        renderTasks();
+    }
+
+    // 筛选任务
+    function filterTasks() {
+        searchQuery = searchInput.value.toLowerCase();
+        renderTasks();
+    }
+
+    // 导出任务数据
+    function exportTasks() {
+        const data = {
+            version: '1.0',
+            exportDate: new Date().toISOString(),
+            storage: 'IndexedDB',
+            tasks: tasks
+        };
+
+        const dataStr = JSON.stringify(data, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(dataBlob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `tasks_backup_${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        showNotification('任务数据导出成功！');
+    }
+
+    // 导入任务数据
+    async function importTasks(file) {
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            try {
+                const importedData = JSON.parse(e.target.result.toString());
+
+                // 使用早期返回替代 throw
+                if (!importedData.tasks || !Array.isArray(importedData.tasks)) {
+                    showNotification('导入失败：文件格式不正确', 'error');
+                    console.error('无效的数据格式');
+                    return; // 直接返回，不执行后续代码
+                }
+
+                if (!confirm(`即将导入 ${importedData.tasks.length} 个任务。是否替换当前数据？`)) {
+                    return; // 用户取消，直接返回
+                }
+
+                // 导入 清除示例
+                await setConfig('sampleTasksAdded', true);
+
+                // 清空旧任务（确保等待完成）
+                await new Promise((resolve, reject) => {
+                    const tx = db.transaction([STORE_NAME], 'readwrite');
+                    const store = tx.objectStore(STORE_NAME);
+                    const req = store.clear();
+                    req.onsuccess = () => resolve();
+                    req.onerror = (e) => reject(e);
+                });
+
+                // 批量导入任务，带字段修复
+                for (const task of importedData.tasks) {
+                    if (!task.id) task.id = Date.now() + Math.floor(Math.random() * 1000);
+                    if (typeof task.completed !== 'boolean') task.completed = false;
+                    if (!task.createdAt) task.createdAt = new Date().toISOString();
+                    await addTaskToDB(task);
+                }
+
+                tasks = await getAllTasks();
+                renderStats();
+                renderTasks();
+                showNotification(`成功导入 ${importedData.tasks.length} 个任务！`);
+
+            } catch (error) {
+                // 这里只捕获真正的意外错误
+                showNotification('导入失败：文件读取错误', 'error');
+                console.error('导入错误:', error);
+            }
+        };
+        reader.readAsText(file);
+
+        // 重置文件输入
+        document.getElementById('importFile').value = '';
+    }
+
+    // 任务排序函数
+    function sortTasks(taskList) {
+        return taskList.sort((a, b) => {
+            // 首先，已完成的放在最后
+            if (a.completed !== b.completed) {
+                return a.completed ? 1 : -1;
+            }
+
+            // 然后，无截止日期的放在有截止日期的后面
+            if (!a.dueDate && b.dueDate) return 1;
+            if (a.dueDate && !b.dueDate) return -1;
+
+            // 如果都有截止日期，按截止日期排序
+            if (a.dueDate && b.dueDate) {
+                return new Date(a.dueDate) - new Date(b.dueDate);
+            }
+
+            // 如果都没有截止日期，按创建时间排序
+            return new Date(a.createdAt) - new Date(b.createdAt);
+        });
+    }
+
+    // 渲染任务列表
+    function renderTasks() {
+        if (tasks.length === 0) {
+            taskList.innerHTML = `
+                <div class="empty-state">
+                    <svg width="80" height="80" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 12H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 16H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 12H9.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 16H9.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3>暂无任务</h3>
+                    <p>点击"添加任务"按钮开始跟踪您的任务</p>
+                </div>
+            `;
+            return;
+        }
+
+        taskList.innerHTML = '';
+
+        // 应用筛选和搜索
+        const filteredTasks = tasks.filter(task => {
+            // 应用搜索筛选
+            if (searchQuery && !task.name.toLowerCase().includes(searchQuery) &&
+                !(task.description && task.description.toLowerCase().includes(searchQuery))) {
+                return false;
+            }
+
+            // 应用状态筛选
+            switch (currentFilter) {
+                case 'active':
+                    return !task.completed;
+                case 'completed':
+                    return task.completed;
+                case 'overdue':
+                    return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
+                case 'no-deadline':
+                    return !task.dueDate;
+                default:
+                    return true;
+            }
+        });
+
+        // 对筛选后的任务进行排序
+        const sortedTasks = sortTasks(filteredTasks);
+
+        if (sortedTasks.length === 0) {
+            taskList.innerHTML = `
+                <div class="empty-state">
+                    <svg width="80" height="80" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.172 16.242L12 13.414L14.828 16.242L16.242 14.828L13.414 12L16.242 9.172L14.828 7.758L12 10.586L9.172 7.758L7.758 9.172L10.586 12L7.758 14.828L9.172 16.242Z" fill="currentColor"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22ZM12 20C16.418 20 20 16.418 20 12C20 7.582 16.418 4 12 4C7.582 4 4 7.582 4 12C4 16.418 7.582 20 12 20Z" fill="currentColor"/>
+                    </svg>
+                    <h3>没有找到匹配的任务</h3>
+                    <p>尝试调整搜索条件或筛选器</p>
+                </div>
+            `;
+            return;
+        }
+
+        sortedTasks.forEach(task => {
+            const taskElement = document.createElement('div');
+            let status, timeLeft = null;
+
+            if (task.completed) {
+                status = {
+                    class: 'completed',
+                    statusClass: 'status-completed',
+                    text: '已完成',
+                    color: '#4CAF50',
+                    progress: 100
+                };
+            } else if (task.dueDate) {
+                timeLeft = calculateTimeLeft(task.dueDate);
+                status = getStatus(timeLeft);
+            } else {
+                status = {
+                    class: 'no-deadline',
+                    statusClass: 'status-no-deadline',
+                    text: '无截止日期',
+                    color: '#9E9E9E',
+                    progress: 0
+                };
+            }
+
+            taskElement.className = `task-item ${status.class} ${task.completed ? 'completed-task' : ''}`;
+
+            taskElement.innerHTML = `
+                <div class="task-header">
+                    <div class="task-title">
+                        ${task.completed ? `
+                            <svg width="16" height="16" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 6L9 17L4 12" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        ` : ''}
+                        ${task.name}
+                    </div>
+                    <div class="task-date">
+                        ${task.dueDate ? `截止: ${formatDateTime(task.dueDate)}` : '无截止日期'}
+                    </div>
+                </div>
+                ${task.description ? `<div class="task-desc">${task.description}</div>` : ''}
+                ${task.dueDate && !task.completed ? `
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${status.progress}%; background-color: ${status.color};"></div>
+                </div>
+                ` : ''}
+                <div class="task-footer">
+                    <div class="status-indicator ${status.statusClass}">
+                        <div class="status-dot"></div>
+                        ${status.text}
+                        ${timeLeft !== null && !task.completed ? `(${formatTimeLeft(timeLeft)})` : ''}
+                    </div>
+                    <div class="task-actions">
+                        <button class="action-btn complete-btn" onclick="toggleTaskComplete(${task.id})" title="${task.completed ? '标记为未完成' : '标记为已完成'}">
+                            <svg width="18" height="18" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <button class="action-btn edit-btn" onclick="editTask(${task.id})" title="编辑任务">
+                            <svg width="18" height="18" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M18.5 2.5C18.8978 2.10217 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10217 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10217 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <button class="action-btn delete-btn" onclick="deleteTask(${task.id})" title="删除任务">
+                            <svg width="18" height="18" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 7L18.1327 19.1425C18.0579 20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7M4 7H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            taskList.appendChild(taskElement);
+        });
+    }
+
+    // 计算剩余时间（返回小时数）
+    function calculateTimeLeft(dueDate) {
+        const now = new Date();
+        const due = new Date(dueDate);
+        const timeDiff = due.getTime() - now.getTime();
+        return timeDiff / (1000 * 60 * 60); // 返回小时数
+    }
+
+    // 根据剩余时间获取状态
+    function getStatus(hoursLeft) {
+        const daysLeft = hoursLeft / 24;
+
+        if (daysLeft > 7) {
+            return {
+                class: '',
+                statusClass: 'status-safe',
+                text: '安全',
+                color: '#4CAF50',
+                progress: Math.min(100, 100 - (daysLeft - 7) * 5)
+            };
+        } else if (daysLeft > 3) {
+            return {
+                class: 'warning',
+                statusClass: 'status-warning',
+                text: '警告',
+                color: '#FFC107',
+                progress: Math.min(100, 100 - (daysLeft - 3) * 20)
+            };
+        } else if (hoursLeft > 0) {
+            return {
+                class: 'danger',
+                statusClass: 'status-danger',
+                text: '紧急',
+                color: '#F44336',
+                progress: Math.min(100, 100 - hoursLeft * 2)
+            };
+        } else {
+            return {
+                class: 'danger',
+                statusClass: 'status-danger',
+                text: '已过期',
+                color: '#F44336',
+                progress: 100
+            };
+        }
+    }
+
+    // 格式化日期时间
+    function formatDateTime(dateTimeString) {
+        const date = new Date(dateTimeString);
+        const options = {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        };
+        return date.toLocaleDateString('zh-CN', options);
+    }
+
+    // 格式化剩余时间
+    function formatTimeLeft(hoursLeft) {
+        if (hoursLeft < 0) {
+            const hoursAgo = Math.abs(Math.floor(hoursLeft));
+            if (hoursAgo < 24) {
+                return `${hoursAgo}小时前`;
+            } else {
+                return `${Math.floor(hoursAgo / 24)}天前`;
+            }
+        }
+
+        if (hoursLeft < 1) {
+            return `${Math.floor(hoursLeft * 60)}分钟`;
+        } else if (hoursLeft < 24) {
+            return `${Math.floor(hoursLeft)}小时`;
+        } else {
+            return `${Math.floor(hoursLeft / 24)}天`;
+        }
+    }
+</script>
+</body>
+</html>
