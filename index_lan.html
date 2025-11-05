@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>任务跟踪器</title>
     <style>
         * {
@@ -39,11 +39,6 @@
             flex-wrap: wrap;
         }
 
-        .header-actions-row {
-            display: flex;
-            gap: 8px;
-        }
-
         h1 {
             font-size: 22px;
             font-weight: 600;
@@ -52,6 +47,17 @@
         .subtitle {
             font-size: 14px;
             opacity: 0.8;
+            line-height: 1.3;
+        }
+
+        html[lang="en"] {
+            h1 {
+                font-size: 24px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+            }
         }
 
         .main-content {
@@ -60,27 +66,6 @@
 
         .tasks-section {
             margin-bottom: 25px;
-        }
-
-        .add-task-btn {
-            background: #4b6cb7;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .add-task-btn:hover {
-            background: #3a5aa0;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .task-item {
@@ -444,7 +429,7 @@
             align-items: center;
         }
 
-        .icon-btn {
+        .icon-btn, .add-task-btn, .lang-btn {
             background: rgba(255, 255, 255, 0.2);
             color: white;
             border: none;
@@ -458,8 +443,23 @@
             transition: background 0.2s;
         }
 
-        .icon-btn:hover {
+        .icon-btn:hover, .lang-btn:hover {
             background: rgba(255, 255, 255, 0.3);
+        }
+
+        .add-task-btn {
+            background: #4b6cb7;
+            font-weight: 600;
+        }
+
+        .add-task-btn:hover {
+            background: #3a5aa0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .lang-btn {
+            padding: 5px 6px !important;
         }
 
         .file-input {
@@ -543,9 +543,15 @@
         }
 
         @keyframes completeAnimation {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
 
         .notification {
@@ -580,12 +586,6 @@
 
         .svg-no-fill {
             fill: none;
-        }
-
-        .language-switcher {
-            display: flex;
-            gap: 5px;
-            margin-right: 10px;
         }
 
         .lang-btn {
@@ -643,34 +643,48 @@
 
             .header-actions {
                 display: flex;
-                flex-direction: column;
-                gap: 5px;
+                flex-direction: row;
+                gap: 3px;
                 align-items: flex-end;
             }
 
             .icon-btn, .add-task-btn {
-                font-size: 12px;
+                font-size: 10px;
                 padding: 6px 10px;
-            }
-
-            .header-actions-row {
-                gap: 6px;
             }
 
             .filters {
                 flex-direction: row;
+                gap: 10px;
             }
 
             .filter-btn {
                 padding: 6px 6px;
+                font-size: 12px;
             }
+
             .task-actions {
                 flex-direction: row;
             }
 
-            .language-switcher {
-                margin-right: 0;
-                margin-bottom: 5px;
+            .stats {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .stat-label {
+                font-size: 12px;
+            }
+
+            html[lang="en"] {
+                .stats {
+                    gap: 9px;
+                    padding-bottom: 15px;
+                }
+
+                .stat-label {
+                    font-size: 10px;
+                }
             }
         }
     </style>
@@ -684,68 +698,50 @@
         </div>
         <div class="header-actions">
             <!-- 语言切换 -->
-            <div class="header-actions-row">
-                <div class="language-switcher">
-                    <button class="lang-btn active" data-lang="zh-CN">中文</button>
-                    <button class="lang-btn" data-lang="en">English</button>
-                </div>
-            </div>
-            <!-- 第一行：导入导出 -->
-            <div class="header-actions-row">
-                <!-- 导出（箭头向上） -->
-                <button class="icon-btn" onclick="exportTasks()" title="导出" data-i18n="export">
-                    <svg width="14" height="14" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
-                        <!-- 向上箭头 -->
-                        <path d="M12 4V16M12 4L8 8M12 4L16 8" stroke="currentColor" stroke-width="2"/>
-                        <!-- 底部横线 -->
-                        <path d="M4 20H20" stroke="currentColor" stroke-width="2"/>
-                    </svg>
-                    <span data-i18n="export">导出</span>
-                </button>
-
-                <!-- 导入（箭头向下） -->
-                <button class="icon-btn" onclick="document.getElementById('importFile').click()" title="导入" data-i18n="import">
-                    <svg width="14" height="14" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
-                        <!-- 向下箭头 -->
-                        <path d="M12 20V8M12 20L8 16M12 20L16 16" stroke="currentColor" stroke-width="2"/>
-                        <!-- 顶部横线 -->
-                        <path d="M4 4H20" stroke="currentColor" stroke-width="2"/>
-                    </svg>
-                    <span data-i18n="import">导入</span>
-                </button>
-            </div>
-            <!-- 第二行：添加任务 -->
-            <div class="header-actions-row">
-                <button class="add-task-btn" id="openModalBtn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                    <span data-i18n="addTask">添加任务</span>
-                </button>
-            </div>
+            <button class="lang-btn active" data-lang="zh-CN">中文</button>
+            <button class="lang-btn" data-lang="en">English</button>
+            <!-- 导出，导入-->
+            <button class="icon-btn" data-i18n-title="export" onclick="exportTasks()" title="导出">
+                <svg class="svg-no-fill" height="14" viewBox="0 0 24 24" width="14" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 4V16M12 4L8 8M12 4L16 8" stroke="currentColor" stroke-width="2"/>
+                    <path d="M4 20H20" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span data-i18n="export">导出</span>
+            </button>
+            <button class="icon-btn" data-i18n-title="import" onclick="document.getElementById('importFile').click()" title="导入">
+                <svg class="svg-no-fill" height="14" viewBox="0 0 24 24" width="14" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 20V8M12 20L8 16M12 20L16 16" stroke="currentColor" stroke-width="2"/>
+                    <path d="M4 4H20" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span data-i18n="import">导入</span>
+            </button>
+            <!-- 添加任务 -->
+            <button class="add-task-btn" id="openModalBtn">
+                <svg class="svg-no-fill" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-linecap="round" stroke-width="2"/>
+                </svg>
+                <span data-i18n="addTask">添加任务</span>
+            </button>
         </div>
-        <input type="file" id="importFile" class="file-input" accept=".json" onchange="importTasks(this.files[0])">
+        <input accept=".json" class="file-input" id="importFile" onchange="importTasks(this.files[0])" type="file">
     </header>
     <div class="main-content">
-        <!-- 搜索框 -->
         <div class="search-box">
-            <label for="searchInput"></label><input type="text" id="searchInput" class="search-input" placeholder="搜索任务..." data-i18n="searchPlaceholder" onkeyup="filterTasks()">
+            <label for="searchInput"></label>
+            <input class="search-input" data-i18n-placeholder="searchPlaceholder" id="searchInput" onkeyup="filterTasks()" placeholder="搜索任务..." type="text">
         </div>
-
-        <!-- 筛选器 -->
         <div class="filters">
-            <button class="filter-btn active" data-filter="all" onclick="setFilter('all')" data-i18n="filterAll">全部</button>
-            <button class="filter-btn" data-filter="active" onclick="setFilter('active')" data-i18n="filterActive">进行中</button>
-            <button class="filter-btn" data-filter="completed" onclick="setFilter('completed')" data-i18n="filterCompleted">已完成</button>
-            <button class="filter-btn" data-filter="overdue" onclick="setFilter('overdue')" data-i18n="filterOverdue">已过期</button>
-            <button class="filter-btn" data-filter="no-deadline" onclick="setFilter('no-deadline')" data-i18n="filterNoDeadline">无截止日期</button>
+            <button class="filter-btn active" data-filter="all" data-i18n="filterAll" onclick="setFilter('all')">全部</button>
+            <button class="filter-btn" data-filter="active" data-i18n="filterActive" onclick="setFilter('active')">进行中</button>
+            <button class="filter-btn" data-filter="completed" data-i18n="filterCompleted" onclick="setFilter('completed')">已完成</button>
+            <button class="filter-btn" data-filter="overdue" data-i18n="filterOverdue" onclick="setFilter('overdue')">已过期</button>
+            <button class="filter-btn" data-filter="no-deadline" data-i18n="filterNoDeadline" onclick="setFilter('no-deadline')">无截止日期</button>
         </div>
 
         <!-- 统计信息 -->
         <div class="stats" id="statsContainer">
             <!-- 统计信息将通过JavaScript动态生成 -->
         </div>
-
         <!-- 任务展示区域 -->
         <div class="tasks-section">
             <div id="taskList">
@@ -754,80 +750,53 @@
         </div>
     </div>
 </div>
-
-<!-- 添加/编辑任务弹窗 -->
 <div class="modal" id="taskModal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3 class="modal-title" id="modalTitle" data-i18n="addNewTask">添加新任务</h3>
+            <h3 class="modal-title" data-i18n="addNewTask" id="modalTitle">添加新任务</h3>
             <button class="close-btn" id="closeModalBtn">&times;</button>
         </div>
         <div class="modal-body">
             <form id="taskForm">
                 <div class="form-group">
-                    <label for="taskName" data-i18n="taskNameLabel">任务名称 *</label>
-                    <input type="text" id="taskName" placeholder="输入任务名称" data-i18n="taskNamePlaceholder" required>
+                    <label data-i18n="taskNameLabel" for="taskName">任务名称 *</label>
+                    <input data-i18n-placeholder="taskNamePlaceholder" id="taskName" placeholder="输入任务名称" required type="text">
                 </div>
-
                 <div class="form-group">
-                    <label for="taskDesc" data-i18n="taskDescLabel">任务描述 (可选)</label>
-                    <textarea id="taskDesc" placeholder="输入任务描述" data-i18n="taskDescPlaceholder"></textarea>
+                    <label data-i18n="taskDescLabel" for="taskDesc">任务描述 (可选)</label>
+                    <textarea data-i18n-placeholder="taskDescPlaceholder" id="taskDesc" placeholder="输入任务描述"></textarea>
                 </div>
-
                 <div class="form-group">
-                    <label for="dueDate" data-i18n="dueDateLabel">截止日期 (可选)</label>
+                    <label data-i18n="dueDateLabel" for="dueDate">截止日期 (可选)</label>
                     <div class="datetime-group">
-                        <input type="date" id="dueDate" class="date-input">
-                        <label for="dueTime"></label><input type="time" id="dueTime" class="time-input" value="23:59">
+                        <input class="date-input" id="dueDate" type="date">
+                        <label for="dueTime"></label><input class="time-input" id="dueTime" type="time" value="23:59">
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="noDeadline">
-                        <label for="noDeadline" data-i18n="noDeadlineLabel">无截止日期</label>
+                        <label data-i18n="noDeadlineLabel" for="noDeadline">无截止日期</label>
+                        <input id="noDeadline" type="checkbox">
                     </div>
                 </div>
-
                 <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" id="cancelBtn" data-i18n="cancel">取消</button>
-                    <button type="submit" class="btn btn-primary" id="submitBtn" data-i18n="addTask">添加任务</button>
+                    <button class="btn btn-secondary" data-i18n="cancel" id="cancelBtn" type="button">取消</button>
+                    <button class="btn btn-primary" data-i18n="addTask" id="submitBtn" type="submit">添加任务</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-<!-- 通知 -->
 <div class="notification" id="notification">
-    <svg width="18" height="18" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg class="svg-no-fill" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2"/>
     </svg>
     <span id="notificationText"></span>
 </div>
-
-<footer style="
-    margin-top: 40px;
-    padding: 20px 10px;
-    text-align: center;
-    font-size: 14px;
-    color: #aaa;
-    border-top: 1px solid rgba(0,0,0,0.1);
-    background: linear-gradient(to top, rgba(0,0,0,0.03), transparent);
-">
-    <a href="https://github.com/muquew/Todo-Manager"
-       target="_blank"
-       style="
-           display: inline-flex;
-           align-items: center;
-           gap: 8px;
-           color: #555;
-           text-decoration: none;
-           font-weight: 500;
-           transition: all 0.25s ease;
-       "
-       onmouseover="this.style.color='#0366d6'; this.querySelector('svg').style.transform='scale(1.15)';"
-       onmouseout="this.style.color='#555'; this.querySelector('svg').style.transform='scale(1)';"
+<footer style="margin-top: 40px; padding: 20px 10px; text-align: center; font-size: 14px; color: #aaa; border-top: 1px solid rgba(0,0,0,0.1); background: linear-gradient(to top, rgba(0,0,0,0.03), transparent);">
+    <a href="https://github.com/muquew/Todo-Manager" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; color: #555; text-decoration: none; font-weight: 500; transition: all 0.25s ease;"
+       onmouseout="this.style.color='#555'; this.querySelector('svg').style.transform='scale(1)';" onmouseover="this.style.color='#0366d6'; this.querySelector('svg').style.transform='scale(1.15)';"
     >
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-             style="transition: transform 0.25s ease; fill: currentColor;">
+        <svg height="18" style="transition: transform 0.25s ease; fill: currentColor;" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.727-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757 -1.09-.745.083-.729.083-.729 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.775.418-1.305.76-1.606-2.665-.305-5.466-1.334-5.466-5.932 0-1.31.47-2.382 1.236-3.22-.125-.303-.535-1.523.115-3.176 0 0 1.008-.322 3.3 1.23a11.49 11.49 0 013.004-.404 c1.02.005 2.045.138 3.003.404 2.292-1.552 3.3-1.23 3.3-1.23.65 1.653.24 2.873.12 3.176.77.838 1.236 1.91 1.236 3.22 0 4.61-2.804 5.624-5.475 5.922.43.372.81 1.102.81 2.222 0 1.606-.015 2.896-.015 3.286 0 .32.216.694.825.576C20.565 21.796 24 17.3 24 12 24 5.373 18.627 0 12 0z"/>
         </svg>
         GitHub
@@ -868,7 +837,6 @@
     const notification = document.getElementById('notification');
     const notificationText = document.getElementById('notificationText');
 
-    // 语言配置
     const translations = {
         'zh-CN': {
             'appTitle': '任务跟踪器',
@@ -940,7 +908,7 @@
             'import': 'Import',
             'exportTitle': 'Export data',
             'importTitle': 'Import data',
-            'addTask': 'Add Task',
+            'addTask': 'Add',
             'searchPlaceholder': 'Search tasks...',
             'filterAll': 'All',
             'filterActive': 'Active',
@@ -1000,10 +968,8 @@
         }
     };
 
-    // 当前语言
     let currentLanguage = 'zh-CN';
 
-    // 显示通知
     function showNotification(message, type = 'success') {
         notificationText.textContent = message;
         notification.className = 'notification';
@@ -1015,7 +981,6 @@
         }, 3000);
     }
 
-    // 初始化 IndexedDB
     function initDB() {
         return new Promise((resolve, reject) => {
             const request = indexedDB.open(DB_NAME, DB_VERSION);
@@ -1031,13 +996,13 @@
 
                 // 创建任务存储
                 if (!db.objectStoreNames.contains(STORE_NAME)) {
-                    const store = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
-                    store.createIndex('dueDate', 'dueDate', { unique: false });
+                    const store = db.createObjectStore(STORE_NAME, {keyPath: 'id'});
+                    store.createIndex('dueDate', 'dueDate', {unique: false});
                 }
 
                 // 创建配置存储
                 if (!db.objectStoreNames.contains(CONFIG_STORE_NAME)) {
-                    db.createObjectStore(CONFIG_STORE_NAME, { keyPath: 'key' });
+                    db.createObjectStore(CONFIG_STORE_NAME, {keyPath: 'key'});
                 }
             };
         });
@@ -1114,7 +1079,7 @@
         return new Promise((resolve, reject) => {
             const transaction = db.transaction([CONFIG_STORE_NAME], 'readwrite');
             const store = transaction.objectStore(CONFIG_STORE_NAME);
-            const request = store.put({ key, value });
+            const request = store.put({key, value});
 
             request.onsuccess = () => resolve();
             request.onerror = () => reject(request.error);
@@ -1122,7 +1087,7 @@
     }
 
     // 初始化应用
-    document.addEventListener('DOMContentLoaded', async function() {
+    document.addEventListener('DOMContentLoaded', async function () {
         try {
             await initDB();
 
@@ -1131,8 +1096,6 @@
             if (savedLanguage) {
                 currentLanguage = savedLanguage;
             }
-
-            // 初始化语言
             initLanguage();
 
             tasks = await getAllTasks();
@@ -1167,10 +1130,7 @@
             }
         });
 
-        // 设置HTML lang属性
         document.documentElement.lang = currentLanguage;
-
-        // 应用翻译
         applyTranslations();
     }
 
@@ -1181,6 +1141,22 @@
             const key = element.getAttribute('data-i18n');
             if (translations[currentLanguage][key]) {
                 element.textContent = translations[currentLanguage][key];
+            }
+        });
+
+        // 翻译placeholder
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+            const key = element.getAttribute('data-i18n-placeholder');
+            if (translations[currentLanguage][key]) {
+                element.placeholder = translations[currentLanguage][key];
+            }
+        });
+
+        // 翻译title
+        document.querySelectorAll('[data-i18n-title]').forEach(element => {
+            const key = element.getAttribute('data-i18n-title');
+            if (translations[currentLanguage][key]) {
+                element.title = translations[currentLanguage][key];
             }
         });
 
@@ -1199,9 +1175,9 @@
     }
 
     // 语言切换事件监听
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 switchLanguage(this.dataset.lang);
             });
         });
@@ -1251,7 +1227,7 @@
     }
 
     // 无截止日期复选框事件
-    noDeadlineCheckbox.addEventListener('change', function() {
+    noDeadlineCheckbox.addEventListener('change', function () {
         dueDateInput.disabled = this.checked;
         dueTimeInput.disabled = this.checked;
 
@@ -1262,7 +1238,7 @@
     });
 
     // 弹窗控制
-    openModalBtn.addEventListener('click', function() {
+    openModalBtn.addEventListener('click', function () {
         editingTaskId = null;
         modalTitle.setAttribute('data-i18n', 'addNewTask');
         submitBtn.setAttribute('data-i18n', 'addTask');
@@ -1287,7 +1263,7 @@
     cancelBtn.addEventListener('click', closeModal);
 
     // 点击弹窗外部关闭
-    taskModal.addEventListener('click', function(e) {
+    taskModal.addEventListener('click', function (e) {
         if (e.target === taskModal) {
             closeModal();
         }
@@ -1339,7 +1315,7 @@
     }
 
     // 添加/更新任务
-    taskForm.addEventListener('submit', async function(e) {
+    taskForm.addEventListener('submit', async function (e) {
         e.preventDefault();
 
         const taskName = document.getElementById('taskName').value;
@@ -1402,7 +1378,7 @@
         if (task.dueDate) {
             const localDate = utcToLocal(task.dueDate);
             dueDateInput.value = localDate.toISOString().split('T')[0];
-            dueTimeInput.value = `${localDate.getHours().toString().padStart(2,'0')}:${localDate.getMinutes().toString().padStart(2,'0')}`;
+            dueTimeInput.value = `${localDate.getHours().toString().padStart(2, '0')}:${localDate.getMinutes().toString().padStart(2, '0')}`;
             noDeadlineCheckbox.checked = false;
             dueDateInput.disabled = false;
             dueTimeInput.disabled = false;
@@ -1499,7 +1475,7 @@
         };
 
         const dataStr = JSON.stringify(data, null, 2);
-        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const dataBlob = new Blob([dataStr], {type: 'application/json'});
         const url = URL.createObjectURL(dataBlob);
 
         const link = document.createElement('a');
