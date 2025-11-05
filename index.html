@@ -1720,14 +1720,14 @@
     // 计算剩余时间（小时）
     function calculateTimeLeft(utcStr) {
         const now = new Date();
-        const due = new Date(utcStr);
-        return (due.getTime() - now.getTime()) / (1000 * 60 * 60); // 返回小时数
+        const due = utcToLocal(utcStr);
+        return (due.getTime() - now.getTime()) / (1000 * 60); // 返回分钟数
     }
 
     // 根据剩余时间获取状态
-    function getStatus(hoursLeft) {
+    function getStatus(minutesLeft) {
+        const hoursLeft = minutesLeft / 60;
         const daysLeft = hoursLeft / 24;
-
         if (daysLeft > 7) {
             return {
                 class: '',
@@ -1744,13 +1744,13 @@
                 color: '#FFC107',
                 progress: Math.min(100, 100 - (daysLeft - 3) * 20)
             };
-        } else if (hoursLeft > 0) {
+        } else if (minutesLeft > 0) {
             return {
                 class: 'danger',
                 statusClass: 'status-danger',
                 text: translations[currentLanguage]['statusDanger'],
                 color: '#F44336',
-                progress: Math.min(100, 100 - hoursLeft * 2)
+                progress: Math.min(100, 100 - (minutesLeft / 4320) * 100)   // 3天的总分钟数 = 4320分钟
             };
         } else {
             return {
@@ -1764,22 +1764,42 @@
     }
 
     // 格式化剩余时间
-    function formatTimeLeft(hoursLeft) {
-        if (hoursLeft < 0) {
-            const hoursAgo = Math.abs(Math.floor(hoursLeft));
-            if (hoursAgo < 24) {
-                return translations[currentLanguage]['hoursAgo'].replace('{hours}', hoursAgo.toString());
+    function formatTimeLeft(minutesLeft) {
+        if (minutesLeft < 0) {
+            const minutesAgo = Math.abs(Math.floor(minutesLeft));
+            if (minutesAgo < 60) {
+                return translations[currentLanguage]['minutesAgo'].replace('{minutes}', minutesAgo.toString());
+            } else if (minutesAgo < 1440) {
+                return translations[currentLanguage]['hoursAgo'].replace('{hours}', Math.floor(minutesAgo / 60).toString());
             } else {
-                return translations[currentLanguage]['daysAgo'].replace('{days}', Math.floor(hoursAgo / 24).toString());
+                return translations[currentLanguage]['daysAgo'].replace('{days}', Math.floor(minutesAgo / 1440).toString());
             }
         }
 
-        if (hoursLeft < 1) {
-            return translations[currentLanguage]['minutesLeft'].replace('{minutes}', Math.floor(hoursLeft * 60).toString());
-        } else if (hoursLeft < 24) {
-            return translations[currentLanguage]['hoursLeft'].replace('{hours}', Math.floor(hoursLeft).toString());
+        if (minutesLeft < 60) {
+            return translations[currentLanguage]['minutesLeft'].replace('{minutes}', Math.floor(minutesLeft).toString());
+        } else if (minutesLeft < 1440) {
+            const hours = Math.floor(minutesLeft / 60);
+            const minutes = Math.floor(minutesLeft % 60);
+            if (minutes > 0) {
+                return translations[currentLanguage]['hoursLeft'].replace('{hours}', hours.toString()) + " " + translations[currentLanguage]['minutesLeft'].replace('{minutes}', minutes.toString());
+            } else {
+                return translations[currentLanguage]['hoursLeft'].replace('{hours}', hours.toString());
+            }
         } else {
-            return translations[currentLanguage]['daysLeft'].replace('{days}', Math.floor(hoursLeft / 24).toString());
+            const days = Math.floor(minutesLeft / 1440);
+            const hours = Math.floor((minutesLeft % 1440) / 60);
+            const minutes = Math.floor(minutesLeft % 60);
+
+            if (hours > 0 && minutes > 0) {
+                return translations[currentLanguage]['daysLeft'].replace('{days}', days.toString()) + ' ' + translations[currentLanguage]['hoursLeft'].replace('{hours}', hours.toString()) + ' ' + translations[currentLanguage]['minutesLeft'].replace('{minutes}', minutes.toString());
+            } else if (hours > 0) {
+                return translations[currentLanguage]['daysLeft'].replace('{days}', days.toString()) + ' ' + translations[currentLanguage]['hoursLeft'].replace('{hours}', hours.toString());
+            } else if (minutes > 0) {
+                return translations[currentLanguage]['daysLeft'].replace('{days}', days.toString()) + ' ' + translations[currentLanguage]['minutesLeft'].replace('{minutes}', minutes.toString());
+            } else {
+                return translations[currentLanguage]['daysLeft'].replace('{days}', days.toString());
+            }
         }
     }
 
@@ -1810,4 +1830,3 @@
 </script>
 </body>
 </html>
-
