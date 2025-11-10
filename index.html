@@ -1454,7 +1454,12 @@
 
                 // --- 填充模板 ---
                 taskElement.dataset.taskId = task.id;
-                taskElement.classList.add(status.class);
+
+                // 🐛 修复点：仅在 status.class 非空时调用 classList.add()
+                if (status.class) {
+                    taskElement.classList.add(status.class);
+                }
+
                 if (task.completed) {
                     taskElement.classList.add('completed-task');
                 }
