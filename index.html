@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>任务跟踪器</title>
+    <title>Task Tracer</title>
     <style>
+        /* === 1. 基本设置与布局 === */
         * {
             margin: 0;
             padding: 0;
@@ -28,6 +29,7 @@
             position: relative;
         }
 
+        /* === 2. 头部 Header === */
         header {
             background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
             color: white;
@@ -60,10 +62,115 @@
             }
         }
 
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .icon-btn, .add-task-btn, .lang-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: background 0.2s;
+        }
+
+        .icon-btn:hover, .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .add-task-btn {
+            background: #4b6cb7;
+            font-weight: 600;
+        }
+
+        .add-task-btn:hover {
+            background: #3a5aa0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* === 3. 搜索、筛选与统计 === */
         .main-content {
             padding: 20px;
         }
 
+        .search-box {
+            margin-bottom: 15px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: #4b6cb7;
+            color: white;
+        }
+
+        .filter-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .filter-btn.active:hover {
+            background: #3a5aa0;
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* === 4. 任务列表与任务项 === */
         .tasks-section {
             margin-bottom: 25px;
         }
@@ -103,6 +210,10 @@
             background-color: #f9f9f9;
         }
 
+        .completed-task .task-name .task-title{
+            text-decoration: line-through;
+        }
+
         .task-header {
             display: flex;
             justify-content: space-between;
@@ -117,6 +228,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            word-break: break-all;
         }
 
         .task-date {
@@ -133,6 +245,7 @@
             margin-bottom: 10px;
             line-height: 1.4;
             font-size: 14px;
+            word-break: break-word;
         }
 
         .task-footer {
@@ -153,6 +266,10 @@
             height: 10px;
             border-radius: 50%;
             margin-right: 6px;
+        }
+
+        .status-timeleft {
+            margin-left: 5px;
         }
 
         .status-safe .status-dot {
@@ -220,6 +337,15 @@
             background: rgba(76, 175, 80, 0.1);
         }
 
+        .task-complete-icon {
+            display: none;
+        }
+
+        .completed-task .task-complete-icon {
+            display: inline-block;
+        }
+
+        /* === 5. 空状态与动画 === */
         .empty-state {
             text-align: center;
             padding: 30px 20px;
@@ -249,6 +375,7 @@
             border-radius: 3px;
             margin-top: 8px;
             overflow: hidden;
+            margin-bottom: 10px; /* 增加与底部的间距 */
         }
 
         .progress-fill {
@@ -257,7 +384,23 @@
             transition: width 0.5s ease;
         }
 
-        /* 弹窗样式 */
+        .task-item.animate-complete {
+            animation: completeAnimation 0.5s ease;
+        }
+
+        @keyframes completeAnimation {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* === 6. 弹窗 Modal & 表单 === */
         .modal {
             display: none;
             position: fixed;
@@ -417,141 +560,9 @@
             background: #e0e0e0;
         }
 
-        .time-display {
-            font-size: 11px;
-            color: #888;
-            margin-left: 5px;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .icon-btn, .add-task-btn, .lang-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            transition: background 0.2s;
-        }
-
-        .icon-btn:hover, .lang-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .add-task-btn {
-            background: #4b6cb7;
-            font-weight: 600;
-        }
-
-        .add-task-btn:hover {
-            background: #3a5aa0;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .lang-btn {
-            padding: 5px 6px !important;
-        }
-
+        /* === 7. 通知与杂项 === */
         .file-input {
             display: none;
-        }
-
-        .stats {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .stat-value {
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-        }
-
-        .filters {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            background: #f0f0f0;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .filter-btn.active {
-            background: #4b6cb7;
-            color: white;
-        }
-
-        .filter-btn:hover {
-            background: #e0e0e0;
-        }
-
-        .filter-btn.active:hover {
-            background: #3a5aa0;
-        }
-
-        .search-box {
-            margin-bottom: 15px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        .completed-task .task-title {
-            text-decoration: line-through;
-        }
-
-        .task-item.animate-complete {
-            animation: completeAnimation 0.5s ease;
-        }
-
-        @keyframes completeAnimation {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
         }
 
         .notification {
@@ -592,11 +603,11 @@
             background: rgba(255, 255, 255, 0.2);
             color: white;
             border: none;
-            padding: 4px 8px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 12px;
             transition: background 0.2s;
+            padding: 5px 6px;
         }
 
         .lang-btn.active {
@@ -608,6 +619,7 @@
             background: rgba(255, 255, 255, 0.3);
         }
 
+        /* === 8. 响应式布局 === */
         @media (max-width: 600px) {
             .container {
                 border-radius: 8px;
@@ -681,10 +693,6 @@
                     gap: 9px;
                     padding-bottom: 15px;
                 }
-
-                /*.stat-label {*/
-                /*    font-size: 10px;*/
-                /*}*/
             }
         }
     </style>
@@ -700,15 +708,15 @@
             <!-- 语言切换 -->
             <button class="lang-btn active" data-lang="zh-CN">中文</button>
             <button class="lang-btn" data-lang="en">English</button>
-            <!-- 导出，导入-->
-            <button class="icon-btn" data-i18n-title="export" onclick="exportTasks()" title="导出">
+            <!-- 导出 / 导入-->
+            <button class="icon-btn" data-i18n-title="export" id="exportBtn" title="导出">
                 <svg class="svg-no-fill" height="14" viewBox="0 0 24 24" width="14" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 4V16M12 4L8 8M12 4L16 8" stroke="currentColor" stroke-width="2"/>
                     <path d="M4 20H20" stroke="currentColor" stroke-width="2"/>
                 </svg>
                 <span data-i18n="export">导出</span>
             </button>
-            <button class="icon-btn" data-i18n-title="import" onclick="document.getElementById('importFile').click()" title="导入">
+            <button class="icon-btn" data-i18n-title="import" id="importBtn" title="导入">
                 <svg class="svg-no-fill" height="14" viewBox="0 0 24 24" width="14" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 20V8M12 20L8 16M12 20L16 16" stroke="currentColor" stroke-width="2"/>
                     <path d="M4 4H20" stroke="currentColor" stroke-width="2"/>
@@ -728,7 +736,7 @@
     <div class="main-content">
         <div class="search-box">
             <label for="searchInput"></label>
-            <input class="search-input" data-i18n-placeholder="searchPlaceholder" id="searchInput" onkeyup="filterTasks()" placeholder="搜索任务..." type="text">
+            <input class="search-input" data-i18n-placeholder="searchPlaceholder" id="searchInput" placeholder="搜索任务..." type="text">
         </div>
         <div class="filters">
             <button class="filter-btn" data-filter="all" data-i18n="filterAll" onclick="setFilter('all')">全部</button>
@@ -787,15 +795,54 @@
 </div>
 <div class="notification" id="notification">
     <svg class="svg-no-fill" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-              stroke-width="2"/>
+        <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
     </svg>
     <span id="notificationText"></span>
 </div>
+
+<template id="task-template">
+    <div class="task-item">
+        <div class="task-header">
+            <div class="task-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="task-name"></span>
+            </div>
+            <div class="task-date"></div>
+        </div>
+        <div class="task-desc"></div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="task-footer">
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span class="status-text"></span> <span class="status-timeleft"></span> </div>
+            <div class="task-actions">
+                <button class="action-btn complete-btn" data-action="toggle" title="标记完成">
+                    <svg width="18" height="18" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <button class="action-btn edit-btn" data-action="edit" title="编辑">
+                    <svg width="18" height="18" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M18.5 2.5C18.8978 2.10217 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10217 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10217 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <button class="action-btn delete-btn" data-action="delete" title="删除">
+                    <svg width="18" height="18" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 7L18.1327 19.1425C18.0579 20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7M4 7H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</template>
+
 <footer style="margin-top: 40px; padding: 20px 10px; text-align: center; font-size: 14px; color: #aaa; border-top: 1px solid rgba(0,0,0,0.1); background: linear-gradient(to top, rgba(0,0,0,0.03), transparent);">
-    <a href="https://github.com/muquew/Todo-Manager" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; color: #555; text-decoration: none; font-weight: 500; transition: all 0.25s ease;"
-       onmouseout="this.style.color='#555'; this.querySelector('svg').style.transform='scale(1)';" onmouseover="this.style.color='#0366d6'; this.querySelector('svg').style.transform='scale(1.15)';"
-    >
+    <a href="https://github.com/muquew/Todo-Manager" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; color: #555; text-decoration: none; font-weight: 500; transition: all 0.25s ease;" onmouseout="this.style.color='#555'; this.querySelector('svg').style.transform='scale(1)';" onmouseover="this.style.color='#0366d6'; this.querySelector('svg').style.transform='scale(1.15)';">
         <svg height="18" style="transition: transform 0.25s ease; fill: currentColor;" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.727-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757 -1.09-.745.083-.729.083-.729 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.775.418-1.305.76-1.606-2.665-.305-5.466-1.334-5.466-5.932 0-1.31.47-2.382 1.236-3.22-.125-.303-.535-1.523.115-3.176 0 0 1.008-.322 3.3 1.23a11.49 11.49 0 013.004-.404 c1.02.005 2.045.138 3.003.404 2.292-1.552 3.3-1.23 3.3-1.23.65 1.653.24 2.873.12 3.176.77.838 1.236 1.91 1.236 3.22 0 4.61-2.804 5.624-5.475 5.922.43.372.81 1.102.81 2.222 0 1.606-.015 2.896-.015 3.286 0 .32.216.694.825.576C20.565 21.796 24 17.3 24 12 24 5.373 18.627 0 12 0z"/>
         </svg>
@@ -806,746 +853,544 @@
     </div>
 </footer>
 
+
 <script>
-    // IndexedDB 配置
-    const DB_NAME = 'TaskTrackerDB';
-    const DB_VERSION = 2;
-    const STORE_NAME = 'tasks';
-    const CONFIG_STORE_NAME = 'config';
+    (function() {
+        // IndexedDB 配置
+        const DB_NAME = 'TaskTrackerDB';
+        const DB_VERSION = 2;
+        const STORE_NAME = 'tasks';
+        const CONFIG_STORE_NAME = 'config';
 
-    // 全局变量
-    let db = null;
-    let tasks = [];
-    let currentFilter = 'all';
-    let searchQuery = '';
-    let editingTaskId = null;
-    let progressUpdateInterval = null;
+        // 状态变量
+        let db = null;
+        let tasks = [];
+        let currentFilter = 'active'; // 默认改为 'active'
+        let searchQuery = '';
+        let editingTaskId = null;
+        let progressUpdateInterval = null;
+        let currentLanguage = 'zh-CN';
 
-    // DOM 元素
-    const taskForm = document.getElementById('taskForm');
-    const taskList = document.getElementById('taskList');
-    const taskModal = document.getElementById('taskModal');
-    const openModalBtn = document.getElementById('openModalBtn');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const cancelBtn = document.getElementById('cancelBtn');
-    const noDeadlineCheckbox = document.getElementById('noDeadline');
-    const dueDateInput = document.getElementById('dueDate');
-    const dueTimeInput = document.getElementById('dueTime');
-    const modalTitle = document.getElementById('modalTitle');
-    const submitBtn = document.getElementById('submitBtn');
-    const searchInput = document.getElementById('searchInput');
-    const notification = document.getElementById('notification');
-    const notificationText = document.getElementById('notificationText');
+        // DOM 元素 (在 DOMContentLoaded 中初始化)
+        let taskForm, taskList, taskModal, openModalBtn, closeModalBtn, cancelBtn,
+            noDeadlineCheckbox, dueDateInput, dueTimeInput, modalTitle, submitBtn,
+            searchInput, notification, notificationText, taskTemplate, importBtn, exportBtn,
+            importFileInput;
 
-    function showNotification(message, type = 'success') {
-        notificationText.textContent = message;
-        notification.className = 'notification';
-        notification.classList.add(type);
-        notification.classList.add('show');
-
-        setTimeout(() => {
-            notification.classList.remove('show');
-        }, 3000);
-    }
-
-    function initDB() {
-        return new Promise((resolve, reject) => {
-            const request = indexedDB.open(DB_NAME, DB_VERSION);
-
-            request.onerror = () => reject(request.error);
-            request.onsuccess = () => {
-                db = request.result;
-                resolve(db);
-            };
-
-            request.onupgradeneeded = (event) => {
-                const db = event.target.result;
-
-                // 创建任务存储
-                if (!db.objectStoreNames.contains(STORE_NAME)) {
-                    const store = db.createObjectStore(STORE_NAME, {keyPath: 'id'});
-                    store.createIndex('dueDate', 'dueDate', {unique: false});
-                }
-
-                // 创建配置存储
-                if (!db.objectStoreNames.contains(CONFIG_STORE_NAME)) {
-                    db.createObjectStore(CONFIG_STORE_NAME, {keyPath: 'key'});
-                }
-            };
-        });
-    }
-
-    // 获取所有任务
-    async function getAllTasks() {
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction([STORE_NAME], 'readonly');
-            const store = transaction.objectStore(STORE_NAME);
-            const request = store.getAll();
-
-            request.onsuccess = () => resolve(request.result);
-            request.onerror = () => reject(request.error);
-        });
-    }
-
-    // 添加任务到 IndexedDB
-    async function addTaskToDB(task) {
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction([STORE_NAME], 'readwrite');
-            const store = transaction.objectStore(STORE_NAME);
-
-            const taskToStore = {
-                ...task,
-                dueDate: task.dueDate || null  // 明确设置为 null
-            };
-
-            const request = store.add(taskToStore);
-
-            request.onsuccess = () => resolve(request.result);
-            request.onerror = () => reject(request.error);
-        });
-    }
-
-    // 更新任务到 IndexedDB
-    async function updateTaskInDB(task) {
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction([STORE_NAME], 'readwrite');
-            const store = transaction.objectStore(STORE_NAME);
-            const request = store.put(task);
-
-            request.onsuccess = () => resolve(request.result);
-            request.onerror = () => reject(request.error);
-        });
-    }
-
-    // 从 IndexedDB 删除任务
-    async function deleteTaskFromDB(id) {
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction([STORE_NAME], 'readwrite');
-            const store = transaction.objectStore(STORE_NAME);
-            const request = store.delete(id);
-
-            request.onsuccess = () => resolve();
-            request.onerror = () => reject(request.error);
-        });
-    }
-
-    // 从IndexedDB读取配置
-    async function getConfig(key) {
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction([CONFIG_STORE_NAME], 'readonly');
-            const store = transaction.objectStore(CONFIG_STORE_NAME);
-            const request = store.get(key);
-
-            request.onsuccess = () => resolve(request.result ? request.result.value : null);
-            request.onerror = () => reject(request.error);
-        });
-    }
-
-    // 保存配置到IndexedDB
-    async function setConfig(key, value) {
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction([CONFIG_STORE_NAME], 'readwrite');
-            const store = transaction.objectStore(CONFIG_STORE_NAME);
-            const request = store.put({key, value});
-
-            request.onsuccess = () => resolve();
-            request.onerror = () => reject(request.error);
-        });
-    }
-
-
-
-    // 键名, 中文, 英文
-    const translationData = [
-        // === 头部区域 ===
-        ['appTitle',           '任务跟踪器',          'Task Tracker'],
-        ['appSubtitle',        '基于截止日期的任务管理', 'Deadline-based Task Management'],
-        ['export',             '导出',                'Export'],
-        ['import',             '导入',                'Import'],
-        ['addTask',            '添加任务',             'Add Task'],
-        // === 搜索和筛选 ===
-        ['searchPlaceholder',  '搜索任务...',          'Search tasks...'],
-        ['filterAll',          '全部',                'All'],
-        ['filterActive',       '进行中',              'Active'],
-        ['filterCompleted',    '已完成',              'Completed'],
-        ['filterOverdue',      '已过期',              'Overdue'],
-        ['filterNoDeadline',   '无截止日期',           'No Deadline'],
-        // === 弹窗表单 ===
-        ['addNewTask',         '添加新任务',           'Add New Task'],
-        ['editTask',           '编辑任务',             'Edit Task'],
-        ['taskNameLabel',      '任务名称 *',          'Task Name *'],
-        ['taskNamePlaceholder','输入任务名称',         'Enter task name'],
-        ['taskDescLabel',      '任务描述 (可选)',      'Task Description (optional)'],
-        ['taskDescPlaceholder','输入任务描述',         'Enter task description'],
-        ['dueDateLabel',       '截止日期 (可选)',      'Due Date (optional)'],
-        ['noDeadlineLabel',    '无截止日期',           'No Deadline'],
-        ['cancel',             '取消',                'Cancel'],
-        ['updateTask',         '更新任务',             'Update Task'],
-        // === 统计信息 ===
-        ['totalTasks',         '总任务',              'Total Tasks'],
-        ['activeTasks',        '进行中',              'Active'],
-        ['completedTasks',     '已完成',              'Completed'],
-        ['tasksWithDeadline',  '有截止日期',           'With Deadline'],
-        ['overdueTasks',       '已过期',              'Overdue'],
-        ['tasksWithoutDeadline', '无截止日期',         'No Deadline'],
-        // === 空状态 ===
-        ['noTasks',            '暂无任务',            'No Tasks'],
-        ['noTasksDescription', '点击"添加任务"按钮开始跟踪您的任务', 'Click "Add Task" to start tracking your tasks'],
-        ['noMatchingTasks',    '没有找到匹配的任务',    'No matching tasks found'],
-        ['noMatchingTasksDescription', '尝试调整搜索条件或筛选器', 'Try adjusting your search or filters'],
-        // === 任务显示 ===
-        ['deadline',           '截止',                'Due'],
-        ['noDeadlineText',     '无截止日期',           'No Deadline'],
-        // === 任务状态 ===
-        ['statusCompleted',    '已完成',              'Completed'],
-        ['statusSafe',         '安全',                'Safe'],
-        ['statusWarning',      '警告',                'Warning'],
-        ['statusDanger',       '紧急',                'Urgent'],
-        ['statusOverdue',      '已过期',              'Overdue'],
-        ['statusNoDeadline',   '无截止日期',           'No Deadline'],
-        // === 操作按钮提示 ===
-        ['markComplete',       '标记为已完成',         'Mark as complete'],
-        ['markIncomplete',     '标记为未完成',         'Mark as incomplete'],
-        ['editTaskTitle',      '编辑任务',             'Edit task'],
-        ['deleteTaskTitle',    '删除任务',             'Delete task'],
-        // === 确认对话框 ===
-        ['confirmDelete',      '确定要删除这个任务吗？', 'Are you sure you want to delete this task?'],
-        // === 通知消息 ===
-        ['taskAdded',          '任务添加成功',         'Task added successfully'],
-        ['taskUpdated',        '任务更新成功',         'Task updated successfully'],
-        ['taskDeleted',        '任务删除成功',         'Task deleted successfully'],
-        ['taskMarkedComplete', '任务标记为已完成',     'Task marked as completed'],
-        ['taskMarkedIncomplete', '任务标记为未完成',   'Task marked as incomplete'],
-        ['exportSuccess',      '任务数据导出成功！',   'Task data exported successfully!'],
-        ['importSuccess',      '成功导入 {count} 个任务！', 'Successfully imported {count} tasks!'],
-        ['importConfirm',      '即将导入 {count} 个任务。是否替换当前数据？', 'About to import {count} tasks. Replace current data?'],
-        ['importFormatError',  '导入失败：文件格式不正确', 'Import failed: Invalid file format'],
-        ['importReadError',    '导入失败：文件读取错误', 'Import failed: File read error'],
-        ['saveError',          '保存任务失败，请重试', 'Failed to save task, please try again'],
-        ['deleteError',        '删除任务失败，请重试', 'Failed to delete task, please try again'],
-        ['updateError',        '更新任务状态失败，请重试', 'Failed to update task status, please try again'],
-        // === 时间显示 ===
-        ['hoursAgo',           '{hours}小时前',       '{hours} hours ago'],
-        ['daysAgo',            '{days}天前',          '{days} days ago'],
-        ['minutesLeft',        '{minutes}分钟',        '{minutes} minutes'],
-        ['hoursLeft',          '{hours}小时',          '{hours} hours'],
-        ['daysLeft',           '{days}天',            '{days} days']
-    ];
-
-    // 转换为快速查找的对象
-    const translations = {
-        'zh-CN': {},
-        'en': {}
-    };
-
-    // 填充翻译对象
-    translationData.forEach(([key, zh, en]) => {
-        translations['zh-CN'][key] = zh;
-        translations['en'][key] = en;
-    });
-
-    let currentLanguage = 'zh-CN';
-
-    // 初始化应用
-    document.addEventListener('DOMContentLoaded', async function () {
-        try {
-            await initDB();
-
-            // 从配置中获取语言设置
-            const savedLanguage = await getConfig('language');
-            if (savedLanguage) {
-                currentLanguage = savedLanguage;
-            } else {
-                // 获取系统语言列表，优先使用第一个支持的语言
-                const languages = navigator.languages || [navigator.language || navigator.userLanguage];
-                // 在系统语言列表中查找支持的语言
-                const supportedLang = languages.find(lang =>
-                    lang.toLowerCase().startsWith('zh') || lang.toLowerCase().startsWith('en')
-                );
-                // 转换为支持的语言格式
-                currentLanguage = supportedLang?.toLowerCase().startsWith('zh') ? 'zh-CN' :
-                    supportedLang?.toLowerCase().startsWith('en') ? 'en' : 'zh-CN';
-
-                await setConfig('language', currentLanguage);
-            }
-
-            initLanguage();
-
-            tasks = await getAllTasks();
-            renderStats();
-            renderTasks();
-
-            // 设置最小日期为今天
-            dueDateInput.min = new Date().toISOString().split('T')[0];
-
-            // 使用IndexedDB检查是否已添加示例任务
-            const sampleTasksAdded = await getConfig('sampleTasksAdded');
-            if (tasks.length === 0 && !sampleTasksAdded) {
-                await addSampleTasks();
-                await setConfig('sampleTasksAdded', true);
-            }
-
-            // 启动进度条更新定时器
-            startProgressUpdate();
-        } catch (error) {
-            console.error('初始化失败:', error);
-            showNotification('数据库初始化失败，请刷新页面重试', 'error');
-        }
-    });
-
-    // 初始化语言
-    function initLanguage() {
-        // 更新语言按钮状态
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.dataset.lang === currentLanguage) {
-                btn.classList.add('active');
-            }
-        });
-
-        document.documentElement.lang = currentLanguage;
-        applyTranslations();
-    }
-
-    // 应用翻译
-    function applyTranslations() {
-        // 翻译所有带有data-i18n属性的元素
-        document.querySelectorAll('[data-i18n]').forEach(element => {
-            const key = element.getAttribute('data-i18n');
-            if (translations[currentLanguage][key]) {
-                element.textContent = translations[currentLanguage][key];
-            }
-        });
-
-        // 翻译placeholder
-        document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-            const key = element.getAttribute('data-i18n-placeholder');
-            if (translations[currentLanguage][key]) {
-                element.placeholder = translations[currentLanguage][key];
-            }
-        });
-
-        // 翻译title
-        document.querySelectorAll('[data-i18n-title]').forEach(element => {
-            const key = element.getAttribute('data-i18n-title');
-            if (translations[currentLanguage][key]) {
-                element.title = translations[currentLanguage][key];
-            }
-        });
-
-        // 重新渲染任务和统计信息以更新语言
-        renderStats();
-        renderTasks();
-    }
-
-    // 切换语言
-    function switchLanguage(lang) {
-        if (translations[lang]) {
-            currentLanguage = lang;
-            setConfig('language', lang);
-            initLanguage();
-        }
-    }
-
-    // 语言切换事件监听
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.addEventListener('click', function () {
-                switchLanguage(this.dataset.lang);
-            });
-        });
-    });
-
-    // 启动进度条更新定时器
-    function startProgressUpdate() {
-        progressUpdateInterval = setInterval(() => {
-            renderTasks();
-        }, 60000); // 60000毫秒 = 1分钟
-    }
-
-    // 渲染统计信息
-    function renderStats() {
-        const statsContainer = document.getElementById('statsContainer');
-        const totalTasks = tasks.length;
-        const activeTasks = tasks.filter(task => !task.completed).length;
-        const completedTasks = tasks.filter(task => task.completed).length;
-        const tasksWithoutDeadline = tasks.filter(task => !task.dueDate).length;
-        const overdueTasks = tasks.filter(task => {
-            if (!task.dueDate || task.completed) return false;
-            return new Date(task.dueDate) < new Date();
-        }).length;
-
-        statsContainer.innerHTML = `
-            <div class="stat-item">
-                <div class="stat-value">${totalTasks}</div>
-                <div class="stat-label">${translations[currentLanguage]['totalTasks']}</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value">${activeTasks}</div>
-                <div class="stat-label">${translations[currentLanguage]['activeTasks']}</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value">${completedTasks}</div>
-                <div class="stat-label">${translations[currentLanguage]['completedTasks']}</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value">${overdueTasks}</div>
-                <div class="stat-label">${translations[currentLanguage]['overdueTasks']}</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value">${tasksWithoutDeadline}</div>
-                <div class="stat-label">${translations[currentLanguage]['tasksWithoutDeadline']}</div>
-            </div>
-        `;
-    }
-
-    // 无截止日期复选框事件
-    noDeadlineCheckbox.addEventListener('change', function () {
-        dueDateInput.disabled = this.checked;
-        dueTimeInput.disabled = this.checked;
-
-        if (this.checked) {
-            dueDateInput.value = new Date().toISOString().split('T')[0];
-            dueTimeInput.value = '23:59';
-        }
-    });
-
-    // 弹窗控制
-    openModalBtn.addEventListener('click', function () {
-        editingTaskId = null;
-        modalTitle.setAttribute('data-i18n', 'addNewTask');
-        submitBtn.setAttribute('data-i18n', 'addTask');
-        taskForm.reset();
-
-        // 重置表单状态
-        noDeadlineCheckbox.checked = false;
-        dueDateInput.disabled = false;
-        dueTimeInput.disabled = false;
-
-        // 设置默认时间为今天23:59
-        dueDateInput.value = new Date().toISOString().split('T')[0];
-
-        taskModal.style.display = 'flex';
-        document.getElementById('taskName').focus();
-
-        // 更新弹窗文本
-        applyTranslations();
-    });
-
-    closeModalBtn.addEventListener('click', closeModal);
-    cancelBtn.addEventListener('click', closeModal);
-
-    // 点击弹窗外部关闭
-    taskModal.addEventListener('click', function (e) {
-        if (e.target === taskModal) {
-            closeModal();
-        }
-    });
-
-    function closeModal() {
-        taskModal.style.display = 'none';
-        taskForm.reset();
-        editingTaskId = null;
-    }
-
-    // 添加示例任务
-    async function addSampleTasks() {
-        const sampleTasks = [
-            {
-                id: Date.now() + 1,
-                name: currentLanguage === 'zh-CN' ? "完成项目报告" : "Complete project report",
-                description: currentLanguage === 'zh-CN' ? "编写并提交季度项目总结报告" : "Write and submit quarterly project summary report",
-                dueDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000).toISOString(),
-                createdAt: new Date().toISOString(),
-                completed: false
+        // 直接定义翻译对象
+        const translations = {
+            'zh-CN': {
+                'appTitle': '任务跟踪器', 'appSubtitle': '基于截止日期的任务管理', 'export': '导出', 'import': '导入',
+                'addTask': '添加任务', 'searchPlaceholder': '搜索任务...', 'filterAll': '全部', 'filterActive': '进行中',
+                'filterCompleted': '已完成', 'filterOverdue': '已过期', 'filterNoDeadline': '无截止日期',
+                'addNewTask': '添加新任务', 'editTask': '编辑任务', 'taskNameLabel': '任务名称 *',
+                'taskNamePlaceholder': '输入任务名称', 'taskDescLabel': '任务描述 (可选)', 'taskDescPlaceholder': '输入任务描述',
+                'dueDateLabel': '截止日期 (可选)', 'noDeadlineLabel': '无截止日期', 'cancel': '取消', 'updateTask': '更新任务',
+                'totalTasks': '总任务', 'activeTasks': '进行中', 'completedTasks': '已完成', 'tasksWithDeadline': '有截止日期',
+                'overdueTasks': '已过期', 'tasksWithoutDeadline': '无截止日期', 'noTasks': '暂无任务',
+                'noTasksDescription': '点击"添加任务"按钮开始跟踪您的任务', 'noMatchingTasks': '没有找到匹配的任务',
+                'noMatchingTasksDescription': '尝试调整搜索条件或筛选器', 'deadline': '截止', 'noDeadlineText': '无截止日期',
+                'statusCompleted': '已完成', 'statusSafe': '安全', 'statusWarning': '警告', 'statusDanger': '紧急',
+                'statusOverdue': '已过期', 'statusNoDeadline': '无截止日期', 'markComplete': '标记为已完成',
+                'markIncomplete': '标记为未完成', 'editTaskTitle': '编辑任务', 'deleteTaskTitle': '删除任务',
+                'confirmDelete': '确定要删除这个任务吗？', 'taskAdded': '任务添加成功', 'taskUpdated': '任务更新成功',
+                'taskDeleted': '任务删除成功', 'taskMarkedComplete': '任务标记为已完成', 'taskMarkedIncomplete': '任务标记为未完成',
+                'exportSuccess': '任务数据导出成功！', 'importSuccess': '成功导入 {count} 个任务！',
+                'importConfirm': '即将导入 {count} 个任务。是否替换当前数据？', 'importFormatError': '导入失败：文件格式不正确',
+                'importReadError': '导入失败：文件读取错误', 'saveError': '保存任务失败，请重试', 'deleteError': '删除任务失败，请重试',
+                'updateError': '更新任务状态失败，请重试', 'minutesAgo': '{minutes}分钟前', 'hoursAgo': '{hours}小时前',
+                'daysAgo': '{days}天前', 'minutesLeft': '{minutes}分钟', 'hoursLeft': '{hours}小时', 'daysLeft': '{days}天'
             },
-            {
-                id: Date.now() + 2,
-                name: currentLanguage === 'zh-CN' ? "团队会议准备" : "Team meeting preparation",
-                description: currentLanguage === 'zh-CN' ? "准备下周团队会议的演示材料" : "Prepare presentation materials for next week's team meeting",
-                dueDate: new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000).toISOString(),
-                createdAt: new Date().toISOString(),
-                completed: false
-            },
-            {
-                id: Date.now() + 3,
-                name: currentLanguage === 'zh-CN' ? "学习计划制定" : "Learning plan development",
-                description: currentLanguage === 'zh-CN' ? "制定下个月的个人学习计划" : "Develop personal learning plan for next month",
-                dueDate: null,
-                createdAt: new Date().toISOString(),
-                completed: false
+            'en': {
+                'appTitle': 'Task Tracker', 'appSubtitle': 'Deadline-based Task Management', 'export': 'Export', 'import': 'Import',
+                'addTask': 'Add Task', 'searchPlaceholder': 'Search tasks...', 'filterAll': 'All', 'filterActive': 'Active',
+                'filterCompleted': 'Completed', 'filterOverdue': 'Overdue', 'filterNoDeadline': 'No Deadline',
+                'addNewTask': 'Add New Task', 'editTask': 'Edit Task', 'taskNameLabel': 'Task Name *',
+                'taskNamePlaceholder': 'Enter task name', 'taskDescLabel': 'Task Description (optional)', 'taskDescPlaceholder': 'Enter task description',
+                'dueDateLabel': 'Due Date (optional)', 'noDeadlineLabel': 'No Deadline', 'cancel': 'Cancel', 'updateTask': 'Update Task',
+                'totalTasks': 'Total Tasks', 'activeTasks': 'Active', 'completedTasks': 'Completed', 'tasksWithDeadline': 'With Deadline',
+                'overdueTasks': 'Overdue', 'tasksWithoutDeadline': 'No Deadline', 'noTasks': 'No Tasks',
+                'noTasksDescription': 'Click "Add Task" to start tracking your tasks', 'noMatchingTasks': 'No matching tasks found',
+                'noMatchingTasksDescription': 'Try adjusting your search or filters', 'deadline': 'Due', 'noDeadlineText': 'No Deadline',
+                'statusCompleted': 'Completed', 'statusSafe': 'Safe', 'statusWarning': 'Warning', 'statusDanger': 'Urgent',
+                'statusOverdue': 'Overdue', 'statusNoDeadline': 'No Deadline', 'markComplete': 'Mark as complete',
+                'markIncomplete': 'Mark as incomplete', 'editTaskTitle': 'Edit task', 'deleteTaskTitle': 'Delete task',
+                'confirmDelete': 'Are you sure you want to delete this task?', 'taskAdded': 'Task added successfully', 'taskUpdated': 'Task updated successfully',
+                'taskDeleted': 'Task deleted successfully', 'taskMarkedComplete': 'Task marked as completed', 'taskMarkedIncomplete': 'Task marked as incomplete',
+                'exportSuccess': 'Task data exported successfully!', 'importSuccess': 'Successfully imported {count} tasks!',
+                'importConfirm': 'About to import {count} tasks. Replace current data?', 'importFormatError': 'Import failed: Invalid file format',
+                'importReadError': 'Import failed: File read error', 'saveError': 'Failed to save task, please try again',
+                'deleteError': 'Failed to delete task, please try again', 'updateError': 'Failed to update task status, please try again',
+                'minutesAgo': '{minutes} minutes ago', 'hoursAgo': '{hours} hours ago', 'daysAgo': '{days} days ago',
+                'minutesLeft': '{minutes} minutes', 'hoursLeft': '{hours} hours', 'daysLeft': '{days} days'
             }
-        ];
-
-        for (const task of sampleTasks) {
-            await addTaskToDB(task);
-        }
-
-        tasks = await getAllTasks();
-        renderStats();
-        renderTasks();
-        showNotification(currentLanguage === 'zh-CN' ? '示例任务已添加' : 'Sample tasks added');
-    }
-
-    // 添加/更新任务
-    taskForm.addEventListener('submit', async function (e) {
-        e.preventDefault();
-
-        const taskName = document.getElementById('taskName').value;
-        const taskDesc = document.getElementById('taskDesc').value;
-        const hasDeadline = !noDeadlineCheckbox.checked;
-
-        let dueDateTime = null;
-        if (hasDeadline && dueDateInput.value) {
-            dueDateTime = localToUTC(dueDateInput.value, dueTimeInput.value);
-        }
-
-        const taskData = {
-            name: taskName,
-            description: taskDesc,
-            dueDate: dueDateTime,
-            createdAt: new Date().toISOString(),
-            completed: false
         };
 
-        try {
-            if (editingTaskId) {
-                const existingTask = tasks.find(t => t.id === editingTaskId);
-                const updatedTask = {
-                    ...existingTask,
-                    ...taskData
-                };
-                await updateTaskInDB(updatedTask);
-                showNotification(translations[currentLanguage]['taskUpdated']);
-            } else {
-                const newTask = {
-                    id: Date.now(),
-                    ...taskData
-                };
-                await addTaskToDB(newTask);
-                showNotification(translations[currentLanguage]['taskAdded']);
-            }
+        // 初始化应用
+        document.addEventListener('DOMContentLoaded', async function () {
+            // 缓存 DOM 元素
+            taskForm = document.getElementById('taskForm');
+            taskList = document.getElementById('taskList');
+            taskModal = document.getElementById('taskModal');
+            openModalBtn = document.getElementById('openModalBtn');
+            closeModalBtn = document.getElementById('closeModalBtn');
+            cancelBtn = document.getElementById('cancelBtn');
+            noDeadlineCheckbox = document.getElementById('noDeadline');
+            dueDateInput = document.getElementById('dueDate');
+            dueTimeInput = document.getElementById('dueTime');
+            modalTitle = document.getElementById('modalTitle');
+            submitBtn = document.getElementById('submitBtn');
+            searchInput = document.getElementById('searchInput');
+            notification = document.getElementById('notification');
+            notificationText = document.getElementById('notificationText');
+            taskTemplate = document.getElementById('task-template');
+            exportBtn = document.getElementById('exportBtn');
+            importBtn = document.getElementById('importBtn');
+            importFileInput = document.getElementById('importFile');
 
-            tasks = await getAllTasks();
+            try {
+                await initDB();
+                // 从配置中获取语言设置
+                const savedLanguage = await getConfig('language');
+                if (savedLanguage) {
+                    currentLanguage = savedLanguage;
+                } else {
+                    // 获取系统语言列表，优先使用第一个支持的语言
+                    const languages = navigator.languages || [navigator.language || navigator.userLanguage];
+                    // 在系统语言列表中查找支持的语言
+                    const supportedLang = languages.find(lang =>
+                        lang.toLowerCase().startsWith('zh') || lang.toLowerCase().startsWith('en')
+                    );
+                    // 转换为支持的语言格式
+                    currentLanguage = supportedLang?.toLowerCase().startsWith('zh') ? 'zh-CN' :
+                        supportedLang?.toLowerCase().startsWith('en') ? 'en' : 'zh-CN';
+                    await setConfig('language', currentLanguage);
+                }
+
+                initLanguage();
+                setupEventListeners();
+
+                tasks = await getAllTasks();
+                setFilter(currentFilter); // 应用默认筛选器
+                renderStats();
+                renderTasks();
+
+                // 设置最小日期为今天
+                dueDateInput.min = new Date().toISOString().split('T')[0];
+
+                // 使用IndexedDB检查是否已添加示例任务
+                const sampleTasksAdded = await getConfig('sampleTasksAdded');
+                if (tasks.length === 0 && !sampleTasksAdded) {
+                    await addSampleTasks();
+                    await setConfig('sampleTasksAdded', true);
+                }
+
+                // 启动进度条更新定时器
+                startProgressUpdate();
+            } catch (error) {
+                console.error('初始化失败:', error);
+                showNotification('数据库初始化失败，请刷新页面重试', 'error');
+            }
+        });
+
+        function setupEventListeners() {
+            // 弹窗控制
+            openModalBtn.addEventListener('click', openAddTaskModal);
+            closeModalBtn.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', closeModal);
+            taskModal.addEventListener('click', (e) => {
+                if (e.target === taskModal) closeModal();
+            });
+
+            // 表单
+            taskForm.addEventListener('submit', handleFormSubmit);
+            noDeadlineCheckbox.addEventListener('change', function () {
+                dueDateInput.disabled = this.checked;
+                dueTimeInput.disabled = this.checked;
+                if (this.checked) {
+                    dueDateInput.value = new Date().toISOString().split('T')[0];
+                    dueTimeInput.value = '23:59';
+                }
+            });
+
+            // 筛选和搜索
+            searchInput.addEventListener('keyup', filterTasks);
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => setFilter(btn.dataset.filter));
+            });
+
+            // 语言切换
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => switchLanguage(btn.dataset.lang));
+            });
+
+            // 导入/导出事件监听
+            exportBtn.addEventListener('click', exportTasks);
+            importBtn.addEventListener('click', () => importFileInput.click());
+            importFileInput.addEventListener('change', (e) => importTasks(e.target.files[0]));
+
+            // 任务列表事件委托
+            taskList.addEventListener('click', function(e) {
+                const button = e.target.closest('.action-btn');
+                if (!button) return;
+
+                const taskItem = button.closest('.task-item');
+                if (!taskItem) return;
+
+                const taskId = Number(taskItem.dataset.taskId);
+                const action = button.dataset.action;
+
+                switch (action) {
+                    case 'toggle':
+                        toggleTaskComplete(taskId);
+                        break;
+                    case 'edit':
+                        editTask(taskId);
+                        break;
+                    case 'delete':
+                        deleteTask(taskId);
+                        break;
+                }
+            });
+        }
+
+        function showNotification(message, type = 'success') {
+            notificationText.textContent = message;
+            notification.className = 'notification';
+            notification.classList.add(type);
+            notification.classList.add('show');
+            setTimeout(() => notification.classList.remove('show'), 3000);
+        }
+
+        // --- IndexedDB 数据库操作 ---
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve(db);
+                };
+                request.onupgradeneeded = (event) => {
+                    const db = event.target.result;
+                    // 创建任务存储
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        const store = db.createObjectStore(STORE_NAME, {keyPath: 'id'});
+                        store.createIndex('dueDate', 'dueDate', {unique: false});
+                    }
+                    // 创建配置存储
+                    if (!db.objectStoreNames.contains(CONFIG_STORE_NAME)) {
+                        db.createObjectStore(CONFIG_STORE_NAME, {keyPath: 'key'});
+                    }
+                };
+            });
+        }
+
+        async function getAllTasks() {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.getAll();
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function addTaskToDB(task) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const taskToStore = {...task, dueDate: task.dueDate || null}; // 明确设置 dueDate 为 null
+                const request = store.add(taskToStore);
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function updateTaskInDB(task) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.put(task);
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function deleteTaskFromDB(id) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.delete(id);
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function getConfig(key) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([CONFIG_STORE_NAME], 'readonly');
+                const store = transaction.objectStore(CONFIG_STORE_NAME);
+                const request = store.get(key);
+                request.onsuccess = () => resolve(request.result ? request.result.value : null);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function setConfig(key, value) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([CONFIG_STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(CONFIG_STORE_NAME);
+                const request = store.put({key, value});
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        // --- 语言与国际化 ---
+        function initLanguage() {
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === currentLanguage);
+            });
+            document.documentElement.lang = currentLanguage;
+            applyTranslations();
+        }
+
+        function applyTranslations() {
+            const langMap = translations[currentLanguage];
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (langMap[key]) element.textContent = langMap[key];
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (langMap[key]) element.placeholder = langMap[key];
+            });
+            document.querySelectorAll('[data-i18n-title]').forEach(element => {
+                const key = element.getAttribute('data-i18n-title');
+                if (langMap[key]) element.title = langMap[key];
+            });
+            // 重新渲染任务和统计信息以更新语言
             renderStats();
             renderTasks();
-            closeModal();
-        } catch (error) {
-            console.error('保存任务失败:', error);
-            showNotification(translations[currentLanguage]['saveError'], 'error');
         }
-    });
 
-    // 编辑任务
-    function editTask(id) {
-        const task = tasks.find(t => t.id === id);
-        if (!task) return;
+        function switchLanguage(lang) {
+            if (translations[lang]) {
+                currentLanguage = lang;
+                setConfig('language', lang);
+                initLanguage();
+            }
+        }
 
-        editingTaskId = id;
-        modalTitle.setAttribute('data-i18n', 'editTask');
-        submitBtn.setAttribute('data-i18n', 'updateTask');
+        // --- 弹窗与表单逻辑 ---
+        function openAddTaskModal() {
+            editingTaskId = null;
+            modalTitle.setAttribute('data-i18n', 'addNewTask');
+            submitBtn.setAttribute('data-i18n', 'addTask');
+            taskForm.reset();
 
-        document.getElementById('taskName').value = task.name;
-        document.getElementById('taskDesc').value = task.description || '';
-
-        if (task.dueDate) {
-            const localDate = utcToLocal(task.dueDate);
-            dueDateInput.value = localDate.toISOString().split('T')[0];
-            dueTimeInput.value = `${localDate.getHours().toString().padStart(2, '0')}:${localDate.getMinutes().toString().padStart(2, '0')}`;
+            // 重置表单状态
             noDeadlineCheckbox.checked = false;
             dueDateInput.disabled = false;
             dueTimeInput.disabled = false;
-        } else {
-            noDeadlineCheckbox.checked = true;
-            dueDateInput.disabled = true;
-            dueTimeInput.disabled = true;
+            dueDateInput.value = new Date().toISOString().split('T')[0];
+            dueTimeInput.value = '23:59';
+
+            taskModal.style.display = 'flex';
+            document.getElementById('taskName').focus();
+            applyTranslations();
         }
 
-        taskModal.style.display = 'flex';
-        document.getElementById('taskName').focus();
-
-        // 更新弹窗文本
-        applyTranslations();
-    }
-
-    // 删除任务
-    async function deleteTask(id) {
-        const confirmMessage = translations[currentLanguage]['confirmDelete'];
-        if (confirm(confirmMessage)) {
-            try {
-                await deleteTaskFromDB(id);
-                tasks = tasks.filter(task => task.id !== id);
-                renderStats();
-                renderTasks();
-                showNotification(translations[currentLanguage]['taskDeleted']);
-            } catch (error) {
-                console.error('删除任务失败:', error);
-                showNotification(translations[currentLanguage]['deleteError'], 'error');
-            }
+        function closeModal() {
+            taskModal.style.display = 'none';
+            taskForm.reset();
+            editingTaskId = null;
         }
-    }
 
-    // 切换任务完成状态
-    async function toggleTaskComplete(id) {
-        const task = tasks.find(t => t.id === id);
-        if (!task) return;
+        async function handleFormSubmit(e) {
+            e.preventDefault();
 
-        const updatedTask = {
-            ...task,
-            completed: !task.completed
-        };
+            const taskName = document.getElementById('taskName').value;
+            const taskDesc = document.getElementById('taskDesc').value;
+            const hasDeadline = !noDeadlineCheckbox.checked;
 
-        try {
-            await updateTaskInDB(updatedTask);
-            tasks = await getAllTasks();
-            renderStats();
-
-            // 添加完成动画
-            const taskElement = document.querySelector(`[onclick="toggleTaskComplete(${id})"]`).closest('.task-item');
-            if (updatedTask.completed) {
-                taskElement.classList.add('animate-complete');
-                setTimeout(() => {
-                    taskElement.classList.remove('animate-complete');
-                }, 500);
-                showNotification(translations[currentLanguage]['taskMarkedComplete']);
-            } else {
-                showNotification(translations[currentLanguage]['taskMarkedIncomplete']);
+            let dueDateTime = null;
+            if (hasDeadline && dueDateInput.value) {
+                dueDateTime = localToUTC(dueDateInput.value, dueTimeInput.value);
             }
 
-            renderTasks();
-        } catch (error) {
-            console.error('更新任务状态失败:', error);
-            showNotification(translations[currentLanguage]['updateError'], 'error');
-        }
-    }
+            const taskData = {
+                name: taskName,
+                description: taskDesc,
+                dueDate: dueDateTime,
+                completed: false
+            };
 
-    // 设置筛选器
-    function setFilter(filter) {
-        currentFilter = filter;
-
-        // 更新按钮状态
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        document.querySelector(`.filter-btn[data-filter="${filter}"]`).classList.add('active');
-
-        renderTasks();
-    }
-
-    // 筛选任务
-    function filterTasks() {
-        searchQuery = searchInput.value.toLowerCase();
-        renderTasks();
-    }
-
-    // 导出任务数据
-    function exportTasks() {
-        const data = {
-            version: '1.0',
-            exportDate: new Date().toISOString(),
-            storage: 'IndexedDB',
-            tasks: tasks
-        };
-
-        const dataStr = JSON.stringify(data, null, 2);
-        const dataBlob = new Blob([dataStr], {type: 'application/json'});
-        const url = URL.createObjectURL(dataBlob);
-
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `tasks_backup_${new Date().toISOString().split('T')[0]}.json`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-
-        showNotification(translations[currentLanguage]['exportSuccess']);
-    }
-
-    // 导入任务数据
-    async function importTasks(file) {
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = async (e) => {
             try {
-                const importedData = JSON.parse(e.target.result.toString());
-
-                if (!importedData.tasks || !Array.isArray(importedData.tasks)) {
-                    showNotification(translations[currentLanguage]['importFormatError'], 'error');
-                    console.error('无效的数据格式');
-                    return;
-                }
-
-                const confirmMessage = translations[currentLanguage]['importConfirm'].replace('{count}', importedData.tasks.length);
-                if (!confirm(confirmMessage)) {
-                    return;
-                }
-
-                // 导入 清除示例
-                await setConfig('sampleTasksAdded', true);
-
-                // 清空旧任务（确保等待完成）
-                await new Promise((resolve, reject) => {
-                    const tx = db.transaction([STORE_NAME], 'readwrite');
-                    const store = tx.objectStore(STORE_NAME);
-                    const req = store.clear();
-                    req.onsuccess = () => resolve();
-                    req.onerror = (e) => reject(e);
-                });
-
-                // 批量导入任务，带字段修复
-                for (const task of importedData.tasks) {
-                    if (!task.id) task.id = Date.now() + Math.floor(Math.random() * 1000);
-                    if (typeof task.completed !== 'boolean') task.completed = false;
-                    if (!task.createdAt) task.createdAt = new Date().toISOString();
-                    await addTaskToDB(task);
+                if (editingTaskId) {
+                    const existingTask = tasks.find(t => t.id === editingTaskId);
+                    const updatedTask = {
+                        ...existingTask,
+                        ...taskData,
+                        createdAt: existingTask.createdAt // 保留原始创建时间
+                    };
+                    await updateTaskInDB(updatedTask);
+                    showNotification(translations[currentLanguage]['taskUpdated']);
+                } else {
+                    const newTask = {
+                        id: Date.now(),
+                        ...taskData,
+                        createdAt: new Date().toISOString() // 设置新创建时间
+                    };
+                    await addTaskToDB(newTask);
+                    showNotification(translations[currentLanguage]['taskAdded']);
                 }
 
                 tasks = await getAllTasks();
                 renderStats();
                 renderTasks();
-
-                const successMessage = translations[currentLanguage]['importSuccess'].replace('{count}', importedData.tasks.length);
-                showNotification(successMessage);
-
+                closeModal();
             } catch (error) {
-                showNotification(translations[currentLanguage]['importReadError'], 'error');
-                console.error('导入错误:', error);
+                console.error('保存任务失败:', error);
+                showNotification(translations[currentLanguage]['saveError'], 'error');
             }
-        };
-        reader.readAsText(file);
+        }
 
-        // 重置文件输入
-        document.getElementById('importFile').value = '';
-    }
+        // --- 任务 CRUD 操作 (由事件委托调用) ---
+        function editTask(id) {
+            const task = tasks.find(t => t.id === id);
+            if (!task) return;
 
-    // 任务排序函数
-    function sortTasks(taskList) {
-        return taskList.sort((a, b) => {
-            // 首先，已完成的放在最后
-            if (a.completed !== b.completed) {
-                return a.completed ? 1 : -1;
+            editingTaskId = id;
+            modalTitle.setAttribute('data-i18n', 'editTask');
+            submitBtn.setAttribute('data-i18n', 'updateTask');
+
+            document.getElementById('taskName').value = task.name;
+            document.getElementById('taskDesc').value = task.description || '';
+
+            if (task.dueDate) {
+                const localDate = utcToLocal(task.dueDate);
+                dueDateInput.value = localDate.toISOString().split('T')[0];
+                dueTimeInput.value = `${localDate.getHours().toString().padStart(2, '0')}:${localDate.getMinutes().toString().padStart(2, '0')}`;
+                noDeadlineCheckbox.checked = false;
+                dueDateInput.disabled = false;
+                dueTimeInput.disabled = false;
+            } else {
+                noDeadlineCheckbox.checked = true;
+                dueDateInput.disabled = true;
+                dueTimeInput.disabled = true;
+                dueDateInput.value = new Date().toISOString().split('T')[0];
+                dueTimeInput.value = '23:59';
             }
 
-            // 然后，无截止日期的放在有截止日期的后面
-            if (!a.dueDate && b.dueDate) return 1;
-            if (a.dueDate && !b.dueDate) return -1;
+            taskModal.style.display = 'flex';
+            document.getElementById('taskName').focus();
+            applyTranslations();
+        }
 
-            // 如果都有截止日期，按截止日期排序
-            if (a.dueDate && b.dueDate) {
-                return new Date(a.dueDate) - new Date(b.dueDate);
+        async function deleteTask(id) {
+            const confirmMessage = translations[currentLanguage]['confirmDelete'];
+            if (confirm(confirmMessage)) {
+                try {
+                    await deleteTaskFromDB(id);
+                    tasks = tasks.filter(task => task.id !== id);
+                    renderStats();
+                    renderTasks();
+                    showNotification(translations[currentLanguage]['taskDeleted']);
+                } catch (error) {
+                    console.error('删除任务失败:', error);
+                    showNotification(translations[currentLanguage]['deleteError'], 'error');
+                }
             }
+        }
 
-            // 如果都没有截止日期，按创建时间排序
-            return new Date(a.createdAt) - new Date(b.createdAt);
-        });
-    }
+        async function toggleTaskComplete(id) {
+            const task = tasks.find(t => t.id === id);
+            if (!task) return;
 
-    // 渲染任务列表
-    function renderTasks() {
-        if (tasks.length === 0) {
-            taskList.innerHTML = `
+            const updatedTask = {...task, completed: !task.completed};
+
+            try {
+                await updateTaskInDB(updatedTask);
+                tasks = await getAllTasks();
+                renderStats();
+
+                const taskElement = document.querySelector(`.task-item[data-task-id="${id}"]`);
+                if (updatedTask.completed) {
+                    taskElement.classList.add('animate-complete');
+                    setTimeout(() => taskElement.classList.remove('animate-complete'), 500);
+                    showNotification(translations[currentLanguage]['taskMarkedComplete']);
+                } else {
+                    showNotification(translations[currentLanguage]['taskMarkedIncomplete']);
+                }
+
+                renderTasks();
+            } catch (error) {
+                console.error('更新任务状态失败:', error);
+                showNotification(translations[currentLanguage]['updateError'], 'error');
+            }
+        }
+
+        // --- 渲染、筛选、排序 ---
+        function startProgressUpdate() {
+            if (progressUpdateInterval) clearInterval(progressUpdateInterval);
+            progressUpdateInterval = setInterval(renderTasks, 60000); // 1分钟
+        }
+
+        function renderStats() {
+            const statsContainer = document.getElementById('statsContainer');
+            const totalTasks = tasks.length;
+            const activeTasks = tasks.filter(task => !task.completed).length;
+            const completedTasks = tasks.filter(task => task.completed).length;
+            const tasksWithoutDeadline = tasks.filter(task => !task.dueDate).length;
+            const overdueTasks = tasks.filter(task => {
+                return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
+            }).length;
+
+            const langMap = translations[currentLanguage];
+            statsContainer.innerHTML = `
+            <div class="stat-item"><div class="stat-value">${totalTasks}</div><div class="stat-label">${langMap['totalTasks']}</div></div>
+            <div class="stat-item"><div class="stat-value">${activeTasks}</div><div class="stat-label">${langMap['activeTasks']}</div></div>
+            <div class="stat-item"><div class="stat-value">${completedTasks}</div><div class="stat-label">${langMap['completedTasks']}</div></div>
+            <div class="stat-item"><div class="stat-value">${overdueTasks}</div><div class="stat-label">${langMap['overdueTasks']}</div></div>
+            <div class="stat-item"><div class="stat-value">${tasksWithoutDeadline}</div><div class="stat-label">${langMap['tasksWithoutDeadline']}</div></div>
+        `;
+        }
+
+        function setFilter(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === filter);
+            });
+            renderTasks();
+        }
+
+        function filterTasks() {
+            searchQuery = searchInput.value.toLowerCase();
+            renderTasks();
+        }
+
+        function sortTasks(taskList) {
+            return taskList.sort((a, b) => {
+                // 首先，已完成的放在最后
+                if (a.completed !== b.completed) return a.completed ? 1 : -1;
+                // 然后，无截止日期的放在有截止日期的后面
+                if (!a.dueDate && b.dueDate) return 1;
+                if (a.dueDate && !b.dueDate) return -1;
+                // 如果都有截止日期，按截止日期排序
+                if (a.dueDate && b.dueDate) return new Date(a.dueDate) - new Date(b.dueDate);
+                // 如果都没有截止日期，按创建时间排序
+                return new Date(a.createdAt) - new Date(b.createdAt);
+            });
+        }
+
+        // 使用 <template> 渲染
+        function renderTasks() {
+            const langMap = translations[currentLanguage];
+
+            if (tasks.length === 0) {
+                taskList.innerHTML = `
                 <div class="empty-state">
                     <svg width="80" height="80" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1555,251 +1400,298 @@
                         <path d="M9 12H9.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M9 16H9.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <h3>${translations[currentLanguage]['noTasks']}</h3>
-                    <p>${translations[currentLanguage]['noTasksDescription']}</p>
-                </div>
-            `;
-            return;
-        }
-
-        taskList.innerHTML = '';
-
-        // 应用筛选和搜索
-        const filteredTasks = tasks.filter(task => {
-            // 应用搜索筛选
-            if (searchQuery && !task.name.toLowerCase().includes(searchQuery) &&
-                !(task.description && task.description.toLowerCase().includes(searchQuery))) {
-                return false;
+                    <h3>${langMap['noTasks']}</h3>
+                    <p>${langMap['noTasksDescription']}</p>
+                </div>`;
+                return;
             }
 
-            // 应用状态筛选
-            switch (currentFilter) {
-                case 'active':
-                    return !task.completed;
-                case 'completed':
-                    return task.completed;
-                case 'overdue':
-                    return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
-                case 'no-deadline':
-                    return !task.dueDate;
-                default:
-                    return true;
-            }
-        });
+            const filteredTasks = tasks.filter(task => {
+                if (searchQuery && !task.name.toLowerCase().includes(searchQuery) &&
+                    !(task.description && task.description.toLowerCase().includes(searchQuery))) {
+                    return false;
+                }
+                switch (currentFilter) {
+                    case 'active': return !task.completed;
+                    case 'completed': return task.completed;
+                    case 'overdue': return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
+                    case 'no-deadline': return !task.dueDate;
+                    default: return true;
+                }
+            });
 
-        // 对筛选后的任务进行排序
-        const sortedTasks = sortTasks(filteredTasks);
+            const sortedTasks = sortTasks(filteredTasks);
+            taskList.innerHTML = ''; // 清空
 
-        if (sortedTasks.length === 0) {
-            taskList.innerHTML = `
+            if (sortedTasks.length === 0) {
+                taskList.innerHTML = `
                 <div class="empty-state">
                     <svg width="80" height="80" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9.172 16.242L12 13.414L14.828 16.242L16.242 14.828L13.414 12L16.242 9.172L14.828 7.758L12 10.586L9.172 7.758L7.758 9.172L10.586 12L7.758 14.828L9.172 16.242Z" fill="currentColor"/>
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22ZM12 20C16.418 20 20 16.418 20 12C20 7.582 16.418 4 12 4C7.582 4 4 7.582 4 12C4 16.418 7.582 20 12 20Z" fill="currentColor"/>
                     </svg>
-                    <h3>${translations[currentLanguage]['noMatchingTasks']}</h3>
-                    <p>${translations[currentLanguage]['noMatchingTasksDescription']}</p>
-                </div>
-            `;
-            return;
-        }
-
-        sortedTasks.forEach(task => {
-            const taskElement = document.createElement('div');
-            let status, timeLeft = null;
-
-            if (task.completed) {
-                status = {
-                    class: 'completed',
-                    statusClass: 'status-completed',
-                    text: translations[currentLanguage]['statusCompleted'],
-                    color: '#4CAF50',
-                    progress: 100
-                };
-            } else if (task.dueDate) {
-                timeLeft = calculateTimeLeft(task.dueDate);
-                status = getStatus(timeLeft);
-            } else {
-                status = {
-                    class: 'no-deadline',
-                    statusClass: 'status-no-deadline',
-                    text: translations[currentLanguage]['statusNoDeadline'],
-                    color: '#9E9E9E',
-                    progress: 0
-                };
+                    <h3>${langMap['noMatchingTasks']}</h3>
+                    <p>${langMap['noMatchingTasksDescription']}</p>
+                </div>`;
+                return;
             }
 
-            taskElement.className = `task-item ${status.class} ${task.completed ? 'completed-task' : ''}`;
+            const templateContent = taskTemplate.content;
+            const fragment = document.createDocumentFragment();
 
-            const deadlineText = task.dueDate ?
-                `${translations[currentLanguage]['deadline']}: ${formatDateTime(task.dueDate)}` :
-                translations[currentLanguage]['noDeadlineText'];
+            sortedTasks.forEach(task => {
+                const taskElement = templateContent.cloneNode(true).firstElementChild;
 
-            const completeTitle = task.completed ?
-                translations[currentLanguage]['markIncomplete'] :
-                translations[currentLanguage]['markComplete'];
+                let status, timeLeft = null;
+                if (task.completed) {
+                    status = { class: 'completed', statusClass: 'status-completed', text: langMap['statusCompleted'], color: '#4CAF50', progress: 100 };
+                } else if (task.dueDate) {
+                    timeLeft = calculateTimeLeft(task.dueDate);
+                    status = getStatus(timeLeft);
+                } else {
+                    status = { class: 'no-deadline', statusClass: 'status-no-deadline', text: langMap['statusNoDeadline'], color: '#9E9E9E', progress: 0 };
+                }
 
-            taskElement.innerHTML = `
-                <div class="task-header">
-                    <div class="task-title">
-                        ${task.completed ? `
-                            <svg width="16" height="16" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20 6L9 17L4 12" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        ` : ''}
-                        ${task.name}
-                    </div>
-                    <div class="task-date">
-                        ${deadlineText}
-                    </div>
-                </div>
-                ${task.description ? `<div class="task-desc">${task.description}</div>` : ''}
-                ${task.dueDate && !task.completed ? `
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: ${status.progress}%; background-color: ${status.color};"></div>
-                </div>
-                ` : ''}
-                <div class="task-footer">
-                    <div class="status-indicator ${status.statusClass}">
-                        <div class="status-dot"></div>
-                        ${status.text}
-                        ${timeLeft !== null && !task.completed ? `(${formatTimeLeft(timeLeft)})` : ''}
-                    </div>
-                    <div class="task-actions">
-                        <button class="action-btn complete-btn" onclick="toggleTaskComplete(${task.id})" title="${completeTitle}">
-                            <svg width="18" height="18" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
-                        <button class="action-btn edit-btn" onclick="editTask(${task.id})" title="${translations[currentLanguage]['editTaskTitle']}">
-                            <svg width="18" height="18" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M18.5 2.5C18.8978 2.10217 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10217 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10217 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
-                        <button class="action-btn delete-btn" onclick="deleteTask(${task.id})" title="${translations[currentLanguage]['deleteTaskTitle']}">
-                            <svg width="18" height="18" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M19 7L18.1327 19.1425C18.0579 20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7M4 7H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            `;
+                // --- 填充模板 ---
+                taskElement.dataset.taskId = task.id;
+                taskElement.classList.add(status.class);
+                if (task.completed) {
+                    taskElement.classList.add('completed-task');
+                }
 
-            taskList.appendChild(taskElement);
-        });
-    }
+                // 头部
+                taskElement.querySelector('.task-name').textContent = task.name;
+                taskElement.querySelector('.task-date').textContent = task.dueDate ?
+                    `${langMap['deadline']}: ${formatDateTime(task.dueDate)}` :
+                    langMap['noDeadlineText'];
 
-    // 计算剩余时间（小时）
-    function calculateTimeLeft(utcStr) {
-        const now = new Date();
-        const due = utcToLocal(utcStr);
-        return (due.getTime() - now.getTime()) / (1000 * 60); // 返回分钟数
-    }
+                // 描述
+                const taskDescEl = taskElement.querySelector('.task-desc');
+                if (task.description) {
+                    taskDescEl.textContent = task.description;
+                } else {
+                    taskDescEl.remove(); // 移除空描述
+                }
 
-    // 根据剩余时间获取状态
-    function getStatus(minutesLeft) {
-        const hoursLeft = minutesLeft / 60;
-        const daysLeft = hoursLeft / 24;
-        if (daysLeft > 7) {
-            return {
-                class: '',
-                statusClass: 'status-safe',
-                text: translations[currentLanguage]['statusSafe'],
-                color: '#4CAF50',
-                progress: Math.min(100, 100 - (daysLeft - 7) * 5)
-            };
-        } else if (daysLeft > 3) {
-            return {
-                class: 'warning',
-                statusClass: 'status-warning',
-                text: translations[currentLanguage]['statusWarning'],
-                color: '#FFC107',
-                progress: Math.min(100, 100 - (daysLeft - 3) * 20)
-            };
-        } else if (minutesLeft > 0) {
-            return {
-                class: 'danger',
-                statusClass: 'status-danger',
-                text: translations[currentLanguage]['statusDanger'],
-                color: '#F44336',
-                progress: Math.min(100, 100 - (minutesLeft / 4320) * 100)   // 3天的总分钟数 = 4320分钟
-            };
-        } else {
-            return {
-                class: 'danger',
-                statusClass: 'status-danger',
-                text: translations[currentLanguage]['statusOverdue'],
-                color: '#F44336',
-                progress: 100
-            };
+                // 进度条
+                const progressBarEl = taskElement.querySelector('.progress-bar');
+                if (task.dueDate && !task.completed) {
+                    const progressFill = progressBarEl.querySelector('.progress-fill');
+                    progressFill.style.width = `${status.progress}%`;
+                    progressFill.style.backgroundColor = status.color;
+                } else {
+                    progressBarEl.remove(); // 移除进度条
+                }
+
+                // 底部
+                const statusIndicator = taskElement.querySelector('.status-indicator');
+                statusIndicator.classList.add(status.statusClass);
+                statusIndicator.querySelector('.status-text').textContent = status.text;
+
+                const timeleftEl = statusIndicator.querySelector('.status-timeleft');
+                if (timeLeft !== null && !task.completed) {
+                    timeleftEl.textContent = `(${formatTimeLeft(timeLeft)})`;
+                } else {
+                    timeleftEl.remove();
+                }
+
+                // 动作按钮
+                const completeBtn = taskElement.querySelector('[data-action="toggle"]');
+                completeBtn.title = task.completed ? langMap['markIncomplete'] : langMap['markComplete'];
+                taskElement.querySelector('[data-action="edit"]').title = langMap['editTaskTitle'];
+                taskElement.querySelector('[data-action="delete"]').title = langMap['deleteTaskTitle'];
+
+                fragment.appendChild(taskElement);
+            });
+
+            taskList.appendChild(fragment); // 一次性插入
         }
-    }
 
-    // 格式化剩余时间
-    function formatTimeLeft(minutesLeft) {
-        if (minutesLeft < 0) {
-            const minutesAgo = Math.abs(Math.floor(minutesLeft));
-            if (minutesAgo < 60) {
-                return translations[currentLanguage]['minutesAgo'].replace('{minutes}', minutesAgo.toString());
-            } else if (minutesAgo < 1440) {
-                return translations[currentLanguage]['hoursAgo'].replace('{hours}', Math.floor(minutesAgo / 60).toString());
+        // --- 示例任务 ---
+        async function addSampleTasks() {
+            const sampleTasks = [
+                {
+                    id: Date.now() + 1,
+                    name: currentLanguage === 'zh-CN' ? "完成项目报告" : "Complete project report",
+                    description: currentLanguage === 'zh-CN' ? "编写并提交季度项目总结报告" : "Write and submit quarterly project summary report",
+                    dueDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+                    createdAt: new Date().toISOString(),
+                    completed: false
+                },
+                {
+                    id: Date.now() + 2,
+                    name: currentLanguage === 'zh-CN' ? "团队会议准备" : "Team meeting preparation",
+                    description: currentLanguage === 'zh-CN' ? "准备下周团队会议的演示材料" : "Prepare presentation materials for next week's team meeting",
+                    dueDate: new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000).toISOString(),
+                    createdAt: new Date().toISOString(),
+                    completed: false
+                },
+                {
+                    id: Date.now() + 3,
+                    name: currentLanguage === 'zh-CN' ? "学习计划制定" : "Learning plan development",
+                    description: currentLanguage === 'zh-CN' ? "制定下个月的个人学习计划" : "Develop personal learning plan for next month",
+                    dueDate: null,
+                    createdAt: new Date().toISOString(),
+                    completed: false
+                }
+            ];
+            for (const task of sampleTasks) await addTaskToDB(task);
+            tasks = await getAllTasks();
+            renderStats();
+            renderTasks();
+            showNotification(currentLanguage === 'zh-CN' ? '示例任务已添加' : 'Sample tasks added');
+        }
+
+        // --- 时间与状态计算工具 ---
+        function calculateTimeLeft(utcStr) {
+            const now = new Date();
+            const due = utcToLocal(utcStr);
+            return (due.getTime() - now.getTime()) / (1000 * 60); // 分钟
+        }
+
+        // 根据剩余时间获取状态
+        function getStatus(minutesLeft) {
+            const langMap = translations[currentLanguage];
+            const hoursLeft = minutesLeft / 60;
+            const daysLeft = hoursLeft / 24;
+            if (daysLeft > 7) {
+                return { class: '', statusClass: 'status-safe', text: langMap['statusSafe'], color: '#4CAF50', progress: Math.min(100, 100 - (daysLeft - 7) * 5) };
+            } else if (daysLeft > 3) {
+                return { class: 'warning', statusClass: 'status-warning', text: langMap['statusWarning'], color: '#FFC107', progress: Math.min(100, 100 - (daysLeft - 3) * 20) };
+            } else if (minutesLeft > 0) {
+                return { class: 'danger', statusClass: 'status-danger', text: langMap['statusDanger'], color: '#F44336', progress: Math.min(100, 100 - (minutesLeft / 4320) * 100) }; // 3天的总分钟数 = 4320分钟
             } else {
-                return translations[currentLanguage]['daysAgo'].replace('{days}', Math.floor(minutesAgo / 1440).toString());
+                return { class: 'danger', statusClass: 'status-danger', text: langMap['statusOverdue'], color: '#F44336', progress: 100 };
             }
         }
 
-        if (minutesLeft < 60) {
-            return translations[currentLanguage]['minutesLeft'].replace('{minutes}', Math.floor(minutesLeft).toString());
-        } else if (minutesLeft < 1440) {
-            const hours = Math.floor(minutesLeft / 60);
-            const minutes = Math.floor(minutesLeft % 60);
-            if (minutes > 0) {
-                return translations[currentLanguage]['hoursLeft'].replace('{hours}', hours.toString()) + " " + translations[currentLanguage]['minutesLeft'].replace('{minutes}', minutes.toString());
-            } else {
-                return translations[currentLanguage]['hoursLeft'].replace('{hours}', hours.toString());
-            }
-        } else {
-            const days = Math.floor(minutesLeft / 1440);
-            const hours = Math.floor((minutesLeft % 1440) / 60);
-            const minutes = Math.floor(minutesLeft % 60);
+        // 本地时间 -> UTC ISO 字符串
+        function localToUTC(dateStr, timeStr = '23:59') {
+            const localDate = new Date(`${dateStr}T${timeStr}`);
+            return new Date(localDate.getTime() + localDate.getTimezoneOffset() * 60000).toISOString();
+        }
 
-            if (hours > 0 && minutes > 0) {
-                return translations[currentLanguage]['daysLeft'].replace('{days}', days.toString()) + ' ' + translations[currentLanguage]['hoursLeft'].replace('{hours}', hours.toString()) + ' ' + translations[currentLanguage]['minutesLeft'].replace('{minutes}', minutes.toString());
-            } else if (hours > 0) {
-                return translations[currentLanguage]['daysLeft'].replace('{days}', days.toString()) + ' ' + translations[currentLanguage]['hoursLeft'].replace('{hours}', hours.toString());
-            } else if (minutes > 0) {
-                return translations[currentLanguage]['daysLeft'].replace('{days}', days.toString()) + ' ' + translations[currentLanguage]['minutesLeft'].replace('{minutes}', minutes.toString());
+        // UTC ISO -> 本地 Date 对象
+        function utcToLocal(utcStr) {
+            const utcDate = new Date(utcStr);
+            return new Date(utcDate.getTime() - utcDate.getTimezoneOffset() * 60000);
+        }
+
+        function formatTimeLeft(minutesLeft) {
+            const langMap = translations[currentLanguage];
+            if (minutesLeft < 0) {
+                const minutesAgo = Math.abs(Math.floor(minutesLeft));
+                if (minutesAgo < 60) return langMap['minutesAgo'].replace('{minutes}', minutesAgo.toString());
+                if (minutesAgo < 1440) return langMap['hoursAgo'].replace('{hours}', Math.floor(minutesAgo / 60).toString());
+                return langMap['daysAgo'].replace('{days}', Math.floor(minutesAgo / 1440).toString());
+            }
+            if (minutesLeft < 60) return langMap['minutesLeft'].replace('{minutes}', Math.floor(minutesLeft).toString());
+            if (minutesLeft < 1440) {
+                const h = Math.floor(minutesLeft / 60);
+                const m = Math.floor(minutesLeft % 60);
+                return m > 0 ? `${langMap['hoursLeft'].replace('{hours}', h.toString())} ${langMap['minutesLeft'].replace('{minutes}', m.toString())}`
+                    : langMap['hoursLeft'].replace('{hours}', h.toString());
+            }
+            const d = Math.floor(minutesLeft / 1440);
+            const h = Math.floor((minutesLeft % 1440) / 60);
+            const m = Math.floor(minutesLeft % 60);
+            if (d > 0 && h > 0 && m > 0) {
+                return `${langMap['daysLeft'].replace('{days}', d.toString())} ${langMap['hoursLeft'].replace('{hours}', h.toString())}  ${langMap['minutesLeft'].replace('{minutes}', m.toString())}`
+            } else if (d > 0 && h > 0) {
+                return `${langMap['daysLeft'].replace('{days}', d.toString())} ${langMap['hoursLeft'].replace('{hours}', h.toString())}`
+            } else if (d > 0 && m > 0) {
+                return `${langMap['daysLeft'].replace('{days}', d.toString())} ${langMap['minutesLeft'].replace('{minutes}', m.toString())}`
             } else {
-                return translations[currentLanguage]['daysLeft'].replace('{days}', days.toString());
+                return langMap['daysLeft'].replace('{days}', d.toString());
             }
         }
-    }
 
-    // 本地时间 -> UTC ISO 字符串
-    function localToUTC(dateStr, timeStr = '23:59') {
-        const localDate = new Date(`${dateStr}T${timeStr}`);
-        return new Date(localDate.getTime() + localDate.getTimezoneOffset() * 60000).toISOString();
-    }
+        function formatDateTime(utcStr) {
+            const localDate = utcToLocal(utcStr);
+            const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            return localDate.toLocaleDateString(currentLanguage === 'zh-CN' ? 'zh-CN' : 'en-US', options);
+        }
 
-    // UTC ISO -> 本地 Date 对象
-    function utcToLocal(utcStr) {
-        const utcDate = new Date(utcStr);
-        return new Date(utcDate.getTime() - utcDate.getTimezoneOffset() * 60000);
-    }
+        // --- 导入 / 导出  ---
+        function exportTasks() {
+            const langMap = translations[currentLanguage];
+            const data = {
+                version: '1.0',
+                exportDate: new Date().toISOString(),
+                storage: 'IndexedDB',
+                tasks: tasks
+            };
 
-    // 格式化 UTC ISO -> 本地显示字符串
-    function formatDateTime(utcStr) {
-        const localDate = utcToLocal(utcStr);
-        const options = {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        };
-        return localDate.toLocaleDateString(currentLanguage === 'zh-CN' ? 'zh-CN' : 'en-US', options);
-    }
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `tasks_backup_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            showNotification(langMap['exportSuccess']);
+        }
+
+        async function importTasks(file) {
+            const langMap = translations[currentLanguage];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const importedData = JSON.parse(e.target.result.toString());
+
+                    if (!importedData.tasks || !Array.isArray(importedData.tasks)) {
+                        showNotification(langMap['importFormatError'], 'error');
+                        return;
+                    }
+
+                    const confirmMessage = langMap['importConfirm'].replace('{count}', importedData.tasks.length);
+                    if (!confirm(confirmMessage)) {
+                        return;
+                    }
+
+                    // 导入 清除示例
+                    await setConfig('sampleTasksAdded', true);
+
+                    // 清空旧任务（确保等待完成）
+                    await new Promise((resolve, reject) => {
+                        const tx = db.transaction([STORE_NAME], 'readwrite');
+                        const store = tx.objectStore(STORE_NAME);
+                        const req = store.clear();
+                        req.onsuccess = () => resolve();
+                        req.onerror = (e) => reject(e);
+                    });
+
+                    for (const task of importedData.tasks) {
+                        if (!task.id) task.id = Date.now() + Math.floor(Math.random() * 1000);
+                        if (typeof task.completed !== 'boolean') task.completed = false;
+                        if (!task.createdAt) task.createdAt = new Date().toISOString();
+                        await addTaskToDB(task);
+                    }
+
+                    tasks = await getAllTasks();
+                    renderStats();
+                    renderTasks();
+
+                    const successMessage = langMap['importSuccess'].replace('{count}', importedData.tasks.length);
+                    showNotification(successMessage);
+
+                } catch (error) {
+                    showNotification(langMap['importReadError'], 'error');
+                    console.error('导入错误:', error);
+                }
+            };
+            reader.readAsText(file);
+            importFileInput.value = ''; // 重置文件输入
+        }
+
+    })(); // 结束 IIFE`
 </script>
 </body>
 </html>
