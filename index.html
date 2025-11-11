@@ -212,32 +212,6 @@
             background: #3a5aa0;
         }
 
-        .stats {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .stat-value {
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-        }
-
         /* === 4. 任务列表与任务项 === */
         .tasks-section {
             margin-bottom: 25px;
@@ -756,21 +730,6 @@
                 flex-direction: row;
             }
 
-            .stats {
-                padding: 10px;
-                font-size: 12px;
-            }
-
-            .stat-label {
-                font-size: 12px;
-            }
-
-            html[lang="en"] {
-                .stats {
-                    gap: 9px;
-                    padding-bottom: 15px;
-                }
-            }
         }
     </style>
 </head>
@@ -844,7 +803,7 @@
                 </div>
             </div>
         </div>
-        <input accept=".json" class="file-input" id="importFile" onchange="importTasks(this.files[0])" type="file">
+        <input accept=".json" class="file-input" id="importFile" type="file">
     </header>
     <div class="main-content">
         <div class="search-box">
@@ -852,17 +811,13 @@
             <input class="search-input" data-i18n-placeholder="searchPlaceholder" id="searchInput" placeholder="搜索任务..." type="text">
         </div>
         <div class="filters">
-            <button class="filter-btn" data-filter="all" data-i18n="filterAll" onclick="setFilter('all')">全部</button>
-            <button class="filter-btn active" data-filter="active" data-i18n="filterActive" onclick="setFilter('active')">进行中</button>
-            <button class="filter-btn" data-filter="completed" data-i18n="filterCompleted" onclick="setFilter('completed')">已完成</button>
-            <button class="filter-btn" data-filter="overdue" data-i18n="filterOverdue" onclick="setFilter('overdue')">已过期</button>
-            <button class="filter-btn" data-filter="no-deadline" data-i18n="filterNoDeadline" onclick="setFilter('no-deadline')">无截止日期</button>
+            <button class="filter-btn" data-filter="all" data-i18n="filterAll">全部</button>
+            <button class="filter-btn active" data-filter="active" data-i18n="filterActive">进行中</button>
+            <button class="filter-btn" data-filter="completed" data-i18n="filterCompleted">已完成</button>
+            <button class="filter-btn" data-filter="overdue" data-i18n="filterOverdue">已过期</button>
+            <button class="filter-btn" data-filter="no-deadline" data-i18n="filterNoDeadline">无截止日期</button>
         </div>
 
-        <!-- 统计信息 -->
-        <div class="stats" id="statsContainer">
-            <!-- 统计信息将通过JavaScript动态生成 -->
-        </div>
         <!-- 任务展示区域 -->
         <div class="tasks-section">
             <div id="taskList">
@@ -988,7 +943,8 @@
         let taskForm, taskList, taskModal, openModalBtn, closeModalBtn, cancelBtn,
             noDeadlineCheckbox, dueDateInput, dueTimeInput, modalTitle, submitBtn,
             searchInput, notification, notificationText, taskTemplate, importBtn, exportBtn,
-            importFileInput, openMenuBtn, menu, langMenuToggle, langSubmenu, clearCompletedBtn;
+            importFileInput, openMenuBtn, menu, langMenuToggle, langSubmenu, clearCompletedBtn,
+            formGroups;
 
         const LANG_RESOURCES = [
             { code: 'zh-CN', name: '简体中文' },
@@ -1022,6 +978,7 @@
             langMenuToggle = document.getElementById('langMenuToggle');
             langSubmenu = document.getElementById('langSubmenu');
             clearCompletedBtn = document.getElementById('clearCompletedBtn');
+            formGroups = document.querySelectorAll('.form-group')
 
             try {
                 // 加载翻译
@@ -1052,7 +1009,6 @@
 
                 tasks = await getAllTasks();
                 setFilter(currentFilter); // 应用默认筛选器
-                renderStats();
                 renderTasks();
 
                 // 设置最小日期为今天
@@ -1165,6 +1121,51 @@
             notification.classList.add(type);
             notification.classList.add('show');
             setTimeout(() => notification.classList.remove('show'), 3000);
+        }
+
+        function showConfirmModal(title, message, onConfirm) {
+            const langMap = translations[currentLanguage];
+
+            // 1. 设置弹窗标题和信息
+            modalTitle.textContent = title;
+
+            let confirmMessageEl = document.getElementById('confirm-message-text');
+            if (!confirmMessageEl) {
+                confirmMessageEl = document.createElement('p');
+                confirmMessageEl.id = 'confirm-message-text';
+                confirmMessageEl.style.fontSize = '16px';
+                confirmMessageEl.style.lineHeight = '1.5';
+                confirmMessageEl.style.marginBottom = '20px';
+                // 插入到表单的开头
+                taskForm.prepend(confirmMessageEl);
+            }
+            confirmMessageEl.textContent = message;
+            confirmMessageEl.style.display = 'block';
+
+            // 2. 隐藏表单字段
+            formGroups.forEach(group => {
+                group.style.display = 'none';
+            });
+
+            // 3. 更改按钮
+            submitBtn.textContent = langMap['confirm'] || 'Confirm';
+            submitBtn.type = 'button'; // 关键！防止它触发表单提交
+
+            // 4. 定义一次性点击事件
+            const handleConfirmClick = () => {
+                onConfirm(); // 执行传入的回调（例如，删除逻辑）
+                closeModal();
+            };
+
+            // 存储引用，以便在 closeModal 中移除它
+            submitBtn._confirmHandler = handleConfirmClick;
+
+            // 绑定事件
+            submitBtn.addEventListener('click', handleConfirmClick);
+            cancelBtn.addEventListener('click', closeModal); // cancelBtn 始终是 closeModal
+
+            // 5. 显示弹窗
+            taskModal.style.display = 'flex';
         }
 
         // --- IndexedDB 数据库操作 ---
@@ -1325,8 +1326,6 @@
                 const key = element.getAttribute('data-i18n-title');
                 if (langMap[key]) element.title = langMap[key];
             });
-            // 重新渲染任务和统计信息以更新语言
-            renderStats();
             renderTasks();
         }
 
@@ -1361,6 +1360,30 @@
             taskModal.style.display = 'none';
             taskForm.reset();
             editingTaskId = null;
+
+            // === ⬇️ 添加下面的重置逻辑 ⬇️ ===
+
+            // 1. 恢复表单字段的显示
+            formGroups.forEach(group => {
+                group.style.display = 'block';
+            });
+
+            // 2. 隐藏确认信息
+            const confirmMessageEl = document.getElementById('confirm-message-text');
+            if (confirmMessageEl) {
+                confirmMessageEl.style.display = 'none';
+            }
+
+            // 3. 重置提交按钮
+            submitBtn.type = 'submit'; // 恢复为 'submit'
+
+            // 4. 移除临时的确认处理器 (非常重要)
+            if (submitBtn._confirmHandler) {
+                submitBtn.removeEventListener('click', submitBtn._confirmHandler);
+                delete submitBtn._confirmHandler; // 清理引用
+            }
+
+            // 恢复按钮的翻译 (openAddTaskModal 或 editTask 会处理)
         }
 
         async function handleFormSubmit(e) {
@@ -1404,7 +1427,6 @@
                 }
 
                 tasks = await getAllTasks();
-                renderStats();
                 renderTasks();
                 closeModal();
             } catch (error) {
@@ -1421,25 +1443,27 @@
                 return;
             }
 
-            const confirmMessage = (langMap['confirmClearCompleted']).replace('{count}', completedTasks.length.toString());
+            showConfirmModal(
+                langMap['clearCompleted'],
+                (langMap['confirmClearCompleted']).replace('{count}', completedTasks.length.toString()),
+                async () => { // "确认" 按钮的回调
+                    try {
+                        const deletionPromises = completedTasks.map(task => deleteTaskFromDB(task.id));
+                        await Promise.all(deletionPromises);
 
-            if (confirm(confirmMessage)) {
-                try {
-                    const deletionPromises = completedTasks.map(task => deleteTaskFromDB(task.id));
-                    await Promise.all(deletionPromises);
+                        tasks = tasks.filter(task => !task.completed);
 
-                    tasks = tasks.filter(task => !task.completed);
+                        renderTasks();
 
-                    renderStats();
-                    renderTasks();
-
-                    const successMessage = (langMap['completedTasksCleared']).replace('{count}', completedTasks.length);
-                    showNotification(successMessage);
-                } catch (error) {
-                    console.error('清除已完成任务失败:', error);
-                    showNotification(langMap['clearCompletedError'], "error");
+                        const successMessage = (langMap['completedTasksCleared']).replace('{count}', completedTasks.length);
+                        showNotification(successMessage);
+                    } catch (error) {
+                        console.error('清除已完成任务失败:', error);
+                        showNotification(langMap['clearCompletedError'], "error");
+                    }
                 }
-            }
+            );
+
         }
 
         // --- 任务 CRUD 操作 (由事件委托调用) ---
@@ -1476,19 +1500,22 @@
 
         async function deleteTask(id) {
             const langMap = translations[currentLanguage];
-            const confirmMessage = langMap['confirmDelete'];
-            if (confirm(confirmMessage)) {
-                try {
-                    await deleteTaskFromDB(id);
-                    tasks = tasks.filter(task => task.id !== id);
-                    renderStats();
-                    renderTasks();
-                    showNotification(langMap['taskDeleted']);
-                } catch (error) {
-                    console.error('删除任务失败:', error);
-                    showNotification(langMap['deleteError'], 'error');
+
+            showConfirmModal(
+                langMap['deleteTaskTitle'], // 弹窗标题
+                langMap['confirmDelete'],   // 确认信息
+                async () => {
+                    try {
+                        await deleteTaskFromDB(id);
+                        tasks = tasks.filter(task => task.id !== id);
+                        renderTasks();
+                        showNotification(langMap['taskDeleted']);
+                    } catch (error) {
+                        console.error('删除任务失败:', error);
+                        showNotification(langMap['deleteError'], 'error');
+                    }
                 }
-            }
+            );
         }
 
         async function toggleTaskComplete(id) {
@@ -1501,7 +1528,6 @@
             try {
                 await updateTaskInDB(updatedTask);
                 tasks = await getAllTasks();
-                renderStats();
 
                 const taskElement = document.querySelector(`.task-item[data-task-id="${id}"]`);
                 if (updatedTask.completed) {
@@ -1522,29 +1548,8 @@
         // --- 渲染、筛选、排序 ---
         function startProgressUpdate() {
             if (progressUpdateInterval) clearInterval(progressUpdateInterval);
-            progressUpdateInterval = setInterval(renderTasks, 60000); // 1分钟
-        }
-
-        function renderStats() {
-            const statsContainer = document.getElementById('statsContainer');
-            const langMap = translations[currentLanguage];
-            if (!langMap) return;
-
-            const totalTasks = tasks.length;
-            const activeTasks = tasks.filter(task => !task.completed).length;
-            const completedTasks = tasks.filter(task => task.completed).length;
-            const tasksWithoutDeadline = tasks.filter(task => !task.dueDate).length;
-            const overdueTasks = tasks.filter(task => {
-                return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
-            }).length;
-
-            statsContainer.innerHTML = `
-            <div class="stat-item"><div class="stat-value">${totalTasks}</div><div class="stat-label">${langMap['totalTasks']}</div></div>
-            <div class="stat-item"><div class="stat-value">${activeTasks}</div><div class="stat-label">${langMap['activeTasks']}</div></div>
-            <div class="stat-item"><div class="stat-value">${completedTasks}</div><div class="stat-label">${langMap['completedTasks']}</div></div>
-            <div class="stat-item"><div class="stat-value">${overdueTasks}</div><div class="stat-label">${langMap['overdueTasks']}</div></div>
-            <div class="stat-item"><div class="stat-value">${tasksWithoutDeadline}</div><div class="stat-label">${langMap['tasksWithoutDeadline']}</div></div>
-        `;
+            // 调用新的轻量级函数，而不是完整的 renderTasks
+            progressUpdateInterval = setInterval(updateTaskTimers, 60000); // 1分钟
         }
 
         function setFilter(filter) {
@@ -1574,10 +1579,64 @@
             });
         }
 
+        // 新增一个轻量级更新函数
+        function updateTaskTimers() {
+            const langMap = translations[currentLanguage];
+            if (!langMap) return;
+
+            // 仅遍历当前DOM中未完成的任务项
+            document.querySelectorAll('.task-item:not(.completed-task)').forEach(taskElement => {
+                const taskId = Number(taskElement.dataset.taskId);
+                const task = tasks.find(t => t.id === taskId);
+
+                if (!task || !task.dueDate) return; // 如果找不到任务或没有截止日期，则跳过
+
+                // 1. 重新计算时间和状态
+                const timeLeft = calculateTimeLeft(task.dueDate);
+                const status = getStatus(timeLeft);
+
+                // 2. 更新状态文本
+                const statusIndicator = taskElement.querySelector('.status-indicator');
+                statusIndicator.className = 'status-indicator'; // 重置class
+                statusIndicator.classList.add(status.statusClass);
+                statusIndicator.querySelector('.status-text').textContent = status.text;
+
+                // 3. 更新剩余时间
+                const timeLeftEl = statusIndicator.querySelector('.status-time-left');
+                if (timeLeftEl) { // 确保元素存在
+                    timeLeftEl.textContent = `(${formatTimeLeft(timeLeft)})`;
+                }
+
+                // 4. 更新进度条
+                const progressBarEl = taskElement.querySelector('.progress-bar');
+                if (progressBarEl) {
+                    const progressFill = progressBarEl.querySelector('.progress-fill');
+                    progressFill.style.width = `${status.progress}%`;
+                    progressFill.style.backgroundColor = status.color;
+                }
+
+                // 5. 更新任务项的 class (用于边框颜色)
+                taskElement.classList.remove('warning', 'danger', 'no-deadline');
+                if (status.class) {
+                    taskElement.classList.add(status.class);
+                }
+            });
+        }
+
         // 使用 <template> 渲染
         function renderTasks() {
             const langMap = translations[currentLanguage];
             if (!langMap) return;
+
+
+            const totalTasks = tasks.length;
+            const activeTasks = tasks.filter(task => !task.completed).length;
+            const completedTasks = tasks.filter(task => task.completed).length;
+            const tasksWithoutDeadline = tasks.filter(task => !task.dueDate).length;
+            const overdueTasks = tasks.filter(task => {
+                return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
+            }).length;
+
 
             if (tasks.length === 0) {
                 taskList.innerHTML = `
@@ -1731,7 +1790,6 @@
             ];
             for (const task of sampleTasks) await addTaskToDB(task);
             tasks = await getAllTasks();
-            renderStats();
             renderTasks();
             showNotification(currentLanguage === 'zh-CN' ? '示例任务已添加' : 'Sample tasks added');
         }
@@ -1845,36 +1903,36 @@
                         return;
                     }
 
-                    const confirmMessage = langMap['importConfirm'].replace('{count}', importedData.tasks.length.toString());
-                    if (!confirm(confirmMessage)) {
-                        return;
-                    }
+                    showConfirmModal(
+                        langMap['import'],
+                        langMap['importConfirm'].replace('{count}', importedData.tasks.length.toString()),
+                        async () => {
+                            // 导入 清除示例
+                            await setConfig('sampleTasksAdded', true);
 
-                    // 导入 清除示例
-                    await setConfig('sampleTasksAdded', true);
+                            // 清空旧任务（确保等待完成）
+                            await new Promise((resolve, reject) => {
+                                const tx = db.transaction([STORE_NAME], 'readwrite');
+                                const store = tx.objectStore(STORE_NAME);
+                                const req = store.clear();
+                                req.onsuccess = () => resolve();
+                                req.onerror = (e) => reject(e);
+                            });
 
-                    // 清空旧任务（确保等待完成）
-                    await new Promise((resolve, reject) => {
-                        const tx = db.transaction([STORE_NAME], 'readwrite');
-                        const store = tx.objectStore(STORE_NAME);
-                        const req = store.clear();
-                        req.onsuccess = () => resolve();
-                        req.onerror = (e) => reject(e);
-                    });
+                            for (const task of importedData.tasks) {
+                                if (!task.id) task.id = Date.now() + Math.floor(Math.random() * 1000);
+                                if (typeof task.completed !== 'boolean') task.completed = false;
+                                if (!task.createdAt) task.createdAt = new Date().toISOString();
+                                await addTaskToDB(task);
+                            }
 
-                    for (const task of importedData.tasks) {
-                        if (!task.id) task.id = Date.now() + Math.floor(Math.random() * 1000);
-                        if (typeof task.completed !== 'boolean') task.completed = false;
-                        if (!task.createdAt) task.createdAt = new Date().toISOString();
-                        await addTaskToDB(task);
-                    }
+                            tasks = await getAllTasks();
+                            renderTasks();
 
-                    tasks = await getAllTasks();
-                    renderStats();
-                    renderTasks();
-
-                    const successMessage = langMap['importSuccess'].replace('{count}', importedData.tasks.length.toString());
-                    showNotification(successMessage);
+                            const successMessage = langMap['importSuccess'].replace('{count}', importedData.tasks.length.toString());
+                            showNotification(successMessage);
+                        }
+                    )
 
                 } catch (error) {
                     showNotification(langMap['importReadError'], 'error');

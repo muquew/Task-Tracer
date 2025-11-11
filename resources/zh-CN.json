@@ -21,12 +21,12 @@
   "noDeadlineLabel": "无截止日期",
   "cancel": "取消",
   "updateTask": "更新任务",
-  "totalTasks": "总任务",
-  "activeTasks": "进行中",
-  "completedTasks": "已完成",
-  "tasksWithDeadline": "有截止日期",
-  "overdueTasks": "已过期",
-  "tasksWithoutDeadline": "无截止日期",
+
+
+
+
+
+
   "noTasks": "暂无任务",
   "noTasksDescription": "点击\"添加任务\"按钮开始跟踪您的任务",
   "noMatchingTasks": "没有找到匹配的任务",
@@ -70,5 +70,7 @@
   "noCompletedTasks": "没有已完成的任务可清除",
   "confirmClearCompleted": "确定永久删除 {count} 个已完成的任务吗？",
   "completedTasksCleared": "{count} 个已完成的任务已被清除",
-  "clearCompletedError": "清除任务时出错"
+  "clearCompletedError": "清除任务时出错",
+
+  "confirm": "确认"
 }

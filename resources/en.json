@@ -21,12 +21,7 @@
   "noDeadlineLabel": "No Deadline",
   "cancel": "Cancel",
   "updateTask": "Update Task",
-  "totalTasks": "Total Tasks",
-  "activeTasks": "Active",
-  "completedTasks": "Completed",
-  "tasksWithDeadline": "With Deadline",
-  "overdueTasks": "Overdue",
-  "tasksWithoutDeadline": "No Deadline",
+
   "noTasks": "No Tasks",
   "noTasksDescription": "Click \"Add Task\" to start tracking your tasks",
   "noMatchingTasks": "No matching tasks found",
@@ -70,5 +65,7 @@
   "noCompletedTasks": "There are no completed tasks to clear",
   "confirmClearCompleted": "Are you sure you want to permanently delete {count} completed tasks?" ,
   "CompletedTasksCleared": "{count} completed tasks have been cleared",
-  "clearCompletedError": "Error while clearing tasks"
+  "clearCompletedError": "Error while clearing tasks",
+
+  "confirm": "Confirm"
 }
