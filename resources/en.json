@@ -67,5 +67,7 @@
   "CompletedTasksCleared": "{count} completed tasks have been cleared",
   "clearCompletedError": "Error while clearing tasks",
 
+  "openMenu": "Open menu",
+  "dueTimeLabel": "Due time",
   "confirm": "Confirm"
 }

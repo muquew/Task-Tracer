@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Task Tracer</title>
-    <!-- favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABW0lEQVRYhe2XO46DMBRFr4cA4iNCS5NdsBHWw07YAhJbSEdBQUOXgia0FCgg/kwFgkxG4yEMpphbvQeW77GNjR/BC5mmObx6voWCICDzfJH8pfF3IBPAnuZzCMLKfNQHK+NRhOXogQPMwImmESEEmqahLEu0bYuu676853kePM9DkiTIsgxN0xBF0TYAAOB5HlRVpW2O+/0Oy7J+bEe1BMMwIAxDavMRgEbUM+C6Lq7XK5IkQZZlUBQFjuMAAG63G2zbhiAIOJ/PMAwDRVFsC+D7/iKfL0eapojjmLarhVbvgrqup/jxeKztZj3AfCfkec4WoGma/QHmYg7wfDDtDtD3PVsAjuPYApxO1MfJdgDzUQuCsD+AJElTLMvy/gC6rk+xoij7A1wuFwBA27ZvfQOrr2SiKEIURWRZttoc+MXf8FlVVaGqqrfMgQPcCZkD/Bcmx6gNWUCM1fEnwG53AxCePfgAAAAASUVORK5CYII=">
     <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAFo9M/3AAAApklEQVR4nLRRwQnEIBBMUwpBkQR8+NQKfAgWYTNWYD2KzeydQg4OY4Lmbh6yrMPs7syyvIEQgvoU1OLT+SqaBqX0goExvmFcNm4JBc8IzYjDjeHPZsS6rnCYsO/7+Q7WWpBS9pfUWsO2bX1CUeCc9wmEkHsnp04dyuonAt57iDFCzrlmW+qUEoQQxjYwxlQBIcTcCSWXAsbYnIBzrgoopf5o4tMYXwAAAP//XH15egAAAAZJREFUAwD7tLYKdxhMJAAAAABJRU5ErkJggg==" />
-    <link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAH70lEQVR4nO3dS1ITXxvH8V+TKySEcKlQ4gQHVulYWQE7cgMuwW24BmfKSIJV6oQqGDhRM0i4J1xCSN7BW8kfueZ0nqaT099PVSqKafqUfn3qkDQhUIzW1tZ6cZ4f0alWq0Ec533SkxJwcj1V4JGfhIhxU5RxR/aJCRmPiSJs809IyHBlGbbZJyJkjMoi7JE/ASHD2ihhjxQ0MSMqYaMOHTQxI2phog4VNDHjqbhG7Rw0MeOpuUTtFDQxIy7DRj100MSMuA0T9VBBEzPGxWNRPxo0MWPcPBT1g0ETM8bVfVHfGzQxY9zdFfVUHAsBonLnhGY6Y1LcnNJMaHjl1oRmOmPSXJ/STGh45Z8JzXTGpOpPaSY0vDKY0ExnTLpqtRowoeEVgoZXAontBvzBhIZXCBpeIWh4JWD/DJ8woeEVgoZXCBpeIWh4haDhFYKGVwgaXiFoeIWg4RWChlcIGl4haHiFoOEVgoZX0nEvANHLZrMqlUpaWFjQ4uKi5ufn9evXL21vb8e9NHPeBl0oFPTu3TudnJyo2Wyq1Wrp9PRU5+fng1u73dbFxYU6nY4uLy8Ht6urq8F9r9dTp9NRr9dTt9v9534YQfDfe/mkUilNTU0pCAKl02kFQTD4WCaTUSqV+uc+nU4rk8kol8spm80qm80ql8spn88Pbv3fz8zMqFAoDG7FYlGlUkmlUkm5XO7Wut6/f0/Qk6TVaunNmzdaWVmJeylj6c+fP3EvIRJe76E3NzfjXsLYIugJRNB3Oz8/197eXtzLiIT3QXe73biXMXZ8nc6S50EfHx9rd3c37mWMnd+/f8e9hMh4HbTEtuMuTOgJ9vXr17iXMHYIeoJ9//5dFxcXcS9jrLDlmGDtdls/f/6MexljhQk94dhH/6fb7erv379xLyMyBJ0w9XpdnU4n7mVEJhFBb29v6+joKO5ljAWf98+Sx9dy3LS1taX19fU7/6zRaKhWq6lWq6nRaOjg4ED7+/uDi5r69+12W+12W5eXl7q4uFCv19PV1dXgYqVPnz6pXC47r+3Dhw/6+PHj4MKlqakppVKpwcVI/QuUisWipqenVSgUNDs7q3K5PLhVKhVVKhUtLy8rn8/fey6f989SgoLe3NzU+vq6jo6OtLW1pW/fvmlnZ0e7u7s6OzszOUe9Xg8V9OHh4eA/x3Vh17W0tKTV1VWtrq7q1atXev36tV68eKF0Ok3QvtjY2NDe3p42NjaGvvTT1d7enl6+fOl8nPV2qNFoqNFoaGtra/CxQqGgt2/fqlarmZ5r3CQm6EajoS9fvkR6jnq9Huq4w8ND45Xc1mq19Pnz58jPE7dEfFH4VMJewcYXrHYI2tA4T+ikIGhDjUbD+ZhOp6NWqxXBapKJoA2F2TocHx9HsJLkImhDzWbT+RiCtkXQhsJM6JOTkwhWklwEbSjMtD09PY1gJclF0IbOzs6cL/zhC0JbBG3MdUoTtC2CNua6J7a6jgT/R9DGzs/PnR4f5pkR3I+gjbkGzYS2RdDGXINmD22LoI25Bs3TdrYI2pjrWya02+2IVpJMBG3MdUITtC2CNuYaNG+CY4ugjbm+UsiEtkXQxly/X5EJbYugjd38zu3HMKFtEbQxthzxImhjbDniRdDG2HLEi6CNuf5MF34GjC2CNpZKpZwe7zrR8TCCNuYadFRvS5ZUBG0snXZ7dzW2HLYI2hhBx4ugjbkGzR7aFkEbYw8dL4I2lslknB7PlsMWQRtjQseLoI25Bg1bBG3MdcsBWwRtjAkdL4I25jqhgyCIaCXJRNDGpqen415CohG0sUKh4PT4qSn+CSzxt2nMNWj23LYI2lixWHR6PEHbImhjrntogrZF0IZSqZRyuZzzMbBD0IZc98+S+9V5eBhBGyLo+BG0oTBB81K5LYI2RNDxI2hDYYLOZrMRrCS5CNrQzMyM8zGuz4rgYQRtqFwuOx+Tz+cjWElyEbQhgo4fQRsKEzRbDlsEbYgJHT+CNjQ3N+d8DEHbImhDYYJ2vToPDyNoQ4uLi87H8B0utgja0Pz8vPMxYZ67xv0I2sjc3FyoC43CvLqI+xG0kTDbDUkqlUrGK0k2gjaytLQU6rjZ2VnjlSQbQRsJO6EJ2hZBG6lUKqGOY8thi6CNhA06zKuLuB9BGwkbdCaT4bloQwRtZHl5OfSxCwsLhitJNoI2EnZCS+FeMsfdCNpANpsdacqGfcoPtxG0gWfPno10PEHbIWgDKysrIx0f9jls3Ma7nBh4/vz50I9tNps6ODjQ/v6+Dg8PdXBwoJ2dnQhXlywEbSCbzerHjx+3Qu3fX/8YP2gzWsHa2ho/VwzeYA8NrxA0vELQ8ApBwysEDa8QNLxC0PAKQcMrBA2vEDS8QtDwCkHDKwQNrxA0vELQ8EogSVwTDV8woeEVgoZXCBpeCfq/YB+NSVetVgMmNLxC0PBKcP03bDswqarVaiAxoeGZ4OYHmNKYNP3pLDGh4ZlbE1piSmNyXJ/OEhManrlzQktMaYy/m9NZYkLDM/dOaIkpjfF113SWHglaImqMn/tiloYIWiJqjI+HYpaGDFoiasTvsZglh6AlokZ8holZcgxaImo8vWFjlkIELRE1no5LzFLIoCWiRvRcY5ZGCFoiakQnTMzSiEFLRA17YWOWDILuI2yMapSQ+8yC7iNsuLIIuc886D7CxmMsQ+6LLOg+wsZNUYTcF3nQ1xF3ckUZ8XX/AyGwyUmxQbNBAAAAAElFTkSuQmCC">
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,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">
     <style>
         /* === 1. 基本设置与布局 === */
         * {
@@ -31,6 +30,21 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             position: relative;
+        }
+
+        /* === 可访问性 (A11y) 样式 ===
+         用于隐藏元素，但保持屏幕阅读器可读
+        */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
 
         /* === 2. 头部 Header === */
@@ -741,14 +755,12 @@
             <p class="subtitle" data-i18n="appSubtitle">基于截止日期的任务管理</p>
         </div>
         <div class="header-actions">
-            <!-- 添加任务 -->
-            <button class="icon-btn" id="openModalBtn">
+            <button class="icon-btn" id="openModalBtn" aria-label="添加新任务" data-i18n-aria-label="addNewTask">
                 <svg class="svg-no-fill" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-linecap="round" stroke-width="2"/>
                 </svg>
             </button>
-            <!-- 菜单 -->
-            <button class="icon-btn" id="openMenuBtn">
+            <button class="icon-btn" id="openMenuBtn" aria-label="打开菜单" data-i18n-aria-label="openMenu" aria-haspopup="true" aria-expanded="false">
                 <svg height="18" viewBox="0 0 24 24" width="18" style="fill: currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4 12C4 11.4477 4.44772 11 5 11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H5C4.44772 13 4 12.5523 4 12Z"/>
                     <path d="M4 6C4 5.44772 4.44772 5 5 5H19C19.5523 5 20 5.44772 20 6C20 6.55228 19.5523 7 19 7H5C4.44772 7 4 6.55228 4 6Z"/>
@@ -756,7 +768,6 @@
                 </svg>
             </button>
             <div class="menu" id="menu">
-                <!-- 导出 / 导入-->
                 <button class="menu-item" data-i18n-title="export" id="exportBtn" title="导出">
                     <svg class="svg-no-fill" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 4V16M12 4L8 8M12 4L16 8" stroke="currentColor" stroke-width="2"/>
@@ -786,8 +797,7 @@
                 </button>
 
                 <div class="menu-divider"></div>
-                <!-- 语言切换 -->
-                <button class="menu-item" id="langMenuToggle">
+                <button class="menu-item" id="langMenuToggle" aria-haspopup="true" aria-expanded="false">
                     <svg viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px; color: #4b6cb7; fill: none;">
                         <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" stroke="currentColor" stroke-width="2"/>
                         <path d="M2 12H22" stroke="currentColor" stroke-width="2"/>
@@ -807,26 +817,26 @@
     </header>
     <div class="main-content">
         <div class="search-box">
-            <label for="searchInput"></label>
+            <label for="searchInput" class="sr-only" data-i18n="searchPlaceholder">搜索任务...</label>
             <input class="search-input" data-i18n-placeholder="searchPlaceholder" id="searchInput" placeholder="搜索任务..." type="text">
         </div>
-        <div class="filters">
-            <button class="filter-btn" data-filter="all" data-i18n="filterAll">全部</button>
-            <button class="filter-btn active" data-filter="active" data-i18n="filterActive">进行中</button>
-            <button class="filter-btn" data-filter="completed" data-i18n="filterCompleted">已完成</button>
-            <button class="filter-btn" data-filter="overdue" data-i18n="filterOverdue">已过期</button>
-            <button class="filter-btn" data-filter="no-deadline" data-i18n="filterNoDeadline">无截止日期</button>
+        <div class="filters" role="toolbar" aria-label="任务筛选器">
+            <button class="filter-btn" data-filter="all" data-i18n="filterAll" aria-pressed="false">全部</button>
+            <button class="filter-btn active" data-filter="active" data-i18n="filterActive" aria-pressed="true">进行中</button>
+            <button class="filter-btn" data-filter="completed" data-i18n="filterCompleted" aria-pressed="false">已完成</button>
+            <button class="filter-btn" data-filter="overdue" data-i18n="filterOverdue" aria-pressed="false">已过期</button>
+            <button class="filter-btn" data-filter="no-deadline" data-i18n="filterNoDeadline" aria-pressed="false">无截止日期</button>
         </div>
 
         <!-- 任务展示区域 -->
         <div class="tasks-section">
-            <div id="taskList">
+            <div id="taskList" aria-live="polite">
                 <!-- 任务将通过JavaScript动态添加 -->
             </div>
         </div>
     </div>
 </div>
-<div class="modal" id="taskModal">
+<div class="modal" id="taskModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-content">
         <div class="modal-header">
             <h3 class="modal-title" data-i18n="addNewTask" id="modalTitle">添加新任务</h3>
@@ -846,7 +856,8 @@
                     <label data-i18n="dueDateLabel" for="dueDate">截止日期 (可选)</label>
                     <div class="datetime-group">
                         <input class="date-input" id="dueDate" type="date">
-                        <label for="dueTime"></label><input class="time-input" id="dueTime" type="time" value="23:59">
+                        <label for="dueTime" class="sr-only" data-i18n="dueTimeLabel">截止时间</label>
+                        <input class="time-input" id="dueTime" type="time" value="23:59">
                     </div>
                     <div class="checkbox-group">
                         <label data-i18n="noDeadlineLabel" for="noDeadline">无截止日期</label>
@@ -861,7 +872,7 @@
         </div>
     </div>
 </div>
-<div class="notification" id="notification">
+<div class="notification" id="notification" role="status" aria-live="polite">
     <svg class="svg-no-fill" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
         <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
     </svg>
@@ -944,7 +955,8 @@
             noDeadlineCheckbox, dueDateInput, dueTimeInput, modalTitle, submitBtn,
             searchInput, notification, notificationText, taskTemplate, importBtn, exportBtn,
             importFileInput, openMenuBtn, menu, langMenuToggle, langSubmenu, clearCompletedBtn,
-            formGroups;
+            formGroups,
+            elementToFocusOnClose = null; // A11y: 存储关闭弹窗时要聚焦的元素
 
         const LANG_RESOURCES = [
             { code: 'zh-CN', name: '简体中文' },
@@ -1057,27 +1069,36 @@
 
             clearCompletedBtn.addEventListener('click', clearCompletedTasks);
 
-            // 菜单
+            // 菜单 (A11y: 添加 aria-expanded)
             openMenuBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                menu.style.display = (menu.style.display === 'none' ? 'block' : 'none');
-                if (menu.style.display === 'none') {
+                const isOpening = menu.style.display === 'none'; // 检查是否即将打开
+                menu.style.display = isOpening ? 'block' : 'none';
+                openMenuBtn.setAttribute('aria-expanded', isOpening); // <-- A11y
+
+                if (!isOpening) { // 如果是关闭
                     langSubmenu.classList.remove('show');
                     langMenuToggle.classList.remove('open');
+                    langMenuToggle.setAttribute('aria-expanded', false); // <-- A11y
                 }
             })
             // 点击外部关闭菜单
             document.addEventListener('click', function(e) {
                 if (menu.style.display === 'block' && !menu.contains(e.target) && !openMenuBtn.contains(e.target)) {
                     menu.style.display = 'none';
+                    openMenuBtn.setAttribute('aria-expanded', false); // <-- A11y
                     langSubmenu.classList.remove('show');
                     langMenuToggle.classList.remove('open');
+                    langMenuToggle.setAttribute('aria-expanded', false); // <-- A11y
                 }
             });
+            // A11y: 添加 aria-expanded
             langMenuToggle.addEventListener('click', (e) => {
                 e.stopPropagation();
+                const isOpening = !langSubmenu.classList.contains('show'); // 检查是否即将打开
                 langSubmenu.classList.toggle('show');
                 langMenuToggle.classList.toggle('open');
+                langMenuToggle.setAttribute('aria-expanded', isOpening); // <-- A11y
             });
 
             // 语言切换
@@ -1119,6 +1140,14 @@
             notificationText.textContent = message;
             notification.className = 'notification';
             notification.classList.add(type);
+
+            // A11y: 根据类型设置 role
+            if (type === 'error' || type === 'warning') {
+                notification.setAttribute('role', 'alert');
+            } else {
+                notification.setAttribute('role', 'status');
+            }
+
             notification.classList.add('show');
             setTimeout(() => notification.classList.remove('show'), 3000);
         }
@@ -1165,7 +1194,9 @@
             cancelBtn.addEventListener('click', closeModal); // cancelBtn 始终是 closeModal
 
             // 5. 显示弹窗
+            elementToFocusOnClose = document.activeElement; // A11y: 存储焦点
             taskModal.style.display = 'flex';
+            submitBtn.focus(); // A11y: 焦点移到确认按钮上
         }
 
         // --- IndexedDB 数据库操作 ---
@@ -1326,6 +1357,11 @@
                 const key = element.getAttribute('data-i18n-title');
                 if (langMap[key]) element.title = langMap[key];
             });
+            // A11y: 翻译 aria-label
+            document.querySelectorAll('[data-i18n-aria-label]').forEach(element => {
+                const key = element.getAttribute('data-i18n-aria-label');
+                if (langMap[key]) element.setAttribute('aria-label', langMap[key]);
+            });
             renderTasks();
         }
 
@@ -1339,6 +1375,7 @@
 
         // --- 弹窗与表单逻辑 ---
         function openAddTaskModal() {
+            elementToFocusOnClose = document.activeElement; // A11y: 存储当前焦点
             editingTaskId = null;
             modalTitle.setAttribute('data-i18n', 'addNewTask');
             submitBtn.setAttribute('data-i18n', 'addTask');
@@ -1361,8 +1398,6 @@
             taskForm.reset();
             editingTaskId = null;
 
-
-
             // 1. 恢复表单字段的显示
             formGroups.forEach(group => {
                 group.style.display = 'block';
@@ -1384,6 +1419,12 @@
             }
 
             // 恢复按钮的翻译 (openAddTaskModal 或 editTask 会处理)
+
+            // A11y: 恢复焦点
+            if (elementToFocusOnClose) {
+                elementToFocusOnClose.focus();
+                elementToFocusOnClose = null;
+            }
         }
 
         async function handleFormSubmit(e) {
@@ -1471,6 +1512,7 @@
             const task = tasks.find(t => t.id === id);
             if (!task) return;
 
+            elementToFocusOnClose = document.activeElement; // A11y: 存储焦点
             editingTaskId = id;
             modalTitle.setAttribute('data-i18n', 'editTask');
             submitBtn.setAttribute('data-i18n', 'updateTask');
@@ -1555,7 +1597,9 @@
         function setFilter(filter) {
             currentFilter = filter;
             document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.filter === filter);
+                const isActive = btn.dataset.filter === filter;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-pressed', isActive); // <-- A11y
             });
             renderTasks();
         }
@@ -1861,6 +1905,7 @@
                 return;
             }
 
+            // 修复：在开始和解之前，移除任何残留的空状态
             const existingEmptyState = taskList.querySelector('.empty-state');
             if (existingEmptyState) {
                 existingEmptyState.remove();

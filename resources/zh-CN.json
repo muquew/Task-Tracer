@@ -72,5 +72,7 @@
   "completedTasksCleared": "{count} 个已完成的任务已被清除",
   "clearCompletedError": "清除任务时出错",
 
-  "confirm": "确认"
+  "confirm": "确认",
+  "openMenu": "打开菜单",
+  "dueTimeLabel": "截止时间"
 }
