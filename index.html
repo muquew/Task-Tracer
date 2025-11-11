@@ -1361,7 +1361,7 @@
             taskForm.reset();
             editingTaskId = null;
 
-            // === ⬇️ 添加下面的重置逻辑 ⬇️ ===
+
 
             // 1. 恢复表单字段的显示
             formGroups.forEach(group => {
@@ -1623,12 +1623,187 @@
             });
         }
 
-        // 使用 <template> 渲染
+        function createTaskElement(task) {
+            const langMap = translations[currentLanguage];
+            const templateContent = taskTemplate.content;
+            const taskElement = templateContent.cloneNode(true).firstElementChild;
+
+            let status, timeLeft = null;
+            if (task.completed) {
+                status = { class: 'completed', statusClass: 'status-completed', text: langMap['statusCompleted'], color: '#4CAF50', progress: 100 };
+            } else if (task.dueDate) {
+                timeLeft = calculateTimeLeft(task.dueDate);
+                status = getStatus(timeLeft);
+            } else {
+                status = { class: 'no-deadline', statusClass: 'status-no-deadline', text: langMap['statusNoDeadline'], color: '#9E9E9E', progress: 0 };
+            }
+
+            // --- 填充模板 ---
+            taskElement.dataset.taskId = task.id;
+
+            if (status.class) {
+                taskElement.classList.add(status.class);
+            }
+
+            if (task.completed) {
+                taskElement.classList.add('completed-task');
+            }
+
+            // 头部
+            taskElement.querySelector('.task-name').textContent = task.name;
+            taskElement.querySelector('.task-date').textContent = task.dueDate ?
+                `${langMap['deadline']}: ${formatDateTime(task.dueDate)}` :
+                langMap['noDeadlineText'];
+
+            // 描述 (确保元素存在)
+            let taskDescEl = taskElement.querySelector('.task-desc');
+            if (task.description) {
+                if (!taskDescEl) { // 如果模板中没有，（理论上不该发生）
+                    taskDescEl = document.createElement('div');
+                    taskDescEl.className = 'task-desc';
+                    taskElement.querySelector('.task-header').after(taskDescEl);
+                }
+                taskDescEl.textContent = task.description;
+            } else if (taskDescEl) {
+                taskDescEl.remove(); // 移除空描述
+            }
+
+            // 进度条 (确保元素存在)
+            let progressBarEl = taskElement.querySelector('.progress-bar');
+            if (task.dueDate && !task.completed) {
+                if (!progressBarEl) { // 如果模板中没有
+                    progressBarEl = document.createElement('div');
+                    progressBarEl.className = 'progress-bar';
+                    progressBarEl.innerHTML = '<div class="progress-fill"></div>';
+                    // 插入到描述后面 (如果描述存在) 或 header 后面
+                    const referenceEl = taskDescEl || taskElement.querySelector('.task-header');
+                    referenceEl.after(progressBarEl);
+                }
+                const progressFill = progressBarEl.querySelector('.progress-fill');
+                progressFill.style.width = `${status.progress}%`;
+                progressFill.style.backgroundColor = status.color;
+            } else if (progressBarEl) {
+                progressBarEl.remove(); // 移除进度条
+            }
+
+            // 底部
+            const statusIndicator = taskElement.querySelector('.status-indicator');
+            statusIndicator.className = 'status-indicator'; // 重置
+            statusIndicator.classList.add(status.statusClass);
+            statusIndicator.querySelector('.status-text').textContent = status.text;
+
+            let timeLeftEl = statusIndicator.querySelector('.status-time-left');
+            if (timeLeft !== null && !task.completed) {
+                if (!timeLeftEl) { // 如果模板中没有
+                    timeLeftEl = document.createElement('span');
+                    timeLeftEl.className = 'status-time-left';
+                    statusIndicator.querySelector('.status-text').after(timeLeftEl);
+                }
+                timeLeftEl.textContent = `(${formatTimeLeft(timeLeft)})`;
+            } else if (timeLeftEl) {
+                timeLeftEl.remove();
+            }
+
+            // 动作按钮
+            const completeBtn = taskElement.querySelector('[data-action="toggle"]');
+            completeBtn.title = task.completed ? langMap['markIncomplete'] : langMap['markComplete'];
+            taskElement.querySelector('[data-action="edit"]').title = langMap['editTaskTitle'];
+            taskElement.querySelector('[data-action="delete"]').title = langMap['deleteTaskTitle'];
+
+            return taskElement;
+        }
+
+        function updateTaskElement(element, task) {
+            const langMap = translations[currentLanguage];
+
+            let status, timeLeft = null;
+            if (task.completed) {
+                status = { class: 'completed', statusClass: 'status-completed', text: langMap['statusCompleted'], color: '#4CAF50', progress: 100 };
+            } else if (task.dueDate) {
+                timeLeft = calculateTimeLeft(task.dueDate);
+                status = getStatus(timeLeft);
+            } else {
+                status = { class: 'no-deadline', statusClass: 'status-no-deadline', text: langMap['statusNoDeadline'], color: '#9E9E9E', progress: 0 };
+            }
+
+            // --- 更新 ---
+            // 状态 Class
+            element.className = 'task-item'; // 重置
+            if (status.class) {
+                element.classList.add(status.class);
+            }
+            if (task.completed) {
+                element.classList.add('completed-task');
+            }
+
+            // 头部
+            element.querySelector('.task-name').textContent = task.name;
+            element.querySelector('.task-date').textContent = task.dueDate ?
+                `${langMap['deadline']}: ${formatDateTime(task.dueDate)}` :
+                langMap['noDeadlineText'];
+
+            // 描述
+            let taskDescEl = element.querySelector('.task-desc');
+            if (task.description) {
+                if (!taskDescEl) { // 描述被添加了
+                    taskDescEl = document.createElement('div');
+                    taskDescEl.className = 'task-desc';
+                    element.querySelector('.task-header').after(taskDescEl);
+                }
+                taskDescEl.textContent = task.description;
+            } else if (taskDescEl) {
+                taskDescEl.remove(); // 描述被移除了
+            }
+
+            // 进度条
+            let progressBarEl = element.querySelector('.progress-bar');
+            if (task.dueDate && !task.completed) {
+                if (!progressBarEl) { // 进度条被添加了
+                    progressBarEl = document.createElement('div');
+                    progressBarEl.className = 'progress-bar';
+                    progressBarEl.innerHTML = '<div class="progress-fill"></div>';
+                    const referenceEl = taskDescEl || element.querySelector('.task-header');
+                    referenceEl.after(progressBarEl);
+                }
+                const progressFill = progressBarEl.querySelector('.progress-fill');
+                progressFill.style.width = `${status.progress}%`;
+                progressFill.style.backgroundColor = status.color;
+            } else if (progressBarEl) {
+                progressBarEl.remove(); // 进度条被移除了
+            }
+
+            // 底部
+            const statusIndicator = element.querySelector('.status-indicator');
+            statusIndicator.className = 'status-indicator'; // 重置
+            statusIndicator.classList.add(status.statusClass);
+            statusIndicator.querySelector('.status-text').textContent = status.text;
+
+            let timeLeftEl = statusIndicator.querySelector('.status-time-left');
+            if (timeLeft !== null && !task.completed) {
+                if (!timeLeftEl) { // 剩余时间被添加了
+                    timeLeftEl = document.createElement('span');
+                    timeLeftEl.className = 'status-time-left';
+                    // 确保插入到正确位置
+                    const statusText = statusIndicator.querySelector('.status-text');
+                    if(statusText) statusText.after(timeLeftEl);
+                    else statusIndicator.querySelector('.status-dot').after(timeLeftEl);
+                }
+                timeLeftEl.textContent = `(${formatTimeLeft(timeLeft)})`;
+            } else if (timeLeftEl) {
+                timeLeftEl.remove(); // 剩余时间被移除了
+            }
+
+            // 动作按钮 (只更新 title)
+            const completeBtn = element.querySelector('[data-action="toggle"]');
+            completeBtn.title = task.completed ? langMap['markIncomplete'] : langMap['markComplete'];
+        }
+
+
         function renderTasks() {
             const langMap = translations[currentLanguage];
             if (!langMap) return;
 
-
+            // --- 1. 计算统计 (保持不变) ---
             const totalTasks = tasks.length;
             const activeTasks = tasks.filter(task => !task.completed).length;
             const completedTasks = tasks.filter(task => task.completed).length;
@@ -1637,7 +1812,7 @@
                 return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
             }).length;
 
-
+            // --- 2. 空状态 (保持不变) ---
             if (tasks.length === 0) {
                 taskList.innerHTML = `
                 <div class="empty-state">
@@ -1655,6 +1830,7 @@
                 return;
             }
 
+            // --- 3. 筛选与排序 (保持不变) ---
             const filteredTasks = tasks.filter(task => {
                 if (searchQuery && !task.name.toLowerCase().includes(searchQuery) &&
                     !(task.description && task.description.toLowerCase().includes(searchQuery))) {
@@ -1670,8 +1846,8 @@
             });
 
             const sortedTasks = sortTasks(filteredTasks);
-            taskList.innerHTML = ''; // 清空
 
+            // --- 4. 筛选后的空状态 (保持不变) ---
             if (sortedTasks.length === 0) {
                 taskList.innerHTML = `
                 <div class="empty-state">
@@ -1685,79 +1861,56 @@
                 return;
             }
 
-            const templateContent = taskTemplate.content;
-            const fragment = document.createDocumentFragment();
+            const existingEmptyState = taskList.querySelector('.empty-state');
+            if (existingEmptyState) {
+                existingEmptyState.remove();
+            }
 
-            sortedTasks.forEach(task => {
-                const taskElement = templateContent.cloneNode(true).firstElementChild;
+            // --- 5. DOM 和解 (全新逻辑) ---
 
-                let status, timeLeft = null;
-                if (task.completed) {
-                    status = { class: 'completed', statusClass: 'status-completed', text: langMap['statusCompleted'], color: '#4CAF50', progress: 100 };
-                } else if (task.dueDate) {
-                    timeLeft = calculateTimeLeft(task.dueDate);
-                    status = getStatus(timeLeft);
-                } else {
-                    status = { class: 'no-deadline', statusClass: 'status-no-deadline', text: langMap['statusNoDeadline'], color: '#9E9E9E', progress: 0 };
+            // A. 将当前 DOM 元素映射到 Map 中，以便通过 ID 快速访问
+            const elementsMap = new Map();
+            Array.from(taskList.children).forEach(el => {
+                // 确保只映射任务项，忽略 .empty-state
+                if (el.classList.contains('task-item')) {
+                    elementsMap.set(Number(el.dataset.taskId), el);
                 }
-
-                // --- 填充模板 ---
-                taskElement.dataset.taskId = task.id;
-
-                if (status.class) {
-                    taskElement.classList.add(status.class);
-                }
-
-                if (task.completed) {
-                    taskElement.classList.add('completed-task');
-                }
-
-                // 头部
-                taskElement.querySelector('.task-name').textContent = task.name;
-                taskElement.querySelector('.task-date').textContent = task.dueDate ?
-                    `${langMap['deadline']}: ${formatDateTime(task.dueDate)}` :
-                    langMap['noDeadlineText'];
-
-                // 描述
-                const taskDescEl = taskElement.querySelector('.task-desc');
-                if (task.description) {
-                    taskDescEl.textContent = task.description;
-                } else {
-                    taskDescEl.remove(); // 移除空描述
-                }
-
-                // 进度条
-                const progressBarEl = taskElement.querySelector('.progress-bar');
-                if (task.dueDate && !task.completed) {
-                    const progressFill = progressBarEl.querySelector('.progress-fill');
-                    progressFill.style.width = `${status.progress}%`;
-                    progressFill.style.backgroundColor = status.color;
-                } else {
-                    progressBarEl.remove(); // 移除进度条
-                }
-
-                // 底部
-                const statusIndicator = taskElement.querySelector('.status-indicator');
-                statusIndicator.classList.add(status.statusClass);
-                statusIndicator.querySelector('.status-text').textContent = status.text;
-
-                const timeLeftEl = statusIndicator.querySelector('.status-time-left');
-                if (timeLeft !== null && !task.completed) {
-                    timeLeftEl.textContent = `(${formatTimeLeft(timeLeft)})`;
-                } else {
-                    timeLeftEl.remove();
-                }
-
-                // 动作按钮
-                const completeBtn = taskElement.querySelector('[data-action="toggle"]');
-                completeBtn.title = task.completed ? langMap['markIncomplete'] : langMap['markComplete'];
-                taskElement.querySelector('[data-action="edit"]').title = langMap['editTaskTitle'];
-                taskElement.querySelector('[data-action="delete"]').title = langMap['deleteTaskTitle'];
-
-                fragment.appendChild(taskElement);
             });
 
-            taskList.appendChild(fragment); // 一次性插入
+            // B. 遍历 "目标" 任务数组，同步 DOM
+            let currentElement = taskList.firstChild;
+
+            for (const task of sortedTasks) {
+                const taskId = task.id;
+                const existingElement = elementsMap.get(taskId);
+
+                if (existingElement) {
+                    // --- 5.1 元素已存在 ---
+                    // 更新内容
+                    updateTaskElement(existingElement, task);
+
+                    // 检查顺序
+                    if (existingElement !== currentElement) {
+                        taskList.insertBefore(existingElement, currentElement);
+                    }
+
+                    // 标记为 "已处理"
+                    elementsMap.delete(taskId);
+                    currentElement = existingElement.nextSibling;
+
+                } else {
+                    // --- 5.2 新元素 ---
+                    const newElement = createTaskElement(task);
+                    taskList.insertBefore(newElement, currentElement);
+                    // 不移动 currentElement，因为 newElement 现在就是 "当前"
+                }
+            }
+
+            // C. 移除陈旧的元素
+            // 循环结束后，elementsMap 中剩下的都是应被删除的元素
+            elementsMap.forEach(staleElement => {
+                staleElement.remove();
+            });
         }
 
         // --- 示例任务 ---
