@@ -1062,7 +1062,7 @@
             });
 
             // 筛选和搜索
-            searchInput.addEventListener('keyup', filterTasks);
+            searchInput.addEventListener('input', debounce(filterTasks, 300));
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', () => setFilter(btn.dataset.filter));
             });
@@ -1197,6 +1197,23 @@
             elementToFocusOnClose = document.activeElement; // A11y: 存储焦点
             taskModal.style.display = 'flex';
             submitBtn.focus(); // A11y: 焦点移到确认按钮上
+        }
+
+        /**
+         * 防抖函数
+         * @param {Function} func - 需要防抖的函数
+         * @param {number} delay - 延迟时间 (毫秒)
+         */
+        function debounce(func, delay = 300) {
+            let timeoutId;
+
+            return function(...args) {
+                const context = this;
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    func.apply(context, args);
+                }, delay);
+            };
         }
 
         // --- IndexedDB 数据库操作 ---
