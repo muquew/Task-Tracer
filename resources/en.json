@@ -52,7 +52,6 @@
   "saveError": "Failed to save task, please try again",
   "deleteError": "Failed to delete task, please try again",
   "updateError": "Failed to update task status, please try again",
-  "initLanError": "Failed to init Language file, please try again",
   "minutesAgo": "{minutes} minutes ago",
   "hoursAgo": "{hours} hours ago",
   "daysAgo": "{days} days ago",
@@ -69,5 +68,15 @@
 
   "openMenu": "Open menu",
   "dueTimeLabel": "Due time",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+
+  "sampleTasksAdded": "Sample tasks added",
+  "initDBError": "Failed to init Database, Please refresh the page and try again.",
+
+  "sampleTask1Name": "Complete project report",
+  "sampleTask1Desc": "Write and submit quarterly project summary report",
+  "sampleTask2Name": "Team meeting preparation",
+  "sampleTask2Desc": "Prepare presentation materials for next week's team meeting",
+  "sampleTask3Name": "Learning plan development",
+  "sampleTask3Desc": "Develop personal learning plan for next month"
 }

@@ -1058,7 +1058,7 @@
                 startProgressUpdate();
             } catch (error) {
                 console.error('初始化失败:', error);
-                showNotification('数据库初始化失败，请刷新页面重试', 'error');
+                showNotification(translations[currentLanguage]['initDBError'] || '数据库初始化失败，请刷新页面重试', 'error');
             }
         });
 
@@ -1383,26 +1383,33 @@
                 currentLanguage = fallbackLang;
                 langMap = translations[currentLanguage];
             }
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if (langMap[key]) element.textContent = langMap[key];
-            });
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-                const key = element.getAttribute('data-i18n-placeholder');
-                if (langMap[key]) element.placeholder = langMap[key];
-            });
-            document.querySelectorAll('[data-i18n-title]').forEach(element => {
-                const key = element.getAttribute('data-i18n-title');
-                if (langMap[key]) element.title = langMap[key];
-            });
-            // A11y: 翻译 aria-label
-            document.querySelectorAll('[data-i18n-aria-label]').forEach(element => {
-                const key = element.getAttribute('data-i18n-aria-label');
-                if (langMap[key]) element.setAttribute('aria-label', langMap[key]);
+            // --- 优化：一次性查询和应用所有i18n属性 ---
+            const elements = document.querySelectorAll(
+                '[data-i18n], [data-i18n-placeholder], [data-i18n-title], [data-i18n-aria-label]'
+            );
+            // 一次遍历
+            elements.forEach(element => {
+                // .dataset 会自动处理驼峰命名 (e.g., data-i18n-placeholder -> dataset.i18nPlaceholder)
+                const i18nKey = element.dataset.i18n;
+                const placeholderKey = element.dataset.i18nPlaceholder;
+                const titleKey = element.dataset.i18nTitle;
+                const ariaLabelKey = element.dataset.i18nAriaLabel;
+
+                if (i18nKey && langMap[i18nKey]) {
+                    element.textContent = langMap[i18nKey];
+                }
+                if (placeholderKey && langMap[placeholderKey]) {
+                    element.placeholder = langMap[placeholderKey];
+                }
+                if (titleKey && langMap[titleKey]) {
+                    element.title = langMap[titleKey];
+                }
+                if (ariaLabelKey && langMap[ariaLabelKey]) {
+                    element.setAttribute('aria-label', langMap[ariaLabelKey]);
+                }
             });
             renderTasks();
         }
-
         function switchLanguage(lang) {
             if (translations[lang]) {
                 currentLanguage = lang;
@@ -2004,27 +2011,28 @@
 
         // --- 示例任务 ---
         async function addSampleTasks() {
+            const langMap = translations[currentLanguage];
             const sampleTasks = [
                 {
                     id: Date.now() + 1,
-                    name: currentLanguage === 'zh-CN' ? "完成项目报告" : "Complete project report",
-                    description: currentLanguage === 'zh-CN' ? "编写并提交季度项目总结报告" : "Write and submit quarterly project summary report",
+                    name: langMap['sampleTask1Name'] || "完成项目报告",
+                    description: langMap['sampleTask1Desc'] || "编写并提交季度项目总结报告",
                     dueDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000).toISOString(),
                     createdAt: new Date().toISOString(),
                     completed: false
                 },
                 {
                     id: Date.now() + 2,
-                    name: currentLanguage === 'zh-CN' ? "团队会议准备" : "Team meeting preparation",
-                    description: currentLanguage === 'zh-CN' ? "准备下周团队会议的演示材料" : "Prepare presentation materials for next week's team meeting",
+                    name: langMap['sampleTask2Name'] || "团队会议准备",
+                    description: langMap['sampleTask2Desc'] || "准备下周团队会议的演示材料",
                     dueDate: new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000).toISOString(),
                     createdAt: new Date().toISOString(),
                     completed: false
                 },
                 {
                     id: Date.now() + 3,
-                    name: currentLanguage === 'zh-CN' ? "学习计划制定" : "Learning plan development",
-                    description: currentLanguage === 'zh-CN' ? "制定下个月的个人学习计划" : "Develop personal learning plan for next month",
+                    name: langMap['sampleTask3Name'] || "学习计划制定",
+                    description: langMap['sampleTask3Desc'] || "制定下个月的个人学习计划",
                     dueDate: null,
                     createdAt: new Date().toISOString(),
                     completed: false
@@ -2033,7 +2041,7 @@
             for (const task of sampleTasks) await addTaskToDB(task);
             tasks = await getAllTasks();
             renderTasks();
-            showNotification(currentLanguage === 'zh-CN' ? '示例任务已添加' : 'Sample tasks added');
+            showNotification(langMap['sampleTasksAdded']);
         }
 
         // --- 时间与状态计算工具 ---
@@ -2184,7 +2192,6 @@
             reader.readAsText(file);
             importFileInput.value = ''; // 重置文件输入
         }
-
     })(); // 结束 IIFE`
 </script>
 </body>

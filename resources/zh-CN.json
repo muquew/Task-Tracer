@@ -6,11 +6,13 @@
   "import": "导入",
   "addTask": "添加任务",
   "searchPlaceholder": "搜索任务...",
+
   "filterAll": "全部",
   "filterActive": "进行中",
   "filterCompleted": "已完成",
   "filterOverdue": "已过期",
   "filterNoDeadline": "无截止日期",
+
   "addNewTask": "添加新任务",
   "editTask": "编辑任务",
   "taskNameLabel": "任务名称 *",
@@ -19,26 +21,28 @@
   "taskDescPlaceholder": "输入任务描述",
   "dueDateLabel": "截止日期 (可选)",
   "noDeadlineLabel": "无截止日期",
+
+  "openMenu": "打开菜单",
+  "dueTimeLabel": "截止时间",
+  "confirm": "确认",
   "cancel": "取消",
   "updateTask": "更新任务",
-
-
-
-
-
 
   "noTasks": "暂无任务",
   "noTasksDescription": "点击\"添加任务\"按钮开始跟踪您的任务",
   "noMatchingTasks": "没有找到匹配的任务",
   "noMatchingTasksDescription": "尝试调整搜索条件或筛选器",
+
   "deadline": "截止",
   "noDeadlineText": "无截止日期",
+
   "statusCompleted": "已完成",
   "statusSafe": "安全",
   "statusWarning": "警告",
   "statusDanger": "紧急",
   "statusOverdue": "已过期",
   "statusNoDeadline": "无截止日期",
+
   "markComplete": "标记为已完成",
   "markIncomplete": "标记为未完成",
   "editTaskTitle": "编辑任务",
@@ -57,7 +61,6 @@
   "saveError": "保存任务失败，请重试",
   "deleteError": "删除任务失败，请重试",
   "updateError": "更新任务状态失败，请重试",
-  "initLanError": "获取语言文件失败，请重试",
   "minutesAgo": "{minutes}分钟前",
   "hoursAgo": "{hours}小时前",
   "daysAgo": "{days}天前",
@@ -72,7 +75,13 @@
   "completedTasksCleared": "{count} 个已完成的任务已被清除",
   "clearCompletedError": "清除任务时出错",
 
-  "confirm": "确认",
-  "openMenu": "打开菜单",
-  "dueTimeLabel": "截止时间"
+  "sampleTasksAdded": "示例任务已添加",
+  "initDBError": "数据库初始化失败，请刷新页面重试",
+
+  "sampleTask1Name": "完成项目报告",
+  "sampleTask1Desc": "编写并提交季度项目总结报告",
+  "sampleTask2Name": "团队会议准备",
+  "sampleTask2Desc": "准备下周团队会议的演示材料",
+  "sampleTask3Name": "学习计划制定",
+  "sampleTask3Desc": "制定下个月的个人学习计划"
 }
