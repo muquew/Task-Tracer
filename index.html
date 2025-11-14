@@ -393,11 +393,7 @@
             background: rgba(76, 175, 80, 0.1);
         }
 
-        .task-complete-icon {
-            display: none;
-        }
-
-        .completed-task .task-complete-icon {
+        .completed-task {
             display: inline-block;
         }
 
@@ -1025,7 +1021,7 @@
                     currentLanguage = savedLanguage;
                 } else {
                     // 获取系统语言列表，优先使用第一个支持的语言
-                    const languages = navigator.languages || [navigator.language || navigator.userLanguage];
+                    const languages = navigator.languages || [navigator.language];
                     // 在系统语言列表中查找支持的语言
                     const supportedLang = languages.find(lang => translations[lang] || translations[lang.split('-')[0]]);
                     currentLanguage = supportedLang
@@ -1346,7 +1342,7 @@
             } catch (error) {
                 console.error('加载语言失败: ', error);
                 // 必须使用一个“硬编码”的后备消息
-                showNotification('Failed to load language resources. Please refresh.', 'error');
+                showNotification('加载语言失败，请刷新页面重试', 'error');
             }
         }
         function createLangButtons() {
@@ -1644,7 +1640,7 @@
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 const isActive = btn.dataset.filter === filter;
                 btn.classList.toggle('active', isActive);
-                btn.setAttribute('aria-pressed', isActive); // <-- A11y
+                btn.setAttribute('aria-pressed', String(isActive)); // <-- A11y
             });
             renderTasks();
         }
@@ -1893,13 +1889,13 @@
             if (!langMap) return;
 
             // --- 1. 计算统计 (保持不变) ---
-            const totalTasks = tasks.length;
-            const activeTasks = tasks.filter(task => !task.completed).length;
-            const completedTasks = tasks.filter(task => task.completed).length;
-            const tasksWithoutDeadline = tasks.filter(task => !task.dueDate).length;
-            const overdueTasks = tasks.filter(task => {
-                return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
-            }).length;
+            // const totalTasks = tasks.length;
+            // const activeTasks = tasks.filter(task => !task.completed).length;
+            // const completedTasks = tasks.filter(task => task.completed).length;
+            // const tasksWithoutDeadline = tasks.filter(task => !task.dueDate).length;
+            // const overdueTasks = tasks.filter(task => {
+            //     return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
+            // }).length;
 
             // --- 2. 空状态 (保持不变) ---
             if (tasks.length === 0) {
