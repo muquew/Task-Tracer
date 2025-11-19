@@ -1,5 +1,5 @@
 // 改了代码要来这里改缓存名字
-const CACHE_NAME = 'task-tracer-v2';
+const CACHE_NAME = 'task-tracer-v3';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -39,9 +39,7 @@ self.addEventListener('fetch', (e) => {
                     return networkResponse;
                 }
 
-                // === 动态缓存资源文件 ===
-                // 检查 URL 是否包含 "resources/"
-                // 如果是，说明这是个语言包，自动把它存入缓存！
+                // === 动态缓存资源文件 (仅缓存本站的 resources 文件夹) ===
                 if (e.request.url.includes('/resources/')) {
                     const responseToCache = networkResponse.clone();
                     // 这里不需要等待缓存完成才返回数据给用户，但为了消除警告，我们加上 return
