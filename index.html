@@ -209,10 +209,18 @@
         }
 
         .icon-btn { background: var(--color-primary); font-weight: 600; }
-        .icon-btn:hover {
+        /* === 仅在电脑端启用悬停效果 (解决手机端粘滞问题) === */
+        @media (hover: hover) {
+            .icon-btn:hover {
+                background: var(--color-primary-dark);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px var(--shadow-base);
+            }
+        }
+        /* 手机端点击时的“按压”回弹效果 */
+        .icon-btn:active {
             background: var(--color-primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px var(--shadow-base);
+            transform: scale(0.95); /* 微微缩小，手感更好 */
         }
 
         /* === Menu === */
@@ -243,7 +251,10 @@
             font-size: 14px;
             color: var(--text-main);
         }
-        .menu-item:hover { background: var(--bg-hover); }
+        @media (hover: hover) {
+            .menu-item:hover { background: var(--bg-hover); }
+        }
+        .menu-item:active { background: var(--bg-active); }
         .menu-item svg { width: 16px; height: 16px; color: var(--color-primary); fill: none; }
 
         .menu-divider { height: 1px; background: var(--border-light); margin: 8px 0; }
@@ -297,8 +308,11 @@
             transition: all 0.2s;
             color: var(--text-main);
         }
-        .filter-btn.active { background: var(--color-primary); color: var(--text-inverse); }
-        .filter-btn:hover { background: var(--bg-active); }
+        @media (hover: hover) {
+            .filter-btn:hover { background: var(--bg-active); }
+            .filter-btn.active:hover { background: var(--color-primary-dark); }
+        }
+        .filter-btn:active { background: var(--bg-active); transform: scale(0.95); }
         .filter-btn.active:hover { background: var(--color-primary-dark); }
 
         /* === Tasks (Using Scoped Variables) === */
@@ -524,8 +538,10 @@
             z-index: 999;
         }
         .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        .back-to-top:hover { background: var(--color-primary-dark); transform: translateY(-3px); }
-
+        @media (hover: hover) {
+            .back-to-top:hover { background: var(--color-primary-dark); transform: translateY(-3px); }
+        }
+        .back-to-top:active { transform: scale(0.9); }
 
         .app-footer {
             margin-top: 40px; padding: 20px 10px; text-align: center;
