@@ -1,4 +1,5 @@
-const CACHE_NAME = 'task-tracer-v1';
+// 改了代码要来这里改缓存名字
+const CACHE_NAME = 'task-tracer-v2';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -11,13 +12,16 @@ const ASSETS_TO_CACHE = [
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Installing...');
     e.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
-            console.log('[Service Worker] Caching all assets');
-            return cache.addAll(ASSETS_TO_CACHE);
-        })
+        caches.open(CACHE_NAME)
+            .then((cache) => {
+                console.log('[Service Worker] Caching all assets');
+                return cache.addAll(ASSETS_TO_CACHE);
+            })
+            .then(() => {
+                // 确保缓存完成后再跳过等待
+                return self.skipWaiting();
+            })
     );
-    // 跳过等待，立即激活新的 Service Worker
-    self.skipWaiting();
 });
 
 // 2. 拦截请求 (发货)：优先使用缓存
@@ -40,12 +44,12 @@ self.addEventListener('fetch', (e) => {
                 // 如果是，说明这是个语言包，自动把它存入缓存！
                 if (e.request.url.includes('/resources/')) {
                     const responseToCache = networkResponse.clone();
+                    // 这里不需要等待缓存完成才返回数据给用户，但为了消除警告，我们加上 return
                     caches.open(CACHE_NAME).then((cache) => {
                         console.log('[Service Worker] Caching new resource:', e.request.url);
-                        cache.put(e.request, responseToCache);
+                        return cache.put(e.request, responseToCache);
                     });
                 }
-
                 return networkResponse;
             });
         })
@@ -56,15 +60,18 @@ self.addEventListener('fetch', (e) => {
 self.addEventListener('activate', (e) => {
     console.log('[Service Worker] Activating...');
     e.waitUntil(
-        caches.keys().then((keyList) => {
-            return Promise.all(keyList.map((key) => {
-                if (key !== CACHE_NAME) {
-                    console.log('[Service Worker] Removing old cache', key);
-                    return caches.delete(key);
-                }
-            }));
-        })
+        caches.keys()
+            .then((keyList) => {
+                return Promise.all(keyList.map((key) => {
+                    if (key !== CACHE_NAME) {
+                        console.log('[Service Worker] Removing old cache', key);
+                        return caches.delete(key);
+                    }
+                }));
+            })
+            .then(() => {
+                // 确保清理完成后再接管页面
+                return self.clients.claim();
+            })
     );
-    // 立即接管页面
-    self.clients.claim();
 });

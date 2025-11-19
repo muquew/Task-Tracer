@@ -5,6 +5,10 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Task Tracer</title>
     <link rel="manifest" href="manifest.json">
+<!--    manifest.json中-->
+<!--    background_color: 启动屏背景色：App 打开瞬间那一秒的背景 (建议与 CSS 背景一致，防闪烁)-->
+<!--    theme_color: 独立窗口顶栏色：电脑端App窗口标题栏/安卓任务管理器卡片顶条颜色-->
+    <!-- 定义浏览器周边的 UI 颜色（主要是手机浏览器的地址栏和状态栏背景色-->
     <meta name="theme-color" content="#4b6cb7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -271,9 +275,8 @@
 
         .search-input {
             width: 100%;
-            padding: 10px 12px;
             /* 关键：右侧留出 45px 空间，防止文字被快捷键提示挡住 */
-            padding-right: 45px;
+            padding: 10px 45px 10px 12px;
             border: 1px solid var(--border-base);
             border-radius: 6px;
             font-size: 14px;
@@ -660,7 +663,7 @@
 </div>
 
 <button id="backToTopBtn" class="back-to-top" aria-label="回到顶部" data-i18n-aria-label="backToTopTooltip" data-i18n-title="backToTopTooltip" title="回到顶部 (Alt + T)">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg width="24" height="24" viewBox="0 0 24 24" class="svg-no-fill" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M18 15l-6-6-6 6"/>
     </svg>
 </button>
@@ -1853,7 +1856,7 @@
         // 根据剩余时间获取状态
         function getStatus(minutesLeft) {
             const langMap = translations[currentLanguage];
-            let status = {};
+            let status;
             // 关键分钟数：3天=4320, 7天=10080, 37天=53280
             if (minutesLeft < 0) {
                 // --- 状态: 已过期 (Overdue) ---
