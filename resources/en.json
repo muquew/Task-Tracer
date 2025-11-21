@@ -84,5 +84,10 @@
   "sampleTask2Name": "Team meeting preparation",
   "sampleTask2Desc": "Prepare presentation materials for next week's team meeting",
   "sampleTask3Name": "Learning plan development",
-  "sampleTask3Desc": "Develop personal learning plan for next month"
+  "sampleTask3Desc": "Develop personal learning plan for next month",
+
+  "sortSmart": "Smart Sort",
+  "sortCreated": "Newest Created",
+  "sortDue": "Due Date",
+  "sortAlpha": "Name (A-Z)"
 }

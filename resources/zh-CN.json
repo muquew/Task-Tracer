@@ -89,5 +89,10 @@
   "sampleTask2Name": "团队会议准备",
   "sampleTask2Desc": "准备下周团队会议的演示材料",
   "sampleTask3Name": "学习计划制定",
-  "sampleTask3Desc": "制定下个月的个人学习计划"
+  "sampleTask3Desc": "制定下个月的个人学习计划",
+
+  "sortSmart": "智能排序",
+  "sortCreated": "新创建",
+  "sortDue": "截止日期",
+  "sortAlpha": "名称 (A-Z)"
 }
