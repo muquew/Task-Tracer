@@ -72,7 +72,7 @@
   "clearCompleted": "Clear Completed",
   "noCompletedTasks": "There are no completed tasks to clear",
   "confirmClearCompleted": "Are you sure you want to permanently delete {count} completed tasks?" ,
-  "CompletedTasksCleared": "{count} completed tasks have been cleared",
+  "completedTasksCleared": "{count} completed tasks have been cleared",
   "clearCompletedError": "Error while clearing tasks",
 
   "openMenu": "Open menu",

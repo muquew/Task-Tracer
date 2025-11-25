@@ -225,9 +225,14 @@
         .btn-icon-small { background: var(--bg-hover); border: 1px solid var(--border-base); border-radius: 6px; cursor: pointer; color: var(--text-main); width: 40px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .btn-icon-small:hover { background: var(--color-primary); color: white; border-color: var(--color-primary); }
         .subtask-preview-list { list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; }
-        .subtask-preview-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: var(--bg-hover); border-radius: 4px; margin-bottom: 5px; font-size: 13px; }
-        .subtask-delete-btn { background: none; border: none; color: var(--text-tertiary); cursor: pointer; padding: 2px; }
+        .subtask-preview-item span { flex: 1; min-width: 0; word-wrap: break-word; word-break: break-all; line-height: 1.4; cursor: text; transition: background 0.2s; padding: 2px 4px; border-radius: 4px; }
+        .subtask-preview-item span:hover { background: var(--bg-active); }
+        .subtask-delete-btn { background: none; border: none; color: var(--text-tertiary); cursor: pointer; padding: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
         .subtask-delete-btn:hover { color: var(--color-danger); }
+        .subtask-edit-input { flex: 1; min-width: 0; padding: 4px 8px; font-size: 13px; border: 1px solid var(--color-primary); border-radius: 4px; outline: none; background: var(--bg-surface); color: var(--text-main); margin-right: 8px; }
+        .subtask-preview-item { display: flex; align-items: center; padding: 6px 10px; background: var(--bg-hover); border-radius: 4px; margin-bottom: 5px; font-size: 13px; min-height: 34px; }
+        .subtask-preview-text { flex: 1; min-width: 0; word-wrap: break-word; word-break: break-all; padding-right: 10px; line-height: 1.4; cursor: text; transition: opacity 0.2s; }
+        .subtask-preview-text:hover { opacity: 0.7; }
 
         /* Card Display */
         .subtask-summary-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px solid var(--border-light); margin-top: 10px; cursor: pointer; color: var(--text-secondary); font-size: 13px; user-select: none; }
@@ -524,961 +529,878 @@
 
 <script>
     (function() {
-        // IndexedDB 配置
-        const DB_NAME = 'TaskTrackerDB';
-        const DB_VERSION = 2;
-        const STORE_NAME = 'tasks';
-        const CONFIG_STORE_NAME = 'config';
+        // 配置与状态 (Config & State)
+        const CONFIG = {
+            DB_NAME: 'TaskTrackerDB',
+            DB_VERSION: 2,
+            STORE_TASKS: 'tasks',
+            STORE_CONFIG: 'config',
+            LANGUAGES: [
+                { code: 'zh-CN', name: '简体中文' },
+                { code: 'en', name: 'English' }]
+        };
 
-        // 状态变量
-        let db = null;
-        let tasks = [];
-        let currentFilter = 'active'; // 默认为 'active'
-        let currentSort = 'smart';
-        let searchQuery = '';
-        let editingTaskId = null;
-        let progressUpdateInterval = null;
-        let currentLanguage = 'zh-CN';
-        let currentSubtasks = []; // 暂存当前编辑/新建时的子任务
+        const state = {
+            db: null,
+            tasks: [],
+            filter: 'active',
+            sort: 'smart',
+            searchQuery: '',
+            editingTaskId: null,
+            currentLanguage: 'zh-CN',
+            translations: {},
+            tempSubtasks: [], // 编辑/新建时暂存的子任务
+            editingSubtaskIndex: -1, // 记录当前正在编辑哪一行，-1 表示没有
+            progressInterval: null,
+            elementToFocusOnClose: null, // A11y: 存储关闭弹窗时要聚焦的元素
+            dateTimeFormatters: {}, // 缓存格式化器
+        };
 
-        // DOM 元素 (在 DOMContentLoaded 中初始化)
-        let taskForm, taskList, taskModal, openModalBtn, closeModalBtn, cancelBtn,
-            noDeadlineCheckbox, dueDateInput, dueTimeInput, modalTitle, submitBtn,
-            searchInput, notification, notificationText, taskTemplate, importBtn, exportBtn,
-            importFileInput, openMenuBtn, menu, langMenuToggle, langSubmenu, clearCompletedBtn,
-            formGroups, themeToggleBtn, backToTopBtn, filterDropdown, sortDropdown, filterBtn, sortBtn,
-            subtaskInput, addSubtaskBtn, subtaskListPreview,
-            elementToFocusOnClose = null; // A11y: 存储关闭弹窗时要聚焦的元素
+        const DOM = {}; // 集中存储 DOM 节点
 
+        function cacheDOM() {
+            // 核心容器与按钮
+            DOM.taskList = document.getElementById('taskList');
+            DOM.taskTemplate = document.getElementById('task-template');
+            DOM.themeBtn = document.getElementById('themeToggleBtn');
+            DOM.backToTopBtn = document.getElementById('backToTopBtn');
+            DOM.clearCompletedBtn = document.getElementById('clearCompletedBtn');
 
+            // 模态框与表单
+            DOM.modal = document.getElementById('taskModal');
+            DOM.form = document.getElementById('taskForm');
+            DOM.openModalBtn = document.getElementById('openModalBtn');
+            DOM.closeModalBtn = document.getElementById('closeModalBtn');
+            DOM.cancelBtn = document.getElementById('cancelBtn');
+            DOM.modalTitle = document.getElementById('modalTitle');
+            DOM.submitBtn = document.getElementById('submitBtn');
 
-        const LANG_RESOURCES = [
-            { code: 'zh-CN', name: '简体中文' },
-            { code: 'en', name: 'English' }
-        ];
-        const translations = {};
+            // 输入字段
+            DOM.inputs = {
+                name: document.getElementById('taskName'),
+                desc: document.getElementById('taskDesc'),
+                date: document.getElementById('dueDate'),
+                time: document.getElementById('dueTime'),
+                noDeadline: document.getElementById('noDeadline'),
+                search: document.getElementById('searchInput'),
+                subtask: document.getElementById('subtaskInput')
+            };
+            DOM.formGroups = document.querySelectorAll('.form-group');
 
-        // 初始化应用
-        document.addEventListener('DOMContentLoaded', async function () {
-            // 缓存 DOM 元素
-            taskForm = document.getElementById('taskForm');
-            taskList = document.getElementById('taskList');
-            taskModal = document.getElementById('taskModal');
-            openModalBtn = document.getElementById('openModalBtn');
-            closeModalBtn = document.getElementById('closeModalBtn');
-            cancelBtn = document.getElementById('cancelBtn');
-            noDeadlineCheckbox = document.getElementById('noDeadline');
-            dueDateInput = document.getElementById('dueDate');
-            dueTimeInput = document.getElementById('dueTime');
-            modalTitle = document.getElementById('modalTitle');
-            submitBtn = document.getElementById('submitBtn');
-            searchInput = document.getElementById('searchInput');
-            notification = document.getElementById('notification');
-            notificationText = document.getElementById('notificationText');
-            taskTemplate = document.getElementById('task-template');
-            exportBtn = document.getElementById('exportBtn');
-            importBtn = document.getElementById('importBtn');
-            importFileInput = document.getElementById('importFile');
-            openMenuBtn = document.getElementById('openMenuBtn');
-            menu = document.getElementById('menu');
-            langMenuToggle = document.getElementById('langMenuToggle');
-            langSubmenu = document.getElementById('langSubmenu');
-            clearCompletedBtn = document.getElementById('clearCompletedBtn');
-            formGroups = document.querySelectorAll('.form-group');
-            themeToggleBtn = document.getElementById('themeToggleBtn');
-            backToTopBtn = document.getElementById('backToTopBtn');
-            filterDropdown = document.getElementById('filterDropdown');
-            sortDropdown = document.getElementById('sortDropdown');
-            filterBtn = document.getElementById('filterBtn');
-            sortBtn = document.getElementById('sortBtn');
-            subtaskInput = document.getElementById('subtaskInput');
-            addSubtaskBtn = document.getElementById('addSubtaskBtn');
-            subtaskListPreview = document.getElementById('subtaskListPreview');
+            // 子任务相关
+            DOM.addSubtaskBtn = document.getElementById('addSubtaskBtn');
+            DOM.subtaskListPreview = document.getElementById('subtaskListPreview');
+
+            // 菜单与下拉
+            DOM.menu = {
+                container: document.getElementById('menu'),
+                btn: document.getElementById('openMenuBtn'),
+                langToggle: document.getElementById('langMenuToggle'),
+                langSubmenu: document.getElementById('langSubmenu'),
+                langContainer: document.getElementById('lang-container'),
+                exportBtn: document.getElementById('exportBtn'),
+                importBtn: document.getElementById('importBtn'),
+                fileInput: document.getElementById('importFile')
+            };
+
+            DOM.dropdowns = {
+                filter: { container: document.getElementById('filterDropdown'), btn: document.getElementById('filterBtn') },
+                sort: { container: document.getElementById('sortDropdown'), btn: document.getElementById('sortBtn') }
+            };
+
+            // 通知
+            DOM.notification = {
+                el: document.getElementById('notification'),
+                text: document.getElementById('notificationText')
+            };
+        }
+
+        // 初始化流程 (Initialization)
+        document.addEventListener('DOMContentLoaded', initApp);
+
+        async function initApp() {
+            cacheDOM(); // 1. 获取所有 DOM 元素
 
             try {
-                // 加载翻译
+                // 2. 加载基础资源
                 await loadTranslations();
                 createLangButtons();
-
                 await initDB();
-                // 从配置中获取语言设置
-                const savedLanguage = await getConfig('language');
-                if (savedLanguage) {
-                    currentLanguage = savedLanguage;
-                } else {
-                    // 获取系统语言列表，优先使用第一个支持的语言
-                    const languages = navigator.languages || [navigator.language];
-                    // 在系统语言列表中查找支持的语言
-                    const supportedLang = languages.find(lang => translations[lang] || translations[lang.split('-')[0]]);
-                    currentLanguage = supportedLang ? translations[supportedLang] ? supportedLang : supportedLang.split('-')[0] : LANG_RESOURCES[0]?.code || 'en';
-                    if (!translations[currentLanguage]) {
-                        currentLanguage = Object.keys(translations)[0]; // 最后的备用
-                    }
-                    await setConfig('language', currentLanguage);
-                }
-                initLanguage();
-                setupEventListeners();
 
-                tasks = await getAllTasks();
-                dueDateInput.min = new Date().toISOString().split('T')[0]; // 设置最小日期为今天
+                // 3. 恢复设置
+                await loadSettings();
+                initLanguage(); // 应用语言并同步 UI
 
-                // 使用IndexedDB检查是否已添加示例任务
-                const sampleTasksAdded = await getConfig('sampleTasksAdded');
-                if (tasks.length === 0 && !sampleTasksAdded) {
+                // 4. 加载数据
+                state.tasks = await dbActions.getAllTasks();
+
+                // 5. 初始化 UI 状态
+                DOM.inputs.date.min = new Date().toISOString().split('T')[0];  // 设置最小日期为今天
+                if (state.tasks.length === 0 && !(await dbActions.getConfig('sampleTasksAdded'))) {
                     await addSampleTasks();
-                    await setConfig('sampleTasksAdded', true);
+                    await dbActions.setConfig('sampleTasksAdded', true);
                 }
-                setFilter(currentFilter); // 应用默认筛选器
-                renderTasks();
-                startProgressUpdate(); // 启动进度条更新定时器
+
+                // 6. 绑定事件并渲染
+                bindEvents();
+                renderTaskList();
+
+                // 7. 启动定时器
+                startProgressTimer();
+
             } catch (error) {
                 console.error('初始化失败:', error);
-                showNotification(translations[currentLanguage]['initDBError'] || '数据库初始化失败，请刷新页面重试', 'error');
-            }
-        });
-
-        function setupEventListeners() {
-            // 主题
-            themeToggleBtn.addEventListener('click', toggleTheme);
-            // 弹窗控制
-            openModalBtn.addEventListener('click', openAddTaskModal);
-            closeModalBtn.addEventListener('click', closeModal);
-            cancelBtn.addEventListener('click', closeModal);
-            taskModal.addEventListener('click', (e) => {
-                if (e.target === taskModal) closeModal();
-            });
-
-            // 表单
-            taskForm.addEventListener('submit', handleFormSubmit);
-            noDeadlineCheckbox.addEventListener('change', function () {
-                dueDateInput.disabled = this.checked;
-                dueTimeInput.disabled = this.checked;
-                if (this.checked) {
-                    dueDateInput.value = new Date().toISOString().split('T')[0];
-                    dueTimeInput.value = '23:59';
-                }
-            });
-
-            // 筛选和搜索
-            searchInput.addEventListener('input', debounce(filterTasks, 300));
-            clearCompletedBtn.addEventListener('click', clearCompletedTasks);
-
-            // 菜单
-            const closeMainMenu = () => {
-                menu.classList.remove('show');
-                openMenuBtn.setAttribute('aria-expanded', false);
-                langSubmenu.classList.remove('show');
-                langMenuToggle.classList.remove('open');
-                langMenuToggle.setAttribute('aria-expanded', false);
-            };
-            const toggleMainMenu = () => {
-                const isOpening = !menu.classList.contains('show');
-                if (isOpening) {
-                    menu.classList.add('show');
-                    openMenuBtn.setAttribute('aria-expanded', true);
-                } else {
-                    closeMainMenu();
-                }
-            };
-            openMenuBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleMainMenu();
-            });
-            // 点击外部关闭菜单
-            document.addEventListener('click', function(e) {
-                if (menu.classList.contains('show') && !menu.contains(e.target) && !openMenuBtn.contains(e.target)) {
-                    closeMainMenu();
-                }
-            });
-
-            // A11y: 添加 aria-expanded
-            langMenuToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const isOpening = !langSubmenu.classList.contains('show'); // 检查是否即将打开
-                langSubmenu.classList.toggle('show');
-                langMenuToggle.classList.toggle('open');
-                langMenuToggle.setAttribute('aria-expanded', isOpening); // <-- A11y
-            });
-
-            // 语言切换
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.addEventListener('click', () => switchLanguage(btn.dataset.lang));
-            });
-
-            // 导入/导出事件监听
-            exportBtn.addEventListener('click', exportTasks);
-            importBtn.addEventListener('click', () => importFileInput.click());
-            importFileInput.addEventListener('change', (e) => importTasks(e.target.files[0]));
-
-            // 任务列表事件委托
-            taskList.addEventListener('click', function(e) {
-                const button = e.target.closest('.action-btn');
-                if (!button) return;
-                const taskItem = button.closest('.task-item');
-                if (!taskItem) return;
-                const taskId = Number(taskItem.dataset.taskId);
-                const action = button.dataset.action;
-                switch (action) {
-                    case 'toggle': toggleTaskComplete(taskId); break;
-                    case 'edit': editTask(taskId); break;
-                    case 'delete': deleteTask(taskId); break;
-                }
-            });
-            // 页面从休眠恢复
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) {
-                    if (progressUpdateInterval) clearInterval(progressUpdateInterval);
-                } else {
-                    updateTaskTimers(); // 回来时立即更新一次
-                    startProgressUpdate(); // 重启定时器
-                }
-            });
-
-            // --- 全局键盘快捷键 ---
-            document.addEventListener('keydown', (e) => {
-                const isCtrlOrMeta = e.ctrlKey || e.metaKey;
-                // 1. Ctrl/Cmd + K: 聚焦搜索
-                if (isCtrlOrMeta && e.key === 'k') { e.preventDefault(); searchInput.focus(); }
-                // 2. Ctrl/Cmd + I: 新建任务
-                if (isCtrlOrMeta && e.key === 'i') { e.preventDefault(); if (taskModal.style.display !== 'flex') openAddTaskModal(); }
-                // 3. Ctrl/Cmd + M: 切换菜单 (新增功能)
-                if (isCtrlOrMeta && e.key === 'm') { e.preventDefault(); toggleMainMenu(); }
-                // 4. Alt + T: 平滑回到顶部
-                if (e.altKey && e.key.toLowerCase() === 't') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
-
-                // 5. Esc: 关闭操作
-                if (e.key === 'Escape') {
-                    if (taskModal.style.display === 'flex') {
-                        closeModal();
-                    } else if (document.activeElement === searchInput) {
-                        searchInput.blur();
-                    } else if (menu.classList.contains('show')) {
-                        closeMainMenu();
-                    }
-                }
-            });
-
-            // Back to Top
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 300) {
-                    backToTopBtn.classList.add('show');
-                } else {
-                    backToTopBtn.classList.remove('show');
-                }
-            });
-            backToTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-
-
-            // === 下拉菜单逻辑 ===
-            function toggleDropdown(container, btn) {
-                const isOpening = !container.classList.contains('show');
-                // 关闭所有其他下拉
-                document.querySelectorAll('.dropdown-container').forEach(el => el.classList.remove('show'));
-                document.querySelectorAll('.dropdown-btn').forEach(el => el.setAttribute('aria-expanded', 'false'));
-
-                if (isOpening) {
-                    container.classList.add('show');
-                    btn.setAttribute('aria-expanded', 'true');
-                }
-            }
-
-            // 筛选排序按钮点击
-            filterBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown(filterDropdown, filterBtn); });
-            sortBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown(sortDropdown, sortBtn); });
-
-            // 筛选选项点击委托
-            filterDropdown.addEventListener('click', (e) => {
-                const option = e.target.closest('.dropdown-option');
-                if (option) {
-                    setFilter(option.dataset.filter);
-                    updateDropdownUI(filterDropdown, option, filterBtn);
-
-                    // 关闭菜单
-                    filterDropdown.classList.remove('show');
-                    filterBtn.setAttribute('aria-expanded', 'false');
-                }
-            });
-
-            // 排序选项点击委托
-            sortDropdown.addEventListener('click', (e) => {
-                const option = e.target.closest('.dropdown-option');
-                if (option) {
-                    currentSort = option.dataset.sort; // 更新状态
-                    renderTasks(); // 重新渲染
-                    updateDropdownUI(sortDropdown, option, sortBtn);
-
-                    sortDropdown.classList.remove('show');
-                    sortBtn.setAttribute('aria-expanded', 'false');
-                }
-            });
-
-            // 点击外部关闭所有下拉
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('.dropdown-container')) {
-                    document.querySelectorAll('.dropdown-container').forEach(el => el.classList.remove('show'));
-                    document.querySelectorAll('.dropdown-btn').forEach(el => el.setAttribute('aria-expanded', 'false'));
-                }
-            });
-
-
-            // === 子任务表单逻辑 ===
-            // 1. 点击添加按钮
-            addSubtaskBtn.addEventListener('click', addSubtaskFromInput);
-            // 2. 输入框回车添加
-            subtaskInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault(); // 防止提交整个表单
-                    addSubtaskFromInput();
-                }
-            });
-            // 3. 预览列表点击删除委托
-            subtaskListPreview.addEventListener('click', (e) => {
-                if (e.target.closest('.subtask-delete-btn')) {
-                    const index = Number(e.target.closest('.subtask-delete-btn').dataset.index);
-                    currentSubtasks.splice(index, 1);
-                    renderSubtaskPreview();
-                }
-            });
-            // 4. 任务卡片内部点击子任务 (切换完成状态) 委托
-            taskList.addEventListener('click', (e) => {
-                if (e.target.classList.contains('subtask-checkbox')) {
-                    // 阻止冒泡，防止触发卡片点击
-                    e.stopPropagation();
-                    const taskId = Number(e.target.closest('.task-item').dataset.taskId);
-                    const subtaskId = Number(e.target.dataset.subtaskId);
-                    toggleSubtaskComplete(taskId, subtaskId);
-                }
-                // 允许点击文字也能切换
-                if (e.target.closest('.subtask-display-item')) {
-                    const checkbox = e.target.closest('.subtask-display-item').querySelector('.subtask-checkbox');
-                    if (checkbox && e.target !== checkbox) {
-                        // 手动触发点击复选框
-                        checkbox.click();
-                    }
-                }
-            });
-            // 5. 子任务折叠/展开 (新增)
-            taskList.addEventListener('click', (e) => {
-                const summaryBar = e.target.closest('.subtask-summary-bar');
-                if (summaryBar) {
-                    const wrapper = summaryBar.closest('.subtasks-wrapper');
-                    wrapper.classList.toggle('expanded');
-                }
-            });
-        }
-
-        // 更新下拉菜单UI (勾选图标和按钮文字)
-        function updateDropdownUI(container, selectedOption, btnElement) {
-            // 移除旧的 selected
-            container.querySelectorAll('.dropdown-option').forEach(opt => opt.classList.remove('selected'));
-            // 添加新的 selected
-            selectedOption.classList.add('selected');
-            // 更新主按钮文字
-            const span = selectedOption.querySelector('span');
-            if (span && btnElement.querySelector('span')) {
-                // 这里我们直接拿 textContent，如果需要 i18n 支持，可能需要更复杂的处理，
-                // 但因为 span 内部已有 i18n 标记，这里为了简单直接复制文字即可。
-                btnElement.querySelector('span').textContent = span.textContent;
+                utils.notify(state.translations[state.currentLanguage]['initDBError'] || '数据库初始化失败，请刷新页面重试', 'error');
             }
         }
 
-        // === 子任务逻辑 ===
-
-        function addSubtaskFromInput() {
-            const text = subtaskInput.value.trim();
-            if (!text) return;
-
-            currentSubtasks.push({
-                id: Date.now(), // 生成唯一ID
-                text: text,
-                completed: false
-            });
-
-            subtaskInput.value = '';
-            renderSubtaskPreview();
-            subtaskInput.focus();
-        }
-
-        function renderSubtaskPreview() {
-            subtaskListPreview.innerHTML = '';
-            currentSubtasks.forEach((sub, index) => {
-                const li = document.createElement('li');
-                li.className = 'subtask-preview-item';
-                li.innerHTML = `
-                    <span>${sub.text}</span>
-                    <button type="button" class="subtask-delete-btn" data-index="${index}" title="删除">
-                        <svg width="14" height="14" viewBox="0 0 24 24" class="svg-no-fill" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                    </button>
-                `;
-                subtaskListPreview.appendChild(li);
-            });
-        }
-
-        async function toggleSubtaskComplete(taskId, subtaskId) {
-            // 1. 确保 ID 类型匹配（转换为数字）
-            taskId = Number(taskId);
-            subtaskId = Number(subtaskId);
-
-            const task = tasks.find(t => t.id === taskId);
-            if (!task || !task.subtasks) return;
-
-            const subtask = task.subtasks.find(s => s.id === subtaskId);
-            if (subtask) {
-                // 2. 更新数据状态
-                subtask.completed = !subtask.completed;
-
-                // 3. 保存到数据库
-                await updateTaskInDB(task);
-
-                // 4. 定位 DOM 元素
-                const taskElement = document.querySelector(`.task-item[data-task-id="${taskId}"]`);
-                if (!taskElement) return; // 如果找不到元素，直接退出防止报错
-
-                // A. 更新复选框状态
-                const checkbox = taskElement.querySelector(`.subtask-checkbox[data-subtask-id="${subtaskId}"]`);
-                if (checkbox) {
-                    checkbox.checked = subtask.completed;
-                    const itemRow = checkbox.closest('.subtask-display-item');
-                    if (itemRow) {
-                        // 切换文字划线样式
-                        if (subtask.completed) itemRow.classList.add('completed');
-                        else itemRow.classList.remove('completed');
-                    }
-                }
-
-                // B. 核心修复：更新顶部计数 (例如 1/3 Subtasks)
-                const total = task.subtasks.length;
-                const completedCount = task.subtasks.filter(s => s.completed).length;
-
-                // 精确查找摘要栏里的文字元素
-                const progressText = taskElement.querySelector('.subtask-summary-bar .progress-text');
-
-                if (progressText) {
-                    // 直接修改文字内容
-                    progressText.textContent = `${completedCount}/${total} ${translations[currentLanguage]['subTasks']}`;
-                } else {
-                    // 调试：如果找不到元素，可能是 renderTaskContent 没渲染出来
-                    console.warn('未找到进度文本元素 (.subtask-summary-bar .progress-text)');
-                }
-
-                // C. 更新主任务的状态显示（比如是否变绿）
-                updateTaskTimers();
-            }
-        }
-
-        function showNotification(message, type = 'success') {
-            notificationText.textContent = message;
-            notification.className = 'notification';
-            notification.classList.add(type);
-
-            // A11y: 根据类型设置 role
-            if (type === 'error' || type === 'warning') {
-                notification.setAttribute('role', 'alert');
+        async function loadSettings() {
+            const savedLang = await dbActions.getConfig('language');
+            if (savedLang) {
+                state.currentLanguage = savedLang;
             } else {
-                notification.setAttribute('role', 'status');
+                // 自动检测语言
+                const sysLang = navigator.languages || [navigator.language];
+                const target = CONFIG.LANGUAGES.find(l => l.code === sysLang || l.code === sysLang[0].split('-')[0]);
+                state.currentLanguage = target ? target.code : 'zh-CN';
+                await dbActions.setConfig('language', state.currentLanguage);
             }
-
-            notification.classList.add('show');
-            setTimeout(() => notification.classList.remove('show'), 3000);
         }
 
-        function showConfirmModal(title, message, onConfirm) {
-            const langMap = translations[currentLanguage];
 
-            // 1. 设置弹窗标题和信息
-            modalTitle.textContent = title;
+        // 事件绑定 (Event Binding)
+        function bindEvents() {
+            // 全局
+            DOM.themeBtn.addEventListener('click', utils.toggleTheme);
+            window.addEventListener('scroll', () => DOM.backToTopBtn.classList.toggle('show', window.scrollY > 300));
+            DOM.backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            document.addEventListener('keydown', handleKeyboardShortcuts);
+            document.addEventListener('visibilitychange', handleVisibilityChange);
 
-            let confirmMessageEl = document.getElementById('confirm-message-text');
-            if (!confirmMessageEl) {
-                confirmMessageEl = document.createElement('p');
-                confirmMessageEl.id = 'confirm-message-text';
-                confirmMessageEl.style.fontSize = '16px';
-                confirmMessageEl.style.lineHeight = '1.5';
-                confirmMessageEl.style.marginBottom = '20px';
-                // 插入到表单的开头
-                taskForm.prepend(confirmMessageEl);
-            }
-            confirmMessageEl.textContent = message;
-            confirmMessageEl.style.display = 'block';
+            // 模态框
+            DOM.openModalBtn.addEventListener('click', () => openModal());
+            DOM.closeModalBtn.addEventListener('click', closeDialog);
+            DOM.cancelBtn.addEventListener('click', closeDialog);
+            DOM.modal.addEventListener('click', (e) => { if (e.target === DOM.modal) closeDialog(); });
+            DOM.form.addEventListener('submit', handleTaskSave);
 
-            // 2. 隐藏表单字段
-            formGroups.forEach(group => { group.style.display = 'none'; });
+            // 表单交互
+            DOM.inputs.noDeadline.addEventListener('change', function() {
+                DOM.inputs.date.disabled = this.checked;
+                DOM.inputs.time.disabled = this.checked;
+                if (this.checked) {
+                    DOM.inputs.date.value = new Date().toISOString().split('T')[0];
+                    DOM.inputs.time.value = '23:59';
+                }
+            });
 
-            // 3. 更改按钮
-            submitBtn.textContent = langMap['confirm'] || 'Confirm';
-            submitBtn.type = 'button'; // 关键！防止它触发表单提交
+            // 搜索与筛选
+            DOM.inputs.search.addEventListener('input', utils.debounce(() => {
+                state.searchQuery = DOM.inputs.search.value.toLowerCase();
+                renderTaskList();
+            }, 300));
+            DOM.clearCompletedBtn.addEventListener('click', handleClearCompleted);
 
-            // 4. 定义一次性点击事件
-            const handleConfirmClick = () => {
-                onConfirm(); // 执行传入的回调（例如，删除逻辑）
-                closeModal();
-            };
+            // 下拉菜单
+            setupDropdowns();
 
-            // 存储引用，以便在 closeModal 中移除它
-            submitBtn._confirmHandler = handleConfirmClick;
+            // 主菜单
+            DOM.menu.btn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(DOM.menu.container, DOM.menu.btn); });
+            document.addEventListener('click', (e) => {
+                if (DOM.menu.container.classList.contains('show') && !DOM.menu.container.contains(e.target) && !DOM.menu.btn.contains(e.target)) {
+                    closeMenu();
+                }
+            });
+            // 语言子菜单
+            DOM.menu.langToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isExpanded = DOM.menu.langSubmenu.classList.toggle('show');
+                DOM.menu.langToggle.classList.toggle('open', isExpanded);
+                DOM.menu.langToggle.setAttribute('aria-expanded', isExpanded.toString());
+            });
+            DOM.menu.langContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('lang-btn')) {
+                    switchLanguage(e.target.dataset.lang);
+                }
+            });
 
-            // 绑定事件
-            submitBtn.addEventListener('click', handleConfirmClick);
-            cancelBtn.addEventListener('click', closeModal); // cancelBtn 始终是 closeModal
+            // 导入导出
+            DOM.menu.exportBtn.addEventListener('click', exportTasks);
+            DOM.menu.importBtn.addEventListener('click', () => DOM.menu.fileInput.click());
+            DOM.menu.fileInput.addEventListener('change', (e) => importTasks(e.target.files[0]));
 
-            // 5. 显示弹窗
-            elementToFocusOnClose = document.activeElement; // A11y: 存储焦点
-            taskModal.style.display = 'flex';
-            submitBtn.focus(); // A11y: 焦点移到确认按钮上
-        }
+            // 任务列表交互 (委托)
+            DOM.taskList.addEventListener('click', handleTaskListClick);
 
-        /**
-         * 防抖函数
-         * @param {Function} func - 需要防抖的函数
-         * @param {number} delay - 延迟时间 (毫秒)
-         */
-        function debounce(func, delay = 300) {
-            let timeoutId;
-            return function(...args) {
-                const context = this;
-                clearTimeout(timeoutId);
-                timeoutId = setTimeout(() => {
-                    func.apply(context, args);
-                }, delay);
-            };
-        }
-
-        // --- IndexedDB 数据库操作 ---
-        function initDB() {
-            return new Promise((resolve, reject) => {
-                const request = indexedDB.open(DB_NAME, DB_VERSION);
-                request.onerror = () => reject(request.error);
-                request.onsuccess = () => {
-                    db = request.result;
-                    resolve(db);
-                };
-                request.onupgradeneeded = (event) => {
-                    const db = event.target.result;
-                    // 创建任务存储
-                    if (!db.objectStoreNames.contains(STORE_NAME)) {
-                        const store = db.createObjectStore(STORE_NAME, {keyPath: 'id'});
-                        store.createIndex('dueDate', 'dueDate', {unique: false});
+            // 子任务输入交互
+            DOM.addSubtaskBtn.addEventListener('click', handleAddSubtaskInput);
+            DOM.inputs.subtask.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); handleAddSubtaskInput(); }
+            });
+            // 子任务列表点击 (删除 / 进入编辑)
+            DOM.subtaskListPreview.addEventListener('click', (e) => {
+                // 1. 删除逻辑 (保持不变)
+                const deleteBtn = e.target.closest('.subtask-delete-btn');
+                if (deleteBtn) {
+                    state.tempSubtasks.splice(Number(deleteBtn.dataset.index), 1);
+                    // 如果删的是正在编辑的那一行，重置编辑索引
+                    if (state.editingSubtaskIndex === Number(deleteBtn.dataset.index)) {
+                        state.editingSubtaskIndex = -1;
                     }
-                    // 创建配置存储
-                    if (!db.objectStoreNames.contains(CONFIG_STORE_NAME)) {
-                        db.createObjectStore(CONFIG_STORE_NAME, {keyPath: 'key'});
-                    }
-                };
-            });
-        }
-
-        async function getAllTasks() {
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction([STORE_NAME], 'readonly');
-                const store = transaction.objectStore(STORE_NAME);
-                const request = store.getAll();
-                request.onsuccess = () => resolve(request.result);
-                request.onerror = () => reject(request.error);
-            });
-        }
-
-        async function addTaskToDB(task) {
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction([STORE_NAME], 'readwrite');
-                const store = transaction.objectStore(STORE_NAME);
-                const taskToStore = {...task, dueDate: task.dueDate || null}; // 明确设置 dueDate 为 null
-                const request = store.add(taskToStore);
-                request.onsuccess = () => resolve(request.result);
-                request.onerror = () => reject(request.error);
-            });
-        }
-
-        async function updateTaskInDB(task) {
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction([STORE_NAME], 'readwrite');
-                const store = transaction.objectStore(STORE_NAME);
-                const request = store.put(task);
-                request.onsuccess = () => resolve(request.result);
-                request.onerror = () => reject(request.error);
-            });
-        }
-
-        async function deleteTaskFromDB(id) {
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction([STORE_NAME], 'readwrite');
-                const store = transaction.objectStore(STORE_NAME);
-                const request = store.delete(id);
-                request.onsuccess = () => resolve();
-                request.onerror = () => reject(request.error);
-            });
-        }
-
-        async function getConfig(key) {
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction([CONFIG_STORE_NAME], 'readonly');
-                const store = transaction.objectStore(CONFIG_STORE_NAME);
-                const request = store.get(key);
-                request.onsuccess = () => resolve(request.result ? request.result.value : null);
-                request.onerror = () => reject(request.error);
-            });
-        }
-
-        async function setConfig(key, value) {
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction([CONFIG_STORE_NAME], 'readwrite');
-                const store = transaction.objectStore(CONFIG_STORE_NAME);
-                const request = store.put({key, value});
-                request.onsuccess = () => resolve();
-                request.onerror = () => reject(request.error);
-            });
-        }
-
-        // --- 语言与国际化 ---
-        async function loadTranslations() {
-            try {
-                const fetchPromises = LANG_RESOURCES.map(lang =>
-                    fetch(`./resources/${lang.code}.json`)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(`[${response.status}] Failed to load ${lang.code}.json`);
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            translations[lang.code] = data; // 填充全局翻译对象
-                        })
-                );
-
-                await Promise.all(fetchPromises);
-
-                if (Object.keys(translations).length === 0) {
-                    throw new Error('没有找到语言文件');
+                    renderSubtaskPreview();
+                    return;
                 }
-            } catch (error) {
-                console.error('加载语言失败: ', error);
-                // 必须使用一个“硬编码”的后备消息
-                showNotification('加载语言失败，请刷新页面重试', 'error');
-            }
-        }
-        function createLangButtons() {
-            const container = document.getElementById('lang-container');
-            if (!container) return;
-
-            LANG_RESOURCES.forEach(lang => {
-                const btn = document.createElement('button');
-                btn.className = 'lang-btn';
-                btn.dataset.lang = lang.code;
-                btn.textContent = lang.name;
-                container.appendChild(btn);
-            });
-        }
-
-        function initLanguage() {
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.lang === currentLanguage);
-            });
-            document.documentElement.lang = currentLanguage;
-            applyTranslations();
-        }
-
-        function applyTranslations() {
-            let langMap = translations[currentLanguage];
-            if (!langMap) {
-                console.warn(`No translations found for language: ${currentLanguage}. Using default.`);
-                // 尝试使用第一个可用的翻译
-                const fallbackLang = Object.keys(translations)[0];
-                if (!fallbackLang) {
-                    console.error("No translations available at all.");
-                    return; // 无法渲染
-                }
-                currentLanguage = fallbackLang;
-                langMap = translations[currentLanguage];
-            }
-            // --- 优化：一次性查询和应用所有i18n属性 ---
-            const elements = document.querySelectorAll(
-                '[data-i18n], [data-i18n-placeholder], [data-i18n-title], [data-i18n-aria-label]'
-            );
-            // 一次遍历
-            elements.forEach(element => {
-                // .dataset 会自动处理驼峰命名 (e.g., data-i18n-placeholder -> dataset.i18nPlaceholder)
-                const i18nKey = element.dataset.i18n;
-                const placeholderKey = element.dataset.i18nPlaceholder;
-                const titleKey = element.dataset.i18nTitle;
-                const ariaLabelKey = element.dataset.i18nAriaLabel;
-
-                if (i18nKey && langMap[i18nKey]) {
-                    element.textContent = langMap[i18nKey];
-                }
-                if (placeholderKey && langMap[placeholderKey]) {
-                    element.placeholder = langMap[placeholderKey];
-                }
-                if (titleKey && langMap[titleKey]) {
-                    element.title = langMap[titleKey];
-                }
-                if (ariaLabelKey && langMap[ariaLabelKey]) {
-                    element.setAttribute('aria-label', langMap[ariaLabelKey]);
+                // 2. 进入编辑模式 (点击了文本)
+                const textSpan = e.target.closest('.subtask-preview-text');
+                if (textSpan) {
+                    state.editingSubtaskIndex = Number(textSpan.dataset.index);
+                    renderSubtaskPreview(); // 重绘：文本变输入框
                 }
             });
-            renderTasks();
+            // 3. 保存逻辑 (监听输入框的动作)
+            DOM.subtaskListPreview.addEventListener('focusout', (e) => {
+                if (e.target.classList.contains('subtask-edit-input')) {
+                    saveEditSubtask(e.target);
+                }
+            });
+            DOM.subtaskListPreview.addEventListener('keydown', (e) => {
+                if (e.target.classList.contains('subtask-edit-input') && e.key === 'Enter') {
+                    e.preventDefault(); // 防止提交外层表单
+                    e.target.blur();    // 触发 focusout 来保存
+                }
+            });
+            // 防止点击删除按钮时输入框失焦
+            DOM.subtaskListPreview.addEventListener('mousedown', (e) => {
+                if (e.target.closest('.subtask-delete-btn')) {
+                    e.preventDefault();
+                }
+            });
         }
-        function switchLanguage(lang) {
-            if (translations[lang]) {
-                currentLanguage = lang;
-                setConfig('language', lang);
-                initLanguage();
+
+        function handleKeyboardShortcuts(e) {
+            const meta = e.ctrlKey || e.metaKey;
+            // 1. Ctrl/Cmd + K: 聚焦搜索
+            if (meta && e.key === 'k') { e.preventDefault(); DOM.inputs.search.focus(); }
+            // 2. Ctrl/Cmd + I: 新建任务
+            if (meta && e.key === 'i') { e.preventDefault(); if (DOM.modal.style.display !== 'flex') openModal(); }
+            // 3. Ctrl/Cmd + M: 切换菜单
+            if (meta && e.key === 'm') { e.preventDefault(); toggleMenu(DOM.menu.container, DOM.menu.btn); }
+            // 4. Alt + T: 平滑回到顶部
+            if (e.altKey && e.key.toLowerCase() === 't') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+            // 5. Esc: 关闭操作
+            if (e.key === 'Escape') {
+                if (DOM.modal.style.display === 'flex') closeDialog();
+                else if (document.activeElement === DOM.inputs.search) DOM.inputs.search.blur();
+                else closeMenu();
             }
         }
 
-        // --- 弹窗与表单逻辑 ---
-        function openAddTaskModal() {
-            elementToFocusOnClose = document.activeElement; // A11y: 存储当前焦点
-            editingTaskId = null;
-            modalTitle.setAttribute('data-i18n', 'addNewTask');
-            submitBtn.setAttribute('data-i18n', 'addTask');
-            taskForm.reset();
+        // ==========================================
+        // 5. 业务逻辑 (Business Logic)
+        // ==========================================
 
-            // 重置表单状态
-            noDeadlineCheckbox.checked = false;
-            dueDateInput.disabled = false;
-            dueTimeInput.disabled = false;
-            dueDateInput.value = new Date().toISOString().split('T')[0];
-            dueTimeInput.value = '23:59';
-            currentSubtasks = [];
-            renderSubtaskPreview();
-
-            taskModal.style.display = 'flex';
-            document.getElementById('taskName').focus();
-            applyTranslations();
-        }
-
-        function closeModal() {
-            taskModal.style.display = 'none';
-            taskForm.reset();
-            editingTaskId = null;
-
-            // 1. 恢复表单字段的显示
-            formGroups.forEach(group => { group.style.display = 'block'; });
-
-            // 2. 隐藏确认信息
-            const confirmMessageEl = document.getElementById('confirm-message-text');
-            if (confirmMessageEl) {
-                confirmMessageEl.style.display = 'none';
-            }
-
-            // 3. 重置提交按钮
-            submitBtn.type = 'submit'; // 恢复为 'submit'
-
-            // 4. 移除临时的确认处理器 (非常重要)
-            if (submitBtn._confirmHandler) {
-                submitBtn.removeEventListener('click', submitBtn._confirmHandler);
-                delete submitBtn._confirmHandler; // 清理引用
-            }
-
-            // 恢复按钮的翻译 (openAddTaskModal 或 editTask 会处理)
-
-            // A11y: 恢复焦点
-            if (elementToFocusOnClose) {
-                elementToFocusOnClose.focus();
-                elementToFocusOnClose = null;
-            }
-        }
-
-        async function handleFormSubmit(e) {
+        // --- 任务 CRUD ---
+        async function handleTaskSave(e) {
             e.preventDefault();
-            const langMap = translations[currentLanguage];
-            const taskName = document.getElementById('taskName').value.trim();
-            const taskDesc = document.getElementById('taskDesc').value.trim();
-            const hasDeadline = !noDeadlineCheckbox.checked;
+            const t = state.translations[state.currentLanguage];
 
-            let dueDateTime = null;
-            if (hasDeadline && dueDateInput.value) {
-                dueDateTime = localToUTC(dueDateInput.value, dueTimeInput.value);
-            }
+            const dueDateTime = (!DOM.inputs.noDeadline.checked && DOM.inputs.date.value)
+                ? utils.localToUTC(DOM.inputs.date.value, DOM.inputs.time.value) : null;
 
-            const taskData = {
-                name: taskName,
-                description: taskDesc,
-                subtasks: currentSubtasks,
+            const taskPayload = {
+                name: DOM.inputs.name.value.trim(),
+                description: DOM.inputs.desc.value.trim(),
+                subtasks: state.tempSubtasks,
                 dueDate: dueDateTime,
                 completed: false
             };
 
             try {
-                if (editingTaskId) {
-                    const existingTask = tasks.find(t => t.id === editingTaskId);
-                    const updatedTask = { ...existingTask, ...taskData,
-                        createdAt: existingTask.createdAt // 保留原始创建时间
-                    };
-                    await updateTaskInDB(updatedTask);
-                    showNotification(langMap['taskUpdated']);
+                if (state.editingTaskId) {
+                    const original = state.tasks.find(t => t.id === state.editingTaskId);
+                    await dbActions.updateTask({ ...original, ...taskPayload });
+                    utils.notify(t['taskUpdated']);
                 } else {
-                    const newTask = {
+                    await dbActions.addTask({
                         id: Date.now(),
-                        ...taskData,
-                        createdAt: new Date().toISOString() // 设置新创建时间
-                    };
-                    await addTaskToDB(newTask);
-                    showNotification(langMap['taskAdded']);
+                        createdAt: new Date().toISOString(),
+                        ...taskPayload
+                    });
+                    utils.notify(t['taskAdded']);
                 }
-
-                tasks = await getAllTasks();
-                renderTasks();
-                closeModal();
-            } catch (error) {
-                console.error('保存任务失败:', error);
-                showNotification(langMap['saveError'], 'error');
+                state.tasks = await dbActions.getAllTasks();
+                renderTaskList();
+                closeDialog();
+            } catch (err) {
+                console.error('保存任务失败:', err);
+                utils.notify(t['saveError'], 'error');
             }
         }
-        async function clearCompletedTasks() {
-            const langMap = translations[currentLanguage];
-            const completedTasks = tasks.filter(task => task.completed);
 
-            if (completedTasks.length === 0) {
-                showNotification(langMap['noCompletedTasks'], 'warning');
-                return;
-            }
-
-            showConfirmModal(
-                langMap['clearCompleted'],
-                (langMap['confirmClearCompleted']).replace('{count}', completedTasks.length.toString()),
-                async () => { // "确认" 按钮的回调
-                    try {
-                        const deletionPromises = completedTasks.map(task => deleteTaskFromDB(task.id));
-                        await Promise.all(deletionPromises);
-
-                        tasks = tasks.filter(task => !task.completed);
-
-                        renderTasks();
-
-                        showNotification((langMap['completedTasksCleared']).replace('{count}', completedTasks.length));
-                    } catch (error) {
-                        console.error('清除已完成任务失败:', error);
-                        showNotification(langMap['clearCompletedError'], "error");
-                    }
-                }
-            );
-
-        }
-
-        // --- 任务 CRUD 操作 (由事件委托调用) ---
         function editTask(id) {
-            const task = tasks.find(t => t.id === id);
+            const task = state.tasks.find(t => t.id === id);
             if (!task) return;
-
-            elementToFocusOnClose = document.activeElement; // A11y: 存储焦点
-            editingTaskId = id;
-            modalTitle.setAttribute('data-i18n', 'editTask');
-            submitBtn.setAttribute('data-i18n', 'updateTask');
-
-            document.getElementById('taskName').value = task.name;
-            document.getElementById('taskDesc').value = task.description || '';
-
-            // 深度复制，防止编辑时直接修改原数组
-            currentSubtasks = task.subtasks ? JSON.parse(JSON.stringify(task.subtasks)) : [];
-            renderSubtaskPreview();
-
-            if (task.dueDate) {
-                const localDate = utcToLocal(task.dueDate);
-                dueDateInput.value = localDate.toISOString().split('T')[0];
-                dueTimeInput.value = `${localDate.getHours().toString().padStart(2, '0')}:${localDate.getMinutes().toString().padStart(2, '0')}`;
-                noDeadlineCheckbox.checked = false;
-                dueDateInput.disabled = false;
-                dueTimeInput.disabled = false;
-            } else {
-                noDeadlineCheckbox.checked = true;
-                dueDateInput.disabled = true;
-                dueTimeInput.disabled = true;
-                dueDateInput.value = new Date().toISOString().split('T')[0];
-                dueTimeInput.value = '23:59';
-            }
-
-            taskModal.style.display = 'flex';
-            document.getElementById('taskName').focus();
-            applyTranslations();
+            openModal(task);
         }
 
         async function deleteTask(id) {
-            const langMap = translations[currentLanguage];
-
-            showConfirmModal(
-                langMap['deleteTaskTitle'], // 弹窗标题
-                langMap['confirmDelete'],   // 确认信息
-                async () => {
-                    try {
-                        await deleteTaskFromDB(id);
-                        tasks = tasks.filter(task => task.id !== id);
-                        renderTasks();
-                        showNotification(langMap['taskDeleted']);
-                    } catch (error) {
-                        console.error('删除任务失败:', error);
-                        showNotification(langMap['deleteError'], 'error');
-                    }
+            const t = state.translations[state.currentLanguage];
+            utils.confirm(t['deleteTaskTitle'], t['confirmDelete'], async () => {
+                try {
+                    await dbActions.deleteTask(id);
+                    state.tasks = state.tasks.filter(task => task.id !== id);
+                    renderTaskList();
+                    utils.notify(t['taskDeleted']);
+                } catch (e) {
+                    console.error('删除任务失败:', e);
+                    utils.notify(t['deleteError'], 'error');
                 }
-            );
+            });
         }
 
         async function toggleTaskComplete(id) {
-            const task = tasks.find(t => t.id === id);
+            const task = state.tasks.find(t => t.id === id);
             if (!task) return;
-            const langMap = translations[currentLanguage];
+            task.completed = !task.completed;
+            await dbActions.updateTask(task);
 
-            const updatedTask = {...task, completed: !task.completed};
+            // 动画反馈
+            const el = document.querySelector(`.task-item[data-task-id="${id}"]`);
+            if (el && task.completed) {
+                el.classList.add('animate-complete');
+                setTimeout(() => el.classList.remove('animate-complete'), 500);
+            }
 
-            try {
-                await updateTaskInDB(updatedTask);
-                tasks = await getAllTasks();
+            const t = state.translations[state.currentLanguage];
+            utils.notify(task.completed ? t['taskMarkedComplete'] : t['taskMarkedIncomplete']);
+            renderTaskList();
+        }
 
-                const taskElement = document.querySelector(`.task-item[data-task-id="${id}"]`);
-                if (updatedTask.completed) {
-                    taskElement.classList.add('animate-complete');
-                    setTimeout(() => taskElement.classList.remove('animate-complete'), 500);
-                    showNotification(langMap['taskMarkedComplete']);
-                } else {
-                    showNotification(langMap['taskMarkedIncomplete']);
+        async function handleClearCompleted() {
+            const t = state.translations[state.currentLanguage];
+            const completed = state.tasks.filter(x => x.completed);
+            if (completed.length === 0) return utils.notify(t['noCompletedTasks'], 'warning');
+
+            utils.confirm(t['clearCompleted'], t['confirmClearCompleted'].replace('{count}', completed.length), async () => {
+                await Promise.all(completed.map(task => dbActions.deleteTask(task.id)));
+                state.tasks = state.tasks.filter(x => !x.completed);
+                renderTaskList();
+                utils.notify(t['completedTasksCleared'].replace('{count}', completed.length));
+            });
+        }
+
+        // --- 子任务逻辑 ---
+        function handleAddSubtaskInput() {
+            const val = DOM.inputs.subtask.value.trim();
+            if (!val) return;
+            state.tempSubtasks.push({ id: Date.now(), text: val, completed: false });
+            DOM.inputs.subtask.value = '';
+            renderSubtaskPreview();
+            DOM.inputs.subtask.focus();
+        }
+
+        async function toggleSubtaskComplete(taskId, subtaskId) {
+            const task = state.tasks.find(t => t.id === taskId);
+            if (!task || !task.subtasks) return;
+
+            const sub = task.subtasks.find(s => s.id === subtaskId);
+            if (sub) {
+                // 1. 更新数据
+                sub.completed = !sub.completed;
+                await dbActions.updateTask(task);
+
+                // 2. DOM 局部更新
+                const taskEl = document.querySelector(`.task-item[data-task-id="${taskId}"]`);
+                if (!taskEl) return;  // 如果找不到元素，直接退出防止报错
+
+                // 更新 Checkbox 状态
+                const checkbox = taskEl.querySelector(`.subtask-checkbox[data-subtask-id="${subtaskId}"]`);
+                if (checkbox) {
+                    checkbox.checked = sub.completed;
+                    const row = checkbox.closest('.subtask-display-item');
+                    if (row) row.classList.toggle('completed', sub.completed);
                 }
 
-                renderTasks();
-            } catch (error) {
-                console.error('更新任务状态失败:', error);
-                showNotification(langMap['updateError'], 'error');
+                // 更新顶部计数 1/3
+                const total = task.subtasks.length;
+                const completedCount = task.subtasks.filter(s => s.completed).length;
+                const progressText = taskEl.querySelector('.subtask-summary-bar .progress-text');
+                if (progressText) progressText.textContent = `${completedCount}/${total} ${state.translations[state.currentLanguage]['subTasks']}`;
+
             }
         }
 
-        // --- 渲染、筛选、排序 ---
-        function startProgressUpdate() {
-            if (progressUpdateInterval) clearInterval(progressUpdateInterval);
-            // 调用新的轻量级函数，而不是完整的 renderTasks
-            progressUpdateInterval = setInterval(updateTaskTimers, 60000); // 1分钟
+        // ==========================================
+        // 6. UI 渲染 (Rendering)
+        // ==========================================
+
+        // --- 1. 计算统计 (保持不变) ---
+        // const totalTasks = tasks.length;
+        // const activeTasks = tasks.filter(task => !task.completed).length;
+        // const completedTasks = tasks.filter(task => task.completed).length;
+        // const tasksWithoutDeadline = tasks.filter(task => !task.dueDate).length;
+        // const overdueTasks = tasks.filter(task => {
+        //     return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
+        // }).length;
+
+        function renderTaskList() {
+            const t = state.translations[state.currentLanguage];
+            if (!t) return;
+
+            if (state.tasks.length === 0) {
+                DOM.taskList.innerHTML = getEmptyStateHTML(t);
+                return;
+            }
+
+            // 1. 筛选与排序
+            let result = state.tasks.filter(task => {
+                if (state.searchQuery && !task.name.toLowerCase().includes(state.searchQuery) &&
+                    !(task.description && task.description.toLowerCase().includes(state.searchQuery)))
+                    return false;
+
+                switch (state.filter) {
+                    case 'active': return !task.completed;
+                    case 'completed': return task.completed;
+                    case 'overdue': return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
+                    case 'no-deadline': return !task.dueDate;
+                    default: return true;
+                }
+            });
+
+            result = utils.sortTasks(result);
+
+            // 2. 空状态处理
+            const loader = document.getElementById('initial-loader');
+            if (loader) loader.remove();
+
+            if (result.length === 0) {
+                DOM.taskList.innerHTML = getEmptyMatchHTML(t);
+                return;
+            }
+            // 清除空状态
+            if (DOM.taskList.querySelector('.empty-state')) DOM.taskList.innerHTML = '';
+
+            // 3. DOM Diff/Patch
+            const existingMap = new Map();
+            Array.from(DOM.taskList.children).forEach(el => {
+                if (el.classList.contains('task-item')) existingMap.set(Number(el.dataset.taskId), el);
+            });
+
+            let refNode = DOM.taskList.firstChild;
+            result.forEach(task => {
+                const existingEl = existingMap.get(task.id);
+                if (existingEl) {
+                    // 更新内容
+                    renderTaskItem(existingEl, task);
+                    // 检查顺序
+                    if (existingEl !== refNode) DOM.taskList.insertBefore(existingEl, refNode);
+                    // 标记为 "已处理"
+                    existingMap.delete(task.id);
+                    refNode = existingEl.nextSibling;
+                } else {
+                    const newEl = createTaskNode(task);
+                    DOM.taskList.insertBefore(newEl, refNode);
+                }
+            });
+
+            // 移除多余元素
+            existingMap.forEach(el => el.remove());
         }
 
-        function setFilter(filter) {
-            currentFilter = filter;
-            renderTasks();
+        function createTaskNode(task) {
+            const el = DOM.taskTemplate.content.cloneNode(true).firstElementChild;
+            el.dataset.taskId = task.id;
+            renderTaskItem(el, task);
+            return el;
         }
 
-        function filterTasks() {
-            searchQuery = searchInput.value.toLowerCase();
-            renderTasks();
+        // --- 核心渲染逻辑 ---
+        function renderTaskItem(el, task) {
+            const t = state.translations[state.currentLanguage];
+
+            // A. 状态计算
+            let statusObj;
+            let timeLeft = null;
+            if (task.completed) statusObj = { cls: 'status-completed', text: t['statusCompleted'], percent: 100 };
+            else if (task.dueDate) {
+                timeLeft = utils.calculateTimeLeft(task.dueDate);
+                statusObj = utils.getStatus(timeLeft);
+            } else {
+                statusObj = { cls: 'status-no-deadline', text: t['statusNoDeadline'], percent: 0 };
+            }
+
+            // B. 基础信息
+            el.className = `task-item ${statusObj.cls} ${task.completed ? 'completed-task' : ''}`;
+            el.querySelector('.task-name').textContent = task.name;
+            el.querySelector('.task-date').textContent = task.dueDate ?
+                `${t['deadline']}: ${utils.formatDate(task.dueDate)}` : t['noDeadlineText'];
+
+            // C. 描述
+            let descEl = el.querySelector('.task-desc');
+            if (task.description) {
+                if (!descEl) { // 如果模板中没有，（理论上不该发生）
+                    descEl = document.createElement('div');
+                    descEl.className = 'task-desc';
+                    el.querySelector('.task-header').after(descEl);
+                }
+                descEl.textContent = task.description;
+            } else if (descEl) descEl.remove(); // 移除空描述
+
+            // D. 子任务 (Subtasks)
+            renderSubtaskList(el, task);
+
+            // E. 进度条
+            let bar = el.querySelector('.progress-bar');
+            if (task.dueDate && !task.completed) {
+                if (!bar) {
+                    bar = document.createElement('div');
+                    bar.className = 'progress-bar';
+                    bar.innerHTML = '<div class="progress-fill"></div>';
+                    // 插入位置：在子任务之后，或描述之后，或头部之后
+                    const prev = el.querySelector('.subtasks-wrapper') || el.querySelector('.task-desc') || el.querySelector('.task-header');
+                    prev.after(bar);
+                }
+                bar.querySelector('.progress-fill').style.width = `${statusObj.percent}%`;
+            } else if (bar) bar.remove();
+
+            // F. 底部状态文字
+            const statusInd = el.querySelector('.status-indicator');
+            statusInd.querySelector('.status-text').textContent = statusObj.text;
+
+            let timeEl = statusInd.querySelector('.status-time-left');
+            if (task.dueDate && !task.completed) {
+                if (!timeEl) {
+                    timeEl = document.createElement('span');
+                    timeEl.className = 'status-time-left';
+                    statusInd.querySelector('.status-text').after(timeEl);
+                }
+                timeEl.textContent = `(${utils.formatTime(timeLeft)})`;
+            } else if (timeEl) timeEl.remove();
+
+            // G. 按钮 Titles
+            el.querySelector('[data-action="toggle"]').title = task.completed ? t['markIncomplete'] : t['markComplete'];
+            el.querySelector('[data-action="edit"]').title = t['editTaskTitle'];
+            el.querySelector('[data-action="delete"]').title = t['deleteTaskTitle'];
         }
 
-        function sortTasks(taskList) {
-            // 复制一份数组以免修改原引用（虽然 filter 已经产生新数组，但这是一个好习惯）
-            const list = [...taskList];
+        function renderSubtaskList(el, task) {
+            let wrapper = el.querySelector('.subtasks-wrapper');
 
-            switch (currentSort) {
-                case 'created-desc': // 新创建 (Created Newest)
-                    return list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            // 如果没有子任务，移除容器并退出
+            if (!task.subtasks || task.subtasks.length === 0) {
+                if (wrapper) wrapper.remove();
+                return;
+            }
 
-                case 'due-asc': // 截止日期 (Due Date Earliest)
-                    return list.sort((a, b) => {
-                        // 无截止日期的排在最后
+            // 创建容器
+            if (!wrapper) {
+                wrapper = document.createElement('div');
+                wrapper.className = 'subtasks-wrapper';
+                const prev = el.querySelector('.task-desc') || el.querySelector('.task-header');
+                prev.after(wrapper);
+            }
+
+            const total = task.subtasks.length;
+            const completed = task.subtasks.filter(s => s.completed).length;
+
+            // 每次都重绘内部 HTML，因为状态可能变了
+            // 注意：我们使用 innerHTML 重绘，这会导致折叠状态丢失，所以需要先保存状态
+            const wasExpanded = wrapper.classList.contains('expanded');
+
+            wrapper.innerHTML = `
+                <div class="subtask-summary-bar">
+                    <div class="subtask-count-text">
+                        <svg width="14" height="14" viewBox="0 0 24 24" class="svg-no-fill" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                        <span class="progress-text">${completed}/${total} ${state.translations[state.currentLanguage]['subTasks']}</span>
+                    </div>
+                    <svg class="subtask-toggle-icon" width="16" height="16" viewBox="0 0 24 24" class="svg-no-fill" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+                <div class="subtasks-list">
+                    ${task.subtasks.map(sub => `
+                        <div class="subtask-display-item ${sub.completed ? 'completed' : ''}">
+                            <input type="checkbox" class="subtask-checkbox" data-subtask-id="${sub.id}" ${sub.completed ? 'checked' : ''}>
+                            <span class="subtask-text">${utils.escapeHTML(sub.text)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            // 恢复折叠状态
+            if (wasExpanded) wrapper.classList.add('expanded');
+        }
+
+        function renderSubtaskPreview() {
+            const listEl = DOM.subtaskListPreview;
+            listEl.innerHTML = ''; // 清空
+
+            state.tempSubtasks.forEach((sub, index) => {
+                const li = document.createElement('li');
+                li.className = 'subtask-preview-item';
+
+                // === 核心逻辑：判断这一行是不是正在编辑 ===
+                if (index === state.editingSubtaskIndex) {
+                    // A. 如果是编辑状态：渲染 INPUT
+                    li.innerHTML = `
+                <input type="text" class="subtask-edit-input" value="${utils.escapeHTML(sub.text)}">
+                <button type="button" class="subtask-delete-btn" data-index="${index}" title="删除">
+                    <svg width="14" height="14" viewBox="0 0 24 24" class="svg-no-fill" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            `;
+                    // 自动聚焦 (注意：innerHTML 渲染后需要手动获取元素来 focus)
+                    // 使用 setTimeout 确保 DOM 渲染完成
+                    setTimeout(() => {
+                        const input = li.querySelector('input');
+                        if(input) {
+                            input.focus();
+                            // 把光标移到末尾 (可选优化)
+                            input.setSelectionRange(input.value.length, input.value.length);
+                        }
+                    }, 0);
+
+                } else {
+                    // B. 如果是普通状态：渲染 SPAN
+                    li.innerHTML = `
+                <span class="subtask-preview-text" data-index="${index}">${utils.escapeHTML(sub.text)}</span>
+                <button type="button" class="subtask-delete-btn" data-index="${index}" title="删除">
+                    <svg width="14" height="14" viewBox="0 0 24 24" class="svg-no-fill" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            `;
+                }
+
+                listEl.appendChild(li);
+            });
+        }
+
+        function openModal(editingTask = null) {
+            state.elementToFocusOnClose = document.activeElement; // A11y: 存储当前焦点
+            if (editingTask) {
+                state.editingTaskId = editingTask.id;
+                DOM.modalTitle.setAttribute('data-i18n', 'editTask');
+                DOM.submitBtn.setAttribute('data-i18n', 'updateTask');
+                DOM.inputs.name.value = editingTask.name;
+                DOM.inputs.desc.value = editingTask.description || '';
+
+                // 子任务深拷贝，防止编辑时直接修改原数组
+                state.tempSubtasks = editingTask.subtasks ? JSON.parse(JSON.stringify(editingTask.subtasks)) : [];
+
+                if (editingTask.dueDate) {
+                    const local = utils.utcToLocal(editingTask.dueDate);
+                    DOM.inputs.date.value = local.toISOString().split('T')[0];
+                    DOM.inputs.time.value = `${local.getHours().toString().padStart(2,'0')}:${local.getMinutes().toString().padStart(2,'0')}`;
+                    DOM.inputs.noDeadline.checked = false;
+                    DOM.inputs.date.disabled = false;
+                    DOM.inputs.time.disabled = false;
+                } else {
+                    DOM.inputs.noDeadline.checked = true;
+                    DOM.inputs.date.disabled = true;
+                    DOM.inputs.time.disabled = true;
+                    DOM.inputs.date.value = new Date().toISOString().split('T')[0];
+                    DOM.inputs.time.value = '23:59';
+                }
+            } else {
+                state.editingTaskId = null;
+                DOM.modalTitle.setAttribute('data-i18n', 'addNewTask');
+                DOM.submitBtn.setAttribute('data-i18n', 'addTask');
+
+                state.tempSubtasks = [];
+                DOM.inputs.noDeadline.checked = false;
+                DOM.inputs.date.disabled = false;
+                DOM.inputs.time.disabled = false;
+                DOM.inputs.date.value = new Date().toISOString().split('T')[0];
+                DOM.inputs.time.value = '23:59';
+            }
+
+            renderSubtaskPreview();
+            utils.applyTranslations(); // 刷新弹窗内的多语言
+            DOM.modal.style.display = 'flex';
+            DOM.inputs.name.focus();
+        }
+
+        function closeDialog() {
+            DOM.modal.style.display = 'none';
+            state.editingTaskId = null;
+
+            // --- 通用清理逻辑 ---
+
+            // 1. 重置表单模式残留
+            DOM.form.reset();
+            DOM.formGroups.forEach(g => g.style.display = 'block'); // 恢复输入框显示
+            state.tempSubtasks = []; // 清空临时数据
+            state.editingSubtaskIndex = -1;
+
+            // 2. 重置确认模式残留
+            const msg = document.getElementById('confirm-message-text');
+            if (msg) msg.style.display = 'none'; // 隐藏确认文字
+
+            // 3. 重置按钮状态 (这是最关键的复用逻辑)
+            DOM.submitBtn.type = 'submit';
+
+            // 移除确认模式下的一次性监听器
+            if (DOM.submitBtn._confirmHandler) {
+                DOM.submitBtn.removeEventListener('click', DOM.submitBtn._confirmHandler);
+                delete DOM.submitBtn._confirmHandler;
+            }
+
+            // A11y: 恢复焦点
+            if (state.elementToFocusOnClose) {
+                state.elementToFocusOnClose.focus();
+                state.elementToFocusOnClose = null;
+            }
+        }
+
+        // ==========================================
+        // 7. 数据库层 (IndexedDB Layer)
+        // ==========================================
+        const dbActions = {
+            init: () => new Promise((resolve, reject) => {
+                const req = indexedDB.open(CONFIG.DB_NAME, CONFIG.DB_VERSION);
+                req.onerror = () => reject(req.error);
+                req.onsuccess = () => { state.db = req.result; resolve(state.db); };
+                req.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains(CONFIG.STORE_TASKS)) { // 创建任务存储
+                        const store = db.createObjectStore(CONFIG.STORE_TASKS, { keyPath: 'id' });
+                        store.createIndex('dueDate', 'dueDate', { unique: false });
+                    }
+                    if (!db.objectStoreNames.contains(CONFIG.STORE_CONFIG)) { // 创建配置存储
+                        db.createObjectStore(CONFIG.STORE_CONFIG, { keyPath: 'key' });
+                    }
+                };
+            }),
+            getAllTasks: () => utils.dbOp(CONFIG.STORE_TASKS, 'readonly', s => s.getAll()),
+            addTask: (task) => utils.dbOp(CONFIG.STORE_TASKS, 'readwrite', s => s.add(task)),
+            updateTask: (task) => utils.dbOp(CONFIG.STORE_TASKS, 'readwrite', s => s.put(task)),
+            deleteTask: (id) => utils.dbOp(CONFIG.STORE_TASKS, 'readwrite', s => s.delete(id)),
+            getConfig: (key) => utils.dbOp(CONFIG.STORE_CONFIG, 'readonly', s => s.get(key)).then(res => res ? res.value : null),
+            setConfig: (key, value) => utils.dbOp(CONFIG.STORE_CONFIG, 'readwrite', s => s.put({ key, value }))
+        };
+        // 别名，为了向后兼容 initApp 调用
+        const initDB = dbActions.init;
+
+
+        // 工具与辅助函数 (Utilities)
+        const utils = {
+            dbOp: (storeName, mode, callback) => new Promise((resolve, reject) => {
+                const tx = state.db.transaction([storeName], mode);
+                const req = callback(tx.objectStore(storeName));
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            }),
+            debounce: (func, delay = 300) => {
+                let id;
+                return (...args) => { clearTimeout(id); id = setTimeout(() => func(...args), delay); };
+            },
+            notify: (msg, type = 'success') => {
+                DOM.notification.text.textContent = msg;
+                DOM.notification.el.className = `notification ${type} show`;
+                DOM.notification.el.setAttribute('role', (type === 'error' || type === 'warning') ? 'alert' : 'status');
+                setTimeout(() => DOM.notification.el.classList.remove('show'), 3000);
+            },
+            confirm: (title, msg, onConfirm) => {
+                DOM.modalTitle.textContent = title;
+
+                // 动态创建提示文本
+                let p = document.getElementById('confirm-message-text');
+                if (!p) {
+                    p = document.createElement('p');
+                    p.id = 'confirm-message-text';
+                    p.style.cssText = 'font-size:16px; line-height:1.5; margin-bottom:20px;';
+                    DOM.form.prepend(p); // 插入到表单的开头
+                }
+                p.textContent = msg;
+                p.style.display = 'block';
+
+                // 隐藏输入框
+                DOM.formGroups.forEach(g => g.style.display = 'none');
+
+                // 修改按钮
+                const t = state.translations[state.currentLanguage];
+                DOM.submitBtn.textContent = t['confirm'];
+                DOM.submitBtn.type = 'button';
+
+                const handler = () => { onConfirm(); closeDialog(); }; // 定义一次性点击事件
+                DOM.submitBtn._confirmHandler = handler;
+                DOM.submitBtn.addEventListener('click', handler);
+
+                state.elementToFocusOnClose = document.activeElement;  // A11y: 存储焦点
+                DOM.modal.style.display = 'flex';
+                DOM.submitBtn.focus();
+            },
+            toggleTheme: () => {
+                const html = document.documentElement;
+                const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                html.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            },
+
+            // 时间计算
+            localToUTC: (d, t) => {
+                const l = new Date(`${d}T${t}`);
+                return new Date(l.getTime() + l.getTimezoneOffset() * 60000).toISOString();
+            },
+            utcToLocal: (iso) => {
+                const d = new Date(iso);
+                return new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+            },
+            calculateTimeLeft: (iso) => (utils.utcToLocal(iso) - new Date()) / 60000,
+
+            formatDate: (iso) => {
+                const d = utils.utcToLocal(iso);
+                const cacheKey = state.currentLanguage; // 获取当前语言
+                if (!state.dateTimeFormatters[cacheKey]) {
+                    state.dateTimeFormatters[cacheKey] = new Intl.DateTimeFormat(
+                        cacheKey, {
+                            year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                        });
+                }
+                return state.dateTimeFormatters[cacheKey].format(d);
+            },
+
+            formatTime: (min) => {
+                const t = state.translations[state.currentLanguage];
+                if (min < 0) {
+                    const m = Math.abs(Math.floor(min));
+                    if (m < 60) return t['minutesAgo'].replace('{minutes}', m);
+                    if (m < 1440) return t['hoursAgo'].replace('{hours}', Math.floor(m/60));
+                    return t['daysAgo'].replace('{days}', Math.floor(m/1440));
+                }
+                const m = Math.floor(min);
+                if (m < 60) return t['minutesLeft'].replace('{minutes}', m);
+                if (m < 1440) {
+                    const h = Math.floor(m/60), rest = m%60;
+                    return `${t['hoursLeft'].replace('{hours}',h)} ${rest>0 ? t['minutesLeft'].replace('{minutes}',rest) : ''}`;
+                }
+                const d = Math.floor(m/1440), h = Math.floor((m%1440)/60), rest = m%60;
+                return `${t['daysLeft'].replace('{days}', d)} ${h>0 ? t['hoursLeft'].replace('{hours}', h) : ''} ${rest>0 ? t['minutesLeft'].replace('{minutes}', rest) : ''}`;
+            },
+
+            // 根据剩余时间获取状态
+            getStatus: (min) => {
+                const t = state.translations[state.currentLanguage];
+                // 关键分钟数：3天=4320, 7天=10080, 37天=53280
+                // --- 状态: 已过期 (Overdue) ---
+                if (min < 0) return { cls: 'status-danger', text: t['statusOverdue'], percent: 100 };
+                // --- 状态: 危险 (Danger) --- (窗口: 0 - 3天 / 4320分钟)
+                if (min <= 4320) return { cls: 'status-danger', text: t['statusDanger'], percent: Math.min(100, ((4320 - min)/4320)*100) };
+                // --- 状态: 警告 (Warning) --- (窗口: 3 - 7天 / 5760分钟)
+                if (min <= 10080) return { cls: 'status-warning', text: t['statusWarning'], percent: Math.min(100, ((10080 - min)/5760)*100) };
+                // --- 状态: 安全 (Safe) --- (窗口: 7 - 37天 / 43200分钟)
+                return { cls: 'status-safe', text: t['statusSafe'], percent: Math.min(100, Math.max(0, ((53280 - min)/43200)*100)) };
+            },
+
+            sortTasks: (list) => {
+                const l = [...list]; // 复制一份数组以免修改原引用
+                switch (state.sort) {
+                    case 'created-desc': return l.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                    case 'due-asc': return l.sort((a, b) => {
                         if (!a.dueDate && b.dueDate) return 1;
                         if (a.dueDate && !b.dueDate) return -1;
                         if (!a.dueDate && !b.dueDate) return 0;
                         return new Date(a.dueDate) - new Date(b.dueDate);
                     });
-
-                case 'alpha-asc': // A-Z
-                    return list.sort((a, b) => a.name.localeCompare(b.name, currentLanguage));
-
-                case 'smart': // 智能排序 (原逻辑)
-                default:
-                    return list.sort((a, b) => {
+                    case 'alpha-asc': return l.sort((a, b) => a.name.localeCompare(b.name, state.currentLanguage));
+                    case 'smart':  // 智能排序 (原逻辑)
+                    default: return l.sort((a, b) => {
                         // 1. 已完成的放最后
                         if (a.completed !== b.completed) return a.completed ? 1 : -1;
                         // 2. 无截止日期放有截止日期后面
@@ -1489,555 +1411,334 @@
                         // 4. 最后按创建时间
                         return new Date(a.createdAt) - new Date(b.createdAt);
                     });
+                }
+            },
+
+            applyTranslations: () => {
+                let t = state.translations[state.currentLanguage];
+                if (!t) {
+                    console.warn(`没有 ${state.currentLanguage} 可用的翻译。将要使用默认语言。`);
+                    // 尝试使用第一个可用的翻译
+                    const fallbackLang = Object.keys(state.translations)[0];
+                    if (!fallbackLang) {
+                        console.error("完全没有翻译文件。");
+                        return; // 无法渲染
+                    }
+                    state.currentLanguage = fallbackLang;
+                    t = state.translations[state.currentLanguage];
+                }
+                document.querySelectorAll('[data-i18n], [data-i18n-placeholder], [data-i18n-title], [data-i18n-aria-label]').forEach(el => {
+                    if (el.dataset.i18n) el.textContent = t[el.dataset.i18n];
+                    if (el.dataset.i18nPlaceholder) el.placeholder = t[el.dataset.i18nPlaceholder];
+                    if (el.dataset.i18nTitle) el.title = t[el.dataset.i18nTitle];
+                    if (el.dataset.i18nAriaLabel) el.setAttribute('aria-label', t[el.dataset.i18nAriaLabel]);
+                });
+                syncDropdowns();
+                renderTaskList();
+            },
+
+            escapeHTML: (str) => {
+                const div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            },
+        };
+
+        // ==========================================
+        // 9. 杂项逻辑 (Dropdowns, Menu, etc.)
+        // ==========================================
+
+        function setupDropdowns() {
+            // 辅助：切换显示
+            const toggle = (c, b) => {
+                const opening = !c.classList.contains('show');
+                // 关闭其他
+                Object.values(DOM.dropdowns).forEach(d => {
+                    d.container.classList.remove('show');
+                    d.btn.setAttribute('aria-expanded', 'false');
+                });
+                if (opening) {
+                    c.classList.add('show');
+                    b.setAttribute('aria-expanded', 'true');
+                }
+            };
+
+            // 绑定点击
+            DOM.dropdowns.filter.btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(DOM.dropdowns.filter.container, DOM.dropdowns.filter.btn); });
+            DOM.dropdowns.sort.btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(DOM.dropdowns.sort.container, DOM.dropdowns.sort.btn); });
+
+            // 选项点击
+            DOM.dropdowns.filter.container.addEventListener('click', (e) => {
+                const opt = e.target.closest('.dropdown-option');
+                if (opt) {
+                    state.filter = opt.dataset.filter;
+                    renderTaskList();
+                    syncDropdowns();
+                }
+            });
+            DOM.dropdowns.sort.container.addEventListener('click', (e) => {
+                const opt = e.target.closest('.dropdown-option');
+                if (opt) {
+                    state.sort = opt.dataset.sort;
+                    renderTaskList();
+                    syncDropdowns();
+                }
+            });
+
+            // 点击外部关闭
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.dropdown-container')) {
+                    Object.values(DOM.dropdowns).forEach(d => {
+                        d.container.classList.remove('show');
+                        d.btn.setAttribute('aria-expanded', 'false');
+                    });
+                }
+            });
+        }
+
+        function syncDropdowns() {
+            // 同步筛选按钮 UI
+            const filterOpt = DOM.dropdowns.filter.container.querySelector(`.dropdown-option[data-filter="${state.filter}"]`);
+            if (filterOpt) updateDropdownUI(DOM.dropdowns.filter.container, filterOpt, DOM.dropdowns.filter.btn);
+
+            // 同步排序按钮 UI
+            const sortOpt = DOM.dropdowns.sort.container.querySelector(`.dropdown-option[data-sort="${state.sort}"]`);
+            if (sortOpt) updateDropdownUI(DOM.dropdowns.sort.container, sortOpt, DOM.dropdowns.sort.btn);
+        }
+
+        function updateDropdownUI(container, selected, btn) {
+            // 移除旧的 selected
+            container.querySelectorAll('.dropdown-option').forEach(o => o.classList.remove('selected'));
+            // 添加新的 selected
+            selected.classList.add('selected');
+            // 关闭菜单
+            container.classList.remove('show');
+            btn.setAttribute('aria-expanded', 'false');
+            // 更新文字
+            const span = selected.querySelector('span');
+            if (span) {
+                const targetSpan = btn.querySelector('[id^="current"]'); // 查找 currentFilterLabel 或 currentSortLabel
+                if (targetSpan) targetSpan.textContent = span.textContent;
             }
         }
 
-        // 新增一个轻量级更新函数
-        function updateTaskTimers() {
-            const langMap = translations[currentLanguage];
-            if (!langMap) return;
+        function toggleMenu(menu, btn) {
+            const opening = !menu.classList.contains('show');
+            if (opening) {
+                menu.classList.add('show');
+                btn.setAttribute('aria-expanded', 'true');
+            } else closeMenu();
+        }
 
-            // 仅遍历当前DOM中未完成的任务项
-            document.querySelectorAll('.task-item:not(.completed-task)').forEach(taskElement => {
-                const taskId = Number(taskElement.dataset.taskId);
-                const task = tasks.find(t => t.id === taskId);
+        function closeMenu() {
+            DOM.menu.container.classList.remove('show');
+            DOM.menu.btn.setAttribute('aria-expanded', 'false');
+            DOM.menu.langSubmenu.classList.remove('show');
+            DOM.menu.langToggle.classList.remove('open');
+            DOM.menu.langToggle.setAttribute('aria-expanded', 'false');
+        }
+
+        function handleTaskListClick(e) {
+            // 1. 勾选子任务
+            if (e.target.classList.contains('subtask-checkbox')) {
+                e.stopPropagation();
+                const taskId = Number(e.target.closest('.task-item').dataset.taskId);
+                const subtaskId = Number(e.target.dataset.subtaskId);
+                toggleSubtaskComplete(taskId, subtaskId);
+                return;
+            }
+            // 允许点击文字也能切换
+            if (e.target.closest('.subtask-display-item')) {
+                const checkbox = e.target.closest('.subtask-display-item').querySelector('.subtask-checkbox');
+                if (checkbox && e.target !== checkbox) {
+                    // 手动触发点击复选框
+                    checkbox.click();
+                    return;
+                }
+            }
+
+            // 2. 折叠子任务
+            const summary = e.target.closest('.subtask-summary-bar');
+            if (summary) {
+                summary.closest('.subtasks-wrapper').classList.toggle('expanded');
+                return;
+            }
+
+            // 3. 主任务动作按钮
+            const btn = e.target.closest('.action-btn');
+            if (btn) {
+                const taskId = Number(btn.closest('.task-item').dataset.taskId);
+                const action = btn.dataset.action;
+                switch (action) {
+                    case 'toggle': toggleTaskComplete(taskId); break;
+                    case 'edit': editTask(taskId); break;
+                    case 'delete': deleteTask(taskId); break;
+                }
+            }
+        }
+
+        function saveEditSubtask(inputEl) {
+            const val = inputEl.value.trim();
+            // 只有在真的处于编辑模式时才保存（防止快速点击导致的竞态）
+            if (state.editingSubtaskIndex !== -1) {
+                if (val) {
+                    state.tempSubtasks[state.editingSubtaskIndex].text = val;
+                }
+                // 如果改为空，恢复原状
+                state.editingSubtaskIndex = -1; // 退出编辑模式
+                renderSubtaskPreview(); // 重绘：输入框变回文本
+            }
+        }
+
+        // --- 其他辅助逻辑 ---
+        async function loadTranslations() {
+            const promises = CONFIG.LANGUAGES.map(l =>
+                fetch(`./resources/${l.code}.json?v=1.2`).then(r => r.json()).then(d => state.translations[l.code] = d)
+            );
+            await Promise.all(promises);
+            if (Object.keys(state.translations).length === 0) utils.notify('加载语言失败，请刷新页面重试', 'error');
+        }
+
+        function createLangButtons() {
+            DOM.menu.langContainer.innerHTML = '';
+            CONFIG.LANGUAGES.forEach(l => {
+                const b = document.createElement('button');
+                b.className = 'lang-btn';
+                b.dataset.lang = l.code;
+                b.textContent = l.name;
+                DOM.menu.langContainer.appendChild(b);
+            });
+        }
+
+        function initLanguage() {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === state.currentLanguage));
+            document.documentElement.lang = state.currentLanguage;
+            utils.applyTranslations();
+        }
+
+        function switchLanguage(code) {
+            if (!state.translations[code]) return;
+            state.currentLanguage = code;
+            dbActions.setConfig('language', code);
+            initLanguage();
+        }
+
+        function startProgressTimer() {
+            if (state.progressInterval) clearInterval(state.progressInterval);
+            state.progressInterval = setInterval(refreshTaskTimers, 60000);
+        }
+
+        function refreshTaskTimers() {
+            // 仅更新 DOM 中可见的任务
+            document.querySelectorAll('.task-item:not(.completed-task)').forEach(el => {
+                const id = Number(el.dataset.taskId);
+                const task = state.tasks.find(t => t.id === id);
 
                 if (!task || !task.dueDate) return; // 如果找不到任务或没有截止日期，则跳过
 
-                // 1. 重新计算时间和状态
-                const timeLeft = calculateTimeLeft(task.dueDate);
-                const status = getStatus(timeLeft);
+                // 1. 计算新状态
+                const timeLeft = utils.calculateTimeLeft(task.dueDate);
+                const statusObj = utils.getStatus(timeLeft);
 
-                // 2. 更新状态文本
-                const statusIndicator = taskElement.querySelector('.status-indicator');
-                // 清除旧的状态类名，保留基础类名
-                statusIndicator.className = 'status-indicator';
-                statusIndicator.classList.add(status.statusClass);
-                statusIndicator.querySelector('.status-text').textContent = status.text;
+                // 2. 仅精准更新受影响的 DOM 节点
+                // A. 更新剩余时间文字
+                const statusText = el.querySelector('.status-text');
+                const timeEl = el.querySelector('.status-time-left');
+                if (statusText) statusText.textContent = statusObj.text;
+                if (timeEl) timeEl.textContent = `(${utils.formatTime(timeLeft)})`;
 
-                // 3. 更新剩余时间
-                const timeLeftEl = statusIndicator.querySelector('.status-time-left');
-                if (timeLeftEl) { // 确保元素存在
-                    timeLeftEl.textContent = `(${formatTimeLeft(timeLeft)})`;
+                // B. 更新进度条宽度
+                const progressFill = el.querySelector('.progress-fill');
+                if (progressFill) progressFill.style.width = `${statusObj.percent}%`;
+
+                // C. 更新颜色类名 (只在类名改变时操作，减少 DOM 写入)
+                // 移除旧的状态类 (safe, warning, danger, overdue)
+                const classesToRemove = ['status-safe', 'status-warning', 'status-danger', 'status-overdue'];
+                if (!el.classList.contains(statusObj.cls)) {
+                    el.classList.remove(...classesToRemove);
+                    el.classList.add(statusObj.cls);
                 }
 
-                // 4. 更新进度条
-                const progressBarEl = taskElement.querySelector('.progress-bar');
-                if (progressBarEl) {
-                    const progressFill = progressBarEl.querySelector('.progress-fill');
-                    progressFill.style.width = `${status.progress}%`;
-                }
-
-                // 5. 更新任务项的 class
-                // 移除所有可能的状态类
-                taskElement.classList.remove('status-safe', 'status-warning', 'status-danger', 'status-no-deadline');
-                // 添加新的状态类
-                if (status.statusClass) {
-                    taskElement.classList.add(status.statusClass);
-                }
             });
         }
-
-        // --- 核心渲染逻辑 (复用代码) ---
-        function renderTaskContent(taskElement, task) {
-            const langMap = translations[currentLanguage];
-
-            // 1. 计算状态
-            let status, timeLeft = null;
-            if (task.completed) {
-                status = { statusClass: 'status-completed', text: langMap['statusCompleted'], progress: 100 };
-            } else if (task.dueDate) {
-                timeLeft = calculateTimeLeft(task.dueDate);
-                status = getStatus(timeLeft);
-            } else {
-                status = { statusClass: 'status-no-deadline', text: langMap['statusNoDeadline'], progress: 0 };
-            }
-
-            // 2. 设置 CSS 类名
-            // 移除旧的状态类
-            taskElement.classList.remove('status-safe', 'status-warning', 'status-danger', 'status-no-deadline', 'completed-task');
-            // 添加新状态
-            if (status.statusClass) taskElement.classList.add(status.statusClass);
-            if (task.completed) taskElement.classList.add('completed-task');
-
-            // 3. 头部信息 (名称 & 日期)
-            taskElement.querySelector('.task-name').textContent = task.name;
-            taskElement.querySelector('.task-date').textContent = task.dueDate ?
-                `${langMap['deadline']}: ${formatDateTime(task.dueDate)}` :
-                langMap['noDeadlineText'];
-
-            // 4. 描述 (动态插入或移除)
-            let taskDescEl = taskElement.querySelector('.task-desc');
-            if (task.description) {
-                if (!taskDescEl) { // 如果模板中没有，（理论上不该发生）
-                    taskDescEl = document.createElement('div');
-                    taskDescEl.className = 'task-desc';
-                    taskElement.querySelector('.task-header').after(taskDescEl);
-                }
-                taskDescEl.textContent = task.description;
-            } else if (taskDescEl) {
-                taskDescEl.remove(); // 移除空描述
-            }
-
-            // 5. 子任务渲染 (UI 更新版)
-            // 查找或创建包裹容器 .subtasks-wrapper
-            let subtaskWrapper = taskElement.querySelector('.subtasks-wrapper');
-            if (!subtaskWrapper) {
-                subtaskWrapper = document.createElement('div');
-                subtaskWrapper.className = 'subtasks-wrapper'; // 新的包裹层
-                // 插入位置
-                const refEl = taskElement.querySelector('.task-desc') || taskElement.querySelector('.task-header');
-                refEl.after(subtaskWrapper);
-            }
-
-            // 清空内容
-            subtaskWrapper.innerHTML = '';
-
-            if (task.subtasks && task.subtasks.length > 0) {
-                const total = task.subtasks.length;
-                const completed = task.subtasks.filter(s => s.completed).length;
-
-                // A. 创建摘要栏 (点击可展开)
-                const summaryBar = document.createElement('div');
-                summaryBar.className = 'subtask-summary-bar';
-                summaryBar.innerHTML = `
-                    <div class="subtask-count-text">
-                        <svg width="14" height="14" viewBox="0 0 24 24" class="svg-no-fill" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                        <span class="progress-text">${completed}/${total} ${langMap['subTasks']}</span>
-                    </div>
-                    <svg class="subtask-toggle-icon" width="16" height="16" viewBox="0 0 24 24" class="svg-no-fill" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                `;
-                subtaskWrapper.appendChild(summaryBar);
-
-                // B. 创建列表容器 (默认隐藏)
-                const listContainer = document.createElement('div');
-                listContainer.className = 'subtasks-list';
-
-                task.subtasks.forEach(sub => {
-                    const item = document.createElement('div');
-                    item.className = `subtask-display-item ${sub.completed ? 'completed' : ''}`;
-                    item.innerHTML = `
-                        <input type="checkbox" class="subtask-checkbox" data-subtask-id="${sub.id}" ${sub.completed ? 'checked' : ''}>
-                        <span class="subtask-text">${sub.text}</span>
-                    `;
-                    listContainer.appendChild(item);
-                });
-                subtaskWrapper.appendChild(listContainer);
-
-                // C. 恢复展开状态 (关键：防止勾选子任务后列表自动折叠)
-                // 我们通过检查 taskElement 上是否有标记，或者直接检查数据
-                // 这里使用 DOM 标记的方法最简单，但因为我们刚才清空了 innerHTML，所以需要从外部传入状态或者在 render 之前保存状态
-                // 更好的方法是：在 toggleSubtaskComplete 中不要调用 renderTaskContent，而是局部更新 DOM。
-                // (见下文 update logic)
-
-            } else {
-                subtaskWrapper.remove(); // 没有子任务就移除整个区域
-            }
-
-            // 6. 进度条 (动态插入或移除)
-            let progressBarEl = taskElement.querySelector('.progress-bar');
-            if (task.dueDate && !task.completed) {
-                if (!progressBarEl) {
-                    progressBarEl = document.createElement('div');
-                    progressBarEl.className = 'progress-bar';
-                    progressBarEl.innerHTML = '<div class="progress-fill"></div>';
-                    // 插入位置判断：有描述插描述后，无描述插Header后
-                    const refEl = taskElement.querySelector('.task-desc') || taskElement.querySelector('.task-header');
-                    refEl.after(progressBarEl);
-                }
-                // 只需要设置宽度，颜色由 CSS 变量自动处理
-                progressBarEl.querySelector('.progress-fill').style.width = `${status.progress}%`;
-            } else if (progressBarEl) {
-                progressBarEl.remove();
-            }
-
-            // 6. 底部状态栏
-            const statusIndicator = taskElement.querySelector('.status-indicator');
-            // 注意：这里不需要再手动设置 statusIndicator 的 class 来改变颜色，
-            // 因为颜色现在由父级 .task-item 的 class 控制
-            statusIndicator.querySelector('.status-text').textContent = status.text;
-
-            let timeLeftEl = statusIndicator.querySelector('.status-time-left');
-            if (task.dueDate && !task.completed) {
-                if (!timeLeftEl) {
-                    timeLeftEl = document.createElement('span');
-                    timeLeftEl.className = 'status-time-left';
-                    statusIndicator.querySelector('.status-text').after(timeLeftEl);
-                }
-                timeLeftEl.textContent = `(${formatTimeLeft(timeLeft)})`;
-            } else if (timeLeftEl) {
-                timeLeftEl.remove();
-            }
-
-            // 7. 按钮 Tooltips
-            const completeBtn = taskElement.querySelector('[data-action="toggle"]');
-            if(completeBtn) completeBtn.title = task.completed ? langMap['markIncomplete'] : langMap['markComplete'];
-
-            // 可以在这里统一更新编辑和删除按钮的 title，虽然它们通常不变
-            const editBtn = taskElement.querySelector('[data-action="edit"]');
-            if(editBtn) editBtn.title = langMap['editTaskTitle'];
-            const deleteBtn = taskElement.querySelector('[data-action="delete"]');
-            if(deleteBtn) deleteBtn.title = langMap['deleteTaskTitle'];
+        function getEmptyStateHTML(t) {
+            return `<div class="empty-state"><svg width="80" height="80" viewBox="0 0 24 24" class="svg-no-fill"><path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12H9.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 16H9.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>${t['noTasks']}</h3><p>${t['noTasksDescription']}</p></div>`;
         }
 
-        // --- 极度简化的 Create 和 Update 函数 ---
-
-        function createTaskElement(task) {
-            const templateContent = taskTemplate.content;
-            const taskElement = templateContent.cloneNode(true).firstElementChild;
-            taskElement.dataset.taskId = task.id;
-
-            // 调用核心渲染函数
-            renderTaskContent(taskElement, task);
-
-            return taskElement;
+        function getEmptyMatchHTML(t) {
+            return `<div class="empty-state"><svg width="80" height="80" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg"><path d="M9.172 16.242L12 13.414L14.828 16.242L16.242 14.828L13.414 12L16.242 9.172L14.828 7.758L12 10.586L9.172 7.758L7.758 9.172L10.586 12L7.758 14.828L9.172 16.242Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22ZM12 20C16.418 20 20 16.418 20 12C20 7.582 16.418 4 12 4C7.582 4 4 7.582 4 12C4 16.418 7.582 20 12 20Z" fill="currentColor"/></svg><h3>${t['noMatchingTasks']}</h3><p>${t['noMatchingTasksDescription']}</p></div>`
         }
 
-        function updateTaskElement(element, task) {
-            // 调用核心渲染函数
-            renderTaskContent(element, task);
-        }
-
-
-        function renderTasks() {
-            const langMap = translations[currentLanguage];
-            if (!langMap) return;
-
-            // --- 1. 计算统计 (保持不变) ---
-            // const totalTasks = tasks.length;
-            // const activeTasks = tasks.filter(task => !task.completed).length;
-            // const completedTasks = tasks.filter(task => task.completed).length;
-            // const tasksWithoutDeadline = tasks.filter(task => !task.dueDate).length;
-            // const overdueTasks = tasks.filter(task => {
-            //     return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
-            // }).length;
-
-            // --- 2. 空状态 (保持不变) ---
-            if (tasks.length === 0) {
-                taskList.innerHTML = `
-                <div class="empty-state">
-                    <svg width="80" height="80" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 12H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 16H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M9 12H9.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M9 16H9.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <h3>${langMap['noTasks']}</h3>
-                    <p>${langMap['noTasksDescription']}</p>
-                </div>`;
-                return;
-            }
-
-            // 移除加载器
-            const initialLoader = document.getElementById('initial-loader');
-            if (initialLoader) {
-                initialLoader.remove();
-            }
-
-            // --- 3. 筛选与排序 (保持不变) ---
-            const filteredTasks = tasks.filter(task => {
-                if (searchQuery && !task.name.toLowerCase().includes(searchQuery) &&
-                    !(task.description && task.description.toLowerCase().includes(searchQuery))) {
-                    return false;
-                }
-                switch (currentFilter) {
-                    case 'active': return !task.completed;
-                    case 'completed': return task.completed;
-                    case 'overdue': return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
-                    case 'no-deadline': return !task.dueDate;
-                    default: return true;
-                }
-            });
-
-            const sortedTasks = sortTasks(filteredTasks);
-
-            // --- 4. 筛选后的空状态 (保持不变) ---
-            if (sortedTasks.length === 0) {
-                taskList.innerHTML = `
-                <div class="empty-state">
-                    <svg width="80" height="80" viewBox="0 0 24 24" class="svg-no-fill" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9.172 16.242L12 13.414L14.828 16.242L16.242 14.828L13.414 12L16.242 9.172L14.828 7.758L12 10.586L9.172 7.758L7.758 9.172L10.586 12L7.758 14.828L9.172 16.242Z" fill="currentColor"/>
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22ZM12 20C16.418 20 20 16.418 20 12C20 7.582 16.418 4 12 4C7.582 4 4 7.582 4 12C4 16.418 7.582 20 12 20Z" fill="currentColor"/>
-                    </svg>
-                    <h3>${langMap['noMatchingTasks']}</h3>
-                    <p>${langMap['noMatchingTasksDescription']}</p>
-                </div>`;
-                return;
-            }
-
-            // 在开始和解之前，移除任何残留的空状态
-            const existingEmptyState = taskList.querySelector('.empty-state');
-            if (existingEmptyState) {
-                existingEmptyState.remove();
-            }
-
-            // --- 5. DOM 和解 (全新逻辑) ---
-
-            // A. 将当前 DOM 元素映射到 Map 中，以便通过 ID 快速访问
-            const elementsMap = new Map();
-            Array.from(taskList.children).forEach(el => {
-                // 确保只映射任务项，忽略 .empty-state
-                if (el.classList.contains('task-item')) {
-                    elementsMap.set(Number(el.dataset.taskId), el);
-                }
-            });
-
-            // B. 遍历 "目标" 任务数组，同步 DOM
-            let currentElement = taskList.firstChild;
-
-            for (const task of sortedTasks) {
-                const taskId = task.id;
-                const existingElement = elementsMap.get(taskId);
-
-                if (existingElement) {
-                    // --- 5.1 元素已存在 ---
-                    // 更新内容
-                    updateTaskElement(existingElement, task);
-
-                    // 检查顺序
-                    if (existingElement !== currentElement) {
-                        taskList.insertBefore(existingElement, currentElement);
-                    }
-
-                    // 标记为 "已处理"
-                    elementsMap.delete(taskId);
-                    currentElement = existingElement.nextSibling;
-
-                } else {
-                    // --- 5.2 新元素 ---
-                    const newElement = createTaskElement(task);
-                    taskList.insertBefore(newElement, currentElement);
-                    // 不移动 currentElement，因为 newElement 现在就是 "当前"
-                }
-            }
-
-            // C. 移除陈旧的元素
-            // 循环结束后，elementsMap 中剩下的都是应被删除的元素
-            elementsMap.forEach(staleElement => {
-                staleElement.remove();
-            });
-        }
-
-        // --- 示例任务 ---
-        async function addSampleTasks() {
-            const langMap = translations[currentLanguage];
-            const sampleTasks = [
-                {
-                    id: Date.now() + 1,
-                    name: langMap['sampleTask1Name'] || "完成项目报告",
-                    description: langMap['sampleTask1Desc'] || "编写并提交季度项目总结报告",
-                    dueDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000).toISOString(),
-                    createdAt: new Date().toISOString(),
-                    completed: false
-                },
-                {
-                    id: Date.now() + 2,
-                    name: langMap['sampleTask2Name'] || "团队会议准备",
-                    description: langMap['sampleTask2Desc'] || "准备下周团队会议的演示材料",
-                    dueDate: new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000).toISOString(),
-                    createdAt: new Date().toISOString(),
-                    completed: false
-                },
-                {
-                    id: Date.now() + 3,
-                    name: langMap['sampleTask3Name'] || "学习计划制定",
-                    description: langMap['sampleTask3Desc'] || "制定下个月的个人学习计划",
-                    dueDate: null,
-                    createdAt: new Date().toISOString(),
-                    completed: false
-                }
-            ];
-            for (const task of sampleTasks) await addTaskToDB(task);
-            tasks = await getAllTasks();
-            renderTasks();
-            showNotification(langMap['sampleTasksAdded']);
-        }
-
-        // --- 时间与状态计算工具 ---
-        function calculateTimeLeft(utcStr) {
-            const now = new Date();
-            const due = utcToLocal(utcStr);
-            return (due.getTime() - now.getTime()) / (1000 * 60); // 分钟
-        }
-
-        // 根据剩余时间获取状态
-        function getStatus(minutesLeft) {
-            const langMap = translations[currentLanguage];
-            let status;
-            // 关键分钟数：3天=4320, 7天=10080, 37天=53280
-            if (minutesLeft < 0) {
-                // --- 状态: 已过期 (Overdue) ---
-                status = { statusClass: 'status-danger', text: langMap['statusOverdue'], progress: 100 }
-            } else if (minutesLeft <= 4320) {
-                // --- 状态: 危险 (Danger) --- (窗口: 0 - 3天 / 4320分钟)
-                status = { statusClass: 'status-danger', text: langMap['statusDanger'],
-                    // 进度: 从 3天(0%) 到 0天(100%)
-                    progress: Math.min(100, ((4320 - minutesLeft) / 4320) * 100) };
-            } else if (minutesLeft <= 10080) {
-                // --- 状态: 警告 (Warning) --- (窗口: 3 - 7天 / 5760分钟)
-                status = { statusClass: 'status-warning', text: langMap['statusWarning'],
-                    // 进度: 从 7天(0%) 到 3天(100%)
-                    progress: Math.min(100, ((10080 - minutesLeft) / 5760) * 100 ) };
-            } else {
-                // --- 状态: 安全 (Safe) --- (窗口: 7 - 37天 / 43200分钟)
-                status = { statusClass: 'status-safe', text: langMap['statusSafe'],
-                    progress: Math.min(100, Math.max(0, ((53280 - minutesLeft) / 43200) * 100)) };
-            }
-            return status;
-        }
-        // 本地时间 -> UTC ISO 字符串
-        function localToUTC(dateStr, timeStr = '23:59') {
-            const localDate = new Date(`${dateStr}T${timeStr}`);
-            return new Date(localDate.getTime() + localDate.getTimezoneOffset() * 60000).toISOString();
-        }
-
-        // UTC ISO -> 本地 Date 对象
-        function utcToLocal(utcStr) {
-            const utcDate = new Date(utcStr);
-            return new Date(utcDate.getTime() - utcDate.getTimezoneOffset() * 60000);
-        }
-
-        function formatTimeLeft(minutesLeft) {
-            const langMap = translations[currentLanguage];
-            if (minutesLeft < 0) {
-                const minutesAgo = Math.abs(Math.floor(minutesLeft));
-                if (minutesAgo < 60) return langMap['minutesAgo'].replace('{minutes}', minutesAgo.toString());
-                if (minutesAgo < 1440) return langMap['hoursAgo'].replace('{hours}', Math.floor(minutesAgo / 60).toString());
-                return langMap['daysAgo'].replace('{days}', Math.floor(minutesAgo / 1440).toString());
-            }
-            if (minutesLeft < 60) return langMap['minutesLeft'].replace('{minutes}', Math.floor(minutesLeft).toString());
-            if (minutesLeft < 1440) {
-                const h = Math.floor(minutesLeft / 60);
-                const m = Math.floor(minutesLeft % 60);
-                return m > 0 ? `${langMap['hoursLeft'].replace('{hours}', h.toString())} ${langMap['minutesLeft'].replace('{minutes}', m.toString())}`
-                    : langMap['hoursLeft'].replace('{hours}', h.toString());
-            }
-            const d = Math.floor(minutesLeft / 1440);
-            const h = Math.floor((minutesLeft % 1440) / 60);
-            const m = Math.floor(minutesLeft % 60);
-            if (d > 0 && h > 0 && m > 0) {
-                return `${langMap['daysLeft'].replace('{days}', d.toString())} ${langMap['hoursLeft'].replace('{hours}', h.toString())}  ${langMap['minutesLeft'].replace('{minutes}', m.toString())}`
-            } else if (d > 0 && h > 0) {
-                return `${langMap['daysLeft'].replace('{days}', d.toString())} ${langMap['hoursLeft'].replace('{hours}', h.toString())}`
-            } else if (d > 0 && m > 0) {
-                return `${langMap['daysLeft'].replace('{days}', d.toString())} ${langMap['minutesLeft'].replace('{minutes}', m.toString())}`
-            } else {
-                return langMap['daysLeft'].replace('{days}', d.toString());
+        // 页面从休眠恢复
+        function handleVisibilityChange() {
+            if (document.hidden && state.progressInterval) clearInterval(state.progressInterval);
+            else {
+                refreshTaskTimers(); // 回来时立即更新一次
+                startProgressTimer();  // 重启定时器
             }
         }
 
-        // 缓存格式化器
-        const dateTimeFormatters = {};
-
-        function formatDateTime(utcStr) {
-            const localDate = utcToLocal(utcStr);
-            // 这里的 key 结合了语言，防止切换语言后格式没变
-            const cacheKey = currentLanguage;
-
-            if (!dateTimeFormatters[cacheKey]) {
-                dateTimeFormatters[cacheKey] = new Intl.DateTimeFormat(
-                    currentLanguage === 'zh-CN' ? 'zh-CN' : 'en-US',
-                    { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }
-                );
-            }
-
-            return dateTimeFormatters[cacheKey].format(localDate);
-        }
-
-        // --- 导入 / 导出  ---
         function exportTasks() {
-            const langMap = translations[currentLanguage];
-            const data = {
-                version: '1.0',
-                exportDate: new Date().toISOString(),
-                storage: 'IndexedDB',
-                tasks: tasks
-            };
-
-            const dataStr = JSON.stringify(data, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const url = URL.createObjectURL(dataBlob);
-
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `tasks_backup_${new Date().toISOString().split('T')[0]}.json`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const blob = new Blob([JSON.stringify({ version: '1.0', date: new Date().toISOString(), tasks: state.tasks }, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = `tasks_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
             URL.revokeObjectURL(url);
-
-            showNotification(langMap['exportSuccess']);
+            utils.notify(state.translations[state.currentLanguage]['exportSuccess']);
         }
 
-        async function importTasks(file) {
-            const langMap = translations[currentLanguage];
-            if (!file) return;
+        function importTasks(file) {
+            if(!file) return;
             const reader = new FileReader();
+            const t = state.translations[state.currentLanguage];
             reader.onload = async (e) => {
                 try {
-                    const importedData = JSON.parse(e.target.result.toString());
-
-                    if (!importedData.tasks || !Array.isArray(importedData.tasks)) {
-                        showNotification(langMap['importFormatError'], 'error');
+                    const data = JSON.parse(e.target.result.toString());
+                    if (!data.tasks || !Array.isArray(data.tasks)) {
+                        utils.notify(t['importFormatError'], 'error');
                         return;
                     }
-
-                    showConfirmModal(
-                        langMap['import'],
-                        langMap['importConfirm'].replace('{count}', importedData.tasks.length.toString()),
-                        async () => {
-                            // 导入 清除示例
-                            await setConfig('sampleTasksAdded', true);
-
-                            // 清空旧任务（确保等待完成）
-                            await new Promise((resolve, reject) => {
-                                const tx = db.transaction([STORE_NAME], 'readwrite');
-                                const store = tx.objectStore(STORE_NAME);
-                                const req = store.clear();
-                                req.onsuccess = () => resolve();
-                                req.onerror = (e) => reject(e);
-                            });
-
-                            for (const task of importedData.tasks) {
-                                if (!task.id) task.id = Date.now() + Math.floor(Math.random() * 1000);
-                                if (typeof task.completed !== 'boolean') task.completed = false;
-                                if (!task.createdAt) task.createdAt = new Date().toISOString();
-                                await addTaskToDB(task);
-                            }
-
-                            tasks = await getAllTasks();
-                            renderTasks();
-
-                            showNotification(langMap['importSuccess'].replace('{count}', importedData.tasks.length.toString()));
+                    utils.confirm(t['import'], t['importConfirm'].replace('{count}', data.tasks.length), async () => {
+                        const tx = state.db.transaction([CONFIG.STORE_TASKS], 'readwrite');
+                        tx.objectStore(CONFIG.STORE_TASKS).clear();
+                        for (const task of data.tasks) {
+                            const safeTask = {
+                                ...task,
+                                id: task.id || Date.now() + Math.floor(Math.random() * 1000),
+                                subtasks: Array.isArray(task.subtasks) ? task.subtasks : [],
+                                completed: (typeof task.completed === 'boolean') ? task.completed : false,
+                                createdAt: task.createdAt || new Date().toISOString()
+                            };
+                            await dbActions.addTask(safeTask);
                         }
-                    )
 
-                } catch (error) {
-                    showNotification(langMap['importReadError'], 'error');
-                    console.error('导入错误:', error);
+                        state.tasks = await dbActions.getAllTasks();
+                        renderTaskList();
+                        utils.notify(t['importSuccess'].replace('{count}', data.tasks.length));
+                    });
+                } catch(err) {
+                    utils.notify(t['importReadError'], 'error');
+                    console.error('导入错误:', err);
                 }
             };
             reader.readAsText(file);
-            importFileInput.value = ''; // 重置文件输入
+            DOM.menu.fileInput.value = '';  // 重置文件输入
         }
 
-        function toggleTheme() {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-            // 1. 切换 DOM 属性（CSS 会自动响应）
-            html.setAttribute('data-theme', newTheme);
-
-            // 2. 保存到本地存储
-            localStorage.setItem('theme', newTheme);
+        async function addSampleTasks() {
+            const t = state.translations[state.currentLanguage];
+            const samples = [
+                { id: Date.now()+1, name: t['sampleTask1Name'] || "完成项目报告", description: t['sampleTask1Desc'] || "编写并提交季度项目总结报告", dueDate: new Date(Date.now() + 432000000).toISOString(), createdAt: new Date().toISOString(), completed: false },
+                { id: Date.now()+2, name: t['sampleTask2Name'] || "团队会议准备", description: t['sampleTask2Desc'] || "准备下周团队会议的演示材料", dueDate: new Date(Date.now() + 864000000).toISOString(), createdAt: new Date().toISOString(), completed: false },
+                { id: Date.now()+3, name: t['sampleTask3Name'] || "学习计划制定", description: t['sampleTask3Desc'] || "制定下个月的个人学习计划", dueDate: null, createdAt: new Date().toISOString(), completed: false }
+            ];
+            await samples.forEach(s => dbActions.addTask(s));
+            state.tasks = await dbActions.getAllTasks();
+            renderTaskList();
+            utils.notify(t['sampleTasksAdded']);
         }
 
-    })(); // 结束 IIFE`
+    })();
 </script>
 <script>
     if ('serviceWorker' in navigator) {
