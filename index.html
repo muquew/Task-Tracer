@@ -123,12 +123,12 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%); min-height: 100vh; padding: 20px; color: var(--text-main); transition: background 0.3s ease, color 0.3s ease; }
         .container, .task-item, .modal-content, input, textarea, .menu { transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
-        .container { max-width: 800px; margin: 0 auto; background: var(--bg-surface); border-radius: 12px; box-shadow: 0 10px 30px var(--shadow-base); overflow: hidden; position: relative; }
+        .container { max-width: 800px; margin: 0 auto; background: var(--bg-surface); border-radius: 12px; box-shadow: 0 10px 30px var(--shadow-base); position: relative; }
         /* === 可访问性 (A11y) 样式 用于隐藏元素，但保持屏幕阅读器可读 ===*/
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
         /* === Header === */
-        header { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%); color: var(--text-inverse); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+        header { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%); color: var(--text-inverse); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-radius: 12px 12px 0 0; }
         h1 { font-size: 22px; font-weight: 600; }
         html[lang="en"] h1 { font-size: 24px; }
         .subtitle { font-size: 14px; opacity: 0.8; line-height: 1.3; }
@@ -1060,7 +1060,11 @@
                 switch (state.filter) {
                     case 'active': return !task.completed;
                     case 'completed': return task.completed;
-                    case 'overdue': return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
+                    case 'overdue':
+                        console.log(task);
+                        console.log(!task.completed, task.dueDate);
+                        console.log(new Date(task.dueDate), new Date(), new Date(task.dueDate) < new Date());
+                        return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
                     case 'no-deadline': return !task.dueDate;
                     default: return true;
                 }
