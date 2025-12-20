@@ -25,6 +25,12 @@
   "taskDescPlaceholder": "Enter task description",
   "dueDateLabel": "Due Date (optional)",
   "noDeadlineLabel": "No Deadline",
+  "reminderLabel": "Reminder",
+  "reminderNone": "None",
+  "reminderAtTime": "At time of due date",
+  "reminder15Min": "15 minutes before",
+  "reminder1Hour": "1 hour before",
+  "reminder1Day": "1 day before",
   "cancel": "Cancel",
   "updateTask": "Update Task",
   "subTasks": "Subtasks",
@@ -93,5 +99,12 @@
   "sortCreated": "Newest Created",
   "sortDue": "Due Date",
   "sortAlpha": "Name (A-Z)",
-  "sortManual": "Custom"
+  "sortManual": "Custom",
+
+  "enableNotifications": "Enable Notifications",
+  "disableNotifications": "Disable Notifications",
+  "notificationPermissionDenied": "Notification permission denied. Please enable in browser settings.",
+  "notificationNotSupported": "This browser does not support desktop notifications",
+  "notificationError": "Error requesting notification permission",
+  "notificationTaskDue": "Task Due Soon: {taskName}"
 }

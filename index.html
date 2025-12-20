@@ -384,6 +384,11 @@
     <symbol id="icon-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13"/><path d="M18.5 2.5C18.8978 2.10217 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10217 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10217 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z"/></symbol>
     <symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7L18.1327 19.1425C18.0579 20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7M4 7H20"/></symbol>
 
+    <symbol id="icon-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></symbol>
+    <symbol id="icon-bell-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"></path><path d="M18.63 13A17.89 17.89 0 0 1 18 8"></path><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"></path><path d="M18 8a6 6 0 0 0-9.33-5"></path><line x1="1" y1="1" x2="23" y2="23"></line></symbol>
+
+    <symbol id="icon-bell-ring" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path><path d="M2 8C1 8 1 8 1 8"></path><path d="M22 8C23 8 23 8 23 8"></path></symbol>
+
     <symbol id="icon-subtask-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></symbol>
     <symbol id="icon-subtask-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></symbol>
 
@@ -402,6 +407,9 @@
             <button class="icon-btn" id="themeToggleBtn" aria-label="切换主题" data-i18n-aria-label="themeTooltip" data-i18n-title="themeTooltip" title="切换主题">
                 <svg class="icon moon-icon"><use href="#icon-moon"></use></svg>
                 <svg class="icon sun-icon"><use href="#icon-sun"></use></svg>
+            </button>
+            <button class="icon-btn" id="notificationToggleBtn" aria-label="开启/关闭通知" title="开启通知">
+                <svg class="icon"><use href="#icon-bell-off"></use></svg>
             </button>
             <button class="icon-btn" id="openModalBtn" aria-label="添加新任务" data-i18n-aria-label="addNewTask" data-i18n-title="addNewTaskTooltip" title="添加新任务 (Ctrl+I)">
                 <svg class="icon"><use href="#icon-plus"></use></svg>
@@ -514,6 +522,16 @@
                         <input id="noDeadline" type="checkbox">
                     </div>
                 </div>
+                <div class="form-group" id="reminderGroup">
+                    <label data-i18n="reminderLabel" for="reminderOffset">提醒设置</label>
+                    <select id="reminderOffset" class="search-input" style="width: 100%;">
+                        <option value="-1" data-i18n="reminderNone">不提醒</option>
+                        <option value="0" data-i18n="reminderAtTime">截止时</option>
+                        <option value="15" selected data-i18n="reminder15Min">提前 15 分钟</option>
+                        <option value="60" data-i18n="reminder1Hour">提前 1 小时</option>
+                        <option value="1440" data-i18n="reminder1Day">提前 1 天</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label data-i18n="subtasksLabel">子任务 (可选)</label>
                     <div class="subtask-input-wrapper">
@@ -544,6 +562,7 @@
                 <div class="task-title">
                     <svg class="icon icon-sm" style="stroke: var(--color-success); margin-right: 8px;"><use href="#icon-check"></use></svg>
                     <span class="task-name"></span>
+                    <svg class="icon icon-sm task-reminder-icon" style="display:none; color: var(--color-warning); margin-left: 6px; width: 14px; height: 14px;"><use href="#icon-bell"></use></svg>
                 </div>
                 <div class="task-date"></div>
             </div>
@@ -594,7 +613,8 @@
             // 本地存储键名
             STORAGE: {
                 THEME: 'theme',
-                LANG: 'language'
+                LANG: 'language',
+                NOTIFICATIONS: 'notifications_enabled'
             },
             // UI 类名与状态常量
             UI: {
@@ -641,6 +661,8 @@
             progressInterval: null,
             elementToFocusOnClose: null, // A11y: 存储关闭弹窗时要聚焦的元素
             dateTimeFormatters: {}, // 缓存格式化器
+            notificationsEnabled: false,
+            notifiedTasks: new Set(),
         };
 
         const DOM = {}; // 集中存储 DOM 节点
@@ -652,6 +674,7 @@
             DOM.themeBtn = document.getElementById('themeToggleBtn');
             DOM.backToTopBtn = document.getElementById('backToTopBtn');
             DOM.clearCompletedBtn = document.getElementById('clearCompletedBtn');
+            DOM.notificationToggleBtn = document.getElementById('notificationToggleBtn');
 
             // 模态框与表单
             DOM.modal = document.getElementById('taskModal');
@@ -669,6 +692,7 @@
                 date: document.getElementById('dueDate'),
                 time: document.getElementById('dueTime'),
                 noDeadline: document.getElementById('noDeadline'),
+                reminderOffset: document.getElementById('reminderOffset'),
                 search: document.getElementById('searchInput'),
                 subtask: document.getElementById('subtaskInput')
             };
@@ -752,6 +776,35 @@
                 state.currentLanguage = target ? target.code : CONFIG.DEFAULTS.LANG;
                 await dbActions.setConfig(CONFIG.STORAGE.LANG, state.currentLanguage);
             }
+
+            // 加载通知设置
+            const savedNotify = await dbActions.getConfig(CONFIG.STORAGE.NOTIFICATIONS);
+            
+            // 修复逻辑：明确判断 true/false，因为 savedNotify 可能是 undefined (首次)
+            if (savedNotify === true) {
+                // 必须再次检查浏览器权限，防止用户在浏览器设置中手动关掉了
+                if (Notification.permission === 'granted') {
+                    state.notificationsEnabled = true;
+                    console.log('Notifications restored from settings: ON');
+                } else {
+                    // 权限不匹配，强制关闭
+                    state.notificationsEnabled = false;
+                    await dbActions.setConfig(CONFIG.STORAGE.NOTIFICATIONS, false);
+                    console.warn('Notifications disabled due to permission mismatch');
+                }
+            } else {
+                state.notificationsEnabled = false;
+                console.log('Notifications settings: OFF');
+            }
+            updateNotificationBtnUI();
+
+            // 恢复已通知任务列表 (SessionStorage)
+            try {
+                const notified = sessionStorage.getItem('notifiedTasks');
+                if (notified) {
+                    state.notifiedTasks = new Set(JSON.parse(notified));
+                }
+            } catch (e) { console.error('Failed to load notified tasks', e); }
         }
 
 
@@ -779,6 +832,8 @@
                     DOM.inputs.date.value = new Date().toISOString().split('T')[0];
                     DOM.inputs.time.value = CONFIG.DEFAULTS.TIME;
                 }
+                // 无截止日期时，禁用提醒设置
+                DOM.inputs.reminderOffset.disabled = this.checked;
             });
 
             // 搜索与筛选
@@ -787,6 +842,17 @@
                 renderTaskList();
             }, 300));
             DOM.clearCompletedBtn.addEventListener('click', handleClearCompleted);
+            
+            // 修复：确保按钮存在再绑定，并增加日志
+            if(DOM.notificationToggleBtn) {
+                DOM.notificationToggleBtn.addEventListener('click', (e) => {
+                    console.log('Notification button clicked'); // Debug Log
+                    e.stopPropagation(); // 防止冒泡
+                    toggleNotifications();
+                });
+            } else {
+                console.error('Notification button not found in DOM');
+            }
 
             // 下拉菜单
             setupDropdowns();
@@ -904,6 +970,7 @@
                 description: DOM.inputs.desc.value.trim(),
                 subtasks: state.tempSubtasks,
                 dueDate: dueDateTime,
+                reminderOffset: parseInt(DOM.inputs.reminderOffset.value, 10), // 保存提醒偏移量
                 completed: false,
                 order: state.editingTaskId ? undefined : (maxOrder + 10000) // 新任务排最后
             };
@@ -982,6 +1049,174 @@
                 renderTaskList();
                 utils.notify(t['completedTasksCleared'].replace('{count}', completed.length));
             });
+        }
+
+        // --- 通知逻辑 ---
+        async function toggleNotifications() {
+            console.log('toggleNotifications called. Current state:', state.notificationsEnabled);
+            const t = state.translations[state.currentLanguage];
+            
+            if (!state.notificationsEnabled) {
+                // 尝试开启
+                if (!('Notification' in window)) {
+                    utils.notify(t['notificationNotSupported'] || '此浏览器不支持桌面通知', 'error');
+                    console.error('Browser does not support notifications');
+                    return;
+                }
+                
+                console.log('Requesting notification permission...');
+                try {
+                    const permission = await Notification.requestPermission();
+                    console.log('Permission result:', permission);
+                    
+                    if (permission === 'granted') {
+                        state.notificationsEnabled = true;
+                        await dbActions.setConfig(CONFIG.STORAGE.NOTIFICATIONS, true);
+                        utils.notify(t['enableNotifications']);
+                        // 立即检查一次
+                        checkNotifications();
+                    } else {
+                        // 权限被拒绝或忽略
+                        utils.notify(t['notificationPermissionDenied'], 'warning');
+                        // 即使被拒绝，也应该更新 UI 显示为关闭状态
+                        state.notificationsEnabled = false; 
+                    }
+                } catch (error) {
+                    console.error('Error requesting permission:', error);
+                    utils.notify(t['notificationError'] || '申请通知权限出错', 'error');
+                }
+            } else {
+                // 关闭
+                console.log('Disabling notifications');
+                state.notificationsEnabled = false;
+                await dbActions.setConfig(CONFIG.STORAGE.NOTIFICATIONS, false);
+                utils.notify(t['disableNotifications']);
+            }
+            updateNotificationBtnUI();
+        }
+
+        function updateNotificationBtnUI() {
+            const btn = DOM.notificationToggleBtn;
+            const t = state.translations[state.currentLanguage];
+            if (!btn) return;
+
+            const iconUse = btn.querySelector('use');
+            // 图标按钮没有 span 文字
+            const textSpan = btn.querySelector('span');
+
+            if (state.notificationsEnabled) {
+                iconUse.setAttribute('href', '#icon-bell');
+                // 在 Header 上，激活状态可以用主色或特定的颜色
+                iconUse.parentElement.style.color = 'var(--text-inverse)'; 
+                // 如果是 Menu Item 模式，才有 textSpan
+                if (textSpan) textSpan.textContent = t['disableNotifications'];
+                btn.title = t['disableNotifications'];
+                btn.setAttribute('aria-label', t['disableNotifications']);
+            } else {
+                iconUse.setAttribute('href', '#icon-bell-off');
+                // 关闭状态，恢复默认颜色 (继承父级)
+                iconUse.parentElement.style.color = ''; 
+                if (textSpan) textSpan.textContent = t['enableNotifications'];
+                btn.title = t['enableNotifications'];
+                btn.setAttribute('aria-label', t['enableNotifications']);
+            }
+        }
+
+        function checkNotifications() {
+            // 双重检查：总开关关闭时直接退出
+            if (!state.notificationsEnabled) return;
+
+            const t = state.translations[state.currentLanguage];
+            const now = new Date();
+            let hasNewNotifications = false;
+
+            state.tasks.forEach(task => {
+                if (task.completed || !task.dueDate) return;
+
+                // 重新计算剩余时间（分钟）
+                const timeLeft = utils.calculateTimeLeft(task.dueDate);
+                
+                // 获取任务的提醒阈值 (兼容旧数据，默认15分钟)
+                const offset = (task.reminderOffset !== undefined) ? task.reminderOffset : 15;
+
+                // 如果设置为 -1，则不提醒
+                if (offset === -1) return;
+
+                // 规则优化：
+                // 1. timeLeft <= offset: 已经到了或者超过了提醒时间
+                // 2. timeLeft > offset - 30:  不能是太久以前的任务（比如一年前过期的），限制在提醒时间点后的 30 分钟内有效
+                // 3. !state.notifiedTasks.has(task.id): 还没通知过
+                if (timeLeft <= offset && timeLeft > (offset - 30) && !state.notifiedTasks.has(task.id)) {
+                    console.log(`[Notification Triggered] Task: ${task.name}`);
+                    sendNotification(t['notificationTaskDue'].replace('{taskName}', task.name));
+                    state.notifiedTasks.add(task.id);
+                    hasNewNotifications = true;
+                    
+                    // 更新UI上的铃铛状态
+                    const el = document.querySelector(`.task-item[data-task-id="${task.id}"]`);
+                    if (el) {
+                         const icon = el.querySelector('.task-reminder-icon');
+                         if(icon) icon.style.color = 'var(--text-tertiary)';
+                    }
+                }
+            });
+
+            // 如果有新通知，持久化 notifiedTasks 到 SessionStorage，防止刷新页面后重复弹窗
+            if (hasNewNotifications) {
+                sessionStorage.setItem('notifiedTasks', JSON.stringify([...state.notifiedTasks]));
+            }
+        }
+
+        // 简单的提示音 (Base64) - 短促的 "叮" 声 (WAV格式，兼容性更好)
+        const NOTIFY_SOUND_BASE64 = 'data:audio/wav;base64,UklGRl9vT1BXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU'; // 占位，稍后用完整 Base64 替换
+
+        function sendNotification(body) {
+             // 再次检查权限，双重保险
+             if (Notification.permission === 'granted') {
+                // 1. 播放声音
+                try {
+                    // 使用简短的 Beep 音效，避免解码错误
+                    // 这是一个 440Hz 正弦波 Beep 的 Base64 (WAV)
+                    const beep = 'data:audio/wav;base64,UklGRl9vT1BXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU'; 
+                    // 这里我们使用一个真实的短音效 Base64 (Glass Ping)
+                    const realSound = 'data:audio/mp3;base64,//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDiMcCBcH3Cc+CDv/7cQBMNJjoDbET4QOgle43gQTAALnipZOg+RIqJQ0YMHgpGYFYxP7yY0/w/iUcaQ2YMaVD+p31Z7//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDiMcCBcH3Cc+CDv/7cQBMNJjoDbET4QOgle43gQTAALnipZOg+RIqJQ0YMHgpGYFYxP7yY0/w/iUcaQ2YMaVD+p31Z7';
+                    
+                    const audio = new Audio(realSound); 
+                    audio.volume = 0.6;
+                    // play() 返回 Promise，必须处理异常 (如用户未交互导致被浏览器拦截)
+                    const playPromise = audio.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(e => {
+                            console.warn('Audio play blocked/failed:', e);
+                            // 备选方案：如果是交互限制，可以尝试在下次点击时预加载
+                        });
+                    }
+                } catch (e) { console.error('Audio setup error:', e); }
+
+                // 2. 振动反馈 (如果是手机)
+                if ('vibrate' in navigator) {
+                    navigator.vibrate([200, 100, 200]);
+                }
+
+                // 3. 发送通知
+                const title = state.translations[state.currentLanguage]['appTitle'];
+                const options = {
+                    body: body,
+                    icon: './fav/android-chrome-192x192.png',
+                    vibrate: [200, 100, 200],
+                    requireInteraction: true // 保持通知不自动消失（桌面端）
+                };
+
+                // 尝试使用 Service Worker 发送（支持移动端），如果不行退回普通 Notification
+                if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.ready.then(registration => {
+                        registration.showNotification(title, options);
+                    });
+                } else {
+                    const n = new Notification(title, options);
+                    n.onclick = () => { window.focus(); n.close(); };
+                }
+            }
         }
 
         // --- 子任务逻辑 ---
@@ -1175,6 +1410,24 @@
             // B. 基础信息
             el.className = `task-item ${statusObj.cls} ${task.completed ? 'completed-task' : ''}`;
             el.querySelector('.task-name').textContent = task.name;
+            
+            // 提醒图标
+            const reminderIcon = el.querySelector('.task-reminder-icon');
+            if (reminderIcon) {
+                // 有截止日期且未完成，且设置了提醒（offset != -1）
+                if (task.dueDate && !task.completed && task.reminderOffset !== undefined && task.reminderOffset !== -1) {
+                    reminderIcon.style.display = 'inline-block';
+                    // 如果已经通知过了，图标变灰或变样
+                    if (state.notifiedTasks.has(task.id)) {
+                        reminderIcon.style.color = 'var(--text-tertiary)';
+                    } else {
+                        reminderIcon.style.color = 'var(--color-warning)';
+                    }
+                } else {
+                    reminderIcon.style.display = 'none';
+                }
+            }
+
             el.querySelector('.task-date').textContent = task.dueDate ?
                 `${t['deadline']}: ${utils.formatDate(task.dueDate)}` : t['noDeadlineText'];
 
@@ -2012,6 +2265,11 @@
                 }
 
             });
+
+            // 检查通知
+            if (state.notificationsEnabled) {
+                checkNotifications();
+            }
         }
         function getEmptyStateHTML(t) {
             return `<div class="empty-state"><svg class="icon icon-lg"><use href="#icon-empty-tasks"></use></svg><h3>${t['noTasks']}</h3><p>${t['noTasksDescription']}</p></div>`;
