@@ -26,7 +26,8 @@
 
 4. App shell HTML
    - Header 放主题、通知、新建、菜单入口。
-   - Controls bar 放搜索、筛选、排序。
+   - 主菜单放导出、备份、导入、归档已完成、清除已完成和语言切换。
+   - Controls bar 放搜索、项目视图、筛选、排序。
    - `#taskList` 是任务列表的唯一渲染容器。
    - `#taskModal` 同时承载任务表单和确认弹窗。
    - `#srStatus` 是给读屏器使用的隐藏 live region。
@@ -52,19 +53,46 @@
   - `id`: 数字主键。
   - `name`: 任务名。
   - `description`: 描述。
+  - `project`: 单个项目名，用作主分组。
+  - `tags`: 标签数组，用于跨项目标记和搜索。
   - `dueDate`: UTC ISO 字符串或 `null`。
   - `reminderOffset`: 提前提醒分钟数，`-1` 表示不提醒。
+  - `reminderRepeat`: 重复提醒间隔分钟数，`-1` 表示不重复。
+  - `snoozedUntil`: 稍后提醒时间点，UTC ISO 字符串或 `null`。
+  - `lastReminderAt`: 最近一次成功投递提醒的时间。
   - `subtasks`: 子任务数组，每个子任务有唯一 `id`。
   - `completed`: 完成状态。
+  - `archived`: 归档状态。
+  - `archivedAt`: 归档时间。
   - `createdAt`: 创建时间。
   - `order`: 手动排序权重。
 
 - 运行时状态:
-  - `filter`、`sort`、`searchQuery`: 当前列表视图条件。
+  - `filter`、`sort`、`projectFilter`、`searchQuery`: 当前列表视图条件。
   - `editingTaskId`: 当前编辑任务 ID。
   - `tempSubtasks`、`editingSubtaskIndex`: 弹窗内的临时子任务草稿。
   - `notificationsEnabled`、`notifiedTasks`、`pendingNotificationKeys`: 通知投递状态。
   - `currentLanguage`、`translations`、`dateTimeFormatters`: i18n 与本地化缓存。
+
+- `config` store 常用键:
+  - `language`: 当前语言。
+  - `notifications_enabled`: 通知开关。
+  - `sampleTasksAdded`: 是否已经写入示例任务。
+  - `lastBackupAt`: 最近一次点击“立即备份”的时间。
+
+## 项目、标签与搜索规则
+
+- 项目是单值字段，用于主分组和项目视图过滤。全部项目的智能排序视图会调用 `renderGroupedTaskList()` 按项目分组。
+- 标签是数组字段，用于给任务增加多个横向标记。
+- `matchesTaskSearch(task)` 当前匹配任务名称、描述、项目名和标签。项目和标签都会参与搜索；区别在于项目负责组织层级，标签负责跨项目检索。
+- 手动排序只在 `sort === 'manual'`、`filter === 'all'`、`projectFilter === 'all'` 且无搜索词时启用，避免局部视图排序写回全局顺序造成误解。
+
+## 导入、导出与备份边界
+
+- 导出由 `exportTasks()` 进入，下载当前任务 JSON，适合迁移、查看或手动保存。
+- 导入由 `importTasks(file)` 进入，会先构建预览，展示导入数量、同名重复项和替换影响，确认后通过 `replaceAllTasks()` 全量替换当前任务。
+- 备份由 `backupTasks()` 进入，下载带 `schema` 和 `versionNotes` 的版本化快照，并把时间写入 `lastBackupAt`。
+- `scheduleBackupReminder()` 根据 `lastBackupAt` 和任务数量决定是否显示最近备份提醒。
 
 ## 初始化流程
 
@@ -81,6 +109,7 @@
 9. `bindEvents()` 绑定事件。
 10. `renderTaskList()` 首次渲染。
 11. `startProgressTimer()` 启动倒计时刷新。
+12. `scheduleBackupReminder()` 根据最近备份时间决定是否提示备份。
 
 ## 主要函数清单
 
@@ -111,9 +140,9 @@
 - `bindGlobalEvents()`: 全局键盘、滚动、可见性事件。
 - `bindDialogEvents()`: 弹窗打开、关闭、提交事件。
 - `bindFormEvents()`: 表单联动。
-- `bindSearchEvents()`: 搜索和清除完成任务入口。
+- `bindSearchEvents()`: 搜索、项目视图和清除完成任务入口。
 - `bindNotificationEvents()`: 通知按钮。
-- `bindMenuEvents()`: 主菜单、语言子菜单、导入导出。
+- `bindMenuEvents()`: 主菜单、语言子菜单、导入、导出、备份和归档入口。
 - `bindTaskListEvents()`: 任务列表委托点击。
 - `bindSubtaskInputEvents()`: 子任务输入。
 - `bindSubtaskPreviewEvents()`: 子任务草稿编辑。
@@ -142,6 +171,11 @@
 - `deleteTask(id)`: 删除确认。
 - `toggleTaskComplete(id)`: 切换任务完成状态。
 - `handleClearCompleted()`: 批量清除已完成任务。
+- `handleArchiveCompleted()`: 批量归档未归档的已完成任务。
+- `toggleTaskArchive(id)`: 单任务归档和从归档恢复。
+- `normalizeTaskProject(value)`: 规范化项目名。
+- `parseTagsInput(value)`: 将逗号分隔的标签输入转换为数组。
+- `normalizeTaskTags(tags)`: 去空、去 `#`、去重并规范化标签。
 
 ### 子任务
 
@@ -150,7 +184,7 @@
 - `createUniqueNumericId(usedIds)`: 生成唯一数字 ID。
 - `normalizeUniqueNumericId(value, usedIds)`: 保留合法唯一 ID，否则生成新 ID。
 - `createUniqueSubtaskId(subtasks)`: 新增草稿子任务时生成 ID。
-- `normalizeTaskSubtaskIds(tasks)`: 读取历史数据时修复子任务 ID。
+- `normalizeTaskRecords(tasks)`: 读取历史数据时修复任务字段、归档字段、提醒字段和子任务 ID。
 - `normalizeSubtasksForTask(subtasks)`: 单任务内子任务 ID 去重。
 - `handleAddSubtaskInput()`: 添加草稿子任务。
 - `toggleSubtaskComplete(taskId, subtaskId)`: 切换子任务完成状态。
@@ -167,7 +201,12 @@
 - `hasNotificationPermission()`: 判断权限状态。
 - `updateNotificationBtnUI()`: 更新通知按钮状态。
 - `checkNotifications()`: 定时扫描待提醒任务。
+- `getTaskReminderDueState(task, timeLeft, offset)`: 判断普通提醒、稍后提醒或错过提醒是否到期。
+- `shouldDeliverTaskReminder(task, notificationKey, dueState)`: 根据重复提醒与已投递状态判断是否应投递。
+- `deliverTaskReminder(task, notificationKey, dueState)`: 发送提醒并写回投递时间。
+- `snoozeTaskReminder(id)`: 将任务提醒延后到默认稍后提醒时间。
 - `getTaskReminderOffset(task)`: 读取任务提醒偏移。
+- `getTaskReminderRepeat(task)`: 读取重复提醒间隔。
 - `getTaskNotificationKey(task, offset)`: 生成提醒签名。
 - `markReminderIconNotified(taskId)`: 本地更新提醒图标状态。
 - `sendNotification(body)`: 发送提醒并返回是否成功。
@@ -182,17 +221,23 @@
 - `getVisibleTasks()`: 过滤并排序任务。
 - `isTaskVisible(task)`: 判断任务是否匹配当前筛选。
 - `matchesTaskSearch(task)`: 搜索匹配。
+- `matchesTaskProject(task)`: 项目视图匹配。
+- `renderProjectFilterOptions()`: 根据任务项目生成项目下拉选项。
+- `renderGroupedTaskList(tasks)`: 全部项目智能视图下按项目分组渲染。
 - `patchTaskList(tasks)`: 增量更新列表。
 - `createTaskNode(task)`: 克隆任务模板。
 - `renderTaskItem(el, task)`: 单任务渲染总入口。
 - `getTaskRenderStatus(task, t)`: 获取任务状态对象。
 - `renderTaskHeader(el, task, statusObj, t)`: 标题、提醒、截止日期。
 - `renderTaskDescription(el, task)`: 描述区域。
+- `renderTaskMeta(el, task)`: 渲染项目 chip 和标签 chip。
 - `renderTaskProgress(el, task, statusObj)`: 进度条。
 - `renderTaskStatus(el, task, statusObj, timeLeft)`: 状态文字。
 - `renderReminderIcon(el, task)`: 提醒图标。
 - `renderTaskActionTitles(el, task, t)`: 操作按钮标签。
 - `renderTaskToggleButton(button, completed)`: 完成/恢复图标切换。
+- `renderTaskSnoozeButton(button, task, t)`: 根据提醒状态显示稍后提醒按钮。
+- `renderTaskArchiveButton(button, task, t)`: 根据完成/归档状态显示归档或恢复按钮。
 - `renderTaskDragHandle(el)`: 手动排序手柄。
 - `renderSubtaskList(el, task)`: 卡片内子任务列表。
 - `renderSubtaskPreview()`: 弹窗内草稿子任务列表。
@@ -205,10 +250,12 @@
 - `prepareEditTaskForm(editingTask)`: 填充编辑表单。
 - `prepareNewTaskForm()`: 填充新建表单。
 - `setDialogFormLabels(titleKey, submitKey)`: 设置标题和提交按钮。
-- `setDeadlineControls({ enabled, date, time, reminderOffset })`: 截止日期控件联动。
+- `setDeadlineControls({ enabled, date, time, reminderOffset, reminderRepeat })`: 截止日期、提醒和重复提醒控件联动。
+- `syncReminderRepeatControl()`: 根据截止日期和提醒设置启用或禁用重复提醒。
 - `closeDialog()`: 关闭并清理弹窗。
 - `resetDialogToFormMode()`: 从确认模式恢复表单模式。
 - `utils.confirm(title, msg, onConfirm)`: 复用任务弹窗显示确认流程。
+- `setConfirmMessageContent(el, msg)`: 让确认弹窗同时支持文本和 DOM 内容。
 - `clearConfirmHandler()`: 移除确认按钮的一次性 handler。
 
 ### 数据库与工具
@@ -252,7 +299,7 @@
 - `closeMenu()`: 关闭主菜单和语言子菜单。
 - `openPopover(container, btn)`、`closePopover(container, btn)`: 通用浮层状态。
 - `handleTaskListClick(e)`: 任务列表点击委托入口。
-- `runTaskAction(action, taskId)`: 执行完成、编辑、删除。
+- `runTaskAction(action, taskId)`: 执行完成、稍后提醒、归档/恢复归档、编辑、删除。
 - `getTaskIdFromElement(el)`: 从 DOM 追溯任务 ID。
 
 ### 拖拽与排序
@@ -274,13 +321,21 @@
 - `getDragAfterElement(container, y)`: 计算拖拽插入点。
 - `saveNewOrder()`: 将 DOM 顺序写回任务 `order`。
 
-### 导入、导出、示例与定时器
+### 导入、导出、备份、示例与定时器
 
 - `startProgressTimer()`: 启动定时刷新。
 - `refreshTaskTimers()`: 局部刷新倒计时和状态样式。
 - `handleVisibilityChange()`: 页面恢复时刷新。
-- `exportTasks()`: 导出 JSON。
-- `importTasks(file)`: 读取并确认导入 JSON。
+- `exportTasks()`: 导出任务 JSON。
+- `backupTasks()`: 下载版本化本地备份。
+- `downloadTaskData(mode)`: 导出和备份的统一下载入口。
+- `createTaskDataPayload(mode, date, tasks)`: 构建带版本说明的数据文件。
+- `createTaskDataFilename(mode, date)`: 生成导出或备份文件名。
+- `scheduleBackupReminder()`: 根据最近备份时间提示备份。
+- `importTasks(file)`: 读取 JSON、展示导入预览并确认替换。
+- `buildImportPreview(importedTasks)`: 统计导入数量、当前替换影响和重复项。
+- `getImportDuplicateNames(importedTasks)`: 统计导入文件内或与当前任务重名的任务。
+- `createImportPreviewContent(preview)`: 生成确认弹窗中的导入预览 DOM。
 - `normalizeImportedTasks(rawTasks)`: 导入任务规范化。
 - `normalizeImportedTask(rawTask, index, normalizeId)`: 单任务规范化。
 - `normalizeImportedSubtasks(rawSubtasks)`: 导入子任务规范化。
