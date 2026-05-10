@@ -300,6 +300,8 @@
         .delete-btn:hover { color: var(--color-danger); background: var(--color-danger-light); }
         .complete-btn { color: var(--color-success); }
         .complete-btn:hover { color: var(--color-success-dark); background: var(--color-success-light); }
+        .restore-btn { color: var(--color-primary); }
+        .restore-btn:hover { color: var(--color-primary-dark); background: var(--color-info-light); }
 
         /* 拖拽模式下的样式 */
         .task-item.draggable-item { cursor: grab; transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s; }
@@ -487,6 +489,7 @@
     <symbol id="icon-github" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.727-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757 -1.09-.745.083-.729.083-.729 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.775.418-1.305.76-1.606-2.665-.305-5.466-1.334-5.466-5.932 0-1.31.47-2.382 1.236-3.22-.125-.303-.535-1.523.115-3.176 0 0 1.008-.322 3.3 1.23a11.49 11.49 0 013.004-.404 c1.02.005 2.045.138 3.003.404 2.292-1.552 3.3-1.23 3.3-1.23.65 1.653.24 2.873.12 3.176.77.838 1.236 1.91 1.236 3.22 0 4.61-2.804 5.624-5.475 5.922.43.372.81 1.102.81 2.222 0 1.606-.015 2.896-.015 3.286 0 .32.216.694.825.576C20.565 21.796 24 17.3 24 12 24 5.373 18.627 0 12 0z"/></symbol>
 
     <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17L4 12"/></symbol>
+    <symbol id="icon-undo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9L9 4"/><path d="M4 9H15C18.3 9 21 11.7 21 15C21 18.3 18.3 21 15 21H12"/></symbol>
     <symbol id="icon-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13"/><path d="M18.5 2.5C18.8978 2.10217 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10217 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10217 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z"/></symbol>
     <symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7L18.1327 19.1425C18.0579 20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7M4 7H20"/></symbol>
 
@@ -1792,9 +1795,20 @@
         }
 
         function renderTaskActionTitles(el, task, t) {
-            setButtonLabel(el.querySelector('[data-action="toggle"]'), task.completed ? t['task.actions.markIncomplete'] : t['task.actions.markComplete']);
+            const toggleButton = el.querySelector('[data-action="toggle"]');
+            renderTaskToggleButton(toggleButton, task.completed);
+            setButtonLabel(toggleButton, task.completed ? t['task.actions.markIncomplete'] : t['task.actions.markComplete']);
             setButtonLabel(el.querySelector('[data-action="edit"]'), t['task.actions.edit']);
             setButtonLabel(el.querySelector('[data-action="delete"]'), t['task.actions.delete']);
+        }
+
+        function renderTaskToggleButton(button, completed) {
+            if (!button) return;
+            button.classList.toggle('complete-btn', !completed);
+            button.classList.toggle('restore-btn', completed);
+            button.dataset.toggleState = completed ? 'restore' : 'complete';
+            const iconUse = button.querySelector('use');
+            if (iconUse) iconUse.setAttribute('href', completed ? '#icon-undo' : '#icon-check');
         }
 
         function setButtonLabel(button, label) {

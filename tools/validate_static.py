@@ -195,7 +195,7 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Interactive controls must expose a visible keyboard focus style")
     if "@media (prefers-reduced-motion: reduce)" not in index_html:
         errors.append("CSS must respect prefers-reduced-motion")
-    if "setButtonLabel(el.querySelector('[data-action=\"toggle\"]')" not in index_html:
+    if "setButtonLabel(toggleButton," not in index_html or "renderTaskToggleButton(toggleButton" not in index_html:
         errors.append("Task action icon buttons must receive accessible labels")
     if "summaryBar.setAttribute('aria-expanded'" not in index_html:
         errors.append("Subtask expand controls must expose aria-expanded")

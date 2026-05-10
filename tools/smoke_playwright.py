@@ -490,10 +490,20 @@ def exercise_filters_and_sort(page: Page, alpha_name: str, beta_name: str, overd
 
 
 def complete_task(page: Page, task_name: str) -> None:
-    task_locator(page, task_name).first.locator('[data-action="toggle"]').click()
+    active_task = task_locator(page, task_name).first
+    expect(active_task.locator('[data-action="toggle"]')).to_have_attribute(
+        "aria-label", re.compile("标记为已完成|Mark as complete", re.I)
+    )
+    expect(active_task.locator('[data-action="toggle"] use')).to_have_attribute("href", "#icon-check")
+
+    active_task.locator('[data-action="toggle"]').click()
     select_filter(page, "completed")
     task = task_locator(page, task_name)
     expect(task).to_have_count(1)
+    expect(task.locator('[data-action="toggle"]')).to_have_attribute(
+        "aria-label", re.compile("标记为未完成|Mark as incomplete", re.I)
+    )
+    expect(task.locator('[data-action="toggle"] use')).to_have_attribute("href", "#icon-undo")
     decoration = task.locator(".task-name").evaluate(
         "element => getComputedStyle(element).textDecorationLine"
     )
