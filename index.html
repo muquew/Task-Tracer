@@ -1534,25 +1534,10 @@
         // --- 核心渲染逻辑 ---
         function renderTaskItem(el, task) {
             const t = state.translations[state.currentLanguage];
-
-            // A. 状态计算
-            let statusObj;
-            let timeLeft = null;
-            if (task.completed) statusObj = { cls: CONFIG.UI.CLASSES.COMPLETED, text: t['status.completed'], percent: 100 };
-            else if (task.dueDate) {
-                timeLeft = utils.calculateTimeLeft(task.dueDate);
-                statusObj = utils.getStatus(timeLeft);
-            } else {
-                statusObj = { cls: CONFIG.UI.CLASSES.NO_DEADLINE, text: t['status.noDeadline'], percent: 0 };
-            }
+            const { statusObj, timeLeft } = getTaskRenderStatus(task, t);
 
             // B. 基础信息
-            el.className = `task-item ${statusObj.cls} ${task.completed ? 'completed-task' : ''}`;
-            el.querySelector('.task-name').textContent = task.name;
-            renderReminderIcon(el, task);
-
-            el.querySelector('.task-date').textContent = task.dueDate ?
-                `${t['task.deadline']}: ${utils.formatDate(task.dueDate)}` : t['task.noDeadline'];
+            renderTaskHeader(el, task, statusObj, t);
 
             // C. 描述
             renderTaskDescription(el, task);
@@ -1571,6 +1556,33 @@
 
             // H. 拖拽手柄 (仅在 manual 模式下显示)
             renderTaskDragHandle(el);
+        }
+
+        function getTaskRenderStatus(task, t) {
+            if (task.completed) {
+                return {
+                    statusObj: { cls: CONFIG.UI.CLASSES.COMPLETED, text: t['status.completed'], percent: 100 },
+                    timeLeft: null
+                };
+            }
+
+            if (task.dueDate) {
+                const timeLeft = utils.calculateTimeLeft(task.dueDate);
+                return { statusObj: utils.getStatus(timeLeft), timeLeft };
+            }
+
+            return {
+                statusObj: { cls: CONFIG.UI.CLASSES.NO_DEADLINE, text: t['status.noDeadline'], percent: 0 },
+                timeLeft: null
+            };
+        }
+
+        function renderTaskHeader(el, task, statusObj, t) {
+            el.className = `task-item ${statusObj.cls} ${task.completed ? 'completed-task' : ''}`;
+            el.querySelector('.task-name').textContent = task.name;
+            renderReminderIcon(el, task);
+            el.querySelector('.task-date').textContent = task.dueDate ?
+                `${t['task.deadline']}: ${utils.formatDate(task.dueDate)}` : t['task.noDeadline'];
         }
 
         function renderTaskDescription(el, task) {
