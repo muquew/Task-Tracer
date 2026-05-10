@@ -1,5 +1,5 @@
 // 改了代码要来这里改缓存名字
-const CACHE_NAME = 'task-tracer-v3.1';
+const CACHE_NAME = 'task-tracer-v3.2';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',

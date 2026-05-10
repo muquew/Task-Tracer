@@ -662,6 +662,7 @@
             translations: {},
             tempSubtasks: [], // 编辑/新建时暂存的子任务
             editingSubtaskIndex: -1, // 记录当前正在编辑哪一行，-1 表示没有
+            modalMode: 'form',
             progressInterval: null,
             elementToFocusOnClose: null, // A11y: 存储关闭弹窗时要聚焦的元素
             dateTimeFormatters: {}, // 缓存格式化器
@@ -1612,12 +1613,38 @@
             });
         }
 
+        function setTranslatedText(el, key) {
+            el.setAttribute('data-i18n', key);
+            el.textContent = utils.translate(key);
+        }
+
+        function clearConfirmHandler() {
+            if (DOM.submitBtn._confirmHandler) {
+                DOM.submitBtn.removeEventListener('click', DOM.submitBtn._confirmHandler);
+                delete DOM.submitBtn._confirmHandler;
+            }
+        }
+
+        function resetDialogToFormMode() {
+            state.modalMode = 'form';
+
+            const msg = document.getElementById('confirm-message-text');
+            if (msg) msg.style.display = 'none';
+
+            DOM.formGroups.forEach(g => g.style.display = 'block');
+            DOM.submitBtn.type = 'submit';
+            DOM.submitBtn.disabled = false;
+            clearConfirmHandler();
+        }
+
         function openModal(editingTask = null) {
             state.elementToFocusOnClose = document.activeElement; // A11y: 存储当前焦点
+            resetDialogToFormMode();
+
             if (editingTask) {
                 state.editingTaskId = editingTask.id;
-                DOM.modalTitle.setAttribute('data-i18n', 'editTask');
-                DOM.submitBtn.setAttribute('data-i18n', 'updateTask');
+                setTranslatedText(DOM.modalTitle, 'editTask');
+                setTranslatedText(DOM.submitBtn, 'updateTask');
                 DOM.inputs.name.value = editingTask.name;
                 DOM.inputs.desc.value = editingTask.description || '';
 
@@ -1643,8 +1670,8 @@
                 DOM.inputs.reminderOffset.value = String(editingTask.reminderOffset ?? 15);
             } else {
                 state.editingTaskId = null;
-                DOM.modalTitle.setAttribute('data-i18n', 'addNewTask');
-                DOM.submitBtn.setAttribute('data-i18n', 'addTask');
+                setTranslatedText(DOM.modalTitle, 'addNewTask');
+                setTranslatedText(DOM.submitBtn, 'addTask');
 
                 state.tempSubtasks = [];
                 DOM.inputs.noDeadline.checked = false;
@@ -1672,23 +1699,9 @@
             DOM.form.reset();
             DOM.inputs.reminderOffset.disabled = false;
             DOM.inputs.reminderOffset.value = '15';
-            DOM.formGroups.forEach(g => g.style.display = 'block'); // 恢复输入框显示
             state.tempSubtasks = []; // 清空临时数据
             state.editingSubtaskIndex = -1;
-
-            // 2. 重置确认模式残留
-            const msg = document.getElementById('confirm-message-text');
-            if (msg) msg.style.display = 'none'; // 隐藏确认文字
-
-            // 3. 重置按钮状态 (这是最关键的复用逻辑)
-            DOM.submitBtn.type = 'submit';
-            DOM.submitBtn.disabled = false;
-
-            // 移除确认模式下的一次性监听器
-            if (DOM.submitBtn._confirmHandler) {
-                DOM.submitBtn.removeEventListener('click', DOM.submitBtn._confirmHandler);
-                delete DOM.submitBtn._confirmHandler;
-            }
+            resetDialogToFormMode();
 
             // A11y: 恢复焦点
             if (state.elementToFocusOnClose) {
@@ -1756,7 +1769,10 @@
                 setTimeout(() => DOM.notification.el.classList.remove(CONFIG.UI.CLASSES.SHOW), 3000);
             },
             confirm: (title, msg, onConfirm) => {
+                state.modalMode = 'confirm';
+                clearConfirmHandler();
                 DOM.modalTitle.textContent = title;
+                DOM.modalTitle.removeAttribute('data-i18n');
 
                 // 动态创建提示文本
                 let p = document.getElementById('confirm-message-text');
@@ -1775,12 +1791,9 @@
                 // 修改按钮
                 const t = state.translations[state.currentLanguage];
                 DOM.submitBtn.textContent = t['confirm'];
+                DOM.submitBtn.removeAttribute('data-i18n');
                 DOM.submitBtn.type = 'button';
                 DOM.submitBtn.disabled = false;
-
-                if (DOM.submitBtn._confirmHandler) {
-                    DOM.submitBtn.removeEventListener('click', DOM.submitBtn._confirmHandler);
-                }
 
                 const handler = async () => {
                     DOM.submitBtn.disabled = true;
