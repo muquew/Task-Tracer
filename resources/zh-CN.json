@@ -13,6 +13,8 @@
     "confirm": "确认",
     "cancel": "取消",
     "updateTask": "更新任务",
+    "archiveCompletedTitle": "归档所有已完成任务",
+    "archiveCompleted": "归档已完成",
     "clearCompletedTitle": "清除所有已完成的任务",
     "clearCompleted": "清除已完成"
   },
@@ -29,6 +31,7 @@
     "all": "全部",
     "active": "进行中",
     "completed": "已完成",
+    "archived": "已归档",
     "overdue": "已过期",
     "noDeadline": "无截止日期"
   },
@@ -105,6 +108,8 @@
       "markComplete": "标记为已完成",
       "markIncomplete": "标记为未完成",
       "snooze": "10 分钟后再提醒",
+      "archive": "归档任务",
+      "restoreArchive": "从归档恢复",
       "edit": "编辑任务",
       "delete": "删除任务",
       "reorder": "移动任务：{taskName}。使用上下方向键调整顺序"
@@ -123,6 +128,7 @@
   },
   "status": {
     "completed": "已完成",
+    "archived": "已归档",
     "safe": "安全",
     "warning": "警告",
     "danger": "紧急",
@@ -153,7 +159,7 @@
       "previewTitle": "导入预览",
       "previewTasks": "导入任务",
       "previewReplace": "替换影响",
-      "previewReplaceValue": "当前 {current} 个任务会被替换，含 {completed} 个已完成",
+      "previewReplaceValue": "当前 {current} 个任务会被替换，含 {completed} 个已完成、{archived} 个已归档",
       "previewDuplicates": "同名重复项",
       "formatError": "导入失败：文件格式不正确",
       "readError": "导入失败：文件读取错误"
@@ -163,6 +169,14 @@
       "confirm": "确定永久删除 {count} 个已完成的任务吗？",
       "success": "{count} 个已完成的任务已被清除",
       "error": "清除任务时出错"
+    },
+    "archive": {
+      "none": "没有可归档的已完成任务",
+      "confirm": "归档 {count} 个已完成任务吗？",
+      "success": "{count} 个已完成任务已归档",
+      "taskArchived": "任务已归档",
+      "taskRestored": "任务已从归档恢复",
+      "error": "更新归档状态失败"
     },
     "sampleTasks": {
       "added": "示例任务已添加"

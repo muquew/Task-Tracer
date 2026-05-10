@@ -849,6 +849,23 @@ def clear_completed_tasks(page: Page, completed_name: str) -> None:
     expect(task_locator(page, completed_name)).to_have_count(0)
 
 
+def archive_and_restore_task(page: Page, completed_name: str) -> None:
+    select_filter(page, "completed")
+    task = task_locator(page, completed_name)
+    expect(task.locator('[data-action="archive"]')).to_be_visible()
+    task.locator('[data-action="archive"]').click()
+    wait_for_notification(page, re.compile("已归档|archived", re.I))
+    select_filter(page, "archived")
+    archived = task_locator(page, completed_name)
+    expect(archived).to_have_count(1)
+    expect(archived.locator(".status-text")).to_have_text(re.compile("已归档|Archived", re.I))
+    expect(archived.locator('[data-action="toggle"]')).to_be_hidden()
+    archived.locator('[data-action="archive"]').click()
+    wait_for_notification(page, re.compile("恢复|restored", re.I))
+    select_filter(page, "completed")
+    expect(task_locator(page, completed_name)).to_have_count(1)
+
+
 def exercise_manual_reorder(page: Page, first_name: str, second_name: str, third_name: str) -> None:
     select_filter(page, "all")
     select_sort(page, "manual")
@@ -856,10 +873,7 @@ def exercise_manual_reorder(page: Page, first_name: str, second_name: str, third
     assert_task_order(page, [first_name, second_name, third_name])
     page.wait_for_timeout(150)
 
-    task_locator(page, third_name).locator(".drag-handle").drag_to(
-        task_locator(page, first_name),
-        target_position={"x": 20, "y": 5},
-    )
+    drag_task_before(page, third_name, first_name)
     page.wait_for_timeout(500)
     assert_task_order(page, [third_name, first_name, second_name])
 
@@ -873,6 +887,17 @@ def exercise_manual_reorder(page: Page, first_name: str, second_name: str, third
     expect(page.locator("#srStatus")).to_contain_text("第 1 位")
     assert_task_order(page, [first_name, third_name, second_name])
     assert_accessibility_baseline(page, "manual reorder")
+
+
+def drag_task_before(page: Page, source_name: str, target_name: str) -> None:
+    handle_box = task_locator(page, source_name).locator(".drag-handle").bounding_box()
+    target_box = task_locator(page, target_name).bounding_box()
+    if not handle_box or not target_box:
+        raise AssertionError("Could not resolve task drag geometry")
+    page.mouse.move(handle_box["x"] + handle_box["width"] / 2, handle_box["y"] + handle_box["height"] / 2)
+    page.mouse.down()
+    page.mouse.move(target_box["x"] + 20, target_box["y"] + 5, steps=12)
+    page.mouse.up()
 
 
 def exercise_filtered_manual_reorder_guard(page: Page, completed_name: str, first_active: str, second_active: str) -> None:
@@ -1211,6 +1236,7 @@ def smoke(url: str) -> None:
         expect(task_locator(page, beta_name)).to_have_count(1)
         expect(task_locator(page, overdue_name)).to_have_count(1)
         exercise_filtered_manual_reorder_guard(page, alpha_edited, overdue_name, beta_name)
+        archive_and_restore_task(page, alpha_edited)
         clear_completed_tasks(page, alpha_edited)
 
         select_filter(page, "all")

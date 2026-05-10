@@ -244,6 +244,7 @@
         .task-item.status-danger { --task-color: var(--color-danger); }
         .task-item.status-overdue { --task-color: var(--color-danger); }
         .task-item.status-no-deadline { --task-color: var(--text-tertiary); }
+        .task-item.status-archived { --task-color: var(--text-tertiary); background-color: var(--bg-surface-alt); opacity: 0.78; }
         .task-item.completed { --task-color: var(--color-success); background-color: var(--bg-surface-alt); opacity: 0.86; }
         .task-item.status-safe .task-date { color: var(--color-success-dark); background: var(--color-success-light); }
         .task-item.status-warning .task-date { color: var(--color-warning-text); background: var(--color-warning-light); }
@@ -284,6 +285,8 @@
         .snooze-btn:hover { color: var(--color-warning-text); background: var(--color-warning-light); }
         .restore-btn { color: var(--color-primary); }
         .restore-btn:hover { color: var(--color-primary-dark); background: var(--color-info-light); }
+        .archive-btn { color: var(--text-tertiary); }
+        .archive-btn:hover { color: var(--color-primary); background: var(--color-info-light); }
         .task-item.draggable-item { cursor: grab; transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s; }
         .task-item.draggable-item:active { cursor: grabbing; }
         .drag-handle { margin: 0 0 0 6px; padding: 0 8px; cursor: grab; color: var(--text-tertiary); display: flex; align-items: stretch; justify-content: center; touch-action: none; background: var(--bg-surface-alt); border: 0; border-right: 1px solid var(--border-light); font: inherit; }
@@ -508,6 +511,8 @@
     <symbol id="icon-export" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4V16M12 4L8 8M12 4L16 8"/><path d="M4 20H20"/></symbol>
     <symbol id="icon-import" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V8M12 20L8 16M12 20L16 16"/><path d="M4 4H20"/></symbol>
     <symbol id="icon-trash-lines" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.75 5.75C5.75 4.7835 6.5335 4 7.5 4H16.5C17.4665 4 18.25 4.7835 18.25 5.75V8.25H5.75V5.75Z"/><path d="M4 8.25H20"/><path d="M17.5 8.25V17.5C17.5 18.8807 16.3807 20 15 20H9C7.61929 20 6.5 18.8807 6.5 17.5V8.25"/><path d="M9.5 11.25V16.25"/><path d="M14.5 11.25V16.25"/></symbol>
+    <symbol id="icon-archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V8"/><path d="M1 3H23V8H1Z"/><path d="M10 12H14"/></symbol>
+    <symbol id="icon-archive-restore" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V8"/><path d="M1 3H23V8H1Z"/><path d="M12 12V18"/><path d="M9 15L12 12L15 15"/></symbol>
     <symbol id="icon-globe-language" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z"/><path d="M2 12H22"/><path d="M12 2C14.7614 2 17 6.48 17 12C17 17.52 14.7614 22 12 22C9.23858 22 7 17.52 7 12C7 6.48 9.23858 2 12 2Z"/></symbol>
     <symbol id="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18L15 12L9 6"/></symbol>
     <symbol id="icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
@@ -559,6 +564,10 @@
                     <span data-i18n="actions.import">导入</span>
                 </button>
                 <div class="menu-divider"></div>
+                <button class="menu-item" data-i18n-title="actions.archiveCompletedTitle" id="archiveCompletedBtn" title="归档所有已完成任务">
+                    <svg class="icon"><use href="#icon-archive"></use></svg>
+                    <span data-i18n="actions.archiveCompleted">归档已完成</span>
+                </button>
                 <button class="menu-item" data-i18n-title="actions.clearCompletedTitle" id="clearCompletedBtn" title="清除所有已完成的任务">
                     <svg class="icon icon-sm" style="color: var(--color-danger);"><use href="#icon-trash-lines"></use></svg>
                     <span data-i18n="actions.clearCompleted">清除已完成</span>
@@ -595,6 +604,7 @@
                     <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="all"><span data-i18n="filters.all">全部</span><span class="filter-count" id="count-all">(0)</span></button>
                     <button type="button" class="dropdown-option selected" role="option" aria-selected="true" data-filter="active"><span data-i18n="filters.active">进行中</span><span class="filter-count" id="count-active">(0)</span></button>
                     <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="completed"><span data-i18n="filters.completed">已完成</span><span class="filter-count" id="count-completed">(0)</span></button>
+                    <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="archived"><span data-i18n="filters.archived">已归档</span><span class="filter-count" id="count-archived">(0)</span></button>
                     <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="overdue"><span data-i18n="filters.overdue">已过期</span><span class="filter-count" id="count-overdue">(0)</span></button>
                     <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="no-deadline"><span data-i18n="filters.noDeadline">无截止日期</span><span class="filter-count" id="count-no-deadline">(0)</span></button>
                 </div>
@@ -728,6 +738,9 @@
                     <button class="action-btn snooze-btn" data-action="snooze" title="稍后提醒" hidden>
                         <svg class="icon"><use href="#icon-clock"></use></svg>
                     </button>
+                    <button class="action-btn archive-btn" data-action="archive" title="归档" hidden>
+                        <svg class="icon"><use href="#icon-archive"></use></svg>
+                    </button>
                     <button class="action-btn edit-btn" data-action="edit" title="编辑">
                         <svg class="icon"><use href="#icon-edit"></use></svg>
                     </button>
@@ -779,7 +792,8 @@
                     DANGER: 'status-danger',
                     OVERDUE: 'status-overdue',
                     NO_DEADLINE: 'status-no-deadline',
-                    COMPLETED: 'status-completed'
+                    COMPLETED: 'status-completed',
+                    ARCHIVED: 'status-archived'
                 },
                 THEME: {
                     TRANSITIONING: 'theme-transitioning',
@@ -796,7 +810,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '2.6'
+                RESOURCE_VERSION: '2.7'
             },
             NOTIFICATIONS: {
                 DEFAULT_OFFSET_MINUTES: 15,
@@ -877,6 +891,7 @@
                 langContainer: document.getElementById('lang-container'),
                 exportBtn: document.getElementById('exportBtn'),
                 importBtn: document.getElementById('importBtn'),
+                archiveCompletedBtn: document.getElementById('archiveCompletedBtn'),
                 fileInput: document.getElementById('importFile')
             };
             DOM.dropdowns = {
@@ -1047,6 +1062,7 @@
             DOM.menu.langContainer.addEventListener('click', handleLanguageMenuClick);
             DOM.menu.exportBtn.addEventListener('click', exportTasks);
             DOM.menu.importBtn.addEventListener('click', () => DOM.menu.fileInput.click());
+            DOM.menu.archiveCompletedBtn.addEventListener('click', handleArchiveCompleted);
             DOM.menu.fileInput.addEventListener('change', (e) => importTasks(e.target.files[0]));
         }
         function handleMainMenuClick(e) {
@@ -1227,6 +1243,8 @@
                 id: Date.now(),
                 createdAt: new Date().toISOString(),
                 completed: false,
+                archived: false,
+                archivedAt: null,
                 snoozedUntil: null,
                 lastReminderAt: null,
                 ...taskPayload
@@ -1320,6 +1338,18 @@
                 const result = normalizeSubtasksForTask(task.subtasks);
                 const normalizedTask = { ...task, subtasks: result.subtasks };
                 if (result.changed) changed = true;
+                if (typeof normalizedTask.archived !== 'boolean') {
+                    normalizedTask.archived = false;
+                    changed = true;
+                }
+                if (normalizedTask.archivedAt && !normalizeStoredDate(normalizedTask.archivedAt)) {
+                    normalizedTask.archivedAt = null;
+                    changed = true;
+                }
+                if (!('archivedAt' in normalizedTask)) {
+                    normalizedTask.archivedAt = null;
+                    changed = true;
+                }
                 const project = normalizeTaskProject(normalizedTask.project);
                 if (normalizedTask.project !== project) {
                     normalizedTask.project = project;
@@ -1413,12 +1443,13 @@
         }
         async function handleClearCompleted() {
             const t = state.translations[state.currentLanguage];
-            const completed = state.tasks.filter(x => x.completed);
+            const completed = state.tasks.filter(x => x.completed && !x.archived);
             if (completed.length === 0) return utils.notify(t['messages.clearCompleted.none'], 'warning');
             utils.confirm(t['actions.clearCompleted'], t['messages.clearCompleted.confirm'].replace('{count}', completed.length), async () => {
                 try {
-                    await dbActions.deleteTasks(completed.map(task => task.id));
-                    state.tasks = state.tasks.filter(x => !x.completed);
+                    const completedIds = new Set(completed.map(task => task.id));
+                    await dbActions.deleteTasks([...completedIds]);
+                    state.tasks = state.tasks.filter(task => !completedIds.has(task.id));
                     renderTaskList();
                     utils.notify(t['messages.clearCompleted.success'].replace('{count}', completed.length));
                 } catch (e) {
@@ -1427,6 +1458,47 @@
                     throw e;
                 }
             });
+        }
+        async function handleArchiveCompleted() {
+            const t = state.translations[state.currentLanguage];
+            const completed = state.tasks.filter(task => task.completed && !task.archived);
+            closeMenu();
+            if (completed.length === 0) return utils.notify(t['messages.archive.none'], 'warning');
+            utils.confirm(t['actions.archiveCompleted'], t['messages.archive.confirm'].replace('{count}', completed.length), async () => {
+                const archivedAt = new Date().toISOString();
+                completed.forEach(task => {
+                    task.archived = true;
+                    task.archivedAt = archivedAt;
+                });
+                try {
+                    await dbActions.updateTasks(completed);
+                    renderTaskList();
+                    utils.notify(t['messages.archive.success'].replace('{count}', completed.length));
+                } catch (error) {
+                    console.error('归档已完成任务失败:', error);
+                    utils.notify(t['messages.archive.error'], 'error');
+                    throw error;
+                }
+            });
+        }
+        async function toggleTaskArchive(id) {
+            const task = getTaskById(id);
+            if (!task) return;
+            const t = state.translations[state.currentLanguage];
+            const wasArchived = !!task.archived;
+            const previousArchivedAt = task.archivedAt || null;
+            task.archived = !wasArchived;
+            task.archivedAt = task.archived ? new Date().toISOString() : null;
+            try {
+                await dbActions.updateTask(task);
+                renderTaskList();
+                utils.notify(task.archived ? t['messages.archive.taskArchived'] : t['messages.archive.taskRestored']);
+            } catch (error) {
+                task.archived = wasArchived;
+                task.archivedAt = previousArchivedAt;
+                console.error('更新归档状态失败:', error);
+                utils.notify(t['messages.archive.error'], 'error');
+            }
         }
         async function snoozeTaskReminder(id) {
             const task = getTaskById(id);
@@ -1520,7 +1592,7 @@
         function checkNotifications() {
             if (!state.notificationsEnabled) return;
             state.tasks.forEach(task => {
-                if (task.completed || !task.dueDate) return;
+                if (task.completed || task.archived || !task.dueDate) return;
                 const timeLeft = utils.calculateTimeLeft(task.dueDate);
                 const offset = getTaskReminderOffset(task);
                 if (offset === -1) return;
@@ -1688,19 +1760,26 @@
             setFilterCountText('count-all', counts.all);
             setFilterCountText('count-active', counts.active);
             setFilterCountText('count-completed', counts.completed);
+            setFilterCountText('count-archived', counts.archived);
             setFilterCountText('count-overdue', counts.overdue);
             setFilterCountText('count-no-deadline', counts['no-deadline']);
         }
         function getFilterCounts() {
             const scopedTasks = state.tasks.filter(matchesTaskProject);
             const counts = {
-                all: scopedTasks.length,
+                all: 0,
                 active: 0,
                 completed: 0,
+                archived: 0,
                 overdue: 0,
                 'no-deadline': 0
             };
             scopedTasks.forEach(task => {
+                if (task.archived) {
+                    counts.archived++;
+                    return;
+                }
+                counts.all++;
                 if (task.completed) counts.completed++;
                 else {
                     counts.active++;
@@ -1744,6 +1823,8 @@
         function isTaskVisible(task) {
             if (!matchesTaskProject(task)) return false;
             if (!matchesTaskSearch(task)) return false;
+            if (state.filter === 'archived') return !!task.archived;
+            if (task.archived) return false;
             switch (state.filter) {
                 case 'active': return !task.completed;
                 case 'completed': return task.completed;
@@ -1895,6 +1976,12 @@
             renderTaskDragHandle(el);
         }
         function getTaskRenderStatus(task, t) {
+            if (task.archived) {
+                return {
+                    statusObj: { cls: CONFIG.UI.STATUS.ARCHIVED, text: t['status.archived'], percent: 100 },
+                    timeLeft: null
+                };
+            }
             if (task.completed) {
                 return {
                     statusObj: { cls: CONFIG.UI.CLASSES.COMPLETED, text: t['status.completed'], percent: 100 },
@@ -1911,7 +1998,7 @@
             };
         }
         function renderTaskHeader(el, task, statusObj, t) {
-            el.className = `task-item ${statusObj.cls} ${task.completed ? 'completed-task' : ''}`;
+            el.className = `task-item ${statusObj.cls} ${task.completed ? 'completed-task' : ''} ${task.archived ? 'archived-task' : ''}`;
             el.querySelector('.task-name').textContent = task.name;
             renderReminderIcon(el, task);
             el.querySelector('.task-date').textContent = task.dueDate ?
@@ -1987,7 +2074,7 @@
             } else if (timeEl) timeEl.remove();
         }
         function shouldShowTaskTiming(task) {
-            return task.dueDate && !task.completed;
+            return task.dueDate && !task.completed && !task.archived;
         }
         function renderReminderIcon(el, task) {
             const reminderIcon = el.querySelector('.task-reminder-icon');
@@ -2002,14 +2089,18 @@
             reminderIcon.style.color = state.notifiedTasks.has(getTaskNotificationKey(task)) ? 'var(--text-tertiary)' : 'var(--color-warning)';
         }
         function shouldShowReminderIcon(task) {
-            return task.dueDate && !task.completed && getTaskReminderOffset(task) !== -1;
+            return task.dueDate && !task.completed && !task.archived && getTaskReminderOffset(task) !== -1;
         }
         function renderTaskActionTitles(el, task, t) {
             const toggleButton = el.querySelector('[data-action="toggle"]');
             renderTaskToggleButton(toggleButton, task.completed);
+            if (toggleButton) toggleButton.hidden = !!task.archived;
             setButtonLabel(toggleButton, task.completed ? t['task.actions.markIncomplete'] : t['task.actions.markComplete']);
             renderTaskSnoozeButton(el.querySelector('[data-action="snooze"]'), task, t);
-            setButtonLabel(el.querySelector('[data-action="edit"]'), t['task.actions.edit']);
+            renderTaskArchiveButton(el.querySelector('[data-action="archive"]'), task, t);
+            const editButton = el.querySelector('[data-action="edit"]');
+            if (editButton) editButton.hidden = !!task.archived;
+            setButtonLabel(editButton, t['task.actions.edit']);
             setButtonLabel(el.querySelector('[data-action="delete"]'), t['task.actions.delete']);
         }
         function renderTaskSnoozeButton(button, task, t) {
@@ -2017,6 +2108,15 @@
             const visible = shouldShowReminderIcon(task);
             button.hidden = !visible;
             if (visible) setButtonLabel(button, t['task.actions.snooze']);
+        }
+        function renderTaskArchiveButton(button, task, t) {
+            if (!button) return;
+            const visible = task.archived || task.completed;
+            button.hidden = !visible;
+            if (!visible) return;
+            const iconUse = button.querySelector('use');
+            if (iconUse) iconUse.setAttribute('href', task.archived ? '#icon-archive-restore' : '#icon-archive');
+            setButtonLabel(button, task.archived ? t['task.actions.restoreArchive'] : t['task.actions.archive']);
         }
         function renderTaskToggleButton(button, completed) {
             if (!button) return;
@@ -2670,6 +2770,7 @@
             switch (action) {
                 case 'toggle': toggleTaskComplete(taskId); break;
                 case 'snooze': snoozeTaskReminder(taskId); break;
+                case 'archive': toggleTaskArchive(taskId); break;
                 case 'edit': editTask(taskId); break;
                 case 'delete': deleteTask(taskId); break;
             }
@@ -3042,10 +3143,12 @@
         function buildImportPreview(importedTasks) {
             const duplicateNames = getImportDuplicateNames(importedTasks);
             const completedCount = state.tasks.filter(task => task.completed).length;
+            const archivedCount = state.tasks.filter(task => task.archived).length;
             return {
                 importCount: importedTasks.length,
                 currentCount: state.tasks.length,
                 completedCount,
+                archivedCount,
                 duplicateNames
             };
         }
@@ -3072,7 +3175,8 @@
                 createConfirmRow(t['messages.import.previewTasks'], String(preview.importCount)),
                 createConfirmRow(t['messages.import.previewReplace'], t['messages.import.previewReplaceValue']
                     .replace('{current}', preview.currentCount)
-                    .replace('{completed}', preview.completedCount)),
+                    .replace('{completed}', preview.completedCount)
+                    .replace('{archived}', preview.archivedCount)),
                 createConfirmRow(t['messages.import.previewDuplicates'], String(preview.duplicateNames.length))
             );
             if (preview.duplicateNames.length > 0) {
@@ -3119,6 +3223,8 @@
                 lastReminderAt: normalizeStoredDate(task.lastReminderAt),
                 subtasks: normalizeImportedSubtasks(task.subtasks),
                 completed: typeof task.completed === 'boolean' ? task.completed : false,
+                archived: typeof task.archived === 'boolean' ? task.archived : false,
+                archivedAt: normalizeStoredDate(task.archivedAt),
                 createdAt: normalizeStoredDate(task.createdAt) || new Date().toISOString(),
                 order: Number.isFinite(Number(task.order)) ? Number(task.order) : (index + 1) * CONFIG.DEFAULTS.ORDER_STEP
             };

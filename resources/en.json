@@ -13,6 +13,8 @@
     "confirm": "Confirm",
     "cancel": "Cancel",
     "updateTask": "Update Task",
+    "archiveCompletedTitle": "Archive all completed tasks",
+    "archiveCompleted": "Archive Completed",
     "clearCompletedTitle": "Clear All Completed Tasks",
     "clearCompleted": "Clear Completed"
   },
@@ -29,6 +31,7 @@
     "all": "All",
     "active": "Active",
     "completed": "Completed",
+    "archived": "Archived",
     "overdue": "Overdue",
     "noDeadline": "No Deadline"
   },
@@ -105,6 +108,8 @@
       "markComplete": "Mark as complete",
       "markIncomplete": "Mark as incomplete",
       "snooze": "Remind again in 10 minutes",
+      "archive": "Archive task",
+      "restoreArchive": "Restore from archive",
       "edit": "Edit task",
       "delete": "Delete task",
       "reorder": "Move task: {taskName}. Use the up and down arrow keys to reorder"
@@ -123,6 +128,7 @@
   },
   "status": {
     "completed": "Completed",
+    "archived": "Archived",
     "safe": "Safe",
     "warning": "Warning",
     "danger": "Urgent",
@@ -153,7 +159,7 @@
       "previewTitle": "Import Preview",
       "previewTasks": "Tasks to import",
       "previewReplace": "Replacement impact",
-      "previewReplaceValue": "{current} current tasks will be replaced, including {completed} completed",
+      "previewReplaceValue": "{current} current tasks will be replaced, including {completed} completed and {archived} archived",
       "previewDuplicates": "Duplicate names",
       "formatError": "Import failed: Invalid file format",
       "readError": "Import failed: File read error"
@@ -163,6 +169,14 @@
       "confirm": "Are you sure you want to permanently delete {count} completed tasks?",
       "success": "{count} completed tasks have been cleared",
       "error": "Error while clearing tasks"
+    },
+    "archive": {
+      "none": "There are no completed tasks to archive",
+      "confirm": "Archive {count} completed tasks?",
+      "success": "{count} completed tasks archived",
+      "taskArchived": "Task archived",
+      "taskRestored": "Task restored from archive",
+      "error": "Failed to update archive status"
     },
     "sampleTasks": {
       "added": "Sample tasks added"
