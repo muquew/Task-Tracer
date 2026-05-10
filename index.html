@@ -2711,7 +2711,7 @@
         }
         function getCompletionDateKey(task) {
             const completedAt = normalizeStoredDate(task.completedAt);
-            return completedAt ? utils.formatDateInputValue(utils.utcToLocal(completedAt)) : '';
+            return completedAt ? utils.formatDateInputValue(new Date(completedAt)) : '';
         }
         function formatPercent(value) {
             return `${Math.round(value * 100)}%`;
