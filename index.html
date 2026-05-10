@@ -641,6 +641,10 @@
                 LANG: 'zh-CN',
                 TIME: '23:59'
             },
+            I18N: {
+                RESOURCE_PATH: './resources',
+                RESOURCE_VERSION: '1.3'
+            },
             LANGUAGES: [
                 { code: 'zh-CN', name: '简体中文' },
                 { code: 'en', name: 'English' }
@@ -767,7 +771,7 @@
 
         async function loadSettings() {
             const savedLang = await dbActions.getConfig(CONFIG.STORAGE.LANG);
-            if (savedLang) {
+            if (savedLang && CONFIG.LANGUAGES.some(l => l.code === savedLang)) {
                 state.currentLanguage = savedLang;
             } else {
                 // 自动检测语言
@@ -1910,13 +1914,19 @@
                     t = state.translations[state.currentLanguage];
                 }
                 document.querySelectorAll('[data-i18n], [data-i18n-placeholder], [data-i18n-title], [data-i18n-aria-label]').forEach(el => {
-                    if (el.dataset.i18n) el.textContent = t[el.dataset.i18n];
-                    if (el.dataset.i18nPlaceholder) el.placeholder = t[el.dataset.i18nPlaceholder];
-                    if (el.dataset.i18nTitle) el.title = t[el.dataset.i18nTitle];
-                    if (el.dataset.i18nAriaLabel) el.setAttribute('aria-label', t[el.dataset.i18nAriaLabel]);
+                    if (el.dataset.i18n) el.textContent = utils.translate(el.dataset.i18n);
+                    if (el.dataset.i18nPlaceholder) el.placeholder = utils.translate(el.dataset.i18nPlaceholder);
+                    if (el.dataset.i18nTitle) el.title = utils.translate(el.dataset.i18nTitle);
+                    if (el.dataset.i18nAriaLabel) el.setAttribute('aria-label', utils.translate(el.dataset.i18nAriaLabel));
                 });
                 syncDropdowns();
                 renderTaskList();
+            },
+
+            translate: (key) => {
+                const current = state.translations[state.currentLanguage] || {};
+                const fallback = state.translations[CONFIG.DEFAULTS.LANG] || {};
+                return current[key] ?? fallback[key] ?? key;
             },
 
             escapeHTML: (str) => {
@@ -2259,11 +2269,33 @@
 
         // --- 其他辅助逻辑 ---
         async function loadTranslations() {
-            const promises = CONFIG.LANGUAGES.map(l =>
-                fetch(`./resources/${l.code}.json?v=1.2`).then(r => r.json()).then(d => state.translations[l.code] = d)
-            );
-            await Promise.all(promises);
-            if (Object.keys(state.translations).length === 0) utils.notify('加载语言失败，请刷新页面重试', 'error');
+            const entries = await Promise.all(CONFIG.LANGUAGES.map(async (l) => {
+                const url = `${CONFIG.I18N.RESOURCE_PATH}/${l.code}.json?v=${CONFIG.I18N.RESOURCE_VERSION}`;
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${l.code} translations: ${response.status}`);
+                }
+                return [l.code, await response.json()];
+            }));
+            state.translations = Object.fromEntries(entries);
+            validateTranslations();
+        }
+
+        function validateTranslations() {
+            const base = state.translations[CONFIG.DEFAULTS.LANG];
+            if (!base) throw new Error(`Missing default language: ${CONFIG.DEFAULTS.LANG}`);
+
+            const baseKeys = Object.keys(base).sort();
+            CONFIG.LANGUAGES.forEach(({ code }) => {
+                const current = state.translations[code];
+                if (!current) throw new Error(`Missing language: ${code}`);
+
+                const missing = baseKeys.filter(key => !(key in current));
+                const extra = Object.keys(current).filter(key => !(key in base));
+                if (missing.length || extra.length) {
+                    console.warn(`[i18n] ${code} key mismatch`, { missing, extra });
+                }
+            });
         }
 
         function createLangButtons() {
