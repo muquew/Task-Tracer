@@ -444,6 +444,8 @@ def add_task(
     due_date: str | None = None,
     due_time: str | None = None,
     reminder_offset: str | None = None,
+    repeat_type: str | None = None,
+    repeat_interval: str | None = None,
     project: str | None = None,
     tags: list[str] | None = None,
     subtasks: list[str] | None = None,
@@ -463,6 +465,7 @@ def add_task(
         expect(page.locator("#dueTime")).to_be_disabled()
         expect(page.locator("#reminderOffset")).to_be_disabled()
         expect(page.locator("#reminderRepeat")).to_be_disabled()
+        expect(page.locator("#repeatType")).to_be_disabled()
     else:
         if due_date:
             page.locator("#dueDate").fill(due_date)
@@ -474,6 +477,11 @@ def add_task(
                 expect(page.locator("#reminderRepeat")).to_be_disabled()
             else:
                 expect(page.locator("#reminderRepeat")).to_be_enabled()
+        if repeat_type:
+            page.locator("#repeatType").select_option(repeat_type)
+            if repeat_type == "custom":
+                expect(page.locator("#repeatCustomRow")).to_be_visible()
+                page.locator("#repeatInterval").fill(repeat_interval or "1")
 
     for index, subtask in enumerate(subtasks or [], start=1):
         page.locator("#subtaskInput").fill(subtask)
@@ -841,6 +849,92 @@ def complete_task(page: Page, task_name: str) -> None:
         raise AssertionError(f"Completed task name is not struck through: {decoration}")
 
 
+def exercise_repeating_task(page: Page, task_name: str) -> None:
+    add_task(
+        page,
+        task_name,
+        description="Repeating task smoke test.",
+        due_date=future_date(1),
+        due_time="08:45",
+        repeat_type="custom",
+        repeat_interval="3",
+        project="Smoke Routine",
+        tags=["routine"],
+    )
+    expect(task_locator(page, task_name).locator(".repeat-chip")).to_contain_text(re.compile("3"))
+    task_locator(page, task_name).locator('[data-action="toggle"]').click()
+    wait_for_notification(page, re.compile("下一期|next occurrence", re.I))
+    records = page.evaluate(
+        """async (taskName) => {
+            const request = indexedDB.open('TaskTrackerDB', 2);
+            return await new Promise((resolve, reject) => {
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readonly');
+                    const getAll = tx.objectStore('tasks').getAll();
+                    getAll.onsuccess = () => {
+                        const tasks = getAll.result
+                            .filter((item) => item.name === taskName)
+                            .map((item) => ({
+                                completed: item.completed,
+                                repeatType: item.repeatType,
+                                repeatInterval: item.repeatInterval,
+                                repeatCreatedFrom: item.repeatCreatedFrom,
+                                dueDate: item.dueDate,
+                                nextRepeatTaskId: item.nextRepeatTaskId
+                            }));
+                        db.close();
+                        resolve(tasks);
+                    };
+                    getAll.onerror = () => reject(getAll.error);
+                };
+            });
+        }""",
+        task_name,
+    )
+    completed = [record for record in records if record["completed"]]
+    active = [record for record in records if not record["completed"]]
+    if len(records) != 2 or len(completed) != 1 or len(active) != 1:
+        raise AssertionError(f"Repeating completion did not create exactly one next task: {records}")
+    if active[0]["repeatType"] != "custom" or active[0]["repeatInterval"] != 3 or not active[0]["repeatCreatedFrom"]:
+        raise AssertionError(f"Next repeating task did not preserve repeat metadata: {records}")
+    if active[0]["dueDate"] <= completed[0]["dueDate"] or completed[0]["nextRepeatTaskId"] is None:
+        raise AssertionError(f"Next repeating task did not advance due date/linkage: {records}")
+    delete_task_records_by_name(page, task_name)
+
+
+def delete_task_records_by_name(page: Page, task_name: str) -> None:
+    page.evaluate(
+        """async (taskName) => {
+            await new Promise((resolve, reject) => {
+                const request = indexedDB.open('TaskTrackerDB', 2);
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readwrite');
+                    const store = tx.objectStore('tasks');
+                    const getAll = store.getAll();
+                    getAll.onsuccess = () => {
+                        getAll.result
+                            .filter((item) => item.name === taskName)
+                            .forEach((item) => store.delete(item.id));
+                    };
+                    tx.oncomplete = () => {
+                        db.close();
+                        resolve();
+                    };
+                    tx.onerror = () => reject(tx.error);
+                    tx.onabort = () => reject(tx.error);
+                };
+            });
+        }""",
+        task_name,
+    )
+    page.reload(wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+
+
 def clear_completed_tasks(page: Page, completed_name: str) -> None:
     page.locator("#openMenuBtn").click()
     page.locator("#clearCompletedBtn").click()
@@ -1203,6 +1297,7 @@ def smoke(url: str) -> None:
     beta_name = f"{task_name} Beta"
     overdue_name = f"{task_name} Overdue"
     imported_name = f"{task_name} Imported"
+    repeat_name = f"{task_name} Repeat"
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -1247,6 +1342,7 @@ def smoke(url: str) -> None:
         assert_service_worker_and_offline_load(context, page)
 
         exercise_subtask_draft_editor(page)
+        exercise_repeating_task(page, repeat_name)
         add_task(page, alpha_name, no_deadline=True, project="Smoke Work", tags=["focus", "docs"], subtasks=["First smoke subtask", "Second smoke subtask"])
         add_task(page, beta_name, due_date=future_date(1), due_time="12:30", reminder_offset="15", project="Smoke Personal", tags=["deadline"])
         expect(task_locator(page, beta_name).locator(".task-reminder-icon")).to_be_visible()

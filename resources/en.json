@@ -92,6 +92,18 @@
         "day1": "Daily"
       }
     },
+    "repeat": {
+      "label": "Repeating Task",
+      "hint": "Completing a repeating task automatically creates the next occurrence.",
+      "customDays": "Interval days",
+      "options": {
+        "none": "Do not repeat",
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly",
+        "custom": "Custom interval"
+      }
+    },
     "subtasks": {
       "label": "Subtasks (optional)",
       "placeholder": "Enter subtasks...",
@@ -118,7 +130,13 @@
       "delete": "Delete task",
       "reorder": "Move task: {taskName}. Use the up and down arrow keys to reorder"
     },
-    "importedFallback": "Imported task {index}"
+    "importedFallback": "Imported task {index}",
+    "repeat": {
+      "daily": "Repeats daily",
+      "weekly": "Repeats weekly",
+      "monthly": "Repeats monthly",
+      "custom": "Repeats every {days} days"
+    }
   },
   "empty": {
     "noTasks": {
@@ -147,6 +165,7 @@
       "deleted": "Task deleted successfully",
       "markedComplete": "Task marked as completed",
       "markedIncomplete": "Task marked as incomplete",
+      "repeatCreated": "Task completed and next occurrence created",
       "nameRequired": "Please enter a task name",
       "snoozed": "Reminder snoozed for {minutes} minutes",
       "saveError": "Failed to save task, please try again",
@@ -245,7 +264,7 @@
   },
   "backup": {
     "versionNotes": {
-      "schema": "Backup 2.0 includes tasks, subtasks, projects, tags, reminders, and archive state.",
+      "schema": "Backup 2.0 includes tasks, subtasks, projects, tags, reminders, repeat rules, and archive state.",
       "compatibility": "The importer reads the tasks array; older export files remain importable."
     }
   }

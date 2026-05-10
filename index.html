@@ -264,6 +264,7 @@
         .task-meta { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
         .task-chip { display: inline-flex; align-items: center; max-width: 100%; min-height: 24px; padding: 3px 8px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); background: var(--bg-surface-alt); color: var(--text-secondary); font-size: 12px; font-weight: 700; line-height: 1.35; overflow-wrap: anywhere; }
         .task-chip.project-chip { color: var(--color-primary); background: var(--color-info-light); border-color: color-mix(in srgb, var(--color-primary) 22%, transparent); }
+        .task-chip.repeat-chip { color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 10%, transparent); border-color: color-mix(in srgb, var(--color-accent) 24%, transparent); }
         .task-group-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 18px 0 8px; color: var(--text-secondary); font-size: 13px; font-weight: 760; }
         .task-group-header::after { content: ""; flex: 1; height: 1px; background: var(--border-light); }
         .progress-bar { height: 7px; background: var(--bg-hover); border-radius: var(--radius-pill); margin: 10px 0 12px; overflow: hidden; }
@@ -331,6 +332,8 @@
         .modal-body { padding: 18px; overflow-y: auto; }
         .form-group { margin-bottom: 15px; }
         .form-group select + label { margin-top: 12px; }
+        .repeat-custom-row { display: grid; grid-template-columns: minmax(90px, 120px) 1fr; gap: 10px; align-items: center; margin-top: 10px; }
+        .repeat-custom-row label { margin-bottom: 0; color: var(--text-secondary); font-weight: 650; }
         label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--text-main); font-size: 13px; }
         .form-hint { margin-top: 7px; color: var(--text-tertiary); font-size: 12px; line-height: 1.45; }
         input, textarea, select { width: 100%; padding: 10px 12px; border: 1px solid var(--border-base); border-radius: var(--radius-control); font-size: 14px; line-height: 1.45; transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-fast); background-color: var(--field-bg); color: var(--text-main); }
@@ -431,6 +434,8 @@
             .modal { padding: 10px; }
             .modal-content { width: 100%; max-height: calc(100dvh - 20px); }
             .datetime-group { flex-direction: column; gap: 8px; }
+            .repeat-custom-row { grid-template-columns: 1fr; gap: 6px; }
+            .repeat-custom-row label { margin-bottom: 0; }
             header { flex-direction: row; align-items: flex-start; }
             .header-actions { display: flex; flex-direction: row; gap: 3px; align-items: flex-end; }
             .icon-btn { font-size: 10px; padding: 6px 8px; min-width: 32px; min-height: 32px; }
@@ -529,6 +534,7 @@
     <symbol id="icon-bell-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"></path><path d="M18.63 13A17.89 17.89 0 0 1 18 8"></path><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"></path><path d="M18 8a6 6 0 0 0-9.33-5"></path><line x1="1" y1="1" x2="23" y2="23"></line></symbol>
     <symbol id="icon-bell-ring" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path><path d="M2 8C1 8 1 8 1 8"></path><path d="M22 8C23 8 23 8 23 8"></path></symbol>
     <symbol id="icon-bell-snooze" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 9A5 5 0 0 0 5 9C5 15 3 17 3 17H17S15 15 15 9"/><path d="M11.7 21A2 2 0 0 1 8.3 21"/><path d="M17 3H21L17 7H21"/><path d="M18 11H22L18 15H22"/></symbol>
+    <symbol id="icon-repeat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1L21 5L17 9"/><path d="M3 11V9A4 4 0 0 1 7 5H21"/><path d="M7 23L3 19L7 15"/><path d="M21 13V15A4 4 0 0 1 17 19H3"/></symbol>
     <symbol id="icon-subtask-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></symbol>
     <symbol id="icon-subtask-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></symbol>
     <symbol id="icon-empty-tasks" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15"/><path d="M12 12H15"/><path d="M12 16H15"/><path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"/><path d="M9 12H9.01"/><path d="M9 16H9.01"/></symbol>
@@ -696,6 +702,21 @@
                     </select>
                     <p class="form-hint" data-i18n="form.reminderRepeat.backgroundLimit">浏览器只会在应用打开或被唤醒时检查提醒；系统级后台提醒不能保证。</p>
                 </div>
+                <div class="form-group" id="repeatGroup">
+                    <label data-i18n="form.repeat.label" for="repeatType">重复任务</label>
+                    <select id="repeatType" class="search-input" style="width: 100%;">
+                        <option value="none" selected data-i18n="form.repeat.options.none">不重复</option>
+                        <option value="daily" data-i18n="form.repeat.options.daily">每天</option>
+                        <option value="weekly" data-i18n="form.repeat.options.weekly">每周</option>
+                        <option value="monthly" data-i18n="form.repeat.options.monthly">每月</option>
+                        <option value="custom" data-i18n="form.repeat.options.custom">自定义周期</option>
+                    </select>
+                    <div class="repeat-custom-row" id="repeatCustomRow" hidden>
+                        <label data-i18n="form.repeat.customDays" for="repeatInterval">间隔天数</label>
+                        <input id="repeatInterval" type="number" min="1" max="365" step="1" value="1" inputmode="numeric">
+                    </div>
+                    <p class="form-hint" data-i18n="form.repeat.hint">完成重复任务后，会自动创建下一期任务。</p>
+                </div>
                 <div class="form-group">
                     <label data-i18n="form.subtasks.label" for="subtaskInput">子任务 (可选)</label>
                     <div class="subtask-input-wrapper">
@@ -816,7 +837,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '2.9'
+                RESOURCE_VERSION: '3.0'
             },
             BACKUP: {
                 FILE_VERSION: '2.0',
@@ -886,6 +907,9 @@
                 noDeadline: document.getElementById('noDeadline'),
                 reminderOffset: document.getElementById('reminderOffset'),
                 reminderRepeat: document.getElementById('reminderRepeat'),
+                repeatType: document.getElementById('repeatType'),
+                repeatInterval: document.getElementById('repeatInterval'),
+                repeatCustomRow: document.getElementById('repeatCustomRow'),
                 search: document.getElementById('searchInput'),
                 projectFilter: document.getElementById('projectFilter'),
                 subtask: document.getElementById('subtaskInput')
@@ -1043,8 +1067,10 @@
                 }
                 DOM.inputs.reminderOffset.disabled = this.checked;
                 syncReminderRepeatControl();
+                syncRepeatControls();
             });
             DOM.inputs.reminderOffset.addEventListener('change', syncReminderRepeatControl);
+            DOM.inputs.repeatType.addEventListener('change', syncRepeatControls);
         }
         function bindSearchEvents() {
             DOM.inputs.search.addEventListener('input', utils.debounce(() => {
@@ -1239,6 +1265,7 @@
                 ? utils.localToUTC(DOM.inputs.date.value, DOM.inputs.time.value)
                 : null;
             const reminderOffset = dueDate ? parseInt(DOM.inputs.reminderOffset.value, 10) : -1;
+            const repeatType = dueDate ? normalizeTaskRepeatType(DOM.inputs.repeatType.value) : 'none';
             return {
                 name: DOM.inputs.name.value.trim(),
                 description: DOM.inputs.desc.value.trim(),
@@ -1248,6 +1275,8 @@
                 dueDate,
                 reminderOffset,
                 reminderRepeat: dueDate && reminderOffset !== -1 ? parseInt(DOM.inputs.reminderRepeat.value, 10) : -1,
+                repeatType,
+                repeatInterval: normalizeTaskRepeatInterval(repeatType, DOM.inputs.repeatInterval.value),
                 order: state.editingTaskId ? undefined : getNextTaskOrder()
             };
         }
@@ -1260,6 +1289,9 @@
                 archivedAt: null,
                 snoozedUntil: null,
                 lastReminderAt: null,
+                repeatSourceId: null,
+                repeatCreatedFrom: null,
+                nextRepeatTaskId: null,
                 ...taskPayload
             };
         }
@@ -1295,6 +1327,25 @@
                     seen.add(key);
                     return true;
                 });
+        }
+        function normalizeTaskRepeatType(value) {
+            return ['none', 'daily', 'weekly', 'monthly', 'custom'].includes(value) ? value : 'none';
+        }
+        function normalizeTaskRepeatInterval(type, value) {
+            const interval = Math.floor(Number(value));
+            if (type !== 'custom') return 1;
+            if (!Number.isFinite(interval)) return 1;
+            return Math.min(365, Math.max(1, interval));
+        }
+        function getTaskRepeatRule(task) {
+            const type = normalizeTaskRepeatType(task.repeatType);
+            return {
+                type,
+                interval: normalizeTaskRepeatInterval(type, task.repeatInterval)
+            };
+        }
+        function hasTaskRepeat(task) {
+            return getTaskRepeatRule(task).type !== 'none';
         }
         function getTaskById(id) {
             return state.tasks.find(task => task.id === id);
@@ -1381,6 +1432,33 @@
                     if (normalizedTask.reminderRepeat !== reminderRepeat) changed = true;
                     normalizedTask.reminderRepeat = reminderRepeat;
                 }
+                const repeatType = normalizeTaskRepeatType(normalizedTask.repeatType);
+                if (normalizedTask.repeatType !== repeatType) {
+                    normalizedTask.repeatType = repeatType;
+                    changed = true;
+                }
+                const repeatInterval = normalizeTaskRepeatInterval(repeatType, normalizedTask.repeatInterval);
+                if (normalizedTask.repeatInterval !== repeatInterval) {
+                    normalizedTask.repeatInterval = repeatInterval;
+                    changed = true;
+                }
+                ['repeatSourceId', 'repeatCreatedFrom', 'nextRepeatTaskId'].forEach(key => {
+                    if (normalizedTask[key] === undefined) {
+                        normalizedTask[key] = null;
+                        changed = true;
+                        return;
+                    }
+                    if (normalizedTask[key] !== null) {
+                        const numericValue = Number(normalizedTask[key]);
+                        if (Number.isFinite(numericValue)) {
+                            if (normalizedTask[key] !== numericValue) changed = true;
+                            normalizedTask[key] = numericValue;
+                        } else {
+                            normalizedTask[key] = null;
+                            changed = true;
+                        }
+                    }
+                });
                 if (normalizedTask.snoozedUntil && !normalizeStoredDate(normalizedTask.snoozedUntil)) {
                     normalizedTask.snoozedUntil = null;
                     changed = true;
@@ -1437,22 +1515,79 @@
             if (!task) return;
             const t = state.translations[state.currentLanguage];
             const previousCompleted = task.completed;
+            const previousNextRepeatTaskId = task.nextRepeatTaskId ?? null;
+            const nextRepeatTask = !previousCompleted && shouldCreateNextRepeatTask(task) ? createNextRepeatTask(task) : null;
             task.completed = !previousCompleted;
+            if (nextRepeatTask) task.nextRepeatTaskId = nextRepeatTask.id;
             try {
-                await dbActions.updateTask(task);
+                if (nextRepeatTask) {
+                    await dbActions.updateTasks([task, nextRepeatTask]);
+                } else {
+                    await dbActions.updateTask(task);
+                }
                 const el = document.querySelector(`.task-item[data-task-id="${id}"]`);
                 if (el && task.completed) {
                     el.classList.add(CONFIG.UI.CLASSES.ANIMATE);
                     setTimeout(() => el.classList.remove(CONFIG.UI.CLASSES.ANIMATE), 500);
                 }
-                utils.notify(task.completed ? t['messages.task.markedComplete'] : t['messages.task.markedIncomplete']);
-                renderTaskList();
+                utils.notify(nextRepeatTask ? t['messages.task.repeatCreated'] : (task.completed ? t['messages.task.markedComplete'] : t['messages.task.markedIncomplete']));
+                await refreshTasks();
             } catch (err) {
                 console.error('更新任务状态失败:', err);
                 task.completed = previousCompleted;
+                task.nextRepeatTaskId = previousNextRepeatTaskId;
                 renderTaskList();
                 utils.notify(t['messages.task.updateError'], 'error');
             }
+        }
+        function shouldCreateNextRepeatTask(task) {
+            if (!task.dueDate || task.completed || task.archived || !hasTaskRepeat(task)) return false;
+            const nextId = Number(task.nextRepeatTaskId);
+            return !Number.isFinite(nextId) || !state.tasks.some(item => item.id === nextId);
+        }
+        function createNextRepeatTask(task) {
+            const usedIds = new Set(state.tasks.map(item => Number(item.id)).filter(Number.isFinite));
+            const nextId = createUniqueNumericId(usedIds);
+            const now = new Date().toISOString();
+            return {
+                ...task,
+                id: nextId,
+                dueDate: calculateNextRepeatDueDate(task.dueDate, getTaskRepeatRule(task)),
+                completed: false,
+                archived: false,
+                archivedAt: null,
+                snoozedUntil: null,
+                lastReminderAt: null,
+                subtasks: resetRepeatedSubtasks(task.subtasks),
+                createdAt: now,
+                repeatSourceId: task.repeatSourceId || task.id,
+                repeatCreatedFrom: task.id,
+                nextRepeatTaskId: null,
+                order: getNextTaskOrder()
+            };
+        }
+        function resetRepeatedSubtasks(subtasks) {
+            return cloneSubtasksWithUniqueIds(subtasks).map(subtask => ({ ...subtask, completed: false }));
+        }
+        function calculateNextRepeatDueDate(iso, rule) {
+            const date = utils.utcToLocal(iso);
+            if (rule.type === 'monthly') {
+                return utils.dateToStoredISO(addMonthsClamped(date, 1));
+            }
+            const days = rule.type === 'weekly' ? 7 : rule.type === 'custom' ? rule.interval : 1;
+            date.setDate(date.getDate() + days);
+            return utils.dateToStoredISO(date);
+        }
+        function addMonthsClamped(date, months) {
+            const next = new Date(date);
+            const day = next.getDate();
+            next.setDate(1);
+            next.setMonth(next.getMonth() + months);
+            next.setDate(Math.min(day, getDaysInMonth(next.getFullYear(), next.getMonth())));
+            return next;
+        }
+        function getDaysInMonth(year, monthIndex) {
+            return new Date(year, monthIndex + 1, 0).getDate();
         }
         async function handleClearCompleted() {
             const t = state.translations[state.currentLanguage];
@@ -2031,8 +2166,9 @@
         function renderTaskMeta(el, task) {
             const project = normalizeTaskProject(task.project);
             const tags = normalizeTaskTags(task.tags);
+            const repeatLabel = getTaskRepeatLabel(task);
             let metaEl = el.querySelector('.task-meta');
-            if (!project && tags.length === 0) {
+            if (!project && tags.length === 0 && !repeatLabel) {
                 if (metaEl) metaEl.remove();
                 return;
             }
@@ -2045,6 +2181,13 @@
             metaEl.textContent = '';
             if (project) metaEl.appendChild(createTaskChip(project, 'project-chip'));
             tags.forEach(tag => metaEl.appendChild(createTaskChip(`#${tag}`, 'tag-chip')));
+            if (repeatLabel) metaEl.appendChild(createTaskChip(repeatLabel, 'repeat-chip'));
+        }
+        function getTaskRepeatLabel(task) {
+            const rule = getTaskRepeatRule(task);
+            if (rule.type === 'none') return '';
+            if (rule.type === 'custom') return utils.translate('task.repeat.custom').replace('{days}', rule.interval);
+            return utils.translate(`task.repeat.${rule.type}`);
         }
         function createTaskChip(text, extraClass) {
             const chip = document.createElement('span');
@@ -2330,7 +2473,9 @@
                 enabled: Boolean(dueDate),
                 date: dueDate,
                 reminderOffset: editingTask.reminderOffset ?? CONFIG.NOTIFICATIONS.DEFAULT_OFFSET_MINUTES,
-                reminderRepeat: editingTask.reminderRepeat ?? -1
+                reminderRepeat: editingTask.reminderRepeat ?? -1,
+                repeatType: editingTask.repeatType ?? 'none',
+                repeatInterval: editingTask.repeatInterval ?? 1
             });
         }
         function prepareNewTaskForm() {
@@ -2344,28 +2489,44 @@
                 date: new Date(),
                 time: CONFIG.DEFAULTS.TIME,
                 reminderOffset: CONFIG.NOTIFICATIONS.DEFAULT_OFFSET_MINUTES,
-                reminderRepeat: -1
+                reminderRepeat: -1,
+                repeatType: 'none',
+                repeatInterval: 1
             });
         }
         function setDialogFormLabels(titleKey, submitKey) {
             setTranslatedText(DOM.modalTitle, titleKey);
             setTranslatedText(DOM.submitBtn, submitKey);
         }
-        function setDeadlineControls({ enabled, date, time, reminderOffset, reminderRepeat }) {
+        function setDeadlineControls({ enabled, date, time, reminderOffset, reminderRepeat, repeatType, repeatInterval }) {
             DOM.inputs.noDeadline.checked = !enabled;
             DOM.inputs.date.disabled = !enabled;
             DOM.inputs.time.disabled = !enabled;
             DOM.inputs.reminderOffset.disabled = !enabled;
             DOM.inputs.reminderRepeat.disabled = !enabled || String(reminderOffset) === '-1';
+            DOM.inputs.repeatType.disabled = !enabled;
+            DOM.inputs.repeatInterval.disabled = !enabled;
             DOM.inputs.date.value = utils.formatDateInputValue(date || new Date());
             DOM.inputs.time.value = enabled ? (time || utils.formatTimeInputValue(date || new Date())) : CONFIG.DEFAULTS.TIME;
             DOM.inputs.reminderOffset.value = String(reminderOffset);
             DOM.inputs.reminderRepeat.value = String(reminderRepeat ?? -1);
+            DOM.inputs.repeatType.value = enabled ? normalizeTaskRepeatType(repeatType) : 'none';
+            DOM.inputs.repeatInterval.value = String(normalizeTaskRepeatInterval(DOM.inputs.repeatType.value, repeatInterval));
             syncReminderRepeatControl();
+            syncRepeatControls();
         }
         function syncReminderRepeatControl() {
             DOM.inputs.reminderRepeat.disabled = DOM.inputs.noDeadline.checked || DOM.inputs.reminderOffset.value === '-1';
             if (DOM.inputs.reminderRepeat.disabled) DOM.inputs.reminderRepeat.value = '-1';
+        }
+        function syncRepeatControls() {
+            const disabled = DOM.inputs.noDeadline.checked;
+            DOM.inputs.repeatType.disabled = disabled;
+            if (disabled) DOM.inputs.repeatType.value = 'none';
+            const custom = !disabled && DOM.inputs.repeatType.value === 'custom';
+            DOM.inputs.repeatCustomRow.hidden = !custom;
+            DOM.inputs.repeatInterval.disabled = !custom;
+            if (!custom) DOM.inputs.repeatInterval.value = '1';
         }
         function closeDialog() {
             DOM.modal.style.display = 'none';
@@ -2375,6 +2536,10 @@
             DOM.inputs.reminderOffset.value = String(CONFIG.NOTIFICATIONS.DEFAULT_OFFSET_MINUTES);
             DOM.inputs.reminderRepeat.disabled = false;
             DOM.inputs.reminderRepeat.value = '-1';
+            DOM.inputs.repeatType.disabled = false;
+            DOM.inputs.repeatType.value = 'none';
+            DOM.inputs.repeatInterval.value = '1';
+            syncRepeatControls();
             state.tempSubtasks = [];
             state.editingSubtaskIndex = -1;
             resetDialogToFormMode();
@@ -3131,7 +3296,7 @@
                 schema: {
                     version: CONFIG.BACKUP.FILE_VERSION,
                     storage: 'indexeddb',
-                    includes: ['tasks', 'subtasks', 'projects', 'tags', 'reminders', 'archiveState']
+                    includes: ['tasks', 'subtasks', 'projects', 'tags', 'reminders', 'repeatRules', 'archiveState']
                 },
                 versionNotes: [
                     utils.translate('backup.versionNotes.schema'),
@@ -3263,6 +3428,7 @@
         }
         function normalizeImportedTask(rawTask, index, normalizeId) {
             const task = rawTask && typeof rawTask === 'object' ? rawTask : {};
+            const repeatType = normalizeTaskRepeatType(task.repeatType);
             return {
                 id: normalizeId(task.id),
                 name: String(task.name || '').trim() || utils.translate('task.importedFallback').replace('{index}', index + 1),
@@ -3272,6 +3438,11 @@
                 dueDate: normalizeStoredDate(task.dueDate),
                 reminderOffset: Number.isFinite(Number(task.reminderOffset)) ? Number(task.reminderOffset) : 15,
                 reminderRepeat: Number.isFinite(Number(task.reminderRepeat)) ? Number(task.reminderRepeat) : -1,
+                repeatType,
+                repeatInterval: normalizeTaskRepeatInterval(repeatType, task.repeatInterval),
+                repeatSourceId: Number.isFinite(Number(task.repeatSourceId)) ? Number(task.repeatSourceId) : null,
+                repeatCreatedFrom: Number.isFinite(Number(task.repeatCreatedFrom)) ? Number(task.repeatCreatedFrom) : null,
+                nextRepeatTaskId: Number.isFinite(Number(task.nextRepeatTaskId)) ? Number(task.nextRepeatTaskId) : null,
                 snoozedUntil: normalizeStoredDate(task.snoozedUntil),
                 lastReminderAt: normalizeStoredDate(task.lastReminderAt),
                 subtasks: normalizeImportedSubtasks(task.subtasks),

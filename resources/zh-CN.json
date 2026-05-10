@@ -92,6 +92,18 @@
         "day1": "每天"
       }
     },
+    "repeat": {
+      "label": "重复任务",
+      "hint": "完成重复任务后，会自动创建下一期任务。",
+      "customDays": "间隔天数",
+      "options": {
+        "none": "不重复",
+        "daily": "每天",
+        "weekly": "每周",
+        "monthly": "每月",
+        "custom": "自定义周期"
+      }
+    },
     "subtasks": {
       "label": "子任务 (可选)",
       "placeholder": "输入子任务...",
@@ -118,7 +130,13 @@
       "delete": "删除任务",
       "reorder": "移动任务：{taskName}。使用上下方向键调整顺序"
     },
-    "importedFallback": "导入任务 {index}"
+    "importedFallback": "导入任务 {index}",
+    "repeat": {
+      "daily": "每天重复",
+      "weekly": "每周重复",
+      "monthly": "每月重复",
+      "custom": "每 {days} 天重复"
+    }
   },
   "empty": {
     "noTasks": {
@@ -147,6 +165,7 @@
       "deleted": "任务删除成功",
       "markedComplete": "任务标记为已完成",
       "markedIncomplete": "任务标记为未完成",
+      "repeatCreated": "任务已完成，下一期已创建",
       "nameRequired": "请输入任务名称",
       "snoozed": "已设为 {minutes} 分钟后提醒",
       "saveError": "保存任务失败，请重试",
@@ -245,7 +264,7 @@
   },
   "backup": {
     "versionNotes": {
-      "schema": "2.0 备份包含任务、子任务、项目、标签、提醒和归档状态。",
+      "schema": "2.0 备份包含任务、子任务、项目、标签、提醒、重复规则和归档状态。",
       "compatibility": "导入器会读取 tasks 数组；旧版导出文件仍可导入。"
     }
   }
