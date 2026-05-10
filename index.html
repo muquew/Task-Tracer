@@ -1561,13 +1561,20 @@
                 // === 核心逻辑：判断这一行是不是正在编辑 ===
                 if (index === state.editingSubtaskIndex) {
                     // A. 如果是编辑状态：渲染 INPUT
-                    li.innerHTML = `
-                <input type="text" class="subtask-edit-input" value="${utils.escapeHTML(sub.text)}">
-                <button type="button" class="subtask-delete-btn" data-index="${index}" title="删除">
-                    <svg class="icon icon-sm"><use href="#icon-x"></use></svg>
-                </button>
-            `;
-                    // 自动聚焦 (注意：innerHTML 渲染后需要手动获取元素来 focus)
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = 'subtask-edit-input';
+                    input.value = sub.text;
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.type = 'button';
+                    deleteBtn.className = 'subtask-delete-btn';
+                    deleteBtn.dataset.index = index;
+                    deleteBtn.title = '删除';
+                    deleteBtn.innerHTML = '<svg class="icon icon-sm"><use href="#icon-x"></use></svg>';
+
+                    li.append(input, deleteBtn);
+                    // 自动聚焦 (DOM 渲染后需要手动获取元素来 focus)
                     // 使用 setTimeout 确保 DOM 渲染完成
                     setTimeout(() => {
                         const input = li.querySelector('input');
