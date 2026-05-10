@@ -7,6 +7,8 @@
   },
   "actions": {
     "export": "Export",
+    "backupTitle": "Download local backup",
+    "backup": "Back Up Now",
     "import": "Import",
     "addTask": "Add Task",
     "openMenu": "Open menu",
@@ -153,6 +155,11 @@
       "success": "Task data exported successfully!",
       "error": "Failed to export task data. Please try again"
     },
+    "backup": {
+      "success": "Local backup downloaded",
+      "error": "Local backup failed. Please try again",
+      "reminder": "Download a recent backup to avoid losing tasks if browser data is cleared."
+    },
     "import": {
       "success": "Successfully imported {count} tasks!",
       "confirm": "About to import {count} tasks. Replace current data?",
@@ -233,5 +240,11 @@
     "missedReminder": "Missed reminder: {taskName}",
     "backgroundLimit": "Notifications are enabled. The browser checks reminders while the app is open or wakes up, so background delivery is not fully guaranteed.",
     "reminderSet": "Reminder set"
+  },
+  "backup": {
+    "versionNotes": {
+      "schema": "Backup 2.0 includes tasks, subtasks, projects, tags, reminders, and archive state.",
+      "compatibility": "The importer reads the tasks array; older export files remain importable."
+    }
   }
 }

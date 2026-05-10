@@ -559,6 +559,10 @@
                     <svg class="icon"><use href="#icon-export"></use></svg>
                     <span data-i18n="actions.export">导出</span>
                 </button>
+                <button class="menu-item" data-i18n-title="actions.backupTitle" id="backupBtn" title="立即备份">
+                    <svg class="icon"><use href="#icon-export"></use></svg>
+                    <span data-i18n="actions.backup">立即备份</span>
+                </button>
                 <button class="menu-item" data-i18n-title="actions.import" id="importBtn" title="导入">
                     <svg class="icon"><use href="#icon-import"></use></svg>
                     <span data-i18n="actions.import">导入</span>
@@ -774,7 +778,8 @@
                 THEME: 'theme',
                 LANG: 'language',
                 NOTIFICATIONS: 'notifications_enabled',
-                NOTIFIED_TASKS: 'notifiedTasks'
+                NOTIFIED_TASKS: 'notifiedTasks',
+                LAST_BACKUP_AT: 'lastBackupAt'
             },
             UI: {
                 CLASSES: {
@@ -810,7 +815,11 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '2.7'
+                RESOURCE_VERSION: '2.8'
+            },
+            BACKUP: {
+                FILE_VERSION: '2.0',
+                REMINDER_DAYS: 7
             },
             NOTIFICATIONS: {
                 DEFAULT_OFFSET_MINUTES: 15,
@@ -890,6 +899,7 @@
                 langSubmenu: document.getElementById('langSubmenu'),
                 langContainer: document.getElementById('lang-container'),
                 exportBtn: document.getElementById('exportBtn'),
+                backupBtn: document.getElementById('backupBtn'),
                 importBtn: document.getElementById('importBtn'),
                 archiveCompletedBtn: document.getElementById('archiveCompletedBtn'),
                 fileInput: document.getElementById('importFile')
@@ -922,6 +932,7 @@
                 bindEvents();
                 renderTaskList();
                 startProgressTimer();
+                scheduleBackupReminder();
             } catch (error) {
                 console.error('初始化失败:', error);
                 utils.notify(utils.translate('messages.initDBError'), 'error');
@@ -1061,6 +1072,7 @@
             DOM.menu.langToggle.addEventListener('click', toggleLanguageSubmenu);
             DOM.menu.langContainer.addEventListener('click', handleLanguageMenuClick);
             DOM.menu.exportBtn.addEventListener('click', exportTasks);
+            DOM.menu.backupBtn.addEventListener('click', backupTasks);
             DOM.menu.importBtn.addEventListener('click', () => DOM.menu.fileInput.click());
             DOM.menu.archiveCompletedBtn.addEventListener('click', handleArchiveCompleted);
             DOM.menu.fileInput.addEventListener('change', (e) => importTasks(e.target.files[0]));
@@ -3082,22 +3094,62 @@
             if (!state.progressInterval) startProgressTimer();
         }
         async function exportTasks() {
+            await downloadTaskData('export');
+        }
+        async function backupTasks() {
+            await downloadTaskData('backup');
+        }
+        async function downloadTaskData(mode) {
             const t = state.translations[state.currentLanguage];
             try {
                 const tasks = await loadNormalizedTasks();
                 state.tasks = tasks;
                 const date = new Date().toISOString();
-                const blob = new Blob([JSON.stringify({ version: '1.1', date, tasks }, null, 2)], {type: 'application/json'});
+                const payload = createTaskDataPayload(mode, date, tasks);
+                const blob = new Blob([JSON.stringify(payload, null, 2)], {type: 'application/json'});
                 const url = URL.createObjectURL(blob);
-                const a = document.createElement('a'); a.href = url; a.download = `task-tracer_${date.split('T')[0]}.json`;
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = createTaskDataFilename(mode, date);
                 document.body.appendChild(a); a.click(); document.body.removeChild(a);
                 URL.revokeObjectURL(url);
+                if (mode === 'backup') await dbActions.setConfig(CONFIG.STORAGE.LAST_BACKUP_AT, date);
                 closeMenu();
-                utils.notify(t['messages.export.success']);
+                utils.notify(mode === 'backup' ? t['messages.backup.success'] : t['messages.export.success']);
             } catch (err) {
-                console.error('导出任务失败:', err);
-                utils.notify(t['messages.export.error'], 'error');
+                console.error('导出/备份任务失败:', err);
+                utils.notify(mode === 'backup' ? t['messages.backup.error'] : t['messages.export.error'], 'error');
             }
+        }
+        function createTaskDataPayload(mode, date, tasks) {
+            return {
+                version: CONFIG.BACKUP.FILE_VERSION,
+                type: mode,
+                date,
+                app: 'Task Tracer',
+                schema: {
+                    version: CONFIG.BACKUP.FILE_VERSION,
+                    storage: 'indexeddb',
+                    includes: ['tasks', 'subtasks', 'projects', 'tags', 'reminders', 'archiveState']
+                },
+                versionNotes: [
+                    utils.translate('backup.versionNotes.schema'),
+                    utils.translate('backup.versionNotes.compatibility')
+                ],
+                tasks
+            };
+        }
+        function createTaskDataFilename(mode, date) {
+            const stamp = date.replace(/[:.]/g, '-').replace('T', '_').replace('Z', '');
+            return `task-tracer_${mode}_${stamp}.json`;
+        }
+        async function scheduleBackupReminder() {
+            if (state.tasks.length === 0) return;
+            const lastBackupAt = normalizeStoredDate(await dbActions.getConfig(CONFIG.STORAGE.LAST_BACKUP_AT));
+            if (lastBackupAt && (Date.now() - new Date(lastBackupAt).getTime()) / 86400000 < CONFIG.BACKUP.REMINDER_DAYS) return;
+            setTimeout(() => {
+                if (state.tasks.length > 0) utils.notify(utils.translate('messages.backup.reminder'), 'warning');
+            }, 900);
         }
         function importTasks(file) {
             if(!file) return;

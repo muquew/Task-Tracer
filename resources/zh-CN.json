@@ -7,6 +7,8 @@
   },
   "actions": {
     "export": "导出",
+    "backupTitle": "下载本地备份",
+    "backup": "立即备份",
     "import": "导入",
     "addTask": "添加任务",
     "openMenu": "打开菜单",
@@ -153,6 +155,11 @@
       "success": "任务数据导出成功！",
       "error": "任务数据导出失败，请重试"
     },
+    "backup": {
+      "success": "本地备份已下载",
+      "error": "本地备份失败，请重试",
+      "reminder": "建议下载一份最近备份，避免浏览器数据被清理后丢失任务。"
+    },
     "import": {
       "success": "成功导入 {count} 个任务！",
       "confirm": "即将导入 {count} 个任务。是否替换当前数据？",
@@ -233,5 +240,11 @@
     "missedReminder": "错过的提醒：{taskName}",
     "backgroundLimit": "已开启通知。浏览器只会在应用打开或被唤醒时检查提醒，后台提醒不能完全保证。",
     "reminderSet": "提醒已设置"
+  },
+  "backup": {
+    "versionNotes": {
+      "schema": "2.0 备份包含任务、子任务、项目、标签、提醒和归档状态。",
+      "compatibility": "导入器会读取 tasks 数组；旧版导出文件仍可导入。"
+    }
   }
 }

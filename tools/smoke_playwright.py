@@ -961,11 +961,45 @@ def exercise_export(page: Page) -> dict[str, Any]:
         raise AssertionError("Export did not produce a readable download file")
 
     exported = json.loads(Path(path).read_text(encoding="utf-8"))
-    if exported.get("version") != "1.1" or not exported.get("date"):
+    if exported.get("version") != "2.0" or not exported.get("date") or not exported.get("versionNotes"):
         raise AssertionError(f"Export payload metadata is incomplete: {exported}")
     if not isinstance(exported.get("tasks"), list) or not exported["tasks"]:
         raise AssertionError(f"Export payload did not include tasks: {exported}")
     return exported
+
+
+def exercise_backup(page: Page) -> dict[str, Any]:
+    page.locator("#openMenuBtn").click()
+    with page.expect_download() as download_info:
+        page.locator("#backupBtn").click()
+    download = download_info.value
+    path = download.path()
+    if not path:
+        raise AssertionError("Backup did not produce a readable download file")
+    backup = json.loads(Path(path).read_text(encoding="utf-8"))
+    if backup.get("version") != "2.0" or backup.get("type") != "backup" or not backup.get("schema"):
+        raise AssertionError(f"Backup payload metadata is incomplete: {backup}")
+    last_backup = page.evaluate(
+        """async () => {
+            return await new Promise((resolve, reject) => {
+                const request = indexedDB.open('TaskTrackerDB', 2);
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['config'], 'readonly');
+                    const get = tx.objectStore('config').get('lastBackupAt');
+                    get.onsuccess = () => {
+                        db.close();
+                        resolve(get.result ? get.result.value : null);
+                    };
+                    get.onerror = () => reject(get.error);
+                };
+            });
+        }"""
+    )
+    if not last_backup:
+        raise AssertionError("Backup did not record the last backup timestamp")
+    return backup
 
 
 def exercise_import(page: Page, imported_name: str) -> None:
@@ -1246,6 +1280,10 @@ def smoke(url: str) -> None:
         exported_names = {task["name"] for task in exported["tasks"]}
         if exported_names != {beta_name, overdue_name}:
             raise AssertionError(f"Exported tasks did not match remaining tasks: {exported}")
+        backup = exercise_backup(page)
+        backup_names = {task["name"] for task in backup["tasks"]}
+        if backup_names != {beta_name, overdue_name}:
+            raise AssertionError(f"Backup tasks did not match remaining tasks: {backup}")
 
         exercise_import(page, imported_name)
         cancel_delete_task(page, imported_name)
