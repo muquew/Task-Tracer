@@ -1028,19 +1028,28 @@
         async function toggleTaskComplete(id) {
             const task = state.tasks.find(t => t.id === id);
             if (!task) return;
-            task.completed = !task.completed;
-            await dbActions.updateTask(task);
-
-            // 动画反馈
-            const el = document.querySelector(`.task-item[data-task-id="${id}"]`);
-            if (el && task.completed) {
-                el.classList.add(CONFIG.UI.CLASSES.ANIMATE);
-                setTimeout(() => el.classList.remove(CONFIG.UI.CLASSES.ANIMATE), 500);
-            }
-
             const t = state.translations[state.currentLanguage];
-            utils.notify(task.completed ? t['taskMarkedComplete'] : t['taskMarkedIncomplete']);
-            renderTaskList();
+            const previousCompleted = task.completed;
+            task.completed = !previousCompleted;
+
+            try {
+                await dbActions.updateTask(task);
+
+                // 动画反馈
+                const el = document.querySelector(`.task-item[data-task-id="${id}"]`);
+                if (el && task.completed) {
+                    el.classList.add(CONFIG.UI.CLASSES.ANIMATE);
+                    setTimeout(() => el.classList.remove(CONFIG.UI.CLASSES.ANIMATE), 500);
+                }
+
+                utils.notify(task.completed ? t['taskMarkedComplete'] : t['taskMarkedIncomplete']);
+                renderTaskList();
+            } catch (err) {
+                console.error('更新任务状态失败:', err);
+                task.completed = previousCompleted;
+                renderTaskList();
+                utils.notify(t['updateError'], 'error');
+            }
         }
 
         async function handleClearCompleted() {
