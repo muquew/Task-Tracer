@@ -2,7 +2,8 @@
   "app": {
     "language": "English",
     "title": "Task Tracker",
-    "subtitle": "Deadline-based Task Management"
+    "subtitle": "Deadline-based Task Management",
+    "toolbar": "Task toolbar"
   },
   "actions": {
     "export": "Export",
@@ -33,7 +34,8 @@
     "addTask": "Add New Task (Ctrl+I)",
     "menu": "Menu (Ctrl+M)",
     "theme": "Change Theme",
-    "backToTop": "back to top (Alt + T)"
+    "backToTop": "Back to top (Alt + T)",
+    "searchShortcut": "Search shortcut: Ctrl/Cmd + K"
   },
   "form": {
     "taskName": {
@@ -60,7 +62,11 @@
     },
     "subtasks": {
       "label": "Subtasks (optional)",
-      "placeholder": "Enter subtasks..."
+      "placeholder": "Enter subtasks...",
+      "add": "Add subtask",
+      "edit": "Edit subtask: {text}",
+      "editInput": "Edit subtask text",
+      "delete": "Delete subtask: {text}"
     },
     "dueTime": {
       "label": "Due time"
@@ -74,8 +80,10 @@
       "markComplete": "Mark as complete",
       "markIncomplete": "Mark as incomplete",
       "edit": "Edit task",
-      "delete": "Delete task"
-    }
+      "delete": "Delete task",
+      "reorder": "Move task: {taskName}. Use the up and down arrow keys to reorder"
+    },
+    "importedFallback": "Imported task {index}"
   },
   "empty": {
     "noTasks": {
@@ -125,6 +133,11 @@
     "sampleTasks": {
       "added": "Sample tasks added"
     },
+    "reorder": {
+      "moved": "{taskName} moved to position {position} of {total}",
+      "first": "{taskName} is already first",
+      "last": "{taskName} is already last"
+    },
     "initDBError": "Failed to init Database, Please refresh the page and try again."
   },
   "time": {
@@ -162,6 +175,7 @@
     "permissionDenied": "Notification permission denied. Please enable in browser settings.",
     "notSupported": "This browser does not support desktop notifications",
     "error": "Error requesting notification permission",
-    "taskDue": "Task Due Soon: {taskName}"
+    "taskDue": "Task Due Soon: {taskName}",
+    "reminderSet": "Reminder set"
   }
 }

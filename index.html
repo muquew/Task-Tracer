@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Task Tracer</title>
+    <title data-i18n="app.title">任务跟踪器</title>
     <link rel="manifest" id="manifestLink" href="manifest.json">
     <!--    manifest.json中-->
     <!--    background_color: 启动屏背景色：App 打开瞬间那一秒的背景 (建议与 CSS 背景一致，防闪烁)-->
@@ -166,7 +166,7 @@
         .container { width: min(100%, var(--app-width)); margin: 0 auto; background: transparent; border-radius: 0; box-shadow: none; position: relative; }
         /* === 可访问性 (A11y) 样式 用于隐藏元素，但保持屏幕阅读器可读 ===*/
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-        .icon-btn:focus-visible, .lang-btn:focus-visible, .menu-item:focus-visible, .dropdown-btn:focus-visible, .dropdown-option:focus-visible, .action-btn:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .btn-icon-small:focus-visible, .back-to-top:focus-visible, .subtask-summary-bar:focus-visible, .subtask-delete-btn:focus-visible, .subtask-checkbox:focus-visible {
+        .icon-btn:focus-visible, .lang-btn:focus-visible, .menu-item:focus-visible, .dropdown-btn:focus-visible, .dropdown-option:focus-visible, .action-btn:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .btn-icon-small:focus-visible, .back-to-top:focus-visible, .subtask-summary-bar:focus-visible, .subtask-delete-btn:focus-visible, .subtask-checkbox:focus-visible, .subtask-preview-text:focus-visible, .drag-handle:focus-visible {
             outline: 2px solid var(--color-primary);
             outline-offset: 2px;
             box-shadow: 0 0 0 4px var(--focus-ring);
@@ -328,7 +328,7 @@
         /* 拖拽模式下的样式 */
         .task-item.draggable-item { cursor: grab; transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s; }
         .task-item.draggable-item:active { cursor: grabbing; }
-        .drag-handle { margin: 0 0 0 6px; padding: 0 8px; cursor: grab; color: var(--text-tertiary); display: flex; align-items: stretch; justify-content: center; touch-action: none; background: var(--bg-surface-alt); border-right: 1px solid var(--border-light); }
+        .drag-handle { margin: 0 0 0 6px; padding: 0 8px; cursor: grab; color: var(--text-tertiary); display: flex; align-items: stretch; justify-content: center; touch-action: none; background: var(--bg-surface-alt); border: 0; border-right: 1px solid var(--border-light); font: inherit; }
         .drag-handle .icon { align-self: center; }
         .task-item.dragging { opacity: 0.4; background: var(--bg-surface-alt); border: 2px dashed var(--color-primary); box-shadow: none; transform: scale(0.98); }
         /* 移动端触摸拖拽时的样式 */
@@ -617,10 +617,10 @@
             <button class="icon-btn" id="openModalBtn" aria-label="添加新任务" data-i18n-aria-label="modal.addTitle" data-i18n-title="tooltips.addTask" title="添加新任务 (Ctrl+I)">
                 <svg class="icon"><use href="#icon-plus"></use></svg>
             </button>
-            <button class="icon-btn" id="openMenuBtn" aria-label="打开菜单" data-i18n-aria-label="actions.openMenu" aria-haspopup="true" aria-expanded="false" data-i18n-title="tooltips.menu" title="菜单 (Ctrl+M)">
+            <button class="icon-btn" id="openMenuBtn" aria-label="打开菜单" data-i18n-aria-label="actions.openMenu" aria-haspopup="true" aria-expanded="false" aria-controls="menu" data-i18n-title="tooltips.menu" title="菜单 (Ctrl+M)">
                 <svg class="icon icon-fill"><use href="#icon-menu"></use></svg>
             </button>
-            <div class="menu" id="menu">
+            <div class="menu" id="menu" aria-labelledby="openMenuBtn">
                 <button class="menu-item" data-i18n-title="actions.export" id="exportBtn" title="导出">
                     <svg class="icon"><use href="#icon-export"></use></svg>
                     <span data-i18n="actions.export">导出</span>
@@ -635,22 +635,22 @@
                     <span data-i18n="actions.clearCompleted">清除已完成</span>
                 </button>
                 <div class="menu-divider"></div>
-                <button class="menu-item" id="langMenuToggle" aria-haspopup="true" aria-expanded="false">
+                <button class="menu-item" id="langMenuToggle" aria-haspopup="menu" aria-expanded="false" aria-controls="langSubmenu">
                     <svg class="icon icon-sm" style="color: var(--color-primary);"><use href="#icon-globe-language"></use></svg>
                     <span data-i18n="app.language" style="margin-left: 10px;">语言</span>
                     <svg class="icon icon-sm" style="margin-left: auto; transition: transform 0.2s;"><use href="#icon-chevron-right"></use></svg>
                 </button>
-                <div class="submenu" id="langSubmenu"><div id="lang-container"></div></div>
+                <div class="submenu" id="langSubmenu" role="menu" aria-labelledby="langMenuToggle"><div id="lang-container" role="none"></div></div>
             </div>
         </div>
         <input accept=".json" class="file-input" id="importFile" type="file">
     </header>
     <div class="main-content">
-        <div class="controls-bar" role="toolbar" aria-label="任务工具栏">
+        <div class="controls-bar" role="toolbar" aria-label="任务工具栏" data-i18n-aria-label="app.toolbar">
             <div class="search-box">
                 <label for="searchInput" class="sr-only" data-i18n="search.placeholder">搜索任务...</label>
                 <input class="search-input" data-i18n-placeholder="search.placeholder" id="searchInput" placeholder="搜索任务..." type="text">
-                <div class="shortcut-hint"><kbd class="shortcut-kbd" title="Ctrl + K">⌘K</kbd></div>
+                <div class="shortcut-hint" aria-hidden="true"><kbd class="shortcut-kbd" data-i18n-title="tooltips.searchShortcut" title="搜索快捷键：Ctrl/Cmd + K">⌘K</kbd></div>
             </div>
             <div class="dropdown-container" id="filterDropdown">
                 <button class="dropdown-btn" id="filterBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="filterMenu">
@@ -736,10 +736,10 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label data-i18n="form.subtasks.label">子任务 (可选)</label>
+                    <label data-i18n="form.subtasks.label" for="subtaskInput">子任务 (可选)</label>
                     <div class="subtask-input-wrapper">
-                        <label for="subtaskInput"></label><input type="text" id="subtaskInput" data-i18n-placeholder="form.subtasks.placeholder" placeholder="添加子任务..." autocomplete="off">
-                        <button type="button" id="addSubtaskBtn" class="btn-icon-small" title="添加">
+                        <input type="text" id="subtaskInput" data-i18n-placeholder="form.subtasks.placeholder" placeholder="添加子任务..." autocomplete="off">
+                        <button type="button" id="addSubtaskBtn" class="btn-icon-small" aria-label="添加子任务" data-i18n-aria-label="form.subtasks.add" data-i18n-title="form.subtasks.add" title="添加子任务">
                             <svg class="icon icon-sm"><use href="#icon-plus"></use></svg>
                         </button>
                     </div>
@@ -753,10 +753,11 @@
         </div>
     </div>
 </div>
-<div class="notification" id="notification" role="status" aria-live="polite">
+<div class="notification" id="notification" role="status" aria-live="polite" aria-atomic="true">
     <svg class="icon"><use href="#icon-check"></use></svg>
     <span id="notificationText"></span>
 </div>
+<div id="srStatus" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
 <template id="task-template">
     <div class="task-item">
@@ -764,16 +765,16 @@
             <div class="task-header">
                 <div class="task-title">
                     <span class="task-name"></span>
-                    <svg class="icon icon-sm task-reminder-icon" style="display:none; color: var(--color-warning); margin-left: 6px; width: 14px; height: 14px;"><use href="#icon-bell"></use></svg>
+                    <svg class="icon icon-sm task-reminder-icon" role="img" aria-label="提醒已设置" style="display:none; color: var(--color-warning); margin-left: 6px; width: 14px; height: 14px;"><use href="#icon-bell"></use></svg>
                 </div>
                 <div class="task-date"></div>
             </div>
             <div class="task-desc"></div>
             <div class="subtasks-list"></div>
-            <div class="progress-bar"><div class="progress-fill"></div></div>
+            <div class="progress-bar" aria-hidden="true"><div class="progress-fill"></div></div>
             <div class="task-footer">
                 <div class="status-indicator">
-                    <div class="status-dot"></div>
+                    <div class="status-dot" aria-hidden="true"></div>
                     <span class="status-text"></span> <span class="status-time-left"></span> </div>
                 <div class="task-actions">
                     <button class="action-btn complete-btn" data-action="toggle" title="标记完成">
@@ -954,6 +955,7 @@
                 el: document.getElementById('notification'),
                 text: document.getElementById('notificationText')
             };
+            DOM.srStatus = document.getElementById('srStatus');
         }
 
         // 初始化流程 (Initialization)
@@ -1198,6 +1200,12 @@
             if (e.target.classList.contains('subtask-edit-input') && e.key === 'Enter') {
                 e.preventDefault();
                 e.target.blur();
+                return;
+            }
+
+            if (e.target.classList.contains('subtask-preview-text') && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                editTempSubtask(Number(e.target.dataset.index));
             }
         }
 
@@ -1240,7 +1248,10 @@
             // 5. Esc: 关闭操作
             if (e.key === 'Escape') {
                 if (document.activeElement === DOM.inputs.search) DOM.inputs.search.blur();
-                else closeMenu();
+                else {
+                    closeAllDropdowns();
+                    closeMenu();
+                }
             }
         }
 
@@ -1982,6 +1993,7 @@
         function createTaskProgressBar() {
             const bar = document.createElement('div');
             bar.className = 'progress-bar';
+            bar.setAttribute('aria-hidden', 'true');
             bar.innerHTML = '<div class="progress-fill"></div>';
             return bar;
         }
@@ -2020,6 +2032,8 @@
             }
 
             reminderIcon.style.display = 'inline-block';
+            reminderIcon.setAttribute('aria-label', utils.translate('notifications.reminderSet'));
+            reminderIcon.setAttribute('role', 'img');
             reminderIcon.style.color = state.notifiedTasks.has(getTaskNotificationKey(task)) ? 'var(--text-tertiary)' : 'var(--color-warning)';
         }
 
@@ -2060,12 +2074,14 @@
 
             el.setAttribute('draggable', 'true');
             el.classList.add('draggable-item');
-            el.prepend(createDragHandle());
+            el.prepend(createDragHandle(el.querySelector('.task-name')?.textContent || ''));
         }
 
-        function createDragHandle() {
-            const handle = document.createElement('div');
+        function createDragHandle(taskName) {
+            const handle = document.createElement('button');
+            handle.type = 'button';
             handle.className = 'drag-handle';
+            handle.setAttribute('aria-label', utils.translate('task.actions.reorder').replace('{taskName}', taskName));
             handle.innerHTML = `<svg class="icon"><use href="#icon-drag"></use></svg>`;
             return handle;
         }
@@ -2099,6 +2115,7 @@
             summaryBar.type = 'button';
             summaryBar.className = 'subtask-summary-bar';
             summaryBar.setAttribute('aria-expanded', String(wasExpanded));
+            summaryBar.setAttribute('aria-controls', `subtasks-${task.id}`);
 
             const countText = document.createElement('div');
             countText.className = 'subtask-count-text';
@@ -2116,9 +2133,12 @@
 
             const subtaskList = document.createElement('div');
             subtaskList.className = 'subtasks-list';
+            subtaskList.id = `subtasks-${task.id}`;
+            subtaskList.setAttribute('role', 'list');
             task.subtasks.forEach(sub => {
                 const item = document.createElement('div');
                 item.className = `subtask-display-item ${sub.completed ? CONFIG.UI.CLASSES.COMPLETED : ''}`;
+                item.setAttribute('role', 'listitem');
 
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
@@ -2155,10 +2175,10 @@
             li.className = 'subtask-preview-item';
 
             if (index === state.editingSubtaskIndex) {
-                li.append(createSubtaskEditInput(subtask.text), createSubtaskDeleteButton(index));
+                li.append(createSubtaskEditInput(subtask.text), createSubtaskDeleteButton(index, subtask.text));
                 focusSubtaskEditInput(li);
             } else {
-                li.append(createSubtaskPreviewText(subtask.text, index), createSubtaskDeleteButton(index));
+                li.append(createSubtaskPreviewText(subtask.text, index), createSubtaskDeleteButton(index, subtask.text));
             }
 
             return li;
@@ -2169,6 +2189,7 @@
             input.type = 'text';
             input.className = 'subtask-edit-input';
             input.value = text;
+            input.setAttribute('aria-label', utils.translate('form.subtasks.editInput'));
             return input;
         }
 
@@ -2176,6 +2197,9 @@
             const span = document.createElement('span');
             span.className = 'subtask-preview-text';
             span.dataset.index = index;
+            span.tabIndex = 0;
+            span.setAttribute('role', 'button');
+            span.setAttribute('aria-label', utils.translate('form.subtasks.edit').replace('{text}', text));
             span.textContent = text;
             return span;
         }
@@ -2198,6 +2222,8 @@
         function createIcon(symbolId, className = 'icon', attrs = {}) {
             const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
             svg.setAttribute('class', className);
+            svg.setAttribute('aria-hidden', 'true');
+            svg.setAttribute('focusable', 'false');
             Object.entries(attrs).forEach(([key, value]) => svg.setAttribute(key, value));
 
             const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
@@ -2206,12 +2232,14 @@
             return svg;
         }
 
-        function createSubtaskDeleteButton(index) {
+        function createSubtaskDeleteButton(index, text) {
             const deleteBtn = document.createElement('button');
             deleteBtn.type = 'button';
             deleteBtn.className = 'subtask-delete-btn';
             deleteBtn.dataset.index = index;
-            deleteBtn.title = '删除';
+            const label = utils.translate('form.subtasks.delete').replace('{text}', text);
+            deleteBtn.title = label;
+            deleteBtn.setAttribute('aria-label', label);
             deleteBtn.appendChild(createIcon('icon-x', 'icon icon-sm'));
             return deleteBtn;
         }
@@ -2225,6 +2253,7 @@
 
         function resetDialogToFormMode() {
             state.modalMode = 'form';
+            DOM.modal.removeAttribute('aria-describedby');
 
             const msg = document.getElementById('confirm-message-text');
             if (msg) msg.style.display = 'none';
@@ -2383,6 +2412,13 @@
                 DOM.notification.el.setAttribute('role', (type === 'error' || type === 'warning') ? 'alert' : 'status');
                 setTimeout(() => DOM.notification.el.classList.remove(CONFIG.UI.CLASSES.SHOW), 3000);
             },
+            announce: (msg) => {
+                if (!DOM.srStatus) return;
+                DOM.srStatus.textContent = '';
+                requestAnimationFrame(() => {
+                    DOM.srStatus.textContent = msg;
+                });
+            },
             confirm: (title, msg, onConfirm) => {
                 state.modalMode = 'confirm';
                 clearConfirmHandler();
@@ -2399,6 +2435,7 @@
                 }
                 p.textContent = msg;
                 p.style.display = 'block';
+                DOM.modal.setAttribute('aria-describedby', 'confirm-message-text');
 
                 // 隐藏输入框
                 DOM.formGroups.forEach(g => g.style.display = 'none');
@@ -2801,9 +2838,75 @@
             DOM.taskList.addEventListener('dragstart', (e) => handleTaskDragStart(e, dragState));
             DOM.taskList.addEventListener('dragend', () => finishTaskDrag(dragState, 'dragging'));
             DOM.taskList.addEventListener('dragover', (e) => handleTaskDragOver(e, dragState));
+            DOM.taskList.addEventListener('keydown', handleTaskReorderKeydown);
             DOM.taskList.addEventListener('touchstart', (e) => handleTaskTouchStart(e, dragState), { passive: false });
             DOM.taskList.addEventListener('touchmove', (e) => handleTaskTouchMove(e, dragState), { passive: false });
             DOM.taskList.addEventListener('touchend', () => finishTaskDrag(dragState, 'touch-dragging'));
+        }
+
+        function handleTaskReorderKeydown(e) {
+            const handle = e.target.closest('.drag-handle');
+            if (!handle || !canReorderTasks()) return;
+            if (!['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(e.key)) return;
+
+            const item = handle.closest('.task-item');
+            if (!item) return;
+
+            e.preventDefault();
+            const moved = moveTaskElementByKeyboard(item, e.key);
+            if (!moved) {
+                announceTaskReorderBoundary(item, e.key);
+                return;
+            }
+
+            saveNewOrder();
+            handle.focus();
+            announceTaskReorderMove(item);
+        }
+
+        function moveTaskElementByKeyboard(item, key) {
+            if (key === 'ArrowUp') {
+                const previous = item.previousElementSibling;
+                if (!previous) return false;
+                DOM.taskList.insertBefore(item, previous);
+                return true;
+            }
+
+            if (key === 'ArrowDown') {
+                const next = item.nextElementSibling;
+                if (!next) return false;
+                DOM.taskList.insertBefore(item, next.nextElementSibling);
+                return true;
+            }
+
+            if (key === 'Home') {
+                const first = DOM.taskList.querySelector('.task-item');
+                if (!first || first === item) return false;
+                DOM.taskList.insertBefore(item, first);
+                return true;
+            }
+
+            const items = Array.from(DOM.taskList.querySelectorAll('.task-item'));
+            const last = items[items.length - 1];
+            if (!last || last === item) return false;
+            DOM.taskList.appendChild(item);
+            return true;
+        }
+
+        function announceTaskReorderMove(item) {
+            const taskName = item.querySelector('.task-name')?.textContent || '';
+            const items = Array.from(DOM.taskList.querySelectorAll('.task-item'));
+            const position = items.indexOf(item) + 1;
+            utils.announce(utils.translate('messages.reorder.moved')
+                .replace('{taskName}', taskName)
+                .replace('{position}', position)
+                .replace('{total}', items.length));
+        }
+
+        function announceTaskReorderBoundary(item, key) {
+            const taskName = item.querySelector('.task-name')?.textContent || '';
+            const messageKey = key === 'ArrowUp' || key === 'Home' ? 'messages.reorder.first' : 'messages.reorder.last';
+            utils.announce(utils.translate(messageKey).replace('{taskName}', taskName));
         }
 
         function handleTaskDragStart(e, dragState) {
@@ -3000,17 +3103,28 @@
             DOM.menu.langContainer.innerHTML = '';
             CONFIG.LANGUAGES.forEach(l => {
                 const b = document.createElement('button');
+                b.type = 'button';
                 b.className = 'lang-btn';
                 b.dataset.lang = l.code;
+                b.setAttribute('role', 'menuitemradio');
                 b.textContent = l.name;
                 DOM.menu.langContainer.appendChild(b);
             });
         }
 
         function initLanguage() {
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle(CONFIG.UI.CLASSES.ACTIVE, b.dataset.lang === state.currentLanguage));
+            document.querySelectorAll('.lang-btn').forEach(button => {
+                const active = button.dataset.lang === state.currentLanguage;
+                button.classList.toggle(CONFIG.UI.CLASSES.ACTIVE, active);
+                button.setAttribute('aria-checked', String(active));
+            });
             document.documentElement.lang = state.currentLanguage;
+            document.documentElement.dir = getLanguageDirection(state.currentLanguage);
             utils.applyTranslations();
+        }
+
+        function getLanguageDirection(code) {
+            return ['ar', 'fa', 'he', 'ur'].includes(normalizeLanguageCode(code).split('-')[0]) ? 'rtl' : 'ltr';
         }
 
         function switchLanguage(code) {
@@ -3064,11 +3178,11 @@
             }
         }
         function getEmptyStateHTML(t) {
-            return `<div class="empty-state"><svg class="icon icon-lg"><use href="#icon-empty-tasks"></use></svg><h3>${t['empty.noTasks.title']}</h3><p>${t['empty.noTasks.description']}</p></div>`;
+            return `<div class="empty-state"><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#icon-empty-tasks"></use></svg><h3>${t['empty.noTasks.title']}</h3><p>${t['empty.noTasks.description']}</p></div>`;
         }
 
         function getEmptyMatchHTML(t) {
-            return `<div class="empty-state"><svg class="icon icon-lg icon-fill"><use href="#icon-empty-search"></use></svg><h3>${t['empty.noMatches.title']}</h3><p>${t['empty.noMatches.description']}</p></div>`
+            return `<div class="empty-state"><svg class="icon icon-lg icon-fill" aria-hidden="true" focusable="false"><use href="#icon-empty-search"></use></svg><h3>${t['empty.noMatches.title']}</h3><p>${t['empty.noMatches.description']}</p></div>`
         }
 
         // 页面从休眠恢复
@@ -3136,7 +3250,7 @@
             const task = rawTask && typeof rawTask === 'object' ? rawTask : {};
             return {
                 id: normalizeId(task.id),
-                name: String(task.name || '').trim() || `Imported task ${index + 1}`,
+                name: String(task.name || '').trim() || utils.translate('task.importedFallback').replace('{index}', index + 1),
                 description: task.description ? String(task.description) : '',
                 dueDate: normalizeStoredDate(task.dueDate),
                 reminderOffset: Number.isFinite(Number(task.reminderOffset)) ? Number(task.reminderOffset) : 15,

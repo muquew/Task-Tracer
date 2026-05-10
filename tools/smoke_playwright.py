@@ -215,6 +215,123 @@ def assert_empty_task_list(page: Page) -> None:
     expect(page.locator("#taskList .empty-state")).to_be_visible()
 
 
+def assert_accessibility_baseline(page: Page, label: str) -> None:
+    issues = page.evaluate(
+        """() => {
+            const issues = [];
+            const normalize = (value) => String(value || '').replace(/\\s+/g, ' ').trim();
+            const isHidden = (el) => {
+                if (!el || el.closest('template,[hidden],[aria-hidden="true"]')) return true;
+                const style = window.getComputedStyle(el);
+                if (style.display === 'none' || style.visibility === 'hidden') return true;
+                const rect = el.getBoundingClientRect();
+                return rect.width === 0 && rect.height === 0 && style.position !== 'fixed';
+            };
+            const describe = (el) => {
+                const bits = [el.tagName.toLowerCase()];
+                if (el.id) bits.push(`#${el.id}`);
+                if (el.className && typeof el.className === 'string') {
+                    bits.push(`.${el.className.trim().split(/\\s+/).join('.')}`);
+                }
+                if (el.getAttribute('role')) bits.push(`[role="${el.getAttribute('role')}"]`);
+                return bits.join('');
+            };
+            const textByIds = (ids) => normalize(ids.split(/\\s+/).map((id) => document.getElementById(id)?.textContent || '').join(' '));
+            const labelText = (el) => {
+                if (el.id) {
+                    const direct = normalize(Array.from(document.querySelectorAll(`label[for="${CSS.escape(el.id)}"]`)).map((label) => label.textContent).join(' '));
+                    if (direct) return direct;
+                }
+                const wrapping = el.closest('label');
+                return wrapping ? normalize(wrapping.textContent) : '';
+            };
+            const textAllowed = (el) => el.matches('button,a,[role="button"],[role="option"],[role="menuitemradio"],[role="img"]');
+            const accessibleName = (el) => {
+                const ariaLabel = normalize(el.getAttribute('aria-label'));
+                if (ariaLabel) return ariaLabel;
+                const labelledby = normalize(el.getAttribute('aria-labelledby'));
+                if (labelledby) {
+                    const labelledText = textByIds(labelledby);
+                    if (labelledText) return labelledText;
+                }
+                const label = labelText(el);
+                if (label) return label;
+                return textAllowed(el) ? normalize(el.textContent) : '';
+            };
+
+            const controls = Array.from(document.querySelectorAll('button,input,select,textarea,a[href],[role="button"],[role="option"],[role="menuitemradio"],[role="img"]'));
+            controls.forEach((el) => {
+                if (isHidden(el)) return;
+                const type = (el.getAttribute('type') || '').toLowerCase();
+                if (type === 'hidden' || type === 'file') return;
+                if (!accessibleName(el)) issues.push(`${describe(el)} has no accessible name`);
+            });
+
+            document.querySelectorAll('label[for]').forEach((label) => {
+                const target = document.getElementById(label.getAttribute('for'));
+                if (target && !isHidden(target) && !normalize(label.textContent)) {
+                    issues.push(`${describe(label)} labels #${target.id} with empty text`);
+                }
+            });
+
+            const ids = new Map();
+            document.querySelectorAll('[id]').forEach((el) => {
+                const id = el.id;
+                ids.set(id, (ids.get(id) || 0) + 1);
+            });
+            ids.forEach((count, id) => {
+                if (count > 1) issues.push(`Duplicate id #${id}`);
+            });
+
+            const html = document.documentElement;
+            if (!normalize(html.lang)) issues.push('documentElement.lang is empty');
+            if (!['ltr', 'rtl', 'auto'].includes(normalize(html.dir))) issues.push('documentElement.dir is invalid or empty');
+
+            document.querySelectorAll('[role="listbox"]').forEach((listbox) => {
+                if (!listbox.getAttribute('aria-labelledby') && !listbox.getAttribute('aria-label')) {
+                    issues.push(`${describe(listbox)} listbox is not labelled`);
+                }
+                const options = Array.from(listbox.querySelectorAll('[role="option"]'));
+                if (!options.length) issues.push(`${describe(listbox)} has no options`);
+                options.forEach((option) => {
+                    if (!['true', 'false'].includes(option.getAttribute('aria-selected'))) {
+                        issues.push(`${describe(option)} option has no aria-selected state`);
+                    }
+                });
+            });
+
+            document.querySelectorAll('[role="menuitemradio"]').forEach((item) => {
+                if (!['true', 'false'].includes(item.getAttribute('aria-checked'))) {
+                    issues.push(`${describe(item)} menuitemradio has no aria-checked state`);
+                }
+            });
+
+            document.querySelectorAll('.drag-handle').forEach((handle) => {
+                if (handle.tagName.toLowerCase() !== 'button') issues.push(`${describe(handle)} is not a button`);
+                if (!accessibleName(handle)) issues.push(`${describe(handle)} has no reorder label`);
+            });
+
+            const visibleDialog = Array.from(document.querySelectorAll('[role="dialog"]')).find((dialog) => !isHidden(dialog));
+            if (visibleDialog) {
+                if (visibleDialog.getAttribute('aria-modal') !== 'true') issues.push('visible dialog must set aria-modal=true');
+                const titleId = visibleDialog.getAttribute('aria-labelledby');
+                if (!titleId || !normalize(document.getElementById(titleId)?.textContent)) {
+                    issues.push('visible dialog must be labelled by visible title text');
+                }
+                const describedBy = visibleDialog.getAttribute('aria-describedby');
+                if (describedBy && !normalize(document.getElementById(describedBy)?.textContent)) {
+                    issues.push('visible dialog aria-describedby points to empty text');
+                }
+            }
+
+            return issues;
+        }"""
+    )
+    if issues:
+        joined = "\n".join(f"- {issue}" for issue in issues)
+        raise AssertionError(f"Accessibility baseline failed during {label}:\n{joined}")
+
+
 def exercise_shortcuts_and_modal_closing(page: Page) -> None:
     page.locator("body").click(position={"x": 10, "y": 10})
     press_control_shortcut(page, "k")
@@ -228,6 +345,7 @@ def exercise_shortcuts_and_modal_closing(page: Page) -> None:
 
     page.locator("#openModalBtn").click()
     expect(page.locator("#taskModal")).to_be_visible()
+    assert_accessibility_baseline(page, "new-task modal")
     exercise_modal_focus_trap(page)
     page.locator("#cancelBtn").click()
     expect(page.locator("#taskModal")).to_be_hidden()
@@ -287,8 +405,10 @@ def exercise_subtask_draft_editor(page: Page) -> None:
     page.locator("#subtaskInput").fill("Subtask to delete")
     page.locator("#addSubtaskBtn").click()
     expect(page.locator("#subtaskListPreview .subtask-preview-item")).to_have_count(2)
+    assert_accessibility_baseline(page, "subtask draft editor")
 
-    page.locator("#subtaskListPreview .subtask-preview-text").first.click()
+    page.locator("#subtaskListPreview .subtask-preview-text").first.focus()
+    page.keyboard.press("Enter")
     page.locator("#subtaskListPreview .subtask-edit-input").fill("Edited draft subtask")
     page.keyboard.press("Enter")
     expect(page.locator("#subtaskListPreview .subtask-preview-text").first).to_have_text("Edited draft subtask")
@@ -396,6 +516,7 @@ def delete_task(page: Page, task_name: str) -> None:
     task = task_locator(page, task_name)
     task.first.locator('[data-action="delete"]').click()
     expect(page.locator("#taskModal")).to_be_visible()
+    assert_accessibility_baseline(page, "delete confirmation")
     page.locator("#submitBtn").click()
     expect(task).to_have_count(0)
 
@@ -576,10 +697,23 @@ def exercise_language(page: Page) -> None:
     page.locator('#lang-container .lang-btn[data-lang="en"]').click()
     expect(page.locator("h1")).to_have_text("Task Tracker")
     expect(page.locator("#currentFilterLabel")).to_have_text("Active")
+    if page.title() != "Task Tracker":
+        raise AssertionError(f"Expected English document title, got {page.title()!r}")
+    expect(page.locator("html")).to_have_attribute("lang", "en")
+    expect(page.locator("html")).to_have_attribute("dir", "ltr")
+    expect(page.locator(".controls-bar")).to_have_attribute("aria-label", "Task toolbar")
+    expect(page.locator('#lang-container .lang-btn[data-lang="en"]')).to_have_attribute("aria-checked", "true")
 
     page.locator('#lang-container .lang-btn[data-lang="zh-CN"]').click()
     expect(page.locator("h1")).to_have_text("任务跟踪器")
     expect(page.locator("#currentFilterLabel")).to_have_text("进行中")
+    if page.title() != "任务跟踪器":
+        raise AssertionError(f"Expected Chinese document title, got {page.title()!r}")
+    expect(page.locator("html")).to_have_attribute("lang", "zh-CN")
+    expect(page.locator("html")).to_have_attribute("dir", "ltr")
+    expect(page.locator(".controls-bar")).to_have_attribute("aria-label", "任务工具栏")
+    expect(page.locator('#lang-container .lang-btn[data-lang="zh-CN"]')).to_have_attribute("aria-checked", "true")
+    assert_accessibility_baseline(page, "language menu")
     page.keyboard.press("Escape")
 
 
@@ -661,6 +795,11 @@ def exercise_manual_reorder(page: Page, first_name: str, second_name: str, third
     select_filter(page, "all")
     select_sort(page, "manual")
     assert_task_order(page, [third_name, first_name, second_name])
+    task_locator(page, first_name).locator(".drag-handle").focus()
+    page.keyboard.press("ArrowUp")
+    expect(page.locator("#srStatus")).to_contain_text("第 1 位")
+    assert_task_order(page, [first_name, third_name, second_name])
+    assert_accessibility_baseline(page, "manual reorder")
 
 
 def exercise_back_to_top(page: Page) -> None:
@@ -940,6 +1079,7 @@ def smoke(url: str) -> None:
         assert_pwa_resources(context, url)
         clear_app_data(page, url)
         assert_empty_task_list(page)
+        assert_accessibility_baseline(page, "empty task list")
 
         exercise_shortcuts_and_modal_closing(page)
         exercise_empty_state_actions(page)

@@ -2,7 +2,8 @@
   "app": {
     "language": "简体中文",
     "title": "任务跟踪器",
-    "subtitle": "基于截止日期的任务管理"
+    "subtitle": "基于截止日期的任务管理",
+    "toolbar": "任务工具栏"
   },
   "actions": {
     "export": "导出",
@@ -33,7 +34,8 @@
     "addTask": "添加新任务 (Ctrl+I)",
     "menu": "菜单 (Ctrl+M)",
     "theme": "切换主题",
-    "backToTop": "回到顶部 (Alt + T)"
+    "backToTop": "回到顶部 (Alt + T)",
+    "searchShortcut": "搜索快捷键：Ctrl/Cmd + K"
   },
   "form": {
     "taskName": {
@@ -60,7 +62,11 @@
     },
     "subtasks": {
       "label": "子任务 (可选)",
-      "placeholder": "输入子任务..."
+      "placeholder": "输入子任务...",
+      "add": "添加子任务",
+      "edit": "编辑子任务：{text}",
+      "editInput": "编辑子任务文本",
+      "delete": "删除子任务：{text}"
     },
     "dueTime": {
       "label": "截止时间"
@@ -74,8 +80,10 @@
       "markComplete": "标记为已完成",
       "markIncomplete": "标记为未完成",
       "edit": "编辑任务",
-      "delete": "删除任务"
-    }
+      "delete": "删除任务",
+      "reorder": "移动任务：{taskName}。使用上下方向键调整顺序"
+    },
+    "importedFallback": "导入任务 {index}"
   },
   "empty": {
     "noTasks": {
@@ -125,6 +133,11 @@
     "sampleTasks": {
       "added": "示例任务已添加"
     },
+    "reorder": {
+      "moved": "{taskName} 已移动到第 {position} 位，共 {total} 位",
+      "first": "{taskName} 已经在第一位",
+      "last": "{taskName} 已经在最后一位"
+    },
     "initDBError": "数据库初始化失败，请刷新页面重试"
   },
   "time": {
@@ -162,6 +175,7 @@
     "permissionDenied": "通知权限被拒绝，请在浏览器设置中开启",
     "notSupported": "此浏览器不支持桌面通知",
     "error": "申请通知权限出错",
-    "taskDue": "任务即将到期：{taskName}"
+    "taskDue": "任务即将到期：{taskName}",
+    "reminderSet": "提醒已设置"
   }
 }

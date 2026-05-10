@@ -207,6 +207,22 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Sort dropdown must expose a labelled listbox menu")
     if 'role="option" aria-selected=' not in index_html or "option.setAttribute('aria-selected'" not in index_html:
         errors.append("Dropdown options must expose and synchronize aria-selected")
+    if re.search(r"<label\b[^>]*for=['\"][^'\"]+['\"][^>]*>\s*</label>", index_html, re.DOTALL):
+        errors.append("Form labels must not be empty")
+    if '<html lang="zh-CN" dir="ltr">' not in index_html or "document.documentElement.dir = getLanguageDirection" not in index_html:
+        errors.append("Document language and direction must be initialized and synchronized")
+    if 'data-i18n-aria-label="app.toolbar"' not in index_html:
+        errors.append("Toolbar accessible label must be localized")
+    if '<title data-i18n="app.title">' not in index_html:
+        errors.append("Document title must be localized")
+    if 'aria-controls="langSubmenu"' not in index_html or "setAttribute('role', 'menuitemradio')" not in index_html:
+        errors.append("Language menu must expose submenu controls and checked language state")
+    if "DOM.modal.setAttribute('aria-describedby', 'confirm-message-text')" not in index_html:
+        errors.append("Confirmation dialogs must expose aria-describedby")
+    if 'id="srStatus" class="sr-only" aria-live="polite" aria-atomic="true"' not in index_html:
+        errors.append("Keyboard-only status updates must use a screen-reader live region")
+    if "handleTaskReorderKeydown" not in index_html or "task.actions.reorder" not in index_html:
+        errors.append("Manual task ordering must support keyboard reordering")
 
 
 def main() -> int:
