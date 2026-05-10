@@ -699,7 +699,7 @@
         <svg class="icon icon-fill"><use href="#icon-github"></use></svg>
         GitHub
     </a>
-    <div class="footer-copyright">© 2026 muquew · Personal Non-Commercial License</div>
+    <div class="footer-copyright">© 2025 muquew · Personal Non-Commercial License</div>
 </footer>
 <script>
     (function() {
@@ -751,7 +751,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '2.1'
+                RESOURCE_VERSION: '2.2'
             },
             NOTIFICATIONS: {
                 DEFAULT_OFFSET_MINUTES: 15,
@@ -913,6 +913,11 @@
                     state.notifiedTasks = new Set(JSON.parse(notified));
                 }
             } catch (e) { console.error('Failed to load notified tasks', e); }
+        }
+        function clearNotificationDeliveryState() {
+            state.notifiedTasks.clear();
+            state.pendingNotificationKeys.clear();
+            sessionStorage.removeItem(CONFIG.STORAGE.NOTIFIED_TASKS);
         }
         function bindEvents() {
             bindGlobalEvents();
@@ -2653,31 +2658,44 @@
                 startProgressTimer();
             }
         }
-        function exportTasks() {
-            const blob = new Blob([JSON.stringify({ version: '1.0', date: new Date().toISOString(), tasks: state.tasks }, null, 2)], {type: 'application/json'});
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a'); a.href = url; a.download = `tasks_${new Date().toISOString().split('T')[0]}.json`;
-            document.body.appendChild(a); a.click(); document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            utils.notify(state.translations[state.currentLanguage]['messages.export.success']);
+        async function exportTasks() {
+            const t = state.translations[state.currentLanguage];
+            try {
+                const tasks = await loadNormalizedTasks();
+                state.tasks = tasks;
+                const date = new Date().toISOString();
+                const blob = new Blob([JSON.stringify({ version: '1.1', date, tasks }, null, 2)], {type: 'application/json'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a'); a.href = url; a.download = `task-tracer_${date.split('T')[0]}.json`;
+                document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                closeMenu();
+                utils.notify(t['messages.export.success']);
+            } catch (err) {
+                console.error('导出任务失败:', err);
+                utils.notify(t['messages.export.error'], 'error');
+            }
         }
         function importTasks(file) {
             if(!file) return;
+            closeMenu();
             const reader = new FileReader();
             const t = state.translations[state.currentLanguage];
             reader.onload = async (e) => {
                 try {
                     const data = JSON.parse(e.target.result.toString());
-                    if (!data.tasks || !Array.isArray(data.tasks)) {
+                    const rawTasks = getImportTaskArray(data);
+                    if (!rawTasks) {
                         utils.notify(t['messages.import.formatError'], 'error');
                         return;
                     }
-                    utils.confirm(t['actions.import'], t['messages.import.confirm'].replace('{count}', data.tasks.length), async () => {
+                    utils.confirm(t['actions.import'], t['messages.import.confirm'].replace('{count}', rawTasks.length), async () => {
                         try {
-                            const importedTasks = normalizeImportedTasks(data.tasks);
+                            const importedTasks = normalizeImportedTasks(rawTasks);
                             await dbActions.replaceAllTasks(importedTasks);
+                            clearNotificationDeliveryState();
                             await refreshTasks();
-                            utils.notify(t['messages.import.success'].replace('{count}', data.tasks.length));
+                            utils.notify(t['messages.import.success'].replace('{count}', importedTasks.length));
                         } catch (err) {
                             console.error('导入任务失败:', err);
                             utils.notify(t['messages.import.readError'], 'error');
@@ -2692,6 +2710,11 @@
             reader.onerror = () => utils.notify(t['messages.import.readError'], 'error');
             reader.readAsText(file);
             DOM.menu.fileInput.value = '';
+        }
+        function getImportTaskArray(data) {
+            if (Array.isArray(data)) return data;
+            if (data && typeof data === 'object' && Array.isArray(data.tasks)) return data.tasks;
+            return null;
         }
         function normalizeImportedTasks(rawTasks) {
             const usedIds = new Set();

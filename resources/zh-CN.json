@@ -116,7 +116,8 @@
       "updateError": "更新任务状态失败，请重试"
     },
     "export": {
-      "success": "任务数据导出成功！"
+      "success": "任务数据导出成功！",
+      "error": "任务数据导出失败，请重试"
     },
     "import": {
       "success": "成功导入 {count} 个任务！",

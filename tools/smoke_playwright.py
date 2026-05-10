@@ -853,31 +853,29 @@ def exercise_export(page: Page) -> dict[str, Any]:
         raise AssertionError("Export did not produce a readable download file")
 
     exported = json.loads(Path(path).read_text(encoding="utf-8"))
+    if exported.get("version") != "1.1" or not exported.get("date"):
+        raise AssertionError(f"Export payload metadata is incomplete: {exported}")
     if not isinstance(exported.get("tasks"), list) or not exported["tasks"]:
         raise AssertionError(f"Export payload did not include tasks: {exported}")
     return exported
 
 
 def exercise_import(page: Page, imported_name: str) -> None:
-    payload = {
-        "version": "1.0",
-        "date": "2026-05-10T00:00:00.000Z",
-        "tasks": [
-            {
-                "id": 10001,
-                "name": imported_name,
-                "description": "Imported by Playwright smoke test.",
-                "dueDate": None,
-                "createdAt": "2026-05-10T00:00:00.000Z",
-                "completed": False,
-                "order": 1000,
-                "subtasks": [
-                    {"id": 20001, "text": "Imported subtask A", "completed": False},
-                    {"id": 20001, "text": "Imported subtask B", "completed": False},
-                ],
-            }
-        ],
-    }
+    payload = [
+        {
+            "id": 10001,
+            "name": imported_name,
+            "description": "Imported by Playwright smoke test.",
+            "dueDate": None,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": False,
+            "order": 1000,
+            "subtasks": [
+                {"id": 20001, "text": "Imported subtask A", "completed": False},
+                {"id": 20001, "text": "Imported subtask B", "completed": False},
+            ],
+        }
+    ]
 
     with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
         json.dump(payload, temp_file)
