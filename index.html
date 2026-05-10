@@ -1555,52 +1555,76 @@
                 `${t['task.deadline']}: ${utils.formatDate(task.dueDate)}` : t['task.noDeadline'];
 
             // C. 描述
-            let descEl = el.querySelector('.task-desc');
-            if (task.description) {
-                if (!descEl) { // 如果模板中没有，（理论上不该发生）
-                    descEl = document.createElement('div');
-                    descEl.className = 'task-desc';
-                    el.querySelector('.task-header').after(descEl);
-                }
-                descEl.textContent = task.description;
-            } else if (descEl) descEl.remove(); // 移除空描述
+            renderTaskDescription(el, task);
 
             // D. 子任务 (Subtasks)
             renderSubtaskList(el, task);
 
             // E. 进度条
-            let bar = el.querySelector('.progress-bar');
-            if (task.dueDate && !task.completed) {
-                if (!bar) {
-                    bar = document.createElement('div');
-                    bar.className = 'progress-bar';
-                    bar.innerHTML = '<div class="progress-fill"></div>';
-                    // 插入位置：在子任务之后，或描述之后，或头部之后
-                    const prev = el.querySelector('.subtasks-wrapper') || el.querySelector('.task-desc') || el.querySelector('.task-header');
-                    prev.after(bar);
-                }
-                bar.querySelector('.progress-fill').style.width = `${statusObj.percent}%`;
-            } else if (bar) bar.remove();
+            renderTaskProgress(el, task, statusObj);
 
             // F. 底部状态文字
-            const statusInd = el.querySelector('.status-indicator');
-            statusInd.querySelector('.status-text').textContent = statusObj.text;
-
-            let timeEl = statusInd.querySelector('.status-time-left');
-            if (task.dueDate && !task.completed) {
-                if (!timeEl) {
-                    timeEl = document.createElement('span');
-                    timeEl.className = 'status-time-left';
-                    statusInd.querySelector('.status-text').after(timeEl);
-                }
-                timeEl.textContent = `(${utils.formatTime(timeLeft)})`;
-            } else if (timeEl) timeEl.remove();
+            renderTaskStatus(el, task, statusObj, timeLeft);
 
             // G. 按钮 Titles
             renderTaskActionTitles(el, task, t);
 
             // H. 拖拽手柄 (仅在 manual 模式下显示)
             renderTaskDragHandle(el);
+        }
+
+        function renderTaskDescription(el, task) {
+            let descEl = el.querySelector('.task-desc');
+            if (task.description) {
+                if (!descEl) {
+                    descEl = document.createElement('div');
+                    descEl.className = 'task-desc';
+                    el.querySelector('.task-header').after(descEl);
+                }
+                descEl.textContent = task.description;
+            } else if (descEl) descEl.remove();
+        }
+
+        function renderTaskProgress(el, task, statusObj) {
+            let bar = el.querySelector('.progress-bar');
+            if (shouldShowTaskTiming(task)) {
+                if (!bar) {
+                    bar = createTaskProgressBar();
+                    getTaskProgressAnchor(el).after(bar);
+                }
+                bar.querySelector('.progress-fill').style.width = `${statusObj.percent}%`;
+            } else if (bar) bar.remove();
+        }
+
+        function createTaskProgressBar() {
+            const bar = document.createElement('div');
+            bar.className = 'progress-bar';
+            bar.innerHTML = '<div class="progress-fill"></div>';
+            return bar;
+        }
+
+        function getTaskProgressAnchor(el) {
+            return el.querySelector('.subtasks-wrapper') || el.querySelector('.task-desc') || el.querySelector('.task-header');
+        }
+
+        function renderTaskStatus(el, task, statusObj, timeLeft) {
+            const statusInd = el.querySelector('.status-indicator');
+            const statusText = statusInd.querySelector('.status-text');
+            statusText.textContent = statusObj.text;
+
+            let timeEl = statusInd.querySelector('.status-time-left');
+            if (shouldShowTaskTiming(task)) {
+                if (!timeEl) {
+                    timeEl = document.createElement('span');
+                    timeEl.className = 'status-time-left';
+                    statusText.after(timeEl);
+                }
+                timeEl.textContent = `(${utils.formatTime(timeLeft)})`;
+            } else if (timeEl) timeEl.remove();
+        }
+
+        function shouldShowTaskTiming(task) {
+            return task.dueDate && !task.completed;
         }
 
         function renderReminderIcon(el, task) {
