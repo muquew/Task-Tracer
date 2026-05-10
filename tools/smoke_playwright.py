@@ -850,6 +850,23 @@ def exercise_filters_and_sort(page: Page, alpha_name: str, beta_name: str, overd
 
 
 def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_name: str) -> None:
+    extra_names = [f"Calendar Overflow Extra {index} {int(time.time())}" for index in range(1, 4)]
+    for index, extra_name in enumerate(extra_names, start=1):
+        put_task_record(
+            page,
+            {
+                "id": int(time.time() * 1000) + 40_000 + index,
+                "name": extra_name,
+                "description": "Extra same-day task for calendar overflow.",
+                "dueDate": f"{future_date(1)}T13:{index:02d}:00.000Z",
+                "reminderOffset": -1,
+                "subtasks": [],
+                "completed": False,
+                "createdAt": iso_minutes_from_now(index),
+                "order": 40_000 + index,
+            },
+        )
+
     select_filter(page, "all")
     select_view(page, "calendar")
     expect(page.locator(".calendar-view")).to_be_visible()
@@ -877,6 +894,19 @@ def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_nam
     )
     if calendar_task_style != {"overflow": "hidden", "textOverflow": "ellipsis", "whiteSpace": "nowrap", "title": beta_name}:
         raise AssertionError(f"Calendar task title is not constrained to one-line ellipsis: {calendar_task_style}")
+    page.locator(".calendar-more-btn").click()
+    expect(page.locator(".calendar-day-detail")).to_be_visible()
+    expect(page.locator(".calendar-detail-task")).to_have_count(4)
+    expect(page.locator(".calendar-day-detail")).to_contain_text(beta_name)
+    expect(page.locator(".calendar-day-detail")).to_contain_text(extra_names[0])
+    page.locator(".calendar-detail-task").filter(has_text=extra_names[0]).click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    expect(page.locator("#taskName")).to_have_value(extra_names[0])
+    page.locator("#cancelBtn").click()
+    page.locator(".calendar-more-btn").click()
+    expect(page.locator(".calendar-day-detail")).to_be_visible()
+    page.locator(".calendar-detail-close").click()
+    expect(page.locator(".calendar-day-detail")).to_have_count(0)
     add_button = page.locator(".calendar-day:not(.outside-month) .calendar-date-number[data-calendar-add-date]").first
     selected_date = add_button.get_attribute("data-calendar-add-date")
     add_button.click()
@@ -888,6 +918,10 @@ def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_nam
     expect(page.locator("#taskName")).to_have_value(beta_name)
     page.locator("#cancelBtn").click()
 
+    for extra_name in extra_names:
+        delete_task_records_by_name(page, extra_name)
+
+    select_filter(page, "all")
     select_view(page, "timeline")
     expect(page.locator(".timeline-view")).to_be_visible()
     expect(page.locator(".timeline-group")).to_have_count(3)

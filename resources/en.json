@@ -46,6 +46,8 @@
     "nextYear": "Next year",
     "today": "Today",
     "addTaskOnDate": "Add task on {date}",
+    "showDayTasks": "View all {count} tasks on {date}",
+    "closeDayTasks": "Close day tasks",
     "more": "+{count} more",
     "taskCount": "{count} tasks",
     "noDeadline": "No deadline"

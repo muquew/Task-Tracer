@@ -140,7 +140,7 @@
         .container, .task-item, .modal-content, input, textarea, select, .menu, .controls-bar { transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease); }
         .container { width: min(100%, var(--app-width)); margin: 0 auto; background: transparent; border-radius: 0; box-shadow: none; position: relative; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-        .icon-btn:focus-visible, .lang-btn:focus-visible, .menu-item:focus-visible, .dropdown-btn:focus-visible, .dropdown-option:focus-visible, .view-tab:focus-visible, .calendar-nav-btn:focus-visible, .calendar-date-number:focus-visible, .calendar-task:focus-visible, .stats-mini:focus-visible, .search-clear-btn:focus-visible, .action-btn:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .btn-icon-small:focus-visible, .back-to-top:focus-visible, .subtask-summary-bar:focus-visible, .subtask-delete-btn:focus-visible, .subtask-checkbox:focus-visible, .subtask-preview-text:focus-visible, .drag-handle:focus-visible {
+        .icon-btn:focus-visible, .lang-btn:focus-visible, .menu-item:focus-visible, .dropdown-btn:focus-visible, .dropdown-option:focus-visible, .view-tab:focus-visible, .calendar-nav-btn:focus-visible, .calendar-date-number:focus-visible, .calendar-task:focus-visible, .calendar-more-btn:focus-visible, .calendar-detail-close:focus-visible, .stats-mini:focus-visible, .search-clear-btn:focus-visible, .action-btn:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .btn-icon-small:focus-visible, .back-to-top:focus-visible, .subtask-summary-bar:focus-visible, .subtask-delete-btn:focus-visible, .subtask-checkbox:focus-visible, .subtask-preview-text:focus-visible, .drag-handle:focus-visible {
             outline: 2px solid var(--color-primary);
             outline-offset: 2px;
             box-shadow: 0 0 0 4px var(--focus-ring);
@@ -247,6 +247,18 @@
         .calendar-task { width: 100%; min-height: 28px; border: 1px solid var(--border-light); border-left: 4px solid var(--task-color, var(--color-primary)); border-radius: var(--radius-control); background: var(--bg-surface-raised); color: var(--text-main); padding: 4px 6px; text-align: left; font: inherit; font-size: 12px; font-weight: 700; line-height: 1.3; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .calendar-task:hover { color: var(--color-primary); background: var(--bg-hover); }
         .calendar-more { color: var(--text-tertiary); font-size: 12px; font-weight: 700; padding: 2px 6px; }
+        .calendar-more-btn { width: 100%; min-height: 26px; border: 1px solid transparent; border-radius: var(--radius-control); background: transparent; text-align: left; cursor: pointer; }
+        .calendar-more-btn:hover { color: var(--color-primary); background: var(--bg-hover); border-color: var(--border-light); }
+        .calendar-day-detail { margin-top: 12px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface); box-shadow: 0 8px 22px var(--shadow-base); padding: 12px; animation: fadeIn 0.2s ease; }
+        .calendar-detail-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+        .calendar-detail-title { color: var(--text-main); font-size: 14px; font-weight: 820; }
+        .calendar-detail-close { width: 30px; height: 30px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface); color: var(--text-secondary); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 6px; }
+        .calendar-detail-close:hover { color: var(--color-primary); background: var(--bg-hover); border-color: var(--color-primary); }
+        .calendar-detail-list { display: grid; gap: 7px; }
+        .calendar-detail-task { width: 100%; min-height: 38px; border: 1px solid var(--border-light); border-left: 4px solid var(--task-color, var(--color-primary)); border-radius: var(--radius-control); background: var(--bg-surface-raised); color: var(--text-main); padding: 7px 9px; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; font: inherit; cursor: pointer; }
+        .calendar-detail-task:hover { color: var(--color-primary); background: var(--bg-hover); }
+        .calendar-detail-task-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 760; }
+        .calendar-detail-task-status { flex-shrink: 0; color: var(--text-tertiary); font-size: 12px; font-weight: 700; }
         .date-view-undated { margin-top: 12px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface); padding: 12px; box-shadow: 0 8px 22px var(--shadow-base); }
         .date-view-undated h3, .timeline-date-title { font-size: 14px; color: var(--text-main); margin-bottom: 9px; }
         .timeline-view { display: grid; gap: 12px; }
@@ -932,7 +944,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '3.7'
+                RESOURCE_VERSION: '3.8'
             },
             BACKUP: {
                 FILE_VERSION: '2.0',
@@ -973,6 +985,7 @@
             modalMode: 'form',
             progressInterval: null,
             elementToFocusOnClose: null,
+            calendarDetailDateKey: '',
             dateTimeFormatters: {},
             notificationsEnabled: false,
             notifiedTasks: new Set(),
@@ -2240,9 +2253,13 @@
             DOM.taskList.textContent = '';
             const datedTasks = sortTasksForDateView(tasks.filter(task => task.dueDate));
             const undatedTasks = tasks.filter(task => !task.dueDate);
+            const byDate = groupTasksByDateKey(datedTasks);
             const calendar = document.createElement('div');
             calendar.className = 'calendar-view';
             calendar.appendChild(createCalendarShell(datedTasks));
+            const detailTasks = byDate.get(state.calendarDetailDateKey);
+            if (detailTasks) calendar.appendChild(createCalendarDayDetail(state.calendarDetailDateKey, detailTasks));
+            else state.calendarDetailDateKey = '';
             if (undatedTasks.length > 0) calendar.appendChild(createUndatedSection(undatedTasks));
             DOM.taskList.appendChild(calendar);
         }
@@ -2316,13 +2333,23 @@
             list.className = 'calendar-task-list';
             tasks.slice(0, 3).forEach(task => list.appendChild(createCalendarTaskButton(task)));
             if (tasks.length > 3) {
-                const more = document.createElement('div');
-                more.className = 'calendar-more';
-                more.textContent = utils.translate('calendar.more').replace('{count}', tasks.length - 3);
-                list.appendChild(more);
+                list.appendChild(createCalendarMoreButton(dayKey, day, tasks.length));
             }
             cell.append(header, list);
             return cell;
+        }
+        function createCalendarMoreButton(dayKey, day, count) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'calendar-more calendar-more-btn';
+            button.dataset.calendarDetailDate = dayKey;
+            const label = utils.translate('calendar.showDayTasks')
+                .replace('{date}', formatCalendarAddDate(day))
+                .replace('{count}', count);
+            button.title = label;
+            button.setAttribute('aria-label', label);
+            button.textContent = utils.translate('calendar.more').replace('{count}', count - 3);
+            return button;
         }
         function createCalendarDateButton(dayKey, day) {
             const button = document.createElement('button');
@@ -2345,6 +2372,46 @@
             button.textContent = task.name;
             button.title = task.name;
             button.setAttribute('aria-label', `${task.name}, ${status.text}`);
+            return button;
+        }
+        function createCalendarDayDetail(dayKey, tasks) {
+            const section = document.createElement('section');
+            section.className = 'calendar-day-detail';
+            section.setAttribute('aria-label', formatCalendarDayLabel(parseDateKey(dayKey), tasks.length));
+            const header = document.createElement('div');
+            header.className = 'calendar-detail-header';
+            const title = document.createElement('h3');
+            title.className = 'calendar-detail-title';
+            title.textContent = `${formatTimelineDate(dayKey)} · ${utils.translate('calendar.taskCount').replace('{count}', tasks.length)}`;
+            const close = document.createElement('button');
+            close.type = 'button';
+            close.className = 'calendar-detail-close';
+            close.dataset.calendarDetailClose = 'true';
+            close.title = utils.translate('calendar.closeDayTasks');
+            close.setAttribute('aria-label', utils.translate('calendar.closeDayTasks'));
+            close.appendChild(createIcon('icon-x', 'icon icon-sm'));
+            header.append(title, close);
+            const list = document.createElement('div');
+            list.className = 'calendar-detail-list';
+            tasks.forEach(task => list.appendChild(createCalendarDetailTaskButton(task)));
+            section.append(header, list);
+            return section;
+        }
+        function createCalendarDetailTaskButton(task) {
+            const status = getTaskRenderStatus(task, state.translations[state.currentLanguage]).statusObj;
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'calendar-detail-task';
+            button.dataset.calendarTaskId = String(task.id);
+            button.style.setProperty('--task-color', getStatusColorFromClass(status.cls));
+            button.setAttribute('aria-label', `${task.name}, ${status.text}`);
+            const name = document.createElement('span');
+            name.className = 'calendar-detail-task-name';
+            name.textContent = task.name;
+            const statusText = document.createElement('span');
+            statusText.className = 'calendar-detail-task-status';
+            statusText.textContent = status.text;
+            button.append(name, statusText);
             return button;
         }
         function getStatusColorFromClass(statusClass) {
@@ -3447,6 +3514,7 @@
         function handleTaskListClick(e) {
             if (handleStatsShortcutClick(e)) return;
             if (handleCalendarActionClick(e)) return;
+            if (handleCalendarDetailClick(e)) return;
             if (handleCalendarAddClick(e)) return;
             if (handleCalendarTaskClick(e)) return;
             if (handleSubtaskCheckboxClick(e)) return;
@@ -3476,6 +3544,23 @@
                 state.calendarMonthDate = new Date();
                 renderTaskList();
             }
+            return true;
+        }
+        function handleCalendarDetailClick(e) {
+            const close = e.target.closest('[data-calendar-detail-close]');
+            if (close) {
+                state.calendarDetailDateKey = '';
+                renderTaskList();
+                return true;
+            }
+            const button = e.target.closest('[data-calendar-detail-date]');
+            if (!button) return false;
+            state.calendarDetailDateKey = button.dataset.calendarDetailDate;
+            renderTaskList();
+            requestAnimationFrame(() => {
+                const detail = DOM.taskList.querySelector('.calendar-day-detail');
+                if (detail) detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
             return true;
         }
         function handleCalendarAddClick(e) {

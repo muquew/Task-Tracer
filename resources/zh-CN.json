@@ -46,6 +46,8 @@
     "nextYear": "下一年",
     "today": "今天",
     "addTaskOnDate": "在 {date} 添加任务",
+    "showDayTasks": "查看 {date} 的全部 {count} 个任务",
+    "closeDayTasks": "关闭当天任务",
     "more": "+{count} 个更多",
     "taskCount": "{count} 个任务",
     "noDeadline": "无截止日期"
