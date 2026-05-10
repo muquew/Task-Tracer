@@ -223,6 +223,8 @@
       "previewReplace": "Replacement impact",
       "previewReplaceValue": "{current} current tasks will be replaced, including {completed} completed and {archived} archived",
       "previewDuplicates": "Duplicate names",
+      "previewFileDuplicates": "Repeated inside file",
+      "previewExistingMatches": "Matches current tasks",
       "formatError": "Import failed: Invalid file format",
       "readError": "Import failed: File read error"
     },

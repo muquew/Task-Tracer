@@ -404,6 +404,7 @@
         .confirm-details { display: grid; gap: 10px; }
         .confirm-row { display: flex; justify-content: space-between; gap: 14px; padding: 9px 10px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface-alt); }
         .confirm-row strong { color: var(--text-main); }
+        .confirm-list-title { color: var(--text-main); font-size: 13px; font-weight: 800; }
         .confirm-list { margin: 0; padding-left: 18px; color: var(--text-secondary); font-size: 13px; }
         .btn { min-height: 40px; padding: 10px 18px; border-radius: var(--radius-control); font-size: 14px; font-weight: 760; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
         .btn-primary { background: var(--color-primary); color: var(--text-inverse); }
@@ -925,7 +926,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '3.5'
+                RESOURCE_VERSION: '3.6'
             },
             BACKUP: {
                 FILE_VERSION: '2.0',
@@ -3926,7 +3927,9 @@
             return null;
         }
         function buildImportPreview(importedTasks) {
-            const duplicateNames = getImportDuplicateNames(importedTasks);
+            const importNameOccurrences = getImportNameOccurrences(importedTasks);
+            const fileDuplicateNames = getImportFileDuplicateNames(importNameOccurrences);
+            const existingDuplicateNames = getImportExistingDuplicateNames(importNameOccurrences);
             const completedCount = state.tasks.filter(task => task.completed).length;
             const archivedCount = state.tasks.filter(task => task.archived).length;
             return {
@@ -3934,19 +3937,28 @@
                 currentCount: state.tasks.length,
                 completedCount,
                 archivedCount,
-                duplicateNames
+                fileDuplicateNames,
+                existingDuplicateNames
             };
         }
-        function getImportDuplicateNames(importedTasks) {
+        function getImportNameOccurrences(importedTasks) {
             const names = new Map();
             importedTasks.forEach(task => {
                 const key = normalizeTaskNameForCompare(task.name);
                 if (!key) return;
-                names.set(key, { label: task.name, count: (names.get(key)?.count || 0) + 1 });
+                names.set(key, { key, label: task.name, count: (names.get(key)?.count || 0) + 1 });
             });
+            return names;
+        }
+        function getImportFileDuplicateNames(names) {
+            return [...names.values()]
+                .filter(item => item.count > 1)
+                .map(item => item.label);
+        }
+        function getImportExistingDuplicateNames(names) {
             const existing = new Set(state.tasks.map(task => normalizeTaskNameForCompare(task.name)).filter(Boolean));
             return [...names.values()]
-                .filter(item => item.count > 1 || existing.has(normalizeTaskNameForCompare(item.label)))
+                .filter(item => existing.has(item.key))
                 .map(item => item.label);
         }
         function normalizeTaskNameForCompare(name) {
@@ -3962,19 +3974,26 @@
                     .replace('{current}', preview.currentCount)
                     .replace('{completed}', preview.completedCount)
                     .replace('{archived}', preview.archivedCount)),
-                createConfirmRow(t['messages.import.previewDuplicates'], String(preview.duplicateNames.length))
+                createConfirmRow(t['messages.import.previewFileDuplicates'], String(preview.fileDuplicateNames.length)),
+                createConfirmRow(t['messages.import.previewExistingMatches'], String(preview.existingDuplicateNames.length))
             );
-            if (preview.duplicateNames.length > 0) {
-                const list = document.createElement('ul');
-                list.className = 'confirm-list';
-                preview.duplicateNames.slice(0, 6).forEach(name => {
-                    const item = document.createElement('li');
-                    item.textContent = name;
-                    list.appendChild(item);
-                });
-                wrapper.appendChild(list);
-            }
+            appendImportNameList(wrapper, t['messages.import.previewFileDuplicates'], preview.fileDuplicateNames);
+            appendImportNameList(wrapper, t['messages.import.previewExistingMatches'], preview.existingDuplicateNames);
             return wrapper;
+        }
+        function appendImportNameList(wrapper, label, names) {
+            if (names.length === 0) return;
+            const title = document.createElement('strong');
+            title.className = 'confirm-list-title';
+            title.textContent = label;
+            const list = document.createElement('ul');
+            list.className = 'confirm-list';
+            names.slice(0, 6).forEach(name => {
+                const item = document.createElement('li');
+                item.textContent = name;
+                list.appendChild(item);
+            });
+            wrapper.append(title, list);
         }
         function createConfirmRow(label, value) {
             const row = document.createElement('div');

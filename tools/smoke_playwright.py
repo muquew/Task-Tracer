@@ -1180,6 +1180,38 @@ def exercise_backup(page: Page) -> dict[str, Any]:
     return backup
 
 
+def exercise_import_preview_details(page: Page, existing_name: str) -> None:
+    payload = [
+        {"id": 91001, "name": existing_name, "createdAt": "2025-05-10T00:00:00.000Z"},
+        {"id": 91002, "name": "Preview Duplicate", "createdAt": "2025-05-10T00:00:00.000Z"},
+        {"id": 91003, "name": "Preview Duplicate", "createdAt": "2025-05-10T00:00:00.000Z"},
+    ]
+
+    with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
+        json.dump(payload, temp_file)
+        temp_path = temp_file.name
+
+    try:
+        page.locator("#openMenuBtn").click()
+        with page.expect_file_chooser() as chooser_info:
+            page.locator("#importBtn").click()
+        chooser_info.value.set_files(temp_path)
+        expect(page.locator("#taskModal")).to_be_visible()
+        expect(page.locator("#modalTitle")).to_have_text(re.compile("导入预览|Import Preview", re.I))
+        rows = page.locator(".confirm-row").all_inner_texts()
+        if not any(re.search(r"(文件内重复|Repeated inside file)[\s\S]*1", row, re.I) for row in rows):
+            raise AssertionError(f"Import preview did not report file duplicates: {rows}")
+        if not any(re.search(r"(匹配当前任务|Matches current tasks)[\s\S]*1", row, re.I) for row in rows):
+            raise AssertionError(f"Import preview did not report current task matches: {rows}")
+        expect(page.locator(".confirm-list")).to_have_count(2)
+        expect(page.locator("#confirm-message-text")).to_contain_text("Preview Duplicate")
+        expect(page.locator("#confirm-message-text")).to_contain_text(existing_name)
+        page.locator("#cancelBtn").click()
+        expect(page.locator("#taskModal")).to_be_hidden()
+    finally:
+        Path(temp_path).unlink(missing_ok=True)
+
+
 def exercise_import(page: Page, imported_name: str) -> None:
     payload = [
         {
@@ -1210,6 +1242,8 @@ def exercise_import(page: Page, imported_name: str) -> None:
         expect(page.locator("#modalTitle")).to_have_text(re.compile("导入预览|Import Preview", re.I))
         expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("1"))
         expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("替换|replace", re.I))
+        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("文件内重复|Repeated inside file", re.I))
+        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("匹配当前任务|Matches current tasks", re.I))
         page.locator("#submitBtn").click()
         select_filter(page, "all")
         imported_task = task_locator(page, imported_name)
@@ -1467,6 +1501,7 @@ def smoke(url: str) -> None:
         if backup_names != {beta_name, overdue_name}:
             raise AssertionError(f"Backup tasks did not match remaining tasks: {backup}")
 
+        exercise_import_preview_details(page, beta_name)
         exercise_import(page, imported_name)
         cancel_delete_task(page, imported_name)
         delete_task(page, imported_name)

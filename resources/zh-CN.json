@@ -223,6 +223,8 @@
       "previewReplace": "替换影响",
       "previewReplaceValue": "当前 {current} 个任务会被替换，含 {completed} 个已完成、{archived} 个已归档",
       "previewDuplicates": "同名重复项",
+      "previewFileDuplicates": "文件内重复",
+      "previewExistingMatches": "匹配当前任务",
       "formatError": "导入失败：文件格式不正确",
       "readError": "导入失败：文件读取错误"
     },
