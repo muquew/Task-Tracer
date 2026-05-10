@@ -19,6 +19,12 @@
   "search": {
     "placeholder": "搜索任务..."
   },
+  "projects": {
+    "filterLabel": "项目视图",
+    "all": "全部项目",
+    "none": "未分组",
+    "groupTitle": "{project} · {count} 个任务"
+  },
   "filters": {
     "all": "全部",
     "active": "进行中",
@@ -45,6 +51,15 @@
     "description": {
       "label": "任务描述 (可选)",
       "placeholder": "输入任务描述"
+    },
+    "project": {
+      "label": "项目 (可选)",
+      "placeholder": "例如：工作 / 个人"
+    },
+    "tags": {
+      "label": "标签 (可选)",
+      "placeholder": "用逗号分隔标签",
+      "hint": "标签会参与搜索。"
     },
     "dueDate": {
       "label": "截止日期 (可选)"
@@ -165,15 +180,21 @@
   "samples": {
     "task1": {
       "name": "完成项目报告",
-      "description": "编写并提交季度项目总结报告"
+      "description": "编写并提交季度项目总结报告",
+      "project": "工作",
+      "tag": "报告"
     },
     "task2": {
       "name": "团队会议准备",
-      "description": "准备下周团队会议的演示材料"
+      "description": "准备下周团队会议的演示材料",
+      "project": "工作",
+      "tag": "会议"
     },
     "task3": {
       "name": "学习计划制定",
-      "description": "制定下个月的个人学习计划"
+      "description": "制定下个月的个人学习计划",
+      "project": "个人",
+      "tag": "学习"
     }
   },
   "sort": {

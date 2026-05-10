@@ -19,6 +19,12 @@
   "search": {
     "placeholder": "Search tasks..."
   },
+  "projects": {
+    "filterLabel": "Project view",
+    "all": "All Projects",
+    "none": "Unassigned",
+    "groupTitle": "{project} · {count} tasks"
+  },
   "filters": {
     "all": "All",
     "active": "Active",
@@ -45,6 +51,15 @@
     "description": {
       "label": "Task Description (optional)",
       "placeholder": "Enter task description"
+    },
+    "project": {
+      "label": "Project (optional)",
+      "placeholder": "e.g. Work / Personal"
+    },
+    "tags": {
+      "label": "Tags (optional)",
+      "placeholder": "Separate tags with commas",
+      "hint": "Tags are included in search."
     },
     "dueDate": {
       "label": "Due Date (optional)"
@@ -165,15 +180,21 @@
   "samples": {
     "task1": {
       "name": "Complete project report",
-      "description": "Write and submit quarterly project summary report"
+      "description": "Write and submit quarterly project summary report",
+      "project": "Work",
+      "tag": "report"
     },
     "task2": {
       "name": "Team meeting preparation",
-      "description": "Prepare presentation materials for next week's team meeting"
+      "description": "Prepare presentation materials for next week's team meeting",
+      "project": "Work",
+      "tag": "meeting"
     },
     "task3": {
       "name": "Learning plan development",
-      "description": "Develop personal learning plan for next month"
+      "description": "Develop personal learning plan for next month",
+      "project": "Personal",
+      "tag": "learning"
     }
   },
   "sort": {

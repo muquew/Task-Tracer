@@ -444,12 +444,18 @@ def add_task(
     due_date: str | None = None,
     due_time: str | None = None,
     reminder_offset: str | None = None,
+    project: str | None = None,
+    tags: list[str] | None = None,
     subtasks: list[str] | None = None,
 ) -> None:
     page.locator("#openModalBtn").click()
     expect(page.locator("#taskModal")).to_be_visible()
     page.locator("#taskName").fill(task_name)
     page.locator("#taskDesc").fill(description)
+    if project:
+        page.locator("#taskProject").fill(project)
+    if tags:
+        page.locator("#taskTags").fill(", ".join(tags))
 
     if no_deadline:
         page.locator("#noDeadline").check()
@@ -479,6 +485,20 @@ def add_task(
     task = task_locator(page, task_name)
     expect(task).to_have_count(1)
     expect(task.first.locator(".task-name")).to_contain_text(task_name)
+
+
+def exercise_project_tags(page: Page, alpha_name: str, beta_name: str) -> None:
+    alpha = task_locator(page, alpha_name)
+    expect(alpha.locator(".project-chip")).to_contain_text("Smoke Work")
+    expect(alpha.locator(".tag-chip").first).to_contain_text("#focus")
+    page.locator("#searchInput").fill("focus")
+    expect(task_locator(page, alpha_name)).to_have_count(1)
+    expect(task_locator(page, beta_name)).to_have_count(0)
+    clear_search(page)
+    page.locator("#projectFilter").select_option("Smoke Work")
+    expect(task_locator(page, alpha_name)).to_have_count(1)
+    expect(task_locator(page, beta_name)).to_have_count(0)
+    page.locator("#projectFilter").select_option("all")
 
 
 def snooze_task_reminder(page: Page, task_name: str) -> None:
@@ -1165,11 +1185,12 @@ def smoke(url: str) -> None:
         assert_service_worker_and_offline_load(context, page)
 
         exercise_subtask_draft_editor(page)
-        add_task(page, alpha_name, no_deadline=True, subtasks=["First smoke subtask", "Second smoke subtask"])
-        add_task(page, beta_name, due_date=future_date(1), due_time="12:30", reminder_offset="15")
+        add_task(page, alpha_name, no_deadline=True, project="Smoke Work", tags=["focus", "docs"], subtasks=["First smoke subtask", "Second smoke subtask"])
+        add_task(page, beta_name, due_date=future_date(1), due_time="12:30", reminder_offset="15", project="Smoke Personal", tags=["deadline"])
         expect(task_locator(page, beta_name).locator(".task-reminder-icon")).to_be_visible()
         snooze_task_reminder(page, beta_name)
         add_overdue_task_record(page, overdue_name, order=30_000)
+        exercise_project_tags(page, alpha_name, beta_name)
         exercise_theme_fallback_transition(page)
         exercise_search_empty_state(page, f"{task_name} Missing")
         exercise_subtasks(page, alpha_name)

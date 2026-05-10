@@ -187,7 +187,7 @@
             position: relative;
             z-index: 700;
             display: grid;
-            grid-template-columns: minmax(240px, 1fr) auto auto;
+            grid-template-columns: minmax(220px, 1fr) minmax(150px, 220px) auto auto;
             gap: 10px;
             margin: 6px 0 14px;
             align-items: center;
@@ -202,6 +202,8 @@
         .search-box { position: relative; display: flex; align-items: center; flex: 1; margin-bottom: 0; }
         .search-input { width: 100%; min-height: 42px; padding: 10px 45px 10px 12px; border: 1px solid var(--border-base); border-radius: var(--radius-control); font-size: 14px; background-color: var(--field-bg); color: var(--text-main); transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-fast); }
         .dropdown-container { position: relative; z-index: 300; }
+        .project-filter { min-width: 0; }
+        .project-select { padding-right: 42px; }
         .dropdown-container.show { z-index: 800; }
         .dropdown-btn { background-color: var(--field-bg); border: 1px solid var(--border-base); color: var(--text-main); padding: 8px 12px; border-radius: var(--radius-control); font-size: 14px; cursor: pointer; display: flex; align-items: center; transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease), transform var(--motion-fast), box-shadow var(--motion-fast); height: 42px; white-space: nowrap; gap: 8px; min-width: 150px; }
         .dropdown-btn .chevron { margin-left: auto; opacity: 0.5; }
@@ -258,6 +260,11 @@
         .task-name { min-width: 0; overflow-wrap: anywhere; }
         .task-date { flex: 0 1 auto; max-width: 46%; font-size: 12px; color: var(--text-secondary); background: var(--bg-hover); padding: 4px 10px; border-radius: var(--radius-pill); line-height: 1.45; white-space: normal; overflow-wrap: anywhere; text-align: right; border: 1px solid color-mix(in srgb, currentColor 16%, transparent); }
         .task-desc { color: var(--text-secondary); margin: 0 0 12px; line-height: 1.55; font-size: 14px; word-break: break-word; }
+        .task-meta { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
+        .task-chip { display: inline-flex; align-items: center; max-width: 100%; min-height: 24px; padding: 3px 8px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); background: var(--bg-surface-alt); color: var(--text-secondary); font-size: 12px; font-weight: 700; line-height: 1.35; overflow-wrap: anywhere; }
+        .task-chip.project-chip { color: var(--color-primary); background: var(--color-info-light); border-color: color-mix(in srgb, var(--color-primary) 22%, transparent); }
+        .task-group-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 18px 0 8px; color: var(--text-secondary); font-size: 13px; font-weight: 760; }
+        .task-group-header::after { content: ""; flex: 1; height: 1px; background: var(--border-light); }
         .progress-bar { height: 7px; background: var(--bg-hover); border-radius: var(--radius-pill); margin: 10px 0 12px; overflow: hidden; }
         .progress-fill { height: 100%; border-radius: var(--radius-pill); transition: width 0.5s ease; background: linear-gradient(90deg, var(--task-color), color-mix(in srgb, var(--task-color) 70%, var(--color-accent))); }
         .task-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
@@ -397,6 +404,7 @@
             .controls-bar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: 8px; gap: 8px; }
             .search-box { width: 100%; flex: none; min-width: 0; }
             .search-box { grid-column: 1 / -1; }
+            .project-filter { grid-column: 1 / -1; }
             .search-input { min-width: 0; }
             .dropdown-container { flex: 1; min-width: 0; }
             .dropdown-btn { width: 100%; min-width: 0; justify-content: space-between; }
@@ -409,7 +417,7 @@
             .task-header { flex-direction: column; align-items: flex-start; }
             .task-title { width: 100%; }
             .task-date { max-width: 100%; margin-top: 5px; text-align: left; }
-            .task-desc, .progress-bar, .subtasks-wrapper, .task-footer { margin-left: 0; padding-left: 0; }
+            .task-desc, .task-meta, .progress-bar, .subtasks-wrapper, .task-footer { margin-left: 0; padding-left: 0; }
             .task-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
             .task-actions { align-self: flex-end; }
             .modal { padding: 10px; }
@@ -568,6 +576,10 @@
                 <input class="search-input" data-i18n-placeholder="search.placeholder" id="searchInput" placeholder="搜索任务..." type="text">
                 <div class="shortcut-hint" aria-hidden="true"><kbd class="shortcut-kbd" data-i18n-title="tooltips.searchShortcut" title="搜索快捷键：Ctrl/Cmd + K">⌘K</kbd></div>
             </div>
+            <div class="project-filter">
+                <label for="projectFilter" class="sr-only" data-i18n="projects.filterLabel">项目视图</label>
+                <select id="projectFilter" class="search-input project-select" aria-label="项目视图" data-i18n-aria-label="projects.filterLabel"></select>
+            </div>
             <div class="dropdown-container" id="filterDropdown">
                 <button class="dropdown-btn" id="filterBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="filterMenu">
                     <svg class="icon icon-sm" style="opacity: 0.7;"><use href="#icon-filter"></use></svg>
@@ -624,6 +636,15 @@
                 <div class="form-group">
                     <label data-i18n="form.description.label" for="taskDesc">任务描述 (可选)</label>
                     <textarea data-i18n-placeholder="form.description.placeholder" id="taskDesc" placeholder="输入任务描述"></textarea>
+                </div>
+                <div class="form-group">
+                    <label data-i18n="form.project.label" for="taskProject">项目 (可选)</label>
+                    <input data-i18n-placeholder="form.project.placeholder" id="taskProject" name="taskProject" placeholder="例如：工作 / 个人" type="text" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="form.tags.label" for="taskTags">标签 (可选)</label>
+                    <input data-i18n-placeholder="form.tags.placeholder" id="taskTags" name="taskTags" placeholder="用逗号分隔标签" type="text" autocomplete="off">
+                    <p class="form-hint" data-i18n="form.tags.hint">标签会参与搜索。</p>
                 </div>
                 <div class="form-group">
                     <label data-i18n="form.dueDate.label" for="dueDate">截止日期 (可选)</label>
@@ -770,7 +791,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '2.4'
+                RESOURCE_VERSION: '2.5'
             },
             NOTIFICATIONS: {
                 DEFAULT_OFFSET_MINUTES: 15,
@@ -795,6 +816,7 @@
             tasks: [],
             filter: 'active',
             sort: 'smart',
+            projectFilter: 'all',
             searchQuery: '',
             editingTaskId: null,
             currentLanguage: 'zh-CN',
@@ -828,12 +850,15 @@
             DOM.inputs = {
                 name: document.getElementById('taskName'),
                 desc: document.getElementById('taskDesc'),
+                project: document.getElementById('taskProject'),
+                tags: document.getElementById('taskTags'),
                 date: document.getElementById('dueDate'),
                 time: document.getElementById('dueTime'),
                 noDeadline: document.getElementById('noDeadline'),
                 reminderOffset: document.getElementById('reminderOffset'),
                 reminderRepeat: document.getElementById('reminderRepeat'),
                 search: document.getElementById('searchInput'),
+                projectFilter: document.getElementById('projectFilter'),
                 subtask: document.getElementById('subtaskInput')
             };
             DOM.formGroups = document.querySelectorAll('.form-group');
@@ -994,6 +1019,10 @@
                 state.searchQuery = DOM.inputs.search.value.toLowerCase();
                 renderTaskList();
             }, 300));
+            DOM.inputs.projectFilter.addEventListener('change', () => {
+                state.projectFilter = DOM.inputs.projectFilter.value;
+                renderTaskList();
+            });
             DOM.clearCompletedBtn.addEventListener('click', handleClearCompleted);
         }
         function bindNotificationEvents() {
@@ -1179,6 +1208,8 @@
             return {
                 name: DOM.inputs.name.value.trim(),
                 description: DOM.inputs.desc.value.trim(),
+                project: normalizeTaskProject(DOM.inputs.project.value),
+                tags: parseTagsInput(DOM.inputs.tags.value),
                 subtasks: cloneSubtasksWithUniqueIds(state.tempSubtasks),
                 dueDate,
                 reminderOffset,
@@ -1210,6 +1241,24 @@
             return original.dueDate !== updatedTask.dueDate ||
                 getTaskReminderOffset(original) !== getTaskReminderOffset(updatedTask) ||
                 getTaskReminderRepeat(original) !== getTaskReminderRepeat(updatedTask);
+        }
+        function normalizeTaskProject(value) {
+            return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ') : '';
+        }
+        function parseTagsInput(value) {
+            return normalizeTaskTags(String(value || '').split(','));
+        }
+        function normalizeTaskTags(tags) {
+            if (!Array.isArray(tags)) return [];
+            const seen = new Set();
+            return tags.map(tag => String(tag || '').trim().replace(/^#/, '').replace(/\s+/g, ' '))
+                .filter(Boolean)
+                .filter(tag => {
+                    const key = tag.toLowerCase();
+                    if (seen.has(key)) return false;
+                    seen.add(key);
+                    return true;
+                });
         }
         function getTaskById(id) {
             return state.tasks.find(task => task.id === id);
@@ -1266,10 +1315,24 @@
                 const result = normalizeSubtasksForTask(task.subtasks);
                 const normalizedTask = { ...task, subtasks: result.subtasks };
                 if (result.changed) changed = true;
+                const project = normalizeTaskProject(normalizedTask.project);
+                if (normalizedTask.project !== project) {
+                    normalizedTask.project = project;
+                    changed = true;
+                }
+                const tags = normalizeTaskTags(normalizedTask.tags);
+                if (!Array.isArray(normalizedTask.tags) || JSON.stringify(normalizedTask.tags) !== JSON.stringify(tags)) {
+                    normalizedTask.tags = tags;
+                    changed = true;
+                }
                 if (!Number.isFinite(Number(normalizedTask.reminderRepeat))) {
                     normalizedTask.reminderRepeat = -1;
                     changed = true;
-                } else normalizedTask.reminderRepeat = Number(normalizedTask.reminderRepeat);
+                } else {
+                    const reminderRepeat = Number(normalizedTask.reminderRepeat);
+                    if (normalizedTask.reminderRepeat !== reminderRepeat) changed = true;
+                    normalizedTask.reminderRepeat = reminderRepeat;
+                }
                 if (normalizedTask.snoozedUntil && !normalizeStoredDate(normalizedTask.snoozedUntil)) {
                     normalizedTask.snoozedUntil = null;
                     changed = true;
@@ -1624,14 +1687,15 @@
             setFilterCountText('count-no-deadline', counts['no-deadline']);
         }
         function getFilterCounts() {
+            const scopedTasks = state.tasks.filter(matchesTaskProject);
             const counts = {
-                all: state.tasks.length,
+                all: scopedTasks.length,
                 active: 0,
                 completed: 0,
                 overdue: 0,
                 'no-deadline': 0
             };
-            state.tasks.forEach(task => {
+            scopedTasks.forEach(task => {
                 if (task.completed) counts.completed++;
                 else {
                     counts.active++;
@@ -1649,6 +1713,7 @@
         function renderTaskList() {
             const t = state.translations[state.currentLanguage];
             if (!t) return;
+            renderProjectFilterOptions();
             updateFilterCounts();
             if (state.tasks.length === 0) {
                 renderEmptyTaskList(getEmptyStateHTML(t));
@@ -1661,12 +1726,18 @@
                 return;
             }
             clearEmptyTaskList();
+            if (shouldGroupVisibleTasks(visibleTasks)) {
+                renderGroupedTaskList(visibleTasks);
+                return;
+            }
+            removeProjectGroupHeaders();
             patchTaskList(visibleTasks);
         }
         function getVisibleTasks() {
             return utils.sortTasks(state.tasks.filter(isTaskVisible));
         }
         function isTaskVisible(task) {
+            if (!matchesTaskProject(task)) return false;
             if (!matchesTaskSearch(task)) return false;
             switch (state.filter) {
                 case 'active': return !task.completed;
@@ -1676,11 +1747,82 @@
                 default: return true;
             }
         }
+        function matchesTaskProject(task) {
+            if (state.projectFilter === 'all') return true;
+            const project = normalizeTaskProject(task.project);
+            if (state.projectFilter === '__none__') return !project;
+            return project === state.projectFilter;
+        }
         function matchesTaskSearch(task) {
             if (!state.searchQuery) return true;
             const query = state.searchQuery;
             return task.name.toLowerCase().includes(query) ||
-                Boolean(task.description && task.description.toLowerCase().includes(query));
+                Boolean(task.description && task.description.toLowerCase().includes(query)) ||
+                Boolean(task.project && task.project.toLowerCase().includes(query)) ||
+                normalizeTaskTags(task.tags).some(tag => tag.toLowerCase().includes(query));
+        }
+        function renderProjectFilterOptions() {
+            const projects = getProjectNames();
+            const validValues = new Set(['all', '__none__', ...projects]);
+            if (!validValues.has(state.projectFilter)) state.projectFilter = 'all';
+            const t = state.translations[state.currentLanguage];
+            const options = [
+                { value: 'all', text: t['projects.all'] },
+                { value: '__none__', text: t['projects.none'] },
+                ...projects.map(project => ({ value: project, text: project }))
+            ];
+            const signature = options.map(option => `${option.value}:${option.text}`).join('|');
+            if (DOM.inputs.projectFilter.dataset.signature !== signature) {
+                DOM.inputs.projectFilter.textContent = '';
+                options.forEach(option => {
+                    const el = document.createElement('option');
+                    el.value = option.value;
+                    el.textContent = option.text;
+                    DOM.inputs.projectFilter.appendChild(el);
+                });
+                DOM.inputs.projectFilter.dataset.signature = signature;
+            }
+            DOM.inputs.projectFilter.value = state.projectFilter;
+        }
+        function getProjectNames() {
+            return [...new Set(state.tasks.map(task => normalizeTaskProject(task.project)).filter(Boolean))]
+                .sort((a, b) => a.localeCompare(b, state.currentLanguage));
+        }
+        function shouldGroupVisibleTasks(tasks) {
+            return state.projectFilter === 'all' && state.sort === 'smart' && !state.searchQuery && tasks.length > 0;
+        }
+        function renderGroupedTaskList(tasks) {
+            DOM.taskList.textContent = '';
+            const fragment = document.createDocumentFragment();
+            groupTasksByProject(tasks).forEach(group => {
+                fragment.appendChild(createProjectGroupHeader(group.name, group.tasks.length));
+                group.tasks.forEach(task => fragment.appendChild(createTaskNode(task)));
+            });
+            DOM.taskList.appendChild(fragment);
+        }
+        function groupTasksByProject(tasks) {
+            const groups = new Map();
+            tasks.forEach(task => {
+                const name = normalizeTaskProject(task.project) || utils.translate('projects.none');
+                if (!groups.has(name)) groups.set(name, []);
+                groups.get(name).push(task);
+            });
+            return [...groups.entries()].map(([name, groupTasks]) => ({ name, tasks: groupTasks }));
+        }
+        function createProjectGroupHeader(name, count) {
+            const header = document.createElement('div');
+            header.className = 'task-group-header';
+            header.setAttribute('role', 'heading');
+            header.setAttribute('aria-level', '2');
+            const label = document.createElement('span');
+            label.textContent = utils.translate('projects.groupTitle')
+                .replace('{project}', name)
+                .replace('{count}', count);
+            header.appendChild(label);
+            return header;
+        }
+        function removeProjectGroupHeaders() {
+            DOM.taskList.querySelectorAll('.task-group-header').forEach(header => header.remove());
         }
         function removeInitialLoader() {
             const loader = document.getElementById('initial-loader');
@@ -1740,6 +1882,7 @@
             const { statusObj, timeLeft } = getTaskRenderStatus(task, t);
             renderTaskHeader(el, task, statusObj, t);
             renderTaskDescription(el, task);
+            renderTaskMeta(el, task);
             renderSubtaskList(el, task);
             renderTaskProgress(el, task, statusObj);
             renderTaskStatus(el, task, statusObj, timeLeft);
@@ -1780,6 +1923,30 @@
                 descEl.textContent = task.description;
             } else if (descEl) descEl.remove();
         }
+        function renderTaskMeta(el, task) {
+            const project = normalizeTaskProject(task.project);
+            const tags = normalizeTaskTags(task.tags);
+            let metaEl = el.querySelector('.task-meta');
+            if (!project && tags.length === 0) {
+                if (metaEl) metaEl.remove();
+                return;
+            }
+            if (!metaEl) {
+                metaEl = document.createElement('div');
+                metaEl.className = 'task-meta';
+                const anchor = el.querySelector('.task-desc') || el.querySelector('.task-header');
+                anchor.after(metaEl);
+            }
+            metaEl.textContent = '';
+            if (project) metaEl.appendChild(createTaskChip(project, 'project-chip'));
+            tags.forEach(tag => metaEl.appendChild(createTaskChip(`#${tag}`, 'tag-chip')));
+        }
+        function createTaskChip(text, extraClass) {
+            const chip = document.createElement('span');
+            chip.className = `task-chip ${extraClass}`;
+            chip.textContent = text;
+            return chip;
+        }
         function renderTaskProgress(el, task, statusObj) {
             let bar = el.querySelector('.progress-bar');
             if (shouldShowTaskTiming(task)) {
@@ -1798,7 +1965,7 @@
             return bar;
         }
         function getTaskProgressAnchor(el) {
-            return el.querySelector('.subtasks-wrapper') || el.querySelector('.task-desc') || el.querySelector('.task-header');
+            return el.querySelector('.subtasks-wrapper') || el.querySelector('.task-meta') || el.querySelector('.task-desc') || el.querySelector('.task-header');
         }
         function renderTaskStatus(el, task, statusObj, timeLeft) {
             const statusInd = el.querySelector('.status-indicator');
@@ -1886,7 +2053,7 @@
             if (!wrapper) {
                 wrapper = document.createElement('div');
                 wrapper.className = 'subtasks-wrapper';
-                const prev = el.querySelector('.task-desc') || el.querySelector('.task-header');
+                const prev = el.querySelector('.task-meta') || el.querySelector('.task-desc') || el.querySelector('.task-header');
                 prev.after(wrapper);
             }
             const total = task.subtasks.length;
@@ -2037,6 +2204,8 @@
             setDialogFormLabels('modal.editTitle', 'actions.updateTask');
             DOM.inputs.name.value = editingTask.name;
             DOM.inputs.desc.value = editingTask.description || '';
+            DOM.inputs.project.value = editingTask.project || '';
+            DOM.inputs.tags.value = normalizeTaskTags(editingTask.tags).join(', ');
             state.tempSubtasks = cloneSubtasksWithUniqueIds(editingTask.subtasks);
             const dueDate = editingTask.dueDate ? utils.utcToLocal(editingTask.dueDate) : null;
             setDeadlineControls({
@@ -2049,6 +2218,8 @@
         function prepareNewTaskForm() {
             state.editingTaskId = null;
             setDialogFormLabels('modal.addTitle', 'actions.addTask');
+            DOM.inputs.project.value = '';
+            DOM.inputs.tags.value = '';
             state.tempSubtasks = [];
             setDeadlineControls({
                 enabled: true,
@@ -2654,7 +2825,7 @@
             }
         }
         function canReorderTasks() {
-            return state.sort === 'manual' && state.filter === 'all' && !state.searchQuery;
+            return state.sort === 'manual' && state.filter === 'all' && state.projectFilter === 'all' && !state.searchQuery;
         }
         function preventCancelableEvent(e) {
             if (e.cancelable) e.preventDefault();
@@ -2866,6 +3037,8 @@
                 id: normalizeId(task.id),
                 name: String(task.name || '').trim() || utils.translate('task.importedFallback').replace('{index}', index + 1),
                 description: task.description ? String(task.description) : '',
+                project: normalizeTaskProject(task.project),
+                tags: normalizeTaskTags(task.tags),
                 dueDate: normalizeStoredDate(task.dueDate),
                 reminderOffset: Number.isFinite(Number(task.reminderOffset)) ? Number(task.reminderOffset) : 15,
                 reminderRepeat: Number.isFinite(Number(task.reminderRepeat)) ? Number(task.reminderRepeat) : -1,
@@ -2895,9 +3068,9 @@
         async function addSampleTasks() {
             const t = state.translations[state.currentLanguage];
             const samples = [
-                { id: Date.now()+1, name: t['samples.task1.name'] || "完成项目报告", description: t['samples.task1.description'] || "编写并提交季度项目总结报告", dueDate: utils.dateToStoredISO(new Date(Date.now() + 432000000)), createdAt: new Date().toISOString(), completed: false },
-                { id: Date.now()+2, name: t['samples.task2.name'] || "团队会议准备", description: t['samples.task2.description'] || "准备下周团队会议的演示材料", dueDate: utils.dateToStoredISO(new Date(Date.now() + 864000000)), createdAt: new Date().toISOString(), completed: false },
-                { id: Date.now()+3, name: t['samples.task3.name'] || "学习计划制定", description: t['samples.task3.description'] || "制定下个月的个人学习计划", dueDate: null, createdAt: new Date().toISOString(), completed: false }
+                { id: Date.now()+1, name: t['samples.task1.name'] || "完成项目报告", description: t['samples.task1.description'] || "编写并提交季度项目总结报告", project: t['samples.task1.project'] || "工作", tags: [t['samples.task1.tag'] || "报告"], dueDate: utils.dateToStoredISO(new Date(Date.now() + 432000000)), createdAt: new Date().toISOString(), completed: false },
+                { id: Date.now()+2, name: t['samples.task2.name'] || "团队会议准备", description: t['samples.task2.description'] || "准备下周团队会议的演示材料", project: t['samples.task2.project'] || "工作", tags: [t['samples.task2.tag'] || "会议"], dueDate: utils.dateToStoredISO(new Date(Date.now() + 864000000)), createdAt: new Date().toISOString(), completed: false },
+                { id: Date.now()+3, name: t['samples.task3.name'] || "学习计划制定", description: t['samples.task3.description'] || "制定下个月的个人学习计划", project: t['samples.task3.project'] || "个人", tags: [t['samples.task3.tag'] || "学习"], dueDate: null, createdAt: new Date().toISOString(), completed: false }
             ];
             await Promise.all(samples.map(s => dbActions.addTask(s)));
             await refreshTasks();
