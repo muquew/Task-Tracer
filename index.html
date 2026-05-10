@@ -277,16 +277,15 @@
         @keyframes completeAnimation { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
         .task-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 9px; }
-        .task-title { min-width: 0; font-size: 16px; font-weight: 760; color: var(--text-main); display: flex; align-items: flex-start; gap: 9px; word-break: break-word; overflow-wrap: anywhere; line-height: 1.35; }
-        .task-title > .icon:first-child { flex: 0 0 22px; width: 22px; height: 22px; padding: 4px; margin: 0 !important; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--task-color) 14%, transparent); stroke: var(--task-color) !important; }
+        .task-title { min-width: 0; font-size: 16px; font-weight: 760; color: var(--text-main); display: flex; align-items: center; gap: 9px; word-break: break-word; overflow-wrap: anywhere; line-height: 1.35; }
         .task-name { min-width: 0; overflow-wrap: anywhere; }
         .task-date { flex: 0 1 auto; max-width: 46%; font-size: 12px; color: var(--text-secondary); background: var(--bg-hover); padding: 4px 10px; border-radius: var(--radius-pill); line-height: 1.45; white-space: normal; overflow-wrap: anywhere; text-align: right; border: 1px solid color-mix(in srgb, currentColor 16%, transparent); }
-        .task-desc { color: var(--text-secondary); margin: 0 0 11px 31px; line-height: 1.5; font-size: 14px; word-break: break-word; }
+        .task-desc { color: var(--text-secondary); margin: 0 0 11px; line-height: 1.5; font-size: 14px; word-break: break-word; }
 
-        .progress-bar { height: 7px; background: var(--bg-hover); border-radius: var(--radius-pill); margin: 9px 0 11px 31px; overflow: hidden; }
+        .progress-bar { height: 7px; background: var(--bg-hover); border-radius: var(--radius-pill); margin: 9px 0 11px; overflow: hidden; }
         .progress-fill { height: 100%; border-radius: var(--radius-pill); transition: width 0.5s ease; background: linear-gradient(90deg, var(--task-color), color-mix(in srgb, var(--task-color) 70%, var(--color-accent))); }
 
-        .task-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-left: 31px; }
+        .task-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
         .status-indicator { display: inline-flex; align-items: center; min-height: 30px; padding: 5px 10px; border: 1px solid var(--border-light); border-radius: var(--radius-pill); background: var(--bg-surface-alt); font-size: 13px; font-weight: 700; color: var(--text-main); }
         .status-dot { width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; background-color: var(--task-color); box-shadow: 0 0 0 3px color-mix(in srgb, var(--task-color) 16%, transparent); }
         .status-time-left { margin-left: 5px; color: var(--text-secondary); }
@@ -328,7 +327,7 @@
         .subtask-preview-text:hover { opacity: 0.7; }
 
         /* Card Display */
-        .subtasks-wrapper { margin: 10px 0 0 31px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-alt); overflow: hidden; }
+        .subtasks-wrapper { margin: 10px 0 0; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-alt); overflow: hidden; }
         .subtask-summary-bar { display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 9px 11px; border: 0; cursor: pointer; color: var(--text-secondary); font: inherit; font-size: 13px; text-align: left; user-select: none; background: transparent; }
         .subtask-summary-bar:hover { color: var(--color-primary); background: var(--bg-hover); }
         .subtask-count-text { font-weight: 500; display: flex; align-items: center; gap: 6px; }
@@ -667,7 +666,6 @@
         <div class="task-item-right">
             <div class="task-header">
                 <div class="task-title">
-                    <svg class="icon icon-sm" style="stroke: var(--color-success); margin-right: 8px;"><use href="#icon-check"></use></svg>
                     <span class="task-name"></span>
                     <svg class="icon icon-sm task-reminder-icon" style="display:none; color: var(--color-warning); margin-left: 6px; width: 14px; height: 14px;"><use href="#icon-bell"></use></svg>
                 </div>
