@@ -639,7 +639,8 @@
             // 默认值
             DEFAULTS: {
                 LANG: 'zh-CN',
-                TIME: '23:59'
+                TIME: '23:59',
+                ORDER_STEP: 10000
             },
             I18N: {
                 RESOURCE_PATH: './resources',
@@ -968,40 +969,19 @@
         async function handleTaskSave(e) {
             e.preventDefault();
             const t = state.translations[state.currentLanguage];
-
-            const dueDateTime = (!DOM.inputs.noDeadline.checked && DOM.inputs.date.value)
-                ? utils.localToUTC(DOM.inputs.date.value, DOM.inputs.time.value) : null;
-
-            // 自定义排序下新建任务插入尾部了
-            const maxOrder = state.tasks.length > 0 ? Math.max(...state.tasks.map(t => t.order || 0)) : 0;
-
-            const taskPayload = {
-                name: DOM.inputs.name.value.trim(),
-                description: DOM.inputs.desc.value.trim(),
-                subtasks: state.tempSubtasks,
-                dueDate: dueDateTime,
-                reminderOffset: dueDateTime ? parseInt(DOM.inputs.reminderOffset.value, 10) : -1, // 保存提醒偏移量
-                order: state.editingTaskId ? undefined : (maxOrder + 10000) // 新任务排最后
-            };
+            const taskPayload = buildTaskPayloadFromForm();
 
             try {
                 if (state.editingTaskId) {
-                    const original = state.tasks.find(t => t.id === state.editingTaskId);
-                    const updatedTask = { ...original, ...taskPayload };
-                    if (taskPayload.order === undefined) updatedTask.order = original.order || 0;
-                    await dbActions.updateTask(updatedTask);
+                    const original = getTaskById(state.editingTaskId);
+                    if (!original) throw new Error(`Task not found: ${state.editingTaskId}`);
+                    await dbActions.updateTask(mergeTaskPayload(original, taskPayload));
                     utils.notify(t['messages.task.updated']);
                 } else {
-                    await dbActions.addTask({
-                        id: Date.now(),
-                        createdAt: new Date().toISOString(),
-                        completed: false,
-                        ...taskPayload
-                    });
+                    await dbActions.addTask(createTaskRecord(taskPayload));
                     utils.notify(t['messages.task.added']);
                 }
-                state.tasks = await dbActions.getAllTasks();
-                renderTaskList();
+                await refreshTasks();
                 closeDialog();
             } catch (err) {
                 console.error('保存任务失败:', err);
@@ -1009,8 +989,56 @@
             }
         }
 
+        function buildTaskPayloadFromForm() {
+            const dueDate = (!DOM.inputs.noDeadline.checked && DOM.inputs.date.value)
+                ? utils.localToUTC(DOM.inputs.date.value, DOM.inputs.time.value)
+                : null;
+
+            return {
+                name: DOM.inputs.name.value.trim(),
+                description: DOM.inputs.desc.value.trim(),
+                subtasks: cloneSubtasks(state.tempSubtasks),
+                dueDate,
+                reminderOffset: dueDate ? parseInt(DOM.inputs.reminderOffset.value, 10) : -1,
+                order: state.editingTaskId ? undefined : getNextTaskOrder()
+            };
+        }
+
+        function createTaskRecord(taskPayload) {
+            return {
+                id: Date.now(),
+                createdAt: new Date().toISOString(),
+                completed: false,
+                ...taskPayload
+            };
+        }
+
+        function mergeTaskPayload(original, taskPayload) {
+            const updatedTask = { ...original, ...taskPayload };
+            if (taskPayload.order === undefined) updatedTask.order = original.order || 0;
+            return updatedTask;
+        }
+
+        function getTaskById(id) {
+            return state.tasks.find(task => task.id === id);
+        }
+
+        function getNextTaskOrder() {
+            const maxOrder = state.tasks.length > 0 ? Math.max(...state.tasks.map(task => task.order || 0)) : 0;
+            return maxOrder + CONFIG.DEFAULTS.ORDER_STEP;
+        }
+
+        async function refreshTasks() {
+            state.tasks = await dbActions.getAllTasks();
+            renderTaskList();
+        }
+
+        function cloneSubtasks(subtasks) {
+            return Array.isArray(subtasks) ? subtasks.map(subtask => ({ ...subtask })) : [];
+        }
+
         function editTask(id) {
-            const task = state.tasks.find(t => t.id === id);
+            const task = getTaskById(id);
             if (!task) return;
             openModal(task);
         }
@@ -1031,7 +1059,7 @@
         }
 
         async function toggleTaskComplete(id) {
-            const task = state.tasks.find(t => t.id === id);
+            const task = getTaskById(id);
             if (!task) return;
             const t = state.translations[state.currentLanguage];
             const previousCompleted = task.completed;
@@ -1255,7 +1283,7 @@
         }
 
         async function toggleSubtaskComplete(taskId, subtaskId) {
-            const task = state.tasks.find(t => t.id === taskId);
+            const task = getTaskById(taskId);
             if (!task || !task.subtasks) return;
 
             const sub = task.subtasks.find(s => s.id === subtaskId);
@@ -2477,8 +2505,7 @@
                             const importedTasks = normalizeImportedTasks(data.tasks);
                             await dbActions.replaceAllTasks(importedTasks);
 
-                            state.tasks = await dbActions.getAllTasks();
-                            renderTaskList();
+                            await refreshTasks();
                             utils.notify(t['messages.import.success'].replace('{count}', data.tasks.length));
                         } catch (err) {
                             console.error('导入任务失败:', err);
@@ -2529,7 +2556,7 @@
                 subtasks: normalizeImportedSubtasks(task.subtasks, index),
                 completed: typeof task.completed === 'boolean' ? task.completed : false,
                 createdAt: normalizeStoredDate(task.createdAt) || new Date().toISOString(),
-                order: Number.isFinite(Number(task.order)) ? Number(task.order) : (index + 1) * 10000
+                order: Number.isFinite(Number(task.order)) ? Number(task.order) : (index + 1) * CONFIG.DEFAULTS.ORDER_STEP
             };
         }
 
@@ -2557,8 +2584,7 @@
                 { id: Date.now()+3, name: t['samples.task3.name'] || "学习计划制定", description: t['samples.task3.description'] || "制定下个月的个人学习计划", dueDate: null, createdAt: new Date().toISOString(), completed: false }
             ];
             await Promise.all(samples.map(s => dbActions.addTask(s)));
-            state.tasks = await dbActions.getAllTasks();
-            renderTaskList();
+            await refreshTasks();
             utils.notify(t['messages.sampleTasks.added']);
         }
 
