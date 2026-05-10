@@ -461,6 +461,66 @@ def exercise_theme(page: Page) -> None:
         )
 
 
+def exercise_theme_fallback_transition(page: Page) -> None:
+    result = page.evaluate(
+        """async () => {
+            const html = document.documentElement;
+            const originalStartViewTransition = document.startViewTransition;
+            Object.defineProperty(document, 'startViewTransition', {
+                configurable: true,
+                value: undefined
+            });
+
+            const body = document.body;
+            const controls = document.querySelector('.controls-bar');
+            const task = document.querySelector('.task-item');
+            const button = document.querySelector('#themeToggleBtn');
+            const beforeTheme = html.getAttribute('data-theme');
+
+            const readState = () => ({
+                theme: html.getAttribute('data-theme'),
+                isTransitioning: html.classList.contains('theme-transitioning'),
+                buttonDisabled: button.disabled,
+                bodyTransition: getComputedStyle(body).transitionProperty,
+                bodyBackgroundImage: getComputedStyle(body).backgroundImage,
+                controlsTransition: getComputedStyle(controls).transitionProperty,
+                taskTransition: getComputedStyle(task).transitionProperty
+            });
+
+            button.click();
+            await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+            const during = readState();
+            await new Promise(resolve => setTimeout(resolve, 330));
+            const after = readState();
+
+            Object.defineProperty(document, 'startViewTransition', {
+                configurable: true,
+                value: originalStartViewTransition
+            });
+
+            return { beforeTheme, during, after };
+        }"""
+    )
+
+    if result["during"]["theme"] == result["beforeTheme"]:
+        raise AssertionError(f"Fallback theme did not switch during transition: {result}")
+    if not result["during"]["isTransitioning"] or not result["during"]["buttonDisabled"]:
+        raise AssertionError(f"Fallback theme transition did not expose in-flight state: {result}")
+    if result["after"]["isTransitioning"] or result["after"]["buttonDisabled"]:
+        raise AssertionError(f"Fallback theme transition did not clean up: {result}")
+
+    for label, property_name in (
+        ("body", "bodyTransition"),
+        ("controls", "controlsTransition"),
+        ("task", "taskTransition"),
+    ):
+        if "background-color" not in result["during"][property_name]:
+            raise AssertionError(f"{label} is missing a background-color transition: {result}")
+
+    if "linear-gradient(135deg" in result["during"]["bodyBackgroundImage"]:
+        raise AssertionError(f"Body fallback still depends on non-interpolable theme gradient: {result}")
+
+
 def exercise_language(page: Page) -> None:
     page.locator("#openMenuBtn").click()
     page.locator("#langMenuToggle").click()
@@ -834,6 +894,7 @@ def smoke(url: str) -> None:
         add_task(page, beta_name, due_date=future_date(1), due_time="12:30", reminder_offset="15")
         expect(task_locator(page, beta_name).locator(".task-reminder-icon")).to_be_visible()
         add_overdue_task_record(page, overdue_name, order=30_000)
+        exercise_theme_fallback_transition(page)
         exercise_search_empty_state(page, f"{task_name} Missing")
         exercise_subtasks(page, alpha_name)
         assert_visual_layout(context, url, errors)
