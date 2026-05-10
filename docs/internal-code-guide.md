@@ -28,6 +28,7 @@
    - Header 放主题、通知、新建、菜单入口。
    - 主菜单放导出、备份、导入、归档已完成、清除已完成和语言切换。
    - Controls bar 放搜索、项目视图、筛选、排序。
+   - View switcher 放列表、日历、时间线和统计视图入口。
    - `#taskList` 是任务列表的唯一渲染容器。
    - `#taskModal` 同时承载任务表单和确认弹窗。
    - `#srStatus` 是给读屏器使用的隐藏 live region。
@@ -62,13 +63,21 @@
   - `lastReminderAt`: 最近一次成功投递提醒的时间。
   - `subtasks`: 子任务数组，每个子任务有唯一 `id`。
   - `completed`: 完成状态。
+  - `completedAt`: 完成时间，用于统计今日完成数和连续完成天数。
+  - `repeatType`: 重复类型，取值为 `none`、`daily`、`weekly`、`monthly`、`custom`。
+  - `repeatInterval`: 自定义重复天数；非自定义类型统一为 `1`。
+  - `repeatSourceId`: 重复链路的源任务 ID。
+  - `repeatCreatedFrom`: 当前任务由哪个任务完成后生成。
+  - `nextRepeatTaskId`: 当前任务完成后生成的下一期任务 ID。
   - `archived`: 归档状态。
   - `archivedAt`: 归档时间。
   - `createdAt`: 创建时间。
   - `order`: 手动排序权重。
 
 - 运行时状态:
-  - `filter`、`sort`、`projectFilter`、`searchQuery`: 当前列表视图条件。
+  - `filter`、`sort`、`projectFilter`、`searchQuery`: 当前任务范围条件。
+  - `viewMode`: 当前主视图，取值为 `list`、`calendar`、`timeline`、`stats`。
+  - `calendarMonthDate`: 日历视图当前月份锚点。
   - `editingTaskId`: 当前编辑任务 ID。
   - `tempSubtasks`、`editingSubtaskIndex`: 弹窗内的临时子任务草稿。
   - `notificationsEnabled`、`notifiedTasks`、`pendingNotificationKeys`: 通知投递状态。
@@ -85,7 +94,15 @@
 - 项目是单值字段，用于主分组和项目视图过滤。全部项目的智能排序视图会调用 `renderGroupedTaskList()` 按项目分组。
 - 标签是数组字段，用于给任务增加多个横向标记。
 - `matchesTaskSearch(task)` 当前匹配任务名称、描述、项目名和标签。项目和标签都会参与搜索；区别在于项目负责组织层级，标签负责跨项目检索。
-- 手动排序只在 `sort === 'manual'`、`filter === 'all'`、`projectFilter === 'all'` 且无搜索词时启用，避免局部视图排序写回全局顺序造成误解。
+- 手动排序只在列表视图、`sort === 'manual'`、`filter === 'all'`、`projectFilter === 'all'` 且无搜索词时启用，避免局部视图排序写回全局顺序造成误解。
+
+## 重复任务、日期视图与统计
+
+- 重复任务由 `repeatType` 和 `repeatInterval` 表示。用户完成一个重复任务时，`toggleTaskComplete()` 会保留当前完成记录，并通过 `createNextRepeatTask()` 生成下一期。
+- 每月重复使用 `addMonthsClamped()` 处理月底日期，避免 1 月 31 日这类日期溢出到错误月份。
+- 日历视图使用 `calendarMonthDate` 渲染 42 个日期格，任务按钮点击后进入编辑弹窗。
+- 时间线视图按本地日期分组，继续复用任务卡片模板，因此任务按钮、子任务和归档逻辑保持一致。
+- 统计视图使用 `getStatsScopeTasks()`，只受项目和搜索范围影响，不受状态筛选影响。完成率按非归档任务计算，逾期率按有截止日期任务计算，连续完成天数基于 `completedAt`。
 
 ## 导入、导出与备份边界
 
@@ -104,7 +121,7 @@
 4. `initDB()` 初始化 IndexedDB。
 5. `loadSettings()` 恢复语言、通知和已提醒签名。
 6. `initLanguage()` 同步 `lang`、`dir` 和页面文案。
-7. `loadNormalizedTasks()` 读取任务并修复历史子任务重复 ID。
+7. `loadNormalizedTasks()` 读取任务并修复历史任务字段和子任务重复 ID。
 8. 必要时 `addSampleTasks()` 添加示例。
 9. `bindEvents()` 绑定事件。
 10. `renderTaskList()` 首次渲染。
@@ -141,6 +158,9 @@
 - `bindDialogEvents()`: 弹窗打开、关闭、提交事件。
 - `bindFormEvents()`: 表单联动。
 - `bindSearchEvents()`: 搜索、项目视图和清除完成任务入口。
+- `bindViewEvents()`: 主视图切换入口。
+- `setViewMode(viewMode)`: 切换列表、日历、时间线或统计视图。
+- `syncViewSwitcher()`: 同步视图按钮选中态。
 - `bindNotificationEvents()`: 通知按钮。
 - `bindMenuEvents()`: 主菜单、语言子菜单、导入、导出、备份和归档入口。
 - `bindTaskListEvents()`: 任务列表委托点击。
@@ -170,12 +190,21 @@
 - `editTask(id)`: 打开编辑弹窗。
 - `deleteTask(id)`: 删除确认。
 - `toggleTaskComplete(id)`: 切换任务完成状态。
+- `shouldCreateNextRepeatTask(task)`: 判断完成后是否需要创建下一期重复任务。
+- `createNextRepeatTask(task)`: 克隆当前任务并推进截止日期，生成下一期。
+- `resetRepeatedSubtasks(subtasks)`: 复制子任务并重置完成状态。
+- `calculateNextRepeatDueDate(iso, rule)`: 根据重复规则计算下一期截止时间。
+- `addMonthsClamped(date, months)`: 月重复时按月份天数夹取日期。
 - `handleClearCompleted()`: 批量清除已完成任务。
 - `handleArchiveCompleted()`: 批量归档未归档的已完成任务。
 - `toggleTaskArchive(id)`: 单任务归档和从归档恢复。
 - `normalizeTaskProject(value)`: 规范化项目名。
 - `parseTagsInput(value)`: 将逗号分隔的标签输入转换为数组。
 - `normalizeTaskTags(tags)`: 去空、去 `#`、去重并规范化标签。
+- `normalizeTaskRepeatType(value)`: 规范化重复类型。
+- `normalizeTaskRepeatInterval(type, value)`: 规范化自定义重复天数。
+- `getTaskRepeatRule(task)`: 读取任务重复规则。
+- `hasTaskRepeat(task)`: 判断任务是否启用重复。
 
 ### 子任务
 
@@ -224,13 +253,24 @@
 - `matchesTaskProject(task)`: 项目视图匹配。
 - `renderProjectFilterOptions()`: 根据任务项目生成项目下拉选项。
 - `renderGroupedTaskList(tasks)`: 全部项目智能视图下按项目分组渲染。
+- `renderCalendarView(tasks)`: 渲染月份日历视图。
+- `createCalendarShell(tasks)`: 生成日历容器。
+- `createCalendarGrid(tasks)`: 生成星期标题和日期格。
+- `createCalendarTaskButton(task)`: 生成日历中的任务按钮。
+- `shiftCalendarMonth(delta)`: 切换日历月份。
+- `renderTimelineView(tasks)`: 渲染按日期分组的时间线视图。
+- `createTimelineGroup(key, tasks)`: 生成单个日期分组。
+- `renderStatsView(tasks)`: 渲染统计视图。
+- `calculateTaskStats(tasks)`: 计算完成率、逾期率、今日完成和连续完成天数。
+- `calculateCompletionStreak(tasks)`: 基于 `completedAt` 计算连续完成天数。
+- `getStatsScopeTasks()`: 统计视图使用的任务范围。
 - `patchTaskList(tasks)`: 增量更新列表。
 - `createTaskNode(task)`: 克隆任务模板。
 - `renderTaskItem(el, task)`: 单任务渲染总入口。
 - `getTaskRenderStatus(task, t)`: 获取任务状态对象。
 - `renderTaskHeader(el, task, statusObj, t)`: 标题、提醒、截止日期。
 - `renderTaskDescription(el, task)`: 描述区域。
-- `renderTaskMeta(el, task)`: 渲染项目 chip 和标签 chip。
+- `renderTaskMeta(el, task)`: 渲染项目、标签和重复规则 chip。
 - `renderTaskProgress(el, task, statusObj)`: 进度条。
 - `renderTaskStatus(el, task, statusObj, timeLeft)`: 状态文字。
 - `renderReminderIcon(el, task)`: 提醒图标。
@@ -250,8 +290,9 @@
 - `prepareEditTaskForm(editingTask)`: 填充编辑表单。
 - `prepareNewTaskForm()`: 填充新建表单。
 - `setDialogFormLabels(titleKey, submitKey)`: 设置标题和提交按钮。
-- `setDeadlineControls({ enabled, date, time, reminderOffset, reminderRepeat })`: 截止日期、提醒和重复提醒控件联动。
+- `setDeadlineControls({ enabled, date, time, reminderOffset, reminderRepeat, repeatType, repeatInterval })`: 截止日期、提醒、重复提醒和重复任务控件联动。
 - `syncReminderRepeatControl()`: 根据截止日期和提醒设置启用或禁用重复提醒。
+- `syncRepeatControls()`: 根据截止日期和重复类型启用或禁用重复任务控件。
 - `closeDialog()`: 关闭并清理弹窗。
 - `resetDialogToFormMode()`: 从确认模式恢复表单模式。
 - `utils.confirm(title, msg, onConfirm)`: 复用任务弹窗显示确认流程。
@@ -299,6 +340,8 @@
 - `closeMenu()`: 关闭主菜单和语言子菜单。
 - `openPopover(container, btn)`、`closePopover(container, btn)`: 通用浮层状态。
 - `handleTaskListClick(e)`: 任务列表点击委托入口。
+- `handleCalendarActionClick(e)`: 日历月份导航入口。
+- `handleCalendarTaskClick(e)`: 日历任务点击后打开编辑。
 - `runTaskAction(action, taskId)`: 执行完成、稍后提醒、归档/恢复归档、编辑、删除。
 - `getTaskIdFromElement(el)`: 从 DOM 追溯任务 ID。
 

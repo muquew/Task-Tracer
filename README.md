@@ -19,17 +19,19 @@
   <img alt="License" src="https://img.shields.io/badge/License-Personal%20Use-475569?style=flat-square">
 </p>
 
-Task Tracer is a deadline-based task management PWA for personal planning, study routines, and recurring work. It keeps task data in the browser, works offline after loading, and focuses on clear deadline status, reminders, project grouping, tags, subtasks, archiving, import safety, and local backup.
+Task Tracer is a deadline-based task management PWA for personal planning, study routines, and recurring work. It keeps task data in the browser, works offline after loading, and focuses on clear deadline status, repeating tasks, reminders, project grouping, tags, subtasks, calendar review, statistics, archiving, import safety, and local backup.
 
 ## Features
 
 - Deadline tracking: safe, warning, urgent, overdue, completed, and no-deadline states.
 - Task management: add, edit, delete, complete, restore, archive, and recover tasks.
+- Repeating tasks: create daily, weekly, monthly, or custom-day cycles; completing one occurrence creates the next one.
 - Subtasks: break a task into smaller steps and track subtask progress.
 - Reminders: choose reminder timing, repeat reminders, snooze a reminder, and see missed reminders when the app wakes up.
 - Projects and tags: use one project as the main grouping for a task, and use multiple tags for cross-cutting labels.
 - Search and filters: search task names, descriptions, projects, and tags; switch between active, completed, archived, overdue, and no-deadline views.
 - Sorting: smart sorting, newest created, due date, alphabetical order, and manual drag-and-drop order.
+- Calendar, timeline, and stats: review work by month, scan chronological groups, and track completion rate, overdue rate, and completion streak.
 - Import preview: review task count, duplicate names, and replacement impact before imported data replaces current tasks.
 - Local data: IndexedDB persistence with JSON import, export, and versioned backup downloads.
 - PWA support: app shell caching, offline loading, and installable browser experience.
@@ -44,11 +46,17 @@ Tags are flexible secondary labels. A task can have multiple tags, such as `desi
 
 Search currently matches task names, descriptions, project names, and tags. In other words, projects help organize the list, while tags add extra searchable meaning across those project groups.
 
+## Views and Feedback
+
+The list view is optimized for daily task work and full task actions. Calendar view shows due tasks in a month grid, including a separate no-deadline section. Timeline view groups visible tasks by date for deadline review.
+
+The stats view summarizes the current project/search scope without depending on the active/completed filter. It reports completion rate, active overdue rate, today's completions, and the current completion streak based on recorded completion dates.
+
 ## Data Files
 
 - Export: downloads the current task data as a JSON file for transfer, inspection, or manual storage.
 - Import: reads a JSON file, shows a preview, then replaces current task data after confirmation.
-- Backup: downloads a versioned local snapshot, records the latest backup time, and includes notes about the backup schema.
+- Backup: downloads a versioned local snapshot, records the latest backup time, and includes notes about the backup schema, repeat rules, and completion dates.
 
 ## Screenshots
 
