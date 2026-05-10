@@ -308,7 +308,7 @@
   },
   "backup": {
     "versionNotes": {
-      "schema": "Backup 2.0 includes tasks, subtasks, projects, tags, reminders, repeat rules, completion dates, and archive state.",
+      "schema": "Backup 2.1 includes local due dates, exact reminder instants, tasks, subtasks, projects, tags, repeat rules, completion dates, and archive state.",
       "compatibility": "The importer reads the tasks array; older export files remain importable."
     }
   }

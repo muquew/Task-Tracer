@@ -955,10 +955,10 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.0'
+                RESOURCE_VERSION: '4.1'
             },
             BACKUP: {
-                FILE_VERSION: '2.0',
+                FILE_VERSION: '2.1',
                 REMINDER_DAYS: 7
             },
             NOTIFICATIONS: {
@@ -1410,20 +1410,21 @@
             }
         }
         function buildTaskPayloadFromForm() {
-            const dueDate = (!DOM.inputs.noDeadline.checked && DOM.inputs.date.value)
-                ? utils.localToUTC(DOM.inputs.date.value, DOM.inputs.time.value)
-                : null;
-            const reminderOffset = dueDate ? parseInt(DOM.inputs.reminderOffset.value, 10) : -1;
-            const repeatType = dueDate ? normalizeTaskRepeatType(DOM.inputs.repeatType.value) : 'none';
+            const dueFields = (!DOM.inputs.noDeadline.checked && DOM.inputs.date.value)
+                ? createDueFields(DOM.inputs.date.value, DOM.inputs.time.value)
+                : clearDueFields();
+            const hasDueDate = Boolean(dueFields.dueAt);
+            const reminderOffset = hasDueDate ? parseInt(DOM.inputs.reminderOffset.value, 10) : -1;
+            const repeatType = hasDueDate ? normalizeTaskRepeatType(DOM.inputs.repeatType.value) : 'none';
             return {
                 name: DOM.inputs.name.value.trim(),
                 description: DOM.inputs.desc.value.trim(),
                 project: normalizeTaskProject(DOM.inputs.project.value),
                 tags: parseTagsInput(DOM.inputs.tags.value),
                 subtasks: cloneSubtasksWithUniqueIds(state.tempSubtasks),
-                dueDate,
+                ...dueFields,
                 reminderOffset,
-                reminderRepeat: dueDate && reminderOffset !== -1 ? parseInt(DOM.inputs.reminderRepeat.value, 10) : -1,
+                reminderRepeat: hasDueDate && reminderOffset !== -1 ? parseInt(DOM.inputs.reminderRepeat.value, 10) : -1,
                 repeatType,
                 repeatInterval: normalizeTaskRepeatInterval(repeatType, DOM.inputs.repeatInterval.value),
                 order: state.editingTaskId ? undefined : getNextTaskOrder()
@@ -1456,7 +1457,9 @@
             return updatedTask;
         }
         function didReminderSettingsChange(original, updatedTask) {
-            return original.dueDate !== updatedTask.dueDate ||
+            return getTaskDueInstant(original) !== getTaskDueInstant(updatedTask) ||
+                normalizeDueDateValue(original.dueLocalDate) !== normalizeDueDateValue(updatedTask.dueLocalDate) ||
+                normalizeDueTimeValue(original.dueLocalTime) !== normalizeDueTimeValue(updatedTask.dueLocalTime) ||
                 getTaskReminderOffset(original) !== getTaskReminderOffset(updatedTask) ||
                 getTaskReminderRepeat(original) !== getTaskReminderRepeat(updatedTask);
         }
@@ -1540,6 +1543,116 @@
                 .filter(Number.isFinite));
             return createUniqueNumericId(usedIds);
         }
+        function createDueFields(dateValue, timeValue) {
+            const dueLocalDate = normalizeDueDateValue(dateValue);
+            if (!dueLocalDate) return clearDueFields();
+            const dueLocalTime = normalizeDueTimeValue(timeValue) || CONFIG.DEFAULTS.TIME;
+            const dueAt = utils.localDateTimeToInstantISO(dueLocalDate, dueLocalTime);
+            return {
+                dueDate: dueAt,
+                dueAt,
+                dueLocalDate,
+                dueLocalTime,
+                dueTimeZone: getCurrentTimeZone()
+            };
+        }
+        function clearDueFields() {
+            return {
+                dueDate: null,
+                dueAt: null,
+                dueLocalDate: null,
+                dueLocalTime: null,
+                dueTimeZone: null
+            };
+        }
+        function normalizeTaskDueFields(task) {
+            const localDate = normalizeDueDateValue(task.dueLocalDate);
+            const localTime = normalizeDueTimeValue(task.dueLocalTime);
+            const dueAt = normalizeStoredDate(task.dueAt);
+            const dueDate = normalizeStoredDate(task.dueDate);
+            if (localDate) {
+                const dueLocalTime = localTime || CONFIG.DEFAULTS.TIME;
+                const instant = dueAt || dueDate || utils.localDateTimeToInstantISO(localDate, dueLocalTime);
+                return {
+                    dueDate: instant,
+                    dueAt: instant,
+                    dueLocalDate: localDate,
+                    dueLocalTime,
+                    dueTimeZone: normalizeTimeZoneName(task.dueTimeZone)
+                };
+            }
+            if (dueAt) return createDueFieldsFromInstant(dueAt);
+            if (dueDate) {
+                const legacy = legacyStoredDueDateToLocalDate(dueDate);
+                return createDueFields(utils.formatDateInputValue(legacy), utils.formatTimeInputValue(legacy));
+            }
+            return clearDueFields();
+        }
+        function createDueFieldsFromDate(date) {
+            if (!isValidDate(date)) return clearDueFields();
+            return createDueFields(utils.formatDateInputValue(date), utils.formatTimeInputValue(date));
+        }
+        function createDueFieldsFromInstant(iso) {
+            const date = new Date(iso);
+            if (Number.isNaN(date.getTime())) return clearDueFields();
+            return {
+                dueDate: iso,
+                dueAt: iso,
+                dueLocalDate: utils.formatDateInputValue(date),
+                dueLocalTime: utils.formatTimeInputValue(date),
+                dueTimeZone: getCurrentTimeZone()
+            };
+        }
+        function normalizeDueDateValue(value) {
+            const text = String(value || '').trim();
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) return '';
+            const date = new Date(`${text}T12:00:00`);
+            return Number.isNaN(date.getTime()) ? '' : text;
+        }
+        function normalizeDueTimeValue(value) {
+            const text = String(value || '').trim();
+            if (!/^\d{2}:\d{2}$/.test(text)) return '';
+            const [hours, minutes] = text.split(':').map(Number);
+            if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) return '';
+            return text;
+        }
+        function getCurrentTimeZone() {
+            return Intl.DateTimeFormat().resolvedOptions().timeZone || 'local';
+        }
+        function normalizeTimeZoneName(value) {
+            return typeof value === 'string' && value.trim() ? value.trim() : getCurrentTimeZone();
+        }
+        function legacyStoredDueDateToLocalDate(iso) {
+            const date = new Date(iso);
+            return new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+        }
+        function hasTaskDueDate(task) {
+            return Boolean(getTaskDueLocalDate(task));
+        }
+        function getTaskDueLocalDate(task) {
+            const dateValue = normalizeDueDateValue(task?.dueLocalDate);
+            if (!dateValue) return null;
+            const timeValue = normalizeDueTimeValue(task?.dueLocalTime) || CONFIG.DEFAULTS.TIME;
+            const date = new Date(`${dateValue}T${timeValue}`);
+            return Number.isNaN(date.getTime()) ? null : date;
+        }
+        function getTaskDueInstant(task) {
+            return normalizeStoredDate(task?.dueAt) || normalizeStoredDate(task?.dueDate);
+        }
+        function getTaskDueSortValue(task) {
+            const date = getTaskDueLocalDate(task);
+            return date ? date.getTime() : null;
+        }
+        function calculateTaskTimeLeft(task) {
+            const dueAt = getTaskDueInstant(task);
+            if (dueAt) return (new Date(dueAt) - new Date()) / 60000;
+            const localDate = getTaskDueLocalDate(task);
+            return localDate ? (localDate - new Date()) / 60000 : null;
+        }
+        function formatTaskDueDate(task) {
+            const localDate = getTaskDueLocalDate(task);
+            return localDate ? utils.formatDateObject(localDate) : '';
+        }
         async function loadNormalizedTasks() {
             const loadedTasks = await dbActions.getAllTasks();
             const { tasks, changed } = normalizeTaskRecords(loadedTasks);
@@ -1552,6 +1665,13 @@
                 const result = normalizeSubtasksForTask(task.subtasks);
                 const normalizedTask = { ...task, subtasks: result.subtasks };
                 if (result.changed) changed = true;
+                const dueFields = normalizeTaskDueFields(normalizedTask);
+                ['dueDate', 'dueAt', 'dueLocalDate', 'dueLocalTime', 'dueTimeZone'].forEach(key => {
+                    if (normalizedTask[key] !== dueFields[key]) {
+                        normalizedTask[key] = dueFields[key];
+                        changed = true;
+                    }
+                });
                 if (typeof normalizedTask.archived !== 'boolean') {
                     normalizedTask.archived = false;
                     changed = true;
@@ -1702,7 +1822,7 @@
             }
         }
         function shouldCreateNextRepeatTask(task) {
-            if (!task.dueDate || task.completed || task.archived || !hasTaskRepeat(task)) return false;
+            if (!hasTaskDueDate(task) || task.completed || task.archived || !hasTaskRepeat(task)) return false;
             const nextId = Number(task.nextRepeatTaskId);
             return !Number.isFinite(nextId) || !state.tasks.some(item => item.id === nextId);
         }
@@ -1713,7 +1833,7 @@
             return {
                 ...task,
                 id: nextId,
-                dueDate: calculateNextRepeatDueDate(task.dueDate, getTaskRepeatRule(task)),
+                ...calculateNextRepeatDueFields(task, getTaskRepeatRule(task)),
                 completed: false,
                 completedAt: null,
                 archived: false,
@@ -1731,14 +1851,15 @@
         function resetRepeatedSubtasks(subtasks) {
             return cloneSubtasksWithUniqueIds(subtasks).map(subtask => ({ ...subtask, completed: false }));
         }
-        function calculateNextRepeatDueDate(iso, rule) {
-            const date = utils.utcToLocal(iso);
+        function calculateNextRepeatDueFields(task, rule) {
+            const date = getTaskDueLocalDate(task);
+            if (!date) return clearDueFields();
             if (rule.type === 'monthly') {
-                return utils.dateToStoredISO(addMonthsClamped(date, 1));
+                return createDueFieldsFromDate(addMonthsClamped(date, 1));
             }
             const days = rule.type === 'weekly' ? 7 : rule.type === 'custom' ? rule.interval : 1;
             date.setDate(date.getDate() + days);
-            return utils.dateToStoredISO(date);
+            return createDueFieldsFromDate(date);
         }
         function addMonthsClamped(date, months) {
             const next = new Date(date);
@@ -1902,8 +2023,9 @@
         function checkNotifications() {
             if (!state.notificationsEnabled) return;
             state.tasks.forEach(task => {
-                if (task.completed || task.archived || !task.dueDate) return;
-                const timeLeft = utils.calculateTimeLeft(task.dueDate);
+                if (task.completed || task.archived || !hasTaskDueDate(task)) return;
+                const timeLeft = calculateTaskTimeLeft(task);
+                if (timeLeft === null) return;
                 const offset = getTaskReminderOffset(task);
                 if (offset === -1) return;
                 const notificationKey = getTaskNotificationKey(task, offset);
@@ -1966,7 +2088,8 @@
             return Number.isFinite(repeat) && repeat > 0 ? repeat : -1;
         }
         function getTaskNotificationKey(task, offset = getTaskReminderOffset(task)) {
-            return `${task.id}|${task.dueDate || 'no-date'}|${offset}`;
+            const dueKey = getTaskDueInstant(task) || normalizeDueDateValue(task.dueLocalDate) || 'no-date';
+            return `${task.id}|${dueKey}|${offset}`;
         }
         function markReminderIconNotified(taskId) {
             const el = document.querySelector(`.task-item[data-task-id="${taskId}"]`);
@@ -2090,12 +2213,12 @@
                     return;
                 }
                 counts.all++;
-                if (!task.dueDate) counts['no-deadline']++;
+                if (!hasTaskDueDate(task)) counts['no-deadline']++;
                 if (task.completed) counts.completed++;
                 else {
                     counts.active++;
-                    if (task.dueDate) {
-                        if (utils.calculateTimeLeft(task.dueDate) < 0) counts.overdue++;
+                    if (hasTaskDueDate(task)) {
+                        if (calculateTaskTimeLeft(task) < 0) counts.overdue++;
                     }
                 }
             });
@@ -2152,8 +2275,8 @@
             switch (state.filter) {
                 case 'active': return !task.completed;
                 case 'completed': return task.completed;
-                case 'overdue': return !task.completed && task.dueDate && utils.calculateTimeLeft(task.dueDate) < 0;
-                case 'no-deadline': return !task.dueDate;
+                case 'overdue': return !task.completed && hasTaskDueDate(task) && calculateTaskTimeLeft(task) < 0;
+                case 'no-deadline': return !hasTaskDueDate(task);
                 default: return true;
             }
         }
@@ -2257,13 +2380,13 @@
             DOM.taskList.querySelectorAll('.task-group-header').forEach(header => header.remove());
         }
         function syncCalendarMonthToVisibleTasks() {
-            const datedTask = getVisibleTasks().find(task => task.dueDate);
-            state.calendarMonthDate = datedTask ? utils.utcToLocal(datedTask.dueDate) : new Date();
+            const datedTask = getVisibleTasks().find(hasTaskDueDate);
+            state.calendarMonthDate = datedTask ? getTaskDueLocalDate(datedTask) : new Date();
         }
         function renderCalendarView(tasks) {
             DOM.taskList.textContent = '';
-            const datedTasks = sortTasksForDateView(tasks.filter(task => task.dueDate));
-            const undatedTasks = tasks.filter(task => !task.dueDate);
+            const datedTasks = sortTasksForDateView(tasks.filter(hasTaskDueDate));
+            const undatedTasks = tasks.filter(task => !hasTaskDueDate(task));
             const byDate = groupTasksByDateKey(datedTasks);
             const calendar = document.createElement('div');
             calendar.className = 'calendar-view';
@@ -2517,7 +2640,8 @@
         function groupTasksByDateKey(tasks) {
             const groups = new Map();
             tasks.forEach(task => {
-                const key = task.dueDate ? utils.formatDateInputValue(utils.utcToLocal(task.dueDate)) : '__none__';
+                const dueLocalDate = getTaskDueLocalDate(task);
+                const key = dueLocalDate ? utils.formatDateInputValue(dueLocalDate) : '__none__';
                 if (!groups.has(key)) groups.set(key, []);
                 groups.get(key).push(task);
             });
@@ -2525,9 +2649,11 @@
         }
         function sortTasksForDateView(tasks) {
             return [...tasks].sort((a, b) => {
-                if (a.dueDate && b.dueDate) return new Date(a.dueDate) - new Date(b.dueDate);
-                if (a.dueDate) return -1;
-                if (b.dueDate) return 1;
+                const dueA = getTaskDueSortValue(a);
+                const dueB = getTaskDueSortValue(b);
+                if (dueA !== null && dueB !== null) return dueA - dueB;
+                if (dueA !== null) return -1;
+                if (dueB !== null) return 1;
                 return new Date(a.createdAt) - new Date(b.createdAt);
             });
         }
@@ -2657,8 +2783,8 @@
             const activeScopeTasks = tasks.filter(task => !task.archived);
             const total = activeScopeTasks.length;
             const completed = activeScopeTasks.filter(task => task.completed).length;
-            const deadlineTasks = activeScopeTasks.filter(task => task.dueDate).length;
-            const overdue = activeScopeTasks.filter(task => !task.completed && task.dueDate && utils.calculateTimeLeft(task.dueDate) < 0).length;
+            const deadlineTasks = activeScopeTasks.filter(hasTaskDueDate).length;
+            const overdue = activeScopeTasks.filter(task => !task.completed && hasTaskDueDate(task) && calculateTaskTimeLeft(task) < 0).length;
             const completedToday = activeScopeTasks.filter(task => getCompletionDateKey(task) === utils.formatDateInputValue()).length;
             const completionRate = total > 0 ? completed / total : 0;
             const overdueRate = deadlineTasks > 0 ? overdue / deadlineTasks : 0;
@@ -2797,8 +2923,8 @@
                     timeLeft: null
                 };
             }
-            if (task.dueDate) {
-                const timeLeft = utils.calculateTimeLeft(task.dueDate);
+            if (hasTaskDueDate(task)) {
+                const timeLeft = calculateTaskTimeLeft(task);
                 return { statusObj: utils.getStatus(timeLeft), timeLeft };
             }
             return {
@@ -2810,8 +2936,8 @@
             el.className = `task-item ${statusObj.cls} ${task.completed ? 'completed-task' : ''} ${task.archived ? 'archived-task' : ''}`;
             el.querySelector('.task-name').textContent = task.name;
             renderReminderIcon(el, task);
-            el.querySelector('.task-date').textContent = task.dueDate ?
-                `${t['task.deadline']}: ${utils.formatDate(task.dueDate)}` : t['task.noDeadline'];
+            el.querySelector('.task-date').textContent = hasTaskDueDate(task) ?
+                `${t['task.deadline']}: ${formatTaskDueDate(task)}` : t['task.noDeadline'];
         }
         function renderTaskDescription(el, task) {
             let descEl = el.querySelector('.task-desc');
@@ -2891,7 +3017,7 @@
             } else if (timeEl) timeEl.remove();
         }
         function shouldShowTaskTiming(task) {
-            return task.dueDate && !task.completed && !task.archived;
+            return hasTaskDueDate(task) && !task.completed && !task.archived;
         }
         function renderReminderIcon(el, task) {
             const reminderIcon = el.querySelector('.task-reminder-icon');
@@ -2906,7 +3032,7 @@
             reminderIcon.style.color = state.notifiedTasks.has(getTaskNotificationKey(task)) ? 'var(--text-tertiary)' : 'var(--color-warning)';
         }
         function shouldShowReminderIcon(task) {
-            return task.dueDate && !task.completed && !task.archived && getTaskReminderOffset(task) !== -1;
+            return hasTaskDueDate(task) && !task.completed && !task.archived && getTaskReminderOffset(task) !== -1;
         }
         function renderTaskActionTitles(el, task, t) {
             const toggleButton = el.querySelector('[data-action="toggle"]');
@@ -3130,7 +3256,7 @@
             DOM.inputs.project.value = editingTask.project || '';
             DOM.inputs.tags.value = normalizeTaskTags(editingTask.tags).join(', ');
             state.tempSubtasks = cloneSubtasksWithUniqueIds(editingTask.subtasks);
-            const dueDate = editingTask.dueDate ? utils.utcToLocal(editingTask.dueDate) : null;
+            const dueDate = getTaskDueLocalDate(editingTask);
             setDeadlineControls({
                 enabled: Boolean(dueDate),
                 date: dueDate,
@@ -3363,14 +3489,6 @@
                 runThemeChange();
                 window.setTimeout(finishThemeTransition, CONFIG.UI.THEME.SWITCH_DURATION);
             },
-            localToUTC: (d, t) => {
-                const l = new Date(`${d}T${t}`);
-                return new Date(l.getTime() + l.getTimezoneOffset() * 60000).toISOString();
-            },
-            utcToLocal: (iso) => {
-                const d = new Date(iso);
-                return new Date(d.getTime() - d.getTimezoneOffset() * 60000);
-            },
             formatDateInputValue: (date = new Date()) => {
                 const d = date instanceof Date ? date : new Date(date);
                 const year = d.getFullYear();
@@ -3384,10 +3502,9 @@
                 const minutes = String(d.getMinutes()).padStart(2, '0');
                 return `${hours}:${minutes}`;
             },
-            dateToStoredISO: (date) => utils.localToUTC(utils.formatDateInputValue(date), utils.formatTimeInputValue(date)),
-            calculateTimeLeft: (iso) => (utils.utcToLocal(iso) - new Date()) / 60000,
-            formatDate: (iso) => {
-                const d = utils.utcToLocal(iso);
+            localDateTimeToInstantISO: (dateValue, timeValue) => new Date(`${dateValue}T${timeValue}`).toISOString(),
+            formatDateObject: (date) => {
+                const d = date instanceof Date ? date : new Date(date);
                 const cacheKey = state.currentLanguage;
                 if (!state.dateTimeFormatters[cacheKey]) {
                     state.dateTimeFormatters[cacheKey] = new Intl.DateTimeFormat(
@@ -3397,6 +3514,7 @@
                 }
                 return state.dateTimeFormatters[cacheKey].format(d);
             },
+            formatDate: (iso) => utils.formatDateObject(new Date(iso)),
             formatTime: (min) => {
                 const t = state.translations[state.currentLanguage];
                 if (min < 0) {
@@ -3434,18 +3552,22 @@
                         });
                     case 'created-desc': return l.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                     case 'due-asc': return l.sort((a, b) => {
-                        if (!a.dueDate && b.dueDate) return 1;
-                        if (a.dueDate && !b.dueDate) return -1;
-                        if (!a.dueDate && !b.dueDate) return 0;
-                        return new Date(a.dueDate) - new Date(b.dueDate);
+                        const dueA = getTaskDueSortValue(a);
+                        const dueB = getTaskDueSortValue(b);
+                        if (dueA === null && dueB !== null) return 1;
+                        if (dueA !== null && dueB === null) return -1;
+                        if (dueA === null && dueB === null) return 0;
+                        return dueA - dueB;
                     });
                     case 'alpha-asc': return l.sort((a, b) => a.name.localeCompare(b.name, state.currentLanguage));
                     case 'smart':
                     default: return l.sort((a, b) => {
                         if (a.completed !== b.completed) return a.completed ? 1 : -1;
-                        if (!a.dueDate && b.dueDate) return 1;
-                        if (a.dueDate && !b.dueDate) return -1;
-                        if (a.dueDate && b.dueDate) return new Date(a.dueDate) - new Date(b.dueDate);
+                        const dueA = getTaskDueSortValue(a);
+                        const dueB = getTaskDueSortValue(b);
+                        if (dueA === null && dueB !== null) return 1;
+                        if (dueA !== null && dueB === null) return -1;
+                        if (dueA !== null && dueB !== null) return dueA - dueB;
                         return new Date(a.createdAt) - new Date(b.createdAt);
                     });
                 }
@@ -3976,8 +4098,9 @@
             document.querySelectorAll('.task-item:not(.completed-task)').forEach(el => {
                 const id = Number(el.dataset.taskId);
                 const task = state.tasks.find(t => t.id === id);
-                if (!task || !task.dueDate) return;
-                const timeLeft = utils.calculateTimeLeft(task.dueDate);
+                if (!task || !hasTaskDueDate(task)) return;
+                const timeLeft = calculateTaskTimeLeft(task);
+                if (timeLeft === null) return;
                 const statusObj = utils.getStatus(timeLeft);
                 const statusText = el.querySelector('.status-text');
                 const timeEl = el.querySelector('.status-time-left');
@@ -4042,7 +4165,7 @@
                 schema: {
                     version: CONFIG.BACKUP.FILE_VERSION,
                     storage: 'indexeddb',
-                    includes: ['tasks', 'subtasks', 'projects', 'tags', 'reminders', 'repeatRules', 'completionDates', 'archiveState']
+                    includes: ['tasks', 'subtasks', 'projects', 'tags', 'localDueDates', 'exactDueInstants', 'reminders', 'repeatRules', 'completionDates', 'archiveState']
                 },
                 versionNotes: [
                     utils.translate('backup.versionNotes.schema'),
@@ -4234,13 +4357,14 @@
         function normalizeImportedTask(rawTask, index, normalizeId) {
             const task = rawTask && typeof rawTask === 'object' ? rawTask : {};
             const repeatType = normalizeTaskRepeatType(task.repeatType);
+            const dueFields = normalizeTaskDueFields(task);
             return {
                 id: normalizeId(task.id),
                 name: String(task.name || '').trim() || utils.translate('task.importedFallback').replace('{index}', index + 1),
                 description: task.description ? String(task.description) : '',
                 project: normalizeTaskProject(task.project),
                 tags: normalizeTaskTags(task.tags),
-                dueDate: normalizeStoredDate(task.dueDate),
+                ...dueFields,
                 reminderOffset: Number.isFinite(Number(task.reminderOffset)) ? Number(task.reminderOffset) : 15,
                 reminderRepeat: Number.isFinite(Number(task.reminderRepeat)) ? Number(task.reminderRepeat) : -1,
                 repeatType,
@@ -4277,9 +4401,9 @@
         async function addSampleTasks() {
             const t = state.translations[state.currentLanguage];
             const samples = [
-                { id: Date.now()+1, name: t['samples.task1.name'] || "完成项目报告", description: t['samples.task1.description'] || "编写并提交季度项目总结报告", project: t['samples.task1.project'] || "工作", tags: [t['samples.task1.tag'] || "报告"], dueDate: utils.dateToStoredISO(new Date(Date.now() + 432000000)), createdAt: new Date().toISOString(), completed: false },
-                { id: Date.now()+2, name: t['samples.task2.name'] || "团队会议准备", description: t['samples.task2.description'] || "准备下周团队会议的演示材料", project: t['samples.task2.project'] || "工作", tags: [t['samples.task2.tag'] || "会议"], dueDate: utils.dateToStoredISO(new Date(Date.now() + 864000000)), createdAt: new Date().toISOString(), completed: false },
-                { id: Date.now()+3, name: t['samples.task3.name'] || "学习计划制定", description: t['samples.task3.description'] || "制定下个月的个人学习计划", project: t['samples.task3.project'] || "个人", tags: [t['samples.task3.tag'] || "学习"], dueDate: null, createdAt: new Date().toISOString(), completed: false }
+                { id: Date.now()+1, name: t['samples.task1.name'] || "完成项目报告", description: t['samples.task1.description'] || "编写并提交季度项目总结报告", project: t['samples.task1.project'] || "工作", tags: [t['samples.task1.tag'] || "报告"], ...createDueFieldsFromDate(new Date(Date.now() + 432000000)), createdAt: new Date().toISOString(), completed: false },
+                { id: Date.now()+2, name: t['samples.task2.name'] || "团队会议准备", description: t['samples.task2.description'] || "准备下周团队会议的演示材料", project: t['samples.task2.project'] || "工作", tags: [t['samples.task2.tag'] || "会议"], ...createDueFieldsFromDate(new Date(Date.now() + 864000000)), createdAt: new Date().toISOString(), completed: false },
+                { id: Date.now()+3, name: t['samples.task3.name'] || "学习计划制定", description: t['samples.task3.description'] || "制定下个月的个人学习计划", project: t['samples.task3.project'] || "个人", tags: [t['samples.task3.tag'] || "学习"], ...clearDueFields(), createdAt: new Date().toISOString(), completed: false }
             ];
             await Promise.all(samples.map(s => dbActions.addTask(s)));
             await refreshTasks();

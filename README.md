@@ -56,7 +56,7 @@ The stats view summarizes the current project/search scope without depending on 
 
 - Export: downloads the current task data as a JSON file for transfer, inspection, or manual storage.
 - Import: reads a JSON file, shows a preview, then replaces current task data after confirmation.
-- Backup: downloads a versioned local snapshot, records the latest backup time, and includes notes about the backup schema, repeat rules, and completion dates.
+- Backup: downloads a versioned local snapshot, records the latest backup time, and includes local due dates, exact reminder instants, repeat rules, and completion dates.
 
 ## Screenshots
 

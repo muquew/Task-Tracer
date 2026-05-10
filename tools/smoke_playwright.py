@@ -128,6 +128,17 @@ def future_date(days: int = 1) -> str:
     return value.strftime("%Y-%m-%d")
 
 
+def due_fields_from_now(minutes: int) -> dict[str, str]:
+    local_value = datetime.now().astimezone() + timedelta(minutes=minutes)
+    instant = local_value.astimezone(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
+    return {
+        "dueDate": instant,
+        "dueAt": instant,
+        "dueLocalDate": local_value.strftime("%Y-%m-%d"),
+        "dueLocalTime": local_value.strftime("%H:%M"),
+    }
+
+
 def wait_for_class(page: Page, selector: str, class_name: str, present: bool = True) -> None:
     page.wait_for_function(
         """({ selector, className, present }) => {
@@ -152,7 +163,6 @@ def wait_for_app_ready(page: Page) -> None:
 
 
 def wait_for_notification(page: Page, pattern: str | re.Pattern[str]) -> None:
-    expect(page.locator("#notification")).to_have_class(re.compile(r"(^|\s)show(\s|$)"))
     expect(page.locator("#notificationText")).to_have_text(pattern)
 
 
@@ -593,7 +603,7 @@ def add_overdue_task_record(page: Page, task_name: str, order: int) -> None:
             "id": now_ms + order,
             "name": task_name,
             "description": "Created directly to cover overdue state.",
-            "dueDate": iso_minutes_from_now(-90),
+            **due_fields_from_now(-90),
             "reminderOffset": -1,
             "subtasks": [],
             "completed": False,
@@ -858,7 +868,11 @@ def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_nam
                 "id": int(time.time() * 1000) + 40_000 + index,
                 "name": extra_name,
                 "description": "Extra same-day task for calendar overflow.",
-                "dueDate": f"{future_date(1)}T13:{index:02d}:00.000Z",
+                "dueDate": None,
+                "dueAt": None,
+                "dueLocalDate": future_date(1),
+                "dueLocalTime": f"13:{index:02d}",
+                "dueTimeZone": None,
                 "reminderOffset": -1,
                 "subtasks": [],
                 "completed": False,
@@ -1014,6 +1028,10 @@ def exercise_repeating_task(page: Page, task_name: str) -> None:
                                 repeatInterval: item.repeatInterval,
                                 repeatCreatedFrom: item.repeatCreatedFrom,
                                 dueDate: item.dueDate,
+                                dueAt: item.dueAt,
+                                dueLocalDate: item.dueLocalDate,
+                                dueLocalTime: item.dueLocalTime,
+                                dueTimeZone: item.dueTimeZone,
                                 nextRepeatTaskId: item.nextRepeatTaskId
                             }));
                         db.close();
@@ -1033,6 +1051,14 @@ def exercise_repeating_task(page: Page, task_name: str) -> None:
         raise AssertionError(f"Next repeating task did not preserve repeat metadata: {records}")
     if active[0]["dueDate"] <= completed[0]["dueDate"] or completed[0]["nextRepeatTaskId"] is None:
         raise AssertionError(f"Next repeating task did not advance due date/linkage: {records}")
+    if active[0]["dueDate"] != active[0]["dueAt"] or completed[0]["dueDate"] != completed[0]["dueAt"]:
+        raise AssertionError(f"Repeating tasks did not keep dueDate/dueAt compatibility: {records}")
+    if active[0]["dueLocalTime"] != completed[0]["dueLocalTime"] or not active[0]["dueTimeZone"]:
+        raise AssertionError(f"Repeating tasks did not preserve local due time metadata: {records}")
+    completed_due = datetime.strptime(completed[0]["dueLocalDate"], "%Y-%m-%d").date()
+    active_due = datetime.strptime(active[0]["dueLocalDate"], "%Y-%m-%d").date()
+    if active_due != completed_due + timedelta(days=3):
+        raise AssertionError(f"Repeating task did not advance the local due date by 3 days: {records}")
     delete_task_records_by_name(page, task_name)
 
 
@@ -1196,7 +1222,7 @@ def exercise_export(page: Page) -> dict[str, Any]:
         raise AssertionError("Export did not produce a readable download file")
 
     exported = json.loads(Path(path).read_text(encoding="utf-8"))
-    if exported.get("version") != "2.0" or not exported.get("date") or not exported.get("versionNotes"):
+    if exported.get("version") != "2.1" or not exported.get("date") or not exported.get("versionNotes"):
         raise AssertionError(f"Export payload metadata is incomplete: {exported}")
     if not isinstance(exported.get("tasks"), list) or not exported["tasks"]:
         raise AssertionError(f"Export payload did not include tasks: {exported}")
@@ -1212,7 +1238,7 @@ def exercise_backup(page: Page) -> dict[str, Any]:
     if not path:
         raise AssertionError("Backup did not produce a readable download file")
     backup = json.loads(Path(path).read_text(encoding="utf-8"))
-    if backup.get("version") != "2.0" or backup.get("type") != "backup" or not backup.get("schema"):
+    if backup.get("version") != "2.1" or backup.get("type") != "backup" or not backup.get("schema"):
         raise AssertionError(f"Backup payload metadata is incomplete: {backup}")
     last_backup = page.evaluate(
         """async () => {

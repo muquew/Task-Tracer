@@ -56,7 +56,11 @@
   - `description`: 描述。
   - `project`: 单个项目名，用作主分组。
   - `tags`: 标签数组，用于跨项目标记和搜索。
-  - `dueDate`: UTC ISO 字符串或 `null`。
+  - `dueLocalDate`: 用户选择的本地截止日期，格式为 `YYYY-MM-DD`，无截止日期时为 `null`。
+  - `dueLocalTime`: 用户选择的本地截止时间，格式为 `HH:mm`，无截止日期时为 `null`。
+  - `dueAt`: 截止日期对应的真实时间点 ISO 字符串，用于提醒、逾期和剩余时间计算。
+  - `dueDate`: 兼容字段，当前与 `dueAt` 保持一致；旧版数据会在加载时迁移。
+  - `dueTimeZone`: 创建或导入该截止时间时的浏览器时区名称。
   - `reminderOffset`: 提前提醒分钟数，`-1` 表示不提醒。
   - `reminderRepeat`: 重复提醒间隔分钟数，`-1` 表示不重复。
   - `snoozedUntil`: 稍后提醒时间点，UTC ISO 字符串或 `null`。
@@ -96,8 +100,11 @@
 - `matchesTaskSearch(task)` 当前匹配任务名称、描述、项目名和标签。项目和标签都会参与搜索；区别在于项目负责组织层级，标签负责跨项目检索。
 - 手动排序只在列表视图、`sort === 'manual'` 且无搜索词时启用。局部筛选或项目视图下拖拽时，`mergeVisibleManualOrder()` 只调整当前可见任务在全局手动顺序中的相对位置。
 
-## 重复任务、日期视图与统计
+## 日期语义、重复任务、日期视图与统计
 
+- 截止日期同时保存本地墙上时间和真实时间点。界面展示、日历和时间线使用 `dueLocalDate`/`dueLocalTime`；提醒、逾期和剩余时间使用 `dueAt`。
+- 旧版 `dueDate` 以本地墙上时间编码到 ISO 字符串中，`normalizeTaskDueFields()` 会通过 `legacyStoredDueDateToLocalDate()` 保留原先显示的日期时间，再写入新的 `dueLocalDate`、`dueLocalTime` 和 `dueAt`。
+- `completedAt`、`archivedAt`、`createdAt`、`snoozedUntil` 和 `lastReminderAt` 都是真实时间点，不能走旧版截止日期转换逻辑。
 - 重复任务由 `repeatType` 和 `repeatInterval` 表示。用户完成一个重复任务时，`toggleTaskComplete()` 会保留当前完成记录，并通过 `createNextRepeatTask()` 生成下一期。
 - 每月重复使用 `addMonthsClamped()` 处理月底日期，避免 1 月 31 日这类日期溢出到错误月份。
 - 日历视图使用 `calendarMonthDate` 和浏览器 `Date` 计算月份首日、星期偏移与 42 个日期格，任务按钮点击后进入编辑弹窗。
@@ -315,13 +322,11 @@
 - `utils.notify(msg, type)`: 页面 toast。
 - `utils.applyTheme(theme)`: 应用主题并同步 manifest/theme-color。
 - `utils.toggleTheme()`: 主题切换动画。
-- `utils.localToUTC(d, t)`: 本地日期时间转 UTC ISO。
-- `utils.utcToLocal(iso)`: UTC ISO 转本地 Date。
 - `utils.formatDateInputValue(date)`: `YYYY-MM-DD`。
 - `utils.formatTimeInputValue(date)`: `HH:mm`。
-- `utils.dateToStoredISO(date)`: Date 转存储 ISO。
-- `utils.calculateTimeLeft(iso)`: 剩余分钟。
-- `utils.formatDate(iso)`: 本地化日期时间。
+- `utils.localDateTimeToInstantISO(dateValue, timeValue)`: 本地日期时间转真实时间点 ISO。
+- `utils.formatDateObject(date)`: 本地化格式化 `Date` 对象。
+- `utils.formatDate(iso)`: 本地化格式化真实时间点 ISO。
 - `utils.formatTime(min)`: 本地化剩余/逾期时间。
 - `utils.getStatus(min)`: 根据剩余时间计算状态。
 - `utils.sortTasks(list)`: 当前排序策略。
