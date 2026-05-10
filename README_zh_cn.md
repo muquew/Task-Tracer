@@ -1,10 +1,25 @@
-# Task Tracer 任务跟踪器
+<p align="center">
+  <img src="./fav/android-chrome-192x192.png" width="88" height="88" alt="Task Tracer 图标">
+</p>
 
-**[English README](./README.md)**
+<h1 align="center">Task Tracer 任务跟踪器</h1>
+
+<p align="center">围绕截止日期组织的轻量 PWA 任务管理器。</p>
+
+<p align="center">
+  <a href="https://todo.muquew.com/">在线体验</a> · <a href="./README.md">English README</a>
+</p>
+
+<p align="center">
+  <a href="https://todo.muquew.com/"><img alt="在线体验" src="https://img.shields.io/badge/Live-Demo-2563eb?style=flat-square"></a>
+  <img alt="PWA" src="https://img.shields.io/badge/PWA-Offline-059669?style=flat-square">
+  <img alt="IndexedDB" src="https://img.shields.io/badge/Data-IndexedDB-0f766e?style=flat-square">
+  <img alt="多语言" src="https://img.shields.io/badge/i18n-ZH%20%7C%20EN-7c3aed?style=flat-square">
+  <img alt="无障碍" src="https://img.shields.io/badge/A11y-Keyboard-d97706?style=flat-square">
+  <img alt="许可" src="https://img.shields.io/badge/License-Personal%20Use-475569?style=flat-square">
+</p>
 
 Task Tracer 是一个基于截止日期的任务管理 PWA，适合个人计划、学习安排和周期性事项跟踪。它把任务数据保存在浏览器本地，加载后支持离线使用，并围绕截止日期状态、提醒、子任务、排序和本地备份组织体验。
-
-[在线体验](https://todo.muquew.com/)
 
 ## 功能速览
 

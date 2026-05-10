@@ -1,10 +1,25 @@
-# Task Tracer
+<p align="center">
+  <img src="./fav/android-chrome-192x192.png" width="88" height="88" alt="Task Tracer icon">
+</p>
 
-**[中文说明](./README_zh_cn.md)**
+<h1 align="center">Task Tracer</h1>
+
+<p align="center">Deadline-based task management in a compact offline-ready PWA.</p>
+
+<p align="center">
+  <a href="https://todo.muquew.com/">Live Demo</a> · <a href="./README_zh_cn.md">中文说明</a>
+</p>
+
+<p align="center">
+  <a href="https://todo.muquew.com/"><img alt="Live demo" src="https://img.shields.io/badge/Live-Demo-2563eb?style=flat-square"></a>
+  <img alt="PWA" src="https://img.shields.io/badge/PWA-Offline-059669?style=flat-square">
+  <img alt="IndexedDB" src="https://img.shields.io/badge/Data-IndexedDB-0f766e?style=flat-square">
+  <img alt="Internationalization" src="https://img.shields.io/badge/i18n-ZH%20%7C%20EN-7c3aed?style=flat-square">
+  <img alt="Accessibility" src="https://img.shields.io/badge/A11y-Keyboard-d97706?style=flat-square">
+  <img alt="License" src="https://img.shields.io/badge/License-Personal%20Use-475569?style=flat-square">
+</p>
 
 Task Tracer is a deadline-based task management PWA for personal planning, study routines, and recurring work. It keeps task data in the browser, works offline after loading, and focuses on clear deadline status, reminders, subtasks, sorting, and local backup.
-
-[Live Demo](https://todo.muquew.com/)
 
 ## Features
 
