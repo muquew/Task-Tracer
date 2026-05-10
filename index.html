@@ -973,7 +973,7 @@
                 initLanguage(); // 应用语言并同步 UI
 
                 // 4. 加载数据
-                state.tasks = await dbActions.getAllTasks();
+                state.tasks = await loadNormalizedTasks();
 
                 // 5. 初始化 UI 状态
                 DOM.inputs.date.min = utils.formatDateInputValue();  // 设置最小日期为今天
@@ -1321,7 +1321,7 @@
             return {
                 name: DOM.inputs.name.value.trim(),
                 description: DOM.inputs.desc.value.trim(),
-                subtasks: cloneSubtasks(state.tempSubtasks),
+                subtasks: cloneSubtasksWithUniqueIds(state.tempSubtasks),
                 dueDate,
                 reminderOffset: dueDate ? parseInt(DOM.inputs.reminderOffset.value, 10) : -1,
                 order: state.editingTaskId ? undefined : getNextTaskOrder()
@@ -1353,12 +1353,78 @@
         }
 
         async function refreshTasks() {
-            state.tasks = await dbActions.getAllTasks();
+            state.tasks = await loadNormalizedTasks();
             renderTaskList();
         }
 
         function cloneSubtasks(subtasks) {
             return Array.isArray(subtasks) ? subtasks.map(subtask => ({ ...subtask })) : [];
+        }
+
+        function cloneSubtasksWithUniqueIds(subtasks) {
+            const usedIds = new Set();
+            return cloneSubtasks(subtasks).map(subtask => ({
+                ...subtask,
+                id: normalizeUniqueNumericId(subtask.id, usedIds)
+            }));
+        }
+
+        function createUniqueNumericId(usedIds) {
+            let id;
+            do {
+                id = Date.now() + Math.floor(Math.random() * 1000000);
+            } while (usedIds.has(id));
+            usedIds.add(id);
+            return id;
+        }
+
+        function normalizeUniqueNumericId(value, usedIds) {
+            const id = Number(value);
+            if (Number.isFinite(id) && !usedIds.has(id)) {
+                usedIds.add(id);
+                return id;
+            }
+            return createUniqueNumericId(usedIds);
+        }
+
+        function createUniqueSubtaskId(subtasks) {
+            const usedIds = new Set(cloneSubtasks(subtasks)
+                .map(subtask => Number(subtask.id))
+                .filter(Number.isFinite));
+            return createUniqueNumericId(usedIds);
+        }
+
+        async function loadNormalizedTasks() {
+            const loadedTasks = await dbActions.getAllTasks();
+            const { tasks, changed } = normalizeTaskSubtaskIds(loadedTasks);
+            if (changed) await dbActions.updateTasks(tasks);
+            return tasks;
+        }
+
+        function normalizeTaskSubtaskIds(tasks) {
+            let changed = false;
+            const normalizedTasks = tasks.map(task => {
+                const result = normalizeSubtasksForTask(task.subtasks);
+                if (!result.changed) return task;
+                changed = true;
+                return { ...task, subtasks: result.subtasks };
+            });
+            return { tasks: normalizedTasks, changed };
+        }
+
+        function normalizeSubtasksForTask(subtasks) {
+            if (!Array.isArray(subtasks)) return { subtasks: [], changed: Boolean(subtasks) };
+
+            const usedIds = new Set();
+            let changed = false;
+            const normalizedSubtasks = subtasks.map(subtask => {
+                const sourceSubtask = subtask && typeof subtask === 'object' ? subtask : {};
+                const normalizedId = normalizeUniqueNumericId(sourceSubtask.id, usedIds);
+                if (sourceSubtask.id !== normalizedId) changed = true;
+                return { ...sourceSubtask, id: normalizedId };
+            });
+
+            return { subtasks: normalizedSubtasks, changed };
         }
 
         function editTask(id) {
@@ -1650,7 +1716,7 @@
         function handleAddSubtaskInput() {
             const val = DOM.inputs.subtask.value.trim();
             if (!val) return;
-            state.tempSubtasks.push({ id: Date.now(), text: val, completed: false });
+            state.tempSubtasks.push({ id: createUniqueSubtaskId(state.tempSubtasks), text: val, completed: false });
             DOM.inputs.subtask.value = '';
             renderSubtaskPreview();
             DOM.inputs.subtask.focus();
@@ -2190,7 +2256,7 @@
             setDialogFormLabels('modal.editTitle', 'actions.updateTask');
             DOM.inputs.name.value = editingTask.name;
             DOM.inputs.desc.value = editingTask.description || '';
-            state.tempSubtasks = cloneSubtasks(editingTask.subtasks);
+            state.tempSubtasks = cloneSubtasksWithUniqueIds(editingTask.subtasks);
 
             const dueDate = editingTask.dueDate ? utils.utcToLocal(editingTask.dueDate) : null;
             setDeadlineControls({
@@ -3058,21 +3124,8 @@
 
         function normalizeImportedTasks(rawTasks) {
             const usedIds = new Set();
-            const createId = () => {
-                let id;
-                do {
-                    id = Date.now() + Math.floor(Math.random() * 1000000);
-                } while (usedIds.has(id));
-                usedIds.add(id);
-                return id;
-            };
             const normalizeId = (value) => {
-                const id = Number(value);
-                if (Number.isFinite(id) && !usedIds.has(id)) {
-                    usedIds.add(id);
-                    return id;
-                }
-                return createId();
+                return normalizeUniqueNumericId(value, usedIds);
             };
 
             return rawTasks.map((rawTask, index) => normalizeImportedTask(rawTask, index, normalizeId));
@@ -3086,19 +3139,20 @@
                 description: task.description ? String(task.description) : '',
                 dueDate: normalizeStoredDate(task.dueDate),
                 reminderOffset: Number.isFinite(Number(task.reminderOffset)) ? Number(task.reminderOffset) : 15,
-                subtasks: normalizeImportedSubtasks(task.subtasks, index),
+                subtasks: normalizeImportedSubtasks(task.subtasks),
                 completed: typeof task.completed === 'boolean' ? task.completed : false,
                 createdAt: normalizeStoredDate(task.createdAt) || new Date().toISOString(),
                 order: Number.isFinite(Number(task.order)) ? Number(task.order) : (index + 1) * CONFIG.DEFAULTS.ORDER_STEP
             };
         }
 
-        function normalizeImportedSubtasks(rawSubtasks, taskIndex) {
+        function normalizeImportedSubtasks(rawSubtasks) {
             if (!Array.isArray(rawSubtasks)) return [];
-            return rawSubtasks.map((rawSubtask, subIndex) => {
+            const usedIds = new Set();
+            return rawSubtasks.map(rawSubtask => {
                 const subtask = rawSubtask && typeof rawSubtask === 'object' ? rawSubtask : {};
                 return {
-                    id: Number.isFinite(Number(subtask.id)) ? Number(subtask.id) : Date.now() + taskIndex * 100000 + subIndex,
+                    id: normalizeUniqueNumericId(subtask.id, usedIds),
                     text: String(subtask.text || '').trim(),
                     completed: !!subtask.completed
                 };

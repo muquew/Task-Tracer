@@ -723,7 +723,8 @@ def exercise_import(page: Page, imported_name: str) -> None:
                 "completed": False,
                 "order": 1000,
                 "subtasks": [
-                    {"id": 20001, "text": "Imported subtask", "completed": False}
+                    {"id": 20001, "text": "Imported subtask A", "completed": False},
+                    {"id": 20001, "text": "Imported subtask B", "completed": False},
                 ],
             }
         ],
@@ -741,8 +742,16 @@ def exercise_import(page: Page, imported_name: str) -> None:
         expect(page.locator("#taskModal")).to_be_visible()
         page.locator("#submitBtn").click()
         select_filter(page, "all")
-        expect(task_locator(page, imported_name)).to_have_count(1)
+        imported_task = task_locator(page, imported_name)
+        expect(imported_task).to_have_count(1)
         expect(page.locator(".task-item")).to_have_count(1)
+        expect(imported_task.locator(".subtasks-wrapper .progress-text")).to_contain_text("0/2")
+        imported_task.locator(".subtask-summary-bar").click()
+        expect(imported_task.locator(".subtask-display-item")).to_have_count(2)
+        imported_task.locator(".subtask-display-item").nth(1).click()
+        expect(imported_task.locator(".subtasks-wrapper .progress-text")).to_contain_text("1/2")
+        expect(imported_task.locator(".subtask-display-item").first.locator(".subtask-checkbox")).not_to_be_checked()
+        expect(imported_task.locator(".subtask-display-item").nth(1).locator(".subtask-checkbox")).to_be_checked()
     finally:
         Path(temp_path).unlink(missing_ok=True)
 
