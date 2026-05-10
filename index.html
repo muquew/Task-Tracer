@@ -889,6 +889,7 @@
             dateTimeFormatters: {}, // 缓存格式化器
             notificationsEnabled: false,
             notifiedTasks: new Set(),
+            pendingNotificationKeys: new Set(),
             themeTransitionInProgress: false,
         };
 
@@ -1474,8 +1475,6 @@
             // 双重检查：总开关关闭时直接退出
             if (!state.notificationsEnabled) return;
 
-            let hasNewNotifications = false;
-
             state.tasks.forEach(task => {
                 if (task.completed || !task.dueDate) return;
 
@@ -1483,7 +1482,7 @@
                 const timeLeft = utils.calculateTimeLeft(task.dueDate);
                 
                 // 获取任务的提醒阈值 (兼容旧数据，默认15分钟)
-                const offset = (task.reminderOffset !== undefined) ? task.reminderOffset : CONFIG.NOTIFICATIONS.DEFAULT_OFFSET_MINUTES;
+                const offset = getTaskReminderOffset(task);
 
                 // 如果设置为 -1，则不提醒
                 if (offset === -1) return;
@@ -1491,20 +1490,36 @@
                 // 规则优化：
                 // 1. timeLeft <= offset: 已经到了或者超过了提醒时间
                 // 2. timeLeft > offset - DELIVERY_WINDOW: 不能是太久以前的任务，限制在提醒时间点后的窗口内有效
-                // 3. !state.notifiedTasks.has(task.id): 还没通知过
-                if (timeLeft <= offset && timeLeft > (offset - CONFIG.NOTIFICATIONS.DELIVERY_WINDOW_MINUTES) && !state.notifiedTasks.has(task.id)) {
-                    sendNotification(utils.translate('notifications.taskDue').replace('{taskName}', task.name));
-                    state.notifiedTasks.add(task.id);
-                    hasNewNotifications = true;
-
-                    markReminderIconNotified(task.id);
+                // 3. !state.notifiedTasks.has(notificationKey): 当前提醒签名还没通知过
+                const notificationKey = getTaskNotificationKey(task, offset);
+                if (
+                    timeLeft <= offset
+                    && timeLeft > (offset - CONFIG.NOTIFICATIONS.DELIVERY_WINDOW_MINUTES)
+                    && !state.notifiedTasks.has(notificationKey)
+                    && !state.pendingNotificationKeys.has(notificationKey)
+                ) {
+                    state.pendingNotificationKeys.add(notificationKey);
+                    sendNotification(utils.translate('notifications.taskDue').replace('{taskName}', task.name))
+                        .then((sent) => {
+                            if (!sent) return;
+                            state.notifiedTasks.add(notificationKey);
+                            sessionStorage.setItem(CONFIG.STORAGE.NOTIFIED_TASKS, JSON.stringify([...state.notifiedTasks]));
+                            markReminderIconNotified(task.id);
+                        })
+                        .finally(() => {
+                            state.pendingNotificationKeys.delete(notificationKey);
+                        });
                 }
             });
+        }
 
-            // 如果有新通知，持久化 notifiedTasks 到 SessionStorage，防止刷新页面后重复弹窗
-            if (hasNewNotifications) {
-                sessionStorage.setItem(CONFIG.STORAGE.NOTIFIED_TASKS, JSON.stringify([...state.notifiedTasks]));
-            }
+        function getTaskReminderOffset(task) {
+            const offset = Number(task.reminderOffset);
+            return Number.isFinite(offset) ? offset : CONFIG.NOTIFICATIONS.DEFAULT_OFFSET_MINUTES;
+        }
+
+        function getTaskNotificationKey(task, offset = getTaskReminderOffset(task)) {
+            return `${task.id}|${task.dueDate || 'no-date'}|${offset}`;
         }
 
         function markReminderIconNotified(taskId) {
@@ -1513,11 +1528,8 @@
             if (icon) icon.style.color = 'var(--text-tertiary)';
         }
 
-        function sendNotification(body) {
-            if (!hasNotificationPermission()) return;
-
-            playNotificationFeedback();
-            vibrateNotification();
+        async function sendNotification(body) {
+            if (!hasNotificationPermission()) return false;
 
             const title = utils.translate('app.title');
             const options = {
@@ -1528,21 +1540,29 @@
             };
 
             // 尝试使用 Service Worker 发送（支持移动端），如果不行退回普通 Notification
+            let sent = false;
             if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-                showServiceWorkerNotification(title, options);
-                return;
+                sent = await showServiceWorkerNotification(title, options);
+            } else {
+                sent = showWindowNotification(title, options);
             }
 
-            showWindowNotification(title, options);
+            if (sent) {
+                playNotificationFeedback();
+                vibrateNotification();
+            }
+            return sent;
         }
 
-        function showServiceWorkerNotification(title, options) {
-            navigator.serviceWorker.ready
-                .then(registration => registration.showNotification(title, options))
-                .catch(error => {
-                    console.warn('Service worker notification failed:', error);
-                    showWindowNotification(title, options);
-                });
+        async function showServiceWorkerNotification(title, options) {
+            try {
+                const registration = await navigator.serviceWorker.ready;
+                await registration.showNotification(title, options);
+                return true;
+            } catch (error) {
+                console.warn('Service worker notification failed:', error);
+                return showWindowNotification(title, options);
+            }
         }
 
         function showWindowNotification(title, options) {
@@ -1552,8 +1572,10 @@
                     window.focus();
                     notification.close();
                 };
+                return true;
             } catch (error) {
                 console.warn('Window notification failed:', error);
+                return false;
             }
         }
 
@@ -1886,11 +1908,11 @@
             }
 
             reminderIcon.style.display = 'inline-block';
-            reminderIcon.style.color = state.notifiedTasks.has(task.id) ? 'var(--text-tertiary)' : 'var(--color-warning)';
+            reminderIcon.style.color = state.notifiedTasks.has(getTaskNotificationKey(task)) ? 'var(--text-tertiary)' : 'var(--color-warning)';
         }
 
         function shouldShowReminderIcon(task) {
-            return task.dueDate && !task.completed && task.reminderOffset !== undefined && task.reminderOffset !== -1;
+            return task.dueDate && !task.completed && getTaskReminderOffset(task) !== -1;
         }
 
         function renderTaskActionTitles(el, task, t) {
