@@ -2520,14 +2520,15 @@
         }
         function calculateTaskStats(tasks) {
             const archived = tasks.filter(task => task.archived).length;
-            const total = tasks.length;
-            const completed = tasks.filter(task => task.completed).length;
-            const deadlineTasks = tasks.filter(task => task.dueDate && !task.archived).length;
-            const overdue = tasks.filter(task => !task.archived && !task.completed && task.dueDate && utils.calculateTimeLeft(task.dueDate) < 0).length;
-            const completedToday = tasks.filter(task => getCompletionDateKey(task) === utils.formatDateInputValue()).length;
+            const activeScopeTasks = tasks.filter(task => !task.archived);
+            const total = activeScopeTasks.length;
+            const completed = activeScopeTasks.filter(task => task.completed).length;
+            const deadlineTasks = activeScopeTasks.filter(task => task.dueDate).length;
+            const overdue = activeScopeTasks.filter(task => !task.completed && task.dueDate && utils.calculateTimeLeft(task.dueDate) < 0).length;
+            const completedToday = activeScopeTasks.filter(task => getCompletionDateKey(task) === utils.formatDateInputValue()).length;
             const completionRate = total > 0 ? completed / total : 0;
             const overdueRate = deadlineTasks > 0 ? overdue / deadlineTasks : 0;
-            const streakDays = calculateCompletionStreak(tasks);
+            const streakDays = calculateCompletionStreak(activeScopeTasks);
             return {
                 total,
                 completed,
