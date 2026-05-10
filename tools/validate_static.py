@@ -274,6 +274,14 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Sort dropdown must expose a labelled listbox menu")
     if 'role="option" aria-selected=' not in index_html or "option.setAttribute('aria-selected'" not in index_html:
         errors.append("Dropdown options must expose and synchronize aria-selected")
+    if "handleDropdownButtonKeydown" not in index_html or "handleDropdownMenuKeydown" not in index_html:
+        errors.append("Custom dropdowns must support keyboard navigation")
+    if "handleViewSwitcherKeydown" not in index_html or 'role="tab" aria-selected="true" aria-controls="taskList" tabindex="0"' not in index_html:
+        errors.append("View tabs must use a roving keyboard tablist model")
+    if 'id="taskList" role="tabpanel"' not in index_html:
+        errors.append("Task view content must be exposed as the selected tab panel")
+    if 'id="menu" role="menu"' not in index_html or "handleMenuKeydown" not in index_html:
+        errors.append("Main app menu must expose menu semantics and keyboard navigation")
     if re.search(r"<label\b[^>]*for=['\"][^'\"]+['\"][^>]*>\s*</label>", index_html, re.DOTALL):
         errors.append("Form labels must not be empty")
     if '<html lang="zh-CN" dir="ltr">' not in index_html or "document.documentElement.dir = getLanguageDirection" not in index_html:
@@ -290,6 +298,10 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Keyboard-only status updates must use a screen-reader live region")
     if "handleTaskReorderKeydown" not in index_html or "task.actions.reorder" not in index_html:
         errors.append("Manual task ordering must support keyboard reordering")
+    if "syncTaskAccessibility(el, task)" not in index_html or "role', 'article'" not in index_html:
+        errors.append("Task cards must expose structured article labels and descriptions")
+    if "markDecorativeIcons" not in index_html:
+        errors.append("Decorative SVG icons must be hidden from the accessibility tree")
 
 
 def validate_security_headers(errors: list[str]) -> None:

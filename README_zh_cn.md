@@ -98,7 +98,7 @@ Task Tracer 默认把任务数据保存在当前浏览器的 IndexedDB 中，不
 - 语言资源：`resources/zh-CN.json`、`resources/en.json`
 - PWA Service Worker：`sw.js`
 - 部署安全响应头：`vercel.json`
-- 验证：静态一致性校验与 Playwright 浏览器冒烟测试
+- 验证：静态一致性校验、Playwright 浏览器冒烟测试和基于 axe 的无障碍/i18n 审计
 
 ## 许可
 

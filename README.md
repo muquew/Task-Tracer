@@ -98,7 +98,7 @@ Browser reminders depend on the page being open or woken by the browser. Task Tr
 - Language resources: `resources/zh-CN.json`, `resources/en.json`
 - PWA Service Worker: `sw.js`
 - Deployment security headers: `vercel.json`
-- Validation: static consistency checks and Playwright browser smoke tests
+- Validation: static consistency checks, Playwright browser smoke tests, and axe-backed accessibility/i18n audits
 
 ## License
 

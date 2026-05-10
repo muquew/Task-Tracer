@@ -31,6 +31,7 @@
             --color-success-dark: #047857;
             --color-warning: #d97706;
             --color-danger: #e11d48;
+            --color-danger-text: #be123c;
             --color-danger-light: rgba(225, 29, 72, 0.10);
             --color-info-light: rgba(37, 99, 235, 0.10);
             --color-success-light: rgba(5, 150, 105, 0.11);
@@ -93,6 +94,7 @@
             --color-success-dark: #10b981;
             --color-warning: #fbbf24;
             --color-danger: #f472b6;
+            --color-danger-text: #fb7185;
             --color-danger-light: rgba(244, 114, 182, 0.16);
             --color-info-light: rgba(96, 165, 250, 0.15);
             --color-success-light: rgba(52, 211, 153, 0.15);
@@ -234,7 +236,7 @@
         .calendar-nav-btn { min-width: 34px; min-height: 34px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface); color: var(--text-main); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 6px 9px; font: inherit; font-size: 13px; font-weight: 760; }
         .calendar-nav-btn:hover { color: var(--color-primary); background: var(--bg-hover); border-color: var(--color-primary); }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
-        .calendar-weekday { padding: 9px 8px; border-bottom: 1px solid var(--border-light); color: var(--text-tertiary); font-size: 12px; font-weight: 800; text-align: center; background: var(--bg-surface-alt); }
+        .calendar-weekday { padding: 9px 8px; border-bottom: 1px solid var(--border-light); color: var(--text-secondary); font-size: 12px; font-weight: 800; text-align: center; background: var(--bg-surface-alt); }
         .calendar-day { min-height: 118px; padding: 8px; border-right: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); background: var(--bg-surface); }
         .calendar-day:nth-child(7n) { border-right: 0; }
         .calendar-day.outside-month { background: var(--bg-surface-alt); color: var(--text-tertiary); }
@@ -275,7 +277,7 @@
         .stat-card { border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface); padding: 15px; box-shadow: 0 10px 28px var(--shadow-base); }
         .stat-label { color: var(--text-secondary); font-size: 13px; font-weight: 800; margin-bottom: 8px; }
         .stat-value { color: var(--text-main); font-size: 30px; line-height: 1; font-weight: 860; }
-        .stat-detail { margin-top: 8px; color: var(--text-tertiary); font-size: 12px; font-weight: 700; line-height: 1.45; }
+        .stat-detail { margin-top: 8px; color: var(--text-secondary); font-size: 12px; font-weight: 700; line-height: 1.45; }
         .stat-bar { height: 7px; margin-top: 13px; border-radius: var(--radius-pill); background: var(--bg-hover); overflow: hidden; }
         .stat-fill { height: 100%; width: var(--stat-value, 0%); border-radius: var(--radius-pill); background: var(--stat-color, var(--color-primary)); transition: width 0.4s ease; }
         .stat-card.success { --stat-color: var(--color-success); }
@@ -295,7 +297,7 @@
         .stats-trend-item { display: grid; grid-template-rows: 1fr auto; gap: 7px; min-width: 0; height: 112px; }
         .stats-trend-track { display: flex; align-items: end; min-height: 78px; border-radius: var(--radius-control); background: var(--bg-hover); overflow: hidden; }
         .stats-trend-bar { width: 100%; height: var(--trend-value, 0%); border-radius: var(--radius-control) var(--radius-control) 0 0; background: linear-gradient(180deg, var(--color-primary), var(--color-success)); transition: height 0.35s ease; }
-        .stats-trend-label { color: var(--text-tertiary); font-size: 11px; font-weight: 780; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .stats-trend-label { color: var(--text-secondary); font-size: 11px; font-weight: 780; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .tasks-section { position: relative; z-index: 1; margin-bottom: 25px; }
         .task-item {
             display: flex;
@@ -325,7 +327,7 @@
         .task-item.status-safe .task-date { color: var(--color-success-dark); background: var(--color-success-light); }
         .task-item.status-warning .task-date { color: var(--color-warning-text); background: var(--color-warning-light); }
         .task-item.status-danger .task-date,
-        .task-item.status-overdue .task-date { color: var(--color-danger); background: var(--color-danger-light); font-weight: 700; }
+        .task-item.status-overdue .task-date { color: var(--color-danger-text); background: var(--color-danger-light); font-weight: 700; }
         .task-item.status-no-deadline .task-date { color: var(--text-secondary); background: var(--bg-hover); }
         .task-item.completed .task-date { color: var(--text-tertiary); background: var(--bg-hover); font-weight: 500; }
         .task-item.completed .task-name,
@@ -395,7 +397,7 @@
         .subtask-display-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 13px; color: var(--text-main); cursor: pointer; transition: background-color 0.2s; }
         .subtask-text { line-height: 1.4; word-break: break-all; flex: 1; }
         .subtask-display-item.completed .subtask-text { text-decoration: line-through; color: var(--text-tertiary); }
-        .subtask-checkbox { flex: 0 0 18px; padding: 0; appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: 1px solid var(--border-base); border-radius: 4px; cursor: pointer; position: relative; transition: all 0.2s ease; margin-right: 8px; background-color: var(--bg-surface); }
+        .subtask-checkbox { flex: 0 0 24px; padding: 0; appearance: none; -webkit-appearance: none; width: 24px; height: 24px; border: 1px solid var(--border-base); border-radius: 4px; cursor: pointer; position: relative; transition: all 0.2s ease; margin-right: 8px; background-color: var(--bg-surface); }
         .subtask-checkbox:hover { border-color: var(--color-success); background-color: var(--bg-hover); }
         .subtask-checkbox:checked { border-color: var(--color-success); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E"); background-size: 80%; background-position: center; background-repeat: no-repeat; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .modal { display: none; position: fixed; inset: 0; width: 100%; height: 100%; background-color: var(--bg-overlay); z-index: 1000; justify-content: center; align-items: center; padding: 18px; overflow-y: auto; }
@@ -411,7 +413,7 @@
         .repeat-custom-row { display: grid; grid-template-columns: minmax(90px, 120px) 1fr; gap: 10px; align-items: center; margin-top: 10px; }
         .repeat-custom-row label { margin-bottom: 0; color: var(--text-secondary); font-weight: 650; }
         label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--text-main); font-size: 13px; }
-        .form-hint { margin-top: 7px; color: var(--text-tertiary); font-size: 12px; line-height: 1.45; }
+        .form-hint { margin-top: 7px; color: var(--text-secondary); font-size: 12px; line-height: 1.45; }
         input, textarea, select { width: 100%; padding: 10px 12px; border: 1px solid var(--border-base); border-radius: var(--radius-control); font-size: 14px; line-height: 1.45; transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-fast); background-color: var(--field-bg); color: var(--text-main); }
         select, select.search-input { appearance: none; -webkit-appearance: none; min-height: 42px; padding-right: 42px; background-color: var(--field-bg); background-image: var(--select-chevron); background-repeat: no-repeat; background-position: right 12px center; background-size: 18px; }
         input:focus, textarea:focus, select:focus { border-color: var(--color-primary); outline: none; box-shadow: 0 0 0 3px var(--color-info-light); background-color: var(--field-bg-focus); }
@@ -419,7 +421,7 @@
         .datetime-group { display: flex; gap: 10px; align-items: center; }
         .date-input, .time-input { flex: 1; }
         .checkbox-group { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
-        .checkbox-group input[type="checkbox"] { width: auto; }
+        .checkbox-group input[type="checkbox"] { width: 24px; height: 24px; flex: 0 0 24px; }
         .form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
         .confirm-message { font-size: 15px; line-height: 1.5; margin-bottom: 20px; color: var(--text-main); }
         .confirm-details { display: grid; gap: 10px; }
@@ -441,11 +443,12 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         .empty-state { text-align: center; padding: 34px 20px; color: var(--text-tertiary); background: rgba(255, 255, 255, 0.62); border-radius: var(--radius-surface); border: 1px dashed var(--border-base); }
         .empty-state svg { margin-bottom: 15px; opacity: 0.6; }
-        .empty-state h3 { font-size: 16px; margin-bottom: 8px; color: var(--text-secondary); }
+        .empty-state h2 { font-size: 16px; margin-bottom: 8px; color: var(--text-secondary); }
         .empty-state p { font-size: 14px; }
         .file-input { display: none; }
         .notification { position: fixed; top: 20px; right: 20px; background: var(--color-success); color: var(--text-inverse); padding: 12px 18px; border-radius: var(--radius-control); box-shadow: 0 16px 36px var(--shadow-float); z-index: 1001; display: flex; align-items: center; gap: 8px; transform: translateX(150%); transition: transform 0.3s ease; }
         .notification.show { transform: translateX(0); }
+        .notification.success { background: #047857; }
         .notification.error { background: var(--color-danger); }
         .notification.warning { background: var(--color-warning); color: var(--text-main); }
         .icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle; }
@@ -453,8 +456,8 @@
         .icon-sm { width: 16px; height: 16px; }
         .icon-lg { width: 80px; height: 80px; stroke-width: 1.5; }
         #lang-container { display: contents; }
-        .shortcut-hint { display: none; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); z-index: 2; pointer-events: none; color: var(--text-tertiary); font-size: 12px; }
-        .shortcut-kbd { font-family: monospace; border: 1px solid var(--border-base); border-radius: 4px; padding: 2px 6px; background: var(--bg-hover); white-space: nowrap; }
+        .shortcut-hint { display: none; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); z-index: 2; pointer-events: none; color: var(--text-secondary); font-size: 12px; }
+        .shortcut-kbd { font-family: monospace; border: 1px solid var(--border-base); border-radius: 4px; padding: 2px 6px; background: var(--bg-surface); color: var(--text-main); white-space: nowrap; }
         @media (min-width: 768px) { .shortcut-hint { display: block; } }
         .back-to-top { position: fixed; bottom: 20px; right: 20px; width: 45px; height: 45px; border-radius: 50%; background: var(--color-secondary); color: var(--text-inverse); border: 1px solid rgba(255, 255, 255, 0.12); cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 26px var(--shadow-heavy); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 999; }
         .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
@@ -545,7 +548,7 @@
             .task-item:hover, .icon-btn:hover, .btn-primary:hover, .back-to-top:hover, .footer-link:hover svg { transform: none; }
         }
         .app-footer { margin-top: 40px; padding: 20px 10px; text-align: center; font-size: 14px; color: var(--text-tertiary); border-top: 1px solid var(--shadow-base); background: linear-gradient(to top, rgba(0,0,0,0.03), transparent); }
-        .footer-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: all 0.25s ease; }
+        .footer-link { display: inline-flex; min-height: 32px; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: all 0.25s ease; }
         .footer-link:hover { color: var(--color-primary); }
         .footer-link svg { transition: transform 0.25s ease; fill: currentColor; }
         .footer-link:hover svg { transform: scale(1.15); }
@@ -658,30 +661,30 @@
             <button class="icon-btn" id="openMenuBtn" aria-label="打开菜单" data-i18n-aria-label="actions.openMenu" aria-haspopup="true" aria-expanded="false" aria-controls="menu" data-i18n-title="tooltips.menu" title="菜单 (Ctrl+M)">
                 <svg class="icon icon-fill"><use href="#icon-menu"></use></svg>
             </button>
-            <div class="menu" id="menu" aria-labelledby="openMenuBtn">
-                <button class="menu-item" data-i18n-title="actions.exportTitle" id="exportBtn" title="导出任务数据文件">
+            <div class="menu" id="menu" role="menu" aria-label="菜单" data-i18n-aria-label="tooltips.menu" aria-orientation="vertical">
+                <button class="menu-item" role="menuitem" data-i18n-title="actions.exportTitle" id="exportBtn" title="导出任务数据文件">
                     <svg class="icon"><use href="#icon-export"></use></svg>
                     <span data-i18n="actions.export">导出</span>
                 </button>
-                <button class="menu-item" data-i18n-title="actions.backupTitle" id="backupBtn" title="下载本地备份快照">
+                <button class="menu-item" role="menuitem" data-i18n-title="actions.backupTitle" id="backupBtn" title="下载本地备份快照">
                     <svg class="icon"><use href="#icon-backup"></use></svg>
                     <span data-i18n="actions.backup">立即备份</span>
                 </button>
-                <button class="menu-item" data-i18n-title="actions.importTitle" id="importBtn" title="导入并替换当前任务数据">
+                <button class="menu-item" role="menuitem" data-i18n-title="actions.importTitle" id="importBtn" title="导入并替换当前任务数据">
                     <svg class="icon"><use href="#icon-import"></use></svg>
                     <span data-i18n="actions.import">导入</span>
                 </button>
-                <div class="menu-divider"></div>
-                <button class="menu-item" data-i18n-title="actions.archiveCompletedTitle" id="archiveCompletedBtn" title="归档所有已完成任务">
+                <div class="menu-divider" role="separator"></div>
+                <button class="menu-item" role="menuitem" data-i18n-title="actions.archiveCompletedTitle" id="archiveCompletedBtn" title="归档所有已完成任务">
                     <svg class="icon"><use href="#icon-archive"></use></svg>
                     <span data-i18n="actions.archiveCompleted">归档已完成</span>
                 </button>
-                <button class="menu-item" data-i18n-title="actions.clearCompletedTitle" id="clearCompletedBtn" title="清除所有已完成的任务">
+                <button class="menu-item" role="menuitem" data-i18n-title="actions.clearCompletedTitle" id="clearCompletedBtn" title="清除所有已完成的任务">
                     <svg class="icon icon-sm" style="color: var(--color-danger);"><use href="#icon-trash-lines"></use></svg>
                     <span data-i18n="actions.clearCompleted">清除已完成</span>
                 </button>
-                <div class="menu-divider"></div>
-                <button class="menu-item" id="langMenuToggle" aria-haspopup="menu" aria-expanded="false" aria-controls="langSubmenu">
+                <div class="menu-divider" role="separator"></div>
+                <button class="menu-item" role="menuitem" id="langMenuToggle" aria-haspopup="menu" aria-expanded="false" aria-controls="langSubmenu">
                     <svg class="icon icon-sm" style="color: var(--color-primary);"><use href="#icon-globe-language"></use></svg>
                     <span data-i18n="app.language" style="margin-left: 10px;">语言</span>
                     <svg class="icon icon-sm" style="margin-left: auto; transition: transform 0.2s;"><use href="#icon-chevron-right"></use></svg>
@@ -691,22 +694,22 @@
         </div>
         <input accept=".json" class="file-input" id="importFile" type="file">
     </header>
-    <div class="main-content">
+    <main class="main-content" id="mainContent">
         <div class="controls-bar" role="toolbar" aria-label="任务工具栏" data-i18n-aria-label="app.toolbar">
             <div class="view-switcher" id="viewSwitcher" role="tablist" aria-label="视图切换" data-i18n-aria-label="views.label">
-                <button class="view-tab selected" type="button" role="tab" aria-selected="true" data-view="list">
+                <button class="view-tab selected" id="viewTab-list" type="button" role="tab" aria-selected="true" aria-controls="taskList" tabindex="0" data-view="list">
                     <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-list"></use></svg>
                     <span data-i18n="views.list">列表</span>
                 </button>
-                <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="calendar">
+                <button class="view-tab" id="viewTab-calendar" type="button" role="tab" aria-selected="false" aria-controls="taskList" tabindex="-1" data-view="calendar">
                     <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-calendar"></use></svg>
                     <span data-i18n="views.calendar">日历</span>
                 </button>
-                <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="timeline">
+                <button class="view-tab" id="viewTab-timeline" type="button" role="tab" aria-selected="false" aria-controls="taskList" tabindex="-1" data-view="timeline">
                     <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-timeline"></use></svg>
                     <span data-i18n="views.timeline">时间线</span>
                 </button>
-                <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="stats">
+                <button class="view-tab" id="viewTab-stats" type="button" role="tab" aria-selected="false" aria-controls="taskList" tabindex="-1" data-view="stats">
                     <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-chart"></use></svg>
                     <span data-i18n="views.stats">统计</span>
                 </button>
@@ -754,13 +757,13 @@
             </div>
         </div>
         <div class="tasks-section">
-            <div id="taskList" aria-live="polite">
+            <div id="taskList" role="tabpanel" aria-labelledby="viewTab-list" aria-live="polite">
                 <div class="loading-state" id="initial-loader">
                     <div class="spinner"></div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 </div>
 <button id="backToTopBtn" class="back-to-top" aria-label="回到顶部" data-i18n-aria-label="tooltips.backToTop" data-i18n-title="tooltips.backToTop" title="回到顶部 (Alt + T)">
     <svg class="icon" width="24" height="24" ><use href="#icon-arrow-up"></use></svg>
@@ -768,7 +771,7 @@
 <div class="modal" id="taskModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-content">
         <div class="modal-header">
-            <h3 class="modal-title" data-i18n="modal.addTitle" id="modalTitle">添加新任务</h3>
+            <h2 class="modal-title" data-i18n="modal.addTitle" id="modalTitle">添加新任务</h2>
             <button class="close-btn" id="closeModalBtn" aria-label="取消" data-i18n-aria-label="actions.cancel">&times;</button>
         </div>
         <div class="modal-body">
@@ -1071,6 +1074,7 @@
                 await initDB();
                 await loadSettings();
                 initLanguage();
+                markDecorativeIcons();
                 state.tasks = await loadNormalizedTasks();
                 DOM.inputs.date.min = utils.formatDateInputValue();
                 if (state.tasks.length === 0 && !(await dbActions.getConfig('sampleTasksAdded'))) {
@@ -1216,6 +1220,25 @@
                 if (!tab) return;
                 setViewMode(tab.dataset.view);
             });
+            DOM.viewSwitcher.addEventListener('keydown', handleViewSwitcherKeydown);
+        }
+        function handleViewSwitcherKeydown(e) {
+            if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+            const tabs = getViewTabs();
+            const currentIndex = Math.max(0, tabs.indexOf(e.target.closest('.view-tab')));
+            let nextIndex = currentIndex;
+            if (e.key === 'ArrowLeft') nextIndex = currentIndex === 0 ? tabs.length - 1 : currentIndex - 1;
+            if (e.key === 'ArrowRight') nextIndex = currentIndex === tabs.length - 1 ? 0 : currentIndex + 1;
+            if (e.key === 'Home') nextIndex = 0;
+            if (e.key === 'End') nextIndex = tabs.length - 1;
+            e.preventDefault();
+            const nextTab = tabs[nextIndex];
+            if (!nextTab) return;
+            setViewMode(nextTab.dataset.view);
+            nextTab.focus();
+        }
+        function getViewTabs() {
+            return Array.from(DOM.viewSwitcher.querySelectorAll('.view-tab'));
         }
         function setViewMode(viewMode) {
             if (!['list', 'calendar', 'timeline', 'stats'].includes(viewMode) || state.viewMode === viewMode) return;
@@ -1229,6 +1252,8 @@
                 const selected = tab.dataset.view === state.viewMode;
                 tab.classList.toggle(CONFIG.UI.CLASSES.SELECTED, selected);
                 tab.setAttribute('aria-selected', String(selected));
+                tab.tabIndex = selected ? 0 : -1;
+                if (selected && tab.id) DOM.taskList.setAttribute('aria-labelledby', tab.id);
             });
         }
         function bindNotificationEvents() {
@@ -1246,6 +1271,7 @@
             document.addEventListener('click', closeMainMenuOnOutsideClick);
             DOM.menu.langToggle.addEventListener('click', toggleLanguageSubmenu);
             DOM.menu.langContainer.addEventListener('click', handleLanguageMenuClick);
+            DOM.menu.container.addEventListener('keydown', handleMenuKeydown);
             DOM.menu.exportBtn.addEventListener('click', exportTasks);
             DOM.menu.backupBtn.addEventListener('click', backupTasks);
             DOM.menu.importBtn.addEventListener('click', () => DOM.menu.fileInput.click());
@@ -1266,11 +1292,64 @@
             const isExpanded = DOM.menu.langSubmenu.classList.toggle(CONFIG.UI.CLASSES.SHOW);
             DOM.menu.langToggle.classList.toggle(CONFIG.UI.CLASSES.OPEN, isExpanded);
             setExpanded(DOM.menu.langToggle, isExpanded);
+            if (isExpanded) focusFirstMenuItem(DOM.menu.langSubmenu);
         }
         function handleLanguageMenuClick(e) {
             if (e.target.classList.contains('lang-btn')) {
                 switchLanguage(e.target.dataset.lang);
             }
+        }
+        function handleMenuKeydown(e) {
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closeMenu();
+                DOM.menu.btn.focus();
+                return;
+            }
+            if (e.key === 'ArrowRight' && e.target === DOM.menu.langToggle) {
+                e.preventDefault();
+                openLanguageSubmenu();
+                focusFirstMenuItem(DOM.menu.langSubmenu);
+                return;
+            }
+            if (e.key === 'ArrowLeft' && DOM.menu.langSubmenu.contains(e.target)) {
+                e.preventDefault();
+                closeLanguageSubmenu();
+                DOM.menu.langToggle.focus();
+                return;
+            }
+            if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) return;
+            e.preventDefault();
+            moveMenuFocus(DOM.menu.container, e.key, e.target);
+        }
+        function moveMenuFocus(container, key, activeElement) {
+            const items = getVisibleMenuItems(container);
+            if (items.length === 0) return;
+            const currentIndex = Math.max(0, items.indexOf(activeElement));
+            let nextIndex = currentIndex;
+            if (key === 'ArrowDown') nextIndex = currentIndex === items.length - 1 ? 0 : currentIndex + 1;
+            if (key === 'ArrowUp') nextIndex = currentIndex === 0 ? items.length - 1 : currentIndex - 1;
+            if (key === 'Home') nextIndex = 0;
+            if (key === 'End') nextIndex = items.length - 1;
+            items[nextIndex].focus();
+        }
+        function getVisibleMenuItems(container) {
+            return Array.from(container.querySelectorAll('[role="menuitem"], [role="menuitemradio"]'))
+                .filter(item => item.offsetParent !== null && !item.disabled);
+        }
+        function focusFirstMenuItem(container) {
+            const item = getVisibleMenuItems(container)[0];
+            if (item) item.focus();
+        }
+        function openLanguageSubmenu() {
+            DOM.menu.langSubmenu.classList.add(CONFIG.UI.CLASSES.SHOW);
+            DOM.menu.langToggle.classList.add(CONFIG.UI.CLASSES.OPEN);
+            setExpanded(DOM.menu.langToggle, true);
+        }
+        function closeLanguageSubmenu() {
+            DOM.menu.langSubmenu.classList.remove(CONFIG.UI.CLASSES.SHOW);
+            DOM.menu.langToggle.classList.remove(CONFIG.UI.CLASSES.OPEN);
+            setExpanded(DOM.menu.langToggle, false);
         }
         function bindTaskListEvents() {
             DOM.taskList.addEventListener('click', handleTaskListClick);
@@ -2691,9 +2770,10 @@
         function createStatCard(labelKey, value, detail, ratio, tone) {
             const card = document.createElement('article');
             card.className = `stat-card ${tone}`;
+            const labelText = utils.translate(labelKey);
             const label = document.createElement('div');
             label.className = 'stat-label';
-            label.textContent = utils.translate(labelKey);
+            label.textContent = labelText;
             const valueEl = document.createElement('div');
             valueEl.className = 'stat-value';
             valueEl.textContent = value;
@@ -2703,6 +2783,7 @@
             const bar = document.createElement('div');
             bar.className = 'stat-bar';
             bar.setAttribute('role', 'meter');
+            bar.setAttribute('aria-label', `${labelText}: ${value}`);
             bar.setAttribute('aria-valuemin', '0');
             bar.setAttribute('aria-valuemax', '100');
             bar.setAttribute('aria-valuenow', String(Math.round(ratio * 100)));
@@ -2750,7 +2831,7 @@
         function createStatsTrend(trend) {
             const section = document.createElement('section');
             section.className = 'stats-trend';
-            const title = document.createElement('h3');
+            const title = document.createElement('h2');
             title.className = 'stats-trend-title';
             title.textContent = utils.translate('stats.completionTrend');
             const bars = document.createElement('div');
@@ -2909,6 +2990,8 @@
             renderTaskStatus(el, task, statusObj, timeLeft);
             renderTaskActionTitles(el, task, t);
             renderTaskDragHandle(el);
+            syncTaskAccessibility(el, task);
+            markDecorativeIcons(el);
         }
         function getTaskRenderStatus(task, t) {
             if (task.archived) {
@@ -2934,9 +3017,13 @@
         }
         function renderTaskHeader(el, task, statusObj, t) {
             el.className = `task-item ${statusObj.cls} ${task.completed ? 'completed-task' : ''} ${task.archived ? 'archived-task' : ''}`;
-            el.querySelector('.task-name').textContent = task.name;
+            const nameEl = el.querySelector('.task-name');
+            nameEl.id = `task-name-${task.id}`;
+            nameEl.textContent = task.name;
             renderReminderIcon(el, task);
-            el.querySelector('.task-date').textContent = hasTaskDueDate(task) ?
+            const dateEl = el.querySelector('.task-date');
+            dateEl.id = `task-date-${task.id}`;
+            dateEl.textContent = hasTaskDueDate(task) ?
                 `${t['task.deadline']}: ${formatTaskDueDate(task)}` : t['task.noDeadline'];
         }
         function renderTaskDescription(el, task) {
@@ -3004,6 +3091,7 @@
         }
         function renderTaskStatus(el, task, statusObj, timeLeft) {
             const statusInd = el.querySelector('.status-indicator');
+            statusInd.id = `task-status-${task.id}`;
             const statusText = statusInd.querySelector('.status-text');
             statusText.textContent = statusObj.text;
             let timeEl = statusInd.querySelector('.status-time-left');
@@ -3045,6 +3133,11 @@
             if (editButton) editButton.hidden = !!task.archived;
             setButtonLabel(editButton, t['task.actions.edit']);
             setButtonLabel(el.querySelector('[data-action="delete"]'), t['task.actions.delete']);
+        }
+        function syncTaskAccessibility(el, task) {
+            el.setAttribute('role', 'article');
+            el.setAttribute('aria-labelledby', `task-name-${task.id}`);
+            el.setAttribute('aria-describedby', `task-date-${task.id} task-status-${task.id}`);
         }
         function renderTaskSnoozeButton(button, task, t) {
             if (!button) return;
@@ -3207,6 +3300,13 @@
             use.setAttribute('href', `#${symbolId}`);
             svg.appendChild(use);
             return svg;
+        }
+        function markDecorativeIcons(root = document) {
+            root.querySelectorAll('svg.icon').forEach(svg => {
+                if (svg.getAttribute('role') === 'img') return;
+                svg.setAttribute('aria-hidden', 'true');
+                svg.setAttribute('focusable', 'false');
+            });
         }
         function createSubtaskDeleteButton(index, text) {
             const deleteBtn = document.createElement('button');
@@ -3619,11 +3719,44 @@
                 e.stopPropagation();
                 toggleDropdown(dropdown);
             });
+            dropdown.btn.addEventListener('keydown', (e) => handleDropdownButtonKeydown(e, dropdown));
+            getDropdownMenu(dropdown).addEventListener('keydown', (e) => handleDropdownMenuKeydown(e, dropdown));
+        }
+        function handleDropdownButtonKeydown(e, dropdown) {
+            if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) return;
+            e.preventDefault();
+            openDropdownAndFocusOption(dropdown, e.key);
+        }
+        function handleDropdownMenuKeydown(e, dropdown) {
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closeDropdown(dropdown);
+                dropdown.btn.focus();
+                return;
+            }
+            if (!['ArrowDown', 'ArrowUp', 'Home', 'End', 'Enter', ' '].includes(e.key)) return;
+            const option = e.target.closest('.dropdown-option');
+            if (!option) return;
+            e.preventDefault();
+            if (e.key === 'Enter' || e.key === ' ') {
+                option.click();
+                return;
+            }
+            moveDropdownFocus(dropdown, e.key, option);
         }
         function toggleDropdown(dropdown) {
             const opening = !isElementOpen(dropdown.container);
             closeAllDropdowns();
-            if (opening) openPopover(dropdown.container, dropdown.btn);
+            if (opening) openDropdownAndFocusOption(dropdown, 'selected');
+        }
+        function openDropdownAndFocusOption(dropdown, key) {
+            openPopover(dropdown.container, dropdown.btn);
+            const options = getDropdownOptions(dropdown);
+            if (options.length === 0) return;
+            let target = options.find(option => option.classList.contains(CONFIG.UI.CLASSES.SELECTED)) || options[0];
+            if (key === 'ArrowUp' || key === 'End') target = options[options.length - 1];
+            if (key === 'Home') target = options[0];
+            requestAnimationFrame(() => target.focus());
         }
         function handleFilterDropdownClick(e) {
             const option = e.target.closest('.dropdown-option');
@@ -3649,6 +3782,24 @@
         }
         function closeDropdown(dropdown) {
             closePopover(dropdown.container, dropdown.btn);
+        }
+        function getDropdownMenu(dropdown) {
+            return dropdown.container.querySelector('.dropdown-menu-content');
+        }
+        function getDropdownOptions(dropdown) {
+            return Array.from(dropdown.container.querySelectorAll('.dropdown-option'))
+                .filter(option => option.offsetParent !== null && !option.disabled);
+        }
+        function moveDropdownFocus(dropdown, key, activeOption) {
+            const options = getDropdownOptions(dropdown);
+            if (options.length === 0) return;
+            const currentIndex = Math.max(0, options.indexOf(activeOption));
+            let nextIndex = currentIndex;
+            if (key === 'ArrowDown') nextIndex = currentIndex === options.length - 1 ? 0 : currentIndex + 1;
+            if (key === 'ArrowUp') nextIndex = currentIndex === 0 ? options.length - 1 : currentIndex - 1;
+            if (key === 'Home') nextIndex = 0;
+            if (key === 'End') nextIndex = options.length - 1;
+            options[nextIndex].focus();
         }
         function syncDropdowns({ focusTrigger = null } = {}) {
             const filterOpt = DOM.dropdowns.filter.container.querySelector(`.dropdown-option[data-filter="${state.filter}"]`);
@@ -3678,13 +3829,12 @@
         }
         function closeMenu() {
             closePopover(DOM.menu.container, DOM.menu.btn);
-            DOM.menu.langSubmenu.classList.remove(CONFIG.UI.CLASSES.SHOW);
-            DOM.menu.langToggle.classList.remove(CONFIG.UI.CLASSES.OPEN);
-            setExpanded(DOM.menu.langToggle, false);
+            closeLanguageSubmenu();
         }
         function openPopover(container, btn) {
             container.classList.add(CONFIG.UI.CLASSES.SHOW);
             setExpanded(btn, true);
+            if (container === DOM.menu.container) requestAnimationFrame(() => focusFirstMenuItem(container));
         }
         function closePopover(container, btn) {
             container.classList.remove(CONFIG.UI.CLASSES.SHOW);
@@ -3734,8 +3884,10 @@
         function handleCalendarDetailClick(e) {
             const close = e.target.closest('[data-calendar-detail-close]');
             if (close) {
+                const closedDateKey = state.calendarDetailDateKey;
                 state.calendarDetailDateKey = '';
                 renderTaskList();
+                requestAnimationFrame(() => focusCalendarMoreButton(closedDateKey));
                 return true;
             }
             const button = e.target.closest('[data-calendar-detail-date]');
@@ -3745,8 +3897,14 @@
             requestAnimationFrame(() => {
                 const detail = DOM.taskList.querySelector('.calendar-day-detail');
                 if (detail) detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                const closeButton = detail ? detail.querySelector('.calendar-detail-close') : null;
+                if (closeButton) closeButton.focus();
             });
             return true;
+        }
+        function focusCalendarMoreButton(dateKey) {
+            const button = DOM.taskList.querySelector(`[data-calendar-detail-date="${CSS.escape(dateKey)}"]`);
+            if (button) button.focus();
         }
         function handleCalendarAddClick(e) {
             const button = e.target.closest('[data-calendar-add-date]');
@@ -4119,10 +4277,10 @@
             }
         }
         function getEmptyStateHTML(t) {
-            return `<div class="empty-state"><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#icon-empty-tasks"></use></svg><h3>${t['empty.noTasks.title']}</h3><p>${t['empty.noTasks.description']}</p></div>`;
+            return `<div class="empty-state"><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#icon-empty-tasks"></use></svg><h2>${t['empty.noTasks.title']}</h2><p>${t['empty.noTasks.description']}</p></div>`;
         }
         function getEmptyMatchHTML(t) {
-            return `<div class="empty-state"><svg class="icon icon-lg icon-fill" aria-hidden="true" focusable="false"><use href="#icon-empty-search"></use></svg><h3>${t['empty.noMatches.title']}</h3><p>${t['empty.noMatches.description']}</p></div>`
+            return `<div class="empty-state"><svg class="icon icon-lg icon-fill" aria-hidden="true" focusable="false"><use href="#icon-empty-search"></use></svg><h2>${t['empty.noMatches.title']}</h2><p>${t['empty.noMatches.description']}</p></div>`
         }
         function handleVisibilityChange() {
             refreshTaskTimers();

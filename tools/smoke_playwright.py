@@ -316,9 +316,49 @@ def assert_accessibility_baseline(page: Page, label: str) -> None:
                 }
             });
 
+            document.querySelectorAll('[aria-controls]').forEach((el) => {
+                const targetId = el.getAttribute('aria-controls');
+                if (targetId && !document.getElementById(targetId)) {
+                    issues.push(`${describe(el)} aria-controls points to missing #${targetId}`);
+                }
+            });
+
+            document.querySelectorAll('[aria-labelledby]').forEach((el) => {
+                const labelledby = normalize(el.getAttribute('aria-labelledby'));
+                if (labelledby && !textByIds(labelledby)) {
+                    issues.push(`${describe(el)} aria-labelledby points to empty text`);
+                }
+            });
+
+            document.querySelectorAll('[aria-describedby]').forEach((el) => {
+                const describedby = normalize(el.getAttribute('aria-describedby'));
+                if (describedby && !textByIds(describedby)) {
+                    issues.push(`${describe(el)} aria-describedby points to empty text`);
+                }
+            });
+
+            document.querySelectorAll('[role="tablist"]').forEach((tablist) => {
+                const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+                const selectedTabs = tabs.filter((tab) => tab.getAttribute('aria-selected') === 'true');
+                if (selectedTabs.length !== 1) issues.push(`${describe(tablist)} must have exactly one selected tab`);
+                tabs.forEach((tab) => {
+                    if (!tab.id) issues.push(`${describe(tab)} tab has no id`);
+                    if (!tab.getAttribute('aria-controls')) issues.push(`${describe(tab)} tab has no aria-controls`);
+                    if (!['0', '-1'].includes(tab.getAttribute('tabindex'))) issues.push(`${describe(tab)} tab has no roving tabindex`);
+                });
+            });
+
             document.querySelectorAll('.drag-handle').forEach((handle) => {
                 if (handle.tagName.toLowerCase() !== 'button') issues.push(`${describe(handle)} is not a button`);
                 if (!accessibleName(handle)) issues.push(`${describe(handle)} has no reorder label`);
+            });
+
+            document.querySelectorAll('svg.icon').forEach((svg) => {
+                if (isHidden(svg)) return;
+                if (svg.getAttribute('role') === 'img') return;
+                if (svg.getAttribute('aria-hidden') !== 'true' || svg.getAttribute('focusable') !== 'false') {
+                    issues.push(`${describe(svg)} decorative icon is not aria-hidden`);
+                }
             });
 
             const visibleDialog = Array.from(document.querySelectorAll('[role="dialog"]')).find((dialog) => !isHidden(dialog));
@@ -379,6 +419,55 @@ def exercise_shortcuts_and_modal_closing(page: Page) -> None:
     wait_for_class(page, "#menu", "show")
     page.keyboard.press("Escape")
     wait_for_class(page, "#menu", "show", present=False)
+
+
+def exercise_keyboard_navigation_patterns(page: Page) -> None:
+    page.locator("#viewTab-list").focus()
+    page.keyboard.press("ArrowRight")
+    expect(page.locator("#viewTab-calendar")).to_be_focused()
+    expect(page.locator("#viewTab-calendar")).to_have_attribute("aria-selected", "true")
+    expect(page.locator("#taskList")).to_have_attribute("aria-labelledby", "viewTab-calendar")
+    page.keyboard.press("End")
+    expect(page.locator("#viewTab-stats")).to_be_focused()
+    expect(page.locator("#viewTab-stats")).to_have_attribute("aria-selected", "true")
+    page.keyboard.press("Home")
+    expect(page.locator("#viewTab-list")).to_be_focused()
+    expect(page.locator("#viewTab-list")).to_have_attribute("aria-selected", "true")
+
+    page.locator("#sortBtn").focus()
+    page.keyboard.press("ArrowDown")
+    wait_for_class(page, "#sortDropdown", "show")
+    expect(page.locator('#sortDropdown .dropdown-option[data-sort="smart"]')).to_be_focused()
+    page.keyboard.press("ArrowDown")
+    expect(page.locator('#sortDropdown .dropdown-option[data-sort="created-desc"]')).to_be_focused()
+    page.keyboard.press("Enter")
+    expect(page.locator("#sortBtn")).to_be_focused()
+    expect(page.locator("#sortBtn")).to_have_attribute("aria-expanded", "false")
+    expect(page.locator('#sortDropdown .dropdown-option[data-sort="created-desc"]')).to_have_attribute("aria-selected", "true")
+
+    page.locator("#filterBtn").focus()
+    page.keyboard.press("ArrowDown")
+    wait_for_class(page, "#filterDropdown", "show")
+    page.keyboard.press("Escape")
+    expect(page.locator("#filterBtn")).to_be_focused()
+    expect(page.locator("#filterBtn")).to_have_attribute("aria-expanded", "false")
+
+    page.locator("#openMenuBtn").focus()
+    page.keyboard.press("Enter")
+    wait_for_class(page, "#menu", "show")
+    expect(page.locator("#exportBtn")).to_be_focused()
+    page.keyboard.press("ArrowDown")
+    expect(page.locator("#backupBtn")).to_be_focused()
+    page.keyboard.press("End")
+    expect(page.locator("#langMenuToggle")).to_be_focused()
+    page.keyboard.press("ArrowRight")
+    expect(page.locator('#lang-container .lang-btn[data-lang="zh-CN"]')).to_be_focused()
+    page.keyboard.press("ArrowLeft")
+    expect(page.locator("#langMenuToggle")).to_be_focused()
+    page.keyboard.press("Escape")
+    wait_for_class(page, "#menu", "show", present=False)
+    expect(page.locator("#openMenuBtn")).to_be_focused()
+    select_sort(page, "smart")
 
 
 def exercise_modal_focus_trap(page: Page) -> None:
@@ -1617,6 +1706,7 @@ def smoke(url: str) -> None:
         assert_accessibility_baseline(page, "empty task list")
 
         exercise_shortcuts_and_modal_closing(page)
+        exercise_keyboard_navigation_patterns(page)
         exercise_task_name_validation(page)
         exercise_empty_state_actions(page)
         exercise_import_error(page)

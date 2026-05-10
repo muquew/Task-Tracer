@@ -8,6 +8,7 @@
 - `sw.js`: Service Worker，负责 App Shell 缓存、语言资源更新策略、静态资源缓存和通知点击回到应用。
 - `manifest.json`: PWA manifest。
 - `resources/zh-CN.json`、`resources/en.json`: 外置语言文件，避免主 HTML 继续膨胀。
+- `docs/accessibility-i18n-audit.md`: 无障碍、键盘、读屏器语义和 i18n 审计基线。
 
 ## index.html 结构
 
@@ -415,4 +416,5 @@
 - 修改缓存资源或运行时代码时，同步递增 `CACHE_NAME`。
 - 新增文案必须同时更新 `zh-CN.json` 和 `en.json`，并通过 `tools/validate_static.py`。
 - 新增交互控件必须有可访问名称，键盘路径要纳入 `tools/smoke_playwright.py`。
+- 修改交互结构、焦点流、颜色对比或翻译渲染时，运行 `tools/accessibility_i18n_audit.py`。
 - 新增任务字段要同步导入规范化、导出格式和内部文档。
