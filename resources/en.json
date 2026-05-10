@@ -62,7 +62,8 @@
     "completedTasks": "Completed",
     "overdueTasks": "Active overdue",
     "archivedTasks": "Archived",
-    "todayCompleted": "Completed today"
+    "todayCompleted": "Completed today",
+    "openFilter": "View {label}: {count}"
   },
   "filters": {
     "all": "All",

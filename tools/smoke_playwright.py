@@ -872,7 +872,7 @@ def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_nam
     expect(page.locator(".task-item")).to_have_count(3)
 
 
-def exercise_stats_view(page: Page) -> None:
+def exercise_stats_view(page: Page, completed_name: str) -> None:
     select_view(page, "stats")
     expect(page.locator(".stats-view")).to_be_visible()
     expect(page.locator(".stat-card").nth(0).locator(".stat-value")).to_have_text("33%")
@@ -880,7 +880,10 @@ def exercise_stats_view(page: Page) -> None:
     expect(page.locator(".stat-card").nth(2).locator(".stat-value")).to_contain_text("1")
     expect(page.locator(".stats-mini")).to_have_count(5)
     assert_accessibility_baseline(page, "stats view")
-    select_view(page, "list")
+    page.locator('.stats-mini[data-stats-filter="completed"]').click()
+    expect(page.locator("#currentFilterLabel")).to_have_text(re.compile("已完成|Completed", re.I))
+    expect(task_locator(page, completed_name)).to_have_count(1)
+    expect(page.locator("#filterBtn")).to_be_focused()
 
 
 def complete_task(page: Page, task_name: str) -> None:
@@ -1424,7 +1427,7 @@ def smoke(url: str) -> None:
         exercise_manual_reorder(page, alpha_edited, beta_name, overdue_name)
         exercise_back_to_top(page)
         complete_task(page, alpha_edited)
-        exercise_stats_view(page)
+        exercise_stats_view(page, alpha_edited)
         select_filter(page, "active")
         expect(task_locator(page, beta_name)).to_have_count(1)
         expect(task_locator(page, overdue_name)).to_have_count(1)

@@ -140,7 +140,7 @@
         .container, .task-item, .modal-content, input, textarea, select, .menu, .controls-bar { transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease); }
         .container { width: min(100%, var(--app-width)); margin: 0 auto; background: transparent; border-radius: 0; box-shadow: none; position: relative; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-        .icon-btn:focus-visible, .lang-btn:focus-visible, .menu-item:focus-visible, .dropdown-btn:focus-visible, .dropdown-option:focus-visible, .view-tab:focus-visible, .calendar-nav-btn:focus-visible, .calendar-add-btn:focus-visible, .calendar-task:focus-visible, .action-btn:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .btn-icon-small:focus-visible, .back-to-top:focus-visible, .subtask-summary-bar:focus-visible, .subtask-delete-btn:focus-visible, .subtask-checkbox:focus-visible, .subtask-preview-text:focus-visible, .drag-handle:focus-visible {
+        .icon-btn:focus-visible, .lang-btn:focus-visible, .menu-item:focus-visible, .dropdown-btn:focus-visible, .dropdown-option:focus-visible, .view-tab:focus-visible, .calendar-nav-btn:focus-visible, .calendar-add-btn:focus-visible, .calendar-task:focus-visible, .stats-mini:focus-visible, .action-btn:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .btn-icon-small:focus-visible, .back-to-top:focus-visible, .subtask-summary-bar:focus-visible, .subtask-delete-btn:focus-visible, .subtask-checkbox:focus-visible, .subtask-preview-text:focus-visible, .drag-handle:focus-visible {
             outline: 2px solid var(--color-primary);
             outline-offset: 2px;
             box-shadow: 0 0 0 4px var(--focus-ring);
@@ -271,9 +271,13 @@
         .stat-card.warning { --stat-color: var(--color-warning); }
         .stat-card.primary { --stat-color: var(--color-primary); }
         .stats-detail-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
-        .stats-mini { border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-alt); padding: 12px; }
+        .stats-mini { position: relative; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-alt); padding: 12px; color: inherit; font: inherit; text-align: left; }
+        button.stats-mini { width: 100%; cursor: pointer; transition: transform var(--motion-fast), background-color var(--motion-fast), border-color var(--motion-fast), box-shadow var(--motion-fast); }
+        button.stats-mini:hover { transform: translateY(-1px); background: var(--bg-surface); border-color: var(--color-primary); box-shadow: 0 10px 24px var(--shadow-base); }
         .stats-mini strong { display: block; color: var(--text-main); font-size: 20px; margin-bottom: 4px; }
         .stats-mini span { color: var(--text-secondary); font-size: 12px; font-weight: 700; }
+        .stats-mini-action { position: absolute; top: 10px; right: 10px; color: var(--text-tertiary); opacity: 0.58; }
+        button.stats-mini:hover .stats-mini-action { color: var(--color-primary); opacity: 1; }
         .tasks-section { position: relative; z-index: 1; margin-bottom: 25px; }
         .task-item {
             display: flex;
@@ -925,7 +929,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '3.4'
+                RESOURCE_VERSION: '3.5'
             },
             BACKUP: {
                 FILE_VERSION: '2.0',
@@ -2480,22 +2484,34 @@
             const grid = document.createElement('div');
             grid.className = 'stats-detail-grid';
             [
-                ['stats.totalTasks', stats.total],
-                ['stats.completedTasks', stats.completed],
-                ['stats.overdueTasks', stats.overdue],
-                ['stats.archivedTasks', stats.archived],
-                ['stats.todayCompleted', stats.completedToday]
-            ].forEach(([key, value]) => grid.appendChild(createStatsMini(key, value)));
+                ['stats.totalTasks', stats.total, 'all'],
+                ['stats.completedTasks', stats.completed, 'completed'],
+                ['stats.overdueTasks', stats.overdue, 'overdue'],
+                ['stats.archivedTasks', stats.archived, 'archived'],
+                ['stats.todayCompleted', stats.completedToday, null]
+            ].forEach(([key, value, filter]) => grid.appendChild(createStatsMini(key, value, filter)));
             return grid;
         }
-        function createStatsMini(labelKey, value) {
-            const item = document.createElement('div');
+        function createStatsMini(labelKey, value, filter) {
+            const labelText = utils.translate(labelKey);
+            const item = document.createElement(filter ? 'button' : 'div');
             item.className = 'stats-mini';
+            if (filter) {
+                item.type = 'button';
+                item.dataset.statsFilter = filter;
+                const actionLabel = utils.translate('stats.openFilter').replace('{label}', labelText).replace('{count}', value);
+                item.title = actionLabel;
+                item.setAttribute('aria-label', actionLabel);
+            }
             const strong = document.createElement('strong');
             strong.textContent = String(value);
             const label = document.createElement('span');
-            label.textContent = utils.translate(labelKey);
+            label.textContent = labelText;
             item.append(strong, label);
+            if (filter) {
+                const icon = createIcon('icon-list', 'icon icon-sm stats-mini-action');
+                item.appendChild(icon);
+            }
             return item;
         }
         function calculateTaskStats(tasks) {
@@ -3399,6 +3415,7 @@
             return el.classList.contains(CONFIG.UI.CLASSES.SHOW);
         }
         function handleTaskListClick(e) {
+            if (handleStatsShortcutClick(e)) return;
             if (handleCalendarActionClick(e)) return;
             if (handleCalendarAddClick(e)) return;
             if (handleCalendarTaskClick(e)) return;
@@ -3406,6 +3423,16 @@
             if (handleSubtaskRowClick(e)) return;
             if (handleSubtaskSummaryClick(e)) return;
             handleTaskActionClick(e);
+        }
+        function handleStatsShortcutClick(e) {
+            const button = e.target.closest('[data-stats-filter]');
+            if (!button) return false;
+            state.filter = button.dataset.statsFilter;
+            state.viewMode = 'list';
+            syncViewSwitcher();
+            renderTaskList();
+            syncDropdowns({ focusTrigger: DOM.dropdowns.filter.btn });
+            return true;
         }
         function handleCalendarActionClick(e) {
             const button = e.target.closest('[data-calendar-action]');

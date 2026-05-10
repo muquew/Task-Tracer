@@ -62,7 +62,8 @@
     "completedTasks": "已完成",
     "overdueTasks": "逾期进行中",
     "archivedTasks": "已归档",
-    "todayCompleted": "今日完成"
+    "todayCompleted": "今日完成",
+    "openFilter": "查看 {label}：{count} 个"
   },
   "filters": {
     "all": "全部",
