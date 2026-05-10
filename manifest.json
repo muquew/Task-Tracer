@@ -3,8 +3,8 @@
   "short_name": "TaskTracer",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#4b6cb7",
+  "background_color": "#f4f6f5",
+  "theme_color": "#263330",
   "orientation": "portrait-primary",
   "icons": [
     {
