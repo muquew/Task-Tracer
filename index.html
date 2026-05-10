@@ -914,28 +914,39 @@
         }
 
         function bindMenuEvents() {
-            DOM.menu.btn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(DOM.menu.container, DOM.menu.btn); });
-            document.addEventListener('click', (e) => {
-                if (DOM.menu.container.classList.contains(CONFIG.UI.CLASSES.SHOW) && !DOM.menu.container.contains(e.target) && !DOM.menu.btn.contains(e.target)) {
-                    closeMenu();
-                }
-            });
+            DOM.menu.btn.addEventListener('click', handleMainMenuClick);
+            document.addEventListener('click', closeMainMenuOnOutsideClick);
 
-            DOM.menu.langToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const isExpanded = DOM.menu.langSubmenu.classList.toggle(CONFIG.UI.CLASSES.SHOW);
-                DOM.menu.langToggle.classList.toggle(CONFIG.UI.CLASSES.OPEN, isExpanded);
-                DOM.menu.langToggle.setAttribute('aria-expanded', isExpanded.toString());
-            });
-            DOM.menu.langContainer.addEventListener('click', (e) => {
-                if (e.target.classList.contains('lang-btn')) {
-                    switchLanguage(e.target.dataset.lang);
-                }
-            });
+            DOM.menu.langToggle.addEventListener('click', toggleLanguageSubmenu);
+            DOM.menu.langContainer.addEventListener('click', handleLanguageMenuClick);
 
             DOM.menu.exportBtn.addEventListener('click', exportTasks);
             DOM.menu.importBtn.addEventListener('click', () => DOM.menu.fileInput.click());
             DOM.menu.fileInput.addEventListener('change', (e) => importTasks(e.target.files[0]));
+        }
+
+        function handleMainMenuClick(e) {
+            e.stopPropagation();
+            toggleMenu(DOM.menu.container, DOM.menu.btn);
+        }
+
+        function closeMainMenuOnOutsideClick(e) {
+            if (isElementOpen(DOM.menu.container) && !DOM.menu.container.contains(e.target) && !DOM.menu.btn.contains(e.target)) {
+                closeMenu();
+            }
+        }
+
+        function toggleLanguageSubmenu(e) {
+            e.stopPropagation();
+            const isExpanded = DOM.menu.langSubmenu.classList.toggle(CONFIG.UI.CLASSES.SHOW);
+            DOM.menu.langToggle.classList.toggle(CONFIG.UI.CLASSES.OPEN, isExpanded);
+            setExpanded(DOM.menu.langToggle, isExpanded);
+        }
+
+        function handleLanguageMenuClick(e) {
+            if (e.target.classList.contains('lang-btn')) {
+                switchLanguage(e.target.dataset.lang);
+            }
         }
 
         function bindTaskListEvents() {
@@ -2122,51 +2133,55 @@
         // ==========================================
 
         function setupDropdowns() {
-            // 辅助：切换显示
-            const toggle = (c, b) => {
-                const opening = !c.classList.contains(CONFIG.UI.CLASSES.SHOW);
-                // 关闭其他
-                Object.values(DOM.dropdowns).forEach(d => {
-                    d.container.classList.remove(CONFIG.UI.CLASSES.SHOW);
-                    d.btn.setAttribute('aria-expanded', 'false');
-                });
-                if (opening) {
-                    c.classList.add(CONFIG.UI.CLASSES.SHOW);
-                    b.setAttribute('aria-expanded', 'true');
-                }
-            };
+            bindDropdownToggle(DOM.dropdowns.filter);
+            bindDropdownToggle(DOM.dropdowns.sort);
 
-            // 绑定点击
-            DOM.dropdowns.filter.btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(DOM.dropdowns.filter.container, DOM.dropdowns.filter.btn); });
-            DOM.dropdowns.sort.btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(DOM.dropdowns.sort.container, DOM.dropdowns.sort.btn); });
+            DOM.dropdowns.filter.container.addEventListener('click', handleFilterDropdownClick);
+            DOM.dropdowns.sort.container.addEventListener('click', handleSortDropdownClick);
+            document.addEventListener('click', closeDropdownsOnOutsideClick);
+        }
 
-            // 选项点击
-            DOM.dropdowns.filter.container.addEventListener('click', (e) => {
-                const opt = e.target.closest('.dropdown-option');
-                if (opt) {
-                    state.filter = opt.dataset.filter;
-                    renderTaskList();
-                    syncDropdowns();
-                }
+        function bindDropdownToggle(dropdown) {
+            dropdown.btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleDropdown(dropdown);
             });
-            DOM.dropdowns.sort.container.addEventListener('click', (e) => {
-                const opt = e.target.closest('.dropdown-option');
-                if (opt) {
-                    state.sort = opt.dataset.sort;
-                    renderTaskList();
-                    syncDropdowns();
-                }
-            });
+        }
 
-            // 点击外部关闭
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('.dropdown-container')) {
-                    Object.values(DOM.dropdowns).forEach(d => {
-                        d.container.classList.remove(CONFIG.UI.CLASSES.SHOW);
-                        d.btn.setAttribute('aria-expanded', 'false');
-                    });
-                }
-            });
+        function toggleDropdown(dropdown) {
+            const opening = !isElementOpen(dropdown.container);
+            closeAllDropdowns();
+            if (opening) openPopover(dropdown.container, dropdown.btn);
+        }
+
+        function handleFilterDropdownClick(e) {
+            const option = e.target.closest('.dropdown-option');
+            if (!option) return;
+            state.filter = option.dataset.filter;
+            renderTaskList();
+            syncDropdowns();
+        }
+
+        function handleSortDropdownClick(e) {
+            const option = e.target.closest('.dropdown-option');
+            if (!option) return;
+            state.sort = option.dataset.sort;
+            renderTaskList();
+            syncDropdowns();
+        }
+
+        function closeDropdownsOnOutsideClick(e) {
+            if (!e.target.closest('.dropdown-container')) {
+                closeAllDropdowns();
+            }
+        }
+
+        function closeAllDropdowns() {
+            Object.values(DOM.dropdowns).forEach(closeDropdown);
+        }
+
+        function closeDropdown(dropdown) {
+            closePopover(dropdown.container, dropdown.btn);
         }
 
         function syncDropdowns() {
@@ -2185,8 +2200,7 @@
             // 添加新的 selected
             selected.classList.add(CONFIG.UI.CLASSES.SELECTED);
             // 关闭菜单
-            container.classList.remove(CONFIG.UI.CLASSES.SHOW);
-            btn.setAttribute('aria-expanded', 'false');
+            closePopover(container, btn);
             // 更新文字
             const span = selected.querySelector('span');
             if (span) {
@@ -2196,19 +2210,35 @@
         }
 
         function toggleMenu(menu, btn) {
-            const opening = !menu.classList.contains(CONFIG.UI.CLASSES.SHOW);
+            const opening = !isElementOpen(menu);
             if (opening) {
-                menu.classList.add(CONFIG.UI.CLASSES.SHOW);
-                btn.setAttribute('aria-expanded', 'true');
+                openPopover(menu, btn);
             } else closeMenu();
         }
 
         function closeMenu() {
-            DOM.menu.container.classList.remove(CONFIG.UI.CLASSES.SHOW);
-            DOM.menu.btn.setAttribute('aria-expanded', 'false');
+            closePopover(DOM.menu.container, DOM.menu.btn);
             DOM.menu.langSubmenu.classList.remove(CONFIG.UI.CLASSES.SHOW);
             DOM.menu.langToggle.classList.remove(CONFIG.UI.CLASSES.OPEN);
-            DOM.menu.langToggle.setAttribute('aria-expanded', 'false');
+            setExpanded(DOM.menu.langToggle, false);
+        }
+
+        function openPopover(container, btn) {
+            container.classList.add(CONFIG.UI.CLASSES.SHOW);
+            setExpanded(btn, true);
+        }
+
+        function closePopover(container, btn) {
+            container.classList.remove(CONFIG.UI.CLASSES.SHOW);
+            setExpanded(btn, false);
+        }
+
+        function setExpanded(btn, expanded) {
+            btn.setAttribute('aria-expanded', String(expanded));
+        }
+
+        function isElementOpen(el) {
+            return el.classList.contains(CONFIG.UI.CLASSES.SHOW);
         }
 
         function handleTaskListClick(e) {
