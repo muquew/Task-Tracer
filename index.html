@@ -232,7 +232,6 @@
             box-shadow: 0 8px 24px var(--shadow-base);
             backdrop-filter: blur(14px);
             transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-theme-duration) var(--motion-theme-ease), transform var(--motion-fast);
-            will-change: background-color, border-color, box-shadow;
         }
 
         .search-box { position: relative; display: flex; align-items: center; flex: 1; margin-bottom: 0; }
@@ -425,7 +424,10 @@
         .back-to-top:active { transform: scale(0.9); }
         @media (hover: hover) { .back-to-top:hover { background: var(--color-primary-dark); transform: translateY(-3px); } }
 
-        html.theme-transitioning .controls-bar { animation: controlsThemeSettle var(--motion-theme-duration) var(--motion-theme-ease); }
+        html.theme-transitioning .controls-bar {
+            animation: controlsThemeSettle var(--motion-theme-duration) var(--motion-theme-ease);
+            will-change: background-color, border-color, box-shadow;
+        }
         @keyframes controlsThemeSettle {
             0% { transform: translateY(0); }
             45% { transform: translateY(-1px); }
