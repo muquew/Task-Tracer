@@ -220,6 +220,7 @@
     },
     "import": {
       "success": "Successfully imported {count} tasks!",
+      "successMerged": "Successfully merged {count} tasks!",
       "confirm": "About to import {count} tasks. Replace current data?",
       "previewTitle": "Import Preview",
       "previewTasks": "Tasks to import",
@@ -228,6 +229,8 @@
       "previewDuplicates": "Duplicate names",
       "previewFileDuplicates": "Repeated inside file",
       "previewExistingMatches": "Matches current tasks",
+      "mergeMode": "Merge into current tasks without replacing existing data",
+      "mergeModeHint": "Imported tasks are appended to the current list; duplicate names are kept and imported tasks receive new sort positions.",
       "formatError": "Import failed: Invalid file format",
       "readError": "Import failed: File read error"
     },

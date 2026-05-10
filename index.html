@@ -418,6 +418,10 @@
         .confirm-details { display: grid; gap: 10px; }
         .confirm-row { display: flex; justify-content: space-between; gap: 14px; padding: 9px 10px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface-alt); }
         .confirm-row strong { color: var(--text-main); }
+        .confirm-option { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 9px; padding: 10px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface-alt); }
+        .confirm-option input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--color-primary); }
+        .confirm-option label { color: var(--text-main); font-size: 13px; font-weight: 780; line-height: 1.35; }
+        .confirm-option span { display: block; color: var(--text-tertiary); font-size: 12px; font-weight: 650; margin-top: 3px; }
         .confirm-list-title { color: var(--text-main); font-size: 13px; font-weight: 800; }
         .confirm-list { margin: 0; padding-left: 18px; color: var(--text-secondary); font-size: 13px; }
         .btn { min-height: 40px; padding: 10px 18px; border-radius: var(--radius-control); font-size: 14px; font-weight: 760; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
@@ -944,7 +948,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '3.8'
+                RESOURCE_VERSION: '3.9'
             },
             BACKUP: {
                 FILE_VERSION: '2.0',
@@ -4017,10 +4021,13 @@
                     const preview = buildImportPreview(importedTasks);
                     utils.confirm(t['messages.import.previewTitle'], createImportPreviewContent(preview), async () => {
                         try {
-                            await dbActions.replaceAllTasks(importedTasks);
+                            const mergeImport = isImportMergeEnabled();
+                            const tasksToStore = mergeImport ? prepareImportedTasksForMerge(importedTasks) : importedTasks;
+                            if (mergeImport) await dbActions.updateTasks(tasksToStore);
+                            else await dbActions.replaceAllTasks(tasksToStore);
                             clearNotificationDeliveryState();
                             await refreshTasks();
-                            utils.notify(t['messages.import.success'].replace('{count}', importedTasks.length));
+                            utils.notify(t[mergeImport ? 'messages.import.successMerged' : 'messages.import.success'].replace('{count}', importedTasks.length));
                         } catch (err) {
                             console.error('导入任务失败:', err);
                             utils.notify(t['messages.import.readError'], 'error');
@@ -4092,9 +4099,47 @@
                 createConfirmRow(t['messages.import.previewFileDuplicates'], String(preview.fileDuplicateNames.length)),
                 createConfirmRow(t['messages.import.previewExistingMatches'], String(preview.existingDuplicateNames.length))
             );
+            wrapper.appendChild(createImportModeOption(t));
             appendImportNameList(wrapper, t['messages.import.previewFileDuplicates'], preview.fileDuplicateNames);
             appendImportNameList(wrapper, t['messages.import.previewExistingMatches'], preview.existingDuplicateNames);
             return wrapper;
+        }
+        function createImportModeOption(t) {
+            const row = document.createElement('div');
+            row.className = 'confirm-option';
+            const input = document.createElement('input');
+            input.type = 'checkbox';
+            input.id = 'mergeImportMode';
+            const label = document.createElement('label');
+            label.htmlFor = 'mergeImportMode';
+            label.textContent = t['messages.import.mergeMode'];
+            const hint = document.createElement('span');
+            hint.textContent = t['messages.import.mergeModeHint'];
+            label.appendChild(hint);
+            row.append(input, label);
+            return row;
+        }
+        function isImportMergeEnabled() {
+            return Boolean(document.getElementById('mergeImportMode')?.checked);
+        }
+        function prepareImportedTasksForMerge(importedTasks) {
+            const usedIds = new Set(state.tasks.map(task => Number(task.id)).filter(Number.isFinite));
+            const idMap = new Map();
+            const remapped = importedTasks.map(task => {
+                const originalId = Number(task.id);
+                const id = normalizeUniqueNumericId(task.id, usedIds);
+                if (Number.isFinite(originalId)) idMap.set(originalId, id);
+                return { ...task, id };
+            });
+            let order = getNextTaskOrder();
+            return remapped.map(task => {
+                const mergedTask = { ...task, order };
+                order += CONFIG.DEFAULTS.ORDER_STEP;
+                ['repeatSourceId', 'repeatCreatedFrom', 'nextRepeatTaskId'].forEach(key => {
+                    if (idMap.has(mergedTask[key])) mergedTask[key] = idMap.get(mergedTask[key]);
+                });
+                return mergedTask;
+            });
         }
         function appendImportNameList(wrapper, label, names) {
             if (names.length === 0) return;

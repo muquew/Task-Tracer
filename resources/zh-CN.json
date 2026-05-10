@@ -220,6 +220,7 @@
     },
     "import": {
       "success": "成功导入 {count} 个任务！",
+      "successMerged": "成功合并 {count} 个任务！",
       "confirm": "即将导入 {count} 个任务。是否替换当前数据？",
       "previewTitle": "导入预览",
       "previewTasks": "导入任务",
@@ -228,6 +229,8 @@
       "previewDuplicates": "同名重复项",
       "previewFileDuplicates": "文件内重复",
       "previewExistingMatches": "匹配当前任务",
+      "mergeMode": "合并到当前任务，不替换现有数据",
+      "mergeModeHint": "导入任务会追加到当前列表；重复名称会保留，导入任务会分配新的排序位置。",
       "formatError": "导入失败：文件格式不正确",
       "readError": "导入失败：文件读取错误"
     },

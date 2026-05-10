@@ -1248,6 +1248,8 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         chooser_info.value.set_files(temp_path)
         expect(page.locator("#taskModal")).to_be_visible()
         expect(page.locator("#modalTitle")).to_have_text(re.compile("导入预览|Import Preview", re.I))
+        expect(page.locator("#mergeImportMode")).not_to_be_checked()
+        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("合并到当前任务|Merge into current tasks", re.I))
         rows = page.locator(".confirm-row").all_inner_texts()
         if not any(re.search(r"(文件内重复|Repeated inside file)[\s\S]*1", row, re.I) for row in rows):
             raise AssertionError(f"Import preview did not report file duplicates: {rows}")
@@ -1260,6 +1262,87 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         expect(page.locator("#taskModal")).to_be_hidden()
     finally:
         Path(temp_path).unlink(missing_ok=True)
+
+
+def exercise_import_merge(page: Page, merged_name: str, existing_name: str) -> None:
+    existing_id = page.evaluate(
+        """async (taskName) => {
+            const request = indexedDB.open('TaskTrackerDB', 2);
+            return await new Promise((resolve, reject) => {
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readonly');
+                    const getAll = tx.objectStore('tasks').getAll();
+                    getAll.onsuccess = () => {
+                        const task = getAll.result.find((item) => item.name === taskName);
+                        db.close();
+                        resolve(task ? task.id : null);
+                    };
+                    getAll.onerror = () => reject(getAll.error);
+                };
+            });
+        }""",
+        existing_name,
+    )
+    if existing_id is None:
+        raise AssertionError(f"Could not find existing task id for {existing_name}")
+
+    payload = [
+        {
+            "id": existing_id,
+            "name": merged_name,
+            "description": "Merged by Playwright smoke test.",
+            "dueDate": None,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": False,
+            "order": 1000,
+        }
+    ]
+
+    with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
+        json.dump(payload, temp_file)
+        temp_path = temp_file.name
+
+    try:
+        page.locator("#openMenuBtn").click()
+        with page.expect_file_chooser() as chooser_info:
+            page.locator("#importBtn").click()
+        chooser_info.value.set_files(temp_path)
+        expect(page.locator("#taskModal")).to_be_visible()
+        page.locator("#mergeImportMode").check()
+        page.locator("#submitBtn").click()
+        wait_for_notification(page, re.compile("合并|merged", re.I))
+        select_filter(page, "all")
+        expect(task_locator(page, existing_name)).to_have_count(1)
+        expect(task_locator(page, merged_name)).to_have_count(1)
+        expect(page.locator(".task-item")).to_have_count(3)
+        merged_id = page.evaluate(
+            """async (taskName) => {
+                const request = indexedDB.open('TaskTrackerDB', 2);
+                return await new Promise((resolve, reject) => {
+                    request.onerror = () => reject(request.error);
+                    request.onsuccess = () => {
+                        const db = request.result;
+                        const tx = db.transaction(['tasks'], 'readonly');
+                        const getAll = tx.objectStore('tasks').getAll();
+                        getAll.onsuccess = () => {
+                            const task = getAll.result.find((item) => item.name === taskName);
+                            db.close();
+                            resolve(task ? task.id : null);
+                        };
+                        getAll.onerror = () => reject(getAll.error);
+                    };
+                });
+            }""",
+            merged_name,
+        )
+        if merged_id == existing_id:
+            raise AssertionError("Merged import reused an existing task id")
+    finally:
+        Path(temp_path).unlink(missing_ok=True)
+    delete_task_records_by_name(page, merged_name)
+    select_filter(page, "all")
 
 
 def exercise_import(page: Page, imported_name: str) -> None:
@@ -1551,6 +1634,7 @@ def smoke(url: str) -> None:
         if backup_names != {beta_name, overdue_name}:
             raise AssertionError(f"Backup tasks did not match remaining tasks: {backup}")
 
+        exercise_import_merge(page, f"{task_name} Merged", beta_name)
         exercise_import_preview_details(page, beta_name)
         exercise_import(page, imported_name)
         cancel_delete_task(page, imported_name)
