@@ -441,10 +441,21 @@ def exercise_subtasks(page: Page, task_name: str) -> None:
 def exercise_theme(page: Page) -> None:
     before = page.evaluate("document.documentElement.getAttribute('data-theme')")
     page.locator("#themeToggleBtn").click()
+    page.wait_for_function(
+        "before => document.documentElement.getAttribute('data-theme') !== before",
+        arg=before,
+    )
+    page.wait_for_function(
+        "() => !document.documentElement.classList.contains('theme-transitioning')"
+    )
     after = page.evaluate("document.documentElement.getAttribute('data-theme')")
     stored = page.evaluate("localStorage.getItem('theme')")
-    if before == after or after not in {"light", "dark"} or stored != after:
-        raise AssertionError(f"Theme toggle failed: before={before}, after={after}, stored={stored}")
+    theme_color = page.locator('meta[name="theme-color"]').get_attribute("content")
+    expected_theme_color = "#0f1117" if after == "dark" else "#2563eb"
+    if before == after or after not in {"light", "dark"} or stored != after or theme_color != expected_theme_color:
+        raise AssertionError(
+            f"Theme toggle failed: before={before}, after={after}, stored={stored}, theme_color={theme_color}"
+        )
 
 
 def exercise_language(page: Page) -> None:
