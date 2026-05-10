@@ -672,8 +672,10 @@ def exercise_back_to_top(page: Page) -> None:
 def exercise_notifications(page: Page) -> None:
     page.locator("#notificationToggleBtn").click()
     expect(page.locator("#notificationToggleBtn")).to_have_attribute("aria-label", "关闭通知")
+    expect(page.locator("#notificationToggleBtn")).to_have_class(re.compile(r"(^|\s)notifications-enabled(\s|$)"))
     page.locator("#notificationToggleBtn").click()
     expect(page.locator("#notificationToggleBtn")).to_have_attribute("aria-label", "开启通知")
+    expect(page.locator("#notificationToggleBtn")).not_to_have_class(re.compile(r"(^|\s)notifications-enabled(\s|$)"))
 
 
 def exercise_import_error(page: Page) -> None:
