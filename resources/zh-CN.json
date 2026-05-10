@@ -1,115 +1,167 @@
 {
-  "language": "简体中文",
-  "appTitle": "任务跟踪器",
-  "appSubtitle": "基于截止日期的任务管理",
-
-  "export": "导出",
-  "import": "导入",
-  "addTask": "添加任务",
-  "searchPlaceholder": "搜索任务...",
-
-  "filterAll": "全部",
-  "filterActive": "进行中",
-  "filterCompleted": "已完成",
-  "filterOverdue": "已过期",
-  "filterNoDeadline": "无截止日期",
-
-  "addNewTask": "添加新任务",
-  "addNewTaskTooltip": "添加新任务 (Ctrl+I)",
-  "menuTooltip": "菜单 (Ctrl+M)",
-  "themeTooltip": "切换主题",
-  "backToTopTooltip": "回到顶部 (Alt + T)",
-
-  "editTask": "编辑任务",
-  "taskNameLabel": "任务名称 *",
-  "taskNamePlaceholder": "输入任务名称",
-  "taskDescLabel": "任务描述 (可选)",
-  "taskDescPlaceholder": "输入任务描述",
-  "dueDateLabel": "截止日期 (可选)",
-  "noDeadlineLabel": "无截止日期",
-  "reminderLabel": "提醒设置",
-  "reminderNone": "不提醒",
-  "reminderAtTime": "截止时",
-  "reminder15Min": "提前 15 分钟",
-  "reminder1Hour": "提前 1 小时",
-  "reminder1Day": "提前 1 天",
-  "subTasks": "子任务",
-  "subtasksLabel": "子任务 (可选)",
-  "subtaskPlaceholder": "输入子任务...",
-
-  "openMenu": "打开菜单",
-  "dueTimeLabel": "截止时间",
-  "confirm": "确认",
-  "cancel": "取消",
-  "updateTask": "更新任务",
-
-  "noTasks": "暂无任务",
-  "noTasksDescription": "点击\"添加任务\"按钮开始跟踪您的任务",
-  "noMatchingTasks": "没有找到匹配的任务",
-  "noMatchingTasksDescription": "尝试调整搜索条件或筛选器",
-
-  "deadline": "截止",
-  "noDeadlineText": "无截止日期",
-
-  "statusCompleted": "已完成",
-  "statusSafe": "安全",
-  "statusWarning": "警告",
-  "statusDanger": "紧急",
-  "statusOverdue": "已过期",
-  "statusNoDeadline": "无截止日期",
-
-  "markComplete": "标记为已完成",
-  "markIncomplete": "标记为未完成",
-  "editTaskTitle": "编辑任务",
-  "deleteTaskTitle": "删除任务",
-  "confirmDelete": "确定要删除这个任务吗？",
-  "taskAdded": "任务添加成功",
-  "taskUpdated": "任务更新成功",
-  "taskDeleted": "任务删除成功",
-  "taskMarkedComplete": "任务标记为已完成",
-  "taskMarkedIncomplete": "任务标记为未完成",
-  "exportSuccess": "任务数据导出成功！",
-  "importSuccess": "成功导入 {count} 个任务！",
-  "importConfirm": "即将导入 {count} 个任务。是否替换当前数据？",
-  "importFormatError": "导入失败：文件格式不正确",
-  "importReadError": "导入失败：文件读取错误",
-  "saveError": "保存任务失败，请重试",
-  "deleteError": "删除任务失败，请重试",
-  "updateError": "更新任务状态失败，请重试",
-  "minutesAgo": "{minutes}分钟前",
-  "hoursAgo": "{hours}小时前",
-  "daysAgo": "{days}天前",
-  "minutesLeft": "{minutes}分钟",
-  "hoursLeft": "{hours}小时",
-  "daysLeft": "{days}天",
-
-  "clearCompletedTitle": "清除所有已完成的任务",
-  "clearCompleted": "清除已完成",
-  "noCompletedTasks": "没有已完成的任务可清除",
-  "confirmClearCompleted": "确定永久删除 {count} 个已完成的任务吗？",
-  "completedTasksCleared": "{count} 个已完成的任务已被清除",
-  "clearCompletedError": "清除任务时出错",
-
-  "sampleTasksAdded": "示例任务已添加",
-  "initDBError": "数据库初始化失败，请刷新页面重试",
-
-  "sampleTask1Name": "完成项目报告",
-  "sampleTask1Desc": "编写并提交季度项目总结报告",
-  "sampleTask2Name": "团队会议准备",
-  "sampleTask2Desc": "准备下周团队会议的演示材料",
-  "sampleTask3Name": "学习计划制定",
-  "sampleTask3Desc": "制定下个月的个人学习计划",
-
-  "sortSmart": "智能排序",
-  "sortCreated": "新创建",
-  "sortDue": "截止日期",
-  "sortAlpha": "名称 (A-Z)",
-  "sortManual": "自定义排序",
-
-  "enableNotifications": "开启通知",
-  "disableNotifications": "关闭通知",
-  "notificationPermissionDenied": "通知权限被拒绝，请在浏览器设置中开启",
-  "notificationNotSupported": "此浏览器不支持桌面通知",
-  "notificationError": "申请通知权限出错",
-  "notificationTaskDue": "任务即将到期：{taskName}"
+  "app": {
+    "language": "简体中文",
+    "title": "任务跟踪器",
+    "subtitle": "基于截止日期的任务管理"
+  },
+  "actions": {
+    "export": "导出",
+    "import": "导入",
+    "addTask": "添加任务",
+    "openMenu": "打开菜单",
+    "confirm": "确认",
+    "cancel": "取消",
+    "updateTask": "更新任务",
+    "clearCompletedTitle": "清除所有已完成的任务",
+    "clearCompleted": "清除已完成"
+  },
+  "search": {
+    "placeholder": "搜索任务..."
+  },
+  "filters": {
+    "all": "全部",
+    "active": "进行中",
+    "completed": "已完成",
+    "overdue": "已过期",
+    "noDeadline": "无截止日期"
+  },
+  "modal": {
+    "addTitle": "添加新任务",
+    "editTitle": "编辑任务"
+  },
+  "tooltips": {
+    "addTask": "添加新任务 (Ctrl+I)",
+    "menu": "菜单 (Ctrl+M)",
+    "theme": "切换主题",
+    "backToTop": "回到顶部 (Alt + T)"
+  },
+  "form": {
+    "taskName": {
+      "label": "任务名称 *",
+      "placeholder": "输入任务名称"
+    },
+    "description": {
+      "label": "任务描述 (可选)",
+      "placeholder": "输入任务描述"
+    },
+    "dueDate": {
+      "label": "截止日期 (可选)"
+    },
+    "noDeadline": "无截止日期",
+    "reminder": {
+      "label": "提醒设置",
+      "options": {
+        "none": "不提醒",
+        "atTime": "截止时",
+        "min15": "提前 15 分钟",
+        "hour1": "提前 1 小时",
+        "day1": "提前 1 天"
+      }
+    },
+    "subtasks": {
+      "label": "子任务 (可选)",
+      "placeholder": "输入子任务..."
+    },
+    "dueTime": {
+      "label": "截止时间"
+    }
+  },
+  "task": {
+    "subtasks": "子任务",
+    "deadline": "截止",
+    "noDeadline": "无截止日期",
+    "actions": {
+      "markComplete": "标记为已完成",
+      "markIncomplete": "标记为未完成",
+      "edit": "编辑任务",
+      "delete": "删除任务"
+    }
+  },
+  "empty": {
+    "noTasks": {
+      "title": "暂无任务",
+      "description": "点击\"添加任务\"按钮开始跟踪您的任务"
+    },
+    "noMatches": {
+      "title": "没有找到匹配的任务",
+      "description": "尝试调整搜索条件或筛选器"
+    }
+  },
+  "status": {
+    "completed": "已完成",
+    "safe": "安全",
+    "warning": "警告",
+    "danger": "紧急",
+    "overdue": "已过期",
+    "noDeadline": "无截止日期"
+  },
+  "messages": {
+    "task": {
+      "confirmDelete": "确定要删除这个任务吗？",
+      "added": "任务添加成功",
+      "updated": "任务更新成功",
+      "deleted": "任务删除成功",
+      "markedComplete": "任务标记为已完成",
+      "markedIncomplete": "任务标记为未完成",
+      "saveError": "保存任务失败，请重试",
+      "deleteError": "删除任务失败，请重试",
+      "updateError": "更新任务状态失败，请重试"
+    },
+    "export": {
+      "success": "任务数据导出成功！"
+    },
+    "import": {
+      "success": "成功导入 {count} 个任务！",
+      "confirm": "即将导入 {count} 个任务。是否替换当前数据？",
+      "formatError": "导入失败：文件格式不正确",
+      "readError": "导入失败：文件读取错误"
+    },
+    "clearCompleted": {
+      "none": "没有已完成的任务可清除",
+      "confirm": "确定永久删除 {count} 个已完成的任务吗？",
+      "success": "{count} 个已完成的任务已被清除",
+      "error": "清除任务时出错"
+    },
+    "sampleTasks": {
+      "added": "示例任务已添加"
+    },
+    "initDBError": "数据库初始化失败，请刷新页面重试"
+  },
+  "time": {
+    "minutesAgo": "{minutes}分钟前",
+    "hoursAgo": "{hours}小时前",
+    "daysAgo": "{days}天前",
+    "minutesLeft": "{minutes}分钟",
+    "hoursLeft": "{hours}小时",
+    "daysLeft": "{days}天"
+  },
+  "samples": {
+    "task1": {
+      "name": "完成项目报告",
+      "description": "编写并提交季度项目总结报告"
+    },
+    "task2": {
+      "name": "团队会议准备",
+      "description": "准备下周团队会议的演示材料"
+    },
+    "task3": {
+      "name": "学习计划制定",
+      "description": "制定下个月的个人学习计划"
+    }
+  },
+  "sort": {
+    "smart": "智能排序",
+    "created": "新创建",
+    "due": "截止日期",
+    "alpha": "名称 (A-Z)",
+    "manual": "自定义排序"
+  },
+  "notifications": {
+    "enable": "开启通知",
+    "disable": "关闭通知",
+    "permissionDenied": "通知权限被拒绝，请在浏览器设置中开启",
+    "notSupported": "此浏览器不支持桌面通知",
+    "error": "申请通知权限出错",
+    "taskDue": "任务即将到期：{taskName}"
+  }
 }

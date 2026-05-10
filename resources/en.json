@@ -1,110 +1,167 @@
 {
-  "language": "English",
-  "appTitle": "Task Tracker",
-  "appSubtitle": "Deadline-based Task Management",
-
-  "export": "Export",
-  "import": "Import",
-  "addTask": "Add Task",
-  "searchPlaceholder": "Search tasks...",
-  "filterAll": "All",
-  "filterActive": "Active",
-  "filterCompleted": "Completed",
-  "filterOverdue": "Overdue",
-  "filterNoDeadline": "No Deadline",
-  "addNewTask": "Add New Task",
-  "addNewTaskTooltip": "Add New Task (Ctrl+I)",
-  "menuTooltip": "Menu (Ctrl+M)",
-  "themeTooltip": "Change Theme",
-  "backToTopTooltip": "back to top (Alt + T)",
-
-  "editTask": "Edit Task",
-  "taskNameLabel": "Task Name *",
-  "taskNamePlaceholder": "Enter task name",
-  "taskDescLabel": "Task Description (optional)",
-  "taskDescPlaceholder": "Enter task description",
-  "dueDateLabel": "Due Date (optional)",
-  "noDeadlineLabel": "No Deadline",
-  "reminderLabel": "Reminder",
-  "reminderNone": "None",
-  "reminderAtTime": "At time of due date",
-  "reminder15Min": "15 minutes before",
-  "reminder1Hour": "1 hour before",
-  "reminder1Day": "1 day before",
-  "cancel": "Cancel",
-  "updateTask": "Update Task",
-  "subTasks": "Subtasks",
-  "subtasksLabel": "Subtasks (optional)",
-  "subtaskPlaceholder": "Enter subtasks...",
-
-  "noTasks": "No Tasks",
-  "noTasksDescription": "Click \"Add Task\" to start tracking your tasks",
-  "noMatchingTasks": "No matching tasks found",
-  "noMatchingTasksDescription": "Try adjusting your search or filters",
-  "deadline": "Due",
-  "noDeadlineText": "No Deadline",
-  "statusCompleted": "Completed",
-  "statusSafe": "Safe",
-  "statusWarning": "Warning",
-  "statusDanger": "Urgent",
-  "statusOverdue": "Overdue",
-  "statusNoDeadline": "No Deadline",
-  "markComplete": "Mark as complete",
-  "markIncomplete": "Mark as incomplete",
-  "editTaskTitle": "Edit task",
-  "deleteTaskTitle": "Delete task",
-  "confirmDelete": "Are you sure you want to delete this task?",
-  "taskAdded": "Task added successfully",
-  "taskUpdated": "Task updated successfully",
-  "taskDeleted": "Task deleted successfully",
-  "taskMarkedComplete": "Task marked as completed",
-  "taskMarkedIncomplete": "Task marked as incomplete",
-  "exportSuccess": "Task data exported successfully!",
-  "importSuccess": "Successfully imported {count} tasks!",
-  "importConfirm": "About to import {count} tasks. Replace current data?",
-  "importFormatError": "Import failed: Invalid file format",
-  "importReadError": "Import failed: File read error",
-  "saveError": "Failed to save task, please try again",
-  "deleteError": "Failed to delete task, please try again",
-  "updateError": "Failed to update task status, please try again",
-  "minutesAgo": "{minutes} minutes ago",
-  "hoursAgo": "{hours} hours ago",
-  "daysAgo": "{days} days ago",
-  "minutesLeft": "{minutes} minutes",
-  "hoursLeft": "{hours} hours",
-  "daysLeft": "{days} days",
-
-  "clearCompletedTitle": "Clear All Completed Tasks",
-  "clearCompleted": "Clear Completed",
-  "noCompletedTasks": "There are no completed tasks to clear",
-  "confirmClearCompleted": "Are you sure you want to permanently delete {count} completed tasks?" ,
-  "completedTasksCleared": "{count} completed tasks have been cleared",
-  "clearCompletedError": "Error while clearing tasks",
-
-  "openMenu": "Open menu",
-  "dueTimeLabel": "Due time",
-  "confirm": "Confirm",
-
-  "sampleTasksAdded": "Sample tasks added",
-  "initDBError": "Failed to init Database, Please refresh the page and try again.",
-
-  "sampleTask1Name": "Complete project report",
-  "sampleTask1Desc": "Write and submit quarterly project summary report",
-  "sampleTask2Name": "Team meeting preparation",
-  "sampleTask2Desc": "Prepare presentation materials for next week's team meeting",
-  "sampleTask3Name": "Learning plan development",
-  "sampleTask3Desc": "Develop personal learning plan for next month",
-
-  "sortSmart": "Smart Sort",
-  "sortCreated": "Newest Created",
-  "sortDue": "Due Date",
-  "sortAlpha": "Name (A-Z)",
-  "sortManual": "Custom",
-
-  "enableNotifications": "Enable Notifications",
-  "disableNotifications": "Disable Notifications",
-  "notificationPermissionDenied": "Notification permission denied. Please enable in browser settings.",
-  "notificationNotSupported": "This browser does not support desktop notifications",
-  "notificationError": "Error requesting notification permission",
-  "notificationTaskDue": "Task Due Soon: {taskName}"
+  "app": {
+    "language": "English",
+    "title": "Task Tracker",
+    "subtitle": "Deadline-based Task Management"
+  },
+  "actions": {
+    "export": "Export",
+    "import": "Import",
+    "addTask": "Add Task",
+    "openMenu": "Open menu",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "updateTask": "Update Task",
+    "clearCompletedTitle": "Clear All Completed Tasks",
+    "clearCompleted": "Clear Completed"
+  },
+  "search": {
+    "placeholder": "Search tasks..."
+  },
+  "filters": {
+    "all": "All",
+    "active": "Active",
+    "completed": "Completed",
+    "overdue": "Overdue",
+    "noDeadline": "No Deadline"
+  },
+  "modal": {
+    "addTitle": "Add New Task",
+    "editTitle": "Edit Task"
+  },
+  "tooltips": {
+    "addTask": "Add New Task (Ctrl+I)",
+    "menu": "Menu (Ctrl+M)",
+    "theme": "Change Theme",
+    "backToTop": "back to top (Alt + T)"
+  },
+  "form": {
+    "taskName": {
+      "label": "Task Name *",
+      "placeholder": "Enter task name"
+    },
+    "description": {
+      "label": "Task Description (optional)",
+      "placeholder": "Enter task description"
+    },
+    "dueDate": {
+      "label": "Due Date (optional)"
+    },
+    "noDeadline": "No Deadline",
+    "reminder": {
+      "label": "Reminder",
+      "options": {
+        "none": "None",
+        "atTime": "At time of due date",
+        "min15": "15 minutes before",
+        "hour1": "1 hour before",
+        "day1": "1 day before"
+      }
+    },
+    "subtasks": {
+      "label": "Subtasks (optional)",
+      "placeholder": "Enter subtasks..."
+    },
+    "dueTime": {
+      "label": "Due time"
+    }
+  },
+  "task": {
+    "subtasks": "Subtasks",
+    "deadline": "Due",
+    "noDeadline": "No Deadline",
+    "actions": {
+      "markComplete": "Mark as complete",
+      "markIncomplete": "Mark as incomplete",
+      "edit": "Edit task",
+      "delete": "Delete task"
+    }
+  },
+  "empty": {
+    "noTasks": {
+      "title": "No Tasks",
+      "description": "Click \"Add Task\" to start tracking your tasks"
+    },
+    "noMatches": {
+      "title": "No matching tasks found",
+      "description": "Try adjusting your search or filters"
+    }
+  },
+  "status": {
+    "completed": "Completed",
+    "safe": "Safe",
+    "warning": "Warning",
+    "danger": "Urgent",
+    "overdue": "Overdue",
+    "noDeadline": "No Deadline"
+  },
+  "messages": {
+    "task": {
+      "confirmDelete": "Are you sure you want to delete this task?",
+      "added": "Task added successfully",
+      "updated": "Task updated successfully",
+      "deleted": "Task deleted successfully",
+      "markedComplete": "Task marked as completed",
+      "markedIncomplete": "Task marked as incomplete",
+      "saveError": "Failed to save task, please try again",
+      "deleteError": "Failed to delete task, please try again",
+      "updateError": "Failed to update task status, please try again"
+    },
+    "export": {
+      "success": "Task data exported successfully!"
+    },
+    "import": {
+      "success": "Successfully imported {count} tasks!",
+      "confirm": "About to import {count} tasks. Replace current data?",
+      "formatError": "Import failed: Invalid file format",
+      "readError": "Import failed: File read error"
+    },
+    "clearCompleted": {
+      "none": "There are no completed tasks to clear",
+      "confirm": "Are you sure you want to permanently delete {count} completed tasks?",
+      "success": "{count} completed tasks have been cleared",
+      "error": "Error while clearing tasks"
+    },
+    "sampleTasks": {
+      "added": "Sample tasks added"
+    },
+    "initDBError": "Failed to init Database, Please refresh the page and try again."
+  },
+  "time": {
+    "minutesAgo": "{minutes} minutes ago",
+    "hoursAgo": "{hours} hours ago",
+    "daysAgo": "{days} days ago",
+    "minutesLeft": "{minutes} minutes",
+    "hoursLeft": "{hours} hours",
+    "daysLeft": "{days} days"
+  },
+  "samples": {
+    "task1": {
+      "name": "Complete project report",
+      "description": "Write and submit quarterly project summary report"
+    },
+    "task2": {
+      "name": "Team meeting preparation",
+      "description": "Prepare presentation materials for next week's team meeting"
+    },
+    "task3": {
+      "name": "Learning plan development",
+      "description": "Develop personal learning plan for next month"
+    }
+  },
+  "sort": {
+    "smart": "Smart Sort",
+    "created": "Newest Created",
+    "due": "Due Date",
+    "alpha": "Name (A-Z)",
+    "manual": "Custom"
+  },
+  "notifications": {
+    "enable": "Enable Notifications",
+    "disable": "Disable Notifications",
+    "permissionDenied": "Notification permission denied. Please enable in browser settings.",
+    "notSupported": "This browser does not support desktop notifications",
+    "error": "Error requesting notification permission",
+    "taskDue": "Task Due Soon: {taskName}"
+  }
 }

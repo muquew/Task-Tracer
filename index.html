@@ -400,41 +400,41 @@
 <div class="container">
     <header>
         <div>
-            <h1 data-i18n="appTitle">任务跟踪器</h1>
-            <p class="subtitle" data-i18n="appSubtitle">基于截止日期的任务管理</p>
+            <h1 data-i18n="app.title">任务跟踪器</h1>
+            <p class="subtitle" data-i18n="app.subtitle">基于截止日期的任务管理</p>
         </div>
         <div class="header-actions">
-            <button class="icon-btn" id="themeToggleBtn" aria-label="切换主题" data-i18n-aria-label="themeTooltip" data-i18n-title="themeTooltip" title="切换主题">
+            <button class="icon-btn" id="themeToggleBtn" aria-label="切换主题" data-i18n-aria-label="tooltips.theme" data-i18n-title="tooltips.theme" title="切换主题">
                 <svg class="icon moon-icon"><use href="#icon-moon"></use></svg>
                 <svg class="icon sun-icon"><use href="#icon-sun"></use></svg>
             </button>
             <button class="icon-btn" id="notificationToggleBtn" aria-label="开启/关闭通知" title="开启通知">
                 <svg class="icon"><use href="#icon-bell-off"></use></svg>
             </button>
-            <button class="icon-btn" id="openModalBtn" aria-label="添加新任务" data-i18n-aria-label="addNewTask" data-i18n-title="addNewTaskTooltip" title="添加新任务 (Ctrl+I)">
+            <button class="icon-btn" id="openModalBtn" aria-label="添加新任务" data-i18n-aria-label="modal.addTitle" data-i18n-title="tooltips.addTask" title="添加新任务 (Ctrl+I)">
                 <svg class="icon"><use href="#icon-plus"></use></svg>
             </button>
-            <button class="icon-btn" id="openMenuBtn" aria-label="打开菜单" data-i18n-aria-label="openMenu" aria-haspopup="true" aria-expanded="false" data-i18n-title="menuTooltip" title="菜单 (Ctrl+M)">
+            <button class="icon-btn" id="openMenuBtn" aria-label="打开菜单" data-i18n-aria-label="actions.openMenu" aria-haspopup="true" aria-expanded="false" data-i18n-title="tooltips.menu" title="菜单 (Ctrl+M)">
                 <svg class="icon icon-fill"><use href="#icon-menu"></use></svg>
             </button>
             <div class="menu" id="menu">
-                <button class="menu-item" data-i18n-title="export" id="exportBtn" title="导出">
+                <button class="menu-item" data-i18n-title="actions.export" id="exportBtn" title="导出">
                     <svg class="icon"><use href="#icon-export"></use></svg>
-                    <span data-i18n="export">导出</span>
+                    <span data-i18n="actions.export">导出</span>
                 </button>
-                <button class="menu-item" data-i18n-title="import" id="importBtn" title="导入">
+                <button class="menu-item" data-i18n-title="actions.import" id="importBtn" title="导入">
                     <svg class="icon"><use href="#icon-import"></use></svg>
-                    <span data-i18n="import">导入</span>
+                    <span data-i18n="actions.import">导入</span>
                 </button>
                 <div class="menu-divider"></div>
-                <button class="menu-item" data-i18n-title="clearCompletedTitle" id="clearCompletedBtn" title="清除所有已完成的任务">
+                <button class="menu-item" data-i18n-title="actions.clearCompletedTitle" id="clearCompletedBtn" title="清除所有已完成的任务">
                     <svg class="icon icon-sm" style="color: var(--color-danger);"><use href="#icon-trash-lines"></use></svg>
-                    <span data-i18n="clearCompleted">清除已完成</span>
+                    <span data-i18n="actions.clearCompleted">清除已完成</span>
                 </button>
                 <div class="menu-divider"></div>
                 <button class="menu-item" id="langMenuToggle" aria-haspopup="true" aria-expanded="false">
                     <svg class="icon icon-sm" style="color: var(--color-primary);"><use href="#icon-globe-language"></use></svg>
-                    <span data-i18n="language" style="margin-left: 10px;">语言</span>
+                    <span data-i18n="app.language" style="margin-left: 10px;">语言</span>
                     <svg class="icon icon-sm" style="margin-left: auto; transition: transform 0.2s;"><use href="#icon-chevron-right"></use></svg>
                 </button>
                 <div class="submenu" id="langSubmenu"><div id="lang-container"></div></div>
@@ -445,36 +445,36 @@
     <div class="main-content">
         <div class="controls-bar" role="toolbar" aria-label="任务工具栏">
             <div class="search-box">
-                <label for="searchInput" class="sr-only" data-i18n="searchPlaceholder">搜索任务...</label>
-                <input class="search-input" data-i18n-placeholder="searchPlaceholder" id="searchInput" placeholder="搜索任务..." type="text">
+                <label for="searchInput" class="sr-only" data-i18n="search.placeholder">搜索任务...</label>
+                <input class="search-input" data-i18n-placeholder="search.placeholder" id="searchInput" placeholder="搜索任务..." type="text">
                 <div class="shortcut-hint"><kbd class="shortcut-kbd" title="Ctrl + K">⌘K</kbd></div>
             </div>
             <div class="dropdown-container" id="filterDropdown">
                 <button class="dropdown-btn" id="filterBtn" aria-haspopup="true" aria-expanded="false">
                     <svg class="icon icon-sm" style="opacity: 0.7;"><use href="#icon-filter"></use></svg>
-                    <span id="currentFilterLabel" data-i18n="filterActive">进行中</span>
+                    <span id="currentFilterLabel" data-i18n="filters.active">进行中</span>
                     <svg class="icon icon-sm chevron"><use href="#icon-chevron-down"></use></svg>
                 </button>
                 <div class="dropdown-menu-content">
-                    <button class="dropdown-option" data-filter="all"><span data-i18n="filterAll">全部</span><span class="filter-count" id="count-all">(0)</span></button>
-                    <button class="dropdown-option selected" data-filter="active"><span data-i18n="filterActive">进行中</span><span class="filter-count" id="count-active">(0)</span></button>
-                    <button class="dropdown-option" data-filter="completed"><span data-i18n="filterCompleted">已完成</span><span class="filter-count" id="count-completed">(0)</span></button>
-                    <button class="dropdown-option" data-filter="overdue"><span data-i18n="filterOverdue">已过期</span><span class="filter-count" id="count-overdue">(0)</span></button>
-                    <button class="dropdown-option" data-filter="no-deadline"><span data-i18n="filterNoDeadline">无截止日期</span><span class="filter-count" id="count-no-deadline">(0)</span></button>
+                    <button class="dropdown-option" data-filter="all"><span data-i18n="filters.all">全部</span><span class="filter-count" id="count-all">(0)</span></button>
+                    <button class="dropdown-option selected" data-filter="active"><span data-i18n="filters.active">进行中</span><span class="filter-count" id="count-active">(0)</span></button>
+                    <button class="dropdown-option" data-filter="completed"><span data-i18n="filters.completed">已完成</span><span class="filter-count" id="count-completed">(0)</span></button>
+                    <button class="dropdown-option" data-filter="overdue"><span data-i18n="filters.overdue">已过期</span><span class="filter-count" id="count-overdue">(0)</span></button>
+                    <button class="dropdown-option" data-filter="no-deadline"><span data-i18n="filters.noDeadline">无截止日期</span><span class="filter-count" id="count-no-deadline">(0)</span></button>
                 </div>
             </div>
             <div class="dropdown-container" id="sortDropdown">
                 <button class="dropdown-btn" id="sortBtn" aria-haspopup="true" aria-expanded="false">
                     <svg class="icon icon-sm" style="opacity: 0.7;"><use href="#icon-sort"></use></svg>
-                    <span id="currentSortLabel" data-i18n="sortSmart">智能排序</span>
+                    <span id="currentSortLabel" data-i18n="sort.smart">智能排序</span>
                     <svg class="icon icon-sm chevron"><use href="#icon-chevron-down"></use></svg>
                 </button>
                 <div class="dropdown-menu-content">
-                    <button class="dropdown-option selected" data-sort="smart"><span data-i18n="sortSmart">智能排序</span></button>
-                    <button class="dropdown-option" data-sort="created-desc"><span data-i18n="sortCreated">新创建</span></button>
-                    <button class="dropdown-option" data-sort="due-asc"><span data-i18n="sortDue">截止日期</span></button>
-                    <button class="dropdown-option" data-sort="alpha-asc"><span data-i18n="sortAlpha">A-Z</span></button>
-                    <button class="dropdown-option" data-sort="manual"><span data-i18n="sortManual">自定义排序 (拖拽)</span></button>
+                    <button class="dropdown-option selected" data-sort="smart"><span data-i18n="sort.smart">智能排序</span></button>
+                    <button class="dropdown-option" data-sort="created-desc"><span data-i18n="sort.created">新创建</span></button>
+                    <button class="dropdown-option" data-sort="due-asc"><span data-i18n="sort.due">截止日期</span></button>
+                    <button class="dropdown-option" data-sort="alpha-asc"><span data-i18n="sort.alpha">A-Z</span></button>
+                    <button class="dropdown-option" data-sort="manual"><span data-i18n="sort.manual">自定义排序 (拖拽)</span></button>
                 </div>
             </div>
         </div>
@@ -490,52 +490,52 @@
     </div>
 </div>
 
-<button id="backToTopBtn" class="back-to-top" aria-label="回到顶部" data-i18n-aria-label="backToTopTooltip" data-i18n-title="backToTopTooltip" title="回到顶部 (Alt + T)">
+<button id="backToTopBtn" class="back-to-top" aria-label="回到顶部" data-i18n-aria-label="tooltips.backToTop" data-i18n-title="tooltips.backToTop" title="回到顶部 (Alt + T)">
     <svg class="icon" width="24" height="24" ><use href="#icon-arrow-up"></use></svg>
 </button>
 
 <div class="modal" id="taskModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-content">
         <div class="modal-header">
-            <h3 class="modal-title" data-i18n="addNewTask" id="modalTitle">添加新任务</h3>
+            <h3 class="modal-title" data-i18n="modal.addTitle" id="modalTitle">添加新任务</h3>
             <button class="close-btn" id="closeModalBtn">&times;</button>
         </div>
         <div class="modal-body">
             <form id="taskForm">
                 <div class="form-group">
-                    <label data-i18n="taskNameLabel" for="taskName">任务名称 *</label>
-                    <input data-i18n-placeholder="taskNamePlaceholder" id="taskName" name="taskName" placeholder="输入任务名称" required type="text">
+                    <label data-i18n="form.taskName.label" for="taskName">任务名称 *</label>
+                    <input data-i18n-placeholder="form.taskName.placeholder" id="taskName" name="taskName" placeholder="输入任务名称" required type="text">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="taskDescLabel" for="taskDesc">任务描述 (可选)</label>
-                    <textarea data-i18n-placeholder="taskDescPlaceholder" id="taskDesc" placeholder="输入任务描述"></textarea>
+                    <label data-i18n="form.description.label" for="taskDesc">任务描述 (可选)</label>
+                    <textarea data-i18n-placeholder="form.description.placeholder" id="taskDesc" placeholder="输入任务描述"></textarea>
                 </div>
                 <div class="form-group">
-                    <label data-i18n="dueDateLabel" for="dueDate">截止日期 (可选)</label>
+                    <label data-i18n="form.dueDate.label" for="dueDate">截止日期 (可选)</label>
                     <div class="datetime-group">
                         <input class="date-input" id="dueDate" type="date">
-                        <label for="dueTime" class="sr-only" data-i18n="dueTimeLabel">截止时间</label>
+                        <label for="dueTime" class="sr-only" data-i18n="form.dueTime.label">截止时间</label>
                         <input class="time-input" id="dueTime" type="time" value="23:59">
                     </div>
                     <div class="checkbox-group">
-                        <label data-i18n="noDeadlineLabel" for="noDeadline">无截止日期</label>
+                        <label data-i18n="form.noDeadline" for="noDeadline">无截止日期</label>
                         <input id="noDeadline" type="checkbox">
                     </div>
                 </div>
                 <div class="form-group" id="reminderGroup">
-                    <label data-i18n="reminderLabel" for="reminderOffset">提醒设置</label>
+                    <label data-i18n="form.reminder.label" for="reminderOffset">提醒设置</label>
                     <select id="reminderOffset" class="search-input" style="width: 100%;">
-                        <option value="-1" data-i18n="reminderNone">不提醒</option>
-                        <option value="0" data-i18n="reminderAtTime">截止时</option>
-                        <option value="15" selected data-i18n="reminder15Min">提前 15 分钟</option>
-                        <option value="60" data-i18n="reminder1Hour">提前 1 小时</option>
-                        <option value="1440" data-i18n="reminder1Day">提前 1 天</option>
+                        <option value="-1" data-i18n="form.reminder.options.none">不提醒</option>
+                        <option value="0" data-i18n="form.reminder.options.atTime">截止时</option>
+                        <option value="15" selected data-i18n="form.reminder.options.min15">提前 15 分钟</option>
+                        <option value="60" data-i18n="form.reminder.options.hour1">提前 1 小时</option>
+                        <option value="1440" data-i18n="form.reminder.options.day1">提前 1 天</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label data-i18n="subtasksLabel">子任务 (可选)</label>
+                    <label data-i18n="form.subtasks.label">子任务 (可选)</label>
                     <div class="subtask-input-wrapper">
-                        <label for="subtaskInput"></label><input type="text" id="subtaskInput" data-i18n-placeholder="subtaskPlaceholder" placeholder="添加子任务..." autocomplete="off">
+                        <label for="subtaskInput"></label><input type="text" id="subtaskInput" data-i18n-placeholder="form.subtasks.placeholder" placeholder="添加子任务..." autocomplete="off">
                         <button type="button" id="addSubtaskBtn" class="btn-icon-small" title="添加">
                             <svg class="icon icon-sm"><use href="#icon-plus"></use></svg>
                         </button>
@@ -543,8 +543,8 @@
                     <ul id="subtaskListPreview" class="subtask-preview-list"></ul>
                 </div>
                 <div class="form-actions">
-                    <button class="btn btn-secondary" data-i18n="cancel" id="cancelBtn" type="button">取消</button>
-                    <button class="btn btn-primary" data-i18n="addTask" id="submitBtn" type="submit">添加任务</button>
+                    <button class="btn btn-secondary" data-i18n="actions.cancel" id="cancelBtn" type="button">取消</button>
+                    <button class="btn btn-primary" data-i18n="actions.addTask" id="submitBtn" type="submit">添加任务</button>
                 </div>
             </form>
         </div>
@@ -643,7 +643,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '1.3'
+                RESOURCE_VERSION: '2.0'
             },
             LANGUAGES: [
                 { code: 'zh-CN', name: '简体中文' },
@@ -766,7 +766,7 @@
 
             } catch (error) {
                 console.error('初始化失败:', error);
-                utils.notify(state.translations[state.currentLanguage]['initDBError'] || '数据库初始化失败，请刷新页面重试', 'error');
+                utils.notify(utils.translate('messages.initDBError'), 'error');
             }
         }
 
@@ -990,7 +990,7 @@
                     const updatedTask = { ...original, ...taskPayload };
                     if (taskPayload.order === undefined) updatedTask.order = original.order || 0;
                     await dbActions.updateTask(updatedTask);
-                    utils.notify(t['taskUpdated']);
+                    utils.notify(t['messages.task.updated']);
                 } else {
                     await dbActions.addTask({
                         id: Date.now(),
@@ -998,14 +998,14 @@
                         completed: false,
                         ...taskPayload
                     });
-                    utils.notify(t['taskAdded']);
+                    utils.notify(t['messages.task.added']);
                 }
                 state.tasks = await dbActions.getAllTasks();
                 renderTaskList();
                 closeDialog();
             } catch (err) {
                 console.error('保存任务失败:', err);
-                utils.notify(t['saveError'], 'error');
+                utils.notify(t['messages.task.saveError'], 'error');
             }
         }
 
@@ -1017,15 +1017,15 @@
 
         async function deleteTask(id) {
             const t = state.translations[state.currentLanguage];
-            utils.confirm(t['deleteTaskTitle'], t['confirmDelete'], async () => {
+            utils.confirm(t['task.actions.delete'], t['messages.task.confirmDelete'], async () => {
                 try {
                     await dbActions.deleteTask(id);
                     state.tasks = state.tasks.filter(task => task.id !== id);
                     renderTaskList();
-                    utils.notify(t['taskDeleted']);
+                    utils.notify(t['messages.task.deleted']);
                 } catch (e) {
                     console.error('删除任务失败:', e);
-                    utils.notify(t['deleteError'], 'error');
+                    utils.notify(t['messages.task.deleteError'], 'error');
                 }
             });
         }
@@ -1047,30 +1047,30 @@
                     setTimeout(() => el.classList.remove(CONFIG.UI.CLASSES.ANIMATE), 500);
                 }
 
-                utils.notify(task.completed ? t['taskMarkedComplete'] : t['taskMarkedIncomplete']);
+                utils.notify(task.completed ? t['messages.task.markedComplete'] : t['messages.task.markedIncomplete']);
                 renderTaskList();
             } catch (err) {
                 console.error('更新任务状态失败:', err);
                 task.completed = previousCompleted;
                 renderTaskList();
-                utils.notify(t['updateError'], 'error');
+                utils.notify(t['messages.task.updateError'], 'error');
             }
         }
 
         async function handleClearCompleted() {
             const t = state.translations[state.currentLanguage];
             const completed = state.tasks.filter(x => x.completed);
-            if (completed.length === 0) return utils.notify(t['noCompletedTasks'], 'warning');
+            if (completed.length === 0) return utils.notify(t['messages.clearCompleted.none'], 'warning');
 
-            utils.confirm(t['clearCompleted'], t['confirmClearCompleted'].replace('{count}', completed.length), async () => {
+            utils.confirm(t['actions.clearCompleted'], t['messages.clearCompleted.confirm'].replace('{count}', completed.length), async () => {
                 try {
                     await Promise.all(completed.map(task => dbActions.deleteTask(task.id)));
                     state.tasks = state.tasks.filter(x => !x.completed);
                     renderTaskList();
-                    utils.notify(t['completedTasksCleared'].replace('{count}', completed.length));
+                    utils.notify(t['messages.clearCompleted.success'].replace('{count}', completed.length));
                 } catch (e) {
                     console.error('清除已完成任务失败:', e);
-                    utils.notify(t['clearCompletedError'], 'error');
+                    utils.notify(t['messages.clearCompleted.error'], 'error');
                     throw e;
                 }
             });
@@ -1084,7 +1084,7 @@
             if (!state.notificationsEnabled) {
                 // 尝试开启
                 if (!('Notification' in window)) {
-                    utils.notify(t['notificationNotSupported'] || '此浏览器不支持桌面通知', 'error');
+                    utils.notify(t['notifications.notSupported'] || '此浏览器不支持桌面通知', 'error');
                     console.error('Browser does not support notifications');
                     return;
                 }
@@ -1097,25 +1097,25 @@
                     if (permission === 'granted') {
                         state.notificationsEnabled = true;
                         await dbActions.setConfig(CONFIG.STORAGE.NOTIFICATIONS, true);
-                        utils.notify(t['enableNotifications']);
+                        utils.notify(t['notifications.enable']);
                         // 立即检查一次
                         checkNotifications();
                     } else {
                         // 权限被拒绝或忽略
-                        utils.notify(t['notificationPermissionDenied'], 'warning');
+                        utils.notify(t['notifications.permissionDenied'], 'warning');
                         // 即使被拒绝，也应该更新 UI 显示为关闭状态
                         state.notificationsEnabled = false; 
                     }
                 } catch (error) {
                     console.error('Error requesting permission:', error);
-                    utils.notify(t['notificationError'] || '申请通知权限出错', 'error');
+                    utils.notify(t['notifications.error'] || '申请通知权限出错', 'error');
                 }
             } else {
                 // 关闭
                 console.log('Disabling notifications');
                 state.notificationsEnabled = false;
                 await dbActions.setConfig(CONFIG.STORAGE.NOTIFICATIONS, false);
-                utils.notify(t['disableNotifications']);
+                utils.notify(t['notifications.disable']);
             }
             updateNotificationBtnUI();
         }
@@ -1134,16 +1134,16 @@
                 // 在 Header 上，激活状态可以用主色或特定的颜色
                 iconUse.parentElement.style.color = 'var(--text-inverse)'; 
                 // 如果是 Menu Item 模式，才有 textSpan
-                if (textSpan) textSpan.textContent = t['disableNotifications'];
-                btn.title = t['disableNotifications'];
-                btn.setAttribute('aria-label', t['disableNotifications']);
+                if (textSpan) textSpan.textContent = t['notifications.disable'];
+                btn.title = t['notifications.disable'];
+                btn.setAttribute('aria-label', t['notifications.disable']);
             } else {
                 iconUse.setAttribute('href', '#icon-bell-off');
                 // 关闭状态，恢复默认颜色 (继承父级)
                 iconUse.parentElement.style.color = ''; 
-                if (textSpan) textSpan.textContent = t['enableNotifications'];
-                btn.title = t['enableNotifications'];
-                btn.setAttribute('aria-label', t['enableNotifications']);
+                if (textSpan) textSpan.textContent = t['notifications.enable'];
+                btn.title = t['notifications.enable'];
+                btn.setAttribute('aria-label', t['notifications.enable']);
             }
         }
 
@@ -1173,7 +1173,7 @@
                 // 3. !state.notifiedTasks.has(task.id): 还没通知过
                 if (timeLeft <= offset && timeLeft > (offset - 30) && !state.notifiedTasks.has(task.id)) {
                     console.log(`[Notification Triggered] Task: ${task.name}`);
-                    sendNotification(t['notificationTaskDue'].replace('{taskName}', task.name));
+                    sendNotification(t['notifications.taskDue'].replace('{taskName}', task.name));
                     state.notifiedTasks.add(task.id);
                     hasNewNotifications = true;
                     
@@ -1224,7 +1224,7 @@
                 }
 
                 // 3. 发送通知
-                const title = state.translations[state.currentLanguage]['appTitle'];
+                const title = state.translations[state.currentLanguage]['app.title'];
                 const options = {
                     body: body,
                     icon: './fav/android-chrome-192x192.png',
@@ -1280,7 +1280,7 @@
                 const total = task.subtasks.length;
                 const completedCount = task.subtasks.filter(s => s.completed).length;
                 const progressText = taskEl.querySelector('.subtask-summary-bar .progress-text');
-                if (progressText) progressText.textContent = `${completedCount}/${total} ${state.translations[state.currentLanguage]['subTasks']}`;
+                if (progressText) progressText.textContent = `${completedCount}/${total} ${state.translations[state.currentLanguage]['task.subtasks']}`;
 
             }
         }
@@ -1423,12 +1423,12 @@
             // A. 状态计算
             let statusObj;
             let timeLeft = null;
-            if (task.completed) statusObj = { cls: CONFIG.UI.CLASSES.COMPLETED, text: t['statusCompleted'], percent: 100 };
+            if (task.completed) statusObj = { cls: CONFIG.UI.CLASSES.COMPLETED, text: t['status.completed'], percent: 100 };
             else if (task.dueDate) {
                 timeLeft = utils.calculateTimeLeft(task.dueDate);
                 statusObj = utils.getStatus(timeLeft);
             } else {
-                statusObj = { cls: CONFIG.UI.CLASSES.NO_DEADLINE, text: t['statusNoDeadline'], percent: 0 };
+                statusObj = { cls: CONFIG.UI.CLASSES.NO_DEADLINE, text: t['status.noDeadline'], percent: 0 };
             }
 
             // B. 基础信息
@@ -1453,7 +1453,7 @@
             }
 
             el.querySelector('.task-date').textContent = task.dueDate ?
-                `${t['deadline']}: ${utils.formatDate(task.dueDate)}` : t['noDeadlineText'];
+                `${t['task.deadline']}: ${utils.formatDate(task.dueDate)}` : t['task.noDeadline'];
 
             // C. 描述
             let descEl = el.querySelector('.task-desc');
@@ -1498,9 +1498,9 @@
             } else if (timeEl) timeEl.remove();
 
             // G. 按钮 Titles
-            el.querySelector('[data-action="toggle"]').title = task.completed ? t['markIncomplete'] : t['markComplete'];
-            el.querySelector('[data-action="edit"]').title = t['editTaskTitle'];
-            el.querySelector('[data-action="delete"]').title = t['deleteTaskTitle'];
+            el.querySelector('[data-action="toggle"]').title = task.completed ? t['task.actions.markIncomplete'] : t['task.actions.markComplete'];
+            el.querySelector('[data-action="edit"]').title = t['task.actions.edit'];
+            el.querySelector('[data-action="delete"]').title = t['task.actions.delete'];
 
             // H. 拖拽手柄 (仅在 manual 模式下显示)
             // 先清理旧的
@@ -1552,7 +1552,7 @@
 
             const progressText = document.createElement('span');
             progressText.className = 'progress-text';
-            progressText.textContent = `${completed}/${total} ${state.translations[state.currentLanguage]['subTasks']}`;
+            progressText.textContent = `${completed}/${total} ${state.translations[state.currentLanguage]['task.subtasks']}`;
             countText.appendChild(progressText);
 
             summaryBar.append(
@@ -1678,8 +1678,8 @@
 
             if (editingTask) {
                 state.editingTaskId = editingTask.id;
-                setTranslatedText(DOM.modalTitle, 'editTask');
-                setTranslatedText(DOM.submitBtn, 'updateTask');
+                setTranslatedText(DOM.modalTitle, 'modal.editTitle');
+                setTranslatedText(DOM.submitBtn, 'actions.updateTask');
                 DOM.inputs.name.value = editingTask.name;
                 DOM.inputs.desc.value = editingTask.description || '';
 
@@ -1705,8 +1705,8 @@
                 DOM.inputs.reminderOffset.value = String(editingTask.reminderOffset ?? 15);
             } else {
                 state.editingTaskId = null;
-                setTranslatedText(DOM.modalTitle, 'addNewTask');
-                setTranslatedText(DOM.submitBtn, 'addTask');
+                setTranslatedText(DOM.modalTitle, 'modal.addTitle');
+                setTranslatedText(DOM.submitBtn, 'actions.addTask');
 
                 state.tempSubtasks = [];
                 DOM.inputs.noDeadline.checked = false;
@@ -1825,7 +1825,7 @@
 
                 // 修改按钮
                 const t = state.translations[state.currentLanguage];
-                DOM.submitBtn.textContent = t['confirm'];
+                DOM.submitBtn.textContent = t['actions.confirm'];
                 DOM.submitBtn.removeAttribute('data-i18n');
                 DOM.submitBtn.type = 'button';
                 DOM.submitBtn.disabled = false;
@@ -1895,18 +1895,18 @@
                 const t = state.translations[state.currentLanguage];
                 if (min < 0) {
                     const m = Math.abs(Math.floor(min));
-                    if (m < 60) return t['minutesAgo'].replace('{minutes}', m);
-                    if (m < 1440) return t['hoursAgo'].replace('{hours}', Math.floor(m/60));
-                    return t['daysAgo'].replace('{days}', Math.floor(m/1440));
+                    if (m < 60) return t['time.minutesAgo'].replace('{minutes}', m);
+                    if (m < 1440) return t['time.hoursAgo'].replace('{hours}', Math.floor(m/60));
+                    return t['time.daysAgo'].replace('{days}', Math.floor(m/1440));
                 }
                 const m = Math.floor(min);
-                if (m < 60) return t['minutesLeft'].replace('{minutes}', m);
+                if (m < 60) return t['time.minutesLeft'].replace('{minutes}', m);
                 if (m < 1440) {
                     const h = Math.floor(m/60), rest = m%60;
-                    return `${t['hoursLeft'].replace('{hours}',h)} ${rest>0 ? t['minutesLeft'].replace('{minutes}',rest) : ''}`;
+                    return `${t['time.hoursLeft'].replace('{hours}',h)} ${rest>0 ? t['time.minutesLeft'].replace('{minutes}',rest) : ''}`;
                 }
                 const d = Math.floor(m/1440), h = Math.floor((m%1440)/60), rest = m%60;
-                return `${t['daysLeft'].replace('{days}', d)} ${h>0 ? t['hoursLeft'].replace('{hours}', h) : ''} ${rest>0 ? t['minutesLeft'].replace('{minutes}', rest) : ''}`;
+                return `${t['time.daysLeft'].replace('{days}', d)} ${h>0 ? t['time.hoursLeft'].replace('{hours}', h) : ''} ${rest>0 ? t['time.minutesLeft'].replace('{minutes}', rest) : ''}`;
             },
 
             // 根据剩余时间获取状态
@@ -1915,13 +1915,13 @@
                 const S = CONFIG.UI.STATUS;
                 // 关键分钟数：3天=4320, 7天=10080, 37天=53280
                 // --- 状态: 已过期 (Overdue) ---
-                if (min < 0) return { cls: S.OVERDUE, text: t['statusOverdue'], percent: 100 };
+                if (min < 0) return { cls: S.OVERDUE, text: t['status.overdue'], percent: 100 };
                 // --- 状态: 危险 (Danger) --- (窗口: 0 - 3天 / 4320分钟)
-                if (min <= 4320) return { cls: S.DANGER, text: t['statusDanger'], percent: Math.min(100, ((4320 - min)/4320)*100) };
+                if (min <= 4320) return { cls: S.DANGER, text: t['status.danger'], percent: Math.min(100, ((4320 - min)/4320)*100) };
                 // --- 状态: 警告 (Warning) --- (窗口: 3 - 7天 / 5760分钟)
-                if (min <= 10080) return { cls: S.WARNING, text: t['statusWarning'], percent: Math.min(100, ((10080 - min)/5760)*100) };
+                if (min <= 10080) return { cls: S.WARNING, text: t['status.warning'], percent: Math.min(100, ((10080 - min)/5760)*100) };
                 // --- 状态: 安全 (Safe) --- (窗口: 7 - 37天 / 43200分钟)
-                return { cls: S.SAFE, text: t['statusSafe'], percent: Math.min(100, Math.max(0, ((53280 - min)/43200)*100)) };
+                return { cls: S.SAFE, text: t['status.safe'], percent: Math.min(100, Math.max(0, ((53280 - min)/43200)*100)) };
             },
 
             sortTasks: (list) => {
@@ -2321,7 +2321,7 @@
                 });
             } catch (err) {
                 console.error('排序保存失败:', err);
-                utils.notify(state.translations[state.currentLanguage]['saveError'], 'error');
+                utils.notify(state.translations[state.currentLanguage]['messages.task.saveError'], 'error');
             }
         }
 
@@ -2333,10 +2333,22 @@
                 if (!response.ok) {
                     throw new Error(`Failed to load ${l.code} translations: ${response.status}`);
                 }
-                return [l.code, await response.json()];
+                return [l.code, flattenTranslations(await response.json())];
             }));
             state.translations = Object.fromEntries(entries);
             validateTranslations();
+        }
+
+        function flattenTranslations(source, prefix = '', target = {}) {
+            Object.entries(source).forEach(([key, value]) => {
+                const path = prefix ? `${prefix}.${key}` : key;
+                if (value && typeof value === 'object' && !Array.isArray(value)) {
+                    flattenTranslations(value, path, target);
+                } else {
+                    target[path] = value;
+                }
+            });
+            return target;
         }
 
         function validateTranslations() {
@@ -2424,11 +2436,11 @@
             }
         }
         function getEmptyStateHTML(t) {
-            return `<div class="empty-state"><svg class="icon icon-lg"><use href="#icon-empty-tasks"></use></svg><h3>${t['noTasks']}</h3><p>${t['noTasksDescription']}</p></div>`;
+            return `<div class="empty-state"><svg class="icon icon-lg"><use href="#icon-empty-tasks"></use></svg><h3>${t['empty.noTasks.title']}</h3><p>${t['empty.noTasks.description']}</p></div>`;
         }
 
         function getEmptyMatchHTML(t) {
-            return `<div class="empty-state"><svg class="icon icon-lg icon-fill"><use href="#icon-empty-search"></use></svg><h3>${t['noMatchingTasks']}</h3><p>${t['noMatchingTasksDescription']}</p></div>`
+            return `<div class="empty-state"><svg class="icon icon-lg icon-fill"><use href="#icon-empty-search"></use></svg><h3>${t['empty.noMatches.title']}</h3><p>${t['empty.noMatches.description']}</p></div>`
         }
 
         // 页面从休眠恢复
@@ -2446,7 +2458,7 @@
             const a = document.createElement('a'); a.href = url; a.download = `tasks_${new Date().toISOString().split('T')[0]}.json`;
             document.body.appendChild(a); a.click(); document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            utils.notify(state.translations[state.currentLanguage]['exportSuccess']);
+            utils.notify(state.translations[state.currentLanguage]['messages.export.success']);
         }
 
         function importTasks(file) {
@@ -2457,29 +2469,29 @@
                 try {
                     const data = JSON.parse(e.target.result.toString());
                     if (!data.tasks || !Array.isArray(data.tasks)) {
-                        utils.notify(t['importFormatError'], 'error');
+                        utils.notify(t['messages.import.formatError'], 'error');
                         return;
                     }
-                    utils.confirm(t['import'], t['importConfirm'].replace('{count}', data.tasks.length), async () => {
+                    utils.confirm(t['actions.import'], t['messages.import.confirm'].replace('{count}', data.tasks.length), async () => {
                         try {
                             const importedTasks = normalizeImportedTasks(data.tasks);
                             await dbActions.replaceAllTasks(importedTasks);
 
                             state.tasks = await dbActions.getAllTasks();
                             renderTaskList();
-                            utils.notify(t['importSuccess'].replace('{count}', data.tasks.length));
+                            utils.notify(t['messages.import.success'].replace('{count}', data.tasks.length));
                         } catch (err) {
                             console.error('导入任务失败:', err);
-                            utils.notify(t['importReadError'], 'error');
+                            utils.notify(t['messages.import.readError'], 'error');
                             throw err;
                         }
                     });
                 } catch(err) {
-                    utils.notify(t['importReadError'], 'error');
+                    utils.notify(t['messages.import.readError'], 'error');
                     console.error('导入错误:', err);
                 }
             };
-            reader.onerror = () => utils.notify(t['importReadError'], 'error');
+            reader.onerror = () => utils.notify(t['messages.import.readError'], 'error');
             reader.readAsText(file);
             DOM.menu.fileInput.value = '';  // 重置文件输入
         }
@@ -2540,14 +2552,14 @@
         async function addSampleTasks() {
             const t = state.translations[state.currentLanguage];
             const samples = [
-                { id: Date.now()+1, name: t['sampleTask1Name'] || "完成项目报告", description: t['sampleTask1Desc'] || "编写并提交季度项目总结报告", dueDate: utils.dateToStoredISO(new Date(Date.now() + 432000000)), createdAt: new Date().toISOString(), completed: false },
-                { id: Date.now()+2, name: t['sampleTask2Name'] || "团队会议准备", description: t['sampleTask2Desc'] || "准备下周团队会议的演示材料", dueDate: utils.dateToStoredISO(new Date(Date.now() + 864000000)), createdAt: new Date().toISOString(), completed: false },
-                { id: Date.now()+3, name: t['sampleTask3Name'] || "学习计划制定", description: t['sampleTask3Desc'] || "制定下个月的个人学习计划", dueDate: null, createdAt: new Date().toISOString(), completed: false }
+                { id: Date.now()+1, name: t['samples.task1.name'] || "完成项目报告", description: t['samples.task1.description'] || "编写并提交季度项目总结报告", dueDate: utils.dateToStoredISO(new Date(Date.now() + 432000000)), createdAt: new Date().toISOString(), completed: false },
+                { id: Date.now()+2, name: t['samples.task2.name'] || "团队会议准备", description: t['samples.task2.description'] || "准备下周团队会议的演示材料", dueDate: utils.dateToStoredISO(new Date(Date.now() + 864000000)), createdAt: new Date().toISOString(), completed: false },
+                { id: Date.now()+3, name: t['samples.task3.name'] || "学习计划制定", description: t['samples.task3.description'] || "制定下个月的个人学习计划", dueDate: null, createdAt: new Date().toISOString(), completed: false }
             ];
             await Promise.all(samples.map(s => dbActions.addTask(s)));
             state.tasks = await dbActions.getAllTasks();
             renderTaskList();
-            utils.notify(t['sampleTasksAdded']);
+            utils.notify(t['messages.sampleTasks.added']);
         }
 
     })();
