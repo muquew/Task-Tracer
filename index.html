@@ -140,7 +140,7 @@
         .container, .task-item, .modal-content, input, textarea, select, .menu, .controls-bar { transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease); }
         .container { width: min(100%, var(--app-width)); margin: 0 auto; background: transparent; border-radius: 0; box-shadow: none; position: relative; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-        .icon-btn:focus-visible, .lang-btn:focus-visible, .menu-item:focus-visible, .dropdown-btn:focus-visible, .dropdown-option:focus-visible, .action-btn:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .btn-icon-small:focus-visible, .back-to-top:focus-visible, .subtask-summary-bar:focus-visible, .subtask-delete-btn:focus-visible, .subtask-checkbox:focus-visible, .subtask-preview-text:focus-visible, .drag-handle:focus-visible {
+        .icon-btn:focus-visible, .lang-btn:focus-visible, .menu-item:focus-visible, .dropdown-btn:focus-visible, .dropdown-option:focus-visible, .view-tab:focus-visible, .calendar-nav-btn:focus-visible, .calendar-task:focus-visible, .action-btn:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .btn-icon-small:focus-visible, .back-to-top:focus-visible, .subtask-summary-bar:focus-visible, .subtask-delete-btn:focus-visible, .subtask-checkbox:focus-visible, .subtask-preview-text:focus-visible, .drag-handle:focus-visible {
             outline: 2px solid var(--color-primary);
             outline-offset: 2px;
             box-shadow: 0 0 0 4px var(--focus-ring);
@@ -220,6 +220,40 @@
         .dropdown-option svg { opacity: 0; color: var(--color-primary); }
         .dropdown-option.selected svg { opacity: 1; }
         .filter-count { margin-left: auto; opacity: 0.6; font-size: 12px; padding-left: 8px; }
+        .view-switcher { display: inline-flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; padding: 5px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--controls-bg); box-shadow: 0 8px 22px var(--shadow-base); backdrop-filter: blur(14px); }
+        .view-tab { min-height: 34px; border: 1px solid transparent; border-radius: var(--radius-control); padding: 7px 10px; display: inline-flex; align-items: center; gap: 7px; background: transparent; color: var(--text-secondary); font: inherit; font-size: 13px; font-weight: 760; cursor: pointer; transition: background-color var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast), transform var(--motion-fast); }
+        .view-tab:hover { color: var(--color-primary); background: var(--bg-hover); }
+        .view-tab.selected { color: var(--color-primary); background: var(--bg-surface); border-color: color-mix(in srgb, var(--color-primary) 24%, transparent); box-shadow: 0 6px 14px var(--shadow-base); }
+        .calendar-view, .timeline-view { animation: fadeIn 0.2s ease; }
+        .calendar-shell { border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface); box-shadow: 0 10px 28px var(--shadow-base); overflow: hidden; }
+        .calendar-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 14px; border-bottom: 1px solid var(--border-light); background: var(--bg-surface-raised); }
+        .calendar-title { font-size: 16px; font-weight: 800; color: var(--text-main); }
+        .calendar-actions { display: flex; gap: 6px; align-items: center; }
+        .calendar-nav-btn { min-width: 34px; min-height: 34px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface); color: var(--text-main); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 6px 9px; font: inherit; font-size: 13px; font-weight: 760; }
+        .calendar-nav-btn:hover { color: var(--color-primary); background: var(--bg-hover); border-color: var(--color-primary); }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+        .calendar-weekday { padding: 9px 8px; border-bottom: 1px solid var(--border-light); color: var(--text-tertiary); font-size: 12px; font-weight: 800; text-align: center; background: var(--bg-surface-alt); }
+        .calendar-day { min-height: 118px; padding: 8px; border-right: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); background: var(--bg-surface); }
+        .calendar-day:nth-child(7n) { border-right: 0; }
+        .calendar-day.outside-month { background: var(--bg-surface-alt); color: var(--text-tertiary); }
+        .calendar-day.today { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--color-primary) 44%, transparent); }
+        .calendar-date-number { display: inline-flex; min-width: 24px; height: 24px; align-items: center; justify-content: center; border-radius: var(--radius-pill); font-size: 12px; font-weight: 800; color: var(--text-secondary); }
+        .calendar-day.today .calendar-date-number { background: var(--color-primary); color: var(--text-inverse); }
+        .calendar-task-list { display: grid; gap: 5px; margin-top: 6px; }
+        .calendar-task { width: 100%; min-height: 28px; border: 1px solid var(--border-light); border-left: 4px solid var(--task-color, var(--color-primary)); border-radius: var(--radius-control); background: var(--bg-surface-raised); color: var(--text-main); padding: 4px 6px; text-align: left; font: inherit; font-size: 12px; font-weight: 700; line-height: 1.3; cursor: pointer; overflow-wrap: anywhere; }
+        .calendar-task:hover { color: var(--color-primary); background: var(--bg-hover); }
+        .calendar-more { color: var(--text-tertiary); font-size: 12px; font-weight: 700; padding: 2px 6px; }
+        .date-view-undated { margin-top: 12px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface); padding: 12px; box-shadow: 0 8px 22px var(--shadow-base); }
+        .date-view-undated h3, .timeline-date-title { font-size: 14px; color: var(--text-main); margin-bottom: 9px; }
+        .timeline-view { display: grid; gap: 12px; }
+        .timeline-group { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; }
+        .timeline-marker { position: relative; display: flex; justify-content: center; }
+        .timeline-marker::before { content: ""; position: absolute; top: 20px; bottom: -18px; width: 2px; background: var(--border-light); }
+        .timeline-group:last-child .timeline-marker::before { display: none; }
+        .timeline-dot { width: 15px; height: 15px; margin-top: 4px; border-radius: var(--radius-pill); background: var(--color-primary); box-shadow: 0 0 0 5px var(--color-info-light); z-index: 1; }
+        .timeline-content { min-width: 0; }
+        .timeline-date-title { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-weight: 800; }
+        .timeline-count { font-size: 12px; color: var(--text-tertiary); font-weight: 700; }
         .tasks-section { position: relative; z-index: 1; margin-bottom: 25px; }
         .task-item {
             display: flex;
@@ -420,6 +454,14 @@
             .dropdown-container { flex: 1; min-width: 0; }
             .dropdown-btn { width: 100%; min-width: 0; justify-content: space-between; }
             .dropdown-menu-content { width: 100%; }
+            .view-switcher { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+            .view-tab { justify-content: center; min-width: 0; padding-inline: 8px; }
+            .calendar-header { align-items: flex-start; flex-direction: column; }
+            .calendar-actions { width: 100%; justify-content: space-between; }
+            .calendar-weekday { font-size: 11px; padding-inline: 3px; }
+            .calendar-day { min-height: 92px; padding: 5px; }
+            .calendar-task { font-size: 11px; padding: 4px 5px; }
+            .timeline-group { grid-template-columns: 22px minmax(0, 1fr); gap: 6px; }
             .container { border-radius: 0; }
             .main-content { padding-top: 12px; }
             .task-item { padding: 13px; }
@@ -524,6 +566,9 @@
     <symbol id="icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
     <symbol id="icon-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></symbol>
     <symbol id="icon-sort" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"/><path d="M7 9l5-5 5 5"/></symbol>
+    <symbol id="icon-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6H21"/><path d="M8 12H21"/><path d="M8 18H21"/><path d="M3 6H3.01"/><path d="M3 12H3.01"/><path d="M3 18H3.01"/></symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2V6"/><path d="M16 2V6"/><path d="M3 10H21"/><path d="M5 4H19A2 2 0 0 1 21 6V20A2 2 0 0 1 19 22H5A2 2 0 0 1 3 20V6A2 2 0 0 1 5 4Z"/></symbol>
+    <symbol id="icon-timeline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3V21"/><path d="M5 6H16A3 3 0 0 1 16 12H5"/><path d="M5 14H18A3 3 0 0 1 18 20H5"/></symbol>
     <symbol id="icon-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></symbol>
     <symbol id="icon-github" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.727-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757 -1.09-.745.083-.729.083-.729 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.775.418-1.305.76-1.606-2.665-.305-5.466-1.334-5.466-5.932 0-1.31.47-2.382 1.236-3.22-.125-.303-.535-1.523.115-3.176 0 0 1.008-.322 3.3 1.23a11.49 11.49 0 013.004-.404 c1.02.005 2.045.138 3.003.404 2.292-1.552 3.3-1.23 3.3-1.23.65 1.653.24 2.873.12 3.176.77.838 1.236 1.91 1.236 3.22 0 4.61-2.804 5.624-5.475 5.922.43.372.81 1.102.81 2.222 0 1.606-.015 2.896-.015 3.286 0 .32.216.694.825.576C20.565 21.796 24 17.3 24 12 24 5.373 18.627 0 12 0z"/></symbol>
     <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17L4 12"/></symbol>
@@ -634,6 +679,20 @@
                     <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="manual"><span data-i18n="sort.manual">自定义排序 (拖拽)</span></button>
                 </div>
             </div>
+        </div>
+        <div class="view-switcher" id="viewSwitcher" role="tablist" aria-label="视图切换" data-i18n-aria-label="views.label">
+            <button class="view-tab selected" type="button" role="tab" aria-selected="true" data-view="list">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-list"></use></svg>
+                <span data-i18n="views.list">列表</span>
+            </button>
+            <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="calendar">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-calendar"></use></svg>
+                <span data-i18n="views.calendar">日历</span>
+            </button>
+            <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="timeline">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-timeline"></use></svg>
+                <span data-i18n="views.timeline">时间线</span>
+            </button>
         </div>
         <div class="tasks-section">
             <div id="taskList" aria-live="polite">
@@ -837,7 +896,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '3.0'
+                RESOURCE_VERSION: '3.1'
             },
             BACKUP: {
                 FILE_VERSION: '2.0',
@@ -867,6 +926,8 @@
             filter: 'active',
             sort: 'smart',
             projectFilter: 'all',
+            viewMode: 'list',
+            calendarMonthDate: new Date(),
             searchQuery: '',
             editingTaskId: null,
             currentLanguage: 'zh-CN',
@@ -886,6 +947,7 @@
         function cacheDOM() {
             DOM.taskList = document.getElementById('taskList');
             DOM.taskTemplate = document.getElementById('task-template');
+            DOM.viewSwitcher = document.getElementById('viewSwitcher');
             DOM.themeBtn = document.getElementById('themeToggleBtn');
             DOM.backToTopBtn = document.getElementById('backToTopBtn');
             DOM.clearCompletedBtn = document.getElementById('clearCompletedBtn');
@@ -1035,6 +1097,7 @@
             bindDialogEvents();
             bindFormEvents();
             bindSearchEvents();
+            bindViewEvents();
             bindNotificationEvents();
             setupDropdowns();
             bindMenuEvents();
@@ -1082,6 +1145,27 @@
                 renderTaskList();
             });
             DOM.clearCompletedBtn.addEventListener('click', handleClearCompleted);
+        }
+        function bindViewEvents() {
+            DOM.viewSwitcher.addEventListener('click', (e) => {
+                const tab = e.target.closest('.view-tab');
+                if (!tab) return;
+                setViewMode(tab.dataset.view);
+            });
+        }
+        function setViewMode(viewMode) {
+            if (!['list', 'calendar', 'timeline'].includes(viewMode) || state.viewMode === viewMode) return;
+            state.viewMode = viewMode;
+            if (viewMode === 'calendar') syncCalendarMonthToVisibleTasks();
+            syncViewSwitcher();
+            renderTaskList();
+        }
+        function syncViewSwitcher() {
+            DOM.viewSwitcher.querySelectorAll('.view-tab').forEach(tab => {
+                const selected = tab.dataset.view === state.viewMode;
+                tab.classList.toggle(CONFIG.UI.CLASSES.SELECTED, selected);
+                tab.setAttribute('aria-selected', String(selected));
+            });
         }
         function bindNotificationEvents() {
             if (DOM.notificationToggleBtn) {
@@ -1945,6 +2029,7 @@
         function renderTaskList() {
             const t = state.translations[state.currentLanguage];
             if (!t) return;
+            syncViewSwitcher();
             renderProjectFilterOptions();
             updateFilterCounts();
             if (state.tasks.length === 0) {
@@ -1958,6 +2043,14 @@
                 return;
             }
             clearEmptyTaskList();
+            if (state.viewMode === 'calendar') {
+                renderCalendarView(visibleTasks);
+                return;
+            }
+            if (state.viewMode === 'timeline') {
+                renderTimelineView(visibleTasks);
+                return;
+            }
             if (shouldGroupVisibleTasks(visibleTasks)) {
                 renderGroupedTaskList(visibleTasks);
                 return;
@@ -2058,6 +2151,220 @@
         function removeProjectGroupHeaders() {
             DOM.taskList.querySelectorAll('.task-group-header').forEach(header => header.remove());
         }
+        function syncCalendarMonthToVisibleTasks() {
+            const datedTask = getVisibleTasks().find(task => task.dueDate);
+            state.calendarMonthDate = datedTask ? utils.utcToLocal(datedTask.dueDate) : new Date();
+        }
+        function renderCalendarView(tasks) {
+            DOM.taskList.textContent = '';
+            const datedTasks = sortTasksForDateView(tasks.filter(task => task.dueDate));
+            const undatedTasks = tasks.filter(task => !task.dueDate);
+            const calendar = document.createElement('div');
+            calendar.className = 'calendar-view';
+            calendar.appendChild(createCalendarShell(datedTasks));
+            if (undatedTasks.length > 0) calendar.appendChild(createUndatedSection(undatedTasks));
+            DOM.taskList.appendChild(calendar);
+        }
+        function createCalendarShell(tasks) {
+            const shell = document.createElement('section');
+            shell.className = 'calendar-shell';
+            shell.append(createCalendarHeader(), createCalendarGrid(tasks));
+            return shell;
+        }
+        function createCalendarHeader() {
+            const header = document.createElement('div');
+            header.className = 'calendar-header';
+            const title = document.createElement('h2');
+            title.className = 'calendar-title';
+            title.textContent = formatCalendarMonthTitle(state.calendarMonthDate);
+            const actions = document.createElement('div');
+            actions.className = 'calendar-actions';
+            actions.append(
+                createCalendarNavButton('prev', 'icon-chevron-right', utils.translate('calendar.previous'), true),
+                createCalendarTodayButton(),
+                createCalendarNavButton('next', 'icon-chevron-right', utils.translate('calendar.next'))
+            );
+            header.append(title, actions);
+            return header;
+        }
+        function createCalendarTodayButton() {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'calendar-nav-btn';
+            button.dataset.calendarAction = 'today';
+            button.textContent = utils.translate('calendar.today');
+            return button;
+        }
+        function createCalendarNavButton(action, iconId, label, flip = false) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'calendar-nav-btn';
+            button.dataset.calendarAction = action;
+            button.setAttribute('aria-label', label);
+            const icon = createIcon(iconId, 'icon icon-sm');
+            if (flip) icon.style.transform = 'rotate(180deg)';
+            button.appendChild(icon);
+            return button;
+        }
+        function createCalendarGrid(tasks) {
+            const grid = document.createElement('div');
+            grid.className = 'calendar-grid';
+            getWeekdayLabels().forEach(label => {
+                const weekday = document.createElement('div');
+                weekday.className = 'calendar-weekday';
+                weekday.textContent = label;
+                grid.appendChild(weekday);
+            });
+            const byDate = groupTasksByDateKey(tasks);
+            getCalendarDays(state.calendarMonthDate).forEach(day => grid.appendChild(createCalendarDay(day, byDate.get(utils.formatDateInputValue(day)) || [])));
+            return grid;
+        }
+        function createCalendarDay(day, tasks) {
+            const cell = document.createElement('div');
+            const todayKey = utils.formatDateInputValue();
+            const dayKey = utils.formatDateInputValue(day);
+            cell.className = `calendar-day ${day.getMonth() === state.calendarMonthDate.getMonth() ? '' : 'outside-month'} ${dayKey === todayKey ? 'today' : ''}`.trim();
+            cell.setAttribute('role', 'group');
+            cell.setAttribute('aria-label', formatCalendarDayLabel(day, tasks.length));
+            const number = document.createElement('div');
+            number.className = 'calendar-date-number';
+            number.textContent = String(day.getDate());
+            const list = document.createElement('div');
+            list.className = 'calendar-task-list';
+            tasks.slice(0, 3).forEach(task => list.appendChild(createCalendarTaskButton(task)));
+            if (tasks.length > 3) {
+                const more = document.createElement('div');
+                more.className = 'calendar-more';
+                more.textContent = utils.translate('calendar.more').replace('{count}', tasks.length - 3);
+                list.appendChild(more);
+            }
+            cell.append(number, list);
+            return cell;
+        }
+        function createCalendarTaskButton(task) {
+            const status = getTaskRenderStatus(task, state.translations[state.currentLanguage]).statusObj;
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'calendar-task';
+            button.dataset.calendarTaskId = String(task.id);
+            button.style.setProperty('--task-color', getStatusColorFromClass(status.cls));
+            button.textContent = task.name;
+            button.setAttribute('aria-label', `${task.name}, ${status.text}`);
+            return button;
+        }
+        function getStatusColorFromClass(statusClass) {
+            const map = {
+                [CONFIG.UI.STATUS.SAFE]: 'var(--color-success)',
+                [CONFIG.UI.STATUS.WARNING]: 'var(--color-warning)',
+                [CONFIG.UI.STATUS.DANGER]: 'var(--color-danger)',
+                [CONFIG.UI.STATUS.OVERDUE]: 'var(--color-danger)',
+                [CONFIG.UI.STATUS.NO_DEADLINE]: 'var(--text-tertiary)',
+                [CONFIG.UI.STATUS.ARCHIVED]: 'var(--text-tertiary)',
+                [CONFIG.UI.CLASSES.COMPLETED]: 'var(--color-success)'
+            };
+            return map[statusClass] || 'var(--color-primary)';
+        }
+        function getCalendarDays(anchorDate) {
+            const first = new Date(anchorDate.getFullYear(), anchorDate.getMonth(), 1);
+            const offset = (first.getDay() + 6) % 7;
+            const start = new Date(first);
+            start.setDate(first.getDate() - offset);
+            return Array.from({ length: 42 }, (_, index) => {
+                const day = new Date(start);
+                day.setDate(start.getDate() + index);
+                return day;
+            });
+        }
+        function getWeekdayLabels() {
+            const base = new Date(2025, 0, 6);
+            return Array.from({ length: 7 }, (_, index) => {
+                const day = new Date(base);
+                day.setDate(base.getDate() + index);
+                return new Intl.DateTimeFormat(state.currentLanguage, { weekday: 'short' }).format(day);
+            });
+        }
+        function formatCalendarMonthTitle(date) {
+            return new Intl.DateTimeFormat(state.currentLanguage, { year: 'numeric', month: 'long' }).format(date);
+        }
+        function formatCalendarDayLabel(day, count) {
+            return `${new Intl.DateTimeFormat(state.currentLanguage, { dateStyle: 'full' }).format(day)}, ${utils.translate('calendar.taskCount').replace('{count}', count)}`;
+        }
+        function renderTimelineView(tasks) {
+            DOM.taskList.textContent = '';
+            const timeline = document.createElement('div');
+            timeline.className = 'timeline-view';
+            timeline.setAttribute('role', 'list');
+            groupTasksByDateKey(sortTasksForDateView(tasks)).forEach((groupTasks, key) => {
+                timeline.appendChild(createTimelineGroup(key, groupTasks));
+            });
+            DOM.taskList.appendChild(timeline);
+        }
+        function createTimelineGroup(key, tasks) {
+            const group = document.createElement('section');
+            group.className = 'timeline-group';
+            group.setAttribute('role', 'listitem');
+            const marker = document.createElement('div');
+            marker.className = 'timeline-marker';
+            const dot = document.createElement('div');
+            dot.className = 'timeline-dot';
+            marker.appendChild(dot);
+            const content = document.createElement('div');
+            content.className = 'timeline-content';
+            const title = document.createElement('h2');
+            title.className = 'timeline-date-title';
+            title.append(createTimelineTitleText(key), createTimelineCount(tasks.length));
+            content.appendChild(title);
+            tasks.forEach(task => content.appendChild(createTaskNode(task)));
+            group.append(marker, content);
+            return group;
+        }
+        function createTimelineTitleText(key) {
+            const span = document.createElement('span');
+            span.textContent = key === '__none__' ? utils.translate('calendar.noDeadline') : formatTimelineDate(key);
+            return span;
+        }
+        function createTimelineCount(count) {
+            const span = document.createElement('span');
+            span.className = 'timeline-count';
+            span.textContent = utils.translate('calendar.taskCount').replace('{count}', count);
+            return span;
+        }
+        function createUndatedSection(tasks) {
+            const section = document.createElement('section');
+            section.className = 'date-view-undated';
+            const title = document.createElement('h3');
+            title.textContent = utils.translate('calendar.noDeadline');
+            section.appendChild(title);
+            tasks.forEach(task => section.appendChild(createTaskNode(task)));
+            return section;
+        }
+        function groupTasksByDateKey(tasks) {
+            const groups = new Map();
+            tasks.forEach(task => {
+                const key = task.dueDate ? utils.formatDateInputValue(utils.utcToLocal(task.dueDate)) : '__none__';
+                if (!groups.has(key)) groups.set(key, []);
+                groups.get(key).push(task);
+            });
+            return groups;
+        }
+        function sortTasksForDateView(tasks) {
+            return [...tasks].sort((a, b) => {
+                if (a.dueDate && b.dueDate) return new Date(a.dueDate) - new Date(b.dueDate);
+                if (a.dueDate) return -1;
+                if (b.dueDate) return 1;
+                return new Date(a.createdAt) - new Date(b.createdAt);
+            });
+        }
+        function formatTimelineDate(key) {
+            const date = new Date(`${key}T12:00:00`);
+            return new Intl.DateTimeFormat(state.currentLanguage, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' }).format(date);
+        }
+        function shiftCalendarMonth(delta) {
+            const date = new Date(state.calendarMonthDate);
+            date.setMonth(date.getMonth() + delta);
+            state.calendarMonthDate = date;
+            renderTaskList();
+        }
         function removeInitialLoader() {
             const loader = document.getElementById('initial-loader');
             if (loader) loader.remove();
@@ -2069,6 +2376,9 @@
             if (DOM.taskList.querySelector('.empty-state')) DOM.taskList.innerHTML = '';
         }
         function patchTaskList(tasks) {
+            if (Array.from(DOM.taskList.children).some(el => !el.classList.contains('task-item'))) {
+                DOM.taskList.textContent = '';
+            }
             if (DOM.taskList.children.length === 0) {
                 appendTaskNodes(tasks);
             } else {
@@ -2301,6 +2611,7 @@
             const handle = document.createElement('button');
             handle.type = 'button';
             handle.className = 'drag-handle';
+            handle.draggable = true;
             handle.setAttribute('aria-label', utils.translate('task.actions.reorder').replace('{taskName}', taskName));
             handle.innerHTML = `<svg class="icon"><use href="#icon-drag"></use></svg>`;
             return handle;
@@ -2909,10 +3220,30 @@
             return el.classList.contains(CONFIG.UI.CLASSES.SHOW);
         }
         function handleTaskListClick(e) {
+            if (handleCalendarActionClick(e)) return;
+            if (handleCalendarTaskClick(e)) return;
             if (handleSubtaskCheckboxClick(e)) return;
             if (handleSubtaskRowClick(e)) return;
             if (handleSubtaskSummaryClick(e)) return;
             handleTaskActionClick(e);
+        }
+        function handleCalendarActionClick(e) {
+            const button = e.target.closest('[data-calendar-action]');
+            if (!button) return false;
+            const action = button.dataset.calendarAction;
+            if (action === 'prev') shiftCalendarMonth(-1);
+            if (action === 'next') shiftCalendarMonth(1);
+            if (action === 'today') {
+                state.calendarMonthDate = new Date();
+                renderTaskList();
+            }
+            return true;
+        }
+        function handleCalendarTaskClick(e) {
+            const button = e.target.closest('[data-calendar-task-id]');
+            if (!button) return false;
+            editTask(Number(button.dataset.calendarTaskId));
+            return true;
         }
         function handleSubtaskCheckboxClick(e) {
             if (!e.target.classList.contains('subtask-checkbox')) return false;
@@ -3118,7 +3449,7 @@
             }
         }
         function canReorderTasks() {
-            return state.sort === 'manual' && state.filter === 'all' && state.projectFilter === 'all' && !state.searchQuery;
+            return state.viewMode === 'list' && state.sort === 'manual' && state.filter === 'all' && state.projectFilter === 'all' && !state.searchQuery;
         }
         function preventCancelableEvent(e) {
             if (e.cancelable) e.preventDefault();

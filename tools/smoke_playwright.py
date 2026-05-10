@@ -636,6 +636,13 @@ def select_sort(page: Page, value: str) -> None:
     )
 
 
+def select_view(page: Page, value: str) -> None:
+    tab = page.locator(f'#viewSwitcher .view-tab[data-view="{value}"]')
+    tab.click()
+    expect(tab).to_have_attribute("aria-selected", "true")
+    expect(tab).to_have_class(re.compile(r"(^|\s)selected(\s|$)"))
+
+
 def visible_task_names(page: Page) -> list[str]:
     return page.locator(".task-item .task-name").all_text_contents()
 
@@ -827,6 +834,31 @@ def exercise_filters_and_sort(page: Page, alpha_name: str, beta_name: str, overd
     select_filter(page, "all")
 
 
+def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_name: str) -> None:
+    select_filter(page, "all")
+    select_view(page, "calendar")
+    expect(page.locator(".calendar-view")).to_be_visible()
+    expect(page.locator(".calendar-day")).to_have_count(42)
+    expect(page.locator(".calendar-task").filter(has_text=beta_name)).to_have_count(1)
+    expect(page.locator(".calendar-task").filter(has_text=overdue_name)).to_have_count(1)
+    expect(page.locator(".date-view-undated")).to_contain_text(alpha_name)
+    page.locator(".calendar-task").filter(has_text=beta_name).first.click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    expect(page.locator("#taskName")).to_have_value(beta_name)
+    page.locator("#cancelBtn").click()
+
+    select_view(page, "timeline")
+    expect(page.locator(".timeline-view")).to_be_visible()
+    expect(page.locator(".timeline-group")).to_have_count(3)
+    expect(task_locator(page, alpha_name)).to_have_count(1)
+    expect(task_locator(page, beta_name)).to_have_count(1)
+    expect(task_locator(page, overdue_name)).to_have_count(1)
+    assert_accessibility_baseline(page, "date views")
+
+    select_view(page, "list")
+    expect(page.locator(".task-item")).to_have_count(3)
+
+
 def complete_task(page: Page, task_name: str) -> None:
     active_task = task_locator(page, task_name).first
     expect(active_task.locator('[data-action="toggle"]')).to_have_attribute(
@@ -984,6 +1016,8 @@ def exercise_manual_reorder(page: Page, first_name: str, second_name: str, third
 
 
 def drag_task_before(page: Page, source_name: str, target_name: str) -> None:
+    task_locator(page, source_name).scroll_into_view_if_needed()
+    task_locator(page, target_name).scroll_into_view_if_needed()
     handle_box = task_locator(page, source_name).locator(".drag-handle").bounding_box()
     target_box = task_locator(page, target_name).bounding_box()
     if not handle_box or not target_box:
@@ -1359,6 +1393,7 @@ def smoke(url: str) -> None:
         clear_search(page)
 
         exercise_filters_and_sort(page, alpha_edited, beta_name, overdue_name)
+        exercise_date_views(page, alpha_edited, beta_name, overdue_name)
         exercise_manual_reorder(page, alpha_edited, beta_name, overdue_name)
         exercise_back_to_top(page)
         complete_task(page, alpha_edited)

@@ -31,6 +31,20 @@
     "none": "未分组",
     "groupTitle": "{project} · {count} 个任务"
   },
+  "views": {
+    "label": "视图切换",
+    "list": "列表",
+    "calendar": "日历",
+    "timeline": "时间线"
+  },
+  "calendar": {
+    "previous": "上个月",
+    "next": "下个月",
+    "today": "今天",
+    "more": "+{count} 个更多",
+    "taskCount": "{count} 个任务",
+    "noDeadline": "无截止日期"
+  },
   "filters": {
     "all": "全部",
     "active": "进行中",

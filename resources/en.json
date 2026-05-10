@@ -31,6 +31,20 @@
     "none": "Unassigned",
     "groupTitle": "{project} · {count} tasks"
   },
+  "views": {
+    "label": "View switcher",
+    "list": "List",
+    "calendar": "Calendar",
+    "timeline": "Timeline"
+  },
+  "calendar": {
+    "previous": "Previous month",
+    "next": "Next month",
+    "today": "Today",
+    "more": "+{count} more",
+    "taskCount": "{count} tasks",
+    "noDeadline": "No deadline"
+  },
   "filters": {
     "all": "All",
     "active": "Active",
