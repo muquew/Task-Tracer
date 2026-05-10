@@ -683,6 +683,76 @@ def assert_service_worker_and_offline_load(context: BrowserContext, page: Page) 
         context.set_offline(False)
 
 
+def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[str]) -> None:
+    visual_page = context.new_page()
+    visual_page.on("pageerror", lambda error: errors.append(str(error)))
+    try:
+        for label, viewport in (
+            ("desktop", {"width": 1280, "height": 720}),
+            ("mobile", {"width": 390, "height": 844}),
+        ):
+            visual_page.set_viewport_size(viewport)
+            visual_page.goto(base_url, wait_until="domcontentloaded")
+            wait_for_app_ready(visual_page)
+            select_filter(visual_page, "all")
+            expect(visual_page.locator(".task-item")).to_have_count(3)
+            visual_page.locator(".task-item").first.scroll_into_view_if_needed()
+
+            metrics = visual_page.evaluate(
+                """(label) => {
+                    const viewportWidth = window.innerWidth;
+                    const doc = document.documentElement;
+                    const selectors = ['header', '.controls-bar', '.task-item', '.task-actions'];
+                    const boxes = selectors.map((selector) => {
+                        const el = document.querySelector(selector);
+                        if (!el) return { selector, missing: true };
+                        const rect = el.getBoundingClientRect();
+                        return {
+                            selector,
+                            left: rect.left,
+                            right: rect.right,
+                            top: rect.top,
+                            bottom: rect.bottom,
+                            width: rect.width,
+                            height: rect.height
+                        };
+                    });
+
+                    return {
+                        label,
+                        viewportWidth,
+                        scrollWidth: doc.scrollWidth,
+                        boxes,
+                        hasTaskName: Boolean(document.querySelector('.task-name')?.textContent.trim()),
+                        hasVisibleActions: [...document.querySelectorAll('.task-actions .action-btn')]
+                            .every((button) => button.getBoundingClientRect().width >= 30)
+                    };
+                }""",
+                label,
+            )
+
+            overflow = metrics["scrollWidth"] - metrics["viewportWidth"]
+            if overflow > 1:
+                raise AssertionError(f"{label} layout has horizontal overflow: {metrics}")
+
+            bad_boxes = [
+                box for box in metrics["boxes"]
+                if box.get("missing")
+                or box["width"] <= 0
+                or box["height"] <= 0
+                or box["left"] < -1
+                or box["right"] > metrics["viewportWidth"] + 1
+            ]
+            if bad_boxes or not metrics["hasTaskName"] or not metrics["hasVisibleActions"]:
+                raise AssertionError(f"{label} layout metrics failed: {metrics}")
+
+            screenshot = visual_page.screenshot(full_page=True)
+            if len(screenshot) < 10_000:
+                raise AssertionError(f"{label} screenshot looks unexpectedly small")
+    finally:
+        visual_page.close()
+
+
 def smoke(url: str) -> None:
     errors: list[str] = []
     console_errors: list[str] = []
@@ -742,6 +812,7 @@ def smoke(url: str) -> None:
         add_overdue_task_record(page, overdue_name, order=30_000)
         exercise_search_empty_state(page, f"{task_name} Missing")
         exercise_subtasks(page, alpha_name)
+        assert_visual_layout(context, url, errors)
 
         edit_task(page, alpha_name, alpha_edited)
         search_task(page, alpha_edited)
