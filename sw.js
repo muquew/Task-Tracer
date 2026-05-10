@@ -1,9 +1,11 @@
 // 改了代码要来这里改缓存名字
-const CACHE_NAME = 'task-tracer-v2.20';
+const CACHE_NAME = 'task-tracer-v2.21';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './manifest.json',
+    './resources/en.json?v=1.2',
+    './resources/zh-CN.json?v=1.2',
     './fav/android-chrome-192x192.png',
     './fav/android-chrome-512x512.png'
 ];
