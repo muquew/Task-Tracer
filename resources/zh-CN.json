@@ -111,6 +111,7 @@
       "deleted": "任务删除成功",
       "markedComplete": "任务标记为已完成",
       "markedIncomplete": "任务标记为未完成",
+      "nameRequired": "请输入任务名称",
       "saveError": "保存任务失败，请重试",
       "deleteError": "删除任务失败，请重试",
       "updateError": "更新任务状态失败，请重试"

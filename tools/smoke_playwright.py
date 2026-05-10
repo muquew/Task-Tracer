@@ -380,6 +380,23 @@ def exercise_modal_focus_trap(page: Page) -> None:
     page.locator("#taskName").focus()
     press_control_shortcut(page, "k")
     expect(page.locator("#taskName")).to_be_focused()
+    page.locator("#taskName").fill("Shortcut selection source")
+    press_control_shortcut(page, "a")
+    page.keyboard.type("Shortcut selection target")
+    expect(page.locator("#taskName")).to_have_value("Shortcut selection target")
+
+
+def exercise_task_name_validation(page: Page) -> None:
+    page.locator("#openModalBtn").click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#taskName").fill("   ")
+    page.locator("#submitBtn").click()
+    wait_for_notification(page, re.compile("请输入任务名称|enter a task name", re.I))
+    expect(page.locator("#taskModal")).to_be_visible()
+    expect(page.locator("#taskName")).to_be_focused()
+    expect(page.locator(".task-item")).to_have_count(0)
+    page.locator("#cancelBtn").click()
+    expect(page.locator("#taskModal")).to_be_hidden()
 
 
 def exercise_empty_state_actions(page: Page) -> None:
@@ -1104,6 +1121,7 @@ def smoke(url: str) -> None:
         assert_accessibility_baseline(page, "empty task list")
 
         exercise_shortcuts_and_modal_closing(page)
+        exercise_task_name_validation(page)
         exercise_empty_state_actions(page)
         exercise_import_error(page)
         exercise_theme(page)

@@ -111,6 +111,7 @@
       "deleted": "Task deleted successfully",
       "markedComplete": "Task marked as completed",
       "markedIncomplete": "Task marked as incomplete",
+      "nameRequired": "Please enter a task name",
       "saveError": "Failed to save task, please try again",
       "deleteError": "Failed to delete task, please try again",
       "updateError": "Failed to update task status, please try again"

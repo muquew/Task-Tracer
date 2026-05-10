@@ -15,6 +15,7 @@ INDEX_PATH = REPO_ROOT / "index.html"
 MANIFEST_PATH = REPO_ROOT / "manifest.json"
 SW_PATH = REPO_ROOT / "sw.js"
 RESOURCE_DIR = REPO_ROOT / "resources"
+VERCEL_PATH = REPO_ROOT / "vercel.json"
 
 
 def read_text(path: Path) -> str:
@@ -291,6 +292,48 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Manual task ordering must support keyboard reordering")
 
 
+def validate_security_headers(errors: list[str]) -> None:
+    if not VERCEL_PATH.is_file():
+        errors.append("vercel.json must configure production security headers")
+        return
+
+    try:
+        config = load_json(VERCEL_PATH)
+    except AssertionError as error:
+        errors.append(str(error))
+        return
+
+    headers: dict[str, str] = {}
+    for route in config.get("headers", []):
+        for header in route.get("headers", []):
+            key = header.get("key")
+            value = header.get("value")
+            if isinstance(key, str) and isinstance(value, str):
+                headers[key.lower()] = value
+
+    required = [
+        "content-security-policy",
+        "referrer-policy",
+        "x-content-type-options",
+        "x-frame-options",
+        "permissions-policy",
+    ]
+    for key in required:
+        if key not in headers:
+            errors.append(f"Missing production security header: {key}")
+
+    csp = headers.get("content-security-policy", "")
+    for directive in [
+        "default-src 'self'",
+        "base-uri 'self'",
+        "object-src 'none'",
+        "frame-ancestors 'none'",
+        "form-action 'none'",
+    ]:
+        if directive not in csp:
+            errors.append(f"Content-Security-Policy is missing directive: {directive}")
+
+
 def main() -> int:
     errors: list[str] = []
     index_html = read_text(INDEX_PATH)
@@ -300,6 +343,7 @@ def main() -> int:
     validate_loaded_code_is_comment_free(index_html, errors)
     validate_task_state_styles(index_html, errors)
     validate_accessibility_styles(index_html, errors)
+    validate_security_headers(errors)
 
     if errors:
         print("Static validation failed:", file=sys.stderr)

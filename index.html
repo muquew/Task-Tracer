@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title data-i18n="app.title">任务跟踪器</title>
     <link rel="manifest" id="manifestLink" href="manifest.json">
     <meta name="theme-color" content="#2563eb">
@@ -752,7 +753,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '2.2'
+                RESOURCE_VERSION: '2.3'
             },
             NOTIFICATIONS: {
                 DEFAULT_OFFSET_MINUTES: 15,
@@ -1064,7 +1065,6 @@
             if (isDialogOpen()) {
                 if (e.key === 'Tab') trapDialogFocus(e);
                 else if (e.key === 'Escape') closeDialog();
-                else if (e.ctrlKey || e.metaKey || e.altKey) e.preventDefault();
                 return;
             }
             const meta = e.ctrlKey || e.metaKey;
@@ -1119,6 +1119,11 @@
             e.preventDefault();
             const t = state.translations[state.currentLanguage];
             const taskPayload = buildTaskPayloadFromForm();
+            if (!taskPayload.name) {
+                utils.notify(t['messages.task.nameRequired'], 'warning');
+                DOM.inputs.name.focus();
+                return;
+            }
             try {
                 if (state.editingTaskId) {
                     const original = getTaskById(state.editingTaskId);
@@ -1374,8 +1379,7 @@
                 if (offset === -1) return;
                 const notificationKey = getTaskNotificationKey(task, offset);
                 if (
-                    timeLeft <= offset
-                    && timeLeft > (offset - CONFIG.NOTIFICATIONS.DELIVERY_WINDOW_MINUTES)
+                    shouldSendReminder(timeLeft, offset)
                     && !state.notifiedTasks.has(notificationKey)
                     && !state.pendingNotificationKeys.has(notificationKey)
                 ) {
@@ -1392,6 +1396,9 @@
                         });
                 }
             });
+        }
+        function shouldSendReminder(timeLeft, offset) {
+            return timeLeft <= offset && timeLeft > -CONFIG.NOTIFICATIONS.DELIVERY_WINDOW_MINUTES;
         }
         function getTaskReminderOffset(task) {
             const offset = Number(task.reminderOffset);
@@ -2623,6 +2630,7 @@
         function startProgressTimer() {
             if (state.progressInterval) clearInterval(state.progressInterval);
             state.progressInterval = setInterval(refreshTaskTimers, 60000);
+            refreshTaskTimers();
         }
         function refreshTaskTimers() {
             document.querySelectorAll('.task-item:not(.completed-task)').forEach(el => {
@@ -2654,11 +2662,8 @@
             return `<div class="empty-state"><svg class="icon icon-lg icon-fill" aria-hidden="true" focusable="false"><use href="#icon-empty-search"></use></svg><h3>${t['empty.noMatches.title']}</h3><p>${t['empty.noMatches.description']}</p></div>`
         }
         function handleVisibilityChange() {
-            if (document.hidden && state.progressInterval) clearInterval(state.progressInterval);
-            else {
-                refreshTaskTimers();
-                startProgressTimer();
-            }
+            refreshTaskTimers();
+            if (!state.progressInterval) startProgressTimer();
         }
         async function exportTasks() {
             const t = state.translations[state.currentLanguage];
