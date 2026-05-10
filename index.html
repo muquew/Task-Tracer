@@ -641,7 +641,8 @@
             DEFAULTS: {
                 LANG: 'zh-CN',
                 TIME: '23:59',
-                ORDER_STEP: 10000
+                ORDER_STEP: 10000,
+                MANUAL_ORDER_STEP: 1000
             },
             I18N: {
                 RESOURCE_PATH: './resources',
@@ -1130,7 +1131,7 @@
 
             utils.confirm(t['actions.clearCompleted'], t['messages.clearCompleted.confirm'].replace('{count}', completed.length), async () => {
                 try {
-                    await Promise.all(completed.map(task => dbActions.deleteTask(task.id)));
+                    await dbActions.deleteTasks(completed.map(task => task.id));
                     state.tasks = state.tasks.filter(x => !x.completed);
                     renderTaskList();
                     utils.notify(t['messages.clearCompleted.success'].replace('{count}', completed.length));
@@ -1854,17 +1855,28 @@
             addTask: (task) => utils.dbOp(CONFIG.DB.STORES.TASKS, 'readwrite', s => s.add(task)),
             updateTask: (task) => utils.dbOp(CONFIG.DB.STORES.TASKS, 'readwrite', s => s.put(task)),
             deleteTask: (id) => utils.dbOp(CONFIG.DB.STORES.TASKS, 'readwrite', s => s.delete(id)),
+            updateTasks: (tasks) => dbActions.writeTaskTransaction(
+                store => tasks.forEach(task => store.put(task)),
+                'Update tasks transaction aborted'
+            ),
+            deleteTasks: (ids) => dbActions.writeTaskTransaction(
+                store => ids.forEach(id => store.delete(id)),
+                'Delete tasks transaction aborted'
+            ),
             getConfig: (key) => utils.dbOp(CONFIG.DB.STORES.CONFIG, 'readonly', s => s.get(key)).then(res => res ? res.value : null),
             setConfig: (key, value) => utils.dbOp(CONFIG.DB.STORES.CONFIG, 'readwrite', s => s.put({ key, value })),
-            replaceAllTasks: (tasks) => new Promise((resolve, reject) => {
+            replaceAllTasks: (tasks) => dbActions.writeTaskTransaction(store => {
+                store.clear();
+                tasks.forEach(task => store.put(task));
+            }, 'Replace tasks transaction aborted'),
+            writeTaskTransaction: (write, abortMessage) => new Promise((resolve, reject) => {
                 const tx = state.db.transaction([CONFIG.DB.STORES.TASKS], 'readwrite');
                 tx.oncomplete = resolve;
                 tx.onerror = () => reject(tx.error);
-                tx.onabort = () => reject(tx.error || new Error('Replace tasks transaction aborted'));
+                tx.onabort = () => reject(tx.error || new Error(abortMessage));
 
                 const store = tx.objectStore(CONFIG.DB.STORES.TASKS);
-                store.clear();
-                tasks.forEach(task => store.put(task));
+                write(store);
             })
         };
         // 别名，为了向后兼容 initApp 调用
@@ -2385,26 +2397,16 @@
 
             if (newOrderIds.length === 0) return;
 
-            // 2. 更新内存状态 (state.tasks)，让 UI 逻辑立即生效
-            newOrderIds.forEach((id, index) => {
-                const task = state.tasks.find(t => t.id === id);
-                if (task) task.order = index * 1000; // 留出 1000 的间隔，方便未来插入
-            });
+            const orderedTasks = newOrderIds.map((id, index) => {
+                const task = getTaskById(id);
+                if (task) task.order = index * CONFIG.DEFAULTS.MANUAL_ORDER_STEP;
+                return task;
+            }).filter(Boolean);
 
-            // 3. 数据库批量写入 (性能优化核心)
+            if (orderedTasks.length === 0) return;
+
             try {
-                const tx = state.db.transaction([CONFIG.DB.STORES.TASKS], 'readwrite');
-                const store = tx.objectStore(CONFIG.DB.STORES.TASKS);
-                // 在同一个事务中执行所有 put 操作
-                for (const id of newOrderIds) {
-                    const task = state.tasks.find(t => t.id === id);
-                    if (task) store.put(task); // 此时不需要 await
-                }
-                // 等待事务完成
-                await new Promise((resolve, reject) => {
-                    tx.oncomplete = resolve;
-                    tx.onerror = () => reject(tx.error);
-                });
+                await dbActions.updateTasks(orderedTasks);
             } catch (err) {
                 console.error('排序保存失败:', err);
                 utils.notify(state.translations[state.currentLanguage]['messages.task.saveError'], 'error');
