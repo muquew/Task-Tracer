@@ -24,6 +24,7 @@
             --radius-surface: 8px;
             --radius-control: 6px;
             --radius-pill: 999px;
+            --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", "WenQuanYi Micro Hei", sans-serif;
 
             /* 品牌色 & 状态色 */
             --color-primary: #2563eb;
@@ -115,6 +116,8 @@
         html[data-theme="dark"] input,
         html[data-theme="dark"] textarea,
         html[data-theme="dark"] select { background-color: #0f1117; border-color: var(--border-base); }
+        html[data-theme="dark"] select,
+        html[data-theme="dark"] select.search-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23eef3fb' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); }
         html[data-theme="dark"] input:focus,
         html[data-theme="dark"] textarea:focus,
         html[data-theme="dark"] select:focus { border-color: var(--color-primary); background-color: #0f1117; }
@@ -129,7 +132,7 @@
         html[data-theme="dark"] .moon-icon { display: none; }
 
         /* === 基本重置与布局 === */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-ui); letter-spacing: 0; }
         body {
             background:
                 linear-gradient(90deg, rgba(37, 99, 235, 0.045) 1px, transparent 1px),
@@ -194,14 +197,14 @@
         #langMenuToggle.open svg:last-child { transform: rotate(90deg); }
 
         /* === Main Content & Controls === */
-        .main-content { padding: 20px 0 0; }
+        .main-content { padding: 6px 0 0; }
         .controls-bar {
             position: relative;
             z-index: 700;
             display: grid;
             grid-template-columns: minmax(240px, 1fr) auto auto;
             gap: 10px;
-            margin: 16px 0 14px;
+            margin: 6px 0 14px;
             align-items: center;
             background: rgba(255, 255, 255, 0.72);
             border: 1px solid var(--border-light);
@@ -356,7 +359,8 @@
         .modal-body { padding: 18px; }
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--text-main); font-size: 13px; }
-        input, textarea, select { width: 100%; padding: 10px 12px; border: 1px solid var(--border-base); border-radius: var(--radius-control); font-size: 14px; transition: border 0.3s, box-shadow 0.3s; background: var(--bg-surface); color: var(--text-main); }
+        input, textarea, select { width: 100%; padding: 10px 12px; border: 1px solid var(--border-base); border-radius: var(--radius-control); font-size: 14px; line-height: 1.45; transition: border 0.3s, box-shadow 0.3s; background: var(--bg-surface); color: var(--text-main); }
+        select, select.search-input { appearance: none; -webkit-appearance: none; min-height: 42px; padding-right: 42px; background-color: var(--bg-surface); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23111827' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 18px; }
         input:focus, textarea:focus, select:focus { border-color: var(--color-primary); outline: none; box-shadow: 0 0 0 3px var(--color-info-light); }
         textarea { min-height: 70px; resize: vertical; }
         .datetime-group { display: flex; gap: 10px; align-items: center; }
