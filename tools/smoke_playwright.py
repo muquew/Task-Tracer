@@ -852,7 +852,20 @@ def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_nam
         raise AssertionError("Calendar next-year navigation did not change the visible month title")
     page.locator('[data-calendar-action="prev-year"]').click()
     expect(page.locator(".calendar-title")).to_have_text(month_title)
-    add_button = page.locator(".calendar-day:not(.outside-month) .calendar-add-btn").first
+    calendar_task_style = page.locator(".calendar-task").filter(has_text=beta_name).first.evaluate(
+        """(element) => {
+            const style = getComputedStyle(element);
+            return {
+                overflow: style.overflow,
+                textOverflow: style.textOverflow,
+                whiteSpace: style.whiteSpace,
+                title: element.getAttribute('title')
+            };
+        }"""
+    )
+    if calendar_task_style != {"overflow": "hidden", "textOverflow": "ellipsis", "whiteSpace": "nowrap", "title": beta_name}:
+        raise AssertionError(f"Calendar task title is not constrained to one-line ellipsis: {calendar_task_style}")
+    add_button = page.locator(".calendar-day:not(.outside-month) .calendar-date-number[data-calendar-add-date]").first
     selected_date = add_button.get_attribute("data-calendar-add-date")
     add_button.click()
     expect(page.locator("#taskModal")).to_be_visible()
