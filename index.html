@@ -307,14 +307,14 @@
         .subtask-checkbox { flex: 0 0 18px; padding: 0; appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: 1px solid var(--border-base); border-radius: 4px; cursor: pointer; position: relative; transition: all 0.2s ease; margin-right: 8px; background-color: var(--bg-surface); }
         .subtask-checkbox:hover { border-color: var(--color-success); background-color: var(--bg-hover); }
         .subtask-checkbox:checked { border-color: var(--color-success); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E"); background-size: 80%; background-position: center; background-repeat: no-repeat; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .modal { display: none; position: fixed; inset: 0; width: 100%; height: 100%; background-color: var(--bg-overlay); z-index: 1000; justify-content: center; align-items: center; padding: 18px; }
-        .modal-content { background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-surface); width: 90%; max-width: 520px; box-shadow: 0 24px 60px var(--shadow-heavy); animation: modalAppear 0.3s ease; overflow: hidden; }
+        .modal { display: none; position: fixed; inset: 0; width: 100%; height: 100%; background-color: var(--bg-overlay); z-index: 1000; justify-content: center; align-items: center; padding: 18px; overflow-y: auto; }
+        .modal-content { background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-surface); width: 90%; max-width: 520px; max-height: calc(100vh - 36px); box-shadow: 0 24px 60px var(--shadow-heavy); animation: modalAppear 0.3s ease; overflow: hidden; display: flex; flex-direction: column; }
         @keyframes modalAppear { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         .modal-header { background: var(--color-secondary); color: var(--text-inverse); padding: 15px 18px; display: flex; justify-content: space-between; align-items: center; }
         .modal-title { font-size: 18px; font-weight: 600; }
         .close-btn { background: none; border: none; color: var(--text-inverse); font-size: 20px; cursor: pointer; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
         .close-btn:hover { background: rgba(255, 255, 255, 0.2); }
-        .modal-body { padding: 18px; }
+        .modal-body { padding: 18px; overflow-y: auto; }
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--text-main); font-size: 13px; }
         input, textarea, select { width: 100%; padding: 10px 12px; border: 1px solid var(--border-base); border-radius: var(--radius-control); font-size: 14px; line-height: 1.45; transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-fast); background-color: var(--field-bg); color: var(--text-main); }
@@ -388,11 +388,12 @@
             h1 { font-size: 19px; }
             .subtitle { font-size: 12px; }
             .menu { top: 54px; right: 0; }
-            .controls-bar { grid-template-columns: 1fr 1fr; padding: 8px; gap: 8px; }
-            .search-box { width: 100%; flex: none; }
+            .controls-bar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: 8px; gap: 8px; }
+            .search-box { width: 100%; flex: none; min-width: 0; }
             .search-box { grid-column: 1 / -1; }
-            .dropdown-container { flex: 1; }
-            .dropdown-btn { width: 100%; justify-content: space-between; }
+            .search-input { min-width: 0; }
+            .dropdown-container { flex: 1; min-width: 0; }
+            .dropdown-btn { width: 100%; min-width: 0; justify-content: space-between; }
             .dropdown-menu-content { width: 100%; }
             .container { border-radius: 0; }
             .main-content { padding-top: 12px; }
@@ -406,7 +407,7 @@
             .task-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
             .task-actions { align-self: flex-end; }
             .modal { padding: 10px; }
-            .modal-content { width: 100%; }
+            .modal-content { width: 100%; max-height: calc(100dvh - 20px); }
             .datetime-group { flex-direction: column; gap: 8px; }
             header { flex-direction: row; align-items: flex-start; }
             .header-actions { display: flex; flex-direction: row; gap: 3px; align-items: flex-end; }
@@ -695,7 +696,7 @@
     </div>
 </template>
 <footer class="app-footer">
-    <a href="https://github.com/muquew/Task-Tracer" target="_blank" class="footer-link">
+    <a href="https://github.com/muquew/Task-Tracer" target="_blank" rel="noopener noreferrer" class="footer-link">
         <svg class="icon icon-fill"><use href="#icon-github"></use></svg>
         GitHub
     </a>
@@ -2242,14 +2243,14 @@
             if (!option) return;
             state.filter = option.dataset.filter;
             renderTaskList();
-            syncDropdowns();
+            syncDropdowns({ focusTrigger: DOM.dropdowns.filter.btn });
         }
         function handleSortDropdownClick(e) {
             const option = e.target.closest('.dropdown-option');
             if (!option) return;
             state.sort = option.dataset.sort;
             renderTaskList();
-            syncDropdowns();
+            syncDropdowns({ focusTrigger: DOM.dropdowns.sort.btn });
         }
         function closeDropdownsOnOutsideClick(e) {
             if (!e.target.closest('.dropdown-container')) {
@@ -2262,11 +2263,12 @@
         function closeDropdown(dropdown) {
             closePopover(dropdown.container, dropdown.btn);
         }
-        function syncDropdowns() {
+        function syncDropdowns({ focusTrigger = null } = {}) {
             const filterOpt = DOM.dropdowns.filter.container.querySelector(`.dropdown-option[data-filter="${state.filter}"]`);
             if (filterOpt) updateDropdownUI(DOM.dropdowns.filter.container, filterOpt, DOM.dropdowns.filter.btn);
             const sortOpt = DOM.dropdowns.sort.container.querySelector(`.dropdown-option[data-sort="${state.sort}"]`);
             if (sortOpt) updateDropdownUI(DOM.dropdowns.sort.container, sortOpt, DOM.dropdowns.sort.btn);
+            if (focusTrigger) focusTrigger.focus();
         }
         function updateDropdownUI(container, selected, btn) {
             container.querySelectorAll('.dropdown-option').forEach(option => {
@@ -2515,7 +2517,7 @@
             }
         }
         function canReorderTasks() {
-            return state.sort === 'manual';
+            return state.sort === 'manual' && state.filter === 'all' && !state.searchQuery;
         }
         function preventCancelableEvent(e) {
             if (e.cancelable) e.preventDefault();

@@ -536,6 +536,7 @@ def select_filter(page: Page, value: str) -> None:
     filter_btn.click()
     selected_option.click()
     expect(filter_btn).to_have_attribute("aria-expanded", "false")
+    expect(filter_btn).to_be_focused()
     expect(selected_option).to_have_attribute("aria-selected", "true")
     expect(selected_option).to_have_class(
         re.compile(r"(^|\s)selected(\s|$)")
@@ -549,6 +550,7 @@ def select_sort(page: Page, value: str) -> None:
     sort_btn.click()
     selected_option.click()
     expect(sort_btn).to_have_attribute("aria-expanded", "false")
+    expect(sort_btn).to_be_focused()
     expect(selected_option).to_have_attribute("aria-selected", "true")
     expect(selected_option).to_have_class(
         re.compile(r"(^|\s)selected(\s|$)")
@@ -802,6 +804,16 @@ def exercise_manual_reorder(page: Page, first_name: str, second_name: str, third
     assert_accessibility_baseline(page, "manual reorder")
 
 
+def exercise_filtered_manual_reorder_guard(page: Page, completed_name: str, first_active: str, second_active: str) -> None:
+    select_filter(page, "active")
+    select_sort(page, "manual")
+    expect(page.locator(".task-item.draggable-item .drag-handle")).to_have_count(0)
+    assert_task_order(page, [first_active, second_active])
+    select_filter(page, "all")
+    expect(page.locator(".task-item.draggable-item .drag-handle")).to_have_count(3)
+    assert_task_order(page, [completed_name, first_active, second_active])
+
+
 def exercise_back_to_top(page: Page) -> None:
     page.evaluate(
         """() => {
@@ -971,6 +983,7 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
         for label, viewport in (
             ("desktop", {"width": 1280, "height": 720}),
             ("mobile", {"width": 390, "height": 844}),
+            ("compact mobile", {"width": 320, "height": 568}),
         ):
             visual_page.set_viewport_size(viewport)
             visual_page.goto(base_url, wait_until="domcontentloaded")
@@ -1030,6 +1043,17 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
             screenshot = visual_page.screenshot(full_page=True)
             if len(screenshot) < 10_000:
                 raise AssertionError(f"{label} screenshot looks unexpectedly small")
+
+            if label == "compact mobile":
+                visual_page.locator("#openModalBtn").click()
+                expect(visual_page.locator("#taskModal")).to_be_visible()
+                visual_page.wait_for_timeout(350)
+                modal_box = visual_page.locator(".modal-content").bounding_box()
+                if not modal_box:
+                    raise AssertionError("Compact mobile modal did not render")
+                if modal_box["y"] < -1 or modal_box["y"] + modal_box["height"] > viewport["height"] + 1:
+                    raise AssertionError(f"Compact mobile modal is clipped: {modal_box}")
+                visual_page.locator("#cancelBtn").click()
     finally:
         visual_page.close()
 
@@ -1108,6 +1132,7 @@ def smoke(url: str) -> None:
         select_filter(page, "active")
         expect(task_locator(page, beta_name)).to_have_count(1)
         expect(task_locator(page, overdue_name)).to_have_count(1)
+        exercise_filtered_manual_reorder_guard(page, alpha_edited, overdue_name, beta_name)
         clear_completed_tasks(page, alpha_edited)
 
         select_filter(page, "all")
