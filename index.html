@@ -970,8 +970,7 @@
                 description: DOM.inputs.desc.value.trim(),
                 subtasks: state.tempSubtasks,
                 dueDate: dueDateTime,
-                reminderOffset: parseInt(DOM.inputs.reminderOffset.value, 10), // 保存提醒偏移量
-                completed: false,
+                reminderOffset: dueDateTime ? parseInt(DOM.inputs.reminderOffset.value, 10) : -1, // 保存提醒偏移量
                 order: state.editingTaskId ? undefined : (maxOrder + 10000) // 新任务排最后
             };
 
@@ -986,6 +985,7 @@
                     await dbActions.addTask({
                         id: Date.now(),
                         createdAt: new Date().toISOString(),
+                        completed: false,
                         ...taskPayload
                     });
                     utils.notify(t['taskAdded']);
@@ -1302,12 +1302,12 @@
             const t = state.translations[state.currentLanguage];
             if (!t) return;
 
+            updateFilterCounts();
+
             if (state.tasks.length === 0) {
                 DOM.taskList.innerHTML = getEmptyStateHTML(t);
                 return;
             }
-
-            updateFilterCounts();
 
             // 1. 筛选与排序
             let result = state.tasks.filter(task => {
@@ -1601,13 +1601,16 @@
                     DOM.inputs.noDeadline.checked = false;
                     DOM.inputs.date.disabled = false;
                     DOM.inputs.time.disabled = false;
+                    DOM.inputs.reminderOffset.disabled = false;
                 } else {
                     DOM.inputs.noDeadline.checked = true;
                     DOM.inputs.date.disabled = true;
                     DOM.inputs.time.disabled = true;
                     DOM.inputs.date.value = new Date().toISOString().split('T')[0];
                     DOM.inputs.time.value = CONFIG.DEFAULTS.TIME;
+                    DOM.inputs.reminderOffset.disabled = true;
                 }
+                DOM.inputs.reminderOffset.value = String(editingTask.reminderOffset ?? 15);
             } else {
                 state.editingTaskId = null;
                 DOM.modalTitle.setAttribute('data-i18n', 'addNewTask');
@@ -1619,6 +1622,8 @@
                 DOM.inputs.time.disabled = false;
                 DOM.inputs.date.value = new Date().toISOString().split('T')[0];
                 DOM.inputs.time.value = CONFIG.DEFAULTS.TIME;
+                DOM.inputs.reminderOffset.disabled = false;
+                DOM.inputs.reminderOffset.value = '15';
             }
 
             renderSubtaskPreview();
@@ -1635,6 +1640,8 @@
 
             // 1. 重置表单模式残留
             DOM.form.reset();
+            DOM.inputs.reminderOffset.disabled = false;
+            DOM.inputs.reminderOffset.value = '15';
             DOM.formGroups.forEach(g => g.style.display = 'block'); // 恢复输入框显示
             state.tempSubtasks = []; // 清空临时数据
             state.editingSubtaskIndex = -1;
