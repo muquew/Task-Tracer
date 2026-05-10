@@ -11,6 +11,7 @@ starts a temporary static server from the repository root.
 from __future__ import annotations
 
 import contextlib
+from datetime import datetime, timedelta, timezone
 import http.server
 import json
 import os
@@ -30,6 +31,17 @@ from playwright.sync_api import BrowserContext, Page, Request, TimeoutError, exp
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_HOST = "127.0.0.1"
+
+
+def read_service_worker_cache_name() -> str:
+    service_worker = (REPO_ROOT / "sw.js").read_text(encoding="utf-8")
+    match = re.search(r"const CACHE_NAME = ['\"]([^'\"]+)['\"]", service_worker)
+    if not match:
+        raise AssertionError("Could not read service worker cache name")
+    return match.group(1)
+
+
+SW_CACHE_NAME = read_service_worker_cache_name()
 
 
 class StaticHandler(http.server.SimpleHTTPRequestHandler):
@@ -101,6 +113,31 @@ def describe_request_failure(request: Request) -> str:
     return f"{error_text} {request.url}"
 
 
+def get_origin(url: str) -> str:
+    parsed = urlparse(url)
+    return f"{parsed.scheme}://{parsed.netloc}"
+
+
+def iso_minutes_from_now(minutes: int) -> str:
+    value = datetime.now(timezone.utc) + timedelta(minutes=minutes)
+    return value.isoformat(timespec="milliseconds").replace("+00:00", "Z")
+
+
+def future_date(days: int = 1) -> str:
+    value = datetime.now(timezone.utc) + timedelta(days=days)
+    return value.strftime("%Y-%m-%d")
+
+
+def wait_for_class(page: Page, selector: str, class_name: str, present: bool = True) -> None:
+    page.wait_for_function(
+        """({ selector, className, present }) => {
+            const el = document.querySelector(selector);
+            return Boolean(el) && el.classList.contains(className) === present;
+        }""",
+        arg={"selector": selector, "className": class_name, "present": present},
+    )
+
+
 def task_locator(page: Page, task_name: str):
     exact_name = page.locator(".task-name").filter(
         has_text=re.compile(f"^{re.escape(task_name)}$")
@@ -112,6 +149,17 @@ def wait_for_app_ready(page: Page) -> None:
     expect(page.locator("#openModalBtn")).to_be_visible()
     page.locator("#taskList .loading-state").wait_for(state="detached", timeout=10_000)
     page.locator("#taskList").wait_for(state="visible")
+
+
+def wait_for_notification(page: Page, pattern: str | re.Pattern[str]) -> None:
+    expect(page.locator("#notification")).to_have_class(re.compile(r"(^|\s)show(\s|$)"))
+    expect(page.locator("#notificationText")).to_have_text(pattern)
+
+
+def press_control_shortcut(page: Page, key: str) -> None:
+    page.keyboard.down("Control")
+    page.keyboard.press(key)
+    page.keyboard.up("Control")
 
 
 def clear_app_data(page: Page, url: str) -> None:
@@ -158,6 +206,7 @@ def clear_app_data(page: Page, url: str) -> None:
         }"""
     )
     page.reload(wait_until="domcontentloaded")
+    page.wait_for_load_state("load")
     wait_for_app_ready(page)
 
 
@@ -166,11 +215,81 @@ def assert_empty_task_list(page: Page) -> None:
     expect(page.locator("#taskList .empty-state")).to_be_visible()
 
 
+def exercise_shortcuts_and_modal_closing(page: Page) -> None:
+    page.locator("body").click(position={"x": 10, "y": 10})
+    press_control_shortcut(page, "k")
+    expect(page.locator("#searchInput")).to_be_focused()
+    page.keyboard.press("Escape")
+
+    press_control_shortcut(page, "i")
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.keyboard.press("Escape")
+    expect(page.locator("#taskModal")).to_be_hidden()
+
+    page.locator("#openModalBtn").click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#cancelBtn").click()
+    expect(page.locator("#taskModal")).to_be_hidden()
+
+    page.locator("#openModalBtn").click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#closeModalBtn").click()
+    expect(page.locator("#taskModal")).to_be_hidden()
+
+    page.locator("#openModalBtn").click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#taskModal").click(position={"x": 5, "y": 5})
+    expect(page.locator("#taskModal")).to_be_hidden()
+
+    press_control_shortcut(page, "m")
+    wait_for_class(page, "#menu", "show")
+    page.keyboard.press("Escape")
+    wait_for_class(page, "#menu", "show", present=False)
+
+
+def exercise_empty_state_actions(page: Page) -> None:
+    page.locator("#openMenuBtn").click()
+    page.locator("#clearCompletedBtn").click()
+    wait_for_notification(page, re.compile("没有已完成的任务可清除|no completed tasks", re.I))
+    page.keyboard.press("Escape")
+
+
+def exercise_search_empty_state(page: Page, query: str) -> None:
+    page.locator("#searchInput").fill(query)
+    page.wait_for_timeout(350)
+    expect(page.locator("#taskList .empty-state")).to_be_visible()
+    expect(page.locator(".task-item")).to_have_count(0)
+    clear_search(page)
+
+
+def exercise_subtask_draft_editor(page: Page) -> None:
+    page.locator("#openModalBtn").click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#subtaskInput").fill("Draft subtask")
+    page.locator("#addSubtaskBtn").click()
+    page.locator("#subtaskInput").fill("Subtask to delete")
+    page.locator("#addSubtaskBtn").click()
+    expect(page.locator("#subtaskListPreview .subtask-preview-item")).to_have_count(2)
+
+    page.locator("#subtaskListPreview .subtask-preview-text").first.click()
+    page.locator("#subtaskListPreview .subtask-edit-input").fill("Edited draft subtask")
+    page.keyboard.press("Enter")
+    expect(page.locator("#subtaskListPreview .subtask-preview-text").first).to_have_text("Edited draft subtask")
+
+    page.locator("#subtaskListPreview .subtask-delete-btn").last.click()
+    expect(page.locator("#subtaskListPreview .subtask-preview-item")).to_have_count(1)
+    page.locator("#cancelBtn").click()
+    expect(page.locator("#taskModal")).to_be_hidden()
+
+
 def add_task(
     page: Page,
     task_name: str,
     description: str = "Created by Playwright smoke test.",
     no_deadline: bool = False,
+    due_date: str | None = None,
+    due_time: str | None = None,
+    reminder_offset: str | None = None,
     subtasks: list[str] | None = None,
 ) -> None:
     page.locator("#openModalBtn").click()
@@ -180,13 +299,21 @@ def add_task(
 
     if no_deadline:
         page.locator("#noDeadline").check()
+        expect(page.locator("#dueDate")).to_be_disabled()
+        expect(page.locator("#dueTime")).to_be_disabled()
+        expect(page.locator("#reminderOffset")).to_be_disabled()
+    else:
+        if due_date:
+            page.locator("#dueDate").fill(due_date)
+        if due_time:
+            page.locator("#dueTime").fill(due_time)
+        if reminder_offset is not None:
+            page.locator("#reminderOffset").select_option(reminder_offset)
 
-    for subtask in subtasks or []:
+    for index, subtask in enumerate(subtasks or [], start=1):
         page.locator("#subtaskInput").fill(subtask)
         page.locator("#addSubtaskBtn").click()
-        expect(page.locator("#subtaskListPreview .subtask-preview-item")).to_have_count(
-            (subtasks or []).index(subtask) + 1
-        )
+        expect(page.locator("#subtaskListPreview .subtask-preview-item")).to_have_count(index)
 
     page.locator("#submitBtn").click()
 
@@ -205,12 +332,63 @@ def clear_search(page: Page) -> None:
     page.wait_for_timeout(350)
 
 
+def put_task_record(page: Page, task: dict[str, Any]) -> None:
+    page.evaluate(
+        """async (task) => {
+            await new Promise((resolve, reject) => {
+                const request = indexedDB.open('TaskTrackerDB', 2);
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readwrite');
+                    tx.objectStore('tasks').put(task);
+                    tx.oncomplete = () => {
+                        db.close();
+                        resolve();
+                    };
+                    tx.onerror = () => reject(tx.error);
+                    tx.onabort = () => reject(tx.error);
+                };
+            });
+        }""",
+        task,
+    )
+    page.reload(wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+
+
+def add_overdue_task_record(page: Page, task_name: str, order: int) -> None:
+    now_ms = int(time.time() * 1000)
+    put_task_record(
+        page,
+        {
+            "id": now_ms + order,
+            "name": task_name,
+            "description": "Created directly to cover overdue state.",
+            "dueDate": iso_minutes_from_now(-90),
+            "reminderOffset": -1,
+            "subtasks": [],
+            "completed": False,
+            "createdAt": iso_minutes_from_now(0),
+            "order": order,
+        },
+    )
+
+
 def delete_task(page: Page, task_name: str) -> None:
     task = task_locator(page, task_name)
     task.first.locator('[data-action="delete"]').click()
     expect(page.locator("#taskModal")).to_be_visible()
     page.locator("#submitBtn").click()
     expect(task).to_have_count(0)
+
+
+def cancel_delete_task(page: Page, task_name: str) -> None:
+    task = task_locator(page, task_name)
+    task.first.locator('[data-action="delete"]').click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#cancelBtn").click()
+    expect(task_locator(page, task_name)).to_have_count(1)
 
 
 def select_filter(page: Page, value: str) -> None:
@@ -282,14 +460,31 @@ def exercise_language(page: Page) -> None:
     page.keyboard.press("Escape")
 
 
-def exercise_filters_and_sort(page: Page, alpha_name: str, beta_name: str) -> None:
+def exercise_filters_and_sort(page: Page, alpha_name: str, beta_name: str, overdue_name: str) -> None:
     select_filter(page, "all")
     select_sort(page, "alpha-asc")
-    assert_task_order(page, [alpha_name, beta_name])
+    assert_task_order(page, [alpha_name, beta_name, overdue_name])
+
+    select_sort(page, "created-desc")
+    expect(page.locator('#sortDropdown .dropdown-option[data-sort="created-desc"]')).to_have_class(
+        re.compile(r"(^|\s)selected(\s|$)")
+    )
+
+    select_sort(page, "due-asc")
+    assert_task_order(page, [overdue_name, beta_name, alpha_name])
 
     select_filter(page, "no-deadline")
     expect(task_locator(page, alpha_name)).to_have_count(1)
     expect(task_locator(page, beta_name)).to_have_count(0)
+    expect(task_locator(page, overdue_name)).to_have_count(0)
+
+    select_filter(page, "overdue")
+    expect(task_locator(page, overdue_name)).to_have_count(1)
+    expect(task_locator(page, alpha_name)).to_have_count(0)
+    expect(task_locator(page, beta_name)).to_have_count(0)
+
+    select_filter(page, "active")
+    expect(page.locator(".task-item")).to_have_count(3)
 
     select_filter(page, "all")
 
@@ -306,6 +501,64 @@ def clear_completed_tasks(page: Page, completed_name: str) -> None:
     expect(page.locator("#taskModal")).to_be_visible()
     page.locator("#submitBtn").click()
     expect(task_locator(page, completed_name)).to_have_count(0)
+
+
+def exercise_manual_reorder(page: Page, first_name: str, second_name: str, third_name: str) -> None:
+    select_filter(page, "all")
+    select_sort(page, "manual")
+    expect(page.locator(".task-item.draggable-item .drag-handle")).to_have_count(3)
+
+    task_locator(page, third_name).drag_to(
+        task_locator(page, first_name),
+        target_position={"x": 20, "y": 5},
+    )
+    page.wait_for_timeout(500)
+    assert_task_order(page, [third_name, first_name, second_name])
+
+    page.reload(wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    select_filter(page, "all")
+    select_sort(page, "manual")
+    assert_task_order(page, [third_name, first_name, second_name])
+
+
+def exercise_back_to_top(page: Page) -> None:
+    page.evaluate(
+        """() => {
+            const spacer = document.createElement('div');
+            spacer.id = 'smoke-scroll-spacer';
+            spacer.style.height = '1200px';
+            document.body.appendChild(spacer);
+        }"""
+    )
+    page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+    wait_for_class(page, "#backToTopBtn", "show")
+    page.locator("#backToTopBtn").click()
+    page.wait_for_function("() => window.scrollY === 0")
+    page.evaluate("document.getElementById('smoke-scroll-spacer')?.remove()")
+
+
+def exercise_notifications(page: Page) -> None:
+    page.locator("#notificationToggleBtn").click()
+    expect(page.locator("#notificationToggleBtn")).to_have_attribute("aria-label", "关闭通知")
+    page.locator("#notificationToggleBtn").click()
+    expect(page.locator("#notificationToggleBtn")).to_have_attribute("aria-label", "开启通知")
+
+
+def exercise_import_error(page: Page) -> None:
+    with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
+        json.dump({"notTasks": []}, temp_file)
+        temp_path = temp_file.name
+
+    try:
+        page.locator("#openMenuBtn").click()
+        with page.expect_file_chooser() as chooser_info:
+            page.locator("#importBtn").click()
+        chooser_info.value.set_files(temp_path)
+        wait_for_notification(page, re.compile("导入失败|Import failed", re.I))
+    finally:
+        Path(temp_path).unlink(missing_ok=True)
+    page.keyboard.press("Escape")
 
 
 def exercise_export(page: Page) -> dict[str, Any]:
@@ -348,7 +601,10 @@ def exercise_import(page: Page, imported_name: str) -> None:
         temp_path = temp_file.name
 
     try:
-        page.set_input_files("#importFile", temp_path)
+        page.locator("#openMenuBtn").click()
+        with page.expect_file_chooser() as chooser_info:
+            page.locator("#importBtn").click()
+        chooser_info.value.set_files(temp_path)
         expect(page.locator("#taskModal")).to_be_visible()
         page.locator("#submitBtn").click()
         select_filter(page, "all")
@@ -379,6 +635,46 @@ def assert_pwa_resources(context: BrowserContext, base_url: str) -> None:
             raise AssertionError(f"Manifest icon failed: {response.status} {src}")
 
 
+def assert_service_worker_and_offline_load(context: BrowserContext, page: Page) -> None:
+    page.wait_for_load_state("load")
+    worker_state = page.evaluate(
+        """async (expectedCacheName) => {
+            if (!('serviceWorker' in navigator)) return { supported: false };
+
+            const registration = await Promise.race([
+                navigator.serviceWorker.ready,
+                new Promise((_, reject) => setTimeout(() => reject(new Error('service worker timeout')), 10000))
+            ]);
+            const keys = 'caches' in window ? await caches.keys() : [];
+            return {
+                supported: true,
+                hasRegistration: Boolean(registration),
+                cacheNames: keys,
+                hasExpectedCache: keys.includes(expectedCacheName)
+            };
+        }""",
+        SW_CACHE_NAME,
+    )
+
+    if not worker_state.get("supported"):
+        raise AssertionError("Service worker is not supported in this browser context")
+    if not worker_state.get("hasRegistration") or not worker_state.get("hasExpectedCache"):
+        raise AssertionError(f"Service worker did not prepare the expected cache: {worker_state}")
+
+    page.reload(wait_until="load")
+    wait_for_app_ready(page)
+    if not page.evaluate("Boolean(navigator.serviceWorker && navigator.serviceWorker.controller)"):
+        page.reload(wait_until="load")
+        wait_for_app_ready(page)
+
+    context.set_offline(True)
+    try:
+        page.reload(wait_until="domcontentloaded")
+        wait_for_app_ready(page)
+    finally:
+        context.set_offline(False)
+
+
 def smoke(url: str) -> None:
     errors: list[str] = []
     console_errors: list[str] = []
@@ -388,11 +684,13 @@ def smoke(url: str) -> None:
     alpha_name = f"{task_name} Alpha"
     alpha_edited = f"{task_name} Alpha Edited"
     beta_name = f"{task_name} Beta"
+    overdue_name = f"{task_name} Overdue"
     imported_name = f"{task_name} Imported"
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
         context = browser.new_context(accept_downloads=True)
+        context.grant_permissions(["notifications"], origin=get_origin(url))
         page = context.new_page()
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.on(
@@ -421,31 +719,47 @@ def smoke(url: str) -> None:
         clear_app_data(page, url)
         assert_empty_task_list(page)
 
+        exercise_shortcuts_and_modal_closing(page)
+        exercise_empty_state_actions(page)
+        exercise_import_error(page)
         exercise_theme(page)
         exercise_language(page)
+        exercise_notifications(page)
+        assert_service_worker_and_offline_load(context, page)
 
+        exercise_subtask_draft_editor(page)
         add_task(page, alpha_name, no_deadline=True, subtasks=["First smoke subtask", "Second smoke subtask"])
-        add_task(page, beta_name)
+        add_task(page, beta_name, due_date=future_date(1), due_time="12:30", reminder_offset="15")
+        expect(task_locator(page, beta_name).locator(".task-reminder-icon")).to_be_visible()
+        add_overdue_task_record(page, overdue_name, order=30_000)
+        exercise_search_empty_state(page, f"{task_name} Missing")
         exercise_subtasks(page, alpha_name)
 
         edit_task(page, alpha_name, alpha_edited)
         search_task(page, alpha_edited)
         clear_search(page)
 
-        exercise_filters_and_sort(page, alpha_edited, beta_name)
+        exercise_filters_and_sort(page, alpha_edited, beta_name, overdue_name)
+        exercise_manual_reorder(page, alpha_edited, beta_name, overdue_name)
+        exercise_back_to_top(page)
         complete_task(page, alpha_edited)
         select_filter(page, "active")
         expect(task_locator(page, beta_name)).to_have_count(1)
+        expect(task_locator(page, overdue_name)).to_have_count(1)
         clear_completed_tasks(page, alpha_edited)
 
         select_filter(page, "all")
         expect(task_locator(page, beta_name)).to_have_count(1)
+        expect(task_locator(page, overdue_name)).to_have_count(1)
         exported = exercise_export(page)
-        if exported["tasks"][0]["name"] != beta_name:
-            raise AssertionError(f"Exported task did not match remaining task: {exported}")
+        exported_names = {task["name"] for task in exported["tasks"]}
+        if exported_names != {beta_name, overdue_name}:
+            raise AssertionError(f"Exported tasks did not match remaining tasks: {exported}")
 
         exercise_import(page, imported_name)
+        cancel_delete_task(page, imported_name)
         delete_task(page, imported_name)
+        assert_empty_task_list(page)
 
         context.close()
         browser.close()
