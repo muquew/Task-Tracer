@@ -492,7 +492,13 @@ def exercise_filters_and_sort(page: Page, alpha_name: str, beta_name: str, overd
 def complete_task(page: Page, task_name: str) -> None:
     task_locator(page, task_name).first.locator('[data-action="toggle"]').click()
     select_filter(page, "completed")
-    expect(task_locator(page, task_name)).to_have_count(1)
+    task = task_locator(page, task_name)
+    expect(task).to_have_count(1)
+    decoration = task.locator(".task-name").evaluate(
+        "element => getComputedStyle(element).textDecorationLine"
+    )
+    if "line-through" not in decoration:
+        raise AssertionError(f"Completed task name is not struck through: {decoration}")
 
 
 def clear_completed_tasks(page: Page, completed_name: str) -> None:

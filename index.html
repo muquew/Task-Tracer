@@ -196,7 +196,8 @@
         .task-item.status-overdue { --task-color: var(--color-danger); }
         .task-item.status-no-deadline { --task-color: var(--text-tertiary); }
         .task-item.completed { --task-color: var(--color-success); background-color: var(--bg-surface-alt); opacity: 0.8; }
-        .completed-task .task-name { text-decoration: line-through; color: var(--text-tertiary); }
+        .task-item.completed .task-name,
+        .completed-task .task-name { color: var(--text-tertiary); text-decoration-line: line-through; text-decoration-thickness: 2px; text-decoration-color: currentColor; }
         .task-item.animate-complete { animation: completeAnimation 0.5s ease; }
         @keyframes completeAnimation { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
