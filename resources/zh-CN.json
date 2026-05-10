@@ -7,9 +7,11 @@
   },
   "actions": {
     "export": "导出",
+    "exportTitle": "导出任务数据文件",
     "backupTitle": "下载本地备份",
     "backup": "立即备份",
     "import": "导入",
+    "importTitle": "导入并替换当前任务数据",
     "addTask": "添加任务",
     "openMenu": "打开菜单",
     "confirm": "确认",

@@ -7,9 +7,11 @@
   },
   "actions": {
     "export": "Export",
+    "exportTitle": "Export task data file",
     "backupTitle": "Download local backup",
     "backup": "Back Up Now",
     "import": "Import",
+    "importTitle": "Import and replace current task data",
     "addTask": "Add Task",
     "openMenu": "Open menu",
     "confirm": "Confirm",
