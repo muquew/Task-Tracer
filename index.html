@@ -2242,42 +2242,55 @@
         }
 
         function handleTaskListClick(e) {
-            // 1. 勾选子任务
-            if (e.target.classList.contains('subtask-checkbox')) {
-                e.stopPropagation();
-                const taskId = Number(e.target.closest('.task-item').dataset.taskId);
-                const subtaskId = Number(e.target.dataset.subtaskId);
-                toggleSubtaskComplete(taskId, subtaskId);
-                return;
-            }
-            // 允许点击文字也能切换
-            if (e.target.closest('.subtask-display-item')) {
-                const checkbox = e.target.closest('.subtask-display-item').querySelector('.subtask-checkbox');
-                if (checkbox && e.target !== checkbox) {
-                    // 手动触发点击复选框
-                    checkbox.click();
-                    return;
-                }
-            }
+            if (handleSubtaskCheckboxClick(e)) return;
+            if (handleSubtaskRowClick(e)) return;
+            if (handleSubtaskSummaryClick(e)) return;
+            handleTaskActionClick(e);
+        }
 
-            // 2. 折叠子任务
+        function handleSubtaskCheckboxClick(e) {
+            if (!e.target.classList.contains('subtask-checkbox')) return false;
+            e.stopPropagation();
+            toggleSubtaskComplete(getTaskIdFromElement(e.target), Number(e.target.dataset.subtaskId));
+            return true;
+        }
+
+        function handleSubtaskRowClick(e) {
+            const row = e.target.closest('.subtask-display-item');
+            if (!row) return false;
+
+            const checkbox = row.querySelector('.subtask-checkbox');
+            if (checkbox && e.target !== checkbox) {
+                checkbox.click();
+                return true;
+            }
+            return false;
+        }
+
+        function handleSubtaskSummaryClick(e) {
             const summary = e.target.closest('.subtask-summary-bar');
-            if (summary) {
-                summary.closest('.subtasks-wrapper').classList.toggle(CONFIG.UI.CLASSES.EXPANDED);
-                return;
-            }
+            if (!summary) return false;
+            summary.closest('.subtasks-wrapper').classList.toggle(CONFIG.UI.CLASSES.EXPANDED);
+            return true;
+        }
 
-            // 3. 主任务动作按钮
+        function handleTaskActionClick(e) {
             const btn = e.target.closest('.action-btn');
-            if (btn) {
-                const taskId = Number(btn.closest('.task-item').dataset.taskId);
-                const action = btn.dataset.action;
-                switch (action) {
-                    case 'toggle': toggleTaskComplete(taskId); break;
-                    case 'edit': editTask(taskId); break;
-                    case 'delete': deleteTask(taskId); break;
-                }
+            if (!btn) return false;
+            runTaskAction(btn.dataset.action, getTaskIdFromElement(btn));
+            return true;
+        }
+
+        function runTaskAction(action, taskId) {
+            switch (action) {
+                case 'toggle': toggleTaskComplete(taskId); break;
+                case 'edit': editTask(taskId); break;
+                case 'delete': deleteTask(taskId); break;
             }
+        }
+
+        function getTaskIdFromElement(el) {
+            return Number(el.closest('.task-item').dataset.taskId);
         }
 
         function saveEditSubtask(inputEl) {
