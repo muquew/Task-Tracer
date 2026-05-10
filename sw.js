@@ -1,24 +1,22 @@
-const CACHE_NAME = 'task-tracer-v3.10';
+const CACHE_NAME = 'task-tracer-v3.11';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './manifest.json',
-    './resources/en.json?v=2.0',
-    './resources/zh-CN.json?v=2.0',
+    './resources/en.json?v=2.1',
+    './resources/zh-CN.json?v=2.1',
     './fav/android-chrome-192x192.png',
     './fav/android-chrome-512x512.png'
 ];
 
 self.addEventListener('install', (e) => {
-    console.log('[Service Worker] Installing...');
     e.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => {
-                console.log('[Service Worker] Caching all assets');
                 return cache.addAll(ASSETS_TO_CACHE);
             })
             .then(() => {
-                // 确保缓存完成后再跳过等待
+
                 return self.skipWaiting();
             })
     );
@@ -43,7 +41,7 @@ self.addEventListener('fetch', (e) => {
     e.respondWith(cacheFirst(e.request));
 });
 
-// 2.5 点击通知：回到已打开的应用窗口，或打开首页
+
 self.addEventListener('notificationclick', (e) => {
     e.notification.close();
     e.waitUntil(
@@ -61,21 +59,19 @@ self.addEventListener('notificationclick', (e) => {
     );
 });
 
-// 3. 激活阶段 (清理)：删除旧版本的缓存
+
 self.addEventListener('activate', (e) => {
-    console.log('[Service Worker] Activating...');
     e.waitUntil(
         caches.keys()
             .then((keyList) => {
                 return Promise.all(keyList.map((key) => {
                     if (key !== CACHE_NAME) {
-                        console.log('[Service Worker] Removing old cache', key);
                         return caches.delete(key);
                     }
                 }));
             })
             .then(() => {
-                // 确保清理完成后再接管页面
+
                 return self.clients.claim();
             })
     );

@@ -73,6 +73,60 @@ def translation_references(index_html: str) -> set[str]:
     return references
 
 
+def tag_blocks(source: str, tag: str) -> list[str]:
+    return re.findall(rf"<{tag}\b[^>]*>(.*?)</{tag}>", source, re.DOTALL | re.IGNORECASE)
+
+
+def contains_js_comment(source: str) -> bool:
+    state = "normal"
+    escape = False
+    i = 0
+    while i < len(source):
+        char = source[i]
+        next_char = source[i + 1] if i + 1 < len(source) else ""
+        if state == "normal":
+            if char == "/" and next_char in {"/", "*"}:
+                return True
+            if char in {"'", '"', "`"}:
+                state = char
+                escape = False
+            i += 1
+            continue
+        if escape:
+            escape = False
+        elif char == "\\":
+            escape = True
+        elif char == state:
+            state = "normal"
+        i += 1
+    return False
+
+
+def contains_css_comment(source: str) -> bool:
+    state = "normal"
+    escape = False
+    i = 0
+    while i < len(source):
+        char = source[i]
+        next_char = source[i + 1] if i + 1 < len(source) else ""
+        if state == "normal":
+            if char == "/" and next_char == "*":
+                return True
+            if char in {"'", '"'}:
+                state = char
+                escape = False
+            i += 1
+            continue
+        if escape:
+            escape = False
+        elif char == "\\":
+            escape = True
+        elif char == state:
+            state = "normal"
+        i += 1
+    return False
+
+
 def validate_translations(index_html: str, errors: list[str]) -> None:
     try:
         languages = configured_languages(index_html)
@@ -162,10 +216,22 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
         errors.append(str(error))
 
 
+def validate_loaded_code_is_comment_free(index_html: str, errors: list[str]) -> None:
+    sw_source = read_text(SW_PATH)
+    if "<!--" in index_html:
+        errors.append("Loaded index.html must not contain HTML comments")
+    if any(contains_css_comment(block) for block in tag_blocks(index_html, "style")):
+        errors.append("Loaded index.html style blocks must not contain CSS comments")
+    if any(contains_js_comment(block) for block in tag_blocks(index_html, "script")):
+        errors.append("Loaded index.html script blocks must not contain JavaScript comments")
+    if contains_js_comment(sw_source):
+        errors.append("Loaded sw.js must not contain JavaScript comments")
+
+
 def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
     try:
         status_block = first_match(
-            r"STATUS:\s*{(.*?)}\s*}\s*,\s*// 默认值",
+            r"STATUS:\s*{(.*?)}\s*,\s*THEME:",
             index_html,
             "CONFIG.UI.STATUS",
         ).group(1)
@@ -231,6 +297,7 @@ def main() -> int:
 
     validate_translations(index_html, errors)
     validate_pwa(index_html, errors)
+    validate_loaded_code_is_comment_free(index_html, errors)
     validate_task_state_styles(index_html, errors)
     validate_accessibility_styles(index_html, errors)
 
