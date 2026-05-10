@@ -1211,6 +1211,10 @@
                 utils.notify(utils.translate('notifications.notSupported'), 'error');
                 return false;
             }
+            if (typeof Notification.requestPermission !== 'function') {
+                utils.notify(utils.translate('notifications.notSupported'), 'error');
+                return false;
+            }
 
             try {
                 const permission = await Notification.requestPermission();
@@ -1320,12 +1324,31 @@
 
             // 尝试使用 Service Worker 发送（支持移动端），如果不行退回普通 Notification
             if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-                navigator.serviceWorker.ready.then(registration => {
-                    registration.showNotification(title, options);
+                showServiceWorkerNotification(title, options);
+                return;
+            }
+
+            showWindowNotification(title, options);
+        }
+
+        function showServiceWorkerNotification(title, options) {
+            navigator.serviceWorker.ready
+                .then(registration => registration.showNotification(title, options))
+                .catch(error => {
+                    console.warn('Service worker notification failed:', error);
+                    showWindowNotification(title, options);
                 });
-            } else {
-                const n = new Notification(title, options);
-                n.onclick = () => { window.focus(); n.close(); };
+        }
+
+        function showWindowNotification(title, options) {
+            try {
+                const notification = new Notification(title, options);
+                notification.onclick = () => {
+                    window.focus();
+                    notification.close();
+                };
+            } catch (error) {
+                console.warn('Window notification failed:', error);
             }
         }
 
@@ -1341,8 +1364,12 @@
         }
 
         function vibrateNotification() {
-            if ('vibrate' in navigator) {
-                navigator.vibrate(CONFIG.NOTIFICATIONS.VIBRATE_PATTERN);
+            if ('vibrate' in navigator && typeof navigator.vibrate === 'function') {
+                try {
+                    navigator.vibrate(CONFIG.NOTIFICATIONS.VIBRATE_PATTERN);
+                } catch (error) {
+                    console.warn('Vibration failed:', error);
+                }
             }
         }
 
