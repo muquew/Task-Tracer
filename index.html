@@ -2066,12 +2066,13 @@
                     return;
                 }
                 counts.all++;
+                if (!task.dueDate) counts['no-deadline']++;
                 if (task.completed) counts.completed++;
                 else {
                     counts.active++;
                     if (task.dueDate) {
                         if (utils.calculateTimeLeft(task.dueDate) < 0) counts.overdue++;
-                    } else counts['no-deadline']++;
+                    }
                 }
             });
             return counts;

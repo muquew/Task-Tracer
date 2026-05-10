@@ -934,6 +934,10 @@ def complete_task(page: Page, task_name: str) -> None:
     )
     if "line-through" not in decoration:
         raise AssertionError(f"Completed task name is not struck through: {decoration}")
+    select_filter(page, "no-deadline")
+    expect(task_locator(page, task_name)).to_have_count(1)
+    expect(page.locator("#count-no-deadline")).to_have_text("(1)")
+    select_filter(page, "completed")
 
 
 def exercise_repeating_task(page: Page, task_name: str) -> None:
