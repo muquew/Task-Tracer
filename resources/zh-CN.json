@@ -150,6 +150,11 @@
     "import": {
       "success": "成功导入 {count} 个任务！",
       "confirm": "即将导入 {count} 个任务。是否替换当前数据？",
+      "previewTitle": "导入预览",
+      "previewTasks": "导入任务",
+      "previewReplace": "替换影响",
+      "previewReplaceValue": "当前 {current} 个任务会被替换，含 {completed} 个已完成",
+      "previewDuplicates": "同名重复项",
       "formatError": "导入失败：文件格式不正确",
       "readError": "导入失败：文件读取错误"
     },

@@ -150,6 +150,11 @@
     "import": {
       "success": "Successfully imported {count} tasks!",
       "confirm": "About to import {count} tasks. Replace current data?",
+      "previewTitle": "Import Preview",
+      "previewTasks": "Tasks to import",
+      "previewReplace": "Replacement impact",
+      "previewReplaceValue": "{current} current tasks will be replaced, including {completed} completed",
+      "previewDuplicates": "Duplicate names",
       "formatError": "Import failed: Invalid file format",
       "readError": "Import failed: File read error"
     },
