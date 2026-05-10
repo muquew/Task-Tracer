@@ -614,7 +614,8 @@
             STORAGE: {
                 THEME: 'theme',
                 LANG: 'language',
-                NOTIFICATIONS: 'notifications_enabled'
+                NOTIFICATIONS: 'notifications_enabled',
+                NOTIFIED_TASKS: 'notifiedTasks'
             },
             // UI 类名与状态常量
             UI: {
@@ -779,23 +780,63 @@
         }
 
         async function loadSettings() {
-            const savedLang = await dbActions.getConfig(CONFIG.STORAGE.LANG);
-            if (savedLang && CONFIG.LANGUAGES.some(l => l.code === savedLang)) {
-                state.currentLanguage = savedLang;
-            } else {
-                // 自动检测语言
-                const sysLang = navigator.languages || [navigator.language];
-                const target = CONFIG.LANGUAGES.find(l => l.code === sysLang || l.code === sysLang[0].split('-')[0]);
-                state.currentLanguage = target ? target.code : CONFIG.DEFAULTS.LANG;
-                await dbActions.setConfig(CONFIG.STORAGE.LANG, state.currentLanguage);
-            }
-
+            await restoreLanguageSetting();
             await restoreNotificationSetting(await dbActions.getConfig(CONFIG.STORAGE.NOTIFICATIONS));
             updateNotificationBtnUI();
+            restoreNotifiedTasks();
+        }
 
-            // 恢复已通知任务列表 (SessionStorage)
+        async function restoreLanguageSetting() {
+            const savedLang = await dbActions.getConfig(CONFIG.STORAGE.LANG);
+            if (isSupportedLanguage(savedLang)) {
+                state.currentLanguage = savedLang;
+                return;
+            }
+
+            state.currentLanguage = resolvePreferredLanguage(getBrowserLanguageCodes());
+            await dbActions.setConfig(CONFIG.STORAGE.LANG, state.currentLanguage);
+        }
+
+        function isSupportedLanguage(code) {
+            return CONFIG.LANGUAGES.some(lang => lang.code === code);
+        }
+
+        function getBrowserLanguageCodes() {
+            return (Array.isArray(navigator.languages) && navigator.languages.length)
+                ? navigator.languages
+                : [navigator.language];
+        }
+
+        function resolvePreferredLanguage(languageCodes) {
+            for (const code of languageCodes) {
+                const exact = findLanguageByCode(code);
+                if (exact) return exact.code;
+
+                const baseMatch = findLanguageByBase(code);
+                if (baseMatch) return baseMatch.code;
+            }
+            return CONFIG.DEFAULTS.LANG;
+        }
+
+        function findLanguageByCode(code) {
+            const normalized = normalizeLanguageCode(code);
+            if (!normalized) return null;
+            return CONFIG.LANGUAGES.find(lang => normalizeLanguageCode(lang.code) === normalized) || null;
+        }
+
+        function findLanguageByBase(code) {
+            const base = normalizeLanguageCode(code).split('-')[0];
+            if (!base) return null;
+            return CONFIG.LANGUAGES.find(lang => normalizeLanguageCode(lang.code).split('-')[0] === base) || null;
+        }
+
+        function normalizeLanguageCode(code) {
+            return typeof code === 'string' ? code.trim().toLowerCase() : '';
+        }
+
+        function restoreNotifiedTasks() {
             try {
-                const notified = sessionStorage.getItem('notifiedTasks');
+                const notified = sessionStorage.getItem(CONFIG.STORAGE.NOTIFIED_TASKS);
                 if (notified) {
                     state.notifiedTasks = new Set(JSON.parse(notified));
                 }
@@ -1208,7 +1249,7 @@
 
             // 如果有新通知，持久化 notifiedTasks 到 SessionStorage，防止刷新页面后重复弹窗
             if (hasNewNotifications) {
-                sessionStorage.setItem('notifiedTasks', JSON.stringify([...state.notifiedTasks]));
+                sessionStorage.setItem(CONFIG.STORAGE.NOTIFIED_TASKS, JSON.stringify([...state.notifiedTasks]));
             }
         }
 
