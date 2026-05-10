@@ -655,6 +655,11 @@
                 VIBRATE_PATTERN: [200, 100, 200],
                 SOUND_SRC: 'data:audio/mp3;base64,//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDiMcCBcH3Cc+CDv/7cQBMNJjoDbET4QOgle43gQTAALnipZOg+RIqJQ0YMHgpGYFYxP7yY0/w/iUcaQ2YMaVD+p31Z7//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDiMcCBcH3Cc+CDv/7cQBMNJjoDbET4QOgle43gQTAALnipZOg+RIqJQ0YMHgpGYFYxP7yY0/w/iUcaQ2YMaVD+p31Z7'
             },
+            DRAG: {
+                EDGE_SCROLL_THRESHOLD: 80,
+                MAX_SCROLL_SPEED: 12,
+                MIN_SCROLL_SPEED: 2
+            },
             LANGUAGES: [
                 { code: 'zh-CN', name: '简体中文' },
                 { code: 'en', name: 'English' }
@@ -2259,137 +2264,124 @@
         }
 
         function setupDragAndDrop() {
-            let draggedItem = null;
-
-            // === 自动滚动状态与逻辑 ===
-            let scrollSpeed = 0;
-            let scrollFrameId = null;
-            // 执行滚动的循环函数
-            const performScroll = () => {
-                if (scrollSpeed !== 0) {
-                    window.scrollBy(0, scrollSpeed);
-                    // 持续滚动直到速度归零
-                    scrollFrameId = requestAnimationFrame(performScroll);
-                } else {
-                    scrollFrameId = null;
-                }
-            };
-            // 停止滚动的辅助函数 (拖拽结束时调用)
-            const stopAutoScroll = () => {
-                scrollSpeed = 0;
-                if (scrollFrameId) {
-                    cancelAnimationFrame(scrollFrameId);
-                    scrollFrameId = null;
-                }
-            };
-            // 检测边缘并设置滚动速度
-            const handleEdgeScroll = (y) => {
-                const threshold = 80; // 边缘检测范围 (px)
-                const maxSpeed = 12;  // 最大滚动速度
-                const h = window.innerHeight;
-
-                // 靠近顶部
-                if (y < threshold) {
-                    // 越靠近边缘速度越快
-                    scrollSpeed = -Math.max(2, maxSpeed * ((threshold - y) / threshold));
-                    if (!scrollFrameId) performScroll();
-                }
-                // 靠近底部
-                else if (y > h - threshold) {
-                    const dist = y - (h - threshold);
-                    scrollSpeed = Math.max(2, maxSpeed * (dist / threshold));
-                    if (!scrollFrameId) performScroll();
-                }
-                // 在中间区域，停止滚动
-                else {
-                    scrollSpeed = 0;
-                    if (scrollFrameId) {
-                        cancelAnimationFrame(scrollFrameId);
-                        scrollFrameId = null;
-                    }
-                }
+            const dragState = {
+                item: null,
+                scrollSpeed: 0,
+                scrollFrameId: null
             };
 
+            DOM.taskList.addEventListener('dragstart', (e) => handleTaskDragStart(e, dragState));
+            DOM.taskList.addEventListener('dragend', () => finishTaskDrag(dragState, 'dragging'));
+            DOM.taskList.addEventListener('dragover', (e) => handleTaskDragOver(e, dragState));
+            DOM.taskList.addEventListener('touchstart', (e) => handleTaskTouchStart(e, dragState), { passive: false });
+            DOM.taskList.addEventListener('touchmove', (e) => handleTaskTouchMove(e, dragState), { passive: false });
+            DOM.taskList.addEventListener('touchend', () => finishTaskDrag(dragState, 'touch-dragging'));
+        }
 
+        function handleTaskDragStart(e, dragState) {
+            if (!canReorderTasks()) return;
+            const item = e.target.closest('.task-item');
+            if (!item) return;
 
-            // === A. 桌面端原生 Drag & Drop ===
-            DOM.taskList.addEventListener('dragstart', (e) => {
-                if (state.sort !== 'manual') return;
-                const item = e.target.closest('.task-item');
-                if (!item) return;
+            dragState.item = item;
+            e.dataTransfer.effectAllowed = 'move';
+            requestAnimationFrame(() => item.classList.add('dragging'));
+        }
 
-                draggedItem = item;
-                e.dataTransfer.effectAllowed = 'move';
-                // 延迟添加样式，让浏览器生成“重影”后再隐藏本体
-                requestAnimationFrame(() => item.classList.add('dragging'));
-            });
-            DOM.taskList.addEventListener('dragend', (e) => {
-                if (!draggedItem) return;
-                draggedItem.classList.remove('dragging');
-                stopAutoScroll(); // 停止滚动
-                saveNewOrder(); // 保存
-                draggedItem = null;
-            });
-            DOM.taskList.addEventListener('dragover', (e) => {
-                if (state.sort !== 'manual' || !draggedItem) return;
-                e.preventDefault(); // 允许 Drop
-                // 1. 处理自动滚动
-                handleEdgeScroll(e.clientY);
-                // 2. 处理 DOM 移动
-                const afterElement = getDragAfterElement(DOM.taskList, e.clientY);
-                const currentNextSibling = draggedItem.nextElementSibling;
-                // 只有当位置真的变了，才操作 DOM，防止闪烁
-                if (afterElement !== currentNextSibling) {
-                    if (afterElement == null) {
-                        DOM.taskList.appendChild(draggedItem);
-                    } else {
-                        DOM.taskList.insertBefore(draggedItem, afterElement);
-                    }
-                }
-            });
+        function handleTaskDragOver(e, dragState) {
+            if (!canReorderTasks() || !dragState.item) return;
+            e.preventDefault();
+            updateDragPosition(dragState, e.clientY);
+        }
 
-            // === B. 移动端 Touch 事件模拟 (Reorder List 模式) ===
-            // 监听 touchstart: 只有按住手柄 (.drag-handle) 才能拖动
-            DOM.taskList.addEventListener('touchstart', (e) => {
-                if (state.sort !== 'manual') return;
-                const handle = e.target.closest('.drag-handle');
-                if (!handle) return; // 必须按住手柄才能拖
+        function handleTaskTouchStart(e, dragState) {
+            if (!canReorderTasks()) return;
+            const handle = e.target.closest('.drag-handle');
+            if (!handle) return;
 
-                const item = handle.closest('.task-item');
-                draggedItem = item;
+            const item = handle.closest('.task-item');
+            if (!item) return;
 
-                item.classList.add('touch-dragging');
+            dragState.item = item;
+            item.classList.add('touch-dragging');
+            preventCancelableEvent(e);
+        }
 
-                // 必须阻止默认事件，否则拖动时会触发页面滚动
-                if (e.cancelable) e.preventDefault();
-            }, { passive: false });
+        function handleTaskTouchMove(e, dragState) {
+            if (!canReorderTasks() || !dragState.item) return;
+            preventCancelableEvent(e);
+            updateDragPosition(dragState, e.touches[0].clientY);
+        }
 
-            DOM.taskList.addEventListener('touchmove', (e) => {
-                if (state.sort !== 'manual' || !draggedItem) return;
-                if (e.cancelable) e.preventDefault(); // 阻止页面滚动
-                const touch = e.touches[0];
-                // 1. 处理自动滚动 (使用手指的 Y 坐标)
-                handleEdgeScroll(touch.clientY);
-                // 2. 处理 DOM 移动
-                const afterElement = getDragAfterElement(DOM.taskList, touch.clientY);
-                const currentNextSibling = draggedItem.nextElementSibling;
-                // 复用防闪烁逻辑
-                if (afterElement !== currentNextSibling) {
-                    if (afterElement == null) {
-                        DOM.taskList.appendChild(draggedItem);
-                    } else {
-                        DOM.taskList.insertBefore(draggedItem, afterElement);
-                    }
-                }
-            }, { passive: false });
-            DOM.taskList.addEventListener('touchend', (e) => {
-                if (state.sort !== 'manual' || !draggedItem) return;
+        function finishTaskDrag(dragState, activeClass) {
+            if (!dragState.item) return;
+            dragState.item.classList.remove(activeClass);
+            stopAutoScroll(dragState);
+            saveNewOrder();
+            dragState.item = null;
+        }
 
-                draggedItem.classList.remove('touch-dragging');
-                stopAutoScroll(); // 停止滚动
-                saveNewOrder();
-                draggedItem = null;
-            });
+        function updateDragPosition(dragState, y) {
+            handleEdgeScroll(dragState, y);
+            moveDraggedTask(dragState, y);
+        }
+
+        function moveDraggedTask(dragState, y) {
+            const afterElement = getDragAfterElement(DOM.taskList, y);
+            const currentNextSibling = dragState.item.nextElementSibling;
+            if (afterElement === currentNextSibling) return;
+
+            if (afterElement == null) {
+                DOM.taskList.appendChild(dragState.item);
+            } else {
+                DOM.taskList.insertBefore(dragState.item, afterElement);
+            }
+        }
+
+        function handleEdgeScroll(dragState, y) {
+            const threshold = CONFIG.DRAG.EDGE_SCROLL_THRESHOLD;
+            const maxSpeed = CONFIG.DRAG.MAX_SCROLL_SPEED;
+            const minSpeed = CONFIG.DRAG.MIN_SCROLL_SPEED;
+            const viewportHeight = window.innerHeight;
+
+            if (y < threshold) {
+                setAutoScrollSpeed(dragState, -Math.max(minSpeed, maxSpeed * ((threshold - y) / threshold)));
+            } else if (y > viewportHeight - threshold) {
+                const distance = y - (viewportHeight - threshold);
+                setAutoScrollSpeed(dragState, Math.max(minSpeed, maxSpeed * (distance / threshold)));
+            } else {
+                stopAutoScroll(dragState);
+            }
+        }
+
+        function setAutoScrollSpeed(dragState, speed) {
+            dragState.scrollSpeed = speed;
+            if (!dragState.scrollFrameId) performAutoScroll(dragState);
+        }
+
+        function performAutoScroll(dragState) {
+            if (dragState.scrollSpeed !== 0) {
+                window.scrollBy(0, dragState.scrollSpeed);
+                dragState.scrollFrameId = requestAnimationFrame(() => performAutoScroll(dragState));
+            } else {
+                dragState.scrollFrameId = null;
+            }
+        }
+
+        function stopAutoScroll(dragState) {
+            dragState.scrollSpeed = 0;
+            if (dragState.scrollFrameId) {
+                cancelAnimationFrame(dragState.scrollFrameId);
+                dragState.scrollFrameId = null;
+            }
+        }
+
+        function canReorderTasks() {
+            return state.sort === 'manual';
+        }
+
+        function preventCancelableEvent(e) {
+            if (e.cancelable) e.preventDefault();
         }
         // 辅助：计算拖拽位置
         function getDragAfterElement(container, y) {
