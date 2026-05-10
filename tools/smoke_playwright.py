@@ -513,8 +513,10 @@ def exercise_manual_reorder(page: Page, first_name: str, second_name: str, third
     select_filter(page, "all")
     select_sort(page, "manual")
     expect(page.locator(".task-item.draggable-item .drag-handle")).to_have_count(3)
+    assert_task_order(page, [first_name, second_name, third_name])
+    page.wait_for_timeout(150)
 
-    task_locator(page, third_name).drag_to(
+    task_locator(page, third_name).locator(".drag-handle").drag_to(
         task_locator(page, first_name),
         target_position={"x": 20, "y": 5},
     )

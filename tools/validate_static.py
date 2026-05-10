@@ -190,6 +190,17 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
         errors.append(str(error))
 
 
+def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
+    if ":focus-visible" not in index_html or "--focus-ring" not in index_html:
+        errors.append("Interactive controls must expose a visible keyboard focus style")
+    if "@media (prefers-reduced-motion: reduce)" not in index_html:
+        errors.append("CSS must respect prefers-reduced-motion")
+    if "setButtonLabel(el.querySelector('[data-action=\"toggle\"]')" not in index_html:
+        errors.append("Task action icon buttons must receive accessible labels")
+    if "summaryBar.setAttribute('aria-expanded'" not in index_html:
+        errors.append("Subtask expand controls must expose aria-expanded")
+
+
 def main() -> int:
     errors: list[str] = []
     index_html = read_text(INDEX_PATH)
@@ -197,6 +208,7 @@ def main() -> int:
     validate_translations(index_html, errors)
     validate_pwa(index_html, errors)
     validate_task_state_styles(index_html, errors)
+    validate_accessibility_styles(index_html, errors)
 
     if errors:
         print("Static validation failed:", file=sys.stderr)
