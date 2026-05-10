@@ -140,7 +140,7 @@
         .container, .task-item, .modal-content, input, textarea, select, .menu, .controls-bar { transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease); }
         .container { width: min(100%, var(--app-width)); margin: 0 auto; background: transparent; border-radius: 0; box-shadow: none; position: relative; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-        .icon-btn:focus-visible, .lang-btn:focus-visible, .menu-item:focus-visible, .dropdown-btn:focus-visible, .dropdown-option:focus-visible, .view-tab:focus-visible, .calendar-nav-btn:focus-visible, .calendar-date-number:focus-visible, .calendar-task:focus-visible, .stats-mini:focus-visible, .action-btn:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .btn-icon-small:focus-visible, .back-to-top:focus-visible, .subtask-summary-bar:focus-visible, .subtask-delete-btn:focus-visible, .subtask-checkbox:focus-visible, .subtask-preview-text:focus-visible, .drag-handle:focus-visible {
+        .icon-btn:focus-visible, .lang-btn:focus-visible, .menu-item:focus-visible, .dropdown-btn:focus-visible, .dropdown-option:focus-visible, .view-tab:focus-visible, .calendar-nav-btn:focus-visible, .calendar-date-number:focus-visible, .calendar-task:focus-visible, .stats-mini:focus-visible, .search-clear-btn:focus-visible, .action-btn:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .btn-icon-small:focus-visible, .back-to-top:focus-visible, .subtask-summary-bar:focus-visible, .subtask-delete-btn:focus-visible, .subtask-checkbox:focus-visible, .subtask-preview-text:focus-visible, .drag-handle:focus-visible {
             outline: 2px solid var(--color-primary);
             outline-offset: 2px;
             box-shadow: 0 0 0 4px var(--focus-ring);
@@ -200,7 +200,9 @@
             transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-theme-duration) var(--motion-theme-ease), transform var(--motion-fast);
         }
         .search-box { position: relative; display: flex; align-items: center; flex: 1; margin-bottom: 0; }
-        .search-input { width: 100%; min-height: 42px; padding: 10px 45px 10px 12px; border: 1px solid var(--border-base); border-radius: var(--radius-control); font-size: 14px; background-color: var(--field-bg); color: var(--text-main); transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-fast); }
+        .search-input { width: 100%; min-height: 42px; padding: 10px 86px 10px 12px; border: 1px solid var(--border-base); border-radius: var(--radius-control); font-size: 14px; background-color: var(--field-bg); color: var(--text-main); transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-fast); }
+        .search-clear-btn { position: absolute; right: 52px; top: 50%; transform: translateY(-50%); z-index: 3; width: 26px; height: 26px; border: 1px solid transparent; border-radius: var(--radius-control); background: transparent; color: var(--text-tertiary); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 4px; transition: background-color var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast); }
+        .search-clear-btn:hover { background: var(--bg-hover); border-color: var(--border-base); color: var(--color-primary); }
         .dropdown-container { position: relative; z-index: 300; }
         .project-filter { min-width: 0; }
         .project-select { padding-right: 42px; }
@@ -473,7 +475,8 @@
             .search-box { width: 100%; flex: none; min-width: 0; }
             .search-box { grid-column: 1 / -1; }
             .project-filter { grid-column: 1 / -1; }
-            .search-input { min-width: 0; }
+            .search-input { min-width: 0; padding-right: 44px; }
+            .search-clear-btn { right: 10px; }
             .dropdown-container { flex: 1; min-width: 0; }
             .dropdown-btn { width: 100%; min-width: 0; justify-content: space-between; }
             .dropdown-menu-content { width: 100%; }
@@ -688,6 +691,9 @@
             <div class="search-box">
                 <label for="searchInput" class="sr-only" data-i18n="search.placeholder">搜索任务...</label>
                 <input class="search-input" data-i18n-placeholder="search.placeholder" id="searchInput" placeholder="搜索任务..." type="text">
+                <button type="button" class="search-clear-btn" id="clearSearchBtn" data-i18n-aria-label="search.clear" data-i18n-title="search.clear" aria-label="清空搜索" title="清空搜索" hidden>
+                    <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-x"></use></svg>
+                </button>
                 <div class="shortcut-hint" aria-hidden="true"><kbd class="shortcut-kbd" data-i18n-title="tooltips.searchShortcut" title="搜索快捷键：Ctrl/Cmd + K">⌘K</kbd></div>
             </div>
             <div class="project-filter">
@@ -926,7 +932,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '3.6'
+                RESOURCE_VERSION: '3.7'
             },
             BACKUP: {
                 FILE_VERSION: '2.0',
@@ -981,6 +987,7 @@
             DOM.themeBtn = document.getElementById('themeToggleBtn');
             DOM.backToTopBtn = document.getElementById('backToTopBtn');
             DOM.clearCompletedBtn = document.getElementById('clearCompletedBtn');
+            DOM.clearSearchBtn = document.getElementById('clearSearchBtn');
             DOM.notificationToggleBtn = document.getElementById('notificationToggleBtn');
             DOM.modal = document.getElementById('taskModal');
             DOM.form = document.getElementById('taskForm');
@@ -1166,10 +1173,13 @@
             DOM.inputs.repeatType.addEventListener('change', syncRepeatControls);
         }
         function bindSearchEvents() {
+            DOM.inputs.search.addEventListener('input', syncSearchClearButton);
             DOM.inputs.search.addEventListener('input', utils.debounce(() => {
                 state.searchQuery = normalizeSearchQuery(DOM.inputs.search.value);
                 renderTaskList();
             }, 300));
+            DOM.clearSearchBtn.addEventListener('click', () => clearSearchInput());
+            syncSearchClearButton();
             DOM.inputs.projectFilter.addEventListener('change', () => {
                 state.projectFilter = DOM.inputs.projectFilter.value;
                 renderTaskList();
@@ -1306,7 +1316,8 @@
             if (meta && e.key === 'm') { e.preventDefault(); toggleMenu(DOM.menu.container, DOM.menu.btn); }
             if (e.altKey && e.key.toLowerCase() === 't') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
             if (e.key === 'Escape') {
-                if (document.activeElement === DOM.inputs.search) DOM.inputs.search.blur();
+                if (document.activeElement === DOM.inputs.search && DOM.inputs.search.value) clearSearchInput();
+                else if (document.activeElement === DOM.inputs.search) DOM.inputs.search.blur();
                 else {
                     closeAllDropdowns();
                     closeMenu();
@@ -2130,6 +2141,16 @@
         function matchesTaskSearch(task) {
             if (!state.searchQuery) return true;
             return state.searchQuery.split(' ').every(token => getTaskSearchText(task).includes(token));
+        }
+        function clearSearchInput({ keepFocus = true } = {}) {
+            DOM.inputs.search.value = '';
+            state.searchQuery = '';
+            syncSearchClearButton();
+            renderTaskList();
+            if (keepFocus) DOM.inputs.search.focus();
+        }
+        function syncSearchClearButton() {
+            DOM.clearSearchBtn.hidden = DOM.inputs.search.value.length === 0;
         }
         function normalizeSearchQuery(value) {
             return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');

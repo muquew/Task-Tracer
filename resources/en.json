@@ -23,7 +23,8 @@
     "clearCompleted": "Clear Completed"
   },
   "search": {
-    "placeholder": "Search tasks..."
+    "placeholder": "Search tasks...",
+    "clear": "Clear search"
   },
   "projects": {
     "filterLabel": "Project view",

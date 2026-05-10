@@ -336,6 +336,11 @@ def exercise_shortcuts_and_modal_closing(page: Page) -> None:
     page.locator("body").click(position={"x": 10, "y": 10})
     press_control_shortcut(page, "k")
     expect(page.locator("#searchInput")).to_be_focused()
+    page.locator("#searchInput").fill("temporary query")
+    expect(page.locator("#clearSearchBtn")).to_be_visible()
+    page.keyboard.press("Escape")
+    expect(page.locator("#searchInput")).to_have_value("")
+    expect(page.locator("#clearSearchBtn")).to_be_hidden()
     page.keyboard.press("Escape")
 
     press_control_shortcut(page, "i")
@@ -548,7 +553,10 @@ def search_task(page: Page, task_name: str) -> None:
 
 
 def clear_search(page: Page) -> None:
-    page.locator("#searchInput").fill("")
+    if page.locator("#clearSearchBtn").is_visible():
+        page.locator("#clearSearchBtn").click()
+    else:
+        page.locator("#searchInput").fill("")
     page.wait_for_timeout(350)
 
 
