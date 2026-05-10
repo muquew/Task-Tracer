@@ -1,5 +1,4 @@
-// 改了代码要来这里改缓存名字
-const CACHE_NAME = 'task-tracer-v3.6';
+const CACHE_NAME = 'task-tracer-v3.7';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -10,7 +9,6 @@ const ASSETS_TO_CACHE = [
     './fav/android-chrome-512x512.png'
 ];
 
-// 1. 安装阶段 (进货)：下载并缓存所有文件
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Installing...');
     e.waitUntil(
@@ -26,34 +24,23 @@ self.addEventListener('install', (e) => {
     );
 });
 
-// 2. 拦截请求 (发货)：优先使用缓存
 self.addEventListener('fetch', (e) => {
-    e.respondWith(
-        caches.match(e.request).then((cachedResponse) => {
-            // A. 如果缓存里有，直接返回缓存 (离线可用)
-            if (cachedResponse) {
-                return cachedResponse;
-            }
-            // B. 如果缓存没有，去网络请求
-            return fetch(e.request).then((networkResponse) => {
-                // 检查请求是否有效
-                if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-                    return networkResponse;
-                }
+    if (e.request.method !== 'GET') return;
 
-                // === 动态缓存资源文件 (仅缓存本站的 resources 文件夹) ===
-                if (e.request.url.includes('/resources/')) {
-                    const responseToCache = networkResponse.clone();
-                    // 这里不需要等待缓存完成才返回数据给用户，但为了消除警告，我们加上 return
-                    caches.open(CACHE_NAME).then((cache) => {
-                        console.log('[Service Worker] Caching new resource:', e.request.url);
-                        return cache.put(e.request, responseToCache);
-                    });
-                }
-                return networkResponse;
-            });
-        })
-    );
+    const url = new URL(e.request.url);
+    if (url.origin !== self.location.origin) return;
+
+    if (e.request.mode === 'navigate' || isAppShellRequest(url)) {
+        e.respondWith(networkFirst(e.request, './index.html'));
+        return;
+    }
+
+    if (url.pathname.includes('/resources/')) {
+        e.respondWith(networkFirst(e.request));
+        return;
+    }
+
+    e.respondWith(cacheFirst(e.request));
 });
 
 // 2.5 点击通知：回到已打开的应用窗口，或打开首页
@@ -93,3 +80,42 @@ self.addEventListener('activate', (e) => {
             })
     );
 });
+
+function isAppShellRequest(url) {
+    return url.pathname === '/' || url.pathname.endsWith('/index.html');
+}
+
+async function networkFirst(request, fallbackUrl) {
+    try {
+        const networkResponse = await fetch(request);
+        cacheResponse(request, networkResponse).catch((error) => {
+            console.warn('[Service Worker] Cache update failed:', error);
+        });
+        return networkResponse;
+    } catch (error) {
+        const cachedResponse = await caches.match(request);
+        if (cachedResponse) return cachedResponse;
+        if (fallbackUrl) {
+            const fallbackResponse = await caches.match(fallbackUrl);
+            if (fallbackResponse) return fallbackResponse;
+        }
+        throw error;
+    }
+}
+
+async function cacheFirst(request) {
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) return cachedResponse;
+
+    const networkResponse = await fetch(request);
+    cacheResponse(request, networkResponse).catch((error) => {
+        console.warn('[Service Worker] Cache update failed:', error);
+    });
+    return networkResponse;
+}
+
+async function cacheResponse(request, response) {
+    if (!response || response.status !== 200 || response.type !== 'basic') return;
+    const cache = await caches.open(CACHE_NAME);
+    await cache.put(request, response.clone());
+}
