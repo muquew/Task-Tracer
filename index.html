@@ -945,41 +945,53 @@
         }
 
         function bindSubtaskPreviewEvents() {
-            DOM.subtaskListPreview.addEventListener('click', (e) => {
-                const deleteBtn = e.target.closest('.subtask-delete-btn');
-                if (deleteBtn) {
-                    state.tempSubtasks.splice(Number(deleteBtn.dataset.index), 1);
-                    if (state.editingSubtaskIndex === Number(deleteBtn.dataset.index)) {
-                        state.editingSubtaskIndex = -1;
-                    }
-                    renderSubtaskPreview();
-                    return;
-                }
+            DOM.subtaskListPreview.addEventListener('click', handleSubtaskPreviewClick);
+            DOM.subtaskListPreview.addEventListener('focusout', handleSubtaskPreviewFocusOut);
+            DOM.subtaskListPreview.addEventListener('keydown', handleSubtaskPreviewKeydown);
+            DOM.subtaskListPreview.addEventListener('mousedown', preventSubtaskDeleteBlur);
+        }
 
-                const textSpan = e.target.closest('.subtask-preview-text');
-                if (textSpan) {
-                    state.editingSubtaskIndex = Number(textSpan.dataset.index);
-                    renderSubtaskPreview();
-                }
-            });
+        function handleSubtaskPreviewClick(e) {
+            const deleteBtn = e.target.closest('.subtask-delete-btn');
+            if (deleteBtn) {
+                removeTempSubtask(Number(deleteBtn.dataset.index));
+                return;
+            }
 
-            DOM.subtaskListPreview.addEventListener('focusout', (e) => {
-                if (e.target.classList.contains('subtask-edit-input')) {
-                    saveEditSubtask(e.target);
-                }
-            });
-            DOM.subtaskListPreview.addEventListener('keydown', (e) => {
-                if (e.target.classList.contains('subtask-edit-input') && e.key === 'Enter') {
-                    e.preventDefault();
-                    e.target.blur();
-                }
-            });
+            const textSpan = e.target.closest('.subtask-preview-text');
+            if (textSpan) editTempSubtask(Number(textSpan.dataset.index));
+        }
 
-            DOM.subtaskListPreview.addEventListener('mousedown', (e) => {
-                if (e.target.closest('.subtask-delete-btn')) {
-                    e.preventDefault();
-                }
-            });
+        function handleSubtaskPreviewFocusOut(e) {
+            if (e.target.classList.contains('subtask-edit-input')) {
+                saveEditSubtask(e.target);
+            }
+        }
+
+        function handleSubtaskPreviewKeydown(e) {
+            if (e.target.classList.contains('subtask-edit-input') && e.key === 'Enter') {
+                e.preventDefault();
+                e.target.blur();
+            }
+        }
+
+        function preventSubtaskDeleteBlur(e) {
+            if (e.target.closest('.subtask-delete-btn')) {
+                e.preventDefault();
+            }
+        }
+
+        function removeTempSubtask(index) {
+            state.tempSubtasks.splice(index, 1);
+            if (state.editingSubtaskIndex === index) {
+                state.editingSubtaskIndex = -1;
+            }
+            renderSubtaskPreview();
+        }
+
+        function editTempSubtask(index) {
+            state.editingSubtaskIndex = index;
+            renderSubtaskPreview();
         }
 
         function handleKeyboardShortcuts(e) {
@@ -1678,40 +1690,48 @@
             listEl.innerHTML = ''; // 清空
 
             state.tempSubtasks.forEach((sub, index) => {
-                const li = document.createElement('li');
-                li.className = 'subtask-preview-item';
-
-                // === 核心逻辑：判断这一行是不是正在编辑 ===
-                if (index === state.editingSubtaskIndex) {
-                    // A. 如果是编辑状态：渲染 INPUT
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.className = 'subtask-edit-input';
-                    input.value = sub.text;
-
-                    li.append(input, createSubtaskDeleteButton(index));
-                    // 自动聚焦 (DOM 渲染后需要手动获取元素来 focus)
-                    // 使用 setTimeout 确保 DOM 渲染完成
-                    setTimeout(() => {
-                        const input = li.querySelector('input');
-                        if(input) {
-                            input.focus();
-                            // 把光标移到末尾 (可选优化)
-                            input.setSelectionRange(input.value.length, input.value.length);
-                        }
-                    }, 0);
-
-                } else {
-                    // B. 如果是普通状态：渲染 SPAN
-                    const text = document.createElement('span');
-                    text.className = 'subtask-preview-text';
-                    text.dataset.index = index;
-                    text.textContent = sub.text;
-                    li.append(text, createSubtaskDeleteButton(index));
-                }
-
-                listEl.appendChild(li);
+                listEl.appendChild(createSubtaskPreviewItem(sub, index));
             });
+        }
+
+        function createSubtaskPreviewItem(subtask, index) {
+            const li = document.createElement('li');
+            li.className = 'subtask-preview-item';
+
+            if (index === state.editingSubtaskIndex) {
+                li.append(createSubtaskEditInput(subtask.text), createSubtaskDeleteButton(index));
+                focusSubtaskEditInput(li);
+            } else {
+                li.append(createSubtaskPreviewText(subtask.text, index), createSubtaskDeleteButton(index));
+            }
+
+            return li;
+        }
+
+        function createSubtaskEditInput(text) {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'subtask-edit-input';
+            input.value = text;
+            return input;
+        }
+
+        function createSubtaskPreviewText(text, index) {
+            const span = document.createElement('span');
+            span.className = 'subtask-preview-text';
+            span.dataset.index = index;
+            span.textContent = text;
+            return span;
+        }
+
+        function focusSubtaskEditInput(item) {
+            setTimeout(() => {
+                const input = item.querySelector('input');
+                if (input) {
+                    input.focus();
+                    input.setSelectionRange(input.value.length, input.value.length);
+                }
+            }, 0);
         }
 
         function setTranslatedText(el, key) {
