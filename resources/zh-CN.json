@@ -44,6 +44,7 @@
     "next": "下个月",
     "nextYear": "下一年",
     "today": "今天",
+    "addTaskOnDate": "在 {date} 添加任务",
     "more": "+{count} 个更多",
     "taskCount": "{count} 个任务",
     "noDeadline": "无截止日期"

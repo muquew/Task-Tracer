@@ -140,7 +140,7 @@
         .container, .task-item, .modal-content, input, textarea, select, .menu, .controls-bar { transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease); }
         .container { width: min(100%, var(--app-width)); margin: 0 auto; background: transparent; border-radius: 0; box-shadow: none; position: relative; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-        .icon-btn:focus-visible, .lang-btn:focus-visible, .menu-item:focus-visible, .dropdown-btn:focus-visible, .dropdown-option:focus-visible, .view-tab:focus-visible, .calendar-nav-btn:focus-visible, .calendar-task:focus-visible, .action-btn:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .btn-icon-small:focus-visible, .back-to-top:focus-visible, .subtask-summary-bar:focus-visible, .subtask-delete-btn:focus-visible, .subtask-checkbox:focus-visible, .subtask-preview-text:focus-visible, .drag-handle:focus-visible {
+        .icon-btn:focus-visible, .lang-btn:focus-visible, .menu-item:focus-visible, .dropdown-btn:focus-visible, .dropdown-option:focus-visible, .view-tab:focus-visible, .calendar-nav-btn:focus-visible, .calendar-add-btn:focus-visible, .calendar-task:focus-visible, .action-btn:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .btn-icon-small:focus-visible, .back-to-top:focus-visible, .subtask-summary-bar:focus-visible, .subtask-delete-btn:focus-visible, .subtask-checkbox:focus-visible, .subtask-preview-text:focus-visible, .drag-handle:focus-visible {
             outline: 2px solid var(--color-primary);
             outline-offset: 2px;
             box-shadow: 0 0 0 4px var(--focus-ring);
@@ -237,8 +237,13 @@
         .calendar-day:nth-child(7n) { border-right: 0; }
         .calendar-day.outside-month { background: var(--bg-surface-alt); color: var(--text-tertiary); }
         .calendar-day.today { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--color-primary) 44%, transparent); }
+        .calendar-day-header { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-height: 26px; }
         .calendar-date-number { display: inline-flex; min-width: 24px; height: 24px; align-items: center; justify-content: center; border-radius: var(--radius-pill); font-size: 12px; font-weight: 800; color: var(--text-secondary); }
         .calendar-day.today .calendar-date-number { background: var(--color-primary); color: var(--text-inverse); }
+        .calendar-add-btn { width: 26px; height: 26px; border: 1px solid transparent; border-radius: var(--radius-control); background: transparent; color: var(--text-tertiary); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 4px; opacity: 0; transition: opacity var(--motion-fast), background-color var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast), transform var(--motion-fast); }
+        .calendar-day:hover .calendar-add-btn, .calendar-day:focus-within .calendar-add-btn { opacity: 1; }
+        .calendar-add-btn:hover { background: var(--bg-hover); border-color: var(--border-base); color: var(--color-primary); transform: translateY(-1px); }
+        .calendar-day.today .calendar-add-btn { color: var(--color-primary); }
         .calendar-task-list { display: grid; gap: 5px; margin-top: 6px; }
         .calendar-task { width: 100%; min-height: 28px; border: 1px solid var(--border-light); border-left: 4px solid var(--task-color, var(--color-primary)); border-radius: var(--radius-control); background: var(--bg-surface-raised); color: var(--text-main); padding: 4px 6px; text-align: left; font: inherit; font-size: 12px; font-weight: 700; line-height: 1.3; cursor: pointer; overflow-wrap: anywhere; }
         .calendar-task:hover { color: var(--color-primary); background: var(--bg-hover); }
@@ -475,6 +480,7 @@
             .calendar-actions { width: 100%; justify-content: space-between; }
             .calendar-weekday { font-size: 11px; padding-inline: 3px; }
             .calendar-day { min-height: 92px; padding: 5px; }
+            .calendar-add-btn { width: 24px; height: 24px; opacity: 0.72; }
             .calendar-task { font-size: 11px; padding: 4px 5px; }
             .timeline-group { grid-template-columns: 22px minmax(0, 1fr); gap: 6px; }
             .stats-grid, .stats-detail-grid { grid-template-columns: 1fr; }
@@ -919,7 +925,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '3.3'
+                RESOURCE_VERSION: '3.4'
             },
             BACKUP: {
                 FILE_VERSION: '2.0',
@@ -2268,9 +2274,12 @@
             cell.className = `calendar-day ${day.getMonth() === state.calendarMonthDate.getMonth() ? '' : 'outside-month'} ${dayKey === todayKey ? 'today' : ''}`.trim();
             cell.setAttribute('role', 'group');
             cell.setAttribute('aria-label', formatCalendarDayLabel(day, tasks.length));
+            const header = document.createElement('div');
+            header.className = 'calendar-day-header';
             const number = document.createElement('div');
             number.className = 'calendar-date-number';
             number.textContent = String(day.getDate());
+            header.append(number, createCalendarAddButton(dayKey, day));
             const list = document.createElement('div');
             list.className = 'calendar-task-list';
             tasks.slice(0, 3).forEach(task => list.appendChild(createCalendarTaskButton(task)));
@@ -2280,8 +2289,19 @@
                 more.textContent = utils.translate('calendar.more').replace('{count}', tasks.length - 3);
                 list.appendChild(more);
             }
-            cell.append(number, list);
+            cell.append(header, list);
             return cell;
+        }
+        function createCalendarAddButton(dayKey, day) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'calendar-add-btn';
+            button.dataset.calendarAddDate = dayKey;
+            const label = utils.translate('calendar.addTaskOnDate').replace('{date}', formatCalendarAddDate(day));
+            button.title = label;
+            button.setAttribute('aria-label', label);
+            button.appendChild(createIcon('icon-plus', 'icon icon-sm'));
+            return button;
         }
         function createCalendarTaskButton(task) {
             const status = getTaskRenderStatus(task, state.translations[state.currentLanguage]).statusObj;
@@ -2330,6 +2350,9 @@
         }
         function formatCalendarDayLabel(day, count) {
             return `${new Intl.DateTimeFormat(state.currentLanguage, { dateStyle: 'full' }).format(day)}, ${utils.translate('calendar.taskCount').replace('{count}', count)}`;
+        }
+        function formatCalendarAddDate(day) {
+            return new Intl.DateTimeFormat(state.currentLanguage, { dateStyle: 'medium' }).format(day);
         }
         function renderTimelineView(tasks) {
             DOM.taskList.textContent = '';
@@ -2910,13 +2933,13 @@
             DOM.submitBtn.disabled = false;
             clearConfirmHandler();
         }
-        function openModal(editingTask = null) {
+        function openModal(editingTask = null, options = {}) {
             state.elementToFocusOnClose = document.activeElement;
             resetDialogToFormMode();
             if (editingTask) {
                 prepareEditTaskForm(editingTask);
             } else {
-                prepareNewTaskForm();
+                prepareNewTaskForm(options);
             }
             renderSubtaskPreview();
             utils.applyTranslations();
@@ -2941,7 +2964,8 @@
                 repeatInterval: editingTask.repeatInterval ?? 1
             });
         }
-        function prepareNewTaskForm() {
+        function prepareNewTaskForm(options = {}) {
+            const dueDate = isValidDate(options.dueDate) ? options.dueDate : new Date();
             state.editingTaskId = null;
             setDialogFormLabels('modal.addTitle', 'actions.addTask');
             DOM.inputs.project.value = '';
@@ -2949,13 +2973,16 @@
             state.tempSubtasks = [];
             setDeadlineControls({
                 enabled: true,
-                date: new Date(),
-                time: CONFIG.DEFAULTS.TIME,
+                date: dueDate,
+                time: options.dueTime || CONFIG.DEFAULTS.TIME,
                 reminderOffset: CONFIG.NOTIFICATIONS.DEFAULT_OFFSET_MINUTES,
                 reminderRepeat: -1,
                 repeatType: 'none',
                 repeatInterval: 1
             });
+        }
+        function isValidDate(date) {
+            return date instanceof Date && !Number.isNaN(date.getTime());
         }
         function setDialogFormLabels(titleKey, submitKey) {
             setTranslatedText(DOM.modalTitle, titleKey);
@@ -3373,6 +3400,7 @@
         }
         function handleTaskListClick(e) {
             if (handleCalendarActionClick(e)) return;
+            if (handleCalendarAddClick(e)) return;
             if (handleCalendarTaskClick(e)) return;
             if (handleSubtaskCheckboxClick(e)) return;
             if (handleSubtaskRowClick(e)) return;
@@ -3392,6 +3420,17 @@
                 renderTaskList();
             }
             return true;
+        }
+        function handleCalendarAddClick(e) {
+            const button = e.target.closest('[data-calendar-add-date]');
+            if (!button) return false;
+            openModal(null, { dueDate: parseDateKey(button.dataset.calendarAddDate), dueTime: CONFIG.DEFAULTS.TIME });
+            return true;
+        }
+        function parseDateKey(dateKey) {
+            const [year, month, day] = String(dateKey).split('-').map(Number);
+            if (!year || !month || !day) return new Date();
+            return new Date(year, month - 1, day, 12, 0, 0, 0);
         }
         function handleCalendarTaskClick(e) {
             const button = e.target.closest('[data-calendar-task-id]');

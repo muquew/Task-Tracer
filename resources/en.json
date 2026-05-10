@@ -44,6 +44,7 @@
     "next": "Next month",
     "nextYear": "Next year",
     "today": "Today",
+    "addTaskOnDate": "Add task on {date}",
     "more": "+{count} more",
     "taskCount": "{count} tasks",
     "noDeadline": "No deadline"
