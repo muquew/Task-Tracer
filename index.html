@@ -846,21 +846,36 @@
 
         // 事件绑定 (Event Binding)
         function bindEvents() {
-            // 全局
+            bindGlobalEvents();
+            bindDialogEvents();
+            bindFormEvents();
+            bindSearchEvents();
+            bindNotificationEvents();
+            setupDropdowns();
+            bindMenuEvents();
+            bindTaskListEvents();
+            bindSubtaskInputEvents();
+            bindSubtaskPreviewEvents();
+            setupDragAndDrop();
+        }
+
+        function bindGlobalEvents() {
             DOM.themeBtn.addEventListener('click', utils.toggleTheme);
             window.addEventListener('scroll', () => DOM.backToTopBtn.classList.toggle(CONFIG.UI.CLASSES.SHOW, window.scrollY > 300));
             DOM.backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
             document.addEventListener('keydown', handleKeyboardShortcuts);
             document.addEventListener('visibilitychange', handleVisibilityChange);
+        }
 
-            // 模态框
+        function bindDialogEvents() {
             DOM.openModalBtn.addEventListener('click', () => openModal());
             DOM.closeModalBtn.addEventListener('click', closeDialog);
             DOM.cancelBtn.addEventListener('click', closeDialog);
             DOM.modal.addEventListener('click', (e) => { if (e.target === DOM.modal) closeDialog(); });
             DOM.form.addEventListener('submit', handleTaskSave);
+        }
 
-            // 表单交互
+        function bindFormEvents() {
             DOM.inputs.noDeadline.addEventListener('change', function() {
                 DOM.inputs.date.disabled = this.checked;
                 DOM.inputs.time.disabled = this.checked;
@@ -871,15 +886,17 @@
                 // 无截止日期时，禁用提醒设置
                 DOM.inputs.reminderOffset.disabled = this.checked;
             });
+        }
 
-            // 搜索与筛选
+        function bindSearchEvents() {
             DOM.inputs.search.addEventListener('input', utils.debounce(() => {
                 state.searchQuery = DOM.inputs.search.value.toLowerCase();
                 renderTaskList();
             }, 300));
             DOM.clearCompletedBtn.addEventListener('click', handleClearCompleted);
-            
-            // 通知开关
+        }
+
+        function bindNotificationEvents() {
             if (DOM.notificationToggleBtn) {
                 DOM.notificationToggleBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -888,18 +905,16 @@
             } else {
                 console.error('Notification button not found in DOM');
             }
+        }
 
-            // 下拉菜单
-            setupDropdowns();
-
-            // 主菜单
+        function bindMenuEvents() {
             DOM.menu.btn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(DOM.menu.container, DOM.menu.btn); });
             document.addEventListener('click', (e) => {
                 if (DOM.menu.container.classList.contains(CONFIG.UI.CLASSES.SHOW) && !DOM.menu.container.contains(e.target) && !DOM.menu.btn.contains(e.target)) {
                     closeMenu();
                 }
             });
-            // 语言子菜单
+
             DOM.menu.langToggle.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const isExpanded = DOM.menu.langSubmenu.classList.toggle(CONFIG.UI.CLASSES.SHOW);
@@ -912,40 +927,41 @@
                 }
             });
 
-            // 导入导出
             DOM.menu.exportBtn.addEventListener('click', exportTasks);
             DOM.menu.importBtn.addEventListener('click', () => DOM.menu.fileInput.click());
             DOM.menu.fileInput.addEventListener('change', (e) => importTasks(e.target.files[0]));
+        }
 
-            // 任务列表交互 (委托)
+        function bindTaskListEvents() {
             DOM.taskList.addEventListener('click', handleTaskListClick);
+        }
 
-            // 子任务输入交互
+        function bindSubtaskInputEvents() {
             DOM.addSubtaskBtn.addEventListener('click', handleAddSubtaskInput);
             DOM.inputs.subtask.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') { e.preventDefault(); handleAddSubtaskInput(); }
             });
-            // 子任务列表点击 (删除 / 进入编辑)
+        }
+
+        function bindSubtaskPreviewEvents() {
             DOM.subtaskListPreview.addEventListener('click', (e) => {
-                // 1. 删除逻辑 (保持不变)
                 const deleteBtn = e.target.closest('.subtask-delete-btn');
                 if (deleteBtn) {
                     state.tempSubtasks.splice(Number(deleteBtn.dataset.index), 1);
-                    // 如果删的是正在编辑的那一行，重置编辑索引
                     if (state.editingSubtaskIndex === Number(deleteBtn.dataset.index)) {
                         state.editingSubtaskIndex = -1;
                     }
                     renderSubtaskPreview();
                     return;
                 }
-                // 2. 进入编辑模式 (点击了文本)
+
                 const textSpan = e.target.closest('.subtask-preview-text');
                 if (textSpan) {
                     state.editingSubtaskIndex = Number(textSpan.dataset.index);
-                    renderSubtaskPreview(); // 重绘：文本变输入框
+                    renderSubtaskPreview();
                 }
             });
-            // 3. 保存逻辑 (监听输入框的动作)
+
             DOM.subtaskListPreview.addEventListener('focusout', (e) => {
                 if (e.target.classList.contains('subtask-edit-input')) {
                     saveEditSubtask(e.target);
@@ -953,18 +969,16 @@
             });
             DOM.subtaskListPreview.addEventListener('keydown', (e) => {
                 if (e.target.classList.contains('subtask-edit-input') && e.key === 'Enter') {
-                    e.preventDefault(); // 防止提交外层表单
-                    e.target.blur();    // 触发 focusout 来保存
+                    e.preventDefault();
+                    e.target.blur();
                 }
             });
-            // 防止点击删除按钮时输入框失焦
+
             DOM.subtaskListPreview.addEventListener('mousedown', (e) => {
                 if (e.target.closest('.subtask-delete-btn')) {
                     e.preventDefault();
                 }
             });
-
-            setupDragAndDrop();
         }
 
         function handleKeyboardShortcuts(e) {
