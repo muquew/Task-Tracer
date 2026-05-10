@@ -4,59 +4,94 @@
 
 <h1 align="center">Task Tracer</h1>
 
-<p align="center">Deadline-based task management in a compact offline-ready PWA.</p>
+<p align="center"><strong>A local-first, offline-ready PWA for deadline-driven personal task management.</strong></p>
 
 <p align="center">
-  <a href="https://todo.muquew.com/">Live Demo</a> · <a href="./README_zh_cn.md">中文说明</a>
+  <a href="https://todo.muquew.com/" rel="noopener noreferrer">Live Demo</a> · <a href="./README_zh_cn.md">中文说明</a>
 </p>
 
 <p align="center">
-  <a href="https://todo.muquew.com/"><img alt="Live demo" src="https://img.shields.io/badge/Live-Demo-2563eb?style=flat-square"></a>
+  <a href="https://todo.muquew.com/" rel="noopener noreferrer"><img alt="Live demo" src="https://img.shields.io/badge/Live-Demo-2563eb?style=flat-square"></a>
   <img alt="PWA" src="https://img.shields.io/badge/PWA-Offline-059669?style=flat-square">
   <img alt="IndexedDB" src="https://img.shields.io/badge/Data-IndexedDB-0f766e?style=flat-square">
-  <img alt="Internationalization" src="https://img.shields.io/badge/i18n-ZH%20%7C%20EN-7c3aed?style=flat-square">
-  <img alt="Accessibility" src="https://img.shields.io/badge/A11y-Keyboard-d97706?style=flat-square">
+  <img alt="Languages" src="https://img.shields.io/badge/i18n-ZH%20%7C%20EN-7c3aed?style=flat-square">
+  <img alt="Accessibility" src="https://img.shields.io/badge/A11y-Keyboard%20%7C%20Screen%20Reader-d97706?style=flat-square">
   <img alt="License" src="https://img.shields.io/badge/License-Personal%20Use-475569?style=flat-square">
 </p>
 
-Task Tracer is a deadline-based task management PWA for personal planning, study routines, and recurring work. It keeps task data in the browser, works offline after loading, and focuses on clear deadline status, repeating tasks, reminders, project grouping, tags, subtasks, calendar review, statistics, archiving, import safety, and local backup.
+Task Tracer is a single-user task manager built around due dates, local reminders, recurring work, and long-term personal task history. It is intentionally browser-local: task data stays in IndexedDB, the app loads offline after the first visit, and the runtime is centered on one HTML application with separate language resource files.
 
-## Features
+It works well for study plans, personal operations, project follow-ups, routine reviews, and any task list where deadlines, status clarity, and safe local data handling matter more than team collaboration or cloud sync.
 
-- Deadline tracking: safe, warning, urgent, overdue, completed, and no-deadline states.
-- Task management: add, edit, delete, complete, restore, archive, and recover tasks.
-- Repeating tasks: create daily, weekly, monthly, or custom-day cycles; completing one occurrence creates the next one.
-- Subtasks: break a task into smaller steps and track subtask progress.
-- Reminders: choose reminder timing, repeat reminders, snooze a reminder, and see missed reminders when the app wakes up.
-- Projects and tags: use one project as the main grouping for a task, and use multiple tags for cross-cutting labels.
-- Search and filters: search task names, descriptions, projects, and tags; switch between active, completed, archived, overdue, and no-deadline views.
-- Sorting: smart sorting, newest created, due date, alphabetical order, and manual drag-and-drop order.
-- Calendar, timeline, and stats: review work by month, scan chronological groups, and track completion rate, overdue rate, and completion streak.
-- Import preview: review task count, duplicate names, and replacement impact before imported data replaces current tasks.
-- Local data: IndexedDB persistence with JSON import, export, and versioned backup downloads.
-- PWA support: app shell caching, offline loading, and installable browser experience.
-- Themes and languages: light/dark themes, Simplified Chinese, and English.
-- Accessibility: keyboard-friendly controls, focus management, screen-reader labels, and live status announcements.
+## Feature Map
+
+| Area | Included |
+| --- | --- |
+| Task lifecycle | Create, edit, complete, mark incomplete, delete, archive, restore from archive, clear completed tasks, and archive completed tasks. |
+| Deadline handling | Local due date and time, no-deadline tasks, exact due instants, timezone-aware legacy normalization, live countdowns, progress bars, and status colors. |
+| Status model | Safe, warning, urgent, overdue, completed, archived, and no-deadline states are shown with distinct labels and visual treatment. |
+| Subtasks | Add subtasks, edit subtask text inline, complete subtasks independently, and track subtask progress on the parent task. |
+| Recurring tasks | Daily, weekly, monthly, and custom-day recurrence; completing one occurrence creates the next one while preserving the completed record. |
+| Reminders | Reminder offset, repeat reminder interval, snooze, missed-reminder catch-up, notification permission handling, and clear background-delivery messaging. |
+| Projects and tags | One primary project per task, multiple tags per task, project-scoped views, tag chips, and project/tag-aware search. |
+| Search and filters | Search task names, descriptions, projects, and tags; filter by all, active, completed, archived, overdue, and no deadline. |
+| Sorting and ordering | Smart sorting, newest-created order, due-date order, alphabetical order, manual drag-and-drop order, touch reorder, and keyboard reorder. |
+| Views | List, calendar, timeline, and statistics views for daily work, date review, chronological scanning, and personal productivity feedback. |
+| Data portability | JSON export, import preview, duplicate-name reporting, replace mode, merge mode, and versioned local backup downloads. |
+| PWA behavior | Installable app shell, service worker caching, offline loading, manifest metadata, and browser-friendly deployment headers. |
+| Comfort and polish | Light/dark themes, responsive layout, reduced-motion support, smooth state transitions, and bilingual UI. |
+| Accessibility | Keyboard navigation, visible focus, dialog focus trap, screen-reader labels, live status announcements, and automated axe checks. |
+
+## Core Workflow
+
+Task Tracer starts from a simple list, then adds structure only where it helps:
+
+1. Add tasks with a name, optional description, due date and time, reminders, repeat rule, project, tags, and subtasks.
+2. Work from the list view for everyday actions such as complete, snooze, edit, archive, delete, and manual reorder.
+3. Switch to calendar or timeline view when due-date distribution matters more than list order.
+4. Use statistics to review completion rate, active overdue rate, archived volume, today's completions, and completion streak.
+5. Export or back up data before clearing browser data, switching devices, or testing imports.
 
 ## Projects, Tags, and Search
 
-Projects are the primary grouping layer. A task belongs to one project, such as Work, Personal, or a named product. The project selector narrows the task list, and the all-project smart view groups tasks by project.
+Projects are the main grouping layer. A task belongs to one project, such as `Work`, `Personal`, or a named product. The project selector narrows the task list, and the all-project smart view keeps tasks grouped by project.
 
-Tags are flexible secondary labels. A task can have multiple tags, such as `design`, `urgent`, or `follow-up`. Tags are useful when related work crosses project boundaries.
+Tags are flexible secondary labels. A task can have multiple tags, such as `design`, `exam`, or `follow-up`. Tags are useful when related work crosses project boundaries.
 
-Search currently matches task names, descriptions, project names, and tags. In other words, projects help organize the list, while tags add extra searchable meaning across those project groups.
+Search matches task names, descriptions, project names, and tags. Projects organize the primary task space, while tags add extra searchable meaning across project groups.
 
-## Views and Feedback
+## Views
 
-The list view is optimized for daily task work and full task actions. Calendar view shows due tasks in a month grid, including a separate no-deadline section. Timeline view groups visible tasks by date for deadline review.
+| View | Purpose |
+| --- | --- |
+| List | Daily task execution with full actions, subtasks, status chips, reminders, archive controls, and manual ordering. |
+| Calendar | Monthly due-date review with previous/next month, previous/next year, today jump, visible day layout, date details, and no-deadline grouping. |
+| Timeline | Chronological grouping for scanning upcoming or historical workload by date. |
+| Statistics | Completion rate, active overdue rate, archived count, today's completions, current streak, and recent completion trend. |
 
-The stats view summarizes the current project/search scope without depending on the active/completed filter. It reports completion rate, active overdue rate, archived task count, today's completions, and the current completion streak based on recorded completion dates.
+## Import, Export, and Backup
 
-## Data Files
+Task Tracer keeps the data controls separate so each action has a clear purpose.
 
-- Export: downloads the current task data as a JSON file for transfer, inspection, or manual storage.
-- Import: reads a JSON file, shows a preview, then replaces current task data after confirmation.
-- Backup: downloads a versioned local snapshot, records the latest backup time, and includes local due dates, exact reminder instants, repeat rules, and completion dates.
+| Action | Purpose |
+| --- | --- |
+| Export | Download the current task set as JSON for transfer, manual inspection, or storage. |
+| Import | Read a JSON file, show a preview, report imported task count, duplicate names, current-data impact, and then replace or merge after confirmation. |
+| Backup | Download a versioned snapshot with schema notes, local due dates, exact reminder instants, repeat rules, completion dates, and archive state. |
+
+Backups also record the latest backup time locally, so the app can remind you when active task data has not been backed up recently.
+
+## Reminder Model
+
+Browser notifications are available when the browser supports them and the user grants permission. Task Tracer can schedule reminder checks while the app is open, repeat reminders at a chosen interval, snooze a reminder, and surface missed reminders when the app runs again.
+
+Browser-based reminders are not a guaranteed system alarm service. Delivery can depend on browser policy, operating system behavior, battery settings, tab lifecycle, and whether the app is opened or woken by the browser.
+
+## Data and Privacy
+
+Task data is stored in the current browser's IndexedDB. Task Tracer does not require an account and does not upload task content to a server by default.
+
+Before changing browsers, clearing site data, reinstalling the app, or moving devices, use Back Up Now or Export to download a JSON file.
 
 ## Screenshots
 
@@ -64,7 +99,7 @@ The stats view summarizes the current project/search scope without depending on 
 | --- | --- |
 | <img src="./screenshots/task-list-en.png" alt="Task Tracer task list"> | <img src="./screenshots/add-task-en.png" alt="Task Tracer add task dialog"> |
 
-## Usage
+## Run
 
 Use the hosted app:
 
@@ -86,19 +121,34 @@ Then open:
 http://127.0.0.1:8080/
 ```
 
-## Data and Privacy
+## Project Layout
 
-Task Tracer stores task data in the current browser's IndexedDB. It does not require an account and does not upload task content to a server by default. Before changing browsers, clearing site data, or moving devices, use Back Up Now or Export to download a JSON file.
+| Path | Role |
+| --- | --- |
+| `index.html` | Main single-file application runtime. |
+| `resources/zh-CN.json` | Simplified Chinese UI text. |
+| `resources/en.json` | English UI text. |
+| `sw.js` | PWA service worker and cache versioning. |
+| `vercel.json` | Deployment security headers. |
+| `fav/` | App icons, favicon files, and web manifest assets. |
+| `screenshots/` | README screenshots. |
+| `tools/validate_static.py` | Static consistency checks for app files and translations. |
+| `tools/date_semantics_test.py` | Date, timezone, and recurrence behavior checks. |
+| `tools/smoke_playwright.py` | Browser smoke tests for core user flows. |
+| `tools/accessibility_i18n_audit.py` | Playwright and axe-backed accessibility/i18n audit. |
+| `docs/internal-code-guide.md` | Internal runtime structure and function guide. |
+| `docs/accessibility-i18n-audit.md` | Accessibility and i18n audit baseline. |
 
-Browser reminders depend on the page being open or woken by the browser. Task Tracer can catch missed reminders when the app runs again, but it cannot guarantee system-level background delivery on every platform.
+## Validation
 
-## Technical Notes
+The project includes local checks for static consistency, date semantics, browser smoke coverage, and accessibility/i18n behavior:
 
-- Main app: `index.html`
-- Language resources: `resources/zh-CN.json`, `resources/en.json`
-- PWA Service Worker: `sw.js`
-- Deployment security headers: `vercel.json`
-- Validation: static consistency checks, Playwright browser smoke tests, and axe-backed accessibility/i18n audits
+```bash
+python3 tools/validate_static.py
+python3 tools/date_semantics_test.py
+conda run -n task python tools/smoke_playwright.py
+conda run -n task python tools/accessibility_i18n_audit.py
+```
 
 ## License
 
