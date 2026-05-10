@@ -941,6 +941,13 @@ def exercise_stats_view(page: Page, completed_name: str) -> None:
     expect(page.locator(".stat-card").nth(1).locator(".stat-value")).to_have_text("50%")
     expect(page.locator(".stat-card").nth(2).locator(".stat-value")).to_contain_text("1")
     expect(page.locator(".stats-mini")).to_have_count(5)
+    expect(page.locator(".stats-trend")).to_be_visible()
+    expect(page.locator(".stats-trend-bar")).to_have_count(7)
+    trend_counts = page.locator(".stats-trend-bar").evaluate_all(
+        "bars => bars.map((bar) => Number(bar.dataset.trendCount || 0))"
+    )
+    if sum(trend_counts) != 1:
+        raise AssertionError(f"Completion trend did not reflect the completed task: {trend_counts}")
     assert_accessibility_baseline(page, "stats view")
     page.locator('.stats-mini[data-stats-filter="completed"]').click()
     expect(page.locator("#currentFilterLabel")).to_have_text(re.compile("已完成|Completed", re.I))

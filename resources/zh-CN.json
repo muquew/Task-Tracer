@@ -66,7 +66,9 @@
     "overdueTasks": "逾期进行中",
     "archivedTasks": "已归档",
     "todayCompleted": "今日完成",
-    "openFilter": "查看 {label}：{count} 个"
+    "openFilter": "查看 {label}：{count} 个",
+    "completionTrend": "最近 7 日完成趋势",
+    "trendCount": "{date} 完成 {count} 个"
   },
   "filters": {
     "all": "全部",

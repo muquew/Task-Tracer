@@ -66,7 +66,9 @@
     "overdueTasks": "Active overdue",
     "archivedTasks": "Archived",
     "todayCompleted": "Completed today",
-    "openFilter": "View {label}: {count}"
+    "openFilter": "View {label}: {count}",
+    "completionTrend": "Last 7 days completed",
+    "trendCount": "{date}: {count} completed"
   },
   "filters": {
     "all": "All",
