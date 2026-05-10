@@ -248,14 +248,14 @@
             border: 1px solid var(--border-light);
             border-radius: var(--radius-surface);
             padding: 0;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             box-shadow: 0 10px 28px var(--shadow-base);
             transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
             position: relative;
             overflow: hidden;
         }
         .task-item::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 6px; background: var(--task-color); }
-        .task-item-right { flex: 1; min-width: 0; padding: 14px 15px 13px 18px; }
+        .task-item-right { flex: 1; min-width: 0; padding: 16px 18px 15px 30px; }
         .task-item:hover { transform: translateY(-1px); border-color: color-mix(in srgb, var(--task-color) 40%, var(--border-light)); box-shadow: 0 16px 34px var(--shadow-base); }
         .task-item:focus-within { box-shadow: 0 0 0 3px var(--focus-ring), 0 16px 34px var(--shadow-base); }
         /* 状态颜色映射 */
@@ -276,13 +276,13 @@
         .task-item.animate-complete { animation: completeAnimation 0.5s ease; }
         @keyframes completeAnimation { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        .task-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 9px; }
+        .task-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 10px; }
         .task-title { min-width: 0; font-size: 16px; font-weight: 760; color: var(--text-main); display: flex; align-items: center; gap: 9px; word-break: break-word; overflow-wrap: anywhere; line-height: 1.35; }
         .task-name { min-width: 0; overflow-wrap: anywhere; }
         .task-date { flex: 0 1 auto; max-width: 46%; font-size: 12px; color: var(--text-secondary); background: var(--bg-hover); padding: 4px 10px; border-radius: var(--radius-pill); line-height: 1.45; white-space: normal; overflow-wrap: anywhere; text-align: right; border: 1px solid color-mix(in srgb, currentColor 16%, transparent); }
-        .task-desc { color: var(--text-secondary); margin: 0 0 11px; line-height: 1.5; font-size: 14px; word-break: break-word; }
+        .task-desc { color: var(--text-secondary); margin: 0 0 12px; line-height: 1.55; font-size: 14px; word-break: break-word; }
 
-        .progress-bar { height: 7px; background: var(--bg-hover); border-radius: var(--radius-pill); margin: 9px 0 11px; overflow: hidden; }
+        .progress-bar { height: 7px; background: var(--bg-hover); border-radius: var(--radius-pill); margin: 10px 0 12px; overflow: hidden; }
         .progress-fill { height: 100%; border-radius: var(--radius-pill); transition: width 0.5s ease; background: linear-gradient(90deg, var(--task-color), color-mix(in srgb, var(--task-color) 70%, var(--color-accent))); }
 
         .task-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
@@ -419,7 +419,7 @@
             .main-content { padding-top: 12px; }
             .task-item { padding: 13px; }
             .task-item::before { width: 4px; }
-            .task-item-right { padding: 0 0 0 4px; }
+            .task-item-right { padding: 2px 0 0 12px; }
             .task-header { flex-direction: column; align-items: flex-start; }
             .task-title { width: 100%; }
             .task-date { max-width: 100%; margin-top: 5px; text-align: left; }
