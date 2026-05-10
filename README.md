@@ -1,114 +1,65 @@
-# 📝 Todo Manager / Task Tracker
+# Task Tracer 任务跟踪器
 
-**[中文版说明 / Chinese Version](./README_zh_cn.md)**
+Task Tracer 是一个基于截止日期的任务管理 PWA。它把任务、截止时间、提醒、子任务、筛选排序和本地数据备份放在一个轻量界面里，适合个人任务规划、学习安排和周期性事项跟踪。
 
-A lightweight web-based task manager built entirely in a single **HTML file** using **IndexedDB** for persistent storage.
-It supports adding, editing, deleting, completing, filtering, and exporting tasks, with progress visualization and responsive design.
+[在线体验](https://todo.muquew.com/)
 
----
+## 功能速览
 
-## 🚀 Features
+- 截止日期跟踪：按剩余时间显示安全、警告、紧急、过期、无截止日期等状态。
+- 任务管理：支持新增、编辑、删除、完成/恢复任务，以及完成任务划线展示。
+- 子任务：为任务添加子步骤，单独勾选完成并显示进度。
+- 提醒设置：可选择截止时、提前 15 分钟、提前 1 小时、提前 1 天或不提醒。
+- 搜索与筛选：按关键词搜索，按进行中、已完成、已过期、无截止日期快速筛选。
+- 排序方式：支持智能排序、创建时间、截止日期、名称排序和手动拖拽排序。
+- 本地数据：使用 IndexedDB 持久化，支持 JSON 导入和导出。
+- PWA 能力：支持离线加载、安装到桌面或移动设备。
+- 多语言与主题：内置简体中文、英文，支持明暗主题切换。
+- 无障碍体验：支持键盘操作、焦点管理、读屏标签和状态播报。
 
-* ✅ Add, edit, and delete tasks
-* ⏱ Support for task deadlines with automatic remaining time calculation
-* 🔔 Dynamic status display: Safe / Warning / Urgent / Expired
-* 🎯 Search and filter tasks (All / Completed / Incomplete / Expired / No Deadline)
-* 📊 Progress bar visualization of time remaining
-* 📁 Import and export task data in JSON format
-* 🎨 Responsive design for both desktop and mobile
-* 📦 Single-file HTML app with IndexedDB persistence — no installation or server required
+## 截图
 
----
+截图用于快速展示实际界面；项目功能仍以应用本身为准。
 
-## 🌐 Live Demo
+| 任务列表 | 添加任务 |
+| --- | --- |
+| <img src="./screenshots/task-list.png" alt="Task Tracer 任务列表界面"> | <img src="./screenshots/add-task.png" alt="Task Tracer 添加任务弹窗"> |
 
-Try it now: [https://todo.muquew.com/](https://todo.muquew.com/)
+## 使用方式
 
----
+直接访问在线地址：
 
-## 📸 Screenshots
+```text
+https://todo.muquew.com/
+```
 
-<div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; align-items: flex-start;">
-    <img src="./screenshots/task-list-en.png" alt="Task List" style="width: 45%; max-width: 300px; border-radius: 8px;"/>
-    <img src="./screenshots/add-task-en.png" alt="Add Task Dialog" style="width: 45%; max-width: 300px; border-radius: 8px;"/>
-</div>
-
----
-
-## 💻 How to Use
-
-1. Clone or download the repository:
+或本地运行：
 
 ```bash
-git clone https://github.com/muquew/Todo-Manager.git
+git clone https://github.com/muquew/Task-Tracer.git
+cd Task-Tracer
+python3 -m http.server 8080
 ```
 
-2. Open `index.html` in your browser:
+然后打开：
 
-```bash
-open index.html
+```text
+http://127.0.0.1:8080/
 ```
 
-Or simply drag it into your browser window.
+## 数据与隐私
 
-3. Main operations:
+Task Tracer 默认把任务数据保存在当前浏览器的 IndexedDB 中，不需要账号，也不会把任务内容上传到服务器。更换浏览器、清理站点数据或更换设备前，请先使用导出功能备份 JSON 文件。
 
-   * Click **“Add Task”** to create a new task
-   * Edit tasks to modify name, description, and due date
-   * Check **“No Deadline”** for open-ended tasks
-   * Use the filter bar to quickly switch between task states
-   * **Export** tasks for backup or **Import** JSON data to restore
+## 技术形态
 
----
+- 单文件主应用：`index.html`
+- 外置语言资源：`resources/zh-CN.json`、`resources/en.json`
+- PWA Service Worker：`sw.js`
+- 自动检查：静态一致性校验与 Playwright 浏览器冒烟测试
 
-## 📂 Project Structure
+## 许可
 
-```
-.
-├── index.html  # Single file containing HTML, CSS, and JS
-└── README.md   # Project description
-```
+本项目采用个人非商业使用许可。个人学习、研究和个人任务管理可以使用；商业使用、盈利性分发或商业服务集成需要获得 `muquew` 的事先书面授权。
 
----
-
-## 🌟 Future Improvements
-
-* 🔹 Local notifications for upcoming deadlines
-* 🔹 Drag-and-drop task sorting
-* 🔹 Dark mode / Custom themes
-* 🔹 Multi-user sync via cloud storage
-
----
-
-## ⚖️ License
-
-### Personal Non-Commercial License
-
-Copyright (c) 2025 muquew
-
-Permission is hereby granted, free of charge, to any individual user obtaining a copy of this software and associated documentation files (the "Software"), to use the Software under the following conditions:
-
-1. **Scope**
-
-   * For **personal use only**, including learning, research, or personal task management.
-   * **Commercial use is strictly prohibited**, including but not limited to selling, paid services, or business distribution.
-
-2. **Rights**
-
-   * You may download, use, and modify the Software for non-commercial purposes.
-   * You may share the Software with other individual users.
-
-3. **Restrictions**
-
-   * You may **not** use the Software for any direct or indirect commercial activity.
-   * You may **not** distribute or sell the Software or its modified versions for profit.
-
-4. **Disclaimer**
-
-   * The Software is provided “as is,” without any warranty of any kind.
-   * The author assumes no responsibility for any damages arising from its use.
-
----
-
-**Note:**
-By downloading or using this software from this repository, you agree to comply with the above terms.
+完整条款见 [LICENSE](./LICENSE)。

@@ -1,26 +1,43 @@
-# 个人非商业使用许可 (Personal Non-Commercial License)
+Task Tracer Personal Non-Commercial License
 
-版权所有 (c) 2025 muquew
+Copyright (c) 2026 muquew
 
-特此授予任何获得本软件及相关文档文件（以下简称“软件”）副本的个人用户，
-在遵守以下条款的前提下使用本软件的权利：
+This software and its associated files are owned by muquew. Permission is granted to individuals to use, copy, and modify this software only for personal, non-commercial purposes, subject to the terms below.
 
-1. 许可范围
-   - 仅允许个人使用，包括学习、研究或个人任务管理。
-   - 禁止任何形式的商业用途，包括但不限于销售、盈利性服务或商业分发。
+1. Permitted Use
 
-2. 权利
-   - 可以自由下载、使用和修改本软件用于非商业目的。
-   - 可以备份、复制、分享本软件给其他个人用户。
+You may use this software for personal task management, learning, research, evaluation, and other non-commercial personal activities.
 
-3. 限制
-   - 不得将本软件用于任何直接或间接的商业活动。
-   - 不得以盈利为目的分发或出售本软件或其修改版本。
+You may make local copies and personal modifications for the permitted uses above.
 
-4. 免责声明
-   - 本软件按“现状”提供，不附带任何明示或暗示的保证。
-   - 作者不对因使用本软件产生的任何损失或责任承担责任。
+2. Restrictions
 
----
+You may not use this software, or any modified version of it, for commercial purposes without prior written permission from muquew.
 
-**注意**：从本仓库下载或使用本软件即表示你同意遵守以上条款。
+Commercial purposes include, but are not limited to:
+
+- selling the software or modified versions;
+- offering paid services based on the software;
+- bundling the software into a commercial product;
+- using the software as part of a business service, paid platform, or revenue-generating workflow;
+- redistributing the software for profit.
+
+You may not remove or alter the copyright notice or this license notice.
+
+3. Commercial Licensing
+
+Commercial use requires separate written authorization from muquew. No commercial rights are granted by this license.
+
+4. Disclaimer
+
+The software is provided "as is", without warranty of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, and non-infringement.
+
+In no event shall muquew be liable for any claim, damages, or other liability arising from the use of this software.
+
+5. Chinese Reference
+
+本软件由 muquew 持有版权。个人用户可以将本软件用于个人任务管理、学习、研究、评估等非商业用途，也可以在上述范围内进行本地复制和修改。
+
+未经 muquew 事先书面许可，不得将本软件或其修改版本用于任何商业目的，包括但不限于销售、付费服务、商业产品集成、业务平台使用、营收流程使用或盈利性分发。
+
+本软件按“现状”提供，不附带任何明示或暗示的保证。因使用本软件产生的任何索赔、损害或其他责任，muquew 不承担责任。
