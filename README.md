@@ -50,7 +50,7 @@ Search currently matches task names, descriptions, project names, and tags. In o
 
 The list view is optimized for daily task work and full task actions. Calendar view shows due tasks in a month grid, including a separate no-deadline section. Timeline view groups visible tasks by date for deadline review.
 
-The stats view summarizes the current project/search scope without depending on the active/completed filter. It reports completion rate, active overdue rate, today's completions, and the current completion streak based on recorded completion dates.
+The stats view summarizes the current project/search scope without depending on the active/completed filter. It reports completion rate, active overdue rate, archived task count, today's completions, and the current completion streak based on recorded completion dates.
 
 ## Data Files
 

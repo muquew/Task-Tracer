@@ -94,15 +94,15 @@
 - 项目是单值字段，用于主分组和项目视图过滤。全部项目的智能排序视图会调用 `renderGroupedTaskList()` 按项目分组。
 - 标签是数组字段，用于给任务增加多个横向标记。
 - `matchesTaskSearch(task)` 当前匹配任务名称、描述、项目名和标签。项目和标签都会参与搜索；区别在于项目负责组织层级，标签负责跨项目检索。
-- 手动排序只在列表视图、`sort === 'manual'`、`filter === 'all'`、`projectFilter === 'all'` 且无搜索词时启用，避免局部视图排序写回全局顺序造成误解。
+- 手动排序只在列表视图、`sort === 'manual'` 且无搜索词时启用。局部筛选或项目视图下拖拽时，`mergeVisibleManualOrder()` 只调整当前可见任务在全局手动顺序中的相对位置。
 
 ## 重复任务、日期视图与统计
 
 - 重复任务由 `repeatType` 和 `repeatInterval` 表示。用户完成一个重复任务时，`toggleTaskComplete()` 会保留当前完成记录，并通过 `createNextRepeatTask()` 生成下一期。
 - 每月重复使用 `addMonthsClamped()` 处理月底日期，避免 1 月 31 日这类日期溢出到错误月份。
-- 日历视图使用 `calendarMonthDate` 渲染 42 个日期格，任务按钮点击后进入编辑弹窗。
+- 日历视图使用 `calendarMonthDate` 和浏览器 `Date` 计算月份首日、星期偏移与 42 个日期格，任务按钮点击后进入编辑弹窗。
 - 时间线视图按本地日期分组，继续复用任务卡片模板，因此任务按钮、子任务和归档逻辑保持一致。
-- 统计视图使用 `getStatsScopeTasks()`，只受项目和搜索范围影响，不受状态筛选影响。完成率按非归档任务计算，逾期率按有截止日期任务计算，连续完成天数基于 `completedAt`。
+- 统计视图使用 `getStatsScopeTasks()`，只受项目和搜索范围影响，不受状态筛选影响。完成率按当前范围任务计算，逾期率按未归档且有截止日期的任务计算，连续完成天数基于 `completedAt`，并单独展示归档数量。
 
 ## 导入、导出与备份边界
 
@@ -363,6 +363,8 @@
 - `canReorderTasks()`: 是否处于手动排序。
 - `getDragAfterElement(container, y)`: 计算拖拽插入点。
 - `saveNewOrder()`: 将 DOM 顺序写回任务 `order`。
+- `mergeVisibleManualOrder(visibleOrderIds)`: 将局部可见任务顺序合并回全局手动排序。
+- `sortTasksByManualOrder(tasks)`: 按 `order` 和 `id` 得到稳定手动顺序。
 
 ### 导入、导出、备份、示例与定时器
 

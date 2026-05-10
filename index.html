@@ -187,7 +187,7 @@
             position: relative;
             z-index: 700;
             display: grid;
-            grid-template-columns: minmax(220px, 1fr) minmax(150px, 220px) auto auto;
+            grid-template-columns: minmax(260px, auto) minmax(180px, 1fr) minmax(130px, 180px) auto auto;
             gap: 10px;
             margin: 6px 0 14px;
             align-items: center;
@@ -220,15 +220,15 @@
         .dropdown-option svg { opacity: 0; color: var(--color-primary); }
         .dropdown-option.selected svg { opacity: 1; }
         .filter-count { margin-left: auto; opacity: 0.6; font-size: 12px; padding-left: 8px; }
-        .view-switcher { display: inline-flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; padding: 5px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--controls-bg); box-shadow: 0 8px 22px var(--shadow-base); backdrop-filter: blur(14px); }
-        .view-tab { min-height: 34px; border: 1px solid transparent; border-radius: var(--radius-control); padding: 7px 10px; display: inline-flex; align-items: center; gap: 7px; background: transparent; color: var(--text-secondary); font: inherit; font-size: 13px; font-weight: 760; cursor: pointer; transition: background-color var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast), transform var(--motion-fast); }
+        .view-switcher { display: inline-flex; flex-wrap: nowrap; gap: 4px; min-width: 0; padding: 4px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-alt); }
+        .view-tab { min-height: 34px; border: 1px solid transparent; border-radius: var(--radius-control); padding: 7px 8px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: transparent; color: var(--text-secondary); font: inherit; font-size: 13px; font-weight: 760; cursor: pointer; white-space: nowrap; transition: background-color var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast), transform var(--motion-fast); }
         .view-tab:hover { color: var(--color-primary); background: var(--bg-hover); }
         .view-tab.selected { color: var(--color-primary); background: var(--bg-surface); border-color: color-mix(in srgb, var(--color-primary) 24%, transparent); box-shadow: 0 6px 14px var(--shadow-base); }
         .calendar-view, .timeline-view { animation: fadeIn 0.2s ease; }
         .calendar-shell { border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface); box-shadow: 0 10px 28px var(--shadow-base); overflow: hidden; }
         .calendar-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 14px; border-bottom: 1px solid var(--border-light); background: var(--bg-surface-raised); }
         .calendar-title { font-size: 16px; font-weight: 800; color: var(--text-main); }
-        .calendar-actions { display: flex; gap: 6px; align-items: center; }
+        .calendar-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
         .calendar-nav-btn { min-width: 34px; min-height: 34px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface); color: var(--text-main); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 6px 9px; font: inherit; font-size: 13px; font-weight: 760; }
         .calendar-nav-btn:hover { color: var(--color-primary); background: var(--bg-hover); border-color: var(--color-primary); }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
@@ -265,7 +265,7 @@
         .stat-card.success { --stat-color: var(--color-success); }
         .stat-card.warning { --stat-color: var(--color-warning); }
         .stat-card.primary { --stat-color: var(--color-primary); }
-        .stats-detail-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+        .stats-detail-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
         .stats-mini { border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-alt); padding: 12px; }
         .stats-mini strong { display: block; color: var(--text-main); font-size: 20px; margin-bottom: 4px; }
         .stats-mini span { color: var(--text-secondary); font-size: 12px; font-weight: 700; }
@@ -462,6 +462,7 @@
             .subtitle { font-size: 12px; }
             .menu { top: 54px; right: 0; }
             .controls-bar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: 8px; gap: 8px; }
+            .view-switcher { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
             .search-box { width: 100%; flex: none; min-width: 0; }
             .search-box { grid-column: 1 / -1; }
             .project-filter { grid-column: 1 / -1; }
@@ -469,7 +470,6 @@
             .dropdown-container { flex: 1; min-width: 0; }
             .dropdown-btn { width: 100%; min-width: 0; justify-content: space-between; }
             .dropdown-menu-content { width: 100%; }
-            .view-switcher { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
             .view-tab { justify-content: center; min-width: 0; padding-inline: 8px; }
             .calendar-header { align-items: flex-start; flex-direction: column; }
             .calendar-actions { width: 100%; justify-content: space-between; }
@@ -587,6 +587,7 @@
     <symbol id="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2V6"/><path d="M16 2V6"/><path d="M3 10H21"/><path d="M5 4H19A2 2 0 0 1 21 6V20A2 2 0 0 1 19 22H5A2 2 0 0 1 3 20V6A2 2 0 0 1 5 4Z"/></symbol>
     <symbol id="icon-timeline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3V21"/><path d="M5 6H16A3 3 0 0 1 16 12H5"/><path d="M5 14H18A3 3 0 0 1 18 20H5"/></symbol>
     <symbol id="icon-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19H20"/><path d="M8 16V11"/><path d="M12 16V8"/><path d="M16 16V13"/></symbol>
+    <symbol id="icon-chevrons-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 6L13 12L7 18"/><path d="M13 6L19 12L13 18"/></symbol>
     <symbol id="icon-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></symbol>
     <symbol id="icon-github" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.727-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757 -1.09-.745.083-.729.083-.729 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.775.418-1.305.76-1.606-2.665-.305-5.466-1.334-5.466-5.932 0-1.31.47-2.382 1.236-3.22-.125-.303-.535-1.523.115-3.176 0 0 1.008-.322 3.3 1.23a11.49 11.49 0 013.004-.404 c1.02.005 2.045.138 3.003.404 2.292-1.552 3.3-1.23 3.3-1.23.65 1.653.24 2.873.12 3.176.77.838 1.236 1.91 1.236 3.22 0 4.61-2.804 5.624-5.475 5.922.43.372.81 1.102.81 2.222 0 1.606-.015 2.896-.015 3.286 0 .32.216.694.825.576C20.565 21.796 24 17.3 24 12 24 5.373 18.627 0 12 0z"/></symbol>
     <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17L4 12"/></symbol>
@@ -659,6 +660,24 @@
     </header>
     <div class="main-content">
         <div class="controls-bar" role="toolbar" aria-label="任务工具栏" data-i18n-aria-label="app.toolbar">
+            <div class="view-switcher" id="viewSwitcher" role="tablist" aria-label="视图切换" data-i18n-aria-label="views.label">
+                <button class="view-tab selected" type="button" role="tab" aria-selected="true" data-view="list">
+                    <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-list"></use></svg>
+                    <span data-i18n="views.list">列表</span>
+                </button>
+                <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="calendar">
+                    <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-calendar"></use></svg>
+                    <span data-i18n="views.calendar">日历</span>
+                </button>
+                <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="timeline">
+                    <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-timeline"></use></svg>
+                    <span data-i18n="views.timeline">时间线</span>
+                </button>
+                <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="stats">
+                    <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-chart"></use></svg>
+                    <span data-i18n="views.stats">统计</span>
+                </button>
+            </div>
             <div class="search-box">
                 <label for="searchInput" class="sr-only" data-i18n="search.placeholder">搜索任务...</label>
                 <input class="search-input" data-i18n-placeholder="search.placeholder" id="searchInput" placeholder="搜索任务..." type="text">
@@ -697,24 +716,6 @@
                     <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="manual"><span data-i18n="sort.manual">自定义排序 (拖拽)</span></button>
                 </div>
             </div>
-        </div>
-        <div class="view-switcher" id="viewSwitcher" role="tablist" aria-label="视图切换" data-i18n-aria-label="views.label">
-            <button class="view-tab selected" type="button" role="tab" aria-selected="true" data-view="list">
-                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-list"></use></svg>
-                <span data-i18n="views.list">列表</span>
-            </button>
-            <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="calendar">
-                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-calendar"></use></svg>
-                <span data-i18n="views.calendar">日历</span>
-            </button>
-            <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="timeline">
-                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-timeline"></use></svg>
-                <span data-i18n="views.timeline">时间线</span>
-            </button>
-            <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="stats">
-                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-chart"></use></svg>
-                <span data-i18n="views.stats">统计</span>
-            </button>
         </div>
         <div class="tasks-section">
             <div id="taskList" aria-live="polite">
@@ -918,7 +919,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '3.2'
+                RESOURCE_VERSION: '3.3'
             },
             BACKUP: {
                 FILE_VERSION: '2.0',
@@ -2219,9 +2220,11 @@
             const actions = document.createElement('div');
             actions.className = 'calendar-actions';
             actions.append(
+                createCalendarNavButton('prev-year', 'icon-chevrons-right', utils.translate('calendar.previousYear'), true),
                 createCalendarNavButton('prev', 'icon-chevron-right', utils.translate('calendar.previous'), true),
                 createCalendarTodayButton(),
-                createCalendarNavButton('next', 'icon-chevron-right', utils.translate('calendar.next'))
+                createCalendarNavButton('next', 'icon-chevron-right', utils.translate('calendar.next')),
+                createCalendarNavButton('next-year', 'icon-chevrons-right', utils.translate('calendar.nextYear'))
             );
             header.append(title, actions);
             return header;
@@ -2407,8 +2410,7 @@
         function getStatsScopeTasks() {
             return state.tasks
                 .filter(matchesTaskProject)
-                .filter(matchesTaskSearch)
-                .filter(task => !task.archived);
+                .filter(matchesTaskSearch);
         }
         function renderStatsView(tasks) {
             DOM.taskList.textContent = '';
@@ -2458,6 +2460,7 @@
                 ['stats.totalTasks', stats.total],
                 ['stats.completedTasks', stats.completed],
                 ['stats.overdueTasks', stats.overdue],
+                ['stats.archivedTasks', stats.archived],
                 ['stats.todayCompleted', stats.completedToday]
             ].forEach(([key, value]) => grid.appendChild(createStatsMini(key, value)));
             return grid;
@@ -2473,10 +2476,11 @@
             return item;
         }
         function calculateTaskStats(tasks) {
+            const archived = tasks.filter(task => task.archived).length;
             const total = tasks.length;
             const completed = tasks.filter(task => task.completed).length;
-            const deadlineTasks = tasks.filter(task => task.dueDate).length;
-            const overdue = tasks.filter(task => !task.completed && task.dueDate && utils.calculateTimeLeft(task.dueDate) < 0).length;
+            const deadlineTasks = tasks.filter(task => task.dueDate && !task.archived).length;
+            const overdue = tasks.filter(task => !task.archived && !task.completed && task.dueDate && utils.calculateTimeLeft(task.dueDate) < 0).length;
             const completedToday = tasks.filter(task => getCompletionDateKey(task) === utils.formatDateInputValue()).length;
             const completionRate = total > 0 ? completed / total : 0;
             const overdueRate = deadlineTasks > 0 ? overdue / deadlineTasks : 0;
@@ -2485,6 +2489,7 @@
                 total,
                 completed,
                 overdue,
+                archived,
                 completedToday,
                 completionRate,
                 overdueRate,
@@ -3378,8 +3383,10 @@
             const button = e.target.closest('[data-calendar-action]');
             if (!button) return false;
             const action = button.dataset.calendarAction;
+            if (action === 'prev-year') shiftCalendarMonth(-12);
             if (action === 'prev') shiftCalendarMonth(-1);
             if (action === 'next') shiftCalendarMonth(1);
+            if (action === 'next-year') shiftCalendarMonth(12);
             if (action === 'today') {
                 state.calendarMonthDate = new Date();
                 renderTaskList();
@@ -3596,7 +3603,7 @@
             }
         }
         function canReorderTasks() {
-            return state.viewMode === 'list' && state.sort === 'manual' && state.filter === 'all' && state.projectFilter === 'all' && !state.searchQuery;
+            return state.viewMode === 'list' && state.sort === 'manual' && !state.searchQuery;
         }
         function preventCancelableEvent(e) {
             if (e.cancelable) e.preventDefault();
@@ -3618,11 +3625,7 @@
                 .map(el => Number(el.dataset.taskId))
                 .filter(id => !isNaN(id));
             if (newOrderIds.length === 0) return;
-            const orderedTasks = newOrderIds.map((id, index) => {
-                const task = getTaskById(id);
-                if (task) task.order = index * CONFIG.DEFAULTS.MANUAL_ORDER_STEP;
-                return task;
-            }).filter(Boolean);
+            const orderedTasks = mergeVisibleManualOrder(newOrderIds);
             if (orderedTasks.length === 0) return;
             try {
                 await dbActions.updateTasks(orderedTasks);
@@ -3630,6 +3633,27 @@
                 console.error('排序保存失败:', err);
                 utils.notify(state.translations[state.currentLanguage]['messages.task.saveError'], 'error');
             }
+        }
+        function mergeVisibleManualOrder(visibleOrderIds) {
+            const visibleIds = new Set(visibleOrderIds);
+            const visibleTasks = visibleOrderIds.map(getTaskById).filter(Boolean);
+            let visibleIndex = 0;
+            const mergedTasks = sortTasksByManualOrder(state.tasks).map(task => {
+                if (!visibleIds.has(task.id)) return task;
+                return visibleTasks[visibleIndex++] || task;
+            });
+            mergedTasks.forEach((task, index) => {
+                task.order = index * CONFIG.DEFAULTS.MANUAL_ORDER_STEP;
+            });
+            return mergedTasks;
+        }
+        function sortTasksByManualOrder(tasks) {
+            return [...tasks].sort((a, b) => {
+                const oA = (a.order !== undefined) ? a.order : 0;
+                const oB = (b.order !== undefined) ? b.order : 0;
+                if (oA !== oB) return oA - oB;
+                return a.id - b.id;
+            });
         }
         async function loadTranslations() {
             const entries = await Promise.all(CONFIG.LANGUAGES.map(async (l) => {

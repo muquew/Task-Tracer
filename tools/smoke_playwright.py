@@ -865,7 +865,7 @@ def exercise_stats_view(page: Page) -> None:
     expect(page.locator(".stat-card").nth(0).locator(".stat-value")).to_have_text("33%")
     expect(page.locator(".stat-card").nth(1).locator(".stat-value")).to_have_text("50%")
     expect(page.locator(".stat-card").nth(2).locator(".stat-value")).to_contain_text("1")
-    expect(page.locator(".stats-mini")).to_have_count(4)
+    expect(page.locator(".stats-mini")).to_have_count(5)
     assert_accessibility_baseline(page, "stats view")
     select_view(page, "list")
 
@@ -1042,11 +1042,14 @@ def drag_task_before(page: Page, source_name: str, target_name: str) -> None:
 def exercise_filtered_manual_reorder_guard(page: Page, completed_name: str, first_active: str, second_active: str) -> None:
     select_filter(page, "active")
     select_sort(page, "manual")
-    expect(page.locator(".task-item.draggable-item .drag-handle")).to_have_count(0)
+    expect(page.locator(".task-item.draggable-item .drag-handle")).to_have_count(2)
     assert_task_order(page, [first_active, second_active])
+    drag_task_before(page, second_active, first_active)
+    page.wait_for_timeout(500)
+    assert_task_order(page, [second_active, first_active])
     select_filter(page, "all")
     expect(page.locator(".task-item.draggable-item .drag-handle")).to_have_count(3)
-    assert_task_order(page, [completed_name, first_active, second_active])
+    assert_task_order(page, [completed_name, second_active, first_active])
 
 
 def exercise_back_to_top(page: Page) -> None:

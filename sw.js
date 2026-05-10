@@ -1,10 +1,10 @@
-const CACHE_NAME = 'task-tracer-v3.24';
+const CACHE_NAME = 'task-tracer-v3.25';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './manifest.json',
-    './resources/en.json?v=3.2',
-    './resources/zh-CN.json?v=3.2',
+    './resources/en.json?v=3.3',
+    './resources/zh-CN.json?v=3.3',
     './fav/android-chrome-192x192.png',
     './fav/android-chrome-512x512.png'
 ];

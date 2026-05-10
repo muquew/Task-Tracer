@@ -39,8 +39,10 @@
     "stats": "统计"
   },
   "calendar": {
+    "previousYear": "上一年",
     "previous": "上个月",
     "next": "下个月",
+    "nextYear": "下一年",
     "today": "今天",
     "more": "+{count} 个更多",
     "taskCount": "{count} 个任务",
@@ -58,6 +60,7 @@
     "totalTasks": "任务总数",
     "completedTasks": "已完成",
     "overdueTasks": "逾期进行中",
+    "archivedTasks": "已归档",
     "todayCompleted": "今日完成"
   },
   "filters": {
