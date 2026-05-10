@@ -19,7 +19,7 @@
   <img alt="License" src="https://img.shields.io/badge/License-Personal%20Use-475569?style=flat-square">
 </p>
 
-Task Tracer is a single-user task manager built around due dates, local reminders, recurring work, and long-term personal task history. It is intentionally browser-local: task data stays in IndexedDB, the app loads offline after the first visit, and the runtime is centered on one HTML application with separate language resource files.
+Task Tracer is a single-user task manager built around due dates, local reminders, recurring work, and long-term personal task history. It is intentionally browser-local: task data stays in IndexedDB, and the app loads offline after the first visit.
 
 It works well for study plans, personal operations, project follow-ups, routine reviews, and any task list where deadlines, status clarity, and safe local data handling matter more than team collaboration or cloud sync.
 
@@ -38,7 +38,7 @@ It works well for study plans, personal operations, project follow-ups, routine 
 | Sorting and ordering | Smart sorting, newest-created order, due-date order, alphabetical order, manual drag-and-drop order, touch reorder, and keyboard reorder. |
 | Views | List, calendar, timeline, and statistics views for daily work, date review, chronological scanning, and personal productivity feedback. |
 | Data portability | JSON export, import preview, duplicate-name reporting, replace mode, merge mode, and versioned local backup downloads. |
-| PWA behavior | Installable app shell, service worker caching, offline loading, manifest metadata, and browser-friendly deployment headers. |
+| PWA behavior | Installable app experience, offline loading, app icons, and browser-friendly behavior. |
 | Comfort and polish | Light/dark themes, responsive layout, reduced-motion support, smooth state transitions, and bilingual UI. |
 | Accessibility | Keyboard navigation, visible focus, dialog focus trap, screen-reader labels, live status announcements, and automated axe checks. |
 
@@ -119,35 +119,6 @@ Then open:
 
 ```text
 http://127.0.0.1:8080/
-```
-
-## Project Layout
-
-| Path | Role |
-| --- | --- |
-| `index.html` | Main single-file application runtime. |
-| `resources/zh-CN.json` | Simplified Chinese UI text. |
-| `resources/en.json` | English UI text. |
-| `sw.js` | PWA service worker and cache versioning. |
-| `vercel.json` | Deployment security headers. |
-| `fav/` | App icons, favicon files, and web manifest assets. |
-| `screenshots/` | README screenshots. |
-| `tools/validate_static.py` | Static consistency checks for app files and translations. |
-| `tools/date_semantics_test.py` | Date, timezone, and recurrence behavior checks. |
-| `tools/smoke_playwright.py` | Browser smoke tests for core user flows. |
-| `tools/accessibility_i18n_audit.py` | Playwright and axe-backed accessibility/i18n audit. |
-| `docs/internal-code-guide.md` | Internal runtime structure and function guide. |
-| `docs/accessibility-i18n-audit.md` | Accessibility and i18n audit baseline. |
-
-## Validation
-
-The project includes local checks for static consistency, date semantics, browser smoke coverage, and accessibility/i18n behavior:
-
-```bash
-python3 tools/validate_static.py
-python3 tools/date_semantics_test.py
-conda run -n task python tools/smoke_playwright.py
-conda run -n task python tools/accessibility_i18n_audit.py
 ```
 
 ## License
