@@ -1400,84 +1400,99 @@
             updateFilterCounts();
 
             if (state.tasks.length === 0) {
-                DOM.taskList.innerHTML = getEmptyStateHTML(t);
+                renderEmptyTaskList(getEmptyStateHTML(t));
                 return;
             }
 
-            // 1. 筛选与排序
-            let result = state.tasks.filter(task => {
-                if (state.searchQuery && !task.name.toLowerCase().includes(state.searchQuery) &&
-                    !(task.description && task.description.toLowerCase().includes(state.searchQuery)))
-                    return false;
+            const visibleTasks = getVisibleTasks();
+            removeInitialLoader();
 
-                switch (state.filter) {
-                    case 'active': return !task.completed;
-                    case 'completed': return task.completed;
-                    case 'overdue': return !task.completed && task.dueDate && utils.calculateTimeLeft(task.dueDate) < 0;
-                    case 'no-deadline': return !task.dueDate;
-                    default: return true;
+            if (visibleTasks.length === 0) {
+                renderEmptyTaskList(getEmptyMatchHTML(t));
+                return;
+            }
+
+            clearEmptyTaskList();
+            patchTaskList(visibleTasks);
+        }
+
+        function getVisibleTasks() {
+            return utils.sortTasks(state.tasks.filter(isTaskVisible));
+        }
+
+        function isTaskVisible(task) {
+            if (!matchesTaskSearch(task)) return false;
+
+            switch (state.filter) {
+                case 'active': return !task.completed;
+                case 'completed': return task.completed;
+                case 'overdue': return !task.completed && task.dueDate && utils.calculateTimeLeft(task.dueDate) < 0;
+                case 'no-deadline': return !task.dueDate;
+                default: return true;
+            }
+        }
+
+        function matchesTaskSearch(task) {
+            if (!state.searchQuery) return true;
+            const query = state.searchQuery;
+            return task.name.toLowerCase().includes(query) ||
+                Boolean(task.description && task.description.toLowerCase().includes(query));
+        }
+
+        function removeInitialLoader() {
+            const loader = document.getElementById('initial-loader');
+            if (loader) loader.remove();
+        }
+
+        function renderEmptyTaskList(html) {
+            DOM.taskList.innerHTML = html;
+        }
+
+        function clearEmptyTaskList() {
+            if (DOM.taskList.querySelector('.empty-state')) DOM.taskList.innerHTML = '';
+        }
+
+        function patchTaskList(tasks) {
+            if (DOM.taskList.children.length === 0) {
+                appendTaskNodes(tasks);
+            } else {
+                reconcileTaskNodes(tasks);
+            }
+        }
+
+        function appendTaskNodes(tasks) {
+            const fragment = document.createDocumentFragment();
+            tasks.forEach(task => fragment.appendChild(createTaskNode(task)));
+            DOM.taskList.appendChild(fragment);
+        }
+
+        function reconcileTaskNodes(tasks) {
+            const existingMap = getTaskElementMap();
+            let refNode = DOM.taskList.firstChild;
+
+            tasks.forEach(task => {
+                const existingEl = existingMap.get(task.id);
+                if (existingEl) {
+                    renderTaskItem(existingEl, task);
+                    if (existingEl !== refNode) {
+                        DOM.taskList.insertBefore(existingEl, refNode);
+                    }
+                    existingMap.delete(task.id);
+                    refNode = existingEl.nextSibling;
+                } else {
+                    DOM.taskList.insertBefore(createTaskNode(task), refNode);
                 }
             });
 
-            result = utils.sortTasks(result);
+            existingMap.forEach(el => el.remove());
+        }
 
-            // 2. 空状态处理
-            const loader = document.getElementById('initial-loader');
-            if (loader) loader.remove();
-
-            if (result.length === 0) {
-                DOM.taskList.innerHTML = getEmptyMatchHTML(t);
-                return;
-            }
-            // 清除空状态
-            if (DOM.taskList.querySelector('.empty-state')) DOM.taskList.innerHTML = '';
-
-            // 3. DOM Diff/Patch
-
-            // 分支 A: 快速渲染 (列表当前为空，直接批量插入)
-            // 场景：页面初始化、从“已完成”切到“进行中”等导致列表完全重置的情况
-            if (DOM.taskList.children.length === 0) {
-                const fragment = document.createDocumentFragment();
-                result.forEach(task => {
-                    const newEl = createTaskNode(task);
-                    fragment.appendChild(newEl);
-                });
-                DOM.taskList.appendChild(fragment); // ⚡️ 仅触发一次回流
-            }
-            // 分支 B: 增量更新 (Diff 算法)
-            // 场景：标记单个任务完成、删除单个任务、新增单个任务
-            else {
-                const existingMap = new Map();
-                // 仅获取任务节点，忽略可能的其他元素
-                Array.from(DOM.taskList.children).forEach(el => {
-                    if (el.classList.contains('task-item')) existingMap.set(Number(el.dataset.taskId), el);
-                });
-
-                let refNode = DOM.taskList.firstChild;
-
-                result.forEach(task => {
-                    const existingEl = existingMap.get(task.id);
-                    if (existingEl) {
-                        // 1. Patch: 更新内容
-                        renderTaskItem(existingEl, task);
-                        // 2. Move: 如果位置不对，移动它
-                        if (existingEl !== refNode) {
-                            DOM.taskList.insertBefore(existingEl, refNode);
-                        }
-                        // 标记已处理，指针后移
-                        existingMap.delete(task.id);
-                        refNode = existingEl.nextSibling;
-                    } else {
-                        // 3. Create: 新增节点
-                        const newEl = createTaskNode(task);
-                        DOM.taskList.insertBefore(newEl, refNode);
-                        // 新节点插在 refNode 之前，所以 refNode 指针不需要动，继续指向下一个待比较节点
-                    }
-                });
-
-                // 4. Remove: 清理掉多余的节点 (例如刚被筛选掉的任务)
-                existingMap.forEach(el => el.remove());
-            }
+        function getTaskElementMap() {
+            const existingMap = new Map();
+            Array.from(DOM.taskList.children).forEach(el => {
+                if (el.classList.contains('task-item')) existingMap.set(Number(el.dataset.taskId), el);
+            });
+            return existingMap;
         }
 
         function createTaskNode(task) {
