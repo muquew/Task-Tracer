@@ -236,17 +236,31 @@
 
         /* === Tasks === */
         .tasks-section { position: relative; z-index: 1; margin-bottom: 25px; }
-        .task-item { display: flex; content-visibility: auto; --task-color: var(--color-primary); background: var(--bg-surface); border-left: 5px solid var(--task-color); border-radius: 8px; padding: 15px; margin-bottom: 12px; box-shadow: 0 3px 10px var(--shadow-base); transition: transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; }
-        .task-item-right { flex: 1; min-width: 0; }
-        .task-item:hover { transform: translateY(-2px); box-shadow: 0 5px 15px var(--shadow-base); }
-        .task-item:focus-within { box-shadow: 0 0 0 3px var(--focus-ring), 0 5px 15px var(--shadow-base); }
+        .task-item {
+            display: flex;
+            content-visibility: auto;
+            --task-color: var(--color-primary);
+            background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-surface-raised) 100%);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-surface);
+            padding: 0;
+            margin-bottom: 12px;
+            box-shadow: 0 10px 28px var(--shadow-base);
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .task-item::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 6px; background: var(--task-color); }
+        .task-item-right { flex: 1; min-width: 0; padding: 14px 15px 13px 18px; }
+        .task-item:hover { transform: translateY(-1px); border-color: color-mix(in srgb, var(--task-color) 40%, var(--border-light)); box-shadow: 0 16px 34px var(--shadow-base); }
+        .task-item:focus-within { box-shadow: 0 0 0 3px var(--focus-ring), 0 16px 34px var(--shadow-base); }
         /* 状态颜色映射 */
         .task-item.status-safe { --task-color: var(--color-success); }
         .task-item.status-warning { --task-color: var(--color-warning); }
         .task-item.status-danger { --task-color: var(--color-danger); }
         .task-item.status-overdue { --task-color: var(--color-danger); }
         .task-item.status-no-deadline { --task-color: var(--text-tertiary); }
-        .task-item.completed { --task-color: var(--color-success); background-color: var(--bg-surface-alt); opacity: 0.8; }
+        .task-item.completed { --task-color: var(--color-success); background: var(--bg-surface-alt); opacity: 0.86; }
         .task-item.status-safe .task-date { color: var(--color-success-dark); background: var(--color-success-light); }
         .task-item.status-warning .task-date { color: var(--color-warning-text); background: var(--color-warning-light); }
         .task-item.status-danger .task-date,
@@ -258,23 +272,25 @@
         .task-item.animate-complete { animation: completeAnimation 0.5s ease; }
         @keyframes completeAnimation { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        .task-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 8px; }
-        .task-title { min-width: 0; font-size: 16px; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 8px; word-break: break-word; overflow-wrap: anywhere; }
+        .task-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 9px; }
+        .task-title { min-width: 0; font-size: 16px; font-weight: 760; color: var(--text-main); display: flex; align-items: flex-start; gap: 9px; word-break: break-word; overflow-wrap: anywhere; line-height: 1.35; }
+        .task-title > .icon:first-child { flex: 0 0 22px; width: 22px; height: 22px; padding: 4px; margin: 0 !important; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--task-color) 14%, transparent); stroke: var(--task-color) !important; }
         .task-name { min-width: 0; overflow-wrap: anywhere; }
-        .task-date { flex: 0 1 auto; max-width: 46%; font-size: 12px; color: var(--text-secondary); background: var(--bg-hover); padding: 3px 9px; border-radius: 15px; line-height: 1.45; white-space: normal; overflow-wrap: anywhere; text-align: right; }
-        .task-desc { color: var(--text-secondary); margin-bottom: 10px; line-height: 1.4; font-size: 14px; word-break: break-word; }
+        .task-date { flex: 0 1 auto; max-width: 46%; font-size: 12px; color: var(--text-secondary); background: var(--bg-hover); padding: 4px 10px; border-radius: var(--radius-pill); line-height: 1.45; white-space: normal; overflow-wrap: anywhere; text-align: right; border: 1px solid color-mix(in srgb, currentColor 16%, transparent); }
+        .task-desc { color: var(--text-secondary); margin: 0 0 11px 31px; line-height: 1.5; font-size: 14px; word-break: break-word; }
 
-        .progress-bar { height: 5px; background: var(--bg-hover); border-radius: 3px; margin-top: 8px; overflow: hidden; margin-bottom: 10px; }
-        .progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; background-color: var(--task-color); }
+        .progress-bar { height: 7px; background: var(--bg-hover); border-radius: var(--radius-pill); margin: 9px 0 11px 31px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: var(--radius-pill); transition: width 0.5s ease; background: linear-gradient(90deg, var(--task-color), color-mix(in srgb, var(--task-color) 70%, var(--color-accent))); }
 
-        .task-footer { display: flex; justify-content: space-between; align-items: center; }
-        .status-indicator { display: flex; align-items: center; font-size: 13px; font-weight: 500; color: var(--text-main); }
-        .status-dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; background-color: var(--task-color); }
+        .task-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-left: 31px; }
+        .status-indicator { display: inline-flex; align-items: center; min-height: 30px; padding: 5px 10px; border: 1px solid var(--border-light); border-radius: var(--radius-pill); background: var(--bg-surface-alt); font-size: 13px; font-weight: 700; color: var(--text-main); }
+        .status-dot { width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; background-color: var(--task-color); box-shadow: 0 0 0 3px color-mix(in srgb, var(--task-color) 16%, transparent); }
         .status-time-left { margin-left: 5px; color: var(--text-secondary); }
 
         /* Actions */
-        .task-actions { display: flex; gap: 8px; }
-        .action-btn { background: none; border: none; cursor: pointer; font-size: 16px; transition: color 0.2s; padding: 5px; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        .task-actions { display: flex; gap: 7px; }
+        .action-btn { width: 32px; height: 32px; background: var(--bg-surface); border: 1px solid var(--border-light); cursor: pointer; font-size: 16px; transition: color 0.2s, background-color 0.2s, transform 0.2s, border-color 0.2s; padding: 6px; border-radius: var(--radius-control); display: flex; align-items: center; justify-content: center; }
+        .action-btn:hover { transform: translateY(-1px); }
         .edit-btn { color: var(--color-primary); }
         .edit-btn:hover { color: var(--color-primary-dark); background: var(--color-info-light); }
         .delete-btn { color: var(--text-tertiary); }
@@ -285,7 +301,8 @@
         /* 拖拽模式下的样式 */
         .task-item.draggable-item { cursor: grab; transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s; }
         .task-item.draggable-item:active { cursor: grabbing; }
-        .drag-handle { margin-right: 8px; padding: 10px 5px; cursor: grab; color: var(--text-tertiary); display: flex; align-items: center; touch-action: none; }
+        .drag-handle { margin: 0 0 0 6px; padding: 0 8px; cursor: grab; color: var(--text-tertiary); display: flex; align-items: stretch; justify-content: center; touch-action: none; background: var(--bg-surface-alt); border-right: 1px solid var(--border-light); }
+        .drag-handle .icon { align-self: center; }
         .task-item.dragging { opacity: 0.4; background: var(--bg-surface-alt); border: 2px dashed var(--color-primary); box-shadow: none; transform: scale(0.98); }
         /* 移动端触摸拖拽时的样式 */
         .task-item.touch-dragging { background: var(--bg-surface); box-shadow: 0 10px 20px var(--shadow-heavy); z-index: 1000; opacity: 0.4; transform: scale(1.02); /* 稍微放大，产生“浮起”的感觉 */ border-left: 5px solid var(--color-primary);}
@@ -294,7 +311,7 @@
         /* === Subtasks (Child Tasks) === */
         /* Modal Input */
         .subtask-input-wrapper { display: flex; gap: 8px; margin-bottom: 10px; }
-        .btn-icon-small { background: var(--bg-hover); border: 1px solid var(--border-base); border-radius: 6px; cursor: pointer; color: var(--text-main); width: 40px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .btn-icon-small { background: var(--bg-hover); border: 1px solid var(--border-base); border-radius: var(--radius-control); cursor: pointer; color: var(--text-main); width: 40px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .btn-icon-small:hover { background: var(--color-primary); color: white; border-color: var(--color-primary); }
         .subtask-preview-list { list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; }
         .subtask-preview-item span { flex: 1; min-width: 0; word-wrap: break-word; word-break: break-all; line-height: 1.4; cursor: text; transition: background 0.2s; padding: 2px 4px; border-radius: 4px; }
@@ -302,17 +319,18 @@
         .subtask-delete-btn { background: none; border: none; color: var(--text-tertiary); cursor: pointer; padding: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
         .subtask-delete-btn:hover { color: var(--color-danger); }
         .subtask-edit-input { flex: 1; min-width: 0; padding: 4px 8px; font-size: 13px; border: 1px solid var(--color-primary); border-radius: 4px; outline: none; background: var(--bg-surface); color: var(--text-main); margin-right: 8px; }
-        .subtask-preview-item { display: flex; align-items: center; padding: 6px 10px; background: var(--bg-hover); border-radius: 4px; margin-bottom: 5px; font-size: 13px; min-height: 34px; }
+        .subtask-preview-item { display: flex; align-items: center; padding: 6px 10px; background: var(--bg-hover); border: 1px solid var(--border-light); border-radius: var(--radius-control); margin-bottom: 5px; font-size: 13px; min-height: 34px; }
         .subtask-preview-text { flex: 1; min-width: 0; word-wrap: break-word; word-break: break-all; padding-right: 10px; line-height: 1.4; cursor: text; transition: opacity 0.2s; }
         .subtask-preview-text:hover { opacity: 0.7; }
 
         /* Card Display */
-        .subtask-summary-bar { display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 8px 0; border: 0; border-top: 1px solid var(--border-light); margin-top: 10px; cursor: pointer; color: var(--text-secondary); font: inherit; font-size: 13px; text-align: left; user-select: none; background: transparent; }
-        .subtask-summary-bar:hover { color: var(--color-primary); }
+        .subtasks-wrapper { margin: 10px 0 0 31px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-alt); overflow: hidden; }
+        .subtask-summary-bar { display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 9px 11px; border: 0; cursor: pointer; color: var(--text-secondary); font: inherit; font-size: 13px; text-align: left; user-select: none; background: transparent; }
+        .subtask-summary-bar:hover { color: var(--color-primary); background: var(--bg-hover); }
         .subtask-count-text { font-weight: 500; display: flex; align-items: center; gap: 6px; }
         .subtask-toggle-icon { transition: transform 0.3s ease; opacity: 0.6; }
 
-        .subtasks-list { display: none; padding-top: 5px; padding-bottom: 5px; border-top: 1px dashed var(--border-light); animation: slideDown 0.2s ease-out; }
+        .subtasks-list { display: none; padding: 6px 11px 9px; border-top: 1px solid var(--border-light); animation: slideDown 0.2s ease-out; }
         .subtasks-wrapper.expanded .subtasks-list { display: block; }
         .subtasks-wrapper.expanded .subtask-toggle-icon { transform: rotate(180deg); }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
@@ -396,9 +414,12 @@
             .container { border-radius: 0; }
             .main-content { padding-top: 12px; }
             .task-item { padding: 13px; }
+            .task-item::before { width: 4px; }
+            .task-item-right { padding: 0 0 0 4px; }
             .task-header { flex-direction: column; align-items: flex-start; }
             .task-title { width: 100%; }
             .task-date { max-width: 100%; margin-top: 5px; text-align: left; }
+            .task-desc, .progress-bar, .subtasks-wrapper, .task-footer { margin-left: 0; padding-left: 0; }
             .task-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
             .task-actions { align-self: flex-end; }
             .modal { padding: 10px; }
