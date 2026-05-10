@@ -779,9 +779,10 @@
 
             // 加载通知设置
             const savedNotify = await dbActions.getConfig(CONFIG.STORAGE.NOTIFICATIONS);
-            
+            const notificationsSupported = 'Notification' in window;
+
             // 修复逻辑：明确判断 true/false，因为 savedNotify 可能是 undefined (首次)
-            if (savedNotify === true) {
+            if (savedNotify === true && notificationsSupported) {
                 // 必须再次检查浏览器权限，防止用户在浏览器设置中手动关掉了
                 if (Notification.permission === 'granted') {
                     state.notificationsEnabled = true;
@@ -794,6 +795,10 @@
                 }
             } else {
                 state.notificationsEnabled = false;
+                if (savedNotify === true && !notificationsSupported) {
+                    await dbActions.setConfig(CONFIG.STORAGE.NOTIFICATIONS, false);
+                    console.warn('Notifications disabled because this browser does not support them');
+                }
                 console.log('Notifications settings: OFF');
             }
             updateNotificationBtnUI();
@@ -1044,10 +1049,16 @@
             if (completed.length === 0) return utils.notify(t['noCompletedTasks'], 'warning');
 
             utils.confirm(t['clearCompleted'], t['confirmClearCompleted'].replace('{count}', completed.length), async () => {
-                await Promise.all(completed.map(task => dbActions.deleteTask(task.id)));
-                state.tasks = state.tasks.filter(x => !x.completed);
-                renderTaskList();
-                utils.notify(t['completedTasksCleared'].replace('{count}', completed.length));
+                try {
+                    await Promise.all(completed.map(task => dbActions.deleteTask(task.id)));
+                    state.tasks = state.tasks.filter(x => !x.completed);
+                    renderTaskList();
+                    utils.notify(t['completedTasksCleared'].replace('{count}', completed.length));
+                } catch (e) {
+                    console.error('清除已完成任务失败:', e);
+                    utils.notify(t['clearCompletedError'], 'error');
+                    throw e;
+                }
             });
         }
 
@@ -1172,7 +1183,7 @@
 
         function sendNotification(body) {
              // 再次检查权限，双重保险
-             if (Notification.permission === 'granted') {
+             if ('Notification' in window && Notification.permission === 'granted') {
                 // 1. 播放声音
                 try {
                     // 使用简短的 Beep 音效，避免解码错误
@@ -1651,6 +1662,7 @@
 
             // 3. 重置按钮状态 (这是最关键的复用逻辑)
             DOM.submitBtn.type = 'submit';
+            DOM.submitBtn.disabled = false;
 
             // 移除确认模式下的一次性监听器
             if (DOM.submitBtn._confirmHandler) {
@@ -1734,8 +1746,22 @@
                 const t = state.translations[state.currentLanguage];
                 DOM.submitBtn.textContent = t['confirm'];
                 DOM.submitBtn.type = 'button';
+                DOM.submitBtn.disabled = false;
 
-                const handler = () => { onConfirm(); closeDialog(); }; // 定义一次性点击事件
+                if (DOM.submitBtn._confirmHandler) {
+                    DOM.submitBtn.removeEventListener('click', DOM.submitBtn._confirmHandler);
+                }
+
+                const handler = async () => {
+                    DOM.submitBtn.disabled = true;
+                    try {
+                        await onConfirm();
+                        closeDialog();
+                    } catch (error) {
+                        console.error('确认操作失败:', error);
+                        DOM.submitBtn.disabled = false;
+                    }
+                }; // 定义一次性点击事件
                 DOM.submitBtn._confirmHandler = handler;
                 DOM.submitBtn.addEventListener('click', handler);
 
@@ -2329,18 +2355,61 @@
                         return;
                     }
                     utils.confirm(t['import'], t['importConfirm'].replace('{count}', data.tasks.length), async () => {
-                        const tx = state.db.transaction([CONFIG.DB.STORES.TASKS], 'readwrite');
-                        tx.objectStore(CONFIG.DB.STORES.TASKS).clear();
-                        for (const task of data.tasks) {
-                            const safeTask = {
-                                ...task,
-                                id: task.id || Date.now() + Math.floor(Math.random() * 1000),
-                                subtasks: Array.isArray(task.subtasks) ? task.subtasks : [],
-                                completed: (typeof task.completed === 'boolean') ? task.completed : false,
-                                createdAt: task.createdAt || new Date().toISOString()
+                        const usedIds = new Set();
+                        const createId = () => {
+                            let id;
+                            do {
+                                id = Date.now() + Math.floor(Math.random() * 1000000);
+                            } while (usedIds.has(id));
+                            usedIds.add(id);
+                            return id;
+                        };
+                        const normalizeId = (value) => {
+                            const id = Number(value);
+                            if (Number.isFinite(id) && !usedIds.has(id)) {
+                                usedIds.add(id);
+                                return id;
+                            }
+                            return createId();
+                        };
+                        const importedTasks = data.tasks.map((rawTask, index) => {
+                            const task = rawTask && typeof rawTask === 'object' ? rawTask : {};
+                            const dueDate = typeof task.dueDate === 'string' && !Number.isNaN(Date.parse(task.dueDate))
+                                ? task.dueDate : null;
+                            const subtasks = Array.isArray(task.subtasks)
+                                ? task.subtasks.map((rawSubtask, subIndex) => {
+                                    const subtask = rawSubtask && typeof rawSubtask === 'object' ? rawSubtask : {};
+                                    return {
+                                        id: Number.isFinite(Number(subtask.id)) ? Number(subtask.id) : Date.now() + index * 1000 + subIndex,
+                                        text: String(subtask.text || '').trim(),
+                                        completed: !!subtask.completed
+                                    };
+                                }).filter(subtask => subtask.text)
+                                : [];
+
+                            return {
+                                id: normalizeId(task.id),
+                                name: String(task.name || '').trim() || `Imported task ${index + 1}`,
+                                description: task.description ? String(task.description) : '',
+                                dueDate,
+                                reminderOffset: Number.isFinite(Number(task.reminderOffset)) ? Number(task.reminderOffset) : 15,
+                                subtasks,
+                                completed: typeof task.completed === 'boolean' ? task.completed : false,
+                                createdAt: task.createdAt || new Date().toISOString(),
+                                order: Number.isFinite(Number(task.order)) ? Number(task.order) : (index + 1) * 10000
                             };
-                            await dbActions.addTask(safeTask);
-                        }
+                        });
+
+                        await new Promise((resolve, reject) => {
+                            const tx = state.db.transaction([CONFIG.DB.STORES.TASKS], 'readwrite');
+                            tx.oncomplete = resolve;
+                            tx.onerror = () => reject(tx.error);
+                            tx.onabort = () => reject(tx.error || new Error('Import transaction aborted'));
+
+                            const store = tx.objectStore(CONFIG.DB.STORES.TASKS);
+                            store.clear();
+                            importedTasks.forEach(task => store.put(task));
+                        });
 
                         state.tasks = await dbActions.getAllTasks();
                         renderTaskList();
@@ -2351,6 +2420,7 @@
                     console.error('导入错误:', err);
                 }
             };
+            reader.onerror = () => utils.notify(t['importReadError'], 'error');
             reader.readAsText(file);
             DOM.menu.fileInput.value = '';  // 重置文件输入
         }
@@ -2362,7 +2432,7 @@
                 { id: Date.now()+2, name: t['sampleTask2Name'] || "团队会议准备", description: t['sampleTask2Desc'] || "准备下周团队会议的演示材料", dueDate: utils.dateToStoredISO(new Date(Date.now() + 864000000)), createdAt: new Date().toISOString(), completed: false },
                 { id: Date.now()+3, name: t['sampleTask3Name'] || "学习计划制定", description: t['sampleTask3Desc'] || "制定下个月的个人学习计划", dueDate: null, createdAt: new Date().toISOString(), completed: false }
             ];
-            await samples.forEach(s => dbActions.addTask(s));
+            await Promise.all(samples.map(s => dbActions.addTask(s)));
             state.tasks = await dbActions.getAllTasks();
             renderTaskList();
             utils.notify(t['sampleTasksAdded']);
