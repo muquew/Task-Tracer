@@ -9,7 +9,7 @@
     <!--    background_color: 启动屏背景色：App 打开瞬间那一秒的背景 (建议与 CSS 背景一致，防闪烁)-->
     <!--    theme_color: 独立窗口顶栏色：电脑端App窗口标题栏/安卓任务管理器卡片顶条颜色-->
     <!-- 定义浏览器周边的 UI 颜色（主要是手机浏览器的地址栏和状态栏背景色-->
-    <meta name="theme-color" content="#263330">
+    <meta name="theme-color" content="#2563eb">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -26,82 +26,82 @@
             --radius-pill: 999px;
 
             /* 品牌色 & 状态色 */
-            --color-primary: #2f6f73;
-            --color-primary-dark: #24585b;
-            --color-secondary: #263330;
-            --color-accent: #b76e2b;
-            --color-success: #2f8f5b;
-            --color-success-dark: #247448;
-            --color-warning: #c58a1d;
-            --color-danger: #c24132;
-            --color-danger-light: rgba(194, 65, 50, 0.11);
-            --color-info-light: rgba(47, 111, 115, 0.12);
-            --color-success-light: rgba(47, 143, 91, 0.12);
-            --color-warning-light: rgba(197, 138, 29, 0.16);
-            --color-warning-text: #805313;
+            --color-primary: #2563eb;
+            --color-primary-dark: #1d4ed8;
+            --color-secondary: #111827;
+            --color-accent: #db2777;
+            --color-success: #059669;
+            --color-success-dark: #047857;
+            --color-warning: #d97706;
+            --color-danger: #e11d48;
+            --color-danger-light: rgba(225, 29, 72, 0.10);
+            --color-info-light: rgba(37, 99, 235, 0.10);
+            --color-success-light: rgba(5, 150, 105, 0.11);
+            --color-warning-light: rgba(217, 119, 6, 0.14);
+            --color-warning-text: #92400e;
 
             /* 背景色 (Backgrounds) */
-            --bg-gradient-start: #f4f6f5;
-            --bg-gradient-end: #e7ece9;
+            --bg-gradient-start: #f7f9fc;
+            --bg-gradient-end: #edf2f8;
             --bg-surface: #ffffff;
-            --bg-surface-alt: #f6f8f7;
-            --bg-surface-raised: #fbfcfb;
-            --bg-hover: #eef3f1;
-            --bg-active: #dde8e4;
-            --bg-overlay: rgba(18, 27, 25, 0.62);
+            --bg-surface-alt: #f3f6fb;
+            --bg-surface-raised: #fbfdff;
+            --bg-hover: #eef4ff;
+            --bg-active: #dbeafe;
+            --bg-overlay: rgba(17, 24, 39, 0.58);
 
             /* 文本色 (Typography) */
-            --text-main: #17211f;
-            --text-secondary: #5f6f6a;
-            --text-tertiary: #8a9893;
+            --text-main: #111827;
+            --text-secondary: #5b6472;
+            --text-tertiary: #8a94a3;
             --text-inverse: #ffffff;
 
             /* 边框与装饰 (Borders & Decor) */
-            --border-base: #cfd9d5;
-            --border-light: #e4ebe8;
-            --shadow-base: rgba(21, 32, 30, 0.08);
-            --shadow-float: rgba(21, 32, 30, 0.16);
-            --shadow-heavy: rgba(21, 32, 30, 0.24);
-            --focus-ring: rgba(47, 111, 115, 0.28);
+            --border-base: #d5dee9;
+            --border-light: #e5ebf3;
+            --shadow-base: rgba(15, 23, 42, 0.07);
+            --shadow-float: rgba(15, 23, 42, 0.14);
+            --shadow-heavy: rgba(15, 23, 42, 0.22);
+            --focus-ring: rgba(37, 99, 235, 0.26);
         }
 
         /* === 2. 深色模式变量 (手动切换支持) === */
         html[data-theme="dark"] {
-            --bg-gradient-start: #101614;
-            --bg-gradient-end: #16201d;
-            --bg-surface: #18211f;
-            --bg-surface-alt: #121a18;
-            --bg-surface-raised: #1d2926;
-            --bg-hover: #24332f;
-            --bg-active: #30443f;
+            --bg-gradient-start: #0f1117;
+            --bg-gradient-end: #151923;
+            --bg-surface: #171b24;
+            --bg-surface-alt: #11151d;
+            --bg-surface-raised: #1d2430;
+            --bg-hover: #242c3a;
+            --bg-active: #2f3a4d;
             --bg-overlay: rgba(0, 0, 0, 0.72);
 
-            --text-main: #e8efec;
-            --text-secondary: #a8b7b1;
-            --text-tertiary: #73827c;
+            --text-main: #eef3fb;
+            --text-secondary: #a8b3c4;
+            --text-tertiary: #748198;
             --text-inverse: #ffffff;
 
-            --border-base: #31423d;
-            --border-light: #24342f;
+            --border-base: #303948;
+            --border-light: #252d3a;
 
             --shadow-base: rgba(0, 0, 0, 0.34);
             --shadow-float: rgba(0, 0, 0, 0.48);
             --shadow-heavy: rgba(0, 0, 0, 0.62);
 
-            --color-primary: #58b7ad;
-            --color-primary-dark: #3d948c;
-            --color-secondary: #0f1715;
-            --color-accent: #d99b45;
-            --color-success: #4fce82;
-            --color-success-dark: #34b76b;
-            --color-warning: #e2a93b;
-            --color-danger: #ef796b;
-            --color-danger-light: rgba(239, 121, 107, 0.17);
-            --color-info-light: rgba(88, 183, 173, 0.16);
-            --color-success-light: rgba(79, 206, 130, 0.16);
-            --color-warning-light: rgba(226, 169, 59, 0.18);
-            --color-warning-text: #f1bd56;
-            --focus-ring: rgba(88, 183, 173, 0.36);
+            --color-primary: #60a5fa;
+            --color-primary-dark: #3b82f6;
+            --color-secondary: #0f1117;
+            --color-accent: #f472b6;
+            --color-success: #34d399;
+            --color-success-dark: #10b981;
+            --color-warning: #fbbf24;
+            --color-danger: #f472b6;
+            --color-danger-light: rgba(244, 114, 182, 0.16);
+            --color-info-light: rgba(96, 165, 250, 0.15);
+            --color-success-light: rgba(52, 211, 153, 0.15);
+            --color-warning-light: rgba(251, 191, 36, 0.17);
+            --color-warning-text: #facc15;
+            --focus-ring: rgba(96, 165, 250, 0.36);
         }
 
         html[data-theme="dark"] img,
@@ -114,12 +114,13 @@
 
         html[data-theme="dark"] input,
         html[data-theme="dark"] textarea,
-        html[data-theme="dark"] select { background-color: #101614; border-color: var(--border-base); }
+        html[data-theme="dark"] select { background-color: #0f1117; border-color: var(--border-base); }
         html[data-theme="dark"] input:focus,
         html[data-theme="dark"] textarea:focus,
-        html[data-theme="dark"] select:focus { border-color: var(--color-primary); background-color: #101614; }
-        html[data-theme="dark"] .controls-bar { background: rgba(24, 33, 31, 0.82); }
-        html[data-theme="dark"] .empty-state { background: rgba(24, 33, 31, 0.72); }
+        html[data-theme="dark"] select:focus { border-color: var(--color-primary); background-color: #0f1117; }
+        html[data-theme="dark"] header { background: linear-gradient(135deg, rgba(29, 36, 48, 0.96) 0%, rgba(23, 27, 36, 0.94) 100%); }
+        html[data-theme="dark"] .controls-bar { background: rgba(23, 27, 36, 0.84); }
+        html[data-theme="dark"] .empty-state { background: rgba(23, 27, 36, 0.72); }
 
         /* === 太阳/月亮 图标切换逻辑 === */
         .sun-icon { display: none; }
@@ -131,8 +132,8 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 0; }
         body {
             background:
-                linear-gradient(90deg, rgba(47, 111, 115, 0.06) 1px, transparent 1px),
-                linear-gradient(180deg, rgba(183, 110, 43, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 99, 235, 0.045) 1px, transparent 1px),
+                linear-gradient(180deg, rgba(219, 39, 119, 0.03) 1px, transparent 1px),
                 linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
             background-size: 44px 44px, 44px 44px, auto;
             min-height: 100vh;
@@ -154,27 +155,27 @@
         header {
             position: relative;
             z-index: 1000;
-            background: linear-gradient(135deg, var(--color-secondary) 0%, #31514c 100%);
-            color: var(--text-inverse);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 251, 255, 0.92) 100%);
+            color: var(--text-main);
             padding: 14px 18px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-surface);
             box-shadow: 0 16px 42px var(--shadow-float);
         }
         h1 { font-size: 21px; font-weight: 760; line-height: 1.1; }
         html[lang="en"] h1 { font-size: 23px; }
-        .subtitle { font-size: 13px; opacity: 0.74; line-height: 1.35; margin-top: 3px; }
+        .subtitle { color: var(--text-secondary); font-size: 13px; opacity: 1; line-height: 1.35; margin-top: 3px; }
         .header-actions { display: flex; gap: 8px; align-items: center; }
 
-        .icon-btn, .lang-btn { background: rgba(255, 255, 255, 0.12); color: var(--text-inverse); border: 1px solid rgba(255, 255, 255, 0.16); padding: 7px 10px; border-radius: var(--radius-control); cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 4px; transition: background 0.2s, transform 0.2s, box-shadow 0.2s, border-color 0.2s; }
+        .icon-btn, .lang-btn { background: var(--bg-surface-alt); color: var(--color-primary); border: 1px solid var(--border-light); padding: 7px 10px; border-radius: var(--radius-control); cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 4px; transition: background 0.2s, transform 0.2s, box-shadow 0.2s, border-color 0.2s, color 0.2s; }
         .icon-btn { font-weight: 700; min-width: 36px; min-height: 36px; justify-content: center; }
         /* 手机端点击时的“按压”回弹效果 */
-        .icon-btn:active { background: var(--color-primary-dark); transform: scale(0.95); }
+        .icon-btn:active { background: var(--color-primary-dark); color: var(--text-inverse); transform: scale(0.95); }
         /* === 仅在电脑端启用悬停效果 (解决手机端粘滞问题) === */
-        @media (hover: hover) { .icon-btn:hover { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.32); transform: translateY(-1px); box-shadow: 0 8px 18px var(--shadow-base); } }
+        @media (hover: hover) { .icon-btn:hover { background: var(--color-primary); color: var(--text-inverse); border-color: var(--color-primary); transform: translateY(-1px); box-shadow: 0 8px 18px var(--shadow-base); } }
 
         /* === Menu === */
         .menu { display: none; position: absolute; top: 58px; right: 0; background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-surface); box-shadow: 0 18px 42px var(--shadow-float); z-index: 900; min-width: 190px; padding: 6px; }
