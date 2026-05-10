@@ -21,8 +21,6 @@ Task Tracer is a deadline-based task management PWA for personal planning, study
 
 ## Screenshots
 
-Screenshots show the current interface and are included to make the GitHub project page easier to scan.
-
 | Task List | Add Task |
 | --- | --- |
 | <img src="./screenshots/task-list-en.png" alt="Task Tracer task list"> | <img src="./screenshots/add-task-en.png" alt="Task Tracer add task dialog"> |
