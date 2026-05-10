@@ -2136,7 +2136,11 @@
             return task.name.toLowerCase().includes(query) ||
                 Boolean(task.description && task.description.toLowerCase().includes(query)) ||
                 Boolean(task.project && task.project.toLowerCase().includes(query)) ||
-                normalizeTaskTags(task.tags).some(tag => tag.toLowerCase().includes(query));
+                normalizeTaskTags(task.tags).some(tag => tag.toLowerCase().includes(query)) ||
+                matchesSubtaskSearch(task.subtasks, query);
+        }
+        function matchesSubtaskSearch(subtasks, query) {
+            return Array.isArray(subtasks) && subtasks.some(subtask => String(subtask?.text || '').toLowerCase().includes(query));
         }
         function renderProjectFilterOptions() {
             const projects = getProjectNames();

@@ -672,6 +672,9 @@ def exercise_subtasks(page: Page, task_name: str) -> None:
     expect(task.locator(".subtasks-wrapper .subtask-display-item")).to_have_count(2)
     task.locator(".subtasks-wrapper .subtask-display-item").first.click()
     expect(task.locator(".subtasks-wrapper .progress-text")).to_contain_text("1/2")
+    page.locator("#searchInput").fill("Second smoke subtask")
+    expect(task_locator(page, task_name)).to_have_count(1)
+    clear_search(page)
 
 
 def exercise_theme(page: Page) -> None:
