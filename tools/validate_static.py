@@ -199,6 +199,14 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Task action icon buttons must receive accessible labels")
     if "summaryBar.setAttribute('aria-expanded'" not in index_html:
         errors.append("Subtask expand controls must expose aria-expanded")
+    if 'aria-controls="filterMenu"' not in index_html or 'aria-controls="sortMenu"' not in index_html:
+        errors.append("Dropdown triggers must expose aria-controls for their menus")
+    if 'id="filterMenu" role="listbox" aria-labelledby="filterBtn"' not in index_html:
+        errors.append("Filter dropdown must expose a labelled listbox menu")
+    if 'id="sortMenu" role="listbox" aria-labelledby="sortBtn"' not in index_html:
+        errors.append("Sort dropdown must expose a labelled listbox menu")
+    if 'role="option" aria-selected=' not in index_html or "option.setAttribute('aria-selected'" not in index_html:
+        errors.append("Dropdown options must expose and synchronize aria-selected")
 
 
 def main() -> int:

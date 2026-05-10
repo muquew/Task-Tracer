@@ -409,17 +409,27 @@ def cancel_delete_task(page: Page, task_name: str) -> None:
 
 
 def select_filter(page: Page, value: str) -> None:
-    page.locator("#filterBtn").click()
-    page.locator(f'#filterDropdown .dropdown-option[data-filter="{value}"]').click()
-    expect(page.locator(f'#filterDropdown .dropdown-option[data-filter="{value}"]')).to_have_class(
+    filter_btn = page.locator("#filterBtn")
+    selected_option = page.locator(f'#filterDropdown .dropdown-option[data-filter="{value}"]')
+    expect(filter_btn).to_have_attribute("aria-controls", "filterMenu")
+    filter_btn.click()
+    selected_option.click()
+    expect(filter_btn).to_have_attribute("aria-expanded", "false")
+    expect(selected_option).to_have_attribute("aria-selected", "true")
+    expect(selected_option).to_have_class(
         re.compile(r"(^|\s)selected(\s|$)")
     )
 
 
 def select_sort(page: Page, value: str) -> None:
-    page.locator("#sortBtn").click()
-    page.locator(f'#sortDropdown .dropdown-option[data-sort="{value}"]').click()
-    expect(page.locator(f'#sortDropdown .dropdown-option[data-sort="{value}"]')).to_have_class(
+    sort_btn = page.locator("#sortBtn")
+    selected_option = page.locator(f'#sortDropdown .dropdown-option[data-sort="{value}"]')
+    expect(sort_btn).to_have_attribute("aria-controls", "sortMenu")
+    sort_btn.click()
+    selected_option.click()
+    expect(sort_btn).to_have_attribute("aria-expanded", "false")
+    expect(selected_option).to_have_attribute("aria-selected", "true")
+    expect(selected_option).to_have_class(
         re.compile(r"(^|\s)selected(\s|$)")
     )
 

@@ -653,31 +653,31 @@
                 <div class="shortcut-hint"><kbd class="shortcut-kbd" title="Ctrl + K">⌘K</kbd></div>
             </div>
             <div class="dropdown-container" id="filterDropdown">
-                <button class="dropdown-btn" id="filterBtn" aria-haspopup="true" aria-expanded="false">
+                <button class="dropdown-btn" id="filterBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="filterMenu">
                     <svg class="icon icon-sm" style="opacity: 0.7;"><use href="#icon-filter"></use></svg>
                     <span id="currentFilterLabel" data-i18n="filters.active">进行中</span>
                     <svg class="icon icon-sm chevron"><use href="#icon-chevron-down"></use></svg>
                 </button>
-                <div class="dropdown-menu-content">
-                    <button class="dropdown-option" data-filter="all"><span data-i18n="filters.all">全部</span><span class="filter-count" id="count-all">(0)</span></button>
-                    <button class="dropdown-option selected" data-filter="active"><span data-i18n="filters.active">进行中</span><span class="filter-count" id="count-active">(0)</span></button>
-                    <button class="dropdown-option" data-filter="completed"><span data-i18n="filters.completed">已完成</span><span class="filter-count" id="count-completed">(0)</span></button>
-                    <button class="dropdown-option" data-filter="overdue"><span data-i18n="filters.overdue">已过期</span><span class="filter-count" id="count-overdue">(0)</span></button>
-                    <button class="dropdown-option" data-filter="no-deadline"><span data-i18n="filters.noDeadline">无截止日期</span><span class="filter-count" id="count-no-deadline">(0)</span></button>
+                <div class="dropdown-menu-content" id="filterMenu" role="listbox" aria-labelledby="filterBtn">
+                    <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="all"><span data-i18n="filters.all">全部</span><span class="filter-count" id="count-all">(0)</span></button>
+                    <button type="button" class="dropdown-option selected" role="option" aria-selected="true" data-filter="active"><span data-i18n="filters.active">进行中</span><span class="filter-count" id="count-active">(0)</span></button>
+                    <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="completed"><span data-i18n="filters.completed">已完成</span><span class="filter-count" id="count-completed">(0)</span></button>
+                    <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="overdue"><span data-i18n="filters.overdue">已过期</span><span class="filter-count" id="count-overdue">(0)</span></button>
+                    <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="no-deadline"><span data-i18n="filters.noDeadline">无截止日期</span><span class="filter-count" id="count-no-deadline">(0)</span></button>
                 </div>
             </div>
             <div class="dropdown-container" id="sortDropdown">
-                <button class="dropdown-btn" id="sortBtn" aria-haspopup="true" aria-expanded="false">
+                <button class="dropdown-btn" id="sortBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="sortMenu">
                     <svg class="icon icon-sm" style="opacity: 0.7;"><use href="#icon-sort"></use></svg>
                     <span id="currentSortLabel" data-i18n="sort.smart">智能排序</span>
                     <svg class="icon icon-sm chevron"><use href="#icon-chevron-down"></use></svg>
                 </button>
-                <div class="dropdown-menu-content">
-                    <button class="dropdown-option selected" data-sort="smart"><span data-i18n="sort.smart">智能排序</span></button>
-                    <button class="dropdown-option" data-sort="created-desc"><span data-i18n="sort.created">新创建</span></button>
-                    <button class="dropdown-option" data-sort="due-asc"><span data-i18n="sort.due">截止日期</span></button>
-                    <button class="dropdown-option" data-sort="alpha-asc"><span data-i18n="sort.alpha">A-Z</span></button>
-                    <button class="dropdown-option" data-sort="manual"><span data-i18n="sort.manual">自定义排序 (拖拽)</span></button>
+                <div class="dropdown-menu-content" id="sortMenu" role="listbox" aria-labelledby="sortBtn">
+                    <button type="button" class="dropdown-option selected" role="option" aria-selected="true" data-sort="smart"><span data-i18n="sort.smart">智能排序</span></button>
+                    <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="created-desc"><span data-i18n="sort.created">新创建</span></button>
+                    <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="due-asc"><span data-i18n="sort.due">截止日期</span></button>
+                    <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="alpha-asc"><span data-i18n="sort.alpha">A-Z</span></button>
+                    <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="manual"><span data-i18n="sort.manual">自定义排序 (拖拽)</span></button>
                 </div>
             </div>
         </div>
@@ -2677,10 +2677,11 @@
         }
 
         function updateDropdownUI(container, selected, btn) {
-            // 移除旧的 selected
-            container.querySelectorAll('.dropdown-option').forEach(o => o.classList.remove(CONFIG.UI.CLASSES.SELECTED));
-            // 添加新的 selected
-            selected.classList.add(CONFIG.UI.CLASSES.SELECTED);
+            container.querySelectorAll('.dropdown-option').forEach(option => {
+                const isSelected = option === selected;
+                option.classList.toggle(CONFIG.UI.CLASSES.SELECTED, isSelected);
+                option.setAttribute('aria-selected', String(isSelected));
+            });
             // 关闭菜单
             closePopover(container, btn);
             // 更新文字
