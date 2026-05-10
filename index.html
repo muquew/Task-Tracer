@@ -2767,8 +2767,18 @@
 <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+
+    (function loadVercelScripts() {
+        const localHosts = new Set(['', 'localhost', '127.0.0.1', '0.0.0.0']);
+        if (localHosts.has(window.location.hostname)) return;
+
+        ['/_vercel/insights/script.js', '/_vercel/speed-insights/script.js'].forEach((src) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.src = src;
+            document.head.appendChild(script);
+        });
+    })();
 </script>
-<script defer src="/_vercel/insights/script.js"></script>
-<script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>
