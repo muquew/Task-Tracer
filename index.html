@@ -2110,12 +2110,6 @@
                 const fallback = state.translations[CONFIG.DEFAULTS.LANG] || {};
                 return current[key] ?? fallback[key] ?? key;
             },
-
-            escapeHTML: (str) => {
-                const div = document.createElement('div');
-                div.textContent = str;
-                return div.innerHTML;
-            },
         };
 
         // ==========================================
