@@ -60,6 +60,16 @@
         "day1": "提前 1 天"
       }
     },
+    "reminderRepeat": {
+      "label": "重复提醒",
+      "backgroundLimit": "浏览器只会在应用打开或被唤醒时检查提醒；系统级后台提醒不能保证。",
+      "options": {
+        "none": "不重复",
+        "min15": "每 15 分钟",
+        "hour1": "每 1 小时",
+        "day1": "每天"
+      }
+    },
     "subtasks": {
       "label": "子任务 (可选)",
       "placeholder": "输入子任务...",
@@ -79,6 +89,7 @@
     "actions": {
       "markComplete": "标记为已完成",
       "markIncomplete": "标记为未完成",
+      "snooze": "10 分钟后再提醒",
       "edit": "编辑任务",
       "delete": "删除任务",
       "reorder": "移动任务：{taskName}。使用上下方向键调整顺序"
@@ -112,6 +123,7 @@
       "markedComplete": "任务标记为已完成",
       "markedIncomplete": "任务标记为未完成",
       "nameRequired": "请输入任务名称",
+      "snoozed": "已设为 {minutes} 分钟后提醒",
       "saveError": "保存任务失败，请重试",
       "deleteError": "删除任务失败，请重试",
       "updateError": "更新任务状态失败，请重试"
@@ -178,6 +190,8 @@
     "notSupported": "此浏览器不支持桌面通知",
     "error": "申请通知权限出错",
     "taskDue": "任务即将到期：{taskName}",
+    "missedReminder": "错过的提醒：{taskName}",
+    "backgroundLimit": "已开启通知。浏览器只会在应用打开或被唤醒时检查提醒，后台提醒不能完全保证。",
     "reminderSet": "提醒已设置"
   }
 }

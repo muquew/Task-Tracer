@@ -60,6 +60,16 @@
         "day1": "1 day before"
       }
     },
+    "reminderRepeat": {
+      "label": "Repeat Reminder",
+      "backgroundLimit": "The browser checks reminders while the app is open or wakes up; system-level background delivery is not guaranteed.",
+      "options": {
+        "none": "Do not repeat",
+        "min15": "Every 15 minutes",
+        "hour1": "Every hour",
+        "day1": "Daily"
+      }
+    },
     "subtasks": {
       "label": "Subtasks (optional)",
       "placeholder": "Enter subtasks...",
@@ -79,6 +89,7 @@
     "actions": {
       "markComplete": "Mark as complete",
       "markIncomplete": "Mark as incomplete",
+      "snooze": "Remind again in 10 minutes",
       "edit": "Edit task",
       "delete": "Delete task",
       "reorder": "Move task: {taskName}. Use the up and down arrow keys to reorder"
@@ -112,6 +123,7 @@
       "markedComplete": "Task marked as completed",
       "markedIncomplete": "Task marked as incomplete",
       "nameRequired": "Please enter a task name",
+      "snoozed": "Reminder snoozed for {minutes} minutes",
       "saveError": "Failed to save task, please try again",
       "deleteError": "Failed to delete task, please try again",
       "updateError": "Failed to update task status, please try again"
@@ -178,6 +190,8 @@
     "notSupported": "This browser does not support desktop notifications",
     "error": "Error requesting notification permission",
     "taskDue": "Task Due Soon: {taskName}",
+    "missedReminder": "Missed reminder: {taskName}",
+    "backgroundLimit": "Notifications are enabled. The browser checks reminders while the app is open or wakes up, so background delivery is not fully guaranteed.",
     "reminderSet": "Reminder set"
   }
 }

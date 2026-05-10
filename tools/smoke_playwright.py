@@ -456,6 +456,7 @@ def add_task(
         expect(page.locator("#dueDate")).to_be_disabled()
         expect(page.locator("#dueTime")).to_be_disabled()
         expect(page.locator("#reminderOffset")).to_be_disabled()
+        expect(page.locator("#reminderRepeat")).to_be_disabled()
     else:
         if due_date:
             page.locator("#dueDate").fill(due_date)
@@ -463,6 +464,10 @@ def add_task(
             page.locator("#dueTime").fill(due_time)
         if reminder_offset is not None:
             page.locator("#reminderOffset").select_option(reminder_offset)
+            if reminder_offset == "-1":
+                expect(page.locator("#reminderRepeat")).to_be_disabled()
+            else:
+                expect(page.locator("#reminderRepeat")).to_be_enabled()
 
     for index, subtask in enumerate(subtasks or [], start=1):
         page.locator("#subtaskInput").fill(subtask)
@@ -474,6 +479,35 @@ def add_task(
     task = task_locator(page, task_name)
     expect(task).to_have_count(1)
     expect(task.first.locator(".task-name")).to_contain_text(task_name)
+
+
+def snooze_task_reminder(page: Page, task_name: str) -> None:
+    task = task_locator(page, task_name)
+    expect(task.locator('[data-action="snooze"]')).to_be_visible()
+    task.locator('[data-action="snooze"]').click()
+    wait_for_notification(page, re.compile("提醒|snoozed", re.I))
+    snoozed_until = page.evaluate(
+        """async (taskName) => {
+            const request = indexedDB.open('TaskTrackerDB', 2);
+            return await new Promise((resolve, reject) => {
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readonly');
+                    const getAll = tx.objectStore('tasks').getAll();
+                    getAll.onsuccess = () => {
+                        const task = getAll.result.find((item) => item.name === taskName);
+                        db.close();
+                        resolve(task ? task.snoozedUntil : null);
+                    };
+                    getAll.onerror = () => reject(getAll.error);
+                };
+            });
+        }""",
+        task_name,
+    )
+    if not snoozed_until:
+        raise AssertionError("Task reminder was not snoozed")
 
 
 def search_task(page: Page, task_name: str) -> None:
@@ -1036,6 +1070,7 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                         boxes,
                         hasTaskName: Boolean(document.querySelector('.task-name')?.textContent.trim()),
                         hasVisibleActions: [...document.querySelectorAll('.task-actions .action-btn')]
+                            .filter((button) => !button.hidden && button.offsetParent !== null)
                             .every((button) => button.getBoundingClientRect().width >= 30)
                     };
                 }""",
@@ -1133,6 +1168,7 @@ def smoke(url: str) -> None:
         add_task(page, alpha_name, no_deadline=True, subtasks=["First smoke subtask", "Second smoke subtask"])
         add_task(page, beta_name, due_date=future_date(1), due_time="12:30", reminder_offset="15")
         expect(task_locator(page, beta_name).locator(".task-reminder-icon")).to_be_visible()
+        snooze_task_reminder(page, beta_name)
         add_overdue_task_record(page, overdue_name, order=30_000)
         exercise_theme_fallback_transition(page)
         exercise_search_empty_state(page, f"{task_name} Missing")
