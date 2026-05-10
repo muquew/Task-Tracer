@@ -8,7 +8,6 @@ const ASSETS_TO_CACHE = [
     './fav/android-chrome-192x192.png',
     './fav/android-chrome-512x512.png'
 ];
-
 self.addEventListener('install', (e) => {
     e.waitUntil(
         caches.open(CACHE_NAME)
@@ -16,32 +15,24 @@ self.addEventListener('install', (e) => {
                 return cache.addAll(ASSETS_TO_CACHE);
             })
             .then(() => {
-
                 return self.skipWaiting();
             })
     );
 });
-
 self.addEventListener('fetch', (e) => {
     if (e.request.method !== 'GET') return;
-
     const url = new URL(e.request.url);
     if (url.origin !== self.location.origin) return;
-
     if (e.request.mode === 'navigate' || isAppShellRequest(url)) {
         e.respondWith(networkFirst(e.request, './index.html'));
         return;
     }
-
     if (url.pathname.includes('/resources/')) {
         e.respondWith(networkFirst(e.request));
         return;
     }
-
     e.respondWith(cacheFirst(e.request));
 });
-
-
 self.addEventListener('notificationclick', (e) => {
     e.notification.close();
     e.waitUntil(
@@ -58,8 +49,6 @@ self.addEventListener('notificationclick', (e) => {
             })
     );
 });
-
-
 self.addEventListener('activate', (e) => {
     e.waitUntil(
         caches.keys()
@@ -71,16 +60,13 @@ self.addEventListener('activate', (e) => {
                 }));
             })
             .then(() => {
-
                 return self.clients.claim();
             })
     );
 });
-
 function isAppShellRequest(url) {
     return url.pathname === '/' || url.pathname.endsWith('/index.html');
 }
-
 async function networkFirst(request, fallbackUrl) {
     try {
         const networkResponse = await fetch(request);
@@ -98,18 +84,15 @@ async function networkFirst(request, fallbackUrl) {
         throw error;
     }
 }
-
 async function cacheFirst(request) {
     const cachedResponse = await caches.match(request);
     if (cachedResponse) return cachedResponse;
-
     const networkResponse = await fetch(request);
     cacheResponse(request, networkResponse).catch((error) => {
         console.warn('[Service Worker] Cache update failed:', error);
     });
     return networkResponse;
 }
-
 async function cacheResponse(request, response) {
     if (!response || response.status !== 200 || response.type !== 'basic') return;
     const cache = await caches.open(CACHE_NAME);
