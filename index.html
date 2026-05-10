@@ -1538,27 +1538,49 @@
             const total = task.subtasks.length;
             const completed = task.subtasks.filter(s => s.completed).length;
 
-            // 每次都重绘内部 HTML，因为状态可能变了
-            // 注意：我们使用 innerHTML 重绘，这会导致折叠状态丢失，所以需要先保存状态
+            // 每次都重绘子任务节点，因为状态可能变了，所以先保存折叠状态
             const wasExpanded = wrapper.classList.contains(CONFIG.UI.CLASSES.EXPANDED);
 
-            wrapper.innerHTML = `
-                <div class="subtask-summary-bar">
-                    <div class="subtask-count-text">
-                        <svg class="icon" width="14" height="14" style="margin-right:6px"><use href="#icon-subtask-arrow"></use></svg>
-                        <span class="progress-text">${completed}/${total} ${state.translations[state.currentLanguage]['subTasks']}</span>
-                    </div>
-                    <svg class="icon icon-sm subtask-toggle-icon"><use href="#icon-subtask-toggle"></use></svg>
-                </div>
-                <div class="subtasks-list">
-                    ${task.subtasks.map(sub => `
-                        <div class="subtask-display-item ${sub.completed ? CONFIG.UI.CLASSES.COMPLETED : ''}">
-                            <input type="checkbox" class="subtask-checkbox" data-subtask-id="${sub.id}" ${sub.completed ? 'checked' : ''}>
-                            <span class="subtask-text">${utils.escapeHTML(sub.text)}</span>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
+            wrapper.textContent = '';
+
+            const summaryBar = document.createElement('div');
+            summaryBar.className = 'subtask-summary-bar';
+
+            const countText = document.createElement('div');
+            countText.className = 'subtask-count-text';
+            countText.appendChild(createIcon('icon-subtask-arrow', 'icon', { width: '14', height: '14', style: 'margin-right:6px' }));
+
+            const progressText = document.createElement('span');
+            progressText.className = 'progress-text';
+            progressText.textContent = `${completed}/${total} ${state.translations[state.currentLanguage]['subTasks']}`;
+            countText.appendChild(progressText);
+
+            summaryBar.append(
+                countText,
+                createIcon('icon-subtask-toggle', 'icon icon-sm subtask-toggle-icon')
+            );
+
+            const subtaskList = document.createElement('div');
+            subtaskList.className = 'subtasks-list';
+            task.subtasks.forEach(sub => {
+                const item = document.createElement('div');
+                item.className = `subtask-display-item ${sub.completed ? CONFIG.UI.CLASSES.COMPLETED : ''}`;
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'subtask-checkbox';
+                checkbox.dataset.subtaskId = String(sub.id);
+                checkbox.checked = !!sub.completed;
+
+                const text = document.createElement('span');
+                text.className = 'subtask-text';
+                text.textContent = sub.text;
+
+                item.append(checkbox, text);
+                subtaskList.appendChild(item);
+            });
+
+            wrapper.append(summaryBar, subtaskList);
 
             // 恢复折叠状态
             if (wasExpanded) wrapper.classList.add(CONFIG.UI.CLASSES.EXPANDED);
@@ -1580,14 +1602,7 @@
                     input.className = 'subtask-edit-input';
                     input.value = sub.text;
 
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.type = 'button';
-                    deleteBtn.className = 'subtask-delete-btn';
-                    deleteBtn.dataset.index = index;
-                    deleteBtn.title = '删除';
-                    deleteBtn.innerHTML = '<svg class="icon icon-sm"><use href="#icon-x"></use></svg>';
-
-                    li.append(input, deleteBtn);
+                    li.append(input, createSubtaskDeleteButton(index));
                     // 自动聚焦 (DOM 渲染后需要手动获取元素来 focus)
                     // 使用 setTimeout 确保 DOM 渲染完成
                     setTimeout(() => {
@@ -1601,12 +1616,11 @@
 
                 } else {
                     // B. 如果是普通状态：渲染 SPAN
-                    li.innerHTML = `
-                <span class="subtask-preview-text" data-index="${index}">${utils.escapeHTML(sub.text)}</span>
-                <button type="button" class="subtask-delete-btn" data-index="${index}" title="删除">
-                    <svg class="icon icon-sm"><use href="#icon-x"></use></svg>
-                </button>
-            `;
+                    const text = document.createElement('span');
+                    text.className = 'subtask-preview-text';
+                    text.dataset.index = index;
+                    text.textContent = sub.text;
+                    li.append(text, createSubtaskDeleteButton(index));
                 }
 
                 listEl.appendChild(li);
@@ -1616,6 +1630,27 @@
         function setTranslatedText(el, key) {
             el.setAttribute('data-i18n', key);
             el.textContent = utils.translate(key);
+        }
+
+        function createIcon(symbolId, className = 'icon', attrs = {}) {
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('class', className);
+            Object.entries(attrs).forEach(([key, value]) => svg.setAttribute(key, value));
+
+            const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+            use.setAttribute('href', `#${symbolId}`);
+            svg.appendChild(use);
+            return svg;
+        }
+
+        function createSubtaskDeleteButton(index) {
+            const deleteBtn = document.createElement('button');
+            deleteBtn.type = 'button';
+            deleteBtn.className = 'subtask-delete-btn';
+            deleteBtn.dataset.index = index;
+            deleteBtn.title = '删除';
+            deleteBtn.appendChild(createIcon('icon-x', 'icon icon-sm'));
+            return deleteBtn;
         }
 
         function clearConfirmHandler() {
