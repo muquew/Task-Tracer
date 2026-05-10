@@ -53,6 +53,7 @@
             --bg-hover: #eef4ff;
             --bg-active: #dbeafe;
             --bg-overlay: rgba(17, 24, 39, 0.58);
+            --page-bg: #edf2f8;
             --controls-bg: rgba(255, 255, 255, 0.72);
             --field-bg: #ffffff;
             --field-bg-focus: #ffffff;
@@ -86,6 +87,7 @@
             --bg-hover: #242c3a;
             --bg-active: #2f3a4d;
             --bg-overlay: rgba(0, 0, 0, 0.72);
+            --page-bg: #151923;
             --controls-bg: rgba(23, 27, 36, 0.84);
             --field-bg: #0f1117;
             --field-bg-focus: #0f1117;
@@ -150,15 +152,14 @@
         /* === 基本重置与布局 === */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-ui); letter-spacing: 0; }
         body {
-            background:
+            background-color: var(--page-bg);
+            background-image:
                 linear-gradient(90deg, rgba(37, 99, 235, 0.045) 1px, transparent 1px),
-                linear-gradient(180deg, rgba(219, 39, 119, 0.03) 1px, transparent 1px),
-                linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-            background-size: 44px 44px, 44px 44px, auto;
+                linear-gradient(180deg, rgba(219, 39, 119, 0.03) 1px, transparent 1px);
+            background-size: 44px 44px, 44px 44px;
             min-height: 100vh;
             padding: 24px;
             color: var(--text-main);
-            background-color: var(--bg-gradient-end);
             transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease);
         }
         .container, .task-item, .modal-content, input, textarea, select, .menu, .controls-bar { transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease); }
@@ -263,13 +264,13 @@
             display: flex;
             content-visibility: auto;
             --task-color: var(--color-primary);
-            background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-surface-raised) 100%);
+            background-color: var(--bg-surface);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-surface);
             padding: 0;
             margin-bottom: 14px;
             box-shadow: 0 10px 28px var(--shadow-base);
-            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            transition: transform 0.2s, background-color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow 0.2s, border-color 0.2s;
             position: relative;
             overflow: hidden;
         }
@@ -283,7 +284,7 @@
         .task-item.status-danger { --task-color: var(--color-danger); }
         .task-item.status-overdue { --task-color: var(--color-danger); }
         .task-item.status-no-deadline { --task-color: var(--text-tertiary); }
-        .task-item.completed { --task-color: var(--color-success); background: var(--bg-surface-alt); opacity: 0.86; }
+        .task-item.completed { --task-color: var(--color-success); background-color: var(--bg-surface-alt); opacity: 0.86; }
         .task-item.status-safe .task-date { color: var(--color-success-dark); background: var(--color-success-light); }
         .task-item.status-warning .task-date { color: var(--color-warning-text); background: var(--color-warning-light); }
         .task-item.status-danger .task-date,
