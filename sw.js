@@ -1,5 +1,5 @@
 // 改了代码要来这里改缓存名字
-const CACHE_NAME = 'task-tracer-v2.23';
+const CACHE_NAME = 'task-tracer-v2.24';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -53,6 +53,24 @@ self.addEventListener('fetch', (e) => {
                 return networkResponse;
             });
         })
+    );
+});
+
+// 2.5 点击通知：回到已打开的应用窗口，或打开首页
+self.addEventListener('notificationclick', (e) => {
+    e.notification.close();
+    e.waitUntil(
+        clients.matchAll({ type: 'window', includeUncontrolled: true })
+            .then((clientList) => {
+                for (const client of clientList) {
+                    if ('focus' in client) {
+                        return client.focus();
+                    }
+                }
+                if (clients.openWindow) {
+                    return clients.openWindow('./index.html');
+                }
+            })
     );
 });
 
