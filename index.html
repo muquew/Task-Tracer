@@ -1764,51 +1764,57 @@
             resetDialogToFormMode();
 
             if (editingTask) {
-                state.editingTaskId = editingTask.id;
-                setTranslatedText(DOM.modalTitle, 'modal.editTitle');
-                setTranslatedText(DOM.submitBtn, 'actions.updateTask');
-                DOM.inputs.name.value = editingTask.name;
-                DOM.inputs.desc.value = editingTask.description || '';
-
-                // 子任务深拷贝，防止编辑时直接修改原数组
-                state.tempSubtasks = editingTask.subtasks ? JSON.parse(JSON.stringify(editingTask.subtasks)) : [];
-
-                if (editingTask.dueDate) {
-                    const local = utils.utcToLocal(editingTask.dueDate);
-                    DOM.inputs.date.value = utils.formatDateInputValue(local);
-                    DOM.inputs.time.value = utils.formatTimeInputValue(local);
-                    DOM.inputs.noDeadline.checked = false;
-                    DOM.inputs.date.disabled = false;
-                    DOM.inputs.time.disabled = false;
-                    DOM.inputs.reminderOffset.disabled = false;
-                } else {
-                    DOM.inputs.noDeadline.checked = true;
-                    DOM.inputs.date.disabled = true;
-                    DOM.inputs.time.disabled = true;
-                    DOM.inputs.date.value = utils.formatDateInputValue();
-                    DOM.inputs.time.value = CONFIG.DEFAULTS.TIME;
-                    DOM.inputs.reminderOffset.disabled = true;
-                }
-                DOM.inputs.reminderOffset.value = String(editingTask.reminderOffset ?? 15);
+                prepareEditTaskForm(editingTask);
             } else {
-                state.editingTaskId = null;
-                setTranslatedText(DOM.modalTitle, 'modal.addTitle');
-                setTranslatedText(DOM.submitBtn, 'actions.addTask');
-
-                state.tempSubtasks = [];
-                DOM.inputs.noDeadline.checked = false;
-                DOM.inputs.date.disabled = false;
-                DOM.inputs.time.disabled = false;
-                DOM.inputs.date.value = utils.formatDateInputValue();
-                DOM.inputs.time.value = CONFIG.DEFAULTS.TIME;
-                DOM.inputs.reminderOffset.disabled = false;
-                DOM.inputs.reminderOffset.value = '15';
+                prepareNewTaskForm();
             }
 
             renderSubtaskPreview();
             utils.applyTranslations(); // 刷新弹窗内的多语言
             DOM.modal.style.display = 'flex';
             DOM.inputs.name.focus();
+        }
+
+        function prepareEditTaskForm(editingTask) {
+            state.editingTaskId = editingTask.id;
+            setDialogFormLabels('modal.editTitle', 'actions.updateTask');
+            DOM.inputs.name.value = editingTask.name;
+            DOM.inputs.desc.value = editingTask.description || '';
+            state.tempSubtasks = cloneSubtasks(editingTask.subtasks);
+
+            const dueDate = editingTask.dueDate ? utils.utcToLocal(editingTask.dueDate) : null;
+            setDeadlineControls({
+                enabled: Boolean(dueDate),
+                date: dueDate,
+                reminderOffset: editingTask.reminderOffset ?? CONFIG.NOTIFICATIONS.DEFAULT_OFFSET_MINUTES
+            });
+        }
+
+        function prepareNewTaskForm() {
+            state.editingTaskId = null;
+            setDialogFormLabels('modal.addTitle', 'actions.addTask');
+            state.tempSubtasks = [];
+            setDeadlineControls({
+                enabled: true,
+                date: new Date(),
+                time: CONFIG.DEFAULTS.TIME,
+                reminderOffset: CONFIG.NOTIFICATIONS.DEFAULT_OFFSET_MINUTES
+            });
+        }
+
+        function setDialogFormLabels(titleKey, submitKey) {
+            setTranslatedText(DOM.modalTitle, titleKey);
+            setTranslatedText(DOM.submitBtn, submitKey);
+        }
+
+        function setDeadlineControls({ enabled, date, time, reminderOffset }) {
+            DOM.inputs.noDeadline.checked = !enabled;
+            DOM.inputs.date.disabled = !enabled;
+            DOM.inputs.time.disabled = !enabled;
+            DOM.inputs.reminderOffset.disabled = !enabled;
+            DOM.inputs.date.value = utils.formatDateInputValue(date || new Date());
+            DOM.inputs.time.value = enabled ? (time || utils.formatTimeInputValue(date || new Date())) : CONFIG.DEFAULTS.TIME;
+            DOM.inputs.reminderOffset.value = String(reminderOffset);
         }
 
         function closeDialog() {
@@ -1820,7 +1826,7 @@
             // 1. 重置表单模式残留
             DOM.form.reset();
             DOM.inputs.reminderOffset.disabled = false;
-            DOM.inputs.reminderOffset.value = '15';
+            DOM.inputs.reminderOffset.value = String(CONFIG.NOTIFICATIONS.DEFAULT_OFFSET_MINUTES);
             state.tempSubtasks = []; // 清空临时数据
             state.editingSubtaskIndex = -1;
             resetDialogToFormMode();
