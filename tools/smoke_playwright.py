@@ -440,7 +440,9 @@ def exercise_subtasks(page: Page, task_name: str) -> None:
 
 def exercise_theme(page: Page) -> None:
     before = page.evaluate("document.documentElement.getAttribute('data-theme')")
-    page.locator("#themeToggleBtn").click()
+    theme_button = page.locator("#themeToggleBtn")
+    theme_button.click()
+    expect(theme_button).to_be_disabled()
     page.wait_for_function(
         "before => document.documentElement.getAttribute('data-theme') !== before",
         arg=before,
@@ -448,6 +450,7 @@ def exercise_theme(page: Page) -> None:
     page.wait_for_function(
         "() => !document.documentElement.classList.contains('theme-transitioning')"
     )
+    expect(theme_button).to_be_enabled()
     after = page.evaluate("document.documentElement.getAttribute('data-theme')")
     stored = page.evaluate("localStorage.getItem('theme')")
     theme_color = page.locator('meta[name="theme-color"]').get_attribute("content")

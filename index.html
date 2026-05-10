@@ -193,6 +193,7 @@
 
         .icon-btn, .lang-btn { background: var(--bg-surface-alt); color: var(--color-primary); border: 1px solid var(--border-light); padding: 7px 10px; border-radius: var(--radius-control); cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 4px; transition: background 0.2s, transform 0.2s, box-shadow 0.2s, border-color 0.2s, color 0.2s; }
         .icon-btn { font-weight: 700; min-width: 36px; min-height: 36px; justify-content: center; }
+        .icon-btn:disabled { cursor: wait; opacity: 0.72; transform: none; }
         /* 手机端点击时的“按压”回弹效果 */
         .icon-btn:active { background: var(--color-primary-dark); color: var(--text-inverse); transform: scale(0.95); }
         /* === 仅在电脑端启用悬停效果 (解决手机端粘滞问题) === */
@@ -845,6 +846,7 @@
             dateTimeFormatters: {}, // 缓存格式化器
             notificationsEnabled: false,
             notifiedTasks: new Set(),
+            themeTransitionInProgress: false,
         };
 
         const DOM = {}; // 集中存储 DOM 节点
@@ -2259,6 +2261,8 @@
             },
             toggleTheme: () => {
                 const html = document.documentElement;
+                if (state.themeTransitionInProgress) return;
+
                 const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
                 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -2267,14 +2271,24 @@
                     return;
                 }
 
-                const finishThemeTransition = () => html.classList.remove(CONFIG.UI.THEME.TRANSITIONING);
+                const finishThemeTransition = () => {
+                    state.themeTransitionInProgress = false;
+                    DOM.themeBtn.disabled = false;
+                    html.classList.remove(CONFIG.UI.THEME.TRANSITIONING);
+                };
                 const runThemeChange = () => utils.applyTheme(newTheme);
 
+                state.themeTransitionInProgress = true;
+                DOM.themeBtn.disabled = true;
                 html.classList.add(CONFIG.UI.THEME.TRANSITIONING);
                 if (document.startViewTransition) {
-                    const transition = document.startViewTransition(runThemeChange);
-                    transition.finished.finally(finishThemeTransition);
-                    return;
+                    try {
+                        const transition = document.startViewTransition(runThemeChange);
+                        transition.finished.finally(finishThemeTransition);
+                        return;
+                    } catch (error) {
+                        console.warn('Theme transition failed; falling back to CSS transition.', error);
+                    }
                 }
 
                 runThemeChange();
