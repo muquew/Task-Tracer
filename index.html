@@ -1167,7 +1167,7 @@
         }
         function bindSearchEvents() {
             DOM.inputs.search.addEventListener('input', utils.debounce(() => {
-                state.searchQuery = DOM.inputs.search.value.toLowerCase();
+                state.searchQuery = normalizeSearchQuery(DOM.inputs.search.value);
                 renderTaskList();
             }, 300));
             DOM.inputs.projectFilter.addEventListener('change', () => {
@@ -2129,15 +2129,23 @@
         }
         function matchesTaskSearch(task) {
             if (!state.searchQuery) return true;
-            const query = state.searchQuery;
-            return task.name.toLowerCase().includes(query) ||
-                Boolean(task.description && task.description.toLowerCase().includes(query)) ||
-                Boolean(task.project && task.project.toLowerCase().includes(query)) ||
-                normalizeTaskTags(task.tags).some(tag => tag.toLowerCase().includes(query)) ||
-                matchesSubtaskSearch(task.subtasks, query);
+            return state.searchQuery.split(' ').every(token => getTaskSearchText(task).includes(token));
         }
-        function matchesSubtaskSearch(subtasks, query) {
-            return Array.isArray(subtasks) && subtasks.some(subtask => String(subtask?.text || '').toLowerCase().includes(query));
+        function normalizeSearchQuery(value) {
+            return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+        }
+        function getTaskSearchText(task) {
+            return [
+                task.name,
+                task.description,
+                task.project,
+                ...normalizeTaskTags(task.tags),
+                ...normalizeSubtaskSearchTexts(task.subtasks)
+            ].filter(Boolean).join(' ').toLowerCase();
+        }
+        function normalizeSubtaskSearchTexts(subtasks) {
+            if (!Array.isArray(subtasks)) return [];
+            return subtasks.map(subtask => String(subtask?.text || '').trim()).filter(Boolean);
         }
         function renderProjectFilterOptions() {
             const projects = getProjectNames();
