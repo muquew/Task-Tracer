@@ -4,7 +4,7 @@
 
 <h1 align="center">Task Tracer</h1>
 
-<p align="center"><strong>A local-first, offline-ready PWA for deadline-driven personal task management.</strong></p>
+<p align="center"><strong>A local-first, offline-ready PWA for personal tasks, routines, and reminders.</strong></p>
 
 <p align="center">
   <a href="https://todo.muquew.com/" rel="noopener noreferrer">Live Demo</a> · <a href="./README_zh_cn.md">中文说明</a>
@@ -19,16 +19,16 @@
   <img alt="License" src="https://img.shields.io/badge/License-Personal%20Use-475569?style=flat-square">
 </p>
 
-Task Tracer is a single-user task manager built around due dates, local reminders, recurring work, and long-term personal task history. It is intentionally browser-local: task data stays in IndexedDB, and the app loads offline after the first visit.
+Task Tracer is a single-user task manager for planning tasks, recurring routines, local reminders, and long-term personal task history. It keeps projects, tags, dates, subtasks, archives, and statistics in one browser-local app.
 
-It works well for study plans, personal operations, project follow-ups, routine reviews, and any task list where deadlines, status clarity, and safe local data handling matter more than team collaboration or cloud sync.
+It works well for study plans, personal operations, project follow-ups, routine reviews, and task lists where ownership, organization, reminders, and clear status matter more than team collaboration or cloud sync.
 
 ## Feature Map
 
 | Area | Included |
 | --- | --- |
 | Task lifecycle | Create, edit, complete, mark incomplete, delete, archive, restore from archive, clear completed tasks, and archive completed tasks. |
-| Deadline handling | Local due date and time, no-deadline tasks, exact due instants, timezone-aware legacy normalization, live countdowns, progress bars, and status colors. |
+| Dates and deadlines | Optional local date and time, no-date tasks, timezone-aware legacy normalization, live countdowns, progress bars, and status colors. |
 | Status model | Safe, warning, urgent, overdue, completed, archived, and no-deadline states are shown with distinct labels and visual treatment. |
 | Subtasks | Add subtasks, edit subtask text inline, complete subtasks independently, and track subtask progress on the parent task. |
 | Recurring tasks | Daily, weekly, monthly, and custom-day recurrence; completing one occurrence creates the next one while preserving the completed record. |
@@ -48,7 +48,7 @@ Task Tracer starts from a simple list, then adds structure only where it helps:
 
 1. Add tasks with a name, optional description, due date and time, reminders, repeat rule, project, tags, and subtasks.
 2. Work from the list view for everyday actions such as complete, snooze, edit, archive, delete, and manual reorder.
-3. Switch to calendar or timeline view when due-date distribution matters more than list order.
+3. Switch to calendar or timeline view when date distribution matters more than list order.
 4. Use statistics to review completion rate, active overdue rate, archived volume, today's completions, and completion streak.
 5. Export or back up data before clearing browser data, switching devices, or testing imports.
 
@@ -65,7 +65,7 @@ Search matches task names, descriptions, project names, and tags. Projects organ
 | View | Purpose |
 | --- | --- |
 | List | Daily task execution with full actions, subtasks, status chips, reminders, archive controls, and manual ordering. |
-| Calendar | Monthly due-date review with previous/next month, previous/next year, today jump, visible day layout, date details, and no-deadline grouping. |
+| Calendar | Monthly date review with previous/next month, previous/next year, today jump, visible day layout, date details, and no-date grouping. |
 | Timeline | Chronological grouping for scanning upcoming or historical workload by date. |
 | Statistics | Completion rate, active overdue rate, archived count, today's completions, current streak, and recent completion trend. |
 
@@ -77,7 +77,7 @@ Task Tracer keeps the data controls separate so each action has a clear purpose.
 | --- | --- |
 | Export | Download the current task set as JSON for transfer, manual inspection, or storage. |
 | Import | Read a JSON file, show a preview, report imported task count, duplicate names, current-data impact, and then replace or merge after confirmation. |
-| Backup | Download a versioned snapshot with schema notes, local due dates, exact reminder instants, repeat rules, completion dates, and archive state. |
+| Backup | Download a versioned snapshot with schema notes, local dates, reminder timing, repeat rules, completion dates, and archive state. |
 
 Backups also record the latest backup time locally, so the app can remind you when active task data has not been backed up recently.
 
