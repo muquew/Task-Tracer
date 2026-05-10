@@ -1390,7 +1390,15 @@
         // ==========================================
 
         function updateFilterCounts() {
-            // 1. 计算各个状态的数量
+            const counts = getFilterCounts();
+            setFilterCountText('count-all', counts.all);
+            setFilterCountText('count-active', counts.active);
+            setFilterCountText('count-completed', counts.completed);
+            setFilterCountText('count-overdue', counts.overdue);
+            setFilterCountText('count-no-deadline', counts['no-deadline']);
+        }
+
+        function getFilterCounts() {
             const counts = {
                 all: state.tasks.length,
                 active: 0,
@@ -1409,17 +1417,12 @@
                 }
             });
 
-            // 2. 更新 DOM
-            // 使用 ID 选择器快速更新
-            const setObjText = (id, count) => {
-                const el = document.getElementById(id);
-                if (el) el.textContent = `(${count})`;
-            };
-            setObjText('count-all', counts.all);
-            setObjText('count-active', counts.active);
-            setObjText('count-completed', counts.completed);
-            setObjText('count-overdue', counts.overdue);
-            setObjText('count-no-deadline', counts['no-deadline']);
+            return counts;
+        }
+
+        function setFilterCountText(id, count) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = `(${count})`;
         }
 
         function renderTaskList() {
