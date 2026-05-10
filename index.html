@@ -1721,7 +1721,17 @@
             updateTask: (task) => utils.dbOp(CONFIG.DB.STORES.TASKS, 'readwrite', s => s.put(task)),
             deleteTask: (id) => utils.dbOp(CONFIG.DB.STORES.TASKS, 'readwrite', s => s.delete(id)),
             getConfig: (key) => utils.dbOp(CONFIG.DB.STORES.CONFIG, 'readonly', s => s.get(key)).then(res => res ? res.value : null),
-            setConfig: (key, value) => utils.dbOp(CONFIG.DB.STORES.CONFIG, 'readwrite', s => s.put({ key, value }))
+            setConfig: (key, value) => utils.dbOp(CONFIG.DB.STORES.CONFIG, 'readwrite', s => s.put({ key, value })),
+            replaceAllTasks: (tasks) => new Promise((resolve, reject) => {
+                const tx = state.db.transaction([CONFIG.DB.STORES.TASKS], 'readwrite');
+                tx.oncomplete = resolve;
+                tx.onerror = () => reject(tx.error);
+                tx.onabort = () => reject(tx.error || new Error('Replace tasks transaction aborted'));
+
+                const store = tx.objectStore(CONFIG.DB.STORES.TASKS);
+                store.clear();
+                tasks.forEach(task => store.put(task));
+            })
         };
         // 别名，为了向后兼容 initApp 调用
         const initDB = dbActions.init;
@@ -2404,61 +2414,8 @@
                     }
                     utils.confirm(t['import'], t['importConfirm'].replace('{count}', data.tasks.length), async () => {
                         try {
-                            const usedIds = new Set();
-                            const createId = () => {
-                                let id;
-                                do {
-                                    id = Date.now() + Math.floor(Math.random() * 1000000);
-                                } while (usedIds.has(id));
-                                usedIds.add(id);
-                                return id;
-                            };
-                            const normalizeId = (value) => {
-                                const id = Number(value);
-                                if (Number.isFinite(id) && !usedIds.has(id)) {
-                                    usedIds.add(id);
-                                    return id;
-                                }
-                                return createId();
-                            };
-                            const importedTasks = data.tasks.map((rawTask, index) => {
-                                const task = rawTask && typeof rawTask === 'object' ? rawTask : {};
-                                const dueDate = typeof task.dueDate === 'string' && !Number.isNaN(Date.parse(task.dueDate))
-                                    ? task.dueDate : null;
-                                const subtasks = Array.isArray(task.subtasks)
-                                    ? task.subtasks.map((rawSubtask, subIndex) => {
-                                        const subtask = rawSubtask && typeof rawSubtask === 'object' ? rawSubtask : {};
-                                        return {
-                                            id: Number.isFinite(Number(subtask.id)) ? Number(subtask.id) : Date.now() + index * 1000 + subIndex,
-                                            text: String(subtask.text || '').trim(),
-                                            completed: !!subtask.completed
-                                        };
-                                    }).filter(subtask => subtask.text)
-                                    : [];
-
-                                return {
-                                    id: normalizeId(task.id),
-                                    name: String(task.name || '').trim() || `Imported task ${index + 1}`,
-                                    description: task.description ? String(task.description) : '',
-                                    dueDate,
-                                    reminderOffset: Number.isFinite(Number(task.reminderOffset)) ? Number(task.reminderOffset) : 15,
-                                    subtasks,
-                                    completed: typeof task.completed === 'boolean' ? task.completed : false,
-                                    createdAt: task.createdAt || new Date().toISOString(),
-                                    order: Number.isFinite(Number(task.order)) ? Number(task.order) : (index + 1) * 10000
-                                };
-                            });
-
-                            await new Promise((resolve, reject) => {
-                                const tx = state.db.transaction([CONFIG.DB.STORES.TASKS], 'readwrite');
-                                tx.oncomplete = resolve;
-                                tx.onerror = () => reject(tx.error);
-                                tx.onabort = () => reject(tx.error || new Error('Import transaction aborted'));
-
-                                const store = tx.objectStore(CONFIG.DB.STORES.TASKS);
-                                store.clear();
-                                importedTasks.forEach(task => store.put(task));
-                            });
+                            const importedTasks = normalizeImportedTasks(data.tasks);
+                            await dbActions.replaceAllTasks(importedTasks);
 
                             state.tasks = await dbActions.getAllTasks();
                             renderTaskList();
@@ -2477,6 +2434,59 @@
             reader.onerror = () => utils.notify(t['importReadError'], 'error');
             reader.readAsText(file);
             DOM.menu.fileInput.value = '';  // 重置文件输入
+        }
+
+        function normalizeImportedTasks(rawTasks) {
+            const usedIds = new Set();
+            const createId = () => {
+                let id;
+                do {
+                    id = Date.now() + Math.floor(Math.random() * 1000000);
+                } while (usedIds.has(id));
+                usedIds.add(id);
+                return id;
+            };
+            const normalizeId = (value) => {
+                const id = Number(value);
+                if (Number.isFinite(id) && !usedIds.has(id)) {
+                    usedIds.add(id);
+                    return id;
+                }
+                return createId();
+            };
+
+            return rawTasks.map((rawTask, index) => normalizeImportedTask(rawTask, index, normalizeId));
+        }
+
+        function normalizeImportedTask(rawTask, index, normalizeId) {
+            const task = rawTask && typeof rawTask === 'object' ? rawTask : {};
+            return {
+                id: normalizeId(task.id),
+                name: String(task.name || '').trim() || `Imported task ${index + 1}`,
+                description: task.description ? String(task.description) : '',
+                dueDate: normalizeStoredDate(task.dueDate),
+                reminderOffset: Number.isFinite(Number(task.reminderOffset)) ? Number(task.reminderOffset) : 15,
+                subtasks: normalizeImportedSubtasks(task.subtasks, index),
+                completed: typeof task.completed === 'boolean' ? task.completed : false,
+                createdAt: normalizeStoredDate(task.createdAt) || new Date().toISOString(),
+                order: Number.isFinite(Number(task.order)) ? Number(task.order) : (index + 1) * 10000
+            };
+        }
+
+        function normalizeImportedSubtasks(rawSubtasks, taskIndex) {
+            if (!Array.isArray(rawSubtasks)) return [];
+            return rawSubtasks.map((rawSubtask, subIndex) => {
+                const subtask = rawSubtask && typeof rawSubtask === 'object' ? rawSubtask : {};
+                return {
+                    id: Number.isFinite(Number(subtask.id)) ? Number(subtask.id) : Date.now() + taskIndex * 100000 + subIndex,
+                    text: String(subtask.text || '').trim(),
+                    completed: !!subtask.completed
+                };
+            }).filter(subtask => subtask.text);
+        }
+
+        function normalizeStoredDate(value) {
+            return typeof value === 'string' && !Number.isNaN(Date.parse(value)) ? value : null;
         }
 
         async function addSampleTasks() {
