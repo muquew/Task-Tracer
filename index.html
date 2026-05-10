@@ -746,7 +746,7 @@
                 state.tasks = await dbActions.getAllTasks();
 
                 // 5. 初始化 UI 状态
-                DOM.inputs.date.min = new Date().toISOString().split('T')[0];  // 设置最小日期为今天
+                DOM.inputs.date.min = utils.formatDateInputValue();  // 设置最小日期为今天
                 if (state.tasks.length === 0 && !(await dbActions.getConfig('sampleTasksAdded'))) {
                     await addSampleTasks();
                     await dbActions.setConfig('sampleTasksAdded', true);
@@ -829,7 +829,7 @@
                 DOM.inputs.date.disabled = this.checked;
                 DOM.inputs.time.disabled = this.checked;
                 if (this.checked) {
-                    DOM.inputs.date.value = new Date().toISOString().split('T')[0];
+                    DOM.inputs.date.value = utils.formatDateInputValue();
                     DOM.inputs.time.value = CONFIG.DEFAULTS.TIME;
                 }
                 // 无截止日期时，禁用提醒设置
@@ -1273,14 +1273,13 @@
                 overdue: 0,
                 'no-deadline': 0
             };
-            const now = new Date();
             // 一次遍历
             state.tasks.forEach(task => {
                 if (task.completed) counts.completed++;
                 else {
                     counts.active++; // 未完成即为 active
                     if (task.dueDate) {
-                        if (utils.utcToLocal(task.dueDate) < now) counts.overdue++;
+                        if (utils.calculateTimeLeft(task.dueDate) < 0) counts.overdue++;
                     } else counts['no-deadline']++;
                 }
             });
@@ -1318,7 +1317,7 @@
                 switch (state.filter) {
                     case 'active': return !task.completed;
                     case 'completed': return task.completed;
-                    case 'overdue': return !task.completed && task.dueDate && new Date(task.dueDate) < new Date();
+                    case 'overdue': return !task.completed && task.dueDate && utils.calculateTimeLeft(task.dueDate) < 0;
                     case 'no-deadline': return !task.dueDate;
                     default: return true;
                 }
@@ -1596,8 +1595,8 @@
 
                 if (editingTask.dueDate) {
                     const local = utils.utcToLocal(editingTask.dueDate);
-                    DOM.inputs.date.value = local.toISOString().split('T')[0];
-                    DOM.inputs.time.value = `${local.getHours().toString().padStart(2,'0')}:${local.getMinutes().toString().padStart(2,'0')}`;
+                    DOM.inputs.date.value = utils.formatDateInputValue(local);
+                    DOM.inputs.time.value = utils.formatTimeInputValue(local);
                     DOM.inputs.noDeadline.checked = false;
                     DOM.inputs.date.disabled = false;
                     DOM.inputs.time.disabled = false;
@@ -1606,7 +1605,7 @@
                     DOM.inputs.noDeadline.checked = true;
                     DOM.inputs.date.disabled = true;
                     DOM.inputs.time.disabled = true;
-                    DOM.inputs.date.value = new Date().toISOString().split('T')[0];
+                    DOM.inputs.date.value = utils.formatDateInputValue();
                     DOM.inputs.time.value = CONFIG.DEFAULTS.TIME;
                     DOM.inputs.reminderOffset.disabled = true;
                 }
@@ -1620,7 +1619,7 @@
                 DOM.inputs.noDeadline.checked = false;
                 DOM.inputs.date.disabled = false;
                 DOM.inputs.time.disabled = false;
-                DOM.inputs.date.value = new Date().toISOString().split('T')[0];
+                DOM.inputs.date.value = utils.formatDateInputValue();
                 DOM.inputs.time.value = CONFIG.DEFAULTS.TIME;
                 DOM.inputs.reminderOffset.disabled = false;
                 DOM.inputs.reminderOffset.value = '15';
@@ -1760,6 +1759,20 @@
                 const d = new Date(iso);
                 return new Date(d.getTime() - d.getTimezoneOffset() * 60000);
             },
+            formatDateInputValue: (date = new Date()) => {
+                const d = date instanceof Date ? date : new Date(date);
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            },
+            formatTimeInputValue: (date = new Date()) => {
+                const d = date instanceof Date ? date : new Date(date);
+                const hours = String(d.getHours()).padStart(2, '0');
+                const minutes = String(d.getMinutes()).padStart(2, '0');
+                return `${hours}:${minutes}`;
+            },
+            dateToStoredISO: (date) => utils.localToUTC(utils.formatDateInputValue(date), utils.formatTimeInputValue(date)),
             calculateTimeLeft: (iso) => (utils.utcToLocal(iso) - new Date()) / 60000,
 
             formatDate: (iso) => {
@@ -2345,8 +2358,8 @@
         async function addSampleTasks() {
             const t = state.translations[state.currentLanguage];
             const samples = [
-                { id: Date.now()+1, name: t['sampleTask1Name'] || "完成项目报告", description: t['sampleTask1Desc'] || "编写并提交季度项目总结报告", dueDate: new Date(Date.now() + 432000000).toISOString(), createdAt: new Date().toISOString(), completed: false },
-                { id: Date.now()+2, name: t['sampleTask2Name'] || "团队会议准备", description: t['sampleTask2Desc'] || "准备下周团队会议的演示材料", dueDate: new Date(Date.now() + 864000000).toISOString(), createdAt: new Date().toISOString(), completed: false },
+                { id: Date.now()+1, name: t['sampleTask1Name'] || "完成项目报告", description: t['sampleTask1Desc'] || "编写并提交季度项目总结报告", dueDate: utils.dateToStoredISO(new Date(Date.now() + 432000000)), createdAt: new Date().toISOString(), completed: false },
+                { id: Date.now()+2, name: t['sampleTask2Name'] || "团队会议准备", description: t['sampleTask2Desc'] || "准备下周团队会议的演示材料", dueDate: utils.dateToStoredISO(new Date(Date.now() + 864000000)), createdAt: new Date().toISOString(), completed: false },
                 { id: Date.now()+3, name: t['sampleTask3Name'] || "学习计划制定", description: t['sampleTask3Desc'] || "制定下个月的个人学习计划", dueDate: null, createdAt: new Date().toISOString(), completed: false }
             ];
             await samples.forEach(s => dbActions.addTask(s));
