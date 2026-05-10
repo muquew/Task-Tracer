@@ -254,6 +254,21 @@
         .timeline-content { min-width: 0; }
         .timeline-date-title { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-weight: 800; }
         .timeline-count { font-size: 12px; color: var(--text-tertiary); font-weight: 700; }
+        .stats-view { display: grid; gap: 14px; animation: fadeIn 0.2s ease; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+        .stat-card { border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface); padding: 15px; box-shadow: 0 10px 28px var(--shadow-base); }
+        .stat-label { color: var(--text-secondary); font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+        .stat-value { color: var(--text-main); font-size: 30px; line-height: 1; font-weight: 860; }
+        .stat-detail { margin-top: 8px; color: var(--text-tertiary); font-size: 12px; font-weight: 700; line-height: 1.45; }
+        .stat-bar { height: 7px; margin-top: 13px; border-radius: var(--radius-pill); background: var(--bg-hover); overflow: hidden; }
+        .stat-fill { height: 100%; width: var(--stat-value, 0%); border-radius: var(--radius-pill); background: var(--stat-color, var(--color-primary)); transition: width 0.4s ease; }
+        .stat-card.success { --stat-color: var(--color-success); }
+        .stat-card.warning { --stat-color: var(--color-warning); }
+        .stat-card.primary { --stat-color: var(--color-primary); }
+        .stats-detail-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+        .stats-mini { border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-alt); padding: 12px; }
+        .stats-mini strong { display: block; color: var(--text-main); font-size: 20px; margin-bottom: 4px; }
+        .stats-mini span { color: var(--text-secondary); font-size: 12px; font-weight: 700; }
         .tasks-section { position: relative; z-index: 1; margin-bottom: 25px; }
         .task-item {
             display: flex;
@@ -454,7 +469,7 @@
             .dropdown-container { flex: 1; min-width: 0; }
             .dropdown-btn { width: 100%; min-width: 0; justify-content: space-between; }
             .dropdown-menu-content { width: 100%; }
-            .view-switcher { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+            .view-switcher { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
             .view-tab { justify-content: center; min-width: 0; padding-inline: 8px; }
             .calendar-header { align-items: flex-start; flex-direction: column; }
             .calendar-actions { width: 100%; justify-content: space-between; }
@@ -462,6 +477,8 @@
             .calendar-day { min-height: 92px; padding: 5px; }
             .calendar-task { font-size: 11px; padding: 4px 5px; }
             .timeline-group { grid-template-columns: 22px minmax(0, 1fr); gap: 6px; }
+            .stats-grid, .stats-detail-grid { grid-template-columns: 1fr; }
+            .stat-value { font-size: 26px; }
             .container { border-radius: 0; }
             .main-content { padding-top: 12px; }
             .task-item { padding: 13px; }
@@ -569,6 +586,7 @@
     <symbol id="icon-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6H21"/><path d="M8 12H21"/><path d="M8 18H21"/><path d="M3 6H3.01"/><path d="M3 12H3.01"/><path d="M3 18H3.01"/></symbol>
     <symbol id="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2V6"/><path d="M16 2V6"/><path d="M3 10H21"/><path d="M5 4H19A2 2 0 0 1 21 6V20A2 2 0 0 1 19 22H5A2 2 0 0 1 3 20V6A2 2 0 0 1 5 4Z"/></symbol>
     <symbol id="icon-timeline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3V21"/><path d="M5 6H16A3 3 0 0 1 16 12H5"/><path d="M5 14H18A3 3 0 0 1 18 20H5"/></symbol>
+    <symbol id="icon-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19H20"/><path d="M8 16V11"/><path d="M12 16V8"/><path d="M16 16V13"/></symbol>
     <symbol id="icon-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></symbol>
     <symbol id="icon-github" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.727-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757 -1.09-.745.083-.729.083-.729 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.775.418-1.305.76-1.606-2.665-.305-5.466-1.334-5.466-5.932 0-1.31.47-2.382 1.236-3.22-.125-.303-.535-1.523.115-3.176 0 0 1.008-.322 3.3 1.23a11.49 11.49 0 013.004-.404 c1.02.005 2.045.138 3.003.404 2.292-1.552 3.3-1.23 3.3-1.23.65 1.653.24 2.873.12 3.176.77.838 1.236 1.91 1.236 3.22 0 4.61-2.804 5.624-5.475 5.922.43.372.81 1.102.81 2.222 0 1.606-.015 2.896-.015 3.286 0 .32.216.694.825.576C20.565 21.796 24 17.3 24 12 24 5.373 18.627 0 12 0z"/></symbol>
     <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17L4 12"/></symbol>
@@ -692,6 +710,10 @@
             <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="timeline">
                 <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-timeline"></use></svg>
                 <span data-i18n="views.timeline">时间线</span>
+            </button>
+            <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="stats">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-chart"></use></svg>
+                <span data-i18n="views.stats">统计</span>
             </button>
         </div>
         <div class="tasks-section">
@@ -896,7 +918,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '3.1'
+                RESOURCE_VERSION: '3.2'
             },
             BACKUP: {
                 FILE_VERSION: '2.0',
@@ -1154,7 +1176,7 @@
             });
         }
         function setViewMode(viewMode) {
-            if (!['list', 'calendar', 'timeline'].includes(viewMode) || state.viewMode === viewMode) return;
+            if (!['list', 'calendar', 'timeline', 'stats'].includes(viewMode) || state.viewMode === viewMode) return;
             state.viewMode = viewMode;
             if (viewMode === 'calendar') syncCalendarMonthToVisibleTasks();
             syncViewSwitcher();
@@ -1369,6 +1391,7 @@
                 id: Date.now(),
                 createdAt: new Date().toISOString(),
                 completed: false,
+                completedAt: null,
                 archived: false,
                 archivedAt: null,
                 snoozedUntil: null,
@@ -1498,6 +1521,14 @@
                     normalizedTask.archivedAt = null;
                     changed = true;
                 }
+                if (normalizedTask.completedAt && !normalizeStoredDate(normalizedTask.completedAt)) {
+                    normalizedTask.completedAt = null;
+                    changed = true;
+                }
+                if (!('completedAt' in normalizedTask)) {
+                    normalizedTask.completedAt = null;
+                    changed = true;
+                }
                 const project = normalizeTaskProject(normalizedTask.project);
                 if (normalizedTask.project !== project) {
                     normalizedTask.project = project;
@@ -1599,9 +1630,11 @@
             if (!task) return;
             const t = state.translations[state.currentLanguage];
             const previousCompleted = task.completed;
+            const previousCompletedAt = task.completedAt || null;
             const previousNextRepeatTaskId = task.nextRepeatTaskId ?? null;
             const nextRepeatTask = !previousCompleted && shouldCreateNextRepeatTask(task) ? createNextRepeatTask(task) : null;
             task.completed = !previousCompleted;
+            task.completedAt = task.completed ? new Date().toISOString() : null;
             if (nextRepeatTask) task.nextRepeatTaskId = nextRepeatTask.id;
             try {
                 if (nextRepeatTask) {
@@ -1619,6 +1652,7 @@
             } catch (err) {
                 console.error('更新任务状态失败:', err);
                 task.completed = previousCompleted;
+                task.completedAt = previousCompletedAt;
                 task.nextRepeatTaskId = previousNextRepeatTaskId;
                 renderTaskList();
                 utils.notify(t['messages.task.updateError'], 'error');
@@ -1638,6 +1672,7 @@
                 id: nextId,
                 dueDate: calculateNextRepeatDueDate(task.dueDate, getTaskRepeatRule(task)),
                 completed: false,
+                completedAt: null,
                 archived: false,
                 archivedAt: null,
                 snoozedUntil: null,
@@ -2038,6 +2073,10 @@
             }
             const visibleTasks = getVisibleTasks();
             removeInitialLoader();
+            if (state.viewMode === 'stats') {
+                renderStatsView(getStatsScopeTasks());
+                return;
+            }
             if (visibleTasks.length === 0) {
                 renderEmptyTaskList(getEmptyMatchHTML(t));
                 return;
@@ -2364,6 +2403,114 @@
             date.setMonth(date.getMonth() + delta);
             state.calendarMonthDate = date;
             renderTaskList();
+        }
+        function getStatsScopeTasks() {
+            return state.tasks
+                .filter(matchesTaskProject)
+                .filter(matchesTaskSearch)
+                .filter(task => !task.archived);
+        }
+        function renderStatsView(tasks) {
+            DOM.taskList.textContent = '';
+            const stats = calculateTaskStats(tasks);
+            const view = document.createElement('section');
+            view.className = 'stats-view';
+            view.setAttribute('aria-label', utils.translate('stats.title'));
+            const grid = document.createElement('div');
+            grid.className = 'stats-grid';
+            grid.append(
+                createStatCard('stats.completionRate', formatPercent(stats.completionRate), stats.completedDetail, stats.completionRate, 'success'),
+                createStatCard('stats.overdueRate', formatPercent(stats.overdueRate), stats.overdueDetail, stats.overdueRate, 'warning'),
+                createStatCard('stats.streakDays', utils.translate('stats.daysValue').replace('{count}', stats.streakDays), stats.streakDetail, Math.min(1, stats.streakDays / 7), 'primary')
+            );
+            view.append(grid, createStatsDetailGrid(stats));
+            DOM.taskList.appendChild(view);
+        }
+        function createStatCard(labelKey, value, detail, ratio, tone) {
+            const card = document.createElement('article');
+            card.className = `stat-card ${tone}`;
+            const label = document.createElement('div');
+            label.className = 'stat-label';
+            label.textContent = utils.translate(labelKey);
+            const valueEl = document.createElement('div');
+            valueEl.className = 'stat-value';
+            valueEl.textContent = value;
+            const detailEl = document.createElement('div');
+            detailEl.className = 'stat-detail';
+            detailEl.textContent = detail;
+            const bar = document.createElement('div');
+            bar.className = 'stat-bar';
+            bar.setAttribute('role', 'meter');
+            bar.setAttribute('aria-valuemin', '0');
+            bar.setAttribute('aria-valuemax', '100');
+            bar.setAttribute('aria-valuenow', String(Math.round(ratio * 100)));
+            const fill = document.createElement('div');
+            fill.className = 'stat-fill';
+            fill.style.setProperty('--stat-value', `${Math.round(ratio * 100)}%`);
+            bar.appendChild(fill);
+            card.append(label, valueEl, detailEl, bar);
+            return card;
+        }
+        function createStatsDetailGrid(stats) {
+            const grid = document.createElement('div');
+            grid.className = 'stats-detail-grid';
+            [
+                ['stats.totalTasks', stats.total],
+                ['stats.completedTasks', stats.completed],
+                ['stats.overdueTasks', stats.overdue],
+                ['stats.todayCompleted', stats.completedToday]
+            ].forEach(([key, value]) => grid.appendChild(createStatsMini(key, value)));
+            return grid;
+        }
+        function createStatsMini(labelKey, value) {
+            const item = document.createElement('div');
+            item.className = 'stats-mini';
+            const strong = document.createElement('strong');
+            strong.textContent = String(value);
+            const label = document.createElement('span');
+            label.textContent = utils.translate(labelKey);
+            item.append(strong, label);
+            return item;
+        }
+        function calculateTaskStats(tasks) {
+            const total = tasks.length;
+            const completed = tasks.filter(task => task.completed).length;
+            const deadlineTasks = tasks.filter(task => task.dueDate).length;
+            const overdue = tasks.filter(task => !task.completed && task.dueDate && utils.calculateTimeLeft(task.dueDate) < 0).length;
+            const completedToday = tasks.filter(task => getCompletionDateKey(task) === utils.formatDateInputValue()).length;
+            const completionRate = total > 0 ? completed / total : 0;
+            const overdueRate = deadlineTasks > 0 ? overdue / deadlineTasks : 0;
+            const streakDays = calculateCompletionStreak(tasks);
+            return {
+                total,
+                completed,
+                overdue,
+                completedToday,
+                completionRate,
+                overdueRate,
+                streakDays,
+                completedDetail: utils.translate('stats.completedDetail').replace('{completed}', completed).replace('{total}', total),
+                overdueDetail: utils.translate('stats.overdueDetail').replace('{overdue}', overdue).replace('{total}', deadlineTasks),
+                streakDetail: utils.translate('stats.streakDetail').replace('{count}', streakDays)
+            };
+        }
+        function calculateCompletionStreak(tasks) {
+            const completedDays = new Set(tasks.map(getCompletionDateKey).filter(Boolean));
+            let cursor = new Date();
+            if (!completedDays.has(utils.formatDateInputValue(cursor))) cursor.setDate(cursor.getDate() - 1);
+            let streak = 0;
+            while (completedDays.has(utils.formatDateInputValue(cursor))) {
+                streak++;
+                cursor.setDate(cursor.getDate() - 1);
+            }
+            return streak;
+        }
+        function getCompletionDateKey(task) {
+            const completedAt = normalizeStoredDate(task.completedAt);
+            return completedAt ? utils.formatDateInputValue(utils.utcToLocal(completedAt)) : '';
+        }
+        function formatPercent(value) {
+            return `${Math.round(value * 100)}%`;
         }
         function removeInitialLoader() {
             const loader = document.getElementById('initial-loader');
@@ -3627,7 +3774,7 @@
                 schema: {
                     version: CONFIG.BACKUP.FILE_VERSION,
                     storage: 'indexeddb',
-                    includes: ['tasks', 'subtasks', 'projects', 'tags', 'reminders', 'repeatRules', 'archiveState']
+                    includes: ['tasks', 'subtasks', 'projects', 'tags', 'reminders', 'repeatRules', 'completionDates', 'archiveState']
                 },
                 versionNotes: [
                     utils.translate('backup.versionNotes.schema'),
@@ -3778,6 +3925,7 @@
                 lastReminderAt: normalizeStoredDate(task.lastReminderAt),
                 subtasks: normalizeImportedSubtasks(task.subtasks),
                 completed: typeof task.completed === 'boolean' ? task.completed : false,
+                completedAt: normalizeStoredDate(task.completedAt),
                 archived: typeof task.archived === 'boolean' ? task.archived : false,
                 archivedAt: normalizeStoredDate(task.archivedAt),
                 createdAt: normalizeStoredDate(task.createdAt) || new Date().toISOString(),

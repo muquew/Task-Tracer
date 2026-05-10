@@ -35,7 +35,8 @@
     "label": "View switcher",
     "list": "List",
     "calendar": "Calendar",
-    "timeline": "Timeline"
+    "timeline": "Timeline",
+    "stats": "Stats"
   },
   "calendar": {
     "previous": "Previous month",
@@ -44,6 +45,20 @@
     "more": "+{count} more",
     "taskCount": "{count} tasks",
     "noDeadline": "No deadline"
+  },
+  "stats": {
+    "title": "Task stats",
+    "completionRate": "Completion rate",
+    "overdueRate": "Overdue rate",
+    "streakDays": "Completion streak",
+    "daysValue": "{count} days",
+    "completedDetail": "{completed}/{total} tasks completed",
+    "overdueDetail": "{overdue}/{total} deadline tasks overdue",
+    "streakDetail": "{count} consecutive recent days with completions",
+    "totalTasks": "Total tasks",
+    "completedTasks": "Completed",
+    "overdueTasks": "Active overdue",
+    "todayCompleted": "Completed today"
   },
   "filters": {
     "all": "All",
@@ -278,7 +293,7 @@
   },
   "backup": {
     "versionNotes": {
-      "schema": "Backup 2.0 includes tasks, subtasks, projects, tags, reminders, repeat rules, and archive state.",
+      "schema": "Backup 2.0 includes tasks, subtasks, projects, tags, reminders, repeat rules, completion dates, and archive state.",
       "compatibility": "The importer reads the tasks array; older export files remain importable."
     }
   }

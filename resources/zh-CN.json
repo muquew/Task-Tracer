@@ -35,7 +35,8 @@
     "label": "视图切换",
     "list": "列表",
     "calendar": "日历",
-    "timeline": "时间线"
+    "timeline": "时间线",
+    "stats": "统计"
   },
   "calendar": {
     "previous": "上个月",
@@ -44,6 +45,20 @@
     "more": "+{count} 个更多",
     "taskCount": "{count} 个任务",
     "noDeadline": "无截止日期"
+  },
+  "stats": {
+    "title": "任务统计",
+    "completionRate": "完成率",
+    "overdueRate": "逾期率",
+    "streakDays": "连续完成",
+    "daysValue": "{count} 天",
+    "completedDetail": "{completed}/{total} 个任务已完成",
+    "overdueDetail": "{overdue}/{total} 个有截止日期任务逾期",
+    "streakDetail": "最近连续 {count} 天有完成记录",
+    "totalTasks": "任务总数",
+    "completedTasks": "已完成",
+    "overdueTasks": "逾期进行中",
+    "todayCompleted": "今日完成"
   },
   "filters": {
     "all": "全部",
@@ -278,7 +293,7 @@
   },
   "backup": {
     "versionNotes": {
-      "schema": "2.0 备份包含任务、子任务、项目、标签、提醒、重复规则和归档状态。",
+      "schema": "2.0 备份包含任务、子任务、项目、标签、提醒、重复规则、完成时间和归档状态。",
       "compatibility": "导入器会读取 tasks 数组；旧版导出文件仍可导入。"
     }
   }
