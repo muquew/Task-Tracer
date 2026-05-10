@@ -228,6 +228,7 @@ def exercise_shortcuts_and_modal_closing(page: Page) -> None:
 
     page.locator("#openModalBtn").click()
     expect(page.locator("#taskModal")).to_be_visible()
+    exercise_modal_focus_trap(page)
     page.locator("#cancelBtn").click()
     expect(page.locator("#taskModal")).to_be_hidden()
 
@@ -245,6 +246,22 @@ def exercise_shortcuts_and_modal_closing(page: Page) -> None:
     wait_for_class(page, "#menu", "show")
     page.keyboard.press("Escape")
     wait_for_class(page, "#menu", "show", present=False)
+
+
+def exercise_modal_focus_trap(page: Page) -> None:
+    expect(page.locator("#taskName")).to_be_focused()
+    page.keyboard.press("Shift+Tab")
+    expect(page.locator("#closeModalBtn")).to_be_focused()
+    page.keyboard.press("Tab")
+    expect(page.locator("#taskName")).to_be_focused()
+
+    page.locator("#submitBtn").focus()
+    page.keyboard.press("Tab")
+    expect(page.locator("#closeModalBtn")).to_be_focused()
+
+    page.locator("#taskName").focus()
+    press_control_shortcut(page, "k")
+    expect(page.locator("#taskName")).to_be_focused()
 
 
 def exercise_empty_state_actions(page: Page) -> None:

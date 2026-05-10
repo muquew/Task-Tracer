@@ -1219,6 +1219,13 @@
         }
 
         function handleKeyboardShortcuts(e) {
+            if (isDialogOpen()) {
+                if (e.key === 'Tab') trapDialogFocus(e);
+                else if (e.key === 'Escape') closeDialog();
+                else if (e.ctrlKey || e.metaKey || e.altKey) e.preventDefault();
+                return;
+            }
+
             const meta = e.ctrlKey || e.metaKey;
             // 1. Ctrl/Cmd + K: 聚焦搜索
             if (meta && e.key === 'k') { e.preventDefault(); DOM.inputs.search.focus(); }
@@ -1230,10 +1237,50 @@
             if (e.altKey && e.key.toLowerCase() === 't') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
             // 5. Esc: 关闭操作
             if (e.key === 'Escape') {
-                if (DOM.modal.style.display === 'flex') closeDialog();
-                else if (document.activeElement === DOM.inputs.search) DOM.inputs.search.blur();
+                if (document.activeElement === DOM.inputs.search) DOM.inputs.search.blur();
                 else closeMenu();
             }
+        }
+
+        function isDialogOpen() {
+            return DOM.modal && DOM.modal.style.display === 'flex';
+        }
+
+        function trapDialogFocus(e) {
+            const focusable = getFocusableDialogElements();
+            if (focusable.length === 0) {
+                e.preventDefault();
+                return;
+            }
+
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            const active = document.activeElement;
+
+            if (!DOM.modal.contains(active)) {
+                e.preventDefault();
+                first.focus();
+                return;
+            }
+
+            if (e.shiftKey && active === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && active === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
+
+        function getFocusableDialogElements() {
+            return Array.from(DOM.modal.querySelectorAll([
+                'a[href]',
+                'button:not([disabled])',
+                'input:not([disabled])',
+                'select:not([disabled])',
+                'textarea:not([disabled])',
+                '[tabindex]:not([tabindex="-1"])'
+            ].join(','))).filter(el => Boolean(el.offsetParent));
         }
 
         // ==========================================
