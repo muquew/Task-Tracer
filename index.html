@@ -1549,23 +1549,7 @@
             // B. 基础信息
             el.className = `task-item ${statusObj.cls} ${task.completed ? 'completed-task' : ''}`;
             el.querySelector('.task-name').textContent = task.name;
-            
-            // 提醒图标
-            const reminderIcon = el.querySelector('.task-reminder-icon');
-            if (reminderIcon) {
-                // 有截止日期且未完成，且设置了提醒（offset != -1）
-                if (task.dueDate && !task.completed && task.reminderOffset !== undefined && task.reminderOffset !== -1) {
-                    reminderIcon.style.display = 'inline-block';
-                    // 如果已经通知过了，图标变灰或变样
-                    if (state.notifiedTasks.has(task.id)) {
-                        reminderIcon.style.color = 'var(--text-tertiary)';
-                    } else {
-                        reminderIcon.style.color = 'var(--color-warning)';
-                    }
-                } else {
-                    reminderIcon.style.display = 'none';
-                }
-            }
+            renderReminderIcon(el, task);
 
             el.querySelector('.task-date').textContent = task.dueDate ?
                 `${t['task.deadline']}: ${utils.formatDate(task.dueDate)}` : t['task.noDeadline'];
@@ -1613,24 +1597,53 @@
             } else if (timeEl) timeEl.remove();
 
             // G. 按钮 Titles
+            renderTaskActionTitles(el, task, t);
+
+            // H. 拖拽手柄 (仅在 manual 模式下显示)
+            renderTaskDragHandle(el);
+        }
+
+        function renderReminderIcon(el, task) {
+            const reminderIcon = el.querySelector('.task-reminder-icon');
+            if (!reminderIcon) return;
+
+            if (!shouldShowReminderIcon(task)) {
+                reminderIcon.style.display = 'none';
+                return;
+            }
+
+            reminderIcon.style.display = 'inline-block';
+            reminderIcon.style.color = state.notifiedTasks.has(task.id) ? 'var(--text-tertiary)' : 'var(--color-warning)';
+        }
+
+        function shouldShowReminderIcon(task) {
+            return task.dueDate && !task.completed && task.reminderOffset !== undefined && task.reminderOffset !== -1;
+        }
+
+        function renderTaskActionTitles(el, task, t) {
             el.querySelector('[data-action="toggle"]').title = task.completed ? t['task.actions.markIncomplete'] : t['task.actions.markComplete'];
             el.querySelector('[data-action="edit"]').title = t['task.actions.edit'];
             el.querySelector('[data-action="delete"]').title = t['task.actions.delete'];
+        }
 
-            // H. 拖拽手柄 (仅在 manual 模式下显示)
-            // 先清理旧的
+        function renderTaskDragHandle(el) {
             const existingHandle = el.querySelector('.drag-handle');
             if (existingHandle) existingHandle.remove();
             el.removeAttribute('draggable');
-            el.classList.remove('draggable-item'); // 用于 CSS 样式
+            el.classList.remove('draggable-item');
 
-            if (state.sort === 'manual') {
-                el.setAttribute('draggable', 'true'); // 开启原生拖拽
-                el.classList.add('draggable-item');
+            if (!canReorderTasks()) return;
 
-                const handle = document.createElement('div'); handle.className = 'drag-handle'; handle.innerHTML = `<svg class="icon"><use href="#icon-drag"></use></svg>`;
-                el.prepend(handle); // 插入到最左边
-            }
+            el.setAttribute('draggable', 'true');
+            el.classList.add('draggable-item');
+            el.prepend(createDragHandle());
+        }
+
+        function createDragHandle() {
+            const handle = document.createElement('div');
+            handle.className = 'drag-handle';
+            handle.innerHTML = `<svg class="icon"><use href="#icon-drag"></use></svg>`;
+            return handle;
         }
 
         function renderSubtaskList(el, task) {
