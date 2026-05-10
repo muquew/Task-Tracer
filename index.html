@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Task Tracer</title>
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" id="manifestLink" href="manifest.json">
     <!--    manifest.json中-->
     <!--    background_color: 启动屏背景色：App 打开瞬间那一秒的背景 (建议与 CSS 背景一致，防闪烁)-->
     <!--    theme_color: 独立窗口顶栏色：电脑端App窗口标题栏/安卓任务管理器卡片顶条颜色-->
@@ -505,12 +505,53 @@
     <script>
         // 解决暗色模式下刷新闪烁白色
         (function() {
+            const THEME_CHROME = {
+                light: { themeColor: '#2563eb', backgroundColor: '#edf2f8' },
+                dark: { themeColor: '#0f1117', backgroundColor: '#151923' }
+            };
+            const MANIFEST_BASE = {
+                name: 'Task Tracer',
+                short_name: 'TaskTracer',
+                start_url: './index.html',
+                display: 'standalone',
+                orientation: 'portrait-primary',
+                icons: [
+                    { src: 'fav/android-chrome-192x192.png', type: 'image/png', sizes: '192x192' },
+                    { src: 'fav/android-chrome-512x512.png', type: 'image/png', sizes: '512x512' }
+                ]
+            };
+
+            function updateThemeChrome(theme) {
+                const colors = THEME_CHROME[theme] || THEME_CHROME.light;
+                document.querySelector('meta[name="theme-color"]')?.setAttribute('content', colors.themeColor);
+
+                const manifestLink = document.getElementById('manifestLink');
+                if (!manifestLink || !window.Blob || !window.URL) return;
+
+                if (window.__TASK_TRACER_MANIFEST_URL__) {
+                    URL.revokeObjectURL(window.__TASK_TRACER_MANIFEST_URL__);
+                }
+
+                const manifest = {
+                    ...MANIFEST_BASE,
+                    background_color: colors.backgroundColor,
+                    theme_color: colors.themeColor
+                };
+                const manifestUrl = URL.createObjectURL(new Blob(
+                    [JSON.stringify(manifest)],
+                    { type: 'application/manifest+json' }
+                ));
+                manifestLink.setAttribute('href', manifestUrl);
+                window.__TASK_TRACER_MANIFEST_URL__ = manifestUrl;
+            }
+
             const savedTheme = localStorage.getItem('theme');
             const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             let currentTheme = 'light';
             if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) { currentTheme = 'dark'; }
             document.documentElement.setAttribute('data-theme', currentTheme); // 立即设置，在页面渲染前生效
-            document.querySelector('meta[name="theme-color"]')?.setAttribute('content', currentTheme === 'dark' ? '#0f1117' : '#2563eb');
+            window.__TASK_TRACER_SET_THEME_CHROME__ = updateThemeChrome;
+            updateThemeChrome(currentTheme);
         })();
     </script>
 </head>
@@ -2254,10 +2295,14 @@
                 const html = document.documentElement;
                 html.setAttribute('data-theme', theme);
                 localStorage.setItem(CONFIG.STORAGE.THEME, theme);
-                document.querySelector('meta[name="theme-color"]')?.setAttribute(
-                    'content',
-                    theme === 'dark' ? CONFIG.UI.THEME.DARK_COLOR : CONFIG.UI.THEME.LIGHT_COLOR
-                );
+                if (window.__TASK_TRACER_SET_THEME_CHROME__) {
+                    window.__TASK_TRACER_SET_THEME_CHROME__(theme);
+                } else {
+                    document.querySelector('meta[name="theme-color"]')?.setAttribute(
+                        'content',
+                        theme === 'dark' ? CONFIG.UI.THEME.DARK_COLOR : CONFIG.UI.THEME.LIGHT_COLOR
+                    );
+                }
             },
             toggleTheme: () => {
                 const html = document.documentElement;
