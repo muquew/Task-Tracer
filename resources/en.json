@@ -24,7 +24,9 @@
   },
   "search": {
     "placeholder": "Search tasks...",
-    "clear": "Clear search"
+    "clear": "Clear search",
+    "syntaxTitle": "Supports project:work, tag:study, status:completed, due:today, and #tag",
+    "syntaxHint": "Supports scoped search: project:name, tag:name, status:value, and due:value."
   },
   "pwa": {
     "install": {

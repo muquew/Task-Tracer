@@ -777,7 +777,8 @@
             </div>
             <div class="search-box">
                 <label for="searchInput" class="sr-only" data-i18n="search.placeholder">搜索任务...</label>
-                <input class="search-input" data-i18n-placeholder="search.placeholder" id="searchInput" placeholder="搜索任务..." type="text">
+                <input class="search-input" data-i18n-placeholder="search.placeholder" data-i18n-title="search.syntaxTitle" id="searchInput" placeholder="搜索任务..." title="支持 project:工作、tag:学习、status:completed、due:today 和 #标签" aria-describedby="searchSyntaxHint" type="text">
+                <span id="searchSyntaxHint" class="sr-only" data-i18n="search.syntaxHint">支持限定搜索：project:项目、tag:标签、status:状态、due:日期。</span>
                 <button type="button" class="search-clear-btn" id="clearSearchBtn" data-i18n-aria-label="search.clear" data-i18n-title="search.clear" aria-label="清空搜索" title="清空搜索" hidden>
                     <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-x"></use></svg>
                 </button>
@@ -1034,7 +1035,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.5'
+                RESOURCE_VERSION: '4.6'
             },
             BACKUP: {
                 FILE_VERSION: '2.1',
@@ -2543,6 +2544,7 @@
         function isTaskVisible(task) {
             if (!matchesTaskProject(task)) return false;
             if (!matchesTaskSearch(task)) return false;
+            if (hasSearchStatusFilter()) return true;
             if (state.filter === 'archived') return !!task.archived;
             if (task.archived) return false;
             switch (state.filter) {
@@ -2561,7 +2563,12 @@
         }
         function matchesTaskSearch(task) {
             if (!state.searchQuery) return true;
-            return state.searchQuery.split(' ').every(token => getTaskSearchText(task).includes(token));
+            const query = parseSearchQuery(state.searchQuery);
+            return query.terms.every(token => getTaskSearchText(task).includes(token))
+                && query.projects.every(value => matchesTaskProjectSearch(task, value))
+                && query.tags.every(value => matchesTaskTagSearch(task, value))
+                && query.statuses.every(value => matchesTaskStatusSearch(task, value))
+                && query.due.every(value => matchesTaskDueSearch(task, value));
         }
         function clearSearchInput({ keepFocus = true } = {}) {
             DOM.inputs.search.value = '';
@@ -2575,6 +2582,76 @@
         }
         function normalizeSearchQuery(value) {
             return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+        }
+        function hasSearchStatusFilter() {
+            return state.searchQuery && parseSearchQuery(state.searchQuery).statuses.length > 0;
+        }
+        function parseSearchQuery(query) {
+            const parsed = { terms: [], projects: [], tags: [], statuses: [], due: [] };
+            String(query || '').split(' ').filter(Boolean).forEach(token => {
+                if (token.startsWith('#') && token.length > 1) {
+                    parsed.tags.push(token.slice(1));
+                    return;
+                }
+                const separatorIndex = token.indexOf(':');
+                if (separatorIndex <= 0 || separatorIndex === token.length - 1) {
+                    parsed.terms.push(token);
+                    return;
+                }
+                const key = token.slice(0, separatorIndex);
+                const value = token.slice(separatorIndex + 1);
+                if (key === 'project' || key === 'p') parsed.projects.push(value);
+                else if (key === 'tag' || key === 'tags') parsed.tags.push(value);
+                else if (key === 'status' || key === 'state') parsed.statuses.push(value);
+                else if (key === 'due' || key === 'date') parsed.due.push(value);
+                else parsed.terms.push(token);
+            });
+            return parsed;
+        }
+        function matchesTaskProjectSearch(task, value) {
+            const project = normalizeTaskProject(task.project).toLowerCase();
+            if (matchesSearchAlias(value, ['none', 'unassigned', '未分组'])) return !project;
+            return project.includes(value);
+        }
+        function matchesTaskTagSearch(task, value) {
+            return normalizeTaskTags(task.tags)
+                .map(tag => tag.toLowerCase())
+                .some(tag => tag.includes(value));
+        }
+        function matchesTaskStatusSearch(task, value) {
+            if (matchesSearchAlias(value, ['archived', 'archive', '已归档'])) return !!task.archived;
+            if (matchesSearchAlias(value, ['completed', 'complete', 'done', '已完成'])) return !!task.completed && !task.archived;
+            if (matchesSearchAlias(value, ['active', 'open', 'todo', '进行中'])) return !task.completed && !task.archived;
+            if (matchesSearchAlias(value, ['overdue', 'expired', '已过期'])) return !task.completed && hasTaskDueDate(task) && calculateTaskTimeLeft(task) < 0;
+            if (matchesSearchAlias(value, ['no-deadline', 'none', 'undated', '无截止日期'])) return !hasTaskDueDate(task);
+            if (matchesSearchAlias(value, ['repeat', 'recurring', '重复'])) return task.repeatType && task.repeatType !== 'none';
+            const timeLeft = calculateTaskTimeLeft(task);
+            if (timeLeft === null) return false;
+            const status = utils.getStatus(timeLeft).cls;
+            if (matchesSearchAlias(value, ['safe', '安全'])) return status === CONFIG.UI.STATUS.SAFE;
+            if (matchesSearchAlias(value, ['warning', 'warn', '警告'])) return status === CONFIG.UI.STATUS.WARNING;
+            if (matchesSearchAlias(value, ['urgent', 'danger', '紧急'])) return status === CONFIG.UI.STATUS.DANGER;
+            return false;
+        }
+        function matchesTaskDueSearch(task, value) {
+            const dueLocalDate = getTaskDueLocalDate(task);
+            if (matchesSearchAlias(value, ['no-deadline', 'none', 'undated', '无截止日期'])) return !dueLocalDate;
+            if (!dueLocalDate) return false;
+            if (matchesSearchAlias(value, ['overdue', 'expired', '已过期'])) return calculateTaskTimeLeft(task) < 0;
+            const dueKey = utils.formatDateInputValue(dueLocalDate);
+            if (matchesSearchAlias(value, ['today', '今天'])) return dueKey === getRelativeDateKey(0);
+            if (matchesSearchAlias(value, ['tomorrow', '明天'])) return dueKey === getRelativeDateKey(1);
+            if (matchesSearchAlias(value, ['week', '7d', '本周'])) return dueKey >= getRelativeDateKey(0) && dueKey <= getRelativeDateKey(7);
+            if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return dueKey === value;
+            return false;
+        }
+        function getRelativeDateKey(offsetDays) {
+            const date = new Date();
+            date.setDate(date.getDate() + offsetDays);
+            return utils.formatDateInputValue(date);
+        }
+        function matchesSearchAlias(value, aliases) {
+            return aliases.includes(value);
         }
         function getTaskSearchText(task) {
             return [

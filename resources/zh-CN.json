@@ -24,7 +24,9 @@
   },
   "search": {
     "placeholder": "搜索任务...",
-    "clear": "清空搜索"
+    "clear": "清空搜索",
+    "syntaxTitle": "支持 project:工作、tag:学习、status:completed、due:today 和 #标签",
+    "syntaxHint": "支持限定搜索：project:项目、tag:标签、status:状态、due:日期。"
   },
   "pwa": {
     "install": {
