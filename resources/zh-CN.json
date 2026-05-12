@@ -27,6 +27,17 @@
     "clear": "清空搜索"
   },
   "pwa": {
+    "install": {
+      "menu": "安装应用",
+      "menuTitle": "安装应用或查看安装方式",
+      "title": "安装 Task Tracer",
+      "installed": "应用已安装",
+      "accepted": "已开始安装应用",
+      "manualIntro": "如果浏览器没有自动弹出安装窗口，可以按下面方式安装：",
+      "desktop": "Chrome 或 Edge 桌面端：点击地址栏右侧的安装图标，或在浏览器菜单中选择安装应用。",
+      "android": "Android Chrome：打开浏览器菜单，选择“安装应用”或“添加到主屏幕”。",
+      "ios": "iPhone 或 iPad Safari：点击分享按钮，然后选择“添加到主屏幕”。"
+    },
     "update": {
       "label": "应用更新",
       "message": "新版本已准备好，刷新后即可使用最新功能。",

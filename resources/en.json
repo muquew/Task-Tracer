@@ -27,6 +27,17 @@
     "clear": "Clear search"
   },
   "pwa": {
+    "install": {
+      "menu": "Install App",
+      "menuTitle": "Install the app or view install steps",
+      "title": "Install Task Tracer",
+      "installed": "App installed",
+      "accepted": "App installation started",
+      "manualIntro": "If the browser does not show an install window automatically, use the matching browser path:",
+      "desktop": "Chrome or Edge on desktop: use the install icon in the address bar, or choose Install app from the browser menu.",
+      "android": "Chrome on Android: open the browser menu, then choose Install app or Add to Home screen.",
+      "ios": "Safari on iPhone or iPad: tap Share, then choose Add to Home Screen."
+    },
     "update": {
       "label": "App update",
       "message": "A new version is ready. Refresh to use the latest app.",

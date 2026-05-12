@@ -654,6 +654,7 @@
     <symbol id="icon-export" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4V15"/><path d="M8 8L12 4L16 8"/><path d="M5 20H19"/></symbol>
     <symbol id="icon-import" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5V16"/><path d="M8 12L12 16L16 12"/><path d="M5 20H19"/></symbol>
     <symbol id="icon-backup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5V15C5 16.66 8.13 18 12 18C15.87 18 19 16.66 19 15V5"/><path d="M5 10C5 11.66 8.13 13 12 13C15.87 13 19 11.66 19 10"/><path d="M9 20L11 22L15 18"/></symbol>
+    <symbol id="icon-install" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4H19A2 2 0 0 1 21 6V18A2 2 0 0 1 19 20H5A2 2 0 0 1 3 18V6A2 2 0 0 1 5 4Z"/><path d="M12 7V15"/><path d="M8.5 11.5L12 15L15.5 11.5"/><path d="M9 18H15"/></symbol>
     <symbol id="icon-trash-lines" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.75 5.75C5.75 4.7835 6.5335 4 7.5 4H16.5C17.4665 4 18.25 4.7835 18.25 5.75V8.25H5.75V5.75Z"/><path d="M4 8.25H20"/><path d="M17.5 8.25V17.5C17.5 18.8807 16.3807 20 15 20H9C7.61929 20 6.5 18.8807 6.5 17.5V8.25"/><path d="M9.5 11.25V16.25"/><path d="M14.5 11.25V16.25"/></symbol>
     <symbol id="icon-archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V8"/><path d="M1 3H23V8H1Z"/><path d="M10 12H14"/></symbol>
     <symbol id="icon-archive-restore" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V8"/><path d="M1 3H23V8H1Z"/><path d="M12 12V18"/><path d="M9 15L12 12L15 15"/></symbol>
@@ -716,6 +717,10 @@
                 <button class="menu-item" role="menuitem" data-i18n-title="actions.importTitle" id="importBtn" title="导入并替换当前任务数据">
                     <svg class="icon"><use href="#icon-import"></use></svg>
                     <span data-i18n="actions.import">导入</span>
+                </button>
+                <button class="menu-item" role="menuitem" data-i18n-title="pwa.install.menuTitle" id="installAppBtn" title="安装应用或查看安装方式" hidden>
+                    <svg class="icon"><use href="#icon-install"></use></svg>
+                    <span data-i18n="pwa.install.menu">安装应用</span>
                 </button>
                 <div class="menu-divider" role="separator"></div>
                 <button class="menu-item" role="menuitem" data-i18n-title="actions.archiveCompletedTitle" id="archiveCompletedBtn" title="归档所有已完成任务">
@@ -1016,7 +1021,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.2'
+                RESOURCE_VERSION: '4.3'
             },
             BACKUP: {
                 FILE_VERSION: '2.1',
@@ -1066,6 +1071,7 @@
             serviceWorkerRegistration: null,
             updatePromptDismissed: false,
             refreshingForUpdate: false,
+            deferredInstallPrompt: null,
         };
         const DOM = {};
         function cacheDOM() {
@@ -1112,6 +1118,7 @@
                 exportBtn: document.getElementById('exportBtn'),
                 backupBtn: document.getElementById('backupBtn'),
                 importBtn: document.getElementById('importBtn'),
+                installBtn: document.getElementById('installAppBtn'),
                 archiveCompletedBtn: document.getElementById('archiveCompletedBtn'),
                 fileInput: document.getElementById('importFile')
             };
@@ -1151,6 +1158,7 @@
                 renderTaskList();
                 startProgressTimer();
                 scheduleBackupReminder();
+                initInstallPrompt();
                 initServiceWorkerUpdates();
             } catch (error) {
                 console.error('初始化失败:', error);
@@ -1334,6 +1342,58 @@
             DOM.updatePrompt.reloadBtn.addEventListener('click', applyServiceWorkerUpdate);
             DOM.updatePrompt.dismissBtn.addEventListener('click', hideUpdatePrompt);
         }
+        function initInstallPrompt() {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                state.deferredInstallPrompt = e;
+                syncInstallEntry();
+            });
+            window.addEventListener('appinstalled', () => {
+                state.deferredInstallPrompt = null;
+                syncInstallEntry();
+                utils.notify(utils.translate('pwa.install.installed'));
+            });
+            syncInstallEntry();
+        }
+        function syncInstallEntry() {
+            DOM.menu.installBtn.hidden = isAppInstalled();
+        }
+        function isAppInstalled() {
+            return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        }
+        async function handleInstallAppClick() {
+            closeMenu();
+            if (!state.deferredInstallPrompt) {
+                showInstallHelp();
+                return;
+            }
+            const promptEvent = state.deferredInstallPrompt;
+            state.deferredInstallPrompt = null;
+            promptEvent.prompt();
+            const choice = await promptEvent.userChoice;
+            syncInstallEntry();
+            if (choice?.outcome === 'accepted') {
+                utils.notify(utils.translate('pwa.install.accepted'));
+            }
+        }
+        function showInstallHelp() {
+            utils.confirm(utils.translate('pwa.install.title'), createInstallHelpContent(), () => {});
+        }
+        function createInstallHelpContent() {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'confirm-details';
+            const intro = document.createElement('p');
+            intro.textContent = utils.translate('pwa.install.manualIntro');
+            const list = document.createElement('ul');
+            list.className = 'confirm-list';
+            ['pwa.install.desktop', 'pwa.install.android', 'pwa.install.ios'].forEach(key => {
+                const item = document.createElement('li');
+                item.textContent = utils.translate(key);
+                list.appendChild(item);
+            });
+            wrapper.append(intro, list);
+            return wrapper;
+        }
         function initServiceWorkerUpdates() {
             if (!('serviceWorker' in navigator)) return;
             navigator.serviceWorker.addEventListener('controllerchange', () => {
@@ -1392,6 +1452,7 @@
             DOM.menu.exportBtn.addEventListener('click', exportTasks);
             DOM.menu.backupBtn.addEventListener('click', backupTasks);
             DOM.menu.importBtn.addEventListener('click', () => DOM.menu.fileInput.click());
+            DOM.menu.installBtn.addEventListener('click', handleInstallAppClick);
             DOM.menu.archiveCompletedBtn.addEventListener('click', handleArchiveCompleted);
             DOM.menu.fileInput.addEventListener('change', (e) => importTasks(e.target.files[0]));
         }
