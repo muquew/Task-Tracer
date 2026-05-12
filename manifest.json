@@ -1,21 +1,29 @@
 {
+  "id": "./",
   "name": "Task Tracer",
   "short_name": "TaskTracer",
-  "start_url": "./index.html",
+  "description": "A local-first personal task, routine, and reminder manager.",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#edf2f8",
   "theme_color": "#2563eb",
   "orientation": "portrait-primary",
+  "categories": ["productivity", "utilities"],
   "icons": [
     {
       "src": "fav/android-chrome-192x192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any"
     },
     {
       "src": "fav/android-chrome-512x512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ]
 }

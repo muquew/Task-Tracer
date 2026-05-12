@@ -193,6 +193,17 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
         version = resource_version(index_html)
         assets = service_worker_assets(sw_source)
 
+        if (REPO_ROOT / "fav" / "site.webmanifest").exists():
+            errors.append("Use only manifest.json; fav/site.webmanifest must not exist")
+        if not re.search(r"<link\s+rel=\"manifest\"\s+id=\"manifestLink\"\s+href=\"\./manifest\.json\"", index_html):
+            errors.append("index.html must link the canonical ./manifest.json")
+        if "application/manifest+json" in index_html or "__TASK_TRACER_MANIFEST_URL__" in index_html:
+            errors.append("Manifest must remain a stable static file, not a runtime blob")
+
+        for key in ("id", "name", "short_name", "description", "start_url", "scope", "display", "theme_color", "background_color"):
+            if not manifest.get(key):
+                errors.append(f"manifest.json is missing required field: {key}")
+
         required_assets = {"./", "./index.html", "./manifest.json"}
         required_assets.update(f"./resources/{code}.json?v={version}" for code in languages)
         for icon_path in manifest_icon_paths(manifest):

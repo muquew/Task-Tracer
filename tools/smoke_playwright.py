@@ -805,17 +805,10 @@ def exercise_theme(page: Page) -> None:
     stored = page.evaluate("localStorage.getItem('theme')")
     theme_color = page.locator('meta[name="theme-color"]').get_attribute("content")
     expected_theme_color = "#0f1117" if after == "dark" else "#2563eb"
-    expected_manifest_background = "#151923" if after == "dark" else "#edf2f8"
-    manifest_theme = page.evaluate(
+    manifest_path = page.evaluate(
         """async () => {
             const href = document.querySelector('#manifestLink').href;
-            const response = await fetch(href);
-            const manifest = await response.json();
-            return {
-                href,
-                themeColor: manifest.theme_color,
-                backgroundColor: manifest.background_color
-            };
+            return new URL(href).pathname;
         }"""
     )
     if (
@@ -823,13 +816,12 @@ def exercise_theme(page: Page) -> None:
         or after not in {"light", "dark"}
         or stored != after
         or theme_color != expected_theme_color
-        or manifest_theme["themeColor"] != expected_theme_color
-        or manifest_theme["backgroundColor"] != expected_manifest_background
+        or not manifest_path.endswith("/manifest.json")
     ):
         raise AssertionError(
             "Theme toggle failed: "
             f"before={before}, after={after}, stored={stored}, "
-            f"theme_color={theme_color}, manifest_theme={manifest_theme}"
+            f"theme_color={theme_color}, manifest_path={manifest_path}"
         )
 
 
