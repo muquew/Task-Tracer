@@ -34,6 +34,35 @@
     "submit": "Add",
     "hint": "Enter a natural date, time, #tag, and /project."
   },
+  "commandPalette": {
+    "title": "Command Palette",
+    "close": "Close command palette",
+    "searchLabel": "Search commands",
+    "placeholder": "Search commands, views, or projects",
+    "hint": "Use the arrow keys to choose a command, then press Enter.",
+    "listLabel": "Available commands",
+    "empty": "No matching commands",
+    "groups": {
+      "tasks": "Tasks",
+      "views": "Views",
+      "data": "Data",
+      "projects": "Projects"
+    },
+    "commands": {
+      "newTask": "New task",
+      "quickAdd": "Focus quick add",
+      "search": "Search tasks",
+      "export": "Export tasks",
+      "backup": "Back up now",
+      "project": "Switch project: {project}",
+      "view": {
+        "list": "Switch to list view",
+        "calendar": "Switch to calendar view",
+        "timeline": "Switch to timeline view",
+        "stats": "Switch to stats view"
+      }
+    }
+  },
   "pwa": {
     "install": {
       "menu": "Install App",

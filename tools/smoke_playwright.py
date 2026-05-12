@@ -683,6 +683,37 @@ def exercise_project_tags(page: Page, alpha_name: str, beta_name: str) -> None:
     select_project(page, "all")
 
 
+def exercise_command_palette(page: Page, alpha_name: str, beta_name: str) -> None:
+    page.keyboard.press("Control+P")
+    expect(page.locator("#commandPalette")).to_be_visible()
+    page.locator("#commandPaletteInput").fill("calendar")
+    page.keyboard.press("Enter")
+    expect(page.locator("#commandPalette")).to_be_hidden()
+    expect(page.locator('#viewTab-calendar')).to_have_attribute("aria-selected", "true")
+
+    page.keyboard.press("Control+P")
+    page.locator("#commandPaletteInput").fill("Smoke Work")
+    page.keyboard.press("Enter")
+    expect(page.locator("#currentProjectLabel")).to_have_text("Smoke Work")
+    expect(task_locator(page, alpha_name)).to_have_count(1)
+    expect(task_locator(page, beta_name)).to_have_count(0)
+
+    page.keyboard.press("Control+P")
+    page.locator("#commandPaletteInput").fill("新建任务")
+    page.keyboard.press("Enter")
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#cancelBtn").click()
+
+    page.keyboard.press("Control+P")
+    page.locator("#commandPaletteInput").fill("backup")
+    expect(page.locator("#commandPaletteList .command-item").first).to_contain_text(re.compile("备份|Back up", re.I))
+    page.keyboard.press("Escape")
+    expect(page.locator("#commandPalette")).to_be_hidden()
+
+    page.locator("#viewTab-list").click()
+    select_project(page, "all")
+
+
 def snooze_task_reminder(page: Page, task_name: str) -> None:
     task = task_locator(page, task_name)
     expect(task.locator('[data-action="snooze"]')).to_be_visible()
@@ -1917,6 +1948,7 @@ def smoke(url: str) -> None:
         exercise_advanced_repeat_task(page, advanced_repeat_name, paused_repeat_name)
         add_task(page, alpha_name, no_deadline=True, project="Smoke Work", tags=["focus", "docs"], subtasks=["First smoke subtask", "Second smoke subtask"])
         add_task(page, beta_name, due_date=future_date(1), due_time="12:30", reminder_offset="15", project="Smoke Personal", tags=["deadline"])
+        exercise_command_palette(page, alpha_name, beta_name)
         expect(task_locator(page, beta_name).locator(".task-reminder-icon")).to_be_visible()
         snooze_task_reminder(page, beta_name)
         add_overdue_task_record(page, overdue_name, order=30_000)

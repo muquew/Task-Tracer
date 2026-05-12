@@ -34,6 +34,35 @@
     "submit": "添加",
     "hint": "可输入自然日期、时间、#标签 和 /项目。"
   },
+  "commandPalette": {
+    "title": "命令面板",
+    "close": "关闭命令面板",
+    "searchLabel": "搜索命令",
+    "placeholder": "搜索命令、视图或项目",
+    "hint": "使用上下方向键选择命令，按回车执行。",
+    "listLabel": "可用命令",
+    "empty": "没有匹配的命令",
+    "groups": {
+      "tasks": "任务",
+      "views": "视图",
+      "data": "数据",
+      "projects": "项目"
+    },
+    "commands": {
+      "newTask": "新建任务",
+      "quickAdd": "聚焦快速添加",
+      "search": "搜索任务",
+      "export": "导出任务",
+      "backup": "立即备份",
+      "project": "切换项目：{project}",
+      "view": {
+        "list": "切换到列表视图",
+        "calendar": "切换到日历视图",
+        "timeline": "切换到时间线视图",
+        "stats": "切换到统计视图"
+      }
+    }
+  },
   "pwa": {
     "install": {
       "menu": "安装应用",
