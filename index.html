@@ -208,6 +208,25 @@
             backdrop-filter: blur(14px);
             transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-theme-duration) var(--motion-theme-ease), transform var(--motion-fast);
         }
+        .quick-add-bar {
+            position: relative;
+            z-index: 680;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 10px;
+            align-items: center;
+            margin: 12px 0 8px;
+            padding: 10px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-surface);
+            background: var(--controls-bg);
+            box-shadow: 0 8px 24px var(--shadow-base);
+            backdrop-filter: blur(14px);
+        }
+        .quick-add-input-wrap { position: relative; min-width: 0; }
+        .quick-add-input-wrap .icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); pointer-events: none; }
+        .quick-add-input { min-height: 42px; padding-left: 40px; padding-right: 12px; }
+        .quick-add-submit { min-width: 88px; }
         .search-box { position: relative; display: flex; align-items: center; flex: 1; margin-bottom: 0; }
         .search-input { width: 100%; min-height: 42px; padding: 10px 86px 10px 12px; border: 1px solid var(--border-base); border-radius: var(--radius-control); font-size: 14px; background-color: var(--field-bg); color: var(--text-main); transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-fast); }
         .search-clear-btn { position: absolute; right: 52px; top: 50%; transform: translateY(-50%); z-index: 3; width: 26px; height: 26px; border: 1px solid transparent; border-radius: var(--radius-control); background: transparent; color: var(--text-tertiary); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 4px; transition: background-color var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast); }
@@ -565,6 +584,8 @@
             h1 { font-size: 19px; }
             .subtitle { font-size: 12px; }
             .menu { top: 54px; right: 0; }
+            .quick-add-bar { grid-template-columns: minmax(0, 1fr) auto; padding: 8px; gap: 8px; }
+            .quick-add-submit { min-width: 68px; padding-inline: 12px; }
             .controls-bar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: 8px; gap: 8px; }
             .view-switcher { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
             .search-box { width: 100%; flex: none; min-width: 0; }
@@ -756,6 +777,15 @@
         <input accept=".json" class="file-input" id="importFile" type="file">
     </header>
     <main class="main-content" id="mainContent">
+        <form class="quick-add-bar" id="quickAddForm" aria-label="快速添加任务" data-i18n-aria-label="quickAdd.label">
+            <div class="quick-add-input-wrap">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-plus"></use></svg>
+                <label for="quickAddInput" class="sr-only" data-i18n="quickAdd.label">快速添加任务</label>
+                <input id="quickAddInput" class="quick-add-input" data-i18n-placeholder="quickAdd.placeholder" placeholder="明天 20:00 复习英语 #学习 /个人" aria-describedby="quickAddHint" autocomplete="off" type="text">
+            </div>
+            <button class="btn btn-primary quick-add-submit" data-i18n="quickAdd.submit" type="submit">添加</button>
+            <p id="quickAddHint" class="sr-only" data-i18n="quickAdd.hint">可输入自然日期、时间、#标签 和 /项目。</p>
+        </form>
         <div class="controls-bar" role="toolbar" aria-label="任务工具栏" data-i18n-aria-label="app.toolbar">
             <div class="view-switcher" id="viewSwitcher" role="tablist" aria-label="视图切换" data-i18n-aria-label="views.label">
                 <button class="view-tab selected" id="viewTab-list" type="button" role="tab" aria-selected="true" aria-controls="taskList" tabindex="0" data-view="list">
@@ -1035,7 +1065,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.6'
+                RESOURCE_VERSION: '4.7'
             },
             BACKUP: {
                 FILE_VERSION: '2.1',
@@ -1097,6 +1127,8 @@
             DOM.clearCompletedBtn = document.getElementById('clearCompletedBtn');
             DOM.clearSearchBtn = document.getElementById('clearSearchBtn');
             DOM.notificationToggleBtn = document.getElementById('notificationToggleBtn');
+            DOM.quickAddForm = document.getElementById('quickAddForm');
+            DOM.quickAddInput = document.getElementById('quickAddInput');
             DOM.modal = document.getElementById('taskModal');
             DOM.form = document.getElementById('taskForm');
             DOM.openModalBtn = document.getElementById('openModalBtn');
@@ -1257,6 +1289,7 @@
             bindNotificationEvents();
             setupDropdowns();
             bindMenuEvents();
+            bindQuickAddEvents();
             bindTaskListEvents();
             bindSubtaskInputEvents();
             bindSubtaskPreviewEvents();
@@ -1309,6 +1342,9 @@
                 setViewMode(tab.dataset.view);
             });
             DOM.viewSwitcher.addEventListener('keydown', handleViewSwitcherKeydown);
+        }
+        function bindQuickAddEvents() {
+            DOM.quickAddForm.addEventListener('submit', handleQuickAddSubmit);
         }
         function handleViewSwitcherKeydown(e) {
             if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
@@ -1682,6 +1718,135 @@
                 console.error('保存任务失败:', err);
                 utils.notify(t['messages.task.saveError'], 'error');
             }
+        }
+        async function handleQuickAddSubmit(e) {
+            e.preventDefault();
+            const t = state.translations[state.currentLanguage];
+            const rawInput = DOM.quickAddInput.value.trim();
+            if (!rawInput) {
+                utils.notify(t['messages.task.nameRequired'], 'warning');
+                DOM.quickAddInput.focus();
+                return;
+            }
+            const taskPayload = buildTaskPayloadFromQuickAdd(rawInput);
+            if (!taskPayload.name) {
+                utils.notify(t['messages.task.nameRequired'], 'warning');
+                DOM.quickAddInput.focus();
+                return;
+            }
+            try {
+                await dbActions.addTask(createTaskRecord(taskPayload));
+                DOM.quickAddInput.value = '';
+                utils.notify(t['messages.task.added']);
+                await refreshTasks();
+            } catch (err) {
+                console.error('快速添加任务失败:', err);
+                utils.notify(t['messages.task.saveError'], 'error');
+            }
+        }
+        function buildTaskPayloadFromQuickAdd(rawInput) {
+            const parsed = parseQuickAddInput(rawInput);
+            const dueFields = parsed.date ? createDueFields(parsed.date, parsed.time || CONFIG.DEFAULTS.TIME) : clearDueFields();
+            const hasDueDate = Boolean(dueFields.dueAt);
+            return {
+                name: parsed.name,
+                description: '',
+                project: parsed.project,
+                tags: parsed.tags,
+                subtasks: [],
+                ...dueFields,
+                reminderOffset: hasDueDate ? CONFIG.NOTIFICATIONS.DEFAULT_OFFSET_MINUTES : -1,
+                reminderRepeat: -1,
+                repeatType: 'none',
+                repeatInterval: 1,
+                order: getNextTaskOrder()
+            };
+        }
+        function parseQuickAddInput(rawInput) {
+            const tokens = String(rawInput || '').trim().match(/\S+/g) || [];
+            const contentTokens = [];
+            const tags = [];
+            let project = '';
+            tokens.forEach(token => {
+                if (token.startsWith('#') && token.length > 1) {
+                    tags.push(token.slice(1));
+                    return;
+                }
+                if (token.startsWith('/') && token.length > 1) {
+                    project = token.slice(1);
+                    return;
+                }
+                contentTokens.push(token);
+            });
+            const consumed = new Set();
+            let date = '';
+            let time = '';
+            contentTokens.forEach((token, index) => {
+                if (!date) {
+                    const parsedDate = parseQuickAddDateToken(token);
+                    if (parsedDate) {
+                        date = parsedDate;
+                        consumed.add(index);
+                        return;
+                    }
+                }
+                if (!time) {
+                    const parsedTime = parseQuickAddTimeToken(token);
+                    if (parsedTime) {
+                        time = parsedTime;
+                        consumed.add(index);
+                    }
+                }
+            });
+            if (time && !date) date = utils.formatDateInputValue();
+            return {
+                name: contentTokens.filter((_, index) => !consumed.has(index)).join(' ').trim(),
+                date,
+                time,
+                project: normalizeTaskProject(project),
+                tags: normalizeTaskTags(tags)
+            };
+        }
+        function parseQuickAddDateToken(token) {
+            const text = String(token || '').trim();
+            const lower = text.toLowerCase();
+            const relativeDates = new Map([
+                ['今天', 0],
+                ['今日', 0],
+                ['today', 0],
+                ['明天', 1],
+                ['tomorrow', 1],
+                ['后天', 2]
+            ]);
+            if (relativeDates.has(lower)) return formatDateWithOffset(relativeDates.get(lower));
+            const fullDate = text.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
+            if (fullDate) return formatQuickDateParts(Number(fullDate[1]), Number(fullDate[2]), Number(fullDate[3]), false);
+            const monthDay = text.match(/^(\d{1,2})[-/](\d{1,2})$/) || text.match(/^(\d{1,2})月(\d{1,2})日?$/);
+            if (monthDay) return formatQuickDateParts(new Date().getFullYear(), Number(monthDay[1]), Number(monthDay[2]), true);
+            return '';
+        }
+        function parseQuickAddTimeToken(token) {
+            const text = String(token || '').trim().replace('：', ':');
+            const colonTime = text.match(/^([01]?\d|2[0-3]):([0-5]\d)$/);
+            if (colonTime) return `${String(Number(colonTime[1])).padStart(2, '0')}:${colonTime[2]}`;
+            const chineseTime = text.match(/^([01]?\d|2[0-3])(?:点|时)([0-5]?\d)?分?$/);
+            if (chineseTime) return `${String(Number(chineseTime[1])).padStart(2, '0')}:${String(Number(chineseTime[2] || 0)).padStart(2, '0')}`;
+            return '';
+        }
+        function formatDateWithOffset(days) {
+            const date = new Date();
+            date.setDate(date.getDate() + days);
+            return utils.formatDateInputValue(date);
+        }
+        function formatQuickDateParts(year, month, day, rollPastDates) {
+            const date = new Date(year, month - 1, day, 12, 0, 0, 0);
+            if (!isValidDate(date) || date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return '';
+            if (rollPastDates) {
+                const today = new Date();
+                const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                if (date < todayStart) date.setFullYear(date.getFullYear() + 1);
+            }
+            return utils.formatDateInputValue(date);
         }
         function buildTaskPayloadFromForm() {
             const dueFields = (!DOM.inputs.noDeadline.checked && DOM.inputs.date.value)

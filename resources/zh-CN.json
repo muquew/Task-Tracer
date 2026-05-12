@@ -28,6 +28,12 @@
     "syntaxTitle": "支持 project:工作、tag:学习、status:completed、due:today 和 #标签",
     "syntaxHint": "支持限定搜索：project:项目、tag:标签、status:状态、due:日期。"
   },
+  "quickAdd": {
+    "label": "快速添加任务",
+    "placeholder": "明天 20:00 复习英语 #学习 /个人",
+    "submit": "添加",
+    "hint": "可输入自然日期、时间、#标签 和 /项目。"
+  },
   "pwa": {
     "install": {
       "menu": "安装应用",

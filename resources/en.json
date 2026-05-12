@@ -28,6 +28,12 @@
     "syntaxTitle": "Supports project:work, tag:study, status:completed, due:today, and #tag",
     "syntaxHint": "Supports scoped search: project:name, tag:name, status:value, and due:value."
   },
+  "quickAdd": {
+    "label": "Quick add task",
+    "placeholder": "tomorrow 20:00 Review English #study /Personal",
+    "submit": "Add",
+    "hint": "Enter a natural date, time, #tag, and /project."
+  },
   "pwa": {
     "install": {
       "menu": "Install App",

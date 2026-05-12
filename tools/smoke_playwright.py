@@ -599,6 +599,39 @@ def add_task(
     expect(task.first.locator(".task-name")).to_contain_text(task_name)
 
 
+def exercise_quick_add(page: Page, task_name: str) -> None:
+    page.locator("#quickAddInput").fill(f"tomorrow 20:00 {task_name} #quick /SmokeQuick")
+    page.locator("#quickAddInput").press("Enter")
+    expect(task_locator(page, task_name)).to_have_count(1)
+    record = page.evaluate(
+        """async (taskName) => {
+            const request = indexedDB.open('TaskTrackerDB', 2);
+            return await new Promise((resolve, reject) => {
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readonly');
+                    const getAll = tx.objectStore('tasks').getAll();
+                    getAll.onsuccess = () => {
+                        const task = getAll.result.find((item) => item.name === taskName);
+                        db.close();
+                        resolve(task || null);
+                    };
+                    getAll.onerror = () => reject(getAll.error);
+                };
+            });
+        }""",
+        task_name,
+    )
+    if not record:
+        raise AssertionError("Quick add did not create a task record")
+    if record["project"] != "SmokeQuick" or "quick" not in record["tags"]:
+        raise AssertionError(f"Quick add did not parse project/tags: {record}")
+    if record["dueLocalTime"] != "20:00" or not record["dueLocalDate"]:
+        raise AssertionError(f"Quick add did not parse due date/time: {record}")
+    delete_task_records_by_name(page, task_name)
+
+
 def exercise_project_tags(page: Page, alpha_name: str, beta_name: str) -> None:
     alpha = task_locator(page, alpha_name)
     expect(alpha.locator(".project-chip")).to_contain_text("Smoke Work")
@@ -1723,6 +1756,7 @@ def smoke(url: str) -> None:
     beta_name = f"{task_name} Beta"
     overdue_name = f"{task_name} Overdue"
     imported_name = f"{task_name} Imported"
+    quick_name = f"{task_name} Quick"
     repeat_name = f"{task_name} Repeat"
 
     with sync_playwright() as playwright:
@@ -1769,6 +1803,7 @@ def smoke(url: str) -> None:
         assert_service_worker_and_offline_load(context, page)
         assert_pwa_installability(page)
 
+        exercise_quick_add(page, quick_name)
         exercise_subtask_draft_editor(page)
         exercise_repeating_task(page, repeat_name)
         add_task(page, alpha_name, no_deadline=True, project="Smoke Work", tags=["focus", "docs"], subtasks=["First smoke subtask", "Second smoke subtask"])
