@@ -34,7 +34,7 @@ It works well for study plans, personal operations, project follow-ups, routine 
 | Recurring tasks | Daily, weekly, monthly, and custom-day recurrence; completing one occurrence creates the next one while preserving the completed record. |
 | Reminders | Reminder offset, repeat reminder interval, snooze, missed-reminder catch-up, notification permission handling, and clear background-delivery messaging. |
 | Projects and tags | One primary project per task, multiple tags per task, project-scoped views, tag chips, and project/tag-aware search. |
-| Search and filters | Search task names, descriptions, projects, and tags; filter by all, active, completed, archived, overdue, and no deadline. |
+| Search and filters | Search task names, descriptions, projects, tags, and subtasks; use scoped search syntax for project, tag, status, and due-date queries. |
 | Sorting and ordering | Smart sorting, newest-created order, due-date order, alphabetical order, manual drag-and-drop order, touch reorder, and keyboard reorder. |
 | Views | List, calendar, timeline, and statistics views for daily work, date review, chronological scanning, and personal productivity feedback. |
 | Data portability | JSON export, import preview, duplicate-name reporting, replace mode, merge mode, and versioned local backup downloads. |
@@ -58,7 +58,28 @@ Projects are the main grouping layer. A task belongs to one project, such as `Wo
 
 Tags are flexible secondary labels. A task can have multiple tags, such as `design`, `exam`, or `follow-up`. Tags are useful when related work crosses project boundaries.
 
-Search matches task names, descriptions, project names, and tags. Projects organize the primary task space, while tags add extra searchable meaning across project groups.
+Search matches task names, descriptions, project names, tags, and subtask text. Projects organize the primary task space, while tags add extra searchable meaning across project groups.
+
+Scoped search can be typed directly into the search box and combined with normal keywords:
+
+| Query | Finds |
+| --- | --- |
+| `project:Work` | Tasks whose project name contains `Work`. |
+| `tag:study` or `#study` | Tasks with a matching tag. |
+| `status:active` | Active, unfinished tasks. |
+| `status:completed` | Completed tasks. |
+| `status:archived` | Archived tasks, even when the main filter is set to active. |
+| `status:overdue` | Unfinished tasks that are already overdue. |
+| `status:no-deadline` | Tasks without a due date. |
+| `status:repeat` | Recurring tasks. |
+| `due:today` | Tasks due today. |
+| `due:tomorrow` | Tasks due tomorrow. |
+| `due:week` | Tasks due in the next seven days. |
+| `due:2025-05-20` | Tasks due on a specific local date. |
+| `due:no-deadline` | Tasks without a due date. |
+| `project:Work tag:report` | Tasks matching both scopes. |
+
+Search values are space-separated. For multi-word project or tag names, use a distinctive part of the name, such as `project:Work` instead of `project:Work Plan`.
 
 ## Views
 
