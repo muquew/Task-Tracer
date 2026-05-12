@@ -164,7 +164,7 @@
       "hint": "标签会参与搜索。"
     },
     "dueDate": {
-      "label": "截止日期 (可选)"
+      "label": "截止日期"
     },
     "noDeadline": "无截止日期",
     "reminder": {

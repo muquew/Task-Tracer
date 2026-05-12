@@ -164,7 +164,7 @@
       "hint": "Tags are included in search."
     },
     "dueDate": {
-      "label": "Due Date (optional)"
+      "label": "Due Date"
     },
     "noDeadline": "No Deadline",
     "reminder": {
