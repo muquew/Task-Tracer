@@ -1384,6 +1384,8 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         if not any(re.search(r"(匹配当前任务|Matches current tasks)[\s\S]*1", row, re.I) for row in rows):
             raise AssertionError(f"Import preview did not report current task matches: {rows}")
         expect(page.locator(".confirm-list")).to_have_count(2)
+        expect(page.locator(".import-conflict-select")).to_have_count(1)
+        expect(page.locator(".import-conflict-select")).to_have_value("keep")
         expect(page.locator("#confirm-message-text")).to_contain_text("Preview Duplicate")
         expect(page.locator("#confirm-message-text")).to_contain_text(existing_name)
         page.locator("#cancelBtn").click()

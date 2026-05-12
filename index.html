@@ -439,6 +439,11 @@
         .confirm-option span { display: block; color: var(--text-tertiary); font-size: 12px; font-weight: 650; margin-top: 3px; }
         .confirm-list-title { color: var(--text-main); font-size: 13px; font-weight: 800; }
         .confirm-list { margin: 0; padding-left: 18px; color: var(--text-secondary); font-size: 13px; }
+        .import-conflict-list { display: grid; gap: 8px; }
+        .import-conflict-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(130px, 170px); gap: 10px; align-items: center; padding: 10px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface-alt); }
+        .import-conflict-name { min-width: 0; font-size: 13px; font-weight: 760; color: var(--text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .import-conflict-meta { display: block; margin-top: 3px; font-size: 12px; font-weight: 650; color: var(--text-tertiary); }
+        .import-conflict-select { min-height: 38px; font-size: 13px; }
         .btn { min-height: 40px; padding: 10px 18px; border-radius: var(--radius-control); font-size: 14px; font-weight: 760; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
         .btn-primary { background: var(--color-primary); color: var(--text-inverse); }
         .btn-primary:hover { background: var(--color-primary-dark); transform: translateY(-1px); box-shadow: 0 8px 18px var(--shadow-base); }
@@ -594,6 +599,7 @@
             .datetime-group { flex-direction: column; gap: 8px; }
             .repeat-custom-row { grid-template-columns: 1fr; gap: 6px; }
             .repeat-custom-row label { margin-bottom: 0; }
+            .import-conflict-row { grid-template-columns: 1fr; }
             header { flex-direction: row; align-items: flex-start; }
             .header-actions { display: flex; flex-direction: row; gap: 3px; align-items: flex-end; }
             .icon-btn { font-size: 10px; padding: 6px 8px; min-width: 32px; min-height: 32px; }
@@ -1021,7 +1027,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.3'
+                RESOURCE_VERSION: '4.4'
             },
             BACKUP: {
                 FILE_VERSION: '2.1',
@@ -3651,6 +3657,13 @@
                 store => tasks.forEach(task => store.put(task)),
                 'Update tasks transaction aborted'
             ),
+            mergeImportedTasks: (tasks, idsToDelete) => dbActions.writeTaskTransaction(
+                store => {
+                    idsToDelete.forEach(id => store.delete(id));
+                    tasks.forEach(task => store.put(task));
+                },
+                'Merge imported tasks transaction aborted'
+            ),
             deleteTasks: (ids) => dbActions.writeTaskTransaction(
                 store => ids.forEach(id => store.delete(id)),
                 'Delete tasks transaction aborted'
@@ -4564,13 +4577,15 @@
                     const preview = buildImportPreview(importedTasks);
                     utils.confirm(t['messages.import.previewTitle'], createImportPreviewContent(preview), async () => {
                         try {
-                            const mergeImport = isImportMergeEnabled();
-                            const tasksToStore = mergeImport ? prepareImportedTasksForMerge(importedTasks) : importedTasks;
-                            if (mergeImport) await dbActions.updateTasks(tasksToStore);
-                            else await dbActions.replaceAllTasks(tasksToStore);
+                            const importOptions = getImportOptions();
+                            const preparedImport = importOptions.merge
+                                ? prepareImportedTasksForMerge(importedTasks, importOptions.conflictActions)
+                                : { tasks: importedTasks, idsToDelete: [] };
+                            if (importOptions.merge) await dbActions.mergeImportedTasks(preparedImport.tasks, preparedImport.idsToDelete);
+                            else await dbActions.replaceAllTasks(preparedImport.tasks);
                             clearNotificationDeliveryState();
                             await refreshTasks();
-                            utils.notify(t[mergeImport ? 'messages.import.successMerged' : 'messages.import.success'].replace('{count}', importedTasks.length));
+                            utils.notify(t[importOptions.merge ? 'messages.import.successMerged' : 'messages.import.success'].replace('{count}', preparedImport.tasks.length));
                         } catch (err) {
                             console.error('导入任务失败:', err);
                             utils.notify(t['messages.import.readError'], 'error');
@@ -4594,7 +4609,9 @@
         function buildImportPreview(importedTasks) {
             const importNameOccurrences = getImportNameOccurrences(importedTasks);
             const fileDuplicateNames = getImportFileDuplicateNames(importNameOccurrences);
-            const existingDuplicateNames = getImportExistingDuplicateNames(importNameOccurrences);
+            const existingByName = getExistingTasksByName();
+            const existingDuplicateNames = getImportExistingDuplicateNames(importNameOccurrences, existingByName);
+            const conflicts = getImportConflicts(importedTasks, existingByName);
             const completedCount = state.tasks.filter(task => task.completed).length;
             const archivedCount = state.tasks.filter(task => task.archived).length;
             return {
@@ -4603,7 +4620,8 @@
                 completedCount,
                 archivedCount,
                 fileDuplicateNames,
-                existingDuplicateNames
+                existingDuplicateNames,
+                conflicts
             };
         }
         function getImportNameOccurrences(importedTasks) {
@@ -4620,11 +4638,33 @@
                 .filter(item => item.count > 1)
                 .map(item => item.label);
         }
-        function getImportExistingDuplicateNames(names) {
-            const existing = new Set(state.tasks.map(task => normalizeTaskNameForCompare(task.name)).filter(Boolean));
+        function getImportExistingDuplicateNames(names, existingByName = getExistingTasksByName()) {
             return [...names.values()]
-                .filter(item => existing.has(item.key))
+                .filter(item => existingByName.has(item.key))
                 .map(item => item.label);
+        }
+        function getExistingTasksByName() {
+            const existing = new Map();
+            state.tasks.forEach(task => {
+                const key = normalizeTaskNameForCompare(task.name);
+                if (!key) return;
+                if (!existing.has(key)) existing.set(key, []);
+                existing.get(key).push(task);
+            });
+            return existing;
+        }
+        function getImportConflicts(importedTasks, existingByName) {
+            return importedTasks.map((task, index) => {
+                const key = normalizeTaskNameForCompare(task.name);
+                const existing = key ? existingByName.get(key) || [] : [];
+                return {
+                    index,
+                    key,
+                    name: task.name,
+                    existingCount: existing.length,
+                    existingIds: existing.map(item => item.id)
+                };
+            }).filter(conflict => conflict.key && conflict.existingCount > 0);
         }
         function normalizeTaskNameForCompare(name) {
             return String(name || '').trim().toLowerCase();
@@ -4645,7 +4685,53 @@
             wrapper.appendChild(createImportModeOption(t));
             appendImportNameList(wrapper, t['messages.import.previewFileDuplicates'], preview.fileDuplicateNames);
             appendImportNameList(wrapper, t['messages.import.previewExistingMatches'], preview.existingDuplicateNames);
+            wrapper.appendChild(createImportConflictControls(preview, t));
             return wrapper;
+        }
+        function createImportConflictControls(preview, t) {
+            const section = document.createElement('div');
+            section.className = 'import-conflict-list';
+            if (preview.conflicts.length === 0) return section;
+            const title = document.createElement('strong');
+            title.className = 'confirm-list-title';
+            title.textContent = t['messages.import.conflictTitle'];
+            const hint = document.createElement('p');
+            hint.textContent = t['messages.import.conflictHint'];
+            section.append(title, hint);
+            preview.conflicts.forEach(conflict => {
+                section.appendChild(createImportConflictRow(conflict, t));
+            });
+            return section;
+        }
+        function createImportConflictRow(conflict, t) {
+            const row = document.createElement('div');
+            row.className = 'import-conflict-row';
+            const label = document.createElement('label');
+            label.className = 'import-conflict-name';
+            const selectId = `import-conflict-${conflict.index}`;
+            label.htmlFor = selectId;
+            label.textContent = conflict.name;
+            const meta = document.createElement('span');
+            meta.className = 'import-conflict-meta';
+            meta.textContent = t['messages.import.conflictExistingCount'].replace('{count}', conflict.existingCount);
+            label.appendChild(meta);
+            const select = document.createElement('select');
+            select.id = selectId;
+            select.className = 'import-conflict-select';
+            select.dataset.importConflictIndex = String(conflict.index);
+            select.setAttribute('aria-label', t['messages.import.conflictActionLabel'].replace('{name}', conflict.name));
+            [
+                ['keep', 'messages.import.conflictKeep'],
+                ['skip', 'messages.import.conflictSkip'],
+                ['replace', 'messages.import.conflictReplace']
+            ].forEach(([value, key]) => {
+                const option = document.createElement('option');
+                option.value = value;
+                option.textContent = t[key];
+                select.appendChild(option);
+            });
+            row.append(label, select);
+            return row;
         }
         function createImportModeOption(t) {
             const row = document.createElement('div');
@@ -4662,20 +4748,41 @@
             row.append(input, label);
             return row;
         }
-        function isImportMergeEnabled() {
-            return Boolean(document.getElementById('mergeImportMode')?.checked);
+        function getImportOptions() {
+            return {
+                merge: Boolean(document.getElementById('mergeImportMode')?.checked),
+                conflictActions: getImportConflictActions()
+            };
         }
-        function prepareImportedTasksForMerge(importedTasks) {
+        function getImportConflictActions() {
+            const actions = new Map();
+            document.querySelectorAll('[data-import-conflict-index]').forEach(select => {
+                actions.set(Number(select.dataset.importConflictIndex), select.value);
+            });
+            return actions;
+        }
+        function prepareImportedTasksForMerge(importedTasks, conflictActions = new Map()) {
             const usedIds = new Set(state.tasks.map(task => Number(task.id)).filter(Number.isFinite));
             const idMap = new Map();
-            const remapped = importedTasks.map(task => {
+            const existingByName = getExistingTasksByName();
+            const idsToDelete = new Set();
+            const tasksToImport = importedTasks.filter((task, index) => {
+                const key = normalizeTaskNameForCompare(task.name);
+                const existing = key ? existingByName.get(key) || [] : [];
+                if (existing.length === 0) return true;
+                const action = conflictActions.get(index) || 'keep';
+                if (action === 'skip') return false;
+                if (action === 'replace') existing.forEach(item => idsToDelete.add(item.id));
+                return true;
+            });
+            const remapped = tasksToImport.map(task => {
                 const originalId = Number(task.id);
                 const id = normalizeUniqueNumericId(task.id, usedIds);
                 if (Number.isFinite(originalId)) idMap.set(originalId, id);
                 return { ...task, id };
             });
             let order = getNextTaskOrder();
-            return remapped.map(task => {
+            const tasks = remapped.map(task => {
                 const mergedTask = { ...task, order };
                 order += CONFIG.DEFAULTS.ORDER_STEP;
                 ['repeatSourceId', 'repeatCreatedFrom', 'nextRepeatTaskId'].forEach(key => {
@@ -4683,6 +4790,7 @@
                 });
                 return mergedTask;
             });
+            return { tasks, idsToDelete: [...idsToDelete] };
         }
         function appendImportNameList(wrapper, label, names) {
             if (names.length === 0) return;
