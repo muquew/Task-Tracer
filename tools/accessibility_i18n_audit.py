@@ -117,6 +117,7 @@ def assert_layout(page: Page, label: str) -> None:
             const viewportWidth = window.innerWidth;
             const visibleControls = [...document.querySelectorAll('button:not([hidden]), input:not([type="hidden"]), select, textarea, a[href]')]
                 .filter((el) => {
+                    if (el.getAttribute('aria-hidden') === 'true' || el.classList.contains('native-select-hidden')) return false;
                     const rect = el.getBoundingClientRect();
                     const style = getComputedStyle(el);
                     return rect.width > 0 && rect.height > 0 && style.visibility !== 'hidden' && style.display !== 'none';

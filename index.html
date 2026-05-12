@@ -133,6 +133,11 @@
         html[data-theme="dark"] #themeToggleBtn .moon-icon { opacity: 0; transform: rotate(60deg) scale(0.72); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-ui); letter-spacing: 0; }
         [hidden] { display: none !important; }
+        html.modal-open, body.modal-open { overflow: hidden; }
+        body.modal-open { position: relative; }
+        body.modal-open::before { content: ""; position: absolute; inset: 0; min-height: 100%; background: var(--bg-overlay); z-index: 1005; pointer-events: none; }
+        body.modal-open .modal,
+        body.modal-open .command-palette { background: transparent; }
         body {
             background-color: var(--page-bg);
             background-image:
@@ -431,7 +436,7 @@
         .subtask-checkbox { flex: 0 0 32px; padding: 0; appearance: none; -webkit-appearance: none; width: 32px; height: 32px; border: 1px solid var(--border-base); border-radius: 4px; cursor: pointer; position: relative; transition: all 0.2s ease; margin-right: 8px; background-color: var(--bg-surface); }
         .subtask-checkbox:hover { border-color: var(--color-success); background-color: var(--bg-hover); }
         .subtask-checkbox:checked { border-color: var(--color-success); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E"); background-size: 80%; background-position: center; background-repeat: no-repeat; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .modal { display: none; position: fixed; inset: 0; width: 100%; height: 100%; background-color: var(--bg-overlay); z-index: 1000; justify-content: center; align-items: center; padding: 18px; overflow-y: auto; }
+        .modal { display: none; position: fixed; inset: 0; width: 100%; min-height: 100dvh; background-color: var(--bg-overlay); z-index: 1010; justify-content: center; align-items: center; padding: 18px; overflow-y: auto; overscroll-behavior: contain; }
         .modal-content { background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-surface); width: min(620px, calc(100vw - 36px)); max-height: calc(100vh - 36px); box-shadow: 0 24px 60px var(--shadow-heavy); animation: modalAppear 0.3s ease; overflow: hidden; display: flex; flex-direction: column; }
         @keyframes modalAppear { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         .modal-header { background: var(--bg-surface-raised); color: var(--text-main); padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-light); }
@@ -458,6 +463,22 @@
         input:not([type="checkbox"]), textarea, select { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--border-base); border-radius: var(--radius-control); font-size: 14px; line-height: 1.45; transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-fast); background-color: var(--field-bg); color: var(--text-main); }
         select, select.search-input { appearance: none; -webkit-appearance: none; min-height: 44px; padding-right: 42px; background-color: var(--field-bg); background-image: var(--select-chevron); background-repeat: no-repeat; background-position: right 12px center; background-size: 18px; font-weight: 650; }
         input:not([type="checkbox"]):focus, textarea:focus, select:focus { border-color: var(--color-primary); outline: none; box-shadow: 0 0 0 3px var(--color-info-light); background-color: var(--field-bg-focus); }
+        .native-select-hidden { position: absolute !important; width: 1px !important; height: 1px !important; min-height: 1px !important; padding: 0 !important; margin: 0 !important; border: 0 !important; opacity: 0 !important; pointer-events: none !important; }
+        .custom-select { position: relative; width: 100%; }
+        .custom-select-btn { width: 100%; min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border: 1px solid var(--border-base); border-radius: var(--radius-control); background: var(--field-bg); color: var(--text-main); font: inherit; font-size: 14px; font-weight: 650; line-height: 1.45; cursor: pointer; transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-fast); }
+        .custom-select-btn:hover { background: var(--bg-hover); border-color: var(--color-primary); }
+        .custom-select-btn:focus-visible { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px var(--color-info-light); }
+        .custom-select-btn:disabled { cursor: not-allowed; opacity: 0.56; background: var(--bg-surface-alt); }
+        .custom-select-value { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .custom-select-btn .chevron { flex: 0 0 auto; opacity: 0.58; transition: transform var(--motion-fast); }
+        .custom-select.open .custom-select-btn .chevron { transform: rotate(180deg); }
+        .custom-select-menu { position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 1220; display: none; max-height: 220px; overflow-y: auto; padding: 5px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface); box-shadow: 0 16px 36px var(--shadow-float); animation: fadeIn 0.18s ease; }
+        .custom-select.open-up .custom-select-menu { top: auto; bottom: calc(100% + 6px); }
+        .custom-select.open .custom-select-menu { display: grid; gap: 3px; }
+        .custom-select-option { width: 100%; min-height: 36px; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 9px; border: 1px solid transparent; border-radius: var(--radius-control); background: transparent; color: var(--text-main); font: inherit; font-size: 13px; font-weight: 680; text-align: left; cursor: pointer; }
+        .custom-select-option:hover, .custom-select-option.selected { color: var(--color-primary); background: var(--bg-hover); border-color: color-mix(in srgb, var(--color-primary) 20%, transparent); }
+        .custom-select-option svg { opacity: 0; flex: 0 0 auto; }
+        .custom-select-option.selected svg { opacity: 1; }
         input[type="date"]::-webkit-calendar-picker-indicator, input[type="time"]::-webkit-calendar-picker-indicator { opacity: 0.68; cursor: pointer; }
         textarea { min-height: 70px; resize: vertical; }
         .datetime-group { display: flex; gap: 10px; align-items: center; }
@@ -507,7 +528,7 @@
         .update-prompt-message svg { flex: 0 0 auto; color: var(--color-primary); }
         .update-prompt-actions { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
         .update-dismiss-btn { min-width: 40px; padding-inline: 10px; }
-        .command-palette { position: fixed; inset: 0; z-index: 1003; display: flex; align-items: flex-start; justify-content: center; padding: max(72px, env(safe-area-inset-top)) 16px 16px; background: var(--bg-overlay); }
+        .command-palette { position: fixed; inset: 0; z-index: 1020; display: flex; align-items: flex-start; justify-content: center; padding: max(72px, env(safe-area-inset-top)) 16px 16px; background: var(--bg-overlay); }
         .command-palette-panel { width: min(640px, 100%); border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface); color: var(--text-main); box-shadow: 0 24px 60px var(--shadow-heavy); overflow: hidden; animation: modalAppear 0.22s ease; }
         .command-palette-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--border-light); background: var(--bg-surface-raised); }
         .command-palette-title { display: flex; align-items: center; gap: 9px; min-width: 0; font-size: 15px; font-weight: 820; }
@@ -1287,6 +1308,7 @@
                 await initDB();
                 await loadSettings();
                 initLanguage();
+                enhanceSelectControls();
                 markDecorativeIcons();
                 state.tasks = await loadNormalizedTasks();
                 DOM.inputs.date.min = utils.formatDateInputValue();
@@ -1394,6 +1416,7 @@
             window.addEventListener('scroll', () => DOM.backToTopBtn.classList.toggle(CONFIG.UI.CLASSES.SHOW, window.scrollY > 300));
             DOM.backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
             document.addEventListener('keydown', handleKeyboardShortcuts);
+            document.addEventListener('click', closeCustomSelectsOnOutsideClick);
             document.addEventListener('visibilitychange', handleVisibilityChange);
         }
         function bindDialogEvents() {
@@ -1483,8 +1506,10 @@
         function openCommandPalette() {
             closeMenu();
             closeAllDropdowns();
+            closeAllCustomSelects();
             state.commandPaletteReturnFocus = document.activeElement;
             DOM.commandPalette.el.hidden = false;
+            syncPageModalOpenState();
             DOM.commandPalette.input.value = '';
             state.commandPaletteActiveIndex = 0;
             renderCommandPalette();
@@ -1492,6 +1517,7 @@
         }
         function closeCommandPalette({ restoreFocus = true } = {}) {
             DOM.commandPalette.el.hidden = true;
+            syncPageModalOpenState();
             DOM.commandPalette.input.removeAttribute('aria-activedescendant');
             DOM.commandPalette.list.removeAttribute('role');
             DOM.commandPalette.list.textContent = '';
@@ -1675,6 +1701,11 @@
             state.projectFilter = value;
             renderTaskList();
             syncDropdowns();
+        }
+        function syncPageModalOpenState() {
+            const open = isDialogOpen();
+            document.documentElement.classList.toggle('modal-open', open);
+            document.body.classList.toggle('modal-open', open);
         }
         function bindNotificationEvents() {
             if (DOM.notificationToggleBtn) {
@@ -1956,6 +1987,7 @@
                 else if (document.activeElement === DOM.inputs.search) DOM.inputs.search.blur();
                 else {
                     closeAllDropdowns();
+                    closeAllCustomSelects();
                     closeMenu();
                 }
             }
@@ -2008,7 +2040,7 @@
                 'select:not([disabled])',
                 'textarea:not([disabled])',
                 '[tabindex]:not([tabindex="-1"])'
-            ].join(','))).filter(el => Boolean(el.offsetParent));
+            ].join(','))).filter(el => Boolean(el.offsetParent) && el.getAttribute('aria-hidden') !== 'true' && !el.classList.contains('native-select-hidden'));
         }
         async function handleTaskSave(e) {
             e.preventDefault();
@@ -4175,6 +4207,202 @@
                 svg.setAttribute('focusable', 'false');
             });
         }
+        function enhanceSelectControls(root = document) {
+            root.querySelectorAll('select:not([data-custom-select-ready])').forEach(enhanceSelectControl);
+            syncAllCustomSelects(root);
+        }
+        function enhanceSelectControl(select) {
+            select.dataset.customSelectReady = 'true';
+            const wrapper = document.createElement('div');
+            wrapper.className = 'custom-select';
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'custom-select-btn';
+            button.id = `${select.id || `select-${Date.now()}`}-custom-button`;
+            button.setAttribute('aria-haspopup', 'listbox');
+            button.setAttribute('aria-expanded', 'false');
+            const value = document.createElement('span');
+            value.className = 'custom-select-value';
+            const chevron = createIcon('icon-chevron-down', 'icon icon-sm chevron');
+            button.append(value, chevron);
+            const menu = document.createElement('div');
+            menu.className = 'custom-select-menu';
+            menu.id = `${button.id}-list`;
+            menu.setAttribute('role', 'listbox');
+            menu.setAttribute('aria-labelledby', button.id);
+            button.setAttribute('aria-controls', menu.id);
+            select.before(wrapper);
+            wrapper.append(select, button, menu);
+            select.classList.add('native-select-hidden');
+            select.setAttribute('aria-hidden', 'true');
+            select.tabIndex = -1;
+            button.setAttribute('aria-label', getSelectAccessibleName(select));
+            const label = select.id ? document.querySelector(`label[for="${CSS.escape(select.id)}"]`) : null;
+            if (label && !label.dataset.customSelectLabelReady) {
+                label.dataset.customSelectLabelReady = 'true';
+                label.addEventListener('click', (e) => {
+                    const control = document.getElementById(label.getAttribute('for'));
+                    const customButton = control?.closest('.custom-select')?.querySelector('.custom-select-btn');
+                    if (!customButton) return;
+                    e.preventDefault();
+                    customButton.focus();
+                });
+            }
+            button.addEventListener('click', handleCustomSelectButtonClick);
+            button.addEventListener('keydown', handleCustomSelectButtonKeydown);
+            menu.addEventListener('click', handleCustomSelectMenuClick);
+            menu.addEventListener('keydown', handleCustomSelectMenuKeydown);
+            select.addEventListener('change', () => syncCustomSelect(select));
+            syncCustomSelect(select);
+        }
+        function syncAllCustomSelects(root = document) {
+            root.querySelectorAll('select[data-custom-select-ready]').forEach(syncCustomSelect);
+        }
+        function syncCustomSelect(select) {
+            const wrapper = select.closest('.custom-select');
+            if (!wrapper) return;
+            const button = wrapper.querySelector('.custom-select-btn');
+            const value = wrapper.querySelector('.custom-select-value');
+            const selectedOption = select.options[select.selectedIndex] || select.options[0];
+            button.disabled = select.disabled;
+            button.setAttribute('aria-label', getSelectAccessibleName(select));
+            if (value) value.textContent = selectedOption ? selectedOption.textContent : '';
+            renderCustomSelectOptions(select);
+        }
+        function renderCustomSelectOptions(select) {
+            const wrapper = select.closest('.custom-select');
+            const menu = wrapper?.querySelector('.custom-select-menu');
+            if (!menu) return;
+            const signature = Array.from(select.options).map(option => `${option.value}:${option.textContent}:${option.disabled}`).join('|');
+            if (menu.dataset.signature !== signature) {
+                menu.textContent = '';
+                Array.from(select.options).forEach((option, index) => {
+                    const item = document.createElement('button');
+                    item.type = 'button';
+                    item.className = 'custom-select-option';
+                    item.id = `${menu.id}-option-${index}`;
+                    item.dataset.value = option.value;
+                    item.setAttribute('role', 'option');
+                    item.disabled = option.disabled;
+                    const label = document.createElement('span');
+                    label.textContent = option.textContent;
+                    item.append(label, createIcon('icon-check', 'icon icon-sm'));
+                    menu.appendChild(item);
+                });
+                menu.dataset.signature = signature;
+            }
+            menu.querySelectorAll('.custom-select-option').forEach(item => {
+                const selected = item.dataset.value === select.value;
+                item.classList.toggle(CONFIG.UI.CLASSES.SELECTED, selected);
+                item.setAttribute('aria-selected', String(selected));
+            });
+        }
+        function getSelectAccessibleName(select) {
+            const label = select.id ? document.querySelector(`label[for="${CSS.escape(select.id)}"]`) : null;
+            return select.getAttribute('aria-label') || label?.textContent?.trim() || select.name || 'Select';
+        }
+        function handleCustomSelectButtonClick(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const select = e.currentTarget.closest('.custom-select')?.querySelector('select');
+            if (select) toggleCustomSelect(select);
+        }
+        function handleCustomSelectButtonKeydown(e) {
+            if (!['ArrowDown', 'ArrowUp', 'Home', 'End', 'Enter', ' '].includes(e.key)) return;
+            e.preventDefault();
+            const select = e.currentTarget.closest('.custom-select')?.querySelector('select');
+            if (!select) return;
+            openCustomSelect(select, e.key);
+        }
+        function handleCustomSelectMenuClick(e) {
+            e.stopPropagation();
+            const option = e.target.closest('.custom-select-option');
+            if (option) chooseCustomSelectOption(option);
+        }
+        function handleCustomSelectMenuKeydown(e) {
+            const option = e.target.closest('.custom-select-option');
+            if (!option) return;
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closeCustomSelect(option.closest('.custom-select'), true);
+                return;
+            }
+            if (!['ArrowDown', 'ArrowUp', 'Home', 'End', 'Enter', ' '].includes(e.key)) return;
+            e.preventDefault();
+            if (e.key === 'Enter' || e.key === ' ') {
+                chooseCustomSelectOption(option);
+                return;
+            }
+            moveCustomSelectFocus(option.closest('.custom-select'), e.key, option);
+        }
+        function toggleCustomSelect(select) {
+            const wrapper = select.closest('.custom-select');
+            if (!wrapper || select.disabled) return;
+            if (wrapper.classList.contains(CONFIG.UI.CLASSES.OPEN)) {
+                closeCustomSelect(wrapper, false);
+            } else openCustomSelect(select, 'selected');
+        }
+        function openCustomSelect(select, key = 'selected') {
+            const wrapper = select.closest('.custom-select');
+            if (!wrapper || select.disabled) return;
+            closeAllCustomSelects(wrapper);
+            syncCustomSelect(select);
+            const menu = wrapper.querySelector('.custom-select-menu');
+            const button = wrapper.querySelector('.custom-select-btn');
+            wrapper.classList.add(CONFIG.UI.CLASSES.OPEN);
+            button.setAttribute('aria-expanded', 'true');
+            const rect = wrapper.getBoundingClientRect();
+            const below = window.innerHeight - rect.bottom;
+            const above = rect.top;
+            wrapper.classList.toggle('open-up', below < 230 && above > below);
+            const options = getCustomSelectOptions(wrapper);
+            let target = options.find(option => option.classList.contains(CONFIG.UI.CLASSES.SELECTED)) || options[0];
+            if (key === 'ArrowUp' || key === 'End') target = options[options.length - 1] || target;
+            if (key === 'Home') target = options[0] || target;
+            if (target && key !== 'Enter' && key !== ' ') requestAnimationFrame(() => target.focus());
+            if (menu && target) menu.setAttribute('aria-activedescendant', target.id);
+        }
+        function chooseCustomSelectOption(option) {
+            if (option.disabled) return;
+            const wrapper = option.closest('.custom-select');
+            const select = wrapper?.querySelector('select');
+            if (!select) return;
+            select.value = option.dataset.value;
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+            closeCustomSelect(wrapper, true);
+        }
+        function moveCustomSelectFocus(wrapper, key, activeOption) {
+            const options = getCustomSelectOptions(wrapper);
+            if (options.length === 0) return;
+            const currentIndex = Math.max(0, options.indexOf(activeOption));
+            let nextIndex = currentIndex;
+            if (key === 'ArrowDown') nextIndex = currentIndex === options.length - 1 ? 0 : currentIndex + 1;
+            if (key === 'ArrowUp') nextIndex = currentIndex === 0 ? options.length - 1 : currentIndex - 1;
+            if (key === 'Home') nextIndex = 0;
+            if (key === 'End') nextIndex = options.length - 1;
+            options[nextIndex].focus();
+            wrapper.querySelector('.custom-select-menu')?.setAttribute('aria-activedescendant', options[nextIndex].id);
+        }
+        function getCustomSelectOptions(wrapper) {
+            return Array.from(wrapper.querySelectorAll('.custom-select-option')).filter(option => !option.disabled);
+        }
+        function closeCustomSelect(wrapper, focusButton = false) {
+            if (!wrapper) return;
+            wrapper.classList.remove(CONFIG.UI.CLASSES.OPEN, 'open-up');
+            const button = wrapper.querySelector('.custom-select-btn');
+            const menu = wrapper.querySelector('.custom-select-menu');
+            if (button) button.setAttribute('aria-expanded', 'false');
+            if (menu) menu.removeAttribute('aria-activedescendant');
+            if (focusButton && button) button.focus();
+        }
+        function closeAllCustomSelects(except = null) {
+            document.querySelectorAll('.custom-select.open').forEach(wrapper => {
+                if (wrapper !== except) closeCustomSelect(wrapper, false);
+            });
+        }
+        function closeCustomSelectsOnOutsideClick(e) {
+            if (!e.target.closest('.custom-select')) closeAllCustomSelects();
+        }
         function createSubtaskDeleteButton(index, text) {
             const deleteBtn = document.createElement('button');
             deleteBtn.type = 'button';
@@ -4212,7 +4440,9 @@
             }
             renderSubtaskPreview();
             utils.applyTranslations();
+            enhanceSelectControls(DOM.modal);
             DOM.modal.style.display = 'flex';
+            syncPageModalOpenState();
             DOM.inputs.name.focus();
         }
         function prepareEditTaskForm(editingTask) {
@@ -4285,6 +4515,7 @@
         function syncReminderRepeatControl() {
             DOM.inputs.reminderRepeat.disabled = DOM.inputs.noDeadline.checked || DOM.inputs.reminderOffset.value === '-1';
             if (DOM.inputs.reminderRepeat.disabled) DOM.inputs.reminderRepeat.value = '-1';
+            syncAllCustomSelects(DOM.modal);
         }
         function syncRepeatControls() {
             const disabled = DOM.inputs.noDeadline.checked;
@@ -4304,6 +4535,7 @@
             if (!weeklyDays) setSelectedRepeatWeekdays([]);
             if (weeklyDays && getSelectedRepeatWeekdays().length === 0) setSelectedRepeatWeekdays([1, 3, 5]);
             if (!repeatEnabled) DOM.inputs.repeatPaused.checked = false;
+            syncAllCustomSelects(DOM.modal);
         }
         function getSelectedRepeatWeekdays() {
             return normalizeTaskRepeatWeekdays(DOM.inputs.repeatWeekdayInputs
@@ -4319,7 +4551,9 @@
             DOM.inputs.repeatWeekdayInputs.forEach(input => { input.checked = selected.has(Number(input.value)); });
         }
         function closeDialog() {
+            closeAllCustomSelects();
             DOM.modal.style.display = 'none';
+            syncPageModalOpenState();
             state.editingTaskId = null;
             DOM.form.reset();
             DOM.inputs.reminderOffset.disabled = false;
@@ -4429,6 +4663,7 @@
                     DOM.form.prepend(p);
                 }
                 setConfirmMessageContent(p, msg);
+                enhanceSelectControls(p);
                 p.style.display = 'block';
                 DOM.modal.setAttribute('aria-describedby', 'confirm-message-text');
                 DOM.formGroups.forEach(g => g.style.display = 'none');
@@ -4451,6 +4686,7 @@
                 DOM.submitBtn.addEventListener('click', handler);
                 state.elementToFocusOnClose = document.activeElement;
                 DOM.modal.style.display = 'flex';
+                syncPageModalOpenState();
                 DOM.submitBtn.focus();
             },
             applyTheme: (theme) => {
@@ -4598,6 +4834,7 @@
                     if (el.dataset.i18nAriaLabel) el.setAttribute('aria-label', utils.translate(el.dataset.i18nAriaLabel));
                 });
                 syncDropdowns();
+                syncAllCustomSelects();
                 renderTaskList();
             },
             translate: (key) => {
