@@ -448,7 +448,7 @@
         .form-group { display: grid; gap: 8px; align-content: start; min-width: 0; margin-bottom: 0; }
         .form-group.span-full, .form-actions, .confirm-message, .confirm-details { grid-column: 1 / -1; }
         .form-group > label, .form-field > label { margin-bottom: 0; }
-        .form-card { gap: 15px; padding: 15px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-raised); }
+        .form-card { gap: 12px; padding: 15px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-raised); }
         .form-section-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 0; }
         .form-section-header > label { margin: 0; min-width: 0; }
         .form-field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -974,7 +974,7 @@
                             <label data-i18n="form.noDeadline" for="noDeadline">无截止日期</label>
                         </div>
                     </div>
-                    <div class="datetime-group">
+                    <div class="datetime-group" id="deadlineFields">
                         <input class="date-input" id="dueDate" type="date">
                         <label for="dueTime" class="sr-only" data-i18n="form.dueTime.label">截止时间</label>
                         <input class="time-input" id="dueTime" type="time" value="23:59">
@@ -1268,6 +1268,9 @@
             DOM.cancelBtn = document.getElementById('cancelBtn');
             DOM.modalTitle = document.getElementById('modalTitle');
             DOM.submitBtn = document.getElementById('submitBtn');
+            DOM.deadlineFields = document.getElementById('deadlineFields');
+            DOM.reminderGroup = document.getElementById('reminderGroup');
+            DOM.repeatGroup = document.getElementById('repeatGroup');
             DOM.inputs = {
                 name: document.getElementById('taskName'),
                 desc: document.getElementById('taskDesc'),
@@ -1457,13 +1460,11 @@
         }
         function bindFormEvents() {
             DOM.inputs.noDeadline.addEventListener('change', function() {
-                DOM.inputs.date.disabled = this.checked;
-                DOM.inputs.time.disabled = this.checked;
                 if (this.checked) {
                     DOM.inputs.date.value = utils.formatDateInputValue();
                     DOM.inputs.time.value = CONFIG.DEFAULTS.TIME;
                 }
-                DOM.inputs.reminderOffset.disabled = this.checked;
+                syncDeadlineDependentSections();
                 syncReminderRepeatControl();
                 syncRepeatControls();
             });
@@ -4454,7 +4455,7 @@
             DOM.modal.removeAttribute('aria-describedby');
             const msg = document.getElementById('confirm-message-text');
             if (msg) msg.style.display = 'none';
-            DOM.formGroups.forEach(g => g.style.display = 'block');
+            DOM.formGroups.forEach(g => { g.style.display = ''; });
             DOM.submitBtn.type = 'submit';
             DOM.submitBtn.disabled = false;
             clearConfirmHandler();
@@ -4538,8 +4539,19 @@
             DOM.inputs.repeatInterval.value = String(normalizeTaskRepeatInterval(DOM.inputs.repeatType.value, repeatInterval));
             setSelectedRepeatWeekdays(normalizeTaskRepeatWeekdays(repeatWeekdays));
             DOM.inputs.repeatPaused.checked = Boolean(repeatPaused);
+            syncDeadlineDependentSections();
             syncReminderRepeatControl();
             syncRepeatControls();
+        }
+        function syncDeadlineDependentSections() {
+            const noDeadline = DOM.inputs.noDeadline.checked;
+            DOM.inputs.date.disabled = noDeadline;
+            DOM.inputs.time.disabled = noDeadline;
+            DOM.inputs.reminderOffset.disabled = noDeadline;
+            if (DOM.deadlineFields) DOM.deadlineFields.hidden = noDeadline;
+            if (DOM.reminderGroup) DOM.reminderGroup.hidden = noDeadline;
+            if (DOM.repeatGroup) DOM.repeatGroup.hidden = noDeadline;
+            if (noDeadline) closeAllCustomSelects();
         }
         function syncReminderRepeatControl() {
             DOM.inputs.reminderRepeat.disabled = DOM.inputs.noDeadline.checked || DOM.inputs.reminderOffset.value === '-1';
