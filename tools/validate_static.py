@@ -199,10 +199,14 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
             errors.append("index.html must link the canonical ./manifest.json")
         if "application/manifest+json" in index_html or "__TASK_TRACER_MANIFEST_URL__" in index_html:
             errors.append("Manifest must remain a stable static file, not a runtime blob")
+        if re.search(r"<link\s+rel=\"(?:icon|shortcut icon|apple-touch-icon)\"[^>]+href=\"data:", index_html):
+            errors.append("Icon links must use stable files instead of data URI fallbacks")
 
         for key in ("id", "name", "short_name", "description", "start_url", "scope", "display", "theme_color", "background_color"):
             if not manifest.get(key):
                 errors.append(f"manifest.json is missing required field: {key}")
+        if "orientation" in manifest:
+            errors.append("manifest.json must not force a screen orientation")
 
         required_assets = {"./", "./index.html", "./manifest.json"}
         required_assets.update(f"./resources/{code}.json?v={version}" for code in languages)

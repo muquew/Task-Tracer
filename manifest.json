@@ -10,7 +10,6 @@
   "display": "standalone",
   "background_color": "#edf2f8",
   "theme_color": "#2563eb",
-  "orientation": "portrait-primary",
   "categories": ["productivity", "utilities"],
   "icons": [
     {

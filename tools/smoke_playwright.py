@@ -1528,6 +1528,30 @@ def assert_pwa_resources(context: BrowserContext, base_url: str) -> None:
             raise AssertionError(f"Manifest icon failed: {response.status} {src}")
 
 
+def assert_pwa_installability(page: Page) -> None:
+    session = page.context.new_cdp_session(page)
+    manifest_result = session.send("Page.getAppManifest")
+    manifest_errors = manifest_result.get("errors", [])
+    if manifest_errors:
+        raise AssertionError(f"Manifest has browser parse errors: {manifest_errors}")
+
+    manifest_data = json.loads(manifest_result.get("data") or "{}")
+    required_values = {
+        "id": "./",
+        "start_url": "./",
+        "scope": "./",
+        "display": "standalone",
+    }
+    for key, expected in required_values.items():
+        if manifest_data.get(key) != expected:
+            raise AssertionError(f"Manifest {key} changed: expected {expected!r}, got {manifest_data.get(key)!r}")
+
+    installability_result = session.send("Page.getInstallabilityErrors")
+    installability_errors = installability_result.get("installabilityErrors", [])
+    if installability_errors:
+        raise AssertionError(f"PWA installability errors: {installability_errors}")
+
+
 def assert_service_worker_and_offline_load(context: BrowserContext, page: Page) -> None:
     page.wait_for_load_state("load")
     worker_state = page.evaluate(
@@ -1706,6 +1730,7 @@ def smoke(url: str) -> None:
         exercise_language(page)
         exercise_notifications(page)
         assert_service_worker_and_offline_load(context, page)
+        assert_pwa_installability(page)
 
         exercise_subtask_draft_editor(page)
         exercise_repeating_task(page, repeat_name)
