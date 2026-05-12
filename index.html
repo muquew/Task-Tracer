@@ -390,6 +390,8 @@
         .complete-btn:hover { color: var(--color-success-dark); background: var(--color-success-light); }
         .snooze-btn { color: var(--color-warning); }
         .snooze-btn:hover { color: var(--color-warning-text); background: var(--color-warning-light); }
+        .skip-repeat-btn { color: var(--color-accent); }
+        .skip-repeat-btn:hover { color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 12%, transparent); }
         .restore-btn { color: var(--color-primary); }
         .restore-btn:hover { color: var(--color-primary-dark); background: var(--color-info-light); }
         .archive-btn { color: var(--text-tertiary); }
@@ -440,6 +442,15 @@
         .form-group select + label { margin-top: 12px; }
         .repeat-custom-row { display: grid; grid-template-columns: minmax(90px, 120px) 1fr; gap: 10px; align-items: center; margin-top: 10px; }
         .repeat-custom-row label { margin-bottom: 0; color: var(--text-secondary); font-weight: 650; }
+        .repeat-weekdays-row { display: grid; gap: 8px; margin-top: 10px; }
+        .repeat-weekdays-label { margin: 0; color: var(--text-secondary); font-size: 13px; font-weight: 650; }
+        .repeat-weekdays { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+        .repeat-weekday-option { position: relative; margin: 0; cursor: pointer; }
+        .repeat-weekday-option input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; cursor: pointer; }
+        .repeat-weekday-option span { display: flex; min-height: 34px; align-items: center; justify-content: center; border: 1px solid var(--border-base); border-radius: var(--radius-control); background: var(--field-bg); color: var(--text-secondary); font-size: 12px; font-weight: 760; transition: background-color var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast), box-shadow var(--motion-fast); }
+        .repeat-weekday-option input:checked + span { border-color: var(--color-primary); background: var(--color-info-light); color: var(--color-primary); }
+        .repeat-weekday-option input:focus-visible + span { outline: 2px solid var(--color-primary); outline-offset: 2px; box-shadow: 0 0 0 4px var(--focus-ring); }
+        .repeat-pause-row { margin-top: 10px; }
         label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--text-main); font-size: 13px; }
         .form-hint { margin-top: 7px; color: var(--text-secondary); font-size: 12px; line-height: 1.45; }
         input, textarea, select { width: 100%; padding: 10px 12px; border: 1px solid var(--border-base); border-radius: var(--radius-control); font-size: 14px; line-height: 1.45; transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-fast); background-color: var(--field-bg); color: var(--text-main); }
@@ -924,12 +935,30 @@
                         <option value="none" selected data-i18n="form.repeat.options.none">不重复</option>
                         <option value="daily" data-i18n="form.repeat.options.daily">每天</option>
                         <option value="weekly" data-i18n="form.repeat.options.weekly">每周</option>
+                        <option value="weekly-days" data-i18n="form.repeat.options.weeklyDays">每周指定星期</option>
                         <option value="monthly" data-i18n="form.repeat.options.monthly">每月</option>
+                        <option value="monthly-last" data-i18n="form.repeat.options.monthlyLast">每月最后一天</option>
                         <option value="custom" data-i18n="form.repeat.options.custom">自定义周期</option>
                     </select>
+                    <div class="repeat-weekdays-row" id="repeatWeekdaysRow" hidden>
+                        <p class="repeat-weekdays-label" data-i18n="form.repeat.weekdaysLabel">重复星期</p>
+                        <div class="repeat-weekdays" role="group" aria-label="重复星期" data-i18n-aria-label="form.repeat.weekdaysLabel">
+                            <label class="repeat-weekday-option" for="repeatWeekday1"><input id="repeatWeekday1" class="repeat-weekday-input" type="checkbox" value="1"><span data-i18n="form.repeat.weekdays.mon">一</span></label>
+                            <label class="repeat-weekday-option" for="repeatWeekday2"><input id="repeatWeekday2" class="repeat-weekday-input" type="checkbox" value="2"><span data-i18n="form.repeat.weekdays.tue">二</span></label>
+                            <label class="repeat-weekday-option" for="repeatWeekday3"><input id="repeatWeekday3" class="repeat-weekday-input" type="checkbox" value="3"><span data-i18n="form.repeat.weekdays.wed">三</span></label>
+                            <label class="repeat-weekday-option" for="repeatWeekday4"><input id="repeatWeekday4" class="repeat-weekday-input" type="checkbox" value="4"><span data-i18n="form.repeat.weekdays.thu">四</span></label>
+                            <label class="repeat-weekday-option" for="repeatWeekday5"><input id="repeatWeekday5" class="repeat-weekday-input" type="checkbox" value="5"><span data-i18n="form.repeat.weekdays.fri">五</span></label>
+                            <label class="repeat-weekday-option" for="repeatWeekday6"><input id="repeatWeekday6" class="repeat-weekday-input" type="checkbox" value="6"><span data-i18n="form.repeat.weekdays.sat">六</span></label>
+                            <label class="repeat-weekday-option" for="repeatWeekday0"><input id="repeatWeekday0" class="repeat-weekday-input" type="checkbox" value="0"><span data-i18n="form.repeat.weekdays.sun">日</span></label>
+                        </div>
+                    </div>
                     <div class="repeat-custom-row" id="repeatCustomRow" hidden>
                         <label data-i18n="form.repeat.customDays" for="repeatInterval">间隔天数</label>
                         <input id="repeatInterval" type="number" min="1" max="365" step="1" value="1" inputmode="numeric">
+                    </div>
+                    <div class="checkbox-group repeat-pause-row" id="repeatPauseRow" hidden>
+                        <label data-i18n="form.repeat.pause" for="repeatPaused">暂停重复任务</label>
+                        <input id="repeatPaused" type="checkbox">
                     </div>
                     <p class="form-hint" data-i18n="form.repeat.hint">完成重复任务后，会自动创建下一期任务。</p>
                 </div>
@@ -991,6 +1020,9 @@
                     </button>
                     <button class="action-btn snooze-btn" data-action="snooze" title="稍后提醒" hidden>
                         <svg class="icon"><use href="#icon-bell-snooze"></use></svg>
+                    </button>
+                    <button class="action-btn skip-repeat-btn" data-action="skip-repeat" title="跳过本次" hidden>
+                        <svg class="icon"><use href="#icon-repeat"></use></svg>
                     </button>
                     <button class="action-btn archive-btn" data-action="archive" title="归档" hidden>
                         <svg class="icon"><use href="#icon-archive"></use></svg>
@@ -1065,10 +1097,10 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.7'
+                RESOURCE_VERSION: '4.8'
             },
             BACKUP: {
-                FILE_VERSION: '2.1',
+                FILE_VERSION: '2.2',
                 REMINDER_DAYS: 7
             },
             NOTIFICATIONS: {
@@ -1149,6 +1181,10 @@
                 repeatType: document.getElementById('repeatType'),
                 repeatInterval: document.getElementById('repeatInterval'),
                 repeatCustomRow: document.getElementById('repeatCustomRow'),
+                repeatWeekdaysRow: document.getElementById('repeatWeekdaysRow'),
+                repeatWeekdayInputs: Array.from(document.querySelectorAll('.repeat-weekday-input')),
+                repeatPauseRow: document.getElementById('repeatPauseRow'),
+                repeatPaused: document.getElementById('repeatPaused'),
                 search: document.getElementById('searchInput'),
                 subtask: document.getElementById('subtaskInput')
             };
@@ -1866,6 +1902,8 @@
                 reminderRepeat: hasDueDate && reminderOffset !== -1 ? parseInt(DOM.inputs.reminderRepeat.value, 10) : -1,
                 repeatType,
                 repeatInterval: normalizeTaskRepeatInterval(repeatType, DOM.inputs.repeatInterval.value),
+                repeatWeekdays: repeatType === 'weekly-days' ? getRepeatWeekdaysForForm() : [],
+                repeatPaused: repeatType !== 'none' && DOM.inputs.repeatPaused.checked,
                 order: state.editingTaskId ? undefined : getNextTaskOrder()
             };
         }
@@ -1882,6 +1920,8 @@
                 repeatSourceId: null,
                 repeatCreatedFrom: null,
                 nextRepeatTaskId: null,
+                repeatWeekdays: [],
+                repeatPaused: false,
                 ...taskPayload
             };
         }
@@ -1921,7 +1961,7 @@
                 });
         }
         function normalizeTaskRepeatType(value) {
-            return ['none', 'daily', 'weekly', 'monthly', 'custom'].includes(value) ? value : 'none';
+            return ['none', 'daily', 'weekly', 'weekly-days', 'monthly', 'monthly-last', 'custom'].includes(value) ? value : 'none';
         }
         function normalizeTaskRepeatInterval(type, value) {
             const interval = Math.floor(Number(value));
@@ -1929,12 +1969,36 @@
             if (!Number.isFinite(interval)) return 1;
             return Math.min(365, Math.max(1, interval));
         }
+        function normalizeTaskRepeatWeekdays(value) {
+            const items = Array.isArray(value) ? value : String(value || '').split(',');
+            const seen = new Set();
+            return items.map(Number)
+                .filter(day => Number.isInteger(day) && day >= 0 && day <= 6)
+                .filter(day => {
+                    if (seen.has(day)) return false;
+                    seen.add(day);
+                    return true;
+                })
+                .sort((a, b) => getWeekdayDisplayIndex(a) - getWeekdayDisplayIndex(b));
+        }
         function getTaskRepeatRule(task) {
             const type = normalizeTaskRepeatType(task.repeatType);
+            const weekdays = type === 'weekly-days' ? getTaskRepeatWeekdays(task) : [];
             return {
                 type,
-                interval: normalizeTaskRepeatInterval(type, task.repeatInterval)
+                interval: normalizeTaskRepeatInterval(type, task.repeatInterval),
+                weekdays,
+                paused: task.repeatPaused === true
             };
+        }
+        function getTaskRepeatWeekdays(task) {
+            const weekdays = normalizeTaskRepeatWeekdays(task.repeatWeekdays);
+            if (weekdays.length > 0) return weekdays;
+            const dueDate = getTaskDueLocalDate(task);
+            return [dueDate ? dueDate.getDay() : 1];
+        }
+        function getWeekdayDisplayIndex(day) {
+            return day === 0 ? 7 : day;
         }
         function hasTaskRepeat(task) {
             return getTaskRepeatRule(task).type !== 'none';
@@ -2159,6 +2223,16 @@
                     normalizedTask.repeatInterval = repeatInterval;
                     changed = true;
                 }
+                const repeatWeekdays = repeatType === 'weekly-days' ? getTaskRepeatWeekdays(normalizedTask) : [];
+                if (!Array.isArray(normalizedTask.repeatWeekdays) || JSON.stringify(normalizedTask.repeatWeekdays) !== JSON.stringify(repeatWeekdays)) {
+                    normalizedTask.repeatWeekdays = repeatWeekdays;
+                    changed = true;
+                }
+                const repeatPaused = normalizedTask.repeatPaused === true;
+                if (normalizedTask.repeatPaused !== repeatPaused) {
+                    normalizedTask.repeatPaused = repeatPaused;
+                    changed = true;
+                }
                 ['repeatSourceId', 'repeatCreatedFrom', 'nextRepeatTaskId'].forEach(key => {
                     if (normalizedTask[key] === undefined) {
                         normalizedTask[key] = null;
@@ -2260,8 +2334,29 @@
                 utils.notify(t['messages.task.updateError'], 'error');
             }
         }
+        async function skipRepeatOccurrence(id) {
+            const task = getTaskById(id);
+            if (!task || !shouldShowSkipRepeatAction(task)) return;
+            const t = state.translations[state.currentLanguage];
+            const updatedTask = {
+                ...task,
+                ...calculateNextRepeatDueFields(task, getTaskRepeatRule(task)),
+                snoozedUntil: null,
+                lastReminderAt: null
+            };
+            try {
+                clearTaskNotificationDeliveryState(task.id);
+                await dbActions.updateTask(updatedTask);
+                utils.notify(t['messages.task.repeatSkipped']);
+                await refreshTasks();
+            } catch (err) {
+                console.error('跳过重复任务失败:', err);
+                utils.notify(t['messages.task.updateError'], 'error');
+            }
+        }
         function shouldCreateNextRepeatTask(task) {
-            if (!hasTaskDueDate(task) || task.completed || task.archived || !hasTaskRepeat(task)) return false;
+            const rule = getTaskRepeatRule(task);
+            if (!hasTaskDueDate(task) || task.completed || task.archived || rule.type === 'none' || rule.paused) return false;
             const nextId = Number(task.nextRepeatTaskId);
             return !Number.isFinite(nextId) || !state.tasks.some(item => item.id === nextId);
         }
@@ -2293,12 +2388,36 @@
         function calculateNextRepeatDueFields(task, rule) {
             const date = getTaskDueLocalDate(task);
             if (!date) return clearDueFields();
+            if (rule.type === 'weekly-days') {
+                return createDueFieldsFromDate(getNextWeeklyRepeatDate(date, rule.weekdays));
+            }
             if (rule.type === 'monthly') {
                 return createDueFieldsFromDate(addMonthsClamped(date, 1));
+            }
+            if (rule.type === 'monthly-last') {
+                return createDueFieldsFromDate(getLastDayOfNextMonth(date));
             }
             const days = rule.type === 'weekly' ? 7 : rule.type === 'custom' ? rule.interval : 1;
             date.setDate(date.getDate() + days);
             return createDueFieldsFromDate(date);
+        }
+        function getNextWeeklyRepeatDate(date, weekdays) {
+            const selected = weekdays.length > 0 ? weekdays : [date.getDay()];
+            for (let offset = 1; offset <= 7; offset += 1) {
+                const next = new Date(date);
+                next.setDate(date.getDate() + offset);
+                if (selected.includes(next.getDay())) return next;
+            }
+            const fallback = new Date(date);
+            fallback.setDate(date.getDate() + 7);
+            return fallback;
+        }
+        function getLastDayOfNextMonth(date) {
+            const next = new Date(date);
+            next.setDate(1);
+            next.setMonth(next.getMonth() + 1);
+            next.setDate(getDaysInMonth(next.getFullYear(), next.getMonth()));
+            return next;
         }
         function addMonthsClamped(date, months) {
             const next = new Date(date);
@@ -3505,8 +3624,19 @@
         function getTaskRepeatLabel(task) {
             const rule = getTaskRepeatRule(task);
             if (rule.type === 'none') return '';
-            if (rule.type === 'custom') return utils.translate('task.repeat.custom').replace('{days}', rule.interval);
-            return utils.translate(`task.repeat.${rule.type}`);
+            let label = '';
+            if (rule.type === 'custom') label = utils.translate('task.repeat.custom').replace('{days}', rule.interval);
+            else if (rule.type === 'weekly-days') label = utils.translate('task.repeat.weeklyDays').replace('{days}', formatRepeatWeekdays(rule.weekdays));
+            else label = utils.translate(`task.repeat.${rule.type}`);
+            return rule.paused ? `${label} · ${utils.translate('task.repeat.paused')}` : label;
+        }
+        function formatRepeatWeekdays(weekdays) {
+            return normalizeTaskRepeatWeekdays(weekdays)
+                .map(day => utils.translate(`form.repeat.weekdays.${getWeekdayKey(day)}`))
+                .join(utils.translate('task.repeat.weekdaySeparator'));
+        }
+        function getWeekdayKey(day) {
+            return ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][day] || 'mon';
         }
         function createTaskChip(text, extraClass) {
             const chip = document.createElement('span');
@@ -3573,6 +3703,7 @@
             if (toggleButton) toggleButton.hidden = !!task.archived;
             setButtonLabel(toggleButton, task.completed ? t['task.actions.markIncomplete'] : t['task.actions.markComplete']);
             renderTaskSnoozeButton(el.querySelector('[data-action="snooze"]'), task, t);
+            renderTaskSkipRepeatButton(el.querySelector('[data-action="skip-repeat"]'), task, t);
             renderTaskArchiveButton(el.querySelector('[data-action="archive"]'), task, t);
             const editButton = el.querySelector('[data-action="edit"]');
             if (editButton) editButton.hidden = !!task.archived;
@@ -3589,6 +3720,16 @@
             const visible = shouldShowReminderIcon(task);
             button.hidden = !visible;
             if (visible) setButtonLabel(button, t['task.actions.snooze']);
+        }
+        function renderTaskSkipRepeatButton(button, task, t) {
+            if (!button) return;
+            const visible = shouldShowSkipRepeatAction(task);
+            button.hidden = !visible;
+            if (visible) setButtonLabel(button, t['task.actions.skipRepeat']);
+        }
+        function shouldShowSkipRepeatAction(task) {
+            const rule = getTaskRepeatRule(task);
+            return hasTaskDueDate(task) && rule.type !== 'none' && !rule.paused && !task.completed && !task.archived;
         }
         function renderTaskArchiveButton(button, task, t) {
             if (!button) return;
@@ -3808,7 +3949,9 @@
                 reminderOffset: editingTask.reminderOffset ?? CONFIG.NOTIFICATIONS.DEFAULT_OFFSET_MINUTES,
                 reminderRepeat: editingTask.reminderRepeat ?? -1,
                 repeatType: editingTask.repeatType ?? 'none',
-                repeatInterval: editingTask.repeatInterval ?? 1
+                repeatInterval: editingTask.repeatInterval ?? 1,
+                repeatWeekdays: editingTask.repeatWeekdays ?? [],
+                repeatPaused: editingTask.repeatPaused === true
             });
         }
         function prepareNewTaskForm(options = {}) {
@@ -3825,7 +3968,9 @@
                 reminderOffset: CONFIG.NOTIFICATIONS.DEFAULT_OFFSET_MINUTES,
                 reminderRepeat: -1,
                 repeatType: 'none',
-                repeatInterval: 1
+                repeatInterval: 1,
+                repeatWeekdays: [],
+                repeatPaused: false
             });
         }
         function isValidDate(date) {
@@ -3835,7 +3980,7 @@
             setTranslatedText(DOM.modalTitle, titleKey);
             setTranslatedText(DOM.submitBtn, submitKey);
         }
-        function setDeadlineControls({ enabled, date, time, reminderOffset, reminderRepeat, repeatType, repeatInterval }) {
+        function setDeadlineControls({ enabled, date, time, reminderOffset, reminderRepeat, repeatType, repeatInterval, repeatWeekdays, repeatPaused }) {
             DOM.inputs.noDeadline.checked = !enabled;
             DOM.inputs.date.disabled = !enabled;
             DOM.inputs.time.disabled = !enabled;
@@ -3843,12 +3988,16 @@
             DOM.inputs.reminderRepeat.disabled = !enabled || String(reminderOffset) === '-1';
             DOM.inputs.repeatType.disabled = !enabled;
             DOM.inputs.repeatInterval.disabled = !enabled;
+            DOM.inputs.repeatPaused.disabled = !enabled;
+            DOM.inputs.repeatWeekdayInputs.forEach(input => { input.disabled = !enabled; });
             DOM.inputs.date.value = utils.formatDateInputValue(date || new Date());
             DOM.inputs.time.value = enabled ? (time || utils.formatTimeInputValue(date || new Date())) : CONFIG.DEFAULTS.TIME;
             DOM.inputs.reminderOffset.value = String(reminderOffset);
             DOM.inputs.reminderRepeat.value = String(reminderRepeat ?? -1);
             DOM.inputs.repeatType.value = enabled ? normalizeTaskRepeatType(repeatType) : 'none';
             DOM.inputs.repeatInterval.value = String(normalizeTaskRepeatInterval(DOM.inputs.repeatType.value, repeatInterval));
+            setSelectedRepeatWeekdays(normalizeTaskRepeatWeekdays(repeatWeekdays));
+            DOM.inputs.repeatPaused.checked = Boolean(repeatPaused);
             syncReminderRepeatControl();
             syncRepeatControls();
         }
@@ -3860,10 +4009,33 @@
             const disabled = DOM.inputs.noDeadline.checked;
             DOM.inputs.repeatType.disabled = disabled;
             if (disabled) DOM.inputs.repeatType.value = 'none';
-            const custom = !disabled && DOM.inputs.repeatType.value === 'custom';
+            const repeatType = normalizeTaskRepeatType(DOM.inputs.repeatType.value);
+            const custom = !disabled && repeatType === 'custom';
+            const weeklyDays = !disabled && repeatType === 'weekly-days';
+            const repeatEnabled = !disabled && repeatType !== 'none';
             DOM.inputs.repeatCustomRow.hidden = !custom;
+            DOM.inputs.repeatWeekdaysRow.hidden = !weeklyDays;
+            DOM.inputs.repeatPauseRow.hidden = !repeatEnabled;
             DOM.inputs.repeatInterval.disabled = !custom;
+            DOM.inputs.repeatWeekdayInputs.forEach(input => { input.disabled = !weeklyDays; });
+            DOM.inputs.repeatPaused.disabled = !repeatEnabled;
             if (!custom) DOM.inputs.repeatInterval.value = '1';
+            if (!weeklyDays) setSelectedRepeatWeekdays([]);
+            if (weeklyDays && getSelectedRepeatWeekdays().length === 0) setSelectedRepeatWeekdays([1, 3, 5]);
+            if (!repeatEnabled) DOM.inputs.repeatPaused.checked = false;
+        }
+        function getSelectedRepeatWeekdays() {
+            return normalizeTaskRepeatWeekdays(DOM.inputs.repeatWeekdayInputs
+                .filter(input => input.checked)
+                .map(input => input.value));
+        }
+        function getRepeatWeekdaysForForm() {
+            const selected = getSelectedRepeatWeekdays();
+            return selected.length > 0 ? selected : [1, 3, 5];
+        }
+        function setSelectedRepeatWeekdays(weekdays) {
+            const selected = new Set(normalizeTaskRepeatWeekdays(weekdays));
+            DOM.inputs.repeatWeekdayInputs.forEach(input => { input.checked = selected.has(Number(input.value)); });
         }
         function closeDialog() {
             DOM.modal.style.display = 'none';
@@ -3876,6 +4048,8 @@
             DOM.inputs.repeatType.disabled = false;
             DOM.inputs.repeatType.value = 'none';
             DOM.inputs.repeatInterval.value = '1';
+            DOM.inputs.repeatPaused.checked = false;
+            setSelectedRepeatWeekdays([]);
             syncRepeatControls();
             state.tempSubtasks = [];
             state.editingSubtaskIndex = -1;
@@ -4425,6 +4599,7 @@
             switch (action) {
                 case 'toggle': toggleTaskComplete(taskId); break;
                 case 'snooze': snoozeTaskReminder(taskId); break;
+                case 'skip-repeat': skipRepeatOccurrence(taskId); break;
                 case 'archive': toggleTaskArchive(taskId); break;
                 case 'edit': editTask(taskId); break;
                 case 'delete': deleteTask(taskId); break;
@@ -5121,6 +5296,8 @@
                 reminderRepeat: Number.isFinite(Number(task.reminderRepeat)) ? Number(task.reminderRepeat) : -1,
                 repeatType,
                 repeatInterval: normalizeTaskRepeatInterval(repeatType, task.repeatInterval),
+                repeatWeekdays: repeatType === 'weekly-days' ? (normalizeTaskRepeatWeekdays(task.repeatWeekdays).length ? normalizeTaskRepeatWeekdays(task.repeatWeekdays) : [1]) : [],
+                repeatPaused: task.repeatPaused === true,
                 repeatSourceId: Number.isFinite(Number(task.repeatSourceId)) ? Number(task.repeatSourceId) : null,
                 repeatCreatedFrom: Number.isFinite(Number(task.repeatCreatedFrom)) ? Number(task.repeatCreatedFrom) : null,
                 nextRepeatTaskId: Number.isFinite(Number(task.nextRepeatTaskId)) ? Number(task.nextRepeatTaskId) : null,

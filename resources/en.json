@@ -166,9 +166,22 @@
         "none": "Do not repeat",
         "daily": "Daily",
         "weekly": "Weekly",
+        "weeklyDays": "Specific weekdays",
         "monthly": "Monthly",
+        "monthlyLast": "Last day of each month",
         "custom": "Custom interval"
-      }
+      },
+      "weekdaysLabel": "Repeat weekdays",
+      "weekdays": {
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "sun": "Sun"
+      },
+      "pause": "Pause repeating task"
     },
     "subtasks": {
       "label": "Subtasks (optional)",
@@ -190,6 +203,7 @@
       "markComplete": "Mark as complete",
       "markIncomplete": "Mark as incomplete",
       "snooze": "Remind again in 10 minutes",
+      "skipRepeat": "Skip this occurrence",
       "archive": "Archive task",
       "restoreArchive": "Restore from archive",
       "edit": "Edit task",
@@ -200,8 +214,12 @@
     "repeat": {
       "daily": "Repeats daily",
       "weekly": "Repeats weekly",
+      "weeklyDays": "Repeats on {days}",
       "monthly": "Repeats monthly",
-      "custom": "Repeats every {days} days"
+      "monthly-last": "Repeats on the last day of each month",
+      "custom": "Repeats every {days} days",
+      "paused": "paused",
+      "weekdaySeparator": ", "
     }
   },
   "empty": {
@@ -232,6 +250,7 @@
       "markedComplete": "Task marked as completed",
       "markedIncomplete": "Task marked as incomplete",
       "repeatCreated": "Task completed and next occurrence created",
+      "repeatSkipped": "This occurrence was skipped and moved to the next one",
       "nameRequired": "Please enter a task name",
       "snoozed": "Reminder snoozed for {minutes} minutes",
       "saveError": "Failed to save task, please try again",
@@ -351,7 +370,7 @@
       "daysAgo": "backed up {days} days ago"
     },
     "versionNotes": {
-      "schema": "Backup 2.1 includes local due dates, exact reminder instants, tasks, subtasks, projects, tags, repeat rules, completion dates, and archive state.",
+      "schema": "Backup 2.2 includes local due dates, exact reminder instants, tasks, subtasks, projects, tags, advanced repeat rules, completion dates, and archive state.",
       "compatibility": "The importer reads the tasks array; older export files remain importable."
     }
   }

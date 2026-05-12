@@ -128,6 +128,15 @@ def future_date(days: int = 1) -> str:
     return value.strftime("%Y-%m-%d")
 
 
+def future_js_weekday(js_weekday: int, min_days: int = 1) -> str:
+    today = datetime.now(timezone.utc).date()
+    for offset in range(min_days, min_days + 8):
+        target = today + timedelta(days=offset)
+        if (target.weekday() + 1) % 7 == js_weekday:
+            return target.strftime("%Y-%m-%d")
+    raise AssertionError(f"Could not resolve future weekday: {js_weekday}")
+
+
 def due_fields_from_now(minutes: int) -> dict[str, str]:
     local_value = datetime.now().astimezone() + timedelta(minutes=minutes)
     instant = local_value.astimezone(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
@@ -550,6 +559,8 @@ def add_task(
     reminder_offset: str | None = None,
     repeat_type: str | None = None,
     repeat_interval: str | None = None,
+    repeat_weekdays: list[str] | None = None,
+    repeat_paused: bool = False,
     project: str | None = None,
     tags: list[str] | None = None,
     subtasks: list[str] | None = None,
@@ -586,6 +597,16 @@ def add_task(
             if repeat_type == "custom":
                 expect(page.locator("#repeatCustomRow")).to_be_visible()
                 page.locator("#repeatInterval").fill(repeat_interval or "1")
+            if repeat_type == "weekly-days":
+                expect(page.locator("#repeatWeekdaysRow")).to_be_visible()
+                if repeat_weekdays:
+                    for value in ("0", "1", "2", "3", "4", "5", "6"):
+                        page.locator(f"#repeatWeekday{value}").uncheck(force=True)
+                    for value in repeat_weekdays:
+                        page.locator(f"#repeatWeekday{value}").check(force=True)
+            if repeat_paused:
+                expect(page.locator("#repeatPauseRow")).to_be_visible()
+                page.locator("#repeatPaused").check()
 
     for index, subtask in enumerate(subtasks or [], start=1):
         page.locator("#subtaskInput").fill(subtask)
@@ -1202,6 +1223,91 @@ def exercise_repeating_task(page: Page, task_name: str) -> None:
     delete_task_records_by_name(page, task_name)
 
 
+def exercise_advanced_repeat_task(page: Page, weekly_name: str, paused_name: str) -> None:
+    start_date = future_js_weekday(1)
+    add_task(
+        page,
+        weekly_name,
+        description="Advanced weekly repeat smoke test.",
+        due_date=start_date,
+        due_time="08:45",
+        repeat_type="weekly-days",
+        repeat_weekdays=["1", "3", "5"],
+        project="Smoke Routine",
+        tags=["routine"],
+    )
+    weekly_task = task_locator(page, weekly_name)
+    expect(weekly_task.locator(".repeat-chip")).to_contain_text(re.compile("一|Mon"))
+    expect(weekly_task.locator('[data-action="skip-repeat"]')).to_be_visible()
+    weekly_task.locator('[data-action="skip-repeat"]').click()
+    wait_for_notification(page, re.compile("跳过|skipped", re.I))
+    record = page.evaluate(
+        """async (taskName) => {
+            const request = indexedDB.open('TaskTrackerDB', 2);
+            return await new Promise((resolve, reject) => {
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readonly');
+                    const getAll = tx.objectStore('tasks').getAll();
+                    getAll.onsuccess = () => {
+                        const task = getAll.result.find((item) => item.name === taskName);
+                        db.close();
+                        resolve(task || null);
+                    };
+                    getAll.onerror = () => reject(getAll.error);
+                };
+            });
+        }""",
+        weekly_name,
+    )
+    if not record or record["completed"]:
+        raise AssertionError(f"Skipped repeat task should stay active: {record}")
+    skipped_date = datetime.strptime(record["dueLocalDate"], "%Y-%m-%d").date()
+    original_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+    if skipped_date <= original_date or (skipped_date.weekday() + 1) % 7 not in {1, 3, 5}:
+        raise AssertionError(f"Weekly skip did not advance to a selected weekday: {record}")
+    delete_task_records_by_name(page, weekly_name)
+
+    add_task(
+        page,
+        paused_name,
+        description="Paused repeating task smoke test.",
+        due_date=future_date(1),
+        due_time="09:15",
+        repeat_type="daily",
+        repeat_paused=True,
+    )
+    paused_task = task_locator(page, paused_name)
+    expect(paused_task.locator(".repeat-chip")).to_contain_text(re.compile("暂停|paused", re.I))
+    expect(paused_task.locator('[data-action="skip-repeat"]')).to_be_hidden()
+    paused_task.locator('[data-action="toggle"]').click()
+    wait_for_notification(page, re.compile("完成|completed", re.I))
+    records = page.evaluate(
+        """async (taskName) => {
+            const request = indexedDB.open('TaskTrackerDB', 2);
+            return await new Promise((resolve, reject) => {
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readonly');
+                    const getAll = tx.objectStore('tasks').getAll();
+                    getAll.onsuccess = () => {
+                        const tasks = getAll.result.filter((item) => item.name === taskName);
+                        db.close();
+                        resolve(tasks);
+                    };
+                    getAll.onerror = () => reject(getAll.error);
+                };
+            });
+        }""",
+        paused_name,
+    )
+    if len(records) != 1 or not records[0]["completed"]:
+        raise AssertionError(f"Paused repeat should not create a next occurrence: {records}")
+    delete_task_records_by_name(page, paused_name)
+
+
 def delete_task_records_by_name(page: Page, task_name: str) -> None:
     page.evaluate(
         """async (taskName) => {
@@ -1758,6 +1864,8 @@ def smoke(url: str) -> None:
     imported_name = f"{task_name} Imported"
     quick_name = f"{task_name} Quick"
     repeat_name = f"{task_name} Repeat"
+    advanced_repeat_name = f"{task_name} Advanced Repeat"
+    paused_repeat_name = f"{task_name} Paused Repeat"
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -1806,6 +1914,7 @@ def smoke(url: str) -> None:
         exercise_quick_add(page, quick_name)
         exercise_subtask_draft_editor(page)
         exercise_repeating_task(page, repeat_name)
+        exercise_advanced_repeat_task(page, advanced_repeat_name, paused_repeat_name)
         add_task(page, alpha_name, no_deadline=True, project="Smoke Work", tags=["focus", "docs"], subtasks=["First smoke subtask", "Second smoke subtask"])
         add_task(page, beta_name, due_date=future_date(1), due_time="12:30", reminder_offset="15", project="Smoke Personal", tags=["deadline"])
         expect(task_locator(page, beta_name).locator(".task-reminder-icon")).to_be_visible()
