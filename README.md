@@ -37,8 +37,8 @@ It works well for study plans, personal operations, project follow-ups, routine 
 | Search and filters | Search task names, descriptions, projects, tags, and subtasks; use scoped search syntax for project, tag, status, and due-date queries. |
 | Sorting and ordering | Smart sorting, newest-created order, due-date order, alphabetical order, manual drag-and-drop order, touch reorder, and keyboard reorder. |
 | Views | List, calendar, timeline, and statistics views for daily work, date review, chronological scanning, and personal productivity feedback. |
-| Data portability | JSON export, import preview, duplicate-name reporting, replace mode, merge mode, and versioned local backup downloads. |
-| PWA behavior | Installable app experience, offline loading, app icons, and browser-friendly behavior. |
+| Data portability | JSON export, import preview, same-name conflict choices, replace mode, merge mode, versioned local backups, and backup health status. |
+| PWA behavior | Menu-based install entry, manual install guidance, offline loading, app icons, and update-ready refresh prompts. |
 | Comfort and polish | Light/dark themes, responsive layout, reduced-motion support, smooth state transitions, and bilingual UI. |
 | Accessibility | Keyboard navigation, visible focus, dialog focus trap, screen-reader labels, live status announcements, and automated axe checks. |
 
@@ -50,7 +50,7 @@ Task Tracer starts from a simple list, then adds structure only where it helps:
 2. Work from the list view for everyday actions such as complete, snooze, edit, archive, delete, and manual reorder.
 3. Switch to calendar or timeline view when date distribution matters more than list order.
 4. Use statistics to review completion rate, active overdue rate, archived volume, today's completions, and completion streak.
-5. Export or back up data before clearing browser data, switching devices, or testing imports.
+5. Use the backup health status before clearing browser data, switching devices, or testing imports.
 
 ## Projects, Tags, and Search
 
@@ -97,10 +97,16 @@ Task Tracer keeps the data controls separate so each action has a clear purpose.
 | Action | Purpose |
 | --- | --- |
 | Export | Download the current task set as JSON for transfer, manual inspection, or storage. |
-| Import | Read a JSON file, show a preview, report imported task count, duplicate names, current-data impact, and then replace or merge after confirmation. |
-| Backup | Download a versioned snapshot with schema notes, local dates, reminder timing, repeat rules, completion dates, and archive state. |
+| Import | Read a JSON file, show a preview, report imported task count, duplicate names, and current-data impact, then replace, merge, keep both, skip, or replace same-name local tasks after confirmation. |
+| Backup | Download a versioned snapshot with schema notes, local dates, reminder timing, repeat rules, completion dates, and archive state. The menu also shows whether the latest backup is healthy or due. |
 
-Backups also record the latest backup time locally, so the app can remind you when active task data has not been backed up recently.
+Backups record the latest backup time locally. When task data exists, Task Tracer can show whether data was backed up today, backed up recently, or should be backed up again.
+
+## Install and Updates
+
+Task Tracer can be installed from the app menu when the browser exposes an install prompt. If the browser does not provide an automatic prompt, the same menu entry shows manual installation steps for desktop Chrome/Edge, Android Chrome, and iOS Safari.
+
+When a newer offline app version is ready, Task Tracer shows an update prompt with a refresh action so the installed app can move to the latest version without guessing whether the cache has changed.
 
 ## Reminder Model
 
