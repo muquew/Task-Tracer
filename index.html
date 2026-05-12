@@ -436,20 +436,25 @@
         .subtask-checkbox { flex: 0 0 32px; padding: 0; appearance: none; -webkit-appearance: none; width: 32px; height: 32px; border: 1px solid var(--border-base); border-radius: 4px; cursor: pointer; position: relative; transition: all 0.2s ease; margin-right: 8px; background-color: var(--bg-surface); }
         .subtask-checkbox:hover { border-color: var(--color-success); background-color: var(--bg-hover); }
         .subtask-checkbox:checked { border-color: var(--color-success); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E"); background-size: 80%; background-position: center; background-repeat: no-repeat; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .modal { display: none; position: fixed; inset: 0; width: 100%; min-height: 100dvh; background-color: var(--bg-overlay); z-index: 1010; justify-content: center; align-items: center; padding: 18px; overflow-y: auto; overscroll-behavior: contain; }
-        .modal-content { background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-surface); width: min(620px, calc(100vw - 36px)); max-height: calc(100vh - 36px); box-shadow: 0 24px 60px var(--shadow-heavy); animation: modalAppear 0.3s ease; overflow: hidden; display: flex; flex-direction: column; }
+        .modal { display: none; position: fixed; inset: 0; width: 100%; min-height: 100dvh; background-color: var(--bg-overlay); z-index: 1010; justify-content: center; align-items: center; padding: clamp(12px, 3vw, 28px); overflow-y: auto; overscroll-behavior: contain; }
+        .modal-content { background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-surface); width: min(720px, calc(100vw - 32px)); max-height: min(860px, calc(100dvh - 32px)); box-shadow: 0 24px 60px var(--shadow-heavy); animation: modalAppear 0.3s ease; overflow: hidden; display: flex; flex-direction: column; }
         @keyframes modalAppear { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        .modal-header { background: var(--bg-surface-raised); color: var(--text-main); padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-light); }
+        .modal-header { background: var(--bg-surface-raised); color: var(--text-main); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-light); }
         .modal-title { font-size: 18px; font-weight: 780; line-height: 1.25; }
         .close-btn { background: transparent; border: 1px solid transparent; color: var(--text-secondary); font-size: 20px; cursor: pointer; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-control); transition: background-color var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast); }
         .close-btn:hover { background: var(--bg-hover); border-color: var(--border-light); color: var(--color-primary); }
-        .modal-body { padding: 18px; overflow-y: auto; }
-        #taskForm { display: grid; gap: 14px; }
-        .form-group { margin-bottom: 0; }
-        .form-group select + label { margin-top: 12px; }
-        .repeat-custom-row { display: grid; grid-template-columns: minmax(90px, 120px) 1fr; gap: 10px; align-items: center; margin-top: 10px; }
+        .modal-body { padding: 0; overflow: hidden; }
+        #taskForm { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 14px; max-height: calc(min(860px, calc(100dvh - 32px)) - 69px); padding: 20px 20px 0; overflow-y: auto; overscroll-behavior: contain; }
+        .form-group { display: grid; gap: 8px; align-content: start; min-width: 0; margin-bottom: 0; }
+        .form-group.span-full, .form-actions, .confirm-message, .confirm-details { grid-column: 1 / -1; }
+        .form-group > label, .form-field > label { margin-bottom: 0; }
+        .form-card { gap: 12px; padding: 14px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-raised); }
+        .form-field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .form-field { display: grid; gap: 8px; min-width: 0; align-content: start; }
+        .form-card .form-hint { margin-top: 0; }
+        .repeat-custom-row { display: grid; grid-template-columns: minmax(90px, 120px) 1fr; gap: 10px; align-items: center; margin-top: 2px; }
         .repeat-custom-row label { margin-bottom: 0; color: var(--text-secondary); font-weight: 650; }
-        .repeat-weekdays-row { display: grid; gap: 8px; margin-top: 10px; }
+        .repeat-weekdays-row { display: grid; gap: 8px; margin-top: 2px; }
         .repeat-weekdays-label { margin: 0; color: var(--text-secondary); font-size: 13px; font-weight: 650; }
         .repeat-weekdays { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
         .repeat-weekday-option { position: relative; margin: 0; cursor: pointer; }
@@ -457,7 +462,7 @@
         .repeat-weekday-option span { display: flex; min-height: 34px; align-items: center; justify-content: center; border: 1px solid var(--border-base); border-radius: var(--radius-control); background: var(--field-bg); color: var(--text-secondary); font-size: 12px; font-weight: 760; transition: background-color var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast), box-shadow var(--motion-fast); }
         .repeat-weekday-option input:checked + span { border-color: var(--color-primary); background: var(--color-info-light); color: var(--color-primary); }
         .repeat-weekday-option input:focus-visible + span { outline: 2px solid var(--color-primary); outline-offset: 2px; box-shadow: 0 0 0 4px var(--focus-ring); }
-        .repeat-pause-row { margin-top: 10px; }
+        .repeat-pause-row { margin-top: 0; }
         label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--text-main); font-size: 13px; }
         .form-hint { margin-top: 7px; color: var(--text-secondary); font-size: 12px; line-height: 1.45; }
         input:not([type="checkbox"]), textarea, select { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--border-base); border-radius: var(--radius-control); font-size: 14px; line-height: 1.45; transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-fast); background-color: var(--field-bg); color: var(--text-main); }
@@ -481,16 +486,16 @@
         .custom-select-option.selected svg { opacity: 1; }
         input[type="date"]::-webkit-calendar-picker-indicator, input[type="time"]::-webkit-calendar-picker-indicator { opacity: 0.68; cursor: pointer; }
         textarea { min-height: 70px; resize: vertical; }
-        .datetime-group { display: flex; gap: 10px; align-items: center; }
-        .date-input, .time-input { flex: 1; }
-        .checkbox-group { display: inline-flex; align-items: center; gap: 9px; margin-top: 10px; color: var(--text-main); }
+        .datetime-group { display: grid; grid-template-columns: minmax(0, 1fr) minmax(130px, 0.58fr); gap: 10px; align-items: center; }
+        .date-input, .time-input { min-width: 0; }
+        .checkbox-group { display: inline-flex; align-items: center; gap: 9px; margin-top: 2px; color: var(--text-main); }
         .checkbox-group label { margin: 0; font-weight: 720; }
         input[type="checkbox"]:not(.subtask-checkbox):not(.repeat-weekday-input) { appearance: none; -webkit-appearance: none; width: 24px; height: 24px; min-height: 24px; flex: 0 0 24px; margin: 0; border: 1px solid var(--border-base); border-radius: var(--radius-control); background-color: var(--field-bg); background-position: center; background-repeat: no-repeat; background-size: 16px; cursor: pointer; transition: background-color var(--motion-fast), border-color var(--motion-fast), box-shadow var(--motion-fast), transform var(--motion-fast); }
         input[type="checkbox"]:not(.subtask-checkbox):not(.repeat-weekday-input):hover { border-color: var(--color-primary); background-color: var(--bg-hover); }
         input[type="checkbox"]:not(.subtask-checkbox):not(.repeat-weekday-input):checked { border-color: var(--color-primary); background-color: var(--color-primary); background-image: var(--checkbox-check); }
         input[type="checkbox"]:not(.subtask-checkbox):not(.repeat-weekday-input):focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; box-shadow: 0 0 0 4px var(--focus-ring); }
         input[type="checkbox"]:not(.subtask-checkbox):not(.repeat-weekday-input):disabled { cursor: not-allowed; opacity: 0.56; }
-        .form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px; padding-top: 4px; }
+        .form-actions { position: sticky; bottom: 0; z-index: 2; display: flex; justify-content: flex-end; gap: 10px; margin: 2px -20px 0; padding: 14px 20px 16px; border-top: 1px solid var(--border-light); background: var(--bg-surface); box-shadow: 0 -12px 24px rgba(15, 23, 42, 0.05); }
         .confirm-message { font-size: 15px; line-height: 1.5; margin-bottom: 20px; color: var(--text-main); }
         .confirm-details { display: grid; gap: 10px; }
         .confirm-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 10px 12px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface-alt); }
@@ -518,7 +523,7 @@
         .empty-state h2 { font-size: 16px; margin-bottom: 8px; color: var(--text-secondary); }
         .empty-state p { font-size: 14px; }
         .file-input { display: none; }
-        .notification { position: fixed; top: 20px; right: 20px; background: var(--color-success); color: var(--text-inverse); padding: 12px 18px; border-radius: var(--radius-control); box-shadow: 0 16px 36px var(--shadow-float); z-index: 1001; display: flex; align-items: center; gap: 8px; transform: translateX(150%); visibility: hidden; pointer-events: none; transition: transform 0.3s ease, visibility 0s linear 0.3s; }
+        .notification { position: fixed; top: 20px; right: 20px; background: var(--color-success); color: var(--text-inverse); padding: 12px 18px; border-radius: var(--radius-control); box-shadow: 0 16px 36px var(--shadow-float); z-index: 1300; display: flex; align-items: center; gap: 8px; transform: translateX(150%); visibility: hidden; pointer-events: none; transition: transform 0.3s ease, visibility 0s linear 0.3s; }
         .notification.show { transform: translateX(0); visibility: visible; pointer-events: auto; transition-delay: 0s; }
         .notification.success { background: #047857; }
         .notification.error { background: var(--color-danger); }
@@ -677,7 +682,11 @@
             .task-actions { align-self: flex-end; }
             .modal { padding: 10px; }
             .modal-content { width: 100%; max-height: calc(100dvh - 20px); }
-            .datetime-group { flex-direction: column; gap: 8px; }
+            #taskForm { grid-template-columns: 1fr; gap: 13px; max-height: calc(100dvh - 85px); padding: 14px 14px 0; }
+            .form-card { padding: 12px; }
+            .form-field-grid, .datetime-group { grid-template-columns: 1fr; gap: 10px; }
+            .form-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 2px -14px 0; padding: 12px 14px 14px; }
+            .form-actions .btn { width: 100%; padding-inline: 10px; }
             .repeat-custom-row { grid-template-columns: 1fr; gap: 6px; }
             .repeat-custom-row label { margin-bottom: 0; }
             .import-conflict-row { grid-template-columns: 1fr; }
@@ -693,6 +702,12 @@
                 transform: translateY(calc(100% + 20px));
             }
             .notification.show { transform: translateY(0); }
+            body.modal-open .notification {
+                top: max(12px, env(safe-area-inset-top));
+                bottom: auto;
+                transform: translateY(calc(-100% - 20px));
+            }
+            body.modal-open .notification.show { transform: translateY(0); }
             .task-actions { flex-direction: row; }
             .update-prompt { align-items: stretch; flex-direction: column; gap: 10px; }
             .update-prompt-actions { justify-content: flex-end; }
@@ -930,11 +945,11 @@
         </div>
         <div class="modal-body">
             <form id="taskForm">
-                <div class="form-group">
+                <div class="form-group span-full">
                     <label data-i18n="form.taskName.label" for="taskName">任务名称 *</label>
                     <input data-i18n-placeholder="form.taskName.placeholder" id="taskName" name="taskName" placeholder="输入任务名称" required type="text">
                 </div>
-                <div class="form-group">
+                <div class="form-group span-full">
                     <label data-i18n="form.description.label" for="taskDesc">任务描述 (可选)</label>
                     <textarea data-i18n-placeholder="form.description.placeholder" id="taskDesc" placeholder="输入任务描述"></textarea>
                 </div>
@@ -947,7 +962,7 @@
                     <input data-i18n-placeholder="form.tags.placeholder" id="taskTags" name="taskTags" placeholder="用逗号分隔标签" type="text" autocomplete="off">
                     <p class="form-hint" data-i18n="form.tags.hint">标签会参与搜索。</p>
                 </div>
-                <div class="form-group">
+                <div class="form-group span-full form-card">
                     <label data-i18n="form.dueDate.label" for="dueDate">截止日期 (可选)</label>
                     <div class="datetime-group">
                         <input class="date-input" id="dueDate" type="date">
@@ -959,35 +974,43 @@
                         <label data-i18n="form.noDeadline" for="noDeadline">无截止日期</label>
                     </div>
                 </div>
-                <div class="form-group" id="reminderGroup">
-                    <label data-i18n="form.reminder.label" for="reminderOffset">提醒设置</label>
-                    <select id="reminderOffset" class="search-input" style="width: 100%;">
-                        <option value="-1" data-i18n="form.reminder.options.none">不提醒</option>
-                        <option value="0" data-i18n="form.reminder.options.atTime">截止时</option>
-                        <option value="15" selected data-i18n="form.reminder.options.min15">提前 15 分钟</option>
-                        <option value="60" data-i18n="form.reminder.options.hour1">提前 1 小时</option>
-                        <option value="1440" data-i18n="form.reminder.options.day1">提前 1 天</option>
-                    </select>
-                    <label data-i18n="form.reminderRepeat.label" for="reminderRepeat">重复提醒</label>
-                    <select id="reminderRepeat" class="search-input" style="width: 100%;">
-                        <option value="-1" selected data-i18n="form.reminderRepeat.options.none">不重复</option>
-                        <option value="15" data-i18n="form.reminderRepeat.options.min15">每 15 分钟</option>
-                        <option value="60" data-i18n="form.reminderRepeat.options.hour1">每 1 小时</option>
-                        <option value="1440" data-i18n="form.reminderRepeat.options.day1">每天</option>
-                    </select>
+                <div class="form-group span-full form-card" id="reminderGroup">
+                    <div class="form-field-grid">
+                        <div class="form-field">
+                            <label data-i18n="form.reminder.label" for="reminderOffset">提醒设置</label>
+                            <select id="reminderOffset" class="search-input">
+                                <option value="-1" data-i18n="form.reminder.options.none">不提醒</option>
+                                <option value="0" data-i18n="form.reminder.options.atTime">截止时</option>
+                                <option value="15" selected data-i18n="form.reminder.options.min15">提前 15 分钟</option>
+                                <option value="60" data-i18n="form.reminder.options.hour1">提前 1 小时</option>
+                                <option value="1440" data-i18n="form.reminder.options.day1">提前 1 天</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label data-i18n="form.reminderRepeat.label" for="reminderRepeat">重复提醒</label>
+                            <select id="reminderRepeat" class="search-input">
+                                <option value="-1" selected data-i18n="form.reminderRepeat.options.none">不重复</option>
+                                <option value="15" data-i18n="form.reminderRepeat.options.min15">每 15 分钟</option>
+                                <option value="60" data-i18n="form.reminderRepeat.options.hour1">每 1 小时</option>
+                                <option value="1440" data-i18n="form.reminderRepeat.options.day1">每天</option>
+                            </select>
+                        </div>
+                    </div>
                     <p class="form-hint" data-i18n="form.reminderRepeat.backgroundLimit">浏览器只会在应用打开或被唤醒时检查提醒；系统级后台提醒不能保证。</p>
                 </div>
-                <div class="form-group" id="repeatGroup">
-                    <label data-i18n="form.repeat.label" for="repeatType">重复任务</label>
-                    <select id="repeatType" class="search-input" style="width: 100%;">
-                        <option value="none" selected data-i18n="form.repeat.options.none">不重复</option>
-                        <option value="daily" data-i18n="form.repeat.options.daily">每天</option>
-                        <option value="weekly" data-i18n="form.repeat.options.weekly">每周</option>
-                        <option value="weekly-days" data-i18n="form.repeat.options.weeklyDays">每周指定星期</option>
-                        <option value="monthly" data-i18n="form.repeat.options.monthly">每月</option>
-                        <option value="monthly-last" data-i18n="form.repeat.options.monthlyLast">每月最后一天</option>
-                        <option value="custom" data-i18n="form.repeat.options.custom">自定义周期</option>
-                    </select>
+                <div class="form-group span-full form-card" id="repeatGroup">
+                    <div class="form-field">
+                        <label data-i18n="form.repeat.label" for="repeatType">重复任务</label>
+                        <select id="repeatType" class="search-input">
+                            <option value="none" selected data-i18n="form.repeat.options.none">不重复</option>
+                            <option value="daily" data-i18n="form.repeat.options.daily">每天</option>
+                            <option value="weekly" data-i18n="form.repeat.options.weekly">每周</option>
+                            <option value="weekly-days" data-i18n="form.repeat.options.weeklyDays">每周指定星期</option>
+                            <option value="monthly" data-i18n="form.repeat.options.monthly">每月</option>
+                            <option value="monthly-last" data-i18n="form.repeat.options.monthlyLast">每月最后一天</option>
+                            <option value="custom" data-i18n="form.repeat.options.custom">自定义周期</option>
+                        </select>
+                    </div>
                     <div class="repeat-weekdays-row" id="repeatWeekdaysRow" hidden>
                         <p class="repeat-weekdays-label" data-i18n="form.repeat.weekdaysLabel">重复星期</p>
                         <div class="repeat-weekdays" role="group" aria-label="重复星期" data-i18n-aria-label="form.repeat.weekdaysLabel">
@@ -1010,7 +1033,7 @@
                     </div>
                     <p class="form-hint" data-i18n="form.repeat.hint">完成重复任务后，会自动创建下一期任务。</p>
                 </div>
-                <div class="form-group">
+                <div class="form-group span-full">
                     <label data-i18n="form.subtasks.label" for="subtaskInput">子任务 (可选)</label>
                     <div class="subtask-input-wrapper">
                         <input type="text" id="subtaskInput" data-i18n-placeholder="form.subtasks.placeholder" placeholder="添加子任务..." autocomplete="off">
