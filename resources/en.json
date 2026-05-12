@@ -26,6 +26,14 @@
     "placeholder": "Search tasks...",
     "clear": "Clear search"
   },
+  "pwa": {
+    "update": {
+      "label": "App update",
+      "message": "A new version is ready. Refresh to use the latest app.",
+      "reload": "Refresh",
+      "dismiss": "Not now"
+    }
+  },
   "projects": {
     "filterLabel": "Project view",
     "all": "All Projects",

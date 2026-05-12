@@ -26,6 +26,14 @@
     "placeholder": "搜索任务...",
     "clear": "清空搜索"
   },
+  "pwa": {
+    "update": {
+      "label": "应用更新",
+      "message": "新版本已准备好，刷新后即可使用最新功能。",
+      "reload": "刷新更新",
+      "dismiss": "暂不更新"
+    }
+  },
   "projects": {
     "filterLabel": "项目视图",
     "all": "全部项目",

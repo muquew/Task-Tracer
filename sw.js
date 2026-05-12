@@ -1,10 +1,10 @@
-const CACHE_NAME = 'task-tracer-v3.41';
+const CACHE_NAME = 'task-tracer-v3.42';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './manifest.json',
-    './resources/en.json?v=4.1',
-    './resources/zh-CN.json?v=4.1',
+    './resources/en.json?v=4.2',
+    './resources/zh-CN.json?v=4.2',
     './fav/favicon-16x16.png',
     './fav/favicon-32x32.png',
     './fav/favicon.ico',
@@ -52,6 +52,9 @@ self.addEventListener('notificationclick', (e) => {
                 }
             })
     );
+});
+self.addEventListener('message', (e) => {
+    if (e.data && e.data.type === 'SKIP_WAITING') self.skipWaiting();
 });
 self.addEventListener('activate', (e) => {
     e.waitUntil(

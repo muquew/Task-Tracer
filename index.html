@@ -457,6 +457,11 @@
         .notification.success { background: #047857; }
         .notification.error { background: var(--color-danger); }
         .notification.warning { background: var(--color-warning); color: var(--text-main); }
+        .update-prompt { position: fixed; left: 50%; bottom: max(18px, env(safe-area-inset-bottom)); z-index: 1002; width: min(540px, calc(100vw - 28px)); transform: translateX(-50%); display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px; border: 1px solid color-mix(in srgb, var(--color-primary) 24%, var(--border-light)); border-radius: var(--radius-surface); background: var(--bg-surface); color: var(--text-main); box-shadow: 0 20px 48px var(--shadow-heavy); }
+        .update-prompt-message { display: flex; align-items: center; gap: 10px; min-width: 0; font-size: 14px; font-weight: 720; line-height: 1.4; }
+        .update-prompt-message svg { flex: 0 0 auto; color: var(--color-primary); }
+        .update-prompt-actions { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+        .update-dismiss-btn { min-width: 40px; padding-inline: 10px; }
         .icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle; }
         .icon-fill { fill: currentColor; stroke: none; }
         .icon-sm { width: 16px; height: 16px; }
@@ -602,6 +607,8 @@
             }
             .notification.show { transform: translateY(0); }
             .task-actions { flex-direction: row; }
+            .update-prompt { align-items: stretch; flex-direction: column; gap: 10px; }
+            .update-prompt-actions { justify-content: flex-end; }
         }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -899,6 +906,18 @@
     <svg class="icon"><use href="#icon-check"></use></svg>
     <span id="notificationText"></span>
 </div>
+<div class="update-prompt" id="updatePrompt" role="region" aria-live="polite" aria-atomic="true" aria-label="应用更新" data-i18n-aria-label="pwa.update.label" hidden>
+    <div class="update-prompt-message">
+        <svg class="icon" aria-hidden="true"><use href="#icon-repeat"></use></svg>
+        <span id="updatePromptText" data-i18n="pwa.update.message">新版本已准备好，刷新后即可使用最新功能。</span>
+    </div>
+    <div class="update-prompt-actions">
+        <button type="button" class="btn btn-primary" id="updateNowBtn" data-i18n="pwa.update.reload">刷新更新</button>
+        <button type="button" class="btn btn-secondary update-dismiss-btn" id="dismissUpdateBtn" aria-label="暂不更新" data-i18n-aria-label="pwa.update.dismiss">
+            <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-x"></use></svg>
+        </button>
+    </div>
+</div>
 <div id="srStatus" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 <template id="task-template">
     <div class="task-item">
@@ -997,7 +1016,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.1'
+                RESOURCE_VERSION: '4.2'
             },
             BACKUP: {
                 FILE_VERSION: '2.1',
@@ -1044,6 +1063,9 @@
             notifiedTasks: new Set(),
             pendingNotificationKeys: new Set(),
             themeTransitionInProgress: false,
+            serviceWorkerRegistration: null,
+            updatePromptDismissed: false,
+            refreshingForUpdate: false,
         };
         const DOM = {};
         function cacheDOM() {
@@ -1102,6 +1124,11 @@
                 el: document.getElementById('notification'),
                 text: document.getElementById('notificationText')
             };
+            DOM.updatePrompt = {
+                el: document.getElementById('updatePrompt'),
+                reloadBtn: document.getElementById('updateNowBtn'),
+                dismissBtn: document.getElementById('dismissUpdateBtn')
+            };
             DOM.srStatus = document.getElementById('srStatus');
         }
         document.addEventListener('DOMContentLoaded', initApp);
@@ -1124,6 +1151,7 @@
                 renderTaskList();
                 startProgressTimer();
                 scheduleBackupReminder();
+                initServiceWorkerUpdates();
             } catch (error) {
                 console.error('初始化失败:', error);
                 utils.notify(utils.translate('messages.initDBError'), 'error');
@@ -1208,6 +1236,7 @@
             bindTaskListEvents();
             bindSubtaskInputEvents();
             bindSubtaskPreviewEvents();
+            bindUpdatePromptEvents();
             setupDragAndDrop();
         }
         function bindGlobalEvents() {
@@ -1300,6 +1329,59 @@
             } else {
                 console.error('Notification button not found in DOM');
             }
+        }
+        function bindUpdatePromptEvents() {
+            DOM.updatePrompt.reloadBtn.addEventListener('click', applyServiceWorkerUpdate);
+            DOM.updatePrompt.dismissBtn.addEventListener('click', hideUpdatePrompt);
+        }
+        function initServiceWorkerUpdates() {
+            if (!('serviceWorker' in navigator)) return;
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (state.refreshingForUpdate) window.location.reload();
+            });
+            const register = async () => {
+                try {
+                    const registration = await navigator.serviceWorker.register('./sw.js');
+                    state.serviceWorkerRegistration = registration;
+                    watchServiceWorkerUpdate(registration);
+                    if (registration.waiting && navigator.serviceWorker.controller) showUpdatePrompt();
+                } catch (error) {
+                    console.log('SW failed:', error);
+                }
+            };
+            if (document.readyState === 'complete') register();
+            else window.addEventListener('load', register, { once: true });
+        }
+        function watchServiceWorkerUpdate(registration) {
+            registration.addEventListener('updatefound', () => {
+                const worker = registration.installing;
+                if (!worker) return;
+                worker.addEventListener('statechange', () => {
+                    if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                        state.serviceWorkerRegistration = registration;
+                        showUpdatePrompt();
+                    }
+                });
+            });
+        }
+        function showUpdatePrompt() {
+            if (state.updatePromptDismissed) return;
+            DOM.updatePrompt.el.hidden = false;
+            utils.announce(utils.translate('pwa.update.message'));
+        }
+        function hideUpdatePrompt() {
+            state.updatePromptDismissed = true;
+            DOM.updatePrompt.el.hidden = true;
+        }
+        function applyServiceWorkerUpdate() {
+            state.refreshingForUpdate = true;
+            const waitingWorker = state.serviceWorkerRegistration?.waiting;
+            if (waitingWorker) {
+                waitingWorker.postMessage({ type: 'SKIP_WAITING' });
+                window.setTimeout(() => window.location.reload(), 700);
+                return;
+            }
+            window.location.reload();
         }
         function bindMenuEvents() {
             DOM.menu.btn.addEventListener('click', handleMainMenuClick);
@@ -4628,13 +4710,6 @@
             utils.notify(t['messages.sampleTasks.added']);
         }
     })();
-</script>
-<script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js').then((reg) => console.log('SW registered:', reg.scope)).catch((err) => console.log('SW failed:', err));
-        });
-    }
 </script>
 <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
