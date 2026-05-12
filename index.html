@@ -211,7 +211,6 @@
         .search-clear-btn:hover { background: var(--bg-hover); border-color: var(--border-base); color: var(--color-primary); }
         .dropdown-container { position: relative; z-index: 300; }
         .project-filter { min-width: 0; }
-        .project-select { padding-right: 42px; }
         .dropdown-container.show { z-index: 800; }
         .dropdown-btn { background-color: var(--field-bg); border: 1px solid var(--border-base); color: var(--text-main); padding: 8px 12px; border-radius: var(--radius-control); font-size: 14px; cursor: pointer; display: flex; align-items: center; transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease), transform var(--motion-fast), box-shadow var(--motion-fast); height: 42px; white-space: nowrap; gap: 8px; min-width: 150px; }
         .dropdown-btn .chevron { margin-left: auto; opacity: 0.5; }
@@ -560,6 +559,8 @@
             .dropdown-container { flex: 1; min-width: 0; }
             .dropdown-btn { width: 100%; min-width: 0; justify-content: space-between; }
             .dropdown-menu-content { width: 100%; }
+            #filterDropdown .dropdown-menu-content { left: 0; right: auto; }
+            #sortDropdown .dropdown-menu-content { left: auto; right: 0; }
             .view-tab { justify-content: center; min-width: 0; padding-inline: 8px; }
             .calendar-header { align-items: flex-start; flex-direction: column; }
             .calendar-actions { width: 100%; justify-content: space-between; }
@@ -754,9 +755,12 @@
                 </button>
                 <div class="shortcut-hint" aria-hidden="true"><kbd class="shortcut-kbd" data-i18n-title="tooltips.searchShortcut" title="搜索快捷键：Ctrl/Cmd + K">⌘K</kbd></div>
             </div>
-            <div class="project-filter">
-                <label for="projectFilter" class="sr-only" data-i18n="projects.filterLabel">项目视图</label>
-                <select id="projectFilter" class="search-input project-select" aria-label="项目视图" data-i18n-aria-label="projects.filterLabel"></select>
+            <div class="dropdown-container project-filter" id="projectDropdown">
+                <button class="dropdown-btn" id="projectFilterBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="projectFilterMenu" aria-label="项目视图" data-i18n-aria-label="projects.filterLabel">
+                    <span id="currentProjectLabel" data-i18n="projects.all">全部项目</span>
+                    <svg class="icon icon-sm chevron"><use href="#icon-chevron-down"></use></svg>
+                </button>
+                <div class="dropdown-menu-content" id="projectFilterMenu" role="listbox" aria-labelledby="projectFilterBtn"></div>
             </div>
             <div class="dropdown-container" id="filterDropdown">
                 <button class="dropdown-btn" id="filterBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="filterMenu">
@@ -1069,7 +1073,6 @@
                 repeatInterval: document.getElementById('repeatInterval'),
                 repeatCustomRow: document.getElementById('repeatCustomRow'),
                 search: document.getElementById('searchInput'),
-                projectFilter: document.getElementById('projectFilter'),
                 subtask: document.getElementById('subtaskInput')
             };
             DOM.formGroups = document.querySelectorAll('.form-group');
@@ -1088,6 +1091,7 @@
                 fileInput: document.getElementById('importFile')
             };
             DOM.dropdowns = {
+                project: { container: document.getElementById('projectDropdown'), btn: document.getElementById('projectFilterBtn') },
                 filter: { container: document.getElementById('filterDropdown'), btn: document.getElementById('filterBtn') },
                 sort: { container: document.getElementById('sortDropdown'), btn: document.getElementById('sortBtn') }
             };
@@ -1240,10 +1244,6 @@
             }, 300));
             DOM.clearSearchBtn.addEventListener('click', () => clearSearchInput());
             syncSearchClearButton();
-            DOM.inputs.projectFilter.addEventListener('change', () => {
-                state.projectFilter = DOM.inputs.projectFilter.value;
-                renderTaskList();
-            });
             DOM.clearCompletedBtn.addEventListener('click', handleClearCompleted);
         }
         function bindViewEvents() {
@@ -2438,17 +2438,26 @@
                 ...projects.map(project => ({ value: project, text: project }))
             ];
             const signature = options.map(option => `${option.value}:${option.text}`).join('|');
-            if (DOM.inputs.projectFilter.dataset.signature !== signature) {
-                DOM.inputs.projectFilter.textContent = '';
+            const menu = getDropdownMenu(DOM.dropdowns.project);
+            if (menu.dataset.signature !== signature) {
+                menu.textContent = '';
                 options.forEach(option => {
-                    const el = document.createElement('option');
-                    el.value = option.value;
-                    el.textContent = option.text;
-                    DOM.inputs.projectFilter.appendChild(el);
+                    const el = document.createElement('button');
+                    el.type = 'button';
+                    el.className = 'dropdown-option';
+                    el.setAttribute('role', 'option');
+                    el.setAttribute('aria-selected', 'false');
+                    el.dataset.project = option.value;
+                    const label = document.createElement('span');
+                    label.textContent = option.text;
+                    el.appendChild(label);
+                    menu.appendChild(el);
                 });
-                DOM.inputs.projectFilter.dataset.signature = signature;
+                menu.dataset.signature = signature;
             }
-            DOM.inputs.projectFilter.value = state.projectFilter;
+            const selected = getDropdownOptions(DOM.dropdowns.project)
+                .find(option => option.dataset.project === state.projectFilter);
+            if (selected) updateDropdownUI(DOM.dropdowns.project.container, selected, DOM.dropdowns.project.btn);
         }
         function getProjectNames() {
             return [...new Set(state.tasks.map(task => normalizeTaskProject(task.project)).filter(Boolean))]
@@ -3740,8 +3749,10 @@
             }
         }
         function setupDropdowns() {
+            bindDropdownToggle(DOM.dropdowns.project);
             bindDropdownToggle(DOM.dropdowns.filter);
             bindDropdownToggle(DOM.dropdowns.sort);
+            DOM.dropdowns.project.container.addEventListener('click', handleProjectDropdownClick);
             DOM.dropdowns.filter.container.addEventListener('click', handleFilterDropdownClick);
             DOM.dropdowns.sort.container.addEventListener('click', handleSortDropdownClick);
             document.addEventListener('click', closeDropdownsOnOutsideClick);
@@ -3790,6 +3801,13 @@
             if (key === 'Home') target = options[0];
             requestAnimationFrame(() => target.focus());
         }
+        function handleProjectDropdownClick(e) {
+            const option = e.target.closest('.dropdown-option');
+            if (!option) return;
+            state.projectFilter = option.dataset.project;
+            renderTaskList();
+            syncDropdowns({ focusTrigger: DOM.dropdowns.project.btn });
+        }
         function handleFilterDropdownClick(e) {
             const option = e.target.closest('.dropdown-option');
             if (!option) return;
@@ -3834,6 +3852,9 @@
             options[nextIndex].focus();
         }
         function syncDropdowns({ focusTrigger = null } = {}) {
+            const projectOpt = getDropdownOptions(DOM.dropdowns.project)
+                .find(option => option.dataset.project === state.projectFilter);
+            if (projectOpt) updateDropdownUI(DOM.dropdowns.project.container, projectOpt, DOM.dropdowns.project.btn);
             const filterOpt = DOM.dropdowns.filter.container.querySelector(`.dropdown-option[data-filter="${state.filter}"]`);
             if (filterOpt) updateDropdownUI(DOM.dropdowns.filter.container, filterOpt, DOM.dropdowns.filter.btn);
             const sortOpt = DOM.dropdowns.sort.container.querySelector(`.dropdown-option[data-sort="${state.sort}"]`);

@@ -611,10 +611,10 @@ def exercise_project_tags(page: Page, alpha_name: str, beta_name: str) -> None:
     expect(task_locator(page, alpha_name)).to_have_count(1)
     expect(task_locator(page, beta_name)).to_have_count(0)
     clear_search(page)
-    page.locator("#projectFilter").select_option("Smoke Work")
+    select_project(page, "Smoke Work")
     expect(task_locator(page, alpha_name)).to_have_count(1)
     expect(task_locator(page, beta_name)).to_have_count(0)
-    page.locator("#projectFilter").select_option("all")
+    select_project(page, "all")
 
 
 def snooze_task_reminder(page: Page, task_name: str) -> None:
@@ -727,6 +727,20 @@ def select_filter(page: Page, value: str) -> None:
     selected_option.click()
     expect(filter_btn).to_have_attribute("aria-expanded", "false")
     expect(filter_btn).to_be_focused()
+    expect(selected_option).to_have_attribute("aria-selected", "true")
+    expect(selected_option).to_have_class(
+        re.compile(r"(^|\s)selected(\s|$)")
+    )
+
+
+def select_project(page: Page, value: str) -> None:
+    project_btn = page.locator("#projectFilterBtn")
+    selected_option = page.locator(f'#projectDropdown .dropdown-option[data-project="{value}"]')
+    expect(project_btn).to_have_attribute("aria-controls", "projectFilterMenu")
+    project_btn.click()
+    selected_option.click()
+    expect(project_btn).to_have_attribute("aria-expanded", "false")
+    expect(project_btn).to_be_focused()
     expect(selected_option).to_have_attribute("aria-selected", "true")
     expect(selected_option).to_have_class(
         re.compile(r"(^|\s)selected(\s|$)")

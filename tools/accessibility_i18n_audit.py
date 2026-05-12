@@ -99,6 +99,7 @@ def assert_focus_baseline(page: Page, label: str) -> None:
     selectors = ["#taskName", "#cancelBtn", "#submitBtn"] if page.locator("#taskModal").is_visible() else [
         "#openModalBtn",
         "#searchInput",
+        "#projectFilterBtn",
         "#filterBtn",
         "#sortBtn",
         '#viewSwitcher .view-tab[aria-selected="true"]',
