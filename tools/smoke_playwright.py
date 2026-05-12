@@ -1355,6 +1355,9 @@ def exercise_backup(page: Page) -> dict[str, Any]:
     )
     if not last_backup:
         raise AssertionError("Backup did not record the last backup timestamp")
+    page.locator("#openMenuBtn").click()
+    expect(page.locator("#backupHealthText")).to_contain_text(re.compile("今天|today", re.I))
+    page.keyboard.press("Escape")
     return backup
 
 

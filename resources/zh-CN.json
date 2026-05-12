@@ -333,6 +333,15 @@
     "reminderSet": "提醒已设置"
   },
   "backup": {
+    "health": {
+      "empty": "暂无任务数据需要备份",
+      "never": "尚未备份，建议立即备份",
+      "ok": "备份正常 · {age}",
+      "due": "建议备份 · {age}",
+      "today": "今天已备份",
+      "yesterday": "昨天备份",
+      "daysAgo": "{days} 天前备份"
+    },
     "versionNotes": {
       "schema": "2.1 备份包含本地截止日期、真实提醒时间、任务、子任务、项目、标签、重复规则、完成时间和归档状态。",
       "compatibility": "导入器会读取 tasks 数组；旧版导出文件仍可导入。"

@@ -181,6 +181,9 @@
         .menu-item:active { background: var(--bg-active); }
         .menu-item svg { width: 16px; height: 16px; color: var(--color-primary); fill: none; }
         @media (hover: hover) { .menu-item:hover { background: var(--bg-hover); } }
+        .menu-status { display: flex; align-items: flex-start; gap: 10px; margin: 2px 0 6px; padding: 9px 12px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface-alt); color: var(--text-secondary); font-size: 12px; font-weight: 700; line-height: 1.4; }
+        .menu-status svg { flex: 0 0 auto; width: 16px; height: 16px; color: var(--color-success); }
+        .menu-status.backup-due svg { color: var(--color-warning); }
         .menu-divider { height: 1px; background: var(--border-light); margin: 6px 4px; }
         .submenu { display: none; background: var(--bg-surface-alt); border-radius: var(--radius-control); overflow: hidden; max-height: 0; transition: max-height 0.3s ease-out; }
         .submenu.show { display: block; max-height: 200px; }
@@ -720,6 +723,10 @@
                     <svg class="icon"><use href="#icon-backup"></use></svg>
                     <span data-i18n="actions.backup">立即备份</span>
                 </button>
+                <div class="menu-status" id="backupHealth" role="none">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-backup"></use></svg>
+                    <span id="backupHealthText" role="status" aria-live="polite">尚未备份，建议立即备份</span>
+                </div>
                 <button class="menu-item" role="menuitem" data-i18n-title="actions.importTitle" id="importBtn" title="导入并替换当前任务数据">
                     <svg class="icon"><use href="#icon-import"></use></svg>
                     <span data-i18n="actions.import">导入</span>
@@ -1027,7 +1034,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.4'
+                RESOURCE_VERSION: '4.5'
             },
             BACKUP: {
                 FILE_VERSION: '2.1',
@@ -1123,6 +1130,8 @@
                 langContainer: document.getElementById('lang-container'),
                 exportBtn: document.getElementById('exportBtn'),
                 backupBtn: document.getElementById('backupBtn'),
+                backupHealth: document.getElementById('backupHealth'),
+                backupHealthText: document.getElementById('backupHealthText'),
                 importBtn: document.getElementById('importBtn'),
                 installBtn: document.getElementById('installAppBtn'),
                 archiveCompletedBtn: document.getElementById('archiveCompletedBtn'),
@@ -1464,6 +1473,7 @@
         }
         function handleMainMenuClick(e) {
             e.stopPropagation();
+            updateBackupHealthStatus();
             toggleMenu(DOM.menu.container, DOM.menu.btn);
         }
         function closeMainMenuOnOutsideClick(e) {
@@ -4522,7 +4532,10 @@
                 a.download = createTaskDataFilename(mode, date);
                 document.body.appendChild(a); a.click(); document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                if (mode === 'backup') await dbActions.setConfig(CONFIG.STORAGE.LAST_BACKUP_AT, date);
+                if (mode === 'backup') {
+                    await dbActions.setConfig(CONFIG.STORAGE.LAST_BACKUP_AT, date);
+                    updateBackupHealthStatus(date);
+                }
                 closeMenu();
                 utils.notify(mode === 'backup' ? t['messages.backup.success'] : t['messages.export.success']);
             } catch (err) {
@@ -4555,10 +4568,38 @@
         async function scheduleBackupReminder() {
             if (state.tasks.length === 0) return;
             const lastBackupAt = normalizeStoredDate(await dbActions.getConfig(CONFIG.STORAGE.LAST_BACKUP_AT));
+            updateBackupHealthStatus(lastBackupAt);
             if (lastBackupAt && (Date.now() - new Date(lastBackupAt).getTime()) / 86400000 < CONFIG.BACKUP.REMINDER_DAYS) return;
             setTimeout(() => {
                 if (state.tasks.length > 0) utils.notify(utils.translate('messages.backup.reminder'), 'warning');
             }, 900);
+        }
+        async function updateBackupHealthStatus(knownLastBackupAt = null) {
+            if (!DOM.menu.backupHealthText) return;
+            const lastBackupAt = knownLastBackupAt ?? normalizeStoredDate(await dbActions.getConfig(CONFIG.STORAGE.LAST_BACKUP_AT));
+            const status = getBackupHealthStatus(lastBackupAt);
+            DOM.menu.backupHealth.classList.toggle('backup-due', status.due);
+            DOM.menu.backupHealthText.textContent = status.text;
+        }
+        function getBackupHealthStatus(lastBackupAt) {
+            if (state.tasks.length === 0) {
+                return { due: false, text: utils.translate('backup.health.empty') };
+            }
+            if (!lastBackupAt) {
+                return { due: true, text: utils.translate('backup.health.never') };
+            }
+            const ageDays = Math.max(0, Math.floor((Date.now() - new Date(lastBackupAt).getTime()) / 86400000));
+            const ageText = formatBackupAge(ageDays);
+            const due = ageDays >= CONFIG.BACKUP.REMINDER_DAYS;
+            return {
+                due,
+                text: utils.translate(due ? 'backup.health.due' : 'backup.health.ok').replace('{age}', ageText)
+            };
+        }
+        function formatBackupAge(ageDays) {
+            if (ageDays === 0) return utils.translate('backup.health.today');
+            if (ageDays === 1) return utils.translate('backup.health.yesterday');
+            return utils.translate('backup.health.daysAgo').replace('{days}', ageDays);
         }
         function importTasks(file) {
             if(!file) return;

@@ -333,6 +333,15 @@
     "reminderSet": "Reminder set"
   },
   "backup": {
+    "health": {
+      "empty": "No task data to back up",
+      "never": "No backup yet. Back up now",
+      "ok": "Backup healthy · {age}",
+      "due": "Backup recommended · {age}",
+      "today": "backed up today",
+      "yesterday": "backed up yesterday",
+      "daysAgo": "backed up {days} days ago"
+    },
     "versionNotes": {
       "schema": "Backup 2.1 includes local due dates, exact reminder instants, tasks, subtasks, projects, tags, repeat rules, completion dates, and archive state.",
       "compatibility": "The importer reads the tasks array; older export files remain importable."
