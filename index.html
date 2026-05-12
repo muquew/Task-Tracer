@@ -2455,7 +2455,7 @@
                 });
                 menu.dataset.signature = signature;
             }
-            const selected = getDropdownOptions(DOM.dropdowns.project)
+            const selected = getAllDropdownOptions(DOM.dropdowns.project)
                 .find(option => option.dataset.project === state.projectFilter);
             if (selected) updateDropdownUI(DOM.dropdowns.project.container, selected, DOM.dropdowns.project.btn);
         }
@@ -3837,8 +3837,12 @@
             return dropdown.container.querySelector('.dropdown-menu-content');
         }
         function getDropdownOptions(dropdown) {
+            return getAllDropdownOptions(dropdown)
+                .filter(option => option.offsetParent !== null);
+        }
+        function getAllDropdownOptions(dropdown) {
             return Array.from(dropdown.container.querySelectorAll('.dropdown-option'))
-                .filter(option => option.offsetParent !== null && !option.disabled);
+                .filter(option => !option.disabled);
         }
         function moveDropdownFocus(dropdown, key, activeOption) {
             const options = getDropdownOptions(dropdown);
@@ -3852,7 +3856,7 @@
             options[nextIndex].focus();
         }
         function syncDropdowns({ focusTrigger = null } = {}) {
-            const projectOpt = getDropdownOptions(DOM.dropdowns.project)
+            const projectOpt = getAllDropdownOptions(DOM.dropdowns.project)
                 .find(option => option.dataset.project === state.projectFilter);
             if (projectOpt) updateDropdownUI(DOM.dropdowns.project.container, projectOpt, DOM.dropdowns.project.btn);
             const filterOpt = DOM.dropdowns.filter.container.querySelector(`.dropdown-option[data-filter="${state.filter}"]`);
