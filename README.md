@@ -28,10 +28,11 @@ It works well for study plans, personal operations, project follow-ups, routine 
 | Area | Included |
 | --- | --- |
 | Task lifecycle | Create, edit, complete, mark incomplete, delete, archive, restore from archive, clear completed tasks, and archive completed tasks. |
+| Fast entry | Quick add parses lightweight text such as `tomorrow 20:00 Review English #study /Personal` into title, date, time, tag, and project fields. |
 | Dates and deadlines | Optional local date and time, no-date tasks, timezone-aware legacy normalization, live countdowns, progress bars, and status colors. |
 | Status model | Safe, warning, urgent, overdue, completed, archived, and no-deadline states are shown with distinct labels and visual treatment. |
 | Subtasks | Add subtasks, edit subtask text inline, complete subtasks independently, and track subtask progress on the parent task. |
-| Recurring tasks | Daily, weekly, monthly, and custom-day recurrence; completing one occurrence creates the next one while preserving the completed record. |
+| Recurring tasks | Daily, weekly, selected weekdays, monthly, last-day-of-month, and custom-day recurrence; skip the current occurrence or pause recurrence without losing the task. |
 | Reminders | Reminder offset, repeat reminder interval, snooze, missed-reminder catch-up, notification permission handling, and clear background-delivery messaging. |
 | Projects and tags | One primary project per task, multiple tags per task, project-scoped views, tag chips, and project/tag-aware search. |
 | Search and filters | Search task names, descriptions, projects, tags, and subtasks; use scoped search syntax for project, tag, status, and due-date queries. |
@@ -41,16 +42,23 @@ It works well for study plans, personal operations, project follow-ups, routine 
 | PWA behavior | Menu-based install entry, manual install guidance, offline loading, app icons, and update-ready refresh prompts. |
 | Comfort and polish | Light/dark themes, responsive layout, reduced-motion support, smooth state transitions, and bilingual UI. |
 | Accessibility | Keyboard navigation, visible focus, dialog focus trap, screen-reader labels, live status announcements, and automated axe checks. |
+| Command palette | `Ctrl/Cmd + P` opens commands for new tasks, quick add, search, view switching, export, backup, and project switching. |
 
 ## Core Workflow
 
 Task Tracer starts from a simple list, then adds structure only where it helps:
 
-1. Add tasks with a name, optional description, due date and time, reminders, repeat rule, project, tags, and subtasks.
+1. Add tasks from the full form, or use quick add for compact entries with date, time, `#tag`, and `/project` tokens.
 2. Work from the list view for everyday actions such as complete, snooze, edit, archive, delete, and manual reorder.
 3. Switch to calendar or timeline view when date distribution matters more than list order.
 4. Use statistics to review completion rate, active overdue rate, archived volume, today's completions, and completion streak.
 5. Use the backup health status before clearing browser data, switching devices, or testing imports.
+
+## Fast Entry and Commands
+
+Quick add accepts compact task text. For example, `tomorrow 20:00 Review English #study /Personal` creates a task named `Review English`, due tomorrow at 20:00, tagged `study`, and assigned to `Personal`.
+
+The command palette opens with `Ctrl/Cmd + P`. Type a command, view name, or project name, then press Enter to run it.
 
 ## Projects, Tags, and Search
 

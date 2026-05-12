@@ -1016,7 +1016,7 @@
                 <input id="commandPaletteInput" class="command-palette-input" data-i18n-placeholder="commandPalette.placeholder" placeholder="搜索命令、视图或项目" aria-controls="commandPaletteList" aria-describedby="commandPaletteHint" autocomplete="off" type="text">
             </div>
             <p id="commandPaletteHint" class="sr-only" data-i18n="commandPalette.hint">使用上下方向键选择命令，按回车执行。</p>
-            <div class="command-palette-list" id="commandPaletteList" role="listbox" aria-label="可用命令" data-i18n-aria-label="commandPalette.listLabel"></div>
+            <div class="command-palette-list" id="commandPaletteList" aria-label="可用命令" data-i18n-aria-label="commandPalette.listLabel"></div>
         </div>
     </div>
 </div>
@@ -1486,6 +1486,7 @@
         function closeCommandPalette({ restoreFocus = true } = {}) {
             DOM.commandPalette.el.hidden = true;
             DOM.commandPalette.input.removeAttribute('aria-activedescendant');
+            DOM.commandPalette.list.removeAttribute('role');
             DOM.commandPalette.list.textContent = '';
             state.commandPaletteItems = [];
             if (restoreFocus && state.commandPaletteReturnFocus) state.commandPaletteReturnFocus.focus();
@@ -1498,6 +1499,7 @@
             state.commandPaletteActiveIndex = Math.min(state.commandPaletteActiveIndex, Math.max(0, items.length - 1));
             DOM.commandPalette.list.textContent = '';
             if (items.length === 0) {
+                DOM.commandPalette.list.removeAttribute('role');
                 const empty = document.createElement('div');
                 empty.className = 'command-empty';
                 empty.textContent = utils.translate('commandPalette.empty');
@@ -1505,6 +1507,7 @@
                 DOM.commandPalette.input.removeAttribute('aria-activedescendant');
                 return;
             }
+            DOM.commandPalette.list.setAttribute('role', 'listbox');
             const fragment = document.createDocumentFragment();
             items.forEach((item, index) => fragment.appendChild(createCommandPaletteItem(item, index)));
             DOM.commandPalette.list.appendChild(fragment);

@@ -69,8 +69,10 @@
   - `subtasks`: 子任务数组，每个子任务有唯一 `id`。
   - `completed`: 完成状态。
   - `completedAt`: 完成时间，用于统计今日完成数和连续完成天数。
-  - `repeatType`: 重复类型，取值为 `none`、`daily`、`weekly`、`monthly`、`custom`。
+  - `repeatType`: 重复类型，取值为 `none`、`daily`、`weekly`、`weekly-days`、`monthly`、`monthly-last`、`custom`。
   - `repeatInterval`: 自定义重复天数；非自定义类型统一为 `1`。
+  - `repeatWeekdays`: 指定星期重复使用的星期数组，采用浏览器 `Date.getDay()` 数值，`0` 为周日。
+  - `repeatPaused`: 是否暂停重复；暂停后完成任务不会生成下一期。
   - `repeatSourceId`: 重复链路的源任务 ID。
   - `repeatCreatedFrom`: 当前任务由哪个任务完成后生成。
   - `nextRepeatTaskId`: 当前任务完成后生成的下一期任务 ID。
@@ -86,6 +88,7 @@
   - `editingTaskId`: 当前编辑任务 ID。
   - `tempSubtasks`、`editingSubtaskIndex`: 弹窗内的临时子任务草稿。
   - `notificationsEnabled`、`notifiedTasks`、`pendingNotificationKeys`: 通知投递状态。
+  - `commandPaletteItems`、`commandPaletteActiveIndex`、`commandPaletteReturnFocus`: 命令面板候选项、当前选中项和关闭后的焦点恢复目标。
   - `currentLanguage`、`translations`、`dateTimeFormatters`: i18n 与本地化缓存。
 
 - `config` store 常用键:
@@ -106,7 +109,9 @@
 - 截止日期同时保存本地墙上时间和真实时间点。界面展示、日历和时间线使用 `dueLocalDate`/`dueLocalTime`；提醒、逾期和剩余时间使用 `dueAt`。
 - 旧版 `dueDate` 以本地墙上时间编码到 ISO 字符串中，`normalizeTaskDueFields()` 会通过 `legacyStoredDueDateToLocalDate()` 保留原先显示的日期时间，再写入新的 `dueLocalDate`、`dueLocalTime` 和 `dueAt`。
 - `completedAt`、`archivedAt`、`createdAt`、`snoozedUntil` 和 `lastReminderAt` 都是真实时间点，不能走旧版截止日期转换逻辑。
-- 重复任务由 `repeatType` 和 `repeatInterval` 表示。用户完成一个重复任务时，`toggleTaskComplete()` 会保留当前完成记录，并通过 `createNextRepeatTask()` 生成下一期。
+- 重复任务由 `repeatType`、`repeatInterval`、`repeatWeekdays` 和 `repeatPaused` 表示。用户完成一个未暂停的重复任务时，`toggleTaskComplete()` 会保留当前完成记录，并通过 `createNextRepeatTask()` 生成下一期。
+- 指定星期重复使用 `getNextWeeklyRepeatDate()` 在已选星期中寻找下一个日期；每月最后一天使用 `getLastDayOfNextMonth()`。
+- 卡片上的“跳过本次”调用 `skipRepeatOccurrence()`，直接把当前任务推进到下一期，不标记完成，也不创建完成记录。
 - 每月重复使用 `addMonthsClamped()` 处理月底日期，避免 1 月 31 日这类日期溢出到错误月份。
 - 日历视图使用 `calendarMonthDate` 和浏览器 `Date` 计算月份首日、星期偏移与 42 个日期格，任务按钮点击后进入编辑弹窗。
 - 时间线视图按本地日期分组，继续复用任务卡片模板，因此任务按钮、子任务和归档逻辑保持一致。
@@ -298,9 +303,12 @@
 - `prepareEditTaskForm(editingTask)`: 填充编辑表单。
 - `prepareNewTaskForm()`: 填充新建表单。
 - `setDialogFormLabels(titleKey, submitKey)`: 设置标题和提交按钮。
-- `setDeadlineControls({ enabled, date, time, reminderOffset, reminderRepeat, repeatType, repeatInterval })`: 截止日期、提醒、重复提醒和重复任务控件联动。
+- `setDeadlineControls({ enabled, date, time, reminderOffset, reminderRepeat, repeatType, repeatInterval, repeatWeekdays, repeatPaused })`: 截止日期、提醒、重复提醒和重复任务控件联动。
 - `syncReminderRepeatControl()`: 根据截止日期和提醒设置启用或禁用重复提醒。
 - `syncRepeatControls()`: 根据截止日期和重复类型启用或禁用重复任务控件。
+- `openCommandPalette()` / `closeCommandPalette()`: 打开或关闭命令面板，并处理焦点恢复。
+- `renderCommandPalette()` / `getCommandPaletteItems()`: 根据当前任务、视图和项目状态生成命令候选项。
+- `executeCommandPaletteItem(index)`: 执行当前命令，覆盖新建任务、快速添加、搜索、视图切换、导出、备份和项目切换。
 - `closeDialog()`: 关闭并清理弹窗。
 - `resetDialogToFormMode()`: 从确认模式恢复表单模式。
 - `utils.confirm(title, msg, onConfirm)`: 复用任务弹窗显示确认流程。

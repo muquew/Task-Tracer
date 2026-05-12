@@ -1505,7 +1505,7 @@ def exercise_export(page: Page) -> dict[str, Any]:
         raise AssertionError("Export did not produce a readable download file")
 
     exported = json.loads(Path(path).read_text(encoding="utf-8"))
-    if exported.get("version") != "2.1" or not exported.get("date") or not exported.get("versionNotes"):
+    if exported.get("version") != "2.2" or not exported.get("date") or not exported.get("versionNotes"):
         raise AssertionError(f"Export payload metadata is incomplete: {exported}")
     if not isinstance(exported.get("tasks"), list) or not exported["tasks"]:
         raise AssertionError(f"Export payload did not include tasks: {exported}")
@@ -1521,7 +1521,7 @@ def exercise_backup(page: Page) -> dict[str, Any]:
     if not path:
         raise AssertionError("Backup did not produce a readable download file")
     backup = json.loads(Path(path).read_text(encoding="utf-8"))
-    if backup.get("version") != "2.1" or backup.get("type") != "backup" or not backup.get("schema"):
+    if backup.get("version") != "2.2" or backup.get("type") != "backup" or not backup.get("schema"):
         raise AssertionError(f"Backup payload metadata is incomplete: {backup}")
     last_backup = page.evaluate(
         """async () => {
