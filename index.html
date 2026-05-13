@@ -444,7 +444,7 @@
         .close-btn { background: transparent; border: 1px solid transparent; color: var(--text-secondary); font-size: 20px; cursor: pointer; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-control); transition: background-color var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast); }
         .close-btn:hover { background: var(--bg-hover); border-color: var(--border-light); color: var(--color-primary); }
         .modal-body { padding: 0; overflow: hidden; }
-        #taskForm { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 14px; max-height: calc(min(860px, calc(100dvh - 32px)) - 69px); padding: 20px 20px 0; overflow-y: auto; overscroll-behavior: contain; }
+        #taskForm { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 14px; max-height: calc(min(860px, calc(100dvh - 32px)) - 69px); padding: 20px 20px 82px; overflow-y: auto; overscroll-behavior: contain; }
         .form-group { display: grid; gap: 8px; align-content: start; min-width: 0; margin-bottom: 0; }
         .form-group.span-full, .form-actions, .confirm-message, .confirm-details { grid-column: 1 / -1; }
         .form-group > label, .form-field > label { margin-bottom: 0; }
@@ -692,7 +692,7 @@
             .form-card { padding: 13px; gap: 14px; }
             .form-section-header { align-items: flex-start; }
             .form-field-grid, .datetime-group { grid-template-columns: 1fr; gap: 10px; }
-            .form-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 2px -14px 0; padding: 12px 14px 14px; }
+            .form-actions { position: static; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 2px -14px 0; padding: 12px 14px 14px; }
             .form-actions .btn { width: 100%; padding-inline: 10px; }
             .repeat-custom-row { grid-template-columns: 1fr; gap: 6px; }
             .repeat-custom-row label { margin-bottom: 0; }
