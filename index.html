@@ -448,6 +448,9 @@
         .form-group { display: grid; gap: 8px; align-content: start; min-width: 0; margin-bottom: 0; }
         .form-group.span-full, .form-actions, .confirm-message, .confirm-details { grid-column: 1 / -1; }
         .form-group > label, .form-field > label { margin-bottom: 0; }
+        .form-label-row { display: flex; align-items: baseline; gap: 8px; min-width: 0; flex-wrap: wrap; }
+        .form-label-row label { margin: 0; flex: 0 0 auto; }
+        .form-label-note { color: var(--text-tertiary); font-size: 12px; font-weight: 650; line-height: 1.35; }
         .form-card { gap: 12px; padding: 15px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-raised); }
         .form-section-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 0; }
         .form-section-header > label { margin: 0; min-width: 0; }
@@ -962,9 +965,11 @@
                     <input data-i18n-placeholder="form.project.placeholder" id="taskProject" name="taskProject" placeholder="例如：工作 / 个人" type="text" autocomplete="off">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="form.tags.label" for="taskTags">标签 (可选)</label>
+                    <div class="form-label-row">
+                        <label data-i18n="form.tags.label" for="taskTags">标签 (可选)</label>
+                        <span class="form-label-note" data-i18n="form.tags.hint">标签会参与搜索。</span>
+                    </div>
                     <input data-i18n-placeholder="form.tags.placeholder" id="taskTags" name="taskTags" placeholder="用逗号分隔标签" type="text" autocomplete="off">
-                    <p class="form-hint" data-i18n="form.tags.hint">标签会参与搜索。</p>
                 </div>
                 <div class="form-group span-full form-card">
                     <div class="form-section-header">
@@ -1006,7 +1011,10 @@
                 </div>
                 <div class="form-group span-full form-card" id="repeatGroup">
                     <div class="form-field">
-                        <label data-i18n="form.repeat.label" for="repeatType">重复任务</label>
+                        <div class="form-label-row">
+                            <label data-i18n="form.repeat.label" for="repeatType">重复任务</label>
+                            <span class="form-label-note" data-i18n="form.repeat.hint">完成后自动创建下一期。</span>
+                        </div>
                         <select id="repeatType" class="search-input">
                             <option value="none" selected data-i18n="form.repeat.options.none">不重复</option>
                             <option value="daily" data-i18n="form.repeat.options.daily">每天</option>
@@ -1037,7 +1045,6 @@
                         <input id="repeatPaused" type="checkbox">
                         <label data-i18n="form.repeat.pause" for="repeatPaused">暂停重复任务</label>
                     </div>
-                    <p class="form-hint" data-i18n="form.repeat.hint">完成重复任务后，会自动创建下一期任务。</p>
                 </div>
                 <div class="form-group span-full">
                     <label data-i18n="form.subtasks.label" for="subtaskInput">子任务 (可选)</label>

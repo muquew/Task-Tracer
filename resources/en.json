@@ -189,7 +189,7 @@
     },
     "repeat": {
       "label": "Repeating Task",
-      "hint": "Completing a repeating task automatically creates the next occurrence.",
+      "hint": "Creates the next occurrence after completion.",
       "customDays": "Interval days",
       "options": {
         "none": "Do not repeat",
