@@ -2459,8 +2459,11 @@
         function normalizeDueDateValue(value) {
             const text = String(value || '').trim();
             if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) return '';
-            const date = new Date(`${text}T12:00:00`);
-            return Number.isNaN(date.getTime()) ? '' : text;
+            const [year, month, day] = text.split('-').map(Number);
+            const date = new Date(year, month - 1, day, 12, 0, 0, 0);
+            if (Number.isNaN(date.getTime())) return '';
+            if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return '';
+            return text;
         }
         function normalizeDueTimeValue(value) {
             const text = String(value || '').trim();
@@ -3925,7 +3928,7 @@
                 return { statusObj: utils.getStatus(timeLeft), timeLeft };
             }
             return {
-                statusObj: { cls: CONFIG.UI.CLASSES.NO_DEADLINE, text: t['status.noDeadline'], percent: 0 },
+                statusObj: { cls: CONFIG.UI.STATUS.NO_DEADLINE, text: t['status.noDeadline'], percent: 0 },
                 timeLeft: null
             };
         }
@@ -5462,10 +5465,10 @@
             refreshTaskTimers();
         }
         function refreshTaskTimers() {
-            document.querySelectorAll('.task-item:not(.completed-task)').forEach(el => {
+            document.querySelectorAll('.task-item:not(.completed-task):not(.archived-task)').forEach(el => {
                 const id = Number(el.dataset.taskId);
                 const task = state.tasks.find(t => t.id === id);
-                if (!task || !hasTaskDueDate(task)) return;
+                if (!task || task.completed || task.archived || !hasTaskDueDate(task)) return;
                 const timeLeft = calculateTaskTimeLeft(task);
                 if (timeLeft === null) return;
                 const statusObj = utils.getStatus(timeLeft);

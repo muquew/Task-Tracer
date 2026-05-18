@@ -266,8 +266,14 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             re.DOTALL,
         ):
             errors.append("Completed task names must be struck through with text-decoration-line: line-through")
-        if "document.querySelectorAll('.task-item:not(.completed-task)')" not in index_html:
-            errors.append("Timer refresh should skip completed tasks")
+        if "statusObj: { cls: CONFIG.UI.STATUS.NO_DEADLINE" not in index_html:
+            errors.append("No-deadline tasks must render the status-no-deadline class")
+        if "document.querySelectorAll('.task-item:not(.completed-task):not(.archived-task)')" not in index_html:
+            errors.append("Timer refresh should skip completed and archived tasks")
+        if "task.completed || task.archived || !hasTaskDueDate(task)" not in index_html:
+            errors.append("Timer refresh must guard completed and archived records")
+        if "date.getFullYear() !== year" not in index_html or "date.getMonth() !== month - 1" not in index_html:
+            errors.append("Due-date normalization must reject rolled-over calendar dates")
     except AssertionError as error:
         errors.append(str(error))
 
