@@ -1181,7 +1181,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.53'
+                VERSION: '3.54'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1293,7 +1293,8 @@
             commandPaletteReturnFocus: null,
             storageAvailable: true,
             storageError: null,
-            storageFailureEventsBound: false
+            storageFailureEventsBound: false,
+            eventsBound: false
         };
         const DOM = {};
         function cacheDOM() {
@@ -1399,7 +1400,7 @@
                 bindEvents();
                 renderTaskList();
                 startProgressTimer();
-                scheduleBackupReminder();
+                scheduleBackupReminder().catch(handleBackgroundStorageFailure);
                 initInstallPrompt();
                 initServiceWorkerUpdates();
             } catch (error) {
@@ -1452,8 +1453,16 @@
         function bindStorageUnavailableEvents() {
             if (state.storageFailureEventsBound) return;
             state.storageFailureEventsBound = true;
-            DOM.themeBtn.addEventListener('click', utils.toggleTheme);
+            if (!state.eventsBound) DOM.themeBtn.addEventListener('click', utils.toggleTheme);
             DOM.retryStorageBtn.addEventListener('click', retryStorageAvailability);
+        }
+        function handleBackgroundStorageFailure(error) {
+            console.error('后台存储状态刷新失败:', error);
+            if (shouldUseStorageUnavailableMode(error)) {
+                handleStorageUnavailable(error);
+                return;
+            }
+            utils.notify(utils.translate('messages.task.updateError'), 'error');
         }
         async function retryStorageAvailability() {
             if (!DOM.retryStorageBtn || DOM.retryStorageBtn.disabled) return;
@@ -1637,6 +1646,7 @@
             bindSubtaskPreviewEvents();
             bindUpdatePromptEvents();
             setupDragAndDrop();
+            state.eventsBound = true;
         }
         function bindGlobalEvents() {
             DOM.themeBtn.addEventListener('click', utils.toggleTheme);
@@ -2065,7 +2075,7 @@
         }
         function handleMainMenuClick(e) {
             e.stopPropagation();
-            updateBackupHealthStatus();
+            updateBackupHealthStatus().catch(handleBackgroundStorageFailure);
             toggleMenu(DOM.menu.container, DOM.menu.btn);
         }
         function closeMainMenuOnOutsideClick(e) {
@@ -5973,7 +5983,7 @@
                 URL.revokeObjectURL(url);
                 if (mode === 'backup') {
                     await dbActions.setConfig(CONFIG.STORAGE.LAST_BACKUP_AT, date);
-                    updateBackupHealthStatus(date);
+                    await updateBackupHealthStatus(date);
                 }
                 closeMenu();
                 utils.notify(mode === 'backup' ? t['messages.backup.success'] : t['messages.export.success']);
@@ -6007,15 +6017,17 @@
         async function scheduleBackupReminder() {
             if (state.tasks.length === 0) return;
             const lastBackupAt = normalizeStoredDate(await dbActions.getConfig(CONFIG.STORAGE.LAST_BACKUP_AT));
-            updateBackupHealthStatus(lastBackupAt);
+            await updateBackupHealthStatus(lastBackupAt);
             if (lastBackupAt && (Date.now() - new Date(lastBackupAt).getTime()) / 86400000 < CONFIG.BACKUP.REMINDER_DAYS) return;
             setTimeout(() => {
                 if (state.tasks.length > 0) utils.notify(utils.translate('messages.backup.reminder'), 'warning');
             }, 900);
         }
-        async function updateBackupHealthStatus(knownLastBackupAt = null) {
+        async function updateBackupHealthStatus(knownLastBackupAt) {
             if (!DOM.menu.backupHealthText) return;
-            const lastBackupAt = knownLastBackupAt ?? normalizeStoredDate(await dbActions.getConfig(CONFIG.STORAGE.LAST_BACKUP_AT));
+            const lastBackupAt = arguments.length > 0
+                ? normalizeStoredDate(knownLastBackupAt)
+                : normalizeStoredDate(await dbActions.getConfig(CONFIG.STORAGE.LAST_BACKUP_AT));
             const status = getBackupHealthStatus(lastBackupAt);
             DOM.menu.backupHealth.classList.toggle('backup-due', status.due);
             DOM.menu.backupHealthText.textContent = status.text;

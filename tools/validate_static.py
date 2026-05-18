@@ -324,6 +324,9 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             "Storage fallback must be scoped to the storage initialization stage": ("function initializeStorageOrFallback()", "await initPersistentStorage();", "if (!shouldUseStorageUnavailableMode(error)) throw error;", "handleStorageUnavailable(error);"),
             "Storage-unavailable mode must pause task-writing actions": ("function handleStorageUnavailable(error)", "function syncStorageAvailabilityUI()", "function ensureStorageAvailable()", "storage.unavailable.actionsDisabled"),
             "Web Storage access must be guarded for privacy modes": ("function safeGetStorageItem(kind, key)", "function safeSetStorageItem(kind, key, value)", "function safeRemoveStorageItem(kind, key)"),
+            "Background backup health reads must route storage failures through fallback": ("scheduleBackupReminder().catch(handleBackgroundStorageFailure)", "function handleBackgroundStorageFailure(error)", "handleStorageUnavailable(error);", "updateBackupHealthStatus().catch(handleBackgroundStorageFailure)"),
+            "Known missing backup state must not re-read config": ("async function updateBackupHealthStatus(knownLastBackupAt)", "arguments.length > 0", "normalizeStoredDate(await dbActions.getConfig(CONFIG.STORAGE.LAST_BACKUP_AT))"),
+            "Storage fallback events must avoid duplicate theme handlers after normal init": ("eventsBound: false", "if (!state.eventsBound) DOM.themeBtn.addEventListener('click', utils.toggleTheme);", "state.eventsBound = true;"),
         }
         for message, fragments in state_consistency_checks.items():
             if not contains_in_order(index_html, fragments):
