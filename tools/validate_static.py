@@ -297,6 +297,8 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Dropdown options must expose and synchronize aria-selected")
     if "handleDropdownButtonKeydown" not in index_html or "handleDropdownMenuKeydown" not in index_html:
         errors.append("Custom dropdowns must support keyboard navigation")
+    if "openCustomSelect(select, (e.key === 'Enter' || e.key === ' ') ? 'selected' : e.key)" not in index_html:
+        errors.append("Custom select buttons must focus the selected option when opened with Enter or Space")
     if "handleViewSwitcherKeydown" not in index_html or 'role="tab" aria-selected="true" aria-controls="taskList" tabindex="0"' not in index_html:
         errors.append("View tabs must use a roving keyboard tablist model")
     if 'id="taskList" role="tabpanel"' not in index_html:
@@ -323,6 +325,12 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Task cards must expose structured article labels and descriptions")
     if "markDecorativeIcons" not in index_html:
         errors.append("Decorative SVG icons must be hidden from the accessibility tree")
+    if "notificationHideTimer" not in index_html or "clearTimeout(state.notificationHideTimer)" not in index_html:
+        errors.append("Toast notifications must clear the previous hide timer before showing a new message")
+    if "id: createTaskId()" not in index_html or "function createTaskId(" not in index_html:
+        errors.append("New task records must use the unique task id generator")
+    if "id: Date.now()" in index_html:
+        errors.append("New task records must not use raw Date.now() as the task id")
 
 
 def validate_security_headers(errors: list[str]) -> None:

@@ -1241,6 +1241,7 @@
             editingSubtaskIndex: -1,
             modalMode: 'form',
             progressInterval: null,
+            notificationHideTimer: null,
             elementToFocusOnClose: null,
             calendarDetailDateKey: '',
             dateTimeFormatters: {},
@@ -2259,7 +2260,7 @@
         }
         function createTaskRecord(taskPayload) {
             return {
-                id: Date.now(),
+                id: createTaskId(),
                 createdAt: new Date().toISOString(),
                 completed: false,
                 completedAt: null,
@@ -2394,6 +2395,9 @@
             const usedIds = new Set(cloneSubtasks(subtasks)
                 .map(subtask => Number(subtask.id))
                 .filter(Number.isFinite));
+            return createUniqueNumericId(usedIds);
+        }
+        function createTaskId(usedIds = new Set(state.tasks.map(task => Number(task.id)).filter(Number.isFinite))) {
             return createUniqueNumericId(usedIds);
         }
         function createDueFields(dateValue, timeValue) {
@@ -4352,7 +4356,7 @@
             e.preventDefault();
             const select = e.currentTarget.closest('.custom-select')?.querySelector('select');
             if (!select) return;
-            openCustomSelect(select, e.key);
+            openCustomSelect(select, (e.key === 'Enter' || e.key === ' ') ? 'selected' : e.key);
         }
         function handleCustomSelectMenuClick(e) {
             e.stopPropagation();
@@ -4399,7 +4403,7 @@
             let target = options.find(option => option.classList.contains(CONFIG.UI.CLASSES.SELECTED)) || options[0];
             if (key === 'ArrowUp' || key === 'End') target = options[options.length - 1] || target;
             if (key === 'Home') target = options[0] || target;
-            if (target && key !== 'Enter' && key !== ' ') requestAnimationFrame(() => target.focus());
+            if (target) requestAnimationFrame(() => target.focus());
             if (menu && target) menu.setAttribute('aria-activedescendant', target.id);
         }
         function chooseCustomSelectOption(option) {
@@ -4688,10 +4692,17 @@
                 return (...args) => { clearTimeout(id); id = setTimeout(() => func(...args), delay); };
             },
             notify: (msg, type = 'success') => {
+                if (state.notificationHideTimer) {
+                    clearTimeout(state.notificationHideTimer);
+                    state.notificationHideTimer = null;
+                }
                 DOM.notification.text.textContent = msg;
                 DOM.notification.el.className = `notification ${type} show`;
                 DOM.notification.el.setAttribute('role', (type === 'error' || type === 'warning') ? 'alert' : 'status');
-                setTimeout(() => DOM.notification.el.classList.remove(CONFIG.UI.CLASSES.SHOW), 3000);
+                state.notificationHideTimer = setTimeout(() => {
+                    DOM.notification.el.classList.remove(CONFIG.UI.CLASSES.SHOW);
+                    state.notificationHideTimer = null;
+                }, 3000);
             },
             announce: (msg) => {
                 if (!DOM.srStatus) return;
@@ -5898,10 +5909,18 @@
         }
         async function addSampleTasks() {
             const t = state.translations[state.currentLanguage];
+            const usedIds = new Set(state.tasks.map(task => Number(task.id)).filter(Number.isFinite));
+            let order = getNextTaskOrder();
+            const createSampleTask = (payload) => {
+                const task = createTaskRecord({ ...payload, order });
+                task.id = createTaskId(usedIds);
+                order += CONFIG.DEFAULTS.ORDER_STEP;
+                return task;
+            };
             const samples = [
-                { id: Date.now()+1, name: t['samples.task1.name'] || "完成项目报告", description: t['samples.task1.description'] || "编写并提交季度项目总结报告", project: t['samples.task1.project'] || "工作", tags: [t['samples.task1.tag'] || "报告"], ...createDueFieldsFromDate(new Date(Date.now() + 432000000)), createdAt: new Date().toISOString(), completed: false },
-                { id: Date.now()+2, name: t['samples.task2.name'] || "团队会议准备", description: t['samples.task2.description'] || "准备下周团队会议的演示材料", project: t['samples.task2.project'] || "工作", tags: [t['samples.task2.tag'] || "会议"], ...createDueFieldsFromDate(new Date(Date.now() + 864000000)), createdAt: new Date().toISOString(), completed: false },
-                { id: Date.now()+3, name: t['samples.task3.name'] || "学习计划制定", description: t['samples.task3.description'] || "制定下个月的个人学习计划", project: t['samples.task3.project'] || "个人", tags: [t['samples.task3.tag'] || "学习"], ...clearDueFields(), createdAt: new Date().toISOString(), completed: false }
+                createSampleTask({ name: t['samples.task1.name'] || "完成项目报告", description: t['samples.task1.description'] || "编写并提交季度项目总结报告", project: t['samples.task1.project'] || "工作", tags: [t['samples.task1.tag'] || "报告"], ...createDueFieldsFromDate(new Date(Date.now() + 432000000)) }),
+                createSampleTask({ name: t['samples.task2.name'] || "团队会议准备", description: t['samples.task2.description'] || "准备下周团队会议的演示材料", project: t['samples.task2.project'] || "工作", tags: [t['samples.task2.tag'] || "会议"], ...createDueFieldsFromDate(new Date(Date.now() + 864000000)) }),
+                createSampleTask({ name: t['samples.task3.name'] || "学习计划制定", description: t['samples.task3.description'] || "制定下个月的个人学习计划", project: t['samples.task3.project'] || "个人", tags: [t['samples.task3.tag'] || "学习"], ...clearDueFields() })
             ];
             await Promise.all(samples.map(s => dbActions.addTask(s)));
             await refreshTasks();
