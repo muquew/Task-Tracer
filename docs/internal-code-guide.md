@@ -135,7 +135,7 @@
 1. `cacheDOM()` 缓存节点。
 2. `loadTranslations()` 加载语言文件。
 3. `createLangButtons()` 创建语言菜单项。
-4. `initPersistentStorage()` 初始化 IndexedDB，并通过 `verifyPersistentStorage()` 执行写入/删除探针。
+4. `initializeStorageOrFallback()` 单独处理存储初始化；内部调用 `initPersistentStorage()` 初始化 IndexedDB，并通过 `verifyPersistentStorage()` 执行写入/删除探针。
 5. `loadSettings()` 恢复语言、通知和已提醒签名。
 6. `initLanguage()` 同步 `lang`、`dir` 和页面文案。
 7. `loadNormalizedTasks()` 读取任务并修复历史任务字段和子任务重复 ID。
@@ -145,7 +145,7 @@
 11. `startProgressTimer()` 启动倒计时刷新。
 12. `scheduleBackupReminder()` 根据最近备份时间决定是否提示备份。
 
-如果 IndexedDB 被禁用、浏览器隐私模式阻止本地数据库，或写入探针失败，`handleStorageUnavailable()` 会进入保护模式：显示存储不可用横幅和任务区错误态，禁用任务写入口，只保留主题切换和重试检测。
+如果 IndexedDB 被禁用、浏览器隐私模式阻止本地数据库，或写入探针失败，`initializeStorageOrFallback()` 会调用 `handleStorageUnavailable()` 进入保护模式：显示存储不可用横幅和任务区错误态，禁用任务写入口，只保留主题切换和重试检测。非存储阶段的初始化错误不会被包装成本地存储不可用。
 
 ## 主要函数清单
 
@@ -153,6 +153,7 @@
 
 - `cacheDOM()`: 缓存常用 DOM 引用。
 - `initApp()`: 应用总入口。
+- `initializeStorageOrFallback()`: 只包住存储初始化阶段，决定进入正常模式还是存储不可用保护模式。
 - `initPersistentStorage()`: 初始化 IndexedDB 并执行存储写入探针。
 - `verifyPersistentStorage()`: 向 `config` store 写入临时键并删除，确认数据库可写。
 - `handleStorageUnavailable(error)`: 切换到存储不可用保护模式。

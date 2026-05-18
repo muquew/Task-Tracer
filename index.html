@@ -1382,12 +1382,10 @@
         document.addEventListener('DOMContentLoaded', initApp);
         async function initApp() {
             cacheDOM();
-            let translationsLoaded = false;
             try {
                 await loadTranslations();
-                translationsLoaded = true;
                 createLangButtons();
-                await initPersistentStorage();
+                if (!(await initializeStorageOrFallback())) return;
                 await loadSettings();
                 initLanguage();
                 enhanceSelectControls();
@@ -1406,11 +1404,18 @@
                 initServiceWorkerUpdates();
             } catch (error) {
                 console.error('初始化失败:', error);
-                if (translationsLoaded && shouldUseStorageUnavailableMode(error)) {
-                    handleStorageUnavailable(error);
-                    return;
-                }
                 utils.notify(utils.translate('messages.initDBError'), 'error');
+            }
+        }
+        async function initializeStorageOrFallback() {
+            try {
+                await initPersistentStorage();
+                return true;
+            } catch (error) {
+                console.error('本地存储初始化失败:', error);
+                if (!shouldUseStorageUnavailableMode(error)) throw error;
+                handleStorageUnavailable(error);
+                return false;
             }
         }
         async function initPersistentStorage() {
