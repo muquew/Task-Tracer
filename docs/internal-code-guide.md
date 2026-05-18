@@ -121,7 +121,7 @@
 ## 导入、导出与备份边界
 
 - 导出由 `exportTasks()` 进入，下载当前任务 JSON，适合迁移、查看或手动保存。
-- 导入由 `importTasks(file)` 进入，会先构建预览，展示导入数量、同名重复项和替换影响，确认后通过 `replaceAllTasks()` 全量替换当前任务。
+- 导入由 `importTasks(file)` 进入，会先构建预览，展示导入数量、文件内同名重复、重复任务 ID、与当前任务同名项和替换影响。默认确认后通过 `replaceAllTasks()` 全量替换当前任务；开启合并模式后会读取冲突策略，并通过 `mergeImportedTasks()` 合并、跳过或替换同名本地任务。
 - 备份由 `backupTasks()` 进入，下载带 `schema` 和 `versionNotes` 的版本化快照，并把时间写入 `lastBackupAt`。
 - `scheduleBackupReminder()` 根据 `lastBackupAt` 和任务数量决定是否显示最近备份提醒。
 
@@ -395,9 +395,12 @@
 - `createTaskDataPayload(mode, date, tasks)`: 构建带版本说明的数据文件。
 - `createTaskDataFilename(mode, date)`: 生成导出或备份文件名。
 - `scheduleBackupReminder()`: 根据最近备份时间提示备份。
-- `importTasks(file)`: 读取 JSON、展示导入预览并确认替换。
-- `buildImportPreview(importedTasks)`: 统计导入数量、当前替换影响和重复项。
-- `getImportDuplicateNames(importedTasks)`: 统计导入文件内或与当前任务重名的任务。
+- `importTasks(file)`: 读取 JSON、展示导入预览，并按替换模式或合并模式写入任务。
+- `buildImportPreview(importedTasks, rawTasks)`: 统计导入数量、当前数据影响、文件内同名重复、重复任务 ID、与当前任务同名项和冲突列表。
+- `getImportFileDuplicateNames(names)`: 统计导入文件内同名任务。
+- `getImportExistingDuplicateNames(names, existingByName)`: 统计导入文件中与当前任务同名的任务。
+- `createImportConflictControls(preview, t)`: 生成合并模式下的同名冲突策略控件。
+- `prepareImportedTasksForMerge(importedTasks, conflictActions)`: 根据 keep、skip、replace 策略准备合并任务和需要删除的本地任务 ID。
 - `createImportPreviewContent(preview)`: 生成确认弹窗中的导入预览 DOM。
 - `normalizeImportedTasks(rawTasks)`: 导入任务规范化；重复任务 ID 会生成新 ID，指向重复 ID 的重复链路引用会被清空，避免误连。
 - `normalizeImportedTask(rawTask, index, normalizeId)`: 单任务规范化。

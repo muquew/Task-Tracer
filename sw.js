@@ -1,4 +1,4 @@
-const CACHE_NAME = 'task-tracer-v3.51';
+const CACHE_NAME = 'task-tracer-v3.52';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -102,6 +102,7 @@ async function cacheFirst(request) {
 }
 async function cacheResponse(request, response) {
     if (!response || response.status !== 200 || response.type !== 'basic') return;
+    const responseToCache = response.clone();
     const cache = await caches.open(CACHE_NAME);
-    await cache.put(request, response.clone());
+    await cache.put(request, responseToCache);
 }
