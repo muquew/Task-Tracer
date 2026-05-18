@@ -388,6 +388,7 @@
         .task-actions { display: flex; gap: 7px; }
         .action-btn { width: 32px; height: 32px; background: var(--bg-surface); border: 1px solid var(--border-light); cursor: pointer; font-size: 16px; transition: color 0.2s, background-color 0.2s, transform 0.2s, border-color 0.2s; padding: 6px; border-radius: var(--radius-control); display: flex; align-items: center; justify-content: center; }
         .action-btn:hover { transform: translateY(-1px); }
+        .action-btn:disabled { cursor: wait; opacity: 0.56; transform: none; }
         .edit-btn { color: var(--color-primary); }
         .edit-btn:hover { color: var(--color-primary-dark); background: var(--color-info-light); }
         .delete-btn { color: var(--text-tertiary); }
@@ -1242,6 +1243,9 @@
             modalMode: 'form',
             progressInterval: null,
             notificationHideTimer: null,
+            taskFormSaving: false,
+            quickAddSaving: false,
+            pendingTaskActions: new Set(),
             elementToFocusOnClose: null,
             calendarDetailDateKey: '',
             dateTimeFormatters: {},
@@ -2082,6 +2086,7 @@
         }
         async function handleTaskSave(e) {
             e.preventDefault();
+            if (state.taskFormSaving) return;
             const t = state.translations[state.currentLanguage];
             const taskPayload = buildTaskPayloadFromForm();
             if (!taskPayload.name) {
@@ -2089,6 +2094,8 @@
                 DOM.inputs.name.focus();
                 return;
             }
+            state.taskFormSaving = true;
+            DOM.submitBtn.disabled = true;
             try {
                 if (state.editingTaskId) {
                     const original = getTaskById(state.editingTaskId);
@@ -2104,10 +2111,14 @@
             } catch (err) {
                 console.error('保存任务失败:', err);
                 utils.notify(t['messages.task.saveError'], 'error');
+            } finally {
+                state.taskFormSaving = false;
+                if (isTaskDialogOpen()) DOM.submitBtn.disabled = false;
             }
         }
         async function handleQuickAddSubmit(e) {
             e.preventDefault();
+            if (state.quickAddSaving) return;
             const t = state.translations[state.currentLanguage];
             const rawInput = DOM.quickAddInput.value.trim();
             if (!rawInput) {
@@ -2121,6 +2132,8 @@
                 DOM.quickAddInput.focus();
                 return;
             }
+            state.quickAddSaving = true;
+            setQuickAddSaving(true);
             try {
                 await dbActions.addTask(createTaskRecord(taskPayload));
                 DOM.quickAddInput.value = '';
@@ -2129,7 +2142,15 @@
             } catch (err) {
                 console.error('快速添加任务失败:', err);
                 utils.notify(t['messages.task.saveError'], 'error');
+            } finally {
+                state.quickAddSaving = false;
+                setQuickAddSaving(false);
             }
+        }
+        function setQuickAddSaving(saving) {
+            DOM.quickAddInput.disabled = saving;
+            const button = DOM.quickAddForm.querySelector('button[type="submit"]');
+            if (button) button.disabled = saving;
         }
         function buildTaskPayloadFromQuickAdd(rawInput) {
             const parsed = parseQuickAddInput(rawInput);
@@ -4066,6 +4087,7 @@
             if (editButton) editButton.hidden = !!task.archived;
             setButtonLabel(editButton, t['task.actions.edit']);
             setButtonLabel(el.querySelector('[data-action="delete"]'), t['task.actions.delete']);
+            syncTaskActionPendingState(el, task.id);
         }
         function syncTaskAccessibility(el, task) {
             el.setAttribute('role', 'article');
@@ -4109,6 +4131,13 @@
             if (!button) return;
             button.title = label;
             button.setAttribute('aria-label', label);
+        }
+        function syncTaskActionPendingState(el, taskId) {
+            const pending = isAnyTaskActionPending(taskId);
+            el.querySelectorAll('[data-action="toggle"], [data-action="snooze"], [data-action="skip-repeat"], [data-action="archive"]').forEach(button => {
+                button.disabled = pending;
+                button.setAttribute('aria-busy', String(pending));
+            });
         }
         function renderTaskDragHandle(el) {
             const existingHandle = el.querySelector('.drag-handle');
@@ -5172,18 +5201,53 @@
         function handleTaskActionClick(e) {
             const btn = e.target.closest('.action-btn');
             if (!btn) return false;
+            if (btn.disabled) return true;
             runTaskAction(btn.dataset.action, getTaskIdFromElement(btn));
             return true;
         }
-        function runTaskAction(action, taskId) {
+        async function runTaskAction(action, taskId) {
+            if (!isGuardedTaskAction(action)) {
+                runUnguardedTaskAction(action, taskId);
+                return;
+            }
+            const key = getTaskActionKey(taskId, action);
+            if (state.pendingTaskActions.has(key)) return;
+            state.pendingTaskActions.add(key);
+            setTaskActionPending(taskId, true);
+            try {
+                await runGuardedTaskAction(action, taskId);
+            } finally {
+                state.pendingTaskActions.delete(key);
+                setTaskActionPending(taskId, false);
+            }
+        }
+        function runUnguardedTaskAction(action, taskId) {
             switch (action) {
-                case 'toggle': toggleTaskComplete(taskId); break;
-                case 'snooze': snoozeTaskReminder(taskId); break;
-                case 'skip-repeat': skipRepeatOccurrence(taskId); break;
-                case 'archive': toggleTaskArchive(taskId); break;
                 case 'edit': editTask(taskId); break;
                 case 'delete': deleteTask(taskId); break;
             }
+        }
+        function runGuardedTaskAction(action, taskId) {
+            switch (action) {
+                case 'toggle': return toggleTaskComplete(taskId);
+                case 'snooze': return snoozeTaskReminder(taskId);
+                case 'skip-repeat': return skipRepeatOccurrence(taskId);
+                case 'archive': return toggleTaskArchive(taskId);
+                default: return Promise.resolve();
+            }
+        }
+        function isGuardedTaskAction(action) {
+            return ['toggle', 'snooze', 'skip-repeat', 'archive'].includes(action);
+        }
+        function getTaskActionKey(taskId, action) {
+            return `${taskId}:${action}`;
+        }
+        function isAnyTaskActionPending(taskId) {
+            return ['toggle', 'snooze', 'skip-repeat', 'archive'].some(action => state.pendingTaskActions.has(getTaskActionKey(taskId, action)));
+        }
+        function setTaskActionPending(taskId, pending) {
+            const el = document.querySelector(`.task-item[data-task-id="${taskId}"]`);
+            if (el) syncTaskActionPendingState(el, taskId);
         }
         function getTaskIdFromElement(el) {
             return Number(el.closest('.task-item').dataset.taskId);
