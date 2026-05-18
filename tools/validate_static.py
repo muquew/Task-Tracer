@@ -320,6 +320,9 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             "Single IndexedDB operations must resolve after transaction completion": ("tx.oncomplete = () => resolve(result);", "req.onsuccess = () => { result = req.result; };"),
             "Due dates must format and group by the task timezone": ("function getTaskDueDateKey(task)", "getInstantWallPartsInTimeZone(dueAt, getTaskDueTimeZone(task))", "function formatTaskDueDate(task)"),
             "Imported duplicate IDs must not produce ambiguous repeat links": ("const duplicateIds = new Set(getDuplicateImportIds(rawTasks));", "sanitizeAmbiguousImportedReferences", "if (duplicateIds.has(Number(sanitizedTask[key]))) sanitizedTask[key] = null;"),
+            "Startup must verify IndexedDB is writable before normal app mode": ("function initPersistentStorage()", "await verifyPersistentStorage();", "function verifyPersistentStorage()", "await dbActions.deleteConfig(CONFIG.STORAGE.PROBE);"),
+            "Storage-unavailable mode must pause task-writing actions": ("function handleStorageUnavailable(error)", "function syncStorageAvailabilityUI()", "function ensureStorageAvailable()", "storage.unavailable.actionsDisabled"),
+            "Web Storage access must be guarded for privacy modes": ("function safeGetStorageItem(kind, key)", "function safeSetStorageItem(kind, key, value)", "function safeRemoveStorageItem(kind, key)"),
         }
         for message, fragments in state_consistency_checks.items():
             if not contains_in_order(index_html, fragments):

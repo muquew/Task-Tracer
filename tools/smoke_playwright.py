@@ -26,7 +26,7 @@ from pathlib import Path
 from typing import Any, Iterator
 from urllib.parse import urljoin, urlparse
 
-from playwright.sync_api import BrowserContext, Page, Request, TimeoutError, expect, sync_playwright
+from playwright.sync_api import Browser, BrowserContext, Page, Request, TimeoutError, expect, sync_playwright
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -1970,6 +1970,57 @@ def assert_service_worker_and_offline_load(context: BrowserContext, page: Page) 
         context.set_offline(False)
 
 
+def assert_storage_unavailable_mode(browser: Browser, base_url: str) -> None:
+    context = browser.new_context()
+    context.add_init_script(
+        """(() => {
+            const blocked = (name) => {
+                throw new DOMException(`${name} blocked by test`, 'SecurityError');
+            };
+            Object.defineProperty(window, 'indexedDB', {
+                configurable: true,
+                value: {
+                    open() {
+                        blocked('IndexedDB');
+                    }
+                }
+            });
+            Object.defineProperty(window, 'localStorage', {
+                configurable: true,
+                get() {
+                    blocked('localStorage');
+                }
+            });
+            Object.defineProperty(window, 'sessionStorage', {
+                configurable: true,
+                get() {
+                    blocked('sessionStorage');
+                }
+            });
+        })();"""
+    )
+    page_errors: list[str] = []
+    page = context.new_page()
+    page.on("pageerror", lambda error: page_errors.append(str(error)))
+    try:
+        page.goto(base_url, wait_until="domcontentloaded")
+        expect(page.locator("#storageUnavailableBanner")).to_be_visible()
+        expect(page.locator("#taskList .storage-empty-state")).to_be_visible()
+        expect(page.locator("#openModalBtn")).to_be_disabled()
+        expect(page.locator("#quickAddInput")).to_be_disabled()
+        expect(page.locator("#notificationToggleBtn")).to_be_disabled()
+        expect(page.locator("#openMenuBtn")).to_be_disabled()
+        expect(page.locator("#viewTab-list")).to_be_disabled()
+        expect(page.locator("#retryStorageBtn")).to_be_enabled()
+        assert_accessibility_baseline(page, "storage unavailable mode")
+        page.locator("#retryStorageBtn").click()
+        wait_for_notification(page, re.compile("本地存储仍不可用|still unavailable", re.I))
+        expect(page.locator("#retryStorageBtn")).to_be_enabled()
+        assert_no_page_errors(page_errors)
+    finally:
+        context.close()
+
+
 def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[str]) -> None:
     visual_page = context.new_page()
     visual_page.on("pageerror", lambda error: errors.append(str(error)))
@@ -2098,6 +2149,7 @@ def smoke(url: str) -> None:
         )
 
         assert_pwa_resources(context, url)
+        assert_storage_unavailable_mode(browser, url)
         clear_app_data(page, url)
         assert_empty_task_list(page)
         assert_accessibility_baseline(page, "empty task list")

@@ -261,6 +261,18 @@
       "description": "Try adjusting your search or filters"
     }
   },
+  "storage": {
+    "unavailable": {
+      "title": "Local storage is unavailable",
+      "message": "This browser is blocking the local database, so tasks cannot be read or saved. Adjust privacy settings and retry; after storage is available again, restore data from an existing export or backup file.",
+      "emptyDescription": "Task Tracer is in protected mode. All task-writing actions are paused to avoid changes that cannot be saved.",
+      "retry": "Retry",
+      "retrying": "Retrying...",
+      "retryFailed": "Local storage is still unavailable",
+      "short": "Local storage is unavailable; task actions are paused",
+      "actionsDisabled": "Local storage is unavailable, so task actions are paused"
+    }
+  },
   "status": {
     "completed": "Completed",
     "archived": "Archived",

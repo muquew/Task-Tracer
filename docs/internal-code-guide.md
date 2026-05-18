@@ -90,12 +90,14 @@
   - `notificationsEnabled`、`notifiedTasks`、`pendingNotificationKeys`: 通知投递状态。
   - `commandPaletteItems`、`commandPaletteActiveIndex`、`commandPaletteReturnFocus`: 命令面板候选项、当前选中项和关闭后的焦点恢复目标。
   - `currentLanguage`、`translations`、`dateTimeFormatters`: i18n 与本地化缓存。
+  - `storageAvailable`、`storageError`、`storageFailureEventsBound`: 本地存储可用性、失败原因和降级态事件绑定状态。
 
 - `config` store 常用键:
   - `language`: 当前语言。
   - `notifications_enabled`: 通知开关。
   - `sampleTasksAdded`: 是否已经写入示例任务。
   - `lastBackupAt`: 最近一次点击“立即备份”的时间。
+  - `__task_tracer_storage_probe__`: 启动探针临时键，写入后立即删除，用于验证 IndexedDB 真的可写。
 
 ## 项目、标签与搜索规则
 
@@ -124,6 +126,7 @@
 - 导入由 `importTasks(file)` 进入，会先构建预览，展示导入数量、文件内同名重复、重复任务 ID、与当前任务同名项和替换影响。默认确认后通过 `replaceAllTasks()` 全量替换当前任务；开启合并模式后会读取冲突策略，并通过 `mergeImportedTasks()` 合并、跳过或替换同名本地任务。
 - 备份由 `backupTasks()` 进入，下载带 `schema` 和 `versionNotes` 的版本化快照，并把时间写入 `lastBackupAt`。
 - `scheduleBackupReminder()` 根据 `lastBackupAt` 和任务数量决定是否显示最近备份提醒。
+- `ensureStorageAvailable()` 是写入口保护层；当 IndexedDB 不可用时，新建、编辑、删除、完成、拖拽排序、导入、导出、备份、归档和通知开关都会被暂停。
 
 ## 初始化流程
 
@@ -132,7 +135,7 @@
 1. `cacheDOM()` 缓存节点。
 2. `loadTranslations()` 加载语言文件。
 3. `createLangButtons()` 创建语言菜单项。
-4. `initDB()` 初始化 IndexedDB。
+4. `initPersistentStorage()` 初始化 IndexedDB，并通过 `verifyPersistentStorage()` 执行写入/删除探针。
 5. `loadSettings()` 恢复语言、通知和已提醒签名。
 6. `initLanguage()` 同步 `lang`、`dir` 和页面文案。
 7. `loadNormalizedTasks()` 读取任务并修复历史任务字段和子任务重复 ID。
@@ -142,12 +145,21 @@
 11. `startProgressTimer()` 启动倒计时刷新。
 12. `scheduleBackupReminder()` 根据最近备份时间决定是否提示备份。
 
+如果 IndexedDB 被禁用、浏览器隐私模式阻止本地数据库，或写入探针失败，`handleStorageUnavailable()` 会进入保护模式：显示存储不可用横幅和任务区错误态，禁用任务写入口，只保留主题切换和重试检测。
+
 ## 主要函数清单
 
 ### DOM 与初始化
 
 - `cacheDOM()`: 缓存常用 DOM 引用。
 - `initApp()`: 应用总入口。
+- `initPersistentStorage()`: 初始化 IndexedDB 并执行存储写入探针。
+- `verifyPersistentStorage()`: 向 `config` store 写入临时键并删除，确认数据库可写。
+- `handleStorageUnavailable(error)`: 切换到存储不可用保护模式。
+- `renderStorageUnavailableState()`: 渲染存储不可用的任务区状态。
+- `syncStorageAvailabilityUI()`: 同步横幅、按钮禁用态和 `aria-disabled`。
+- `ensureStorageAvailable()`: 写操作统一守卫。
+- `safeGetStorageItem()`、`safeSetStorageItem()`、`safeRemoveStorageItem()`: 包装 `localStorage`/`sessionStorage`，避免隐私模式抛错导致启动中断。
 - `loadSettings()`: 恢复配置。
 - `restoreLanguageSetting()`: 恢复或解析首选语言。
 - `restoreNotificationSetting(savedNotify)`: 恢复通知开关。

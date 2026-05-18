@@ -39,6 +39,7 @@ It works well for study plans, personal operations, project follow-ups, routine 
 | Sorting and ordering | Smart sorting, newest-created order, due-date order, alphabetical order, manual drag-and-drop order, touch reorder, and keyboard reorder. |
 | Views | List, calendar, timeline, and statistics views for daily work, date review, chronological scanning, and personal productivity feedback. |
 | Data portability | JSON export, import preview, duplicate-name and duplicate-ID checks, same-name conflict choices, replace mode, merge mode, versioned local backups, and backup health status. |
+| Storage safety | Startup IndexedDB write probe, privacy-mode storage blocking detection, protected storage-unavailable mode, and retry after browser settings change. |
 | PWA behavior | Menu-based install entry, manual install guidance, offline loading, app icons, and update-ready refresh prompts. |
 | Comfort and polish | Light/dark themes, responsive layout, reduced-motion support, smooth state transitions, and bilingual UI. |
 | Accessibility | Keyboard navigation, visible focus, dialog focus trap, screen-reader labels, live status announcements, and automated axe checks. |
@@ -125,6 +126,8 @@ Browser-based reminders are not a guaranteed system alarm service. Delivery can 
 ## Data and Privacy
 
 Task data is stored in the current browser's IndexedDB. Task Tracer does not require an account and does not upload task content to a server by default.
+
+If the browser blocks local storage, Task Tracer stops task-writing actions and shows a storage-unavailable state instead of pretending changes can be saved. After changing privacy settings, use Retry to re-check local storage.
 
 Before changing browsers, clearing site data, reinstalling the app, or moving devices, use Back Up Now or Export to download a JSON file.
 

@@ -261,6 +261,18 @@
       "description": "尝试调整搜索条件或筛选器"
     }
   },
+  "storage": {
+    "unavailable": {
+      "title": "本地存储不可用",
+      "message": "当前浏览器阻止了本地数据库，任务无法读取或保存。请调整隐私设置后重试；存储恢复后可使用已有导出/备份文件恢复数据。",
+      "emptyDescription": "应用已进入保护模式，所有会写入任务数据的操作都已暂停，避免产生无法保存的更改。",
+      "retry": "重试",
+      "retrying": "正在重试...",
+      "retryFailed": "本地存储仍不可用",
+      "short": "本地存储不可用，已暂停任务操作",
+      "actionsDisabled": "本地存储不可用，任务操作已暂停"
+    }
+  },
   "status": {
     "completed": "已完成",
     "archived": "已归档",

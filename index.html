@@ -176,7 +176,7 @@
         .header-actions { display: flex; gap: 8px; align-items: center; }
         .icon-btn, .lang-btn { background: var(--bg-surface-alt); color: var(--color-primary); border: 1px solid var(--border-light); padding: 7px 10px; border-radius: var(--radius-control); cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 4px; transition: background 0.2s, transform 0.2s, box-shadow 0.2s, border-color 0.2s, color 0.2s; }
         .icon-btn { font-weight: 700; min-width: 36px; min-height: 36px; justify-content: center; }
-        .icon-btn:disabled { cursor: wait; opacity: 0.72; transform: none; }
+        .icon-btn:disabled { cursor: not-allowed; opacity: 0.56; transform: none; box-shadow: none; }
         .icon-btn.notifications-enabled { background: var(--color-primary); color: var(--text-inverse); border-color: var(--color-primary); box-shadow: 0 8px 18px var(--shadow-base); }
         @media (hover: hover) { .icon-btn.notifications-enabled:hover { background: var(--color-primary-dark); border-color: var(--color-primary-dark); color: var(--text-inverse); } }
         .icon-btn:active { background: var(--color-primary-dark); color: var(--text-inverse); transform: scale(0.95); }
@@ -233,6 +233,14 @@
         .quick-add-input-wrap .icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); pointer-events: none; }
         .quick-add-input { min-height: 42px; padding-left: 40px; padding-right: 12px; }
         .quick-add-submit { min-width: 88px; }
+        .storage-warning { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; margin: 12px 0 8px; padding: 14px; border: 1px solid color-mix(in srgb, var(--color-warning) 34%, var(--border-light)); border-left: 5px solid var(--color-warning); border-radius: var(--radius-surface); background: color-mix(in srgb, var(--color-warning) 12%, var(--bg-surface)); color: var(--text-main); box-shadow: 0 10px 28px var(--shadow-base); }
+        .storage-warning-icon { display: inline-flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: var(--radius-control); background: var(--color-warning-light); color: var(--color-warning-text); }
+        .storage-warning-copy { min-width: 0; display: grid; gap: 3px; }
+        .storage-warning-title { font-size: 14px; font-weight: 820; color: var(--text-main); }
+        .storage-warning p { margin: 0; color: var(--text-secondary); font-size: 13px; line-height: 1.45; }
+        .storage-warning-actions { display: flex; justify-content: flex-end; }
+        .storage-empty-state { border-style: solid; border-color: color-mix(in srgb, var(--color-warning) 34%, var(--border-base)); background: color-mix(in srgb, var(--color-warning) 8%, var(--bg-surface)); }
+        .storage-empty-state .icon { color: var(--color-warning-text); opacity: 0.86; }
         .search-box { position: relative; display: flex; align-items: center; flex: 1; margin-bottom: 0; }
         .search-input { width: 100%; min-height: 42px; padding: 10px 86px 10px 12px; border: 1px solid var(--border-base); border-radius: var(--radius-control); font-size: 14px; background-color: var(--field-bg); color: var(--text-main); transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-fast); }
         .search-clear-btn { position: absolute; right: 52px; top: 50%; transform: translateY(-50%); z-index: 3; width: 26px; height: 26px; border: 1px solid transparent; border-radius: var(--radius-control); background: transparent; color: var(--text-tertiary); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 4px; transition: background-color var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast); }
@@ -260,6 +268,8 @@
         .view-switcher { display: inline-flex; flex-wrap: nowrap; gap: 4px; min-width: 0; padding: 4px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-alt); }
         .view-tab { min-height: 34px; border: 1px solid transparent; border-radius: var(--radius-control); padding: 7px 8px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: transparent; color: var(--text-secondary); font: inherit; font-size: 13px; font-weight: 760; cursor: pointer; white-space: nowrap; transition: background-color var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast), transform var(--motion-fast); }
         .view-tab:hover { color: var(--color-primary); background: var(--bg-hover); }
+        .view-tab:disabled, .dropdown-btn:disabled, .btn:disabled, .search-input:disabled, .quick-add-input:disabled, .menu-item:disabled { cursor: not-allowed; opacity: 0.56; transform: none; box-shadow: none; }
+        .view-tab:disabled:hover, .dropdown-btn:disabled:hover, .btn:disabled:hover, .menu-item:disabled:hover { color: inherit; background: inherit; border-color: inherit; transform: none; box-shadow: none; }
         .view-tab.selected { color: var(--color-primary); background: var(--bg-surface); border-color: color-mix(in srgb, var(--color-primary) 24%, transparent); box-shadow: 0 6px 14px var(--shadow-base); }
         .calendar-view, .timeline-view { animation: fadeIn 0.2s ease; }
         .calendar-shell { border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface); box-shadow: 0 10px 28px var(--shadow-base); overflow: hidden; }
@@ -746,7 +756,12 @@
             function updateThemeChrome(theme) {
                 document.querySelector('meta[name="theme-color"]')?.setAttribute('content', THEME_CHROME[theme] || THEME_CHROME.light);
             }
-            const savedTheme = localStorage.getItem('theme');
+            let savedTheme = null;
+            try {
+                savedTheme = localStorage.getItem('theme');
+            } catch (error) {
+                savedTheme = null;
+            }
             const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             let currentTheme = 'light';
             if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) { currentTheme = 'dark'; }
@@ -858,6 +873,18 @@
         </div>
         <input accept=".json" class="file-input" id="importFile" type="file">
     </header>
+    <div class="storage-warning" id="storageUnavailableBanner" role="alert" aria-live="assertive" hidden>
+        <div class="storage-warning-icon" aria-hidden="true">
+            <svg class="icon"><use href="#icon-backup"></use></svg>
+        </div>
+        <div class="storage-warning-copy">
+            <strong class="storage-warning-title" data-i18n="storage.unavailable.title">本地存储不可用</strong>
+            <p data-i18n="storage.unavailable.message">当前浏览器阻止了本地数据库，任务无法读取或保存。请调整隐私设置后重试；存储恢复后可使用已有导出/备份文件恢复数据。</p>
+        </div>
+        <div class="storage-warning-actions">
+            <button class="btn btn-secondary" id="retryStorageBtn" type="button" data-i18n="storage.unavailable.retry">重试</button>
+        </div>
+    </div>
     <main class="main-content" id="mainContent">
         <form class="quick-add-bar" id="quickAddForm" aria-label="快速添加任务" data-i18n-aria-label="quickAdd.label">
             <div class="quick-add-input-wrap">
@@ -1154,7 +1181,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.52'
+                VERSION: '3.53'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1169,7 +1196,8 @@
                 LANG: 'language',
                 NOTIFICATIONS: 'notifications_enabled',
                 NOTIFIED_TASKS: 'notifiedTasks',
-                LAST_BACKUP_AT: 'lastBackupAt'
+                LAST_BACKUP_AT: 'lastBackupAt',
+                PROBE: '__task_tracer_storage_probe__'
             },
             UI: {
                 CLASSES: {
@@ -1205,7 +1233,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.10'
+                RESOURCE_VERSION: '4.11'
             },
             BACKUP: {
                 FILE_VERSION: '2.2',
@@ -1262,7 +1290,10 @@
             deferredInstallPrompt: null,
             commandPaletteItems: [],
             commandPaletteActiveIndex: 0,
-            commandPaletteReturnFocus: null
+            commandPaletteReturnFocus: null,
+            storageAvailable: true,
+            storageError: null,
+            storageFailureEventsBound: false
         };
         const DOM = {};
         function cacheDOM() {
@@ -1271,6 +1302,8 @@
             DOM.viewSwitcher = document.getElementById('viewSwitcher');
             DOM.themeBtn = document.getElementById('themeToggleBtn');
             DOM.backToTopBtn = document.getElementById('backToTopBtn');
+            DOM.storageUnavailableBanner = document.getElementById('storageUnavailableBanner');
+            DOM.retryStorageBtn = document.getElementById('retryStorageBtn');
             DOM.clearCompletedBtn = document.getElementById('clearCompletedBtn');
             DOM.clearSearchBtn = document.getElementById('clearSearchBtn');
             DOM.notificationToggleBtn = document.getElementById('notificationToggleBtn');
@@ -1349,10 +1382,12 @@
         document.addEventListener('DOMContentLoaded', initApp);
         async function initApp() {
             cacheDOM();
+            let translationsLoaded = false;
             try {
                 await loadTranslations();
+                translationsLoaded = true;
                 createLangButtons();
-                await initDB();
+                await initPersistentStorage();
                 await loadSettings();
                 initLanguage();
                 enhanceSelectControls();
@@ -1371,8 +1406,112 @@
                 initServiceWorkerUpdates();
             } catch (error) {
                 console.error('初始化失败:', error);
+                if (translationsLoaded && shouldUseStorageUnavailableMode(error)) {
+                    handleStorageUnavailable(error);
+                    return;
+                }
                 utils.notify(utils.translate('messages.initDBError'), 'error');
             }
+        }
+        async function initPersistentStorage() {
+            await initDB();
+            await verifyPersistentStorage();
+            state.storageAvailable = true;
+            state.storageError = null;
+        }
+        async function verifyPersistentStorage() {
+            const stamp = new Date().toISOString();
+            await dbActions.setConfig(CONFIG.STORAGE.PROBE, stamp);
+            await dbActions.deleteConfig(CONFIG.STORAGE.PROBE);
+        }
+        function shouldUseStorageUnavailableMode(error) {
+            if (!error) return !state.db;
+            const name = String(error.name || '');
+            const message = String(error.message || '');
+            return !state.db || /SecurityError|InvalidStateError|UnknownError|QuotaExceededError|AbortError|VersionError|NotFoundError|NotAllowedError/i.test(`${name} ${message}`);
+        }
+        function handleStorageUnavailable(error) {
+            state.storageAvailable = false;
+            state.storageError = error;
+            state.tasks = [];
+            state.notificationsEnabled = false;
+            state.currentLanguage = resolvePreferredLanguage(getBrowserLanguageCodes());
+            initLanguage();
+            enhanceSelectControls();
+            markDecorativeIcons();
+            bindStorageUnavailableEvents();
+            syncStorageAvailabilityUI();
+            renderStorageUnavailableState();
+            utils.notify(utils.translate('storage.unavailable.short'), 'error');
+        }
+        function bindStorageUnavailableEvents() {
+            if (state.storageFailureEventsBound) return;
+            state.storageFailureEventsBound = true;
+            DOM.themeBtn.addEventListener('click', utils.toggleTheme);
+            DOM.retryStorageBtn.addEventListener('click', retryStorageAvailability);
+        }
+        async function retryStorageAvailability() {
+            if (!DOM.retryStorageBtn || DOM.retryStorageBtn.disabled) return;
+            DOM.retryStorageBtn.disabled = true;
+            DOM.retryStorageBtn.textContent = utils.translate('storage.unavailable.retrying');
+            try {
+                await initPersistentStorage();
+                window.location.reload();
+            } catch (error) {
+                state.storageError = error;
+                DOM.retryStorageBtn.disabled = false;
+                DOM.retryStorageBtn.textContent = utils.translate('storage.unavailable.retry');
+                utils.notify(utils.translate('storage.unavailable.retryFailed'), 'error');
+            }
+        }
+        function renderStorageUnavailableState() {
+            if (!DOM.taskList) return;
+            syncViewSwitcher();
+            renderProjectFilterOptions();
+            updateFilterCounts();
+            syncDropdowns();
+            removeInitialLoader();
+            const title = utils.translate('storage.unavailable.title');
+            const description = utils.translate('storage.unavailable.emptyDescription');
+            DOM.taskList.innerHTML = `<div class="empty-state storage-empty-state"><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#icon-backup"></use></svg><h2>${title}</h2><p>${description}</p></div>`;
+        }
+        function syncStorageAvailabilityUI() {
+            const unavailable = !state.storageAvailable;
+            document.body.classList.toggle('storage-unavailable', unavailable);
+            if (DOM.storageUnavailableBanner) DOM.storageUnavailableBanner.hidden = !unavailable;
+            if (DOM.retryStorageBtn) {
+                DOM.retryStorageBtn.disabled = false;
+                DOM.retryStorageBtn.textContent = utils.translate('storage.unavailable.retry');
+            }
+            const controls = [
+                DOM.openModalBtn,
+                DOM.notificationToggleBtn,
+                DOM.quickAddInput,
+                DOM.quickAddForm?.querySelector('button[type="submit"]'),
+                DOM.inputs.search,
+                DOM.clearSearchBtn,
+                DOM.menu.btn,
+                DOM.menu.exportBtn,
+                DOM.menu.backupBtn,
+                DOM.menu.importBtn,
+                DOM.menu.fileInput,
+                DOM.menu.archiveCompletedBtn,
+                DOM.clearCompletedBtn,
+                DOM.dropdowns.project?.btn,
+                DOM.dropdowns.filter?.btn,
+                DOM.dropdowns.sort?.btn,
+                ...Array.from(DOM.viewSwitcher?.querySelectorAll('.view-tab') || [])
+            ];
+            controls.filter(Boolean).forEach(control => {
+                control.disabled = unavailable;
+                control.setAttribute('aria-disabled', String(unavailable));
+            });
+        }
+        function ensureStorageAvailable() {
+            if (state.storageAvailable) return true;
+            syncStorageAvailabilityUI();
+            utils.notify(utils.translate('storage.unavailable.actionsDisabled'), 'warning');
+            return false;
         }
         async function loadSettings() {
             await restoreLanguageSetting();
@@ -1419,9 +1558,45 @@
         function normalizeLanguageCode(code) {
             return typeof code === 'string' ? code.trim().toLowerCase() : '';
         }
+        function getWebStorage(kind) {
+            try {
+                return window[kind];
+            } catch (error) {
+                return null;
+            }
+        }
+        function safeGetStorageItem(kind, key) {
+            const storage = getWebStorage(kind);
+            if (!storage) return null;
+            try {
+                return storage.getItem(key);
+            } catch (error) {
+                return null;
+            }
+        }
+        function safeSetStorageItem(kind, key, value) {
+            const storage = getWebStorage(kind);
+            if (!storage) return false;
+            try {
+                storage.setItem(key, value);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
+        function safeRemoveStorageItem(kind, key) {
+            const storage = getWebStorage(kind);
+            if (!storage) return false;
+            try {
+                storage.removeItem(key);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
         function restoreNotifiedTasks() {
             try {
-                const notified = sessionStorage.getItem(CONFIG.STORAGE.NOTIFIED_TASKS);
+                const notified = safeGetStorageItem('sessionStorage', CONFIG.STORAGE.NOTIFIED_TASKS);
                 if (notified) {
                     state.notifiedTasks = new Set(JSON.parse(notified));
                 }
@@ -1430,7 +1605,7 @@
         function clearNotificationDeliveryState() {
             state.notifiedTasks.clear();
             state.pendingNotificationKeys.clear();
-            sessionStorage.removeItem(CONFIG.STORAGE.NOTIFIED_TASKS);
+            safeRemoveStorageItem('sessionStorage', CONFIG.STORAGE.NOTIFIED_TASKS);
         }
         function clearTaskNotificationDeliveryState(taskId) {
             [...state.notifiedTasks].forEach(key => {
@@ -1439,7 +1614,7 @@
             [...state.pendingNotificationKeys].forEach(key => {
                 if (String(key).startsWith(`${taskId}|`)) state.pendingNotificationKeys.delete(key);
             });
-            sessionStorage.setItem(CONFIG.STORAGE.NOTIFIED_TASKS, JSON.stringify([...state.notifiedTasks]));
+            safeSetStorageItem('sessionStorage', CONFIG.STORAGE.NOTIFIED_TASKS, JSON.stringify([...state.notifiedTasks]));
         }
         function bindEvents() {
             bindGlobalEvents();
@@ -1549,6 +1724,7 @@
             });
         }
         function openCommandPalette() {
+            if (!ensureStorageAvailable()) return;
             closeMenu();
             closeAllDropdowns();
             closeAllCustomSelects();
@@ -1875,7 +2051,9 @@
             DOM.menu.container.addEventListener('keydown', handleMenuKeydown);
             DOM.menu.exportBtn.addEventListener('click', exportTasks);
             DOM.menu.backupBtn.addEventListener('click', backupTasks);
-            DOM.menu.importBtn.addEventListener('click', () => DOM.menu.fileInput.click());
+            DOM.menu.importBtn.addEventListener('click', () => {
+                if (ensureStorageAvailable()) DOM.menu.fileInput.click();
+            });
             DOM.menu.installBtn.addEventListener('click', handleInstallAppClick);
             DOM.menu.archiveCompletedBtn.addEventListener('click', handleArchiveCompleted);
             DOM.menu.fileInput.addEventListener('change', (e) => importTasks(e.target.files[0]));
@@ -2137,6 +2315,7 @@
         async function handleTaskSave(e) {
             e.preventDefault();
             if (state.taskFormSaving) return;
+            if (!ensureStorageAvailable()) return;
             const t = state.translations[state.currentLanguage];
             const taskPayload = buildTaskPayloadFromForm();
             if (!taskPayload.name) {
@@ -2172,6 +2351,7 @@
         async function handleQuickAddSubmit(e) {
             e.preventDefault();
             if (state.quickAddSaving) return;
+            if (!ensureStorageAvailable()) return;
             const t = state.translations[state.currentLanguage];
             const rawInput = DOM.quickAddInput.value.trim();
             if (!rawInput) {
@@ -2201,9 +2381,9 @@
             }
         }
         function setQuickAddSaving(saving) {
-            DOM.quickAddInput.disabled = saving;
+            DOM.quickAddInput.disabled = saving || !state.storageAvailable;
             const button = DOM.quickAddForm.querySelector('button[type="submit"]');
-            if (button) button.disabled = saving;
+            if (button) button.disabled = saving || !state.storageAvailable;
         }
         function buildTaskPayloadFromQuickAdd(rawInput) {
             const parsed = parseQuickAddInput(rawInput);
@@ -2786,6 +2966,7 @@
             openModal(task);
         }
         async function deleteTask(id) {
+            if (!ensureStorageAvailable()) return;
             const t = state.translations[state.currentLanguage];
             utils.confirm(t['task.actions.delete'], t['messages.task.confirmDelete'], async () => {
                 try {
@@ -2800,6 +2981,7 @@
             });
         }
         async function toggleTaskComplete(id) {
+            if (!ensureStorageAvailable()) return;
             const task = getTaskById(id);
             if (!task) return;
             const t = state.translations[state.currentLanguage];
@@ -2833,6 +3015,7 @@
             }
         }
         async function skipRepeatOccurrence(id) {
+            if (!ensureStorageAvailable()) return;
             const task = getTaskById(id);
             if (!task || !shouldShowSkipRepeatAction(task)) return;
             const t = state.translations[state.currentLanguage];
@@ -2930,6 +3113,7 @@
             return new Date(year, monthIndex + 1, 0).getDate();
         }
         async function handleClearCompleted() {
+            if (!ensureStorageAvailable()) return;
             const t = state.translations[state.currentLanguage];
             const completed = state.tasks.filter(x => x.completed && !x.archived);
             if (completed.length === 0) return utils.notify(t['messages.clearCompleted.none'], 'warning');
@@ -2948,6 +3132,7 @@
             });
         }
         async function handleArchiveCompleted() {
+            if (!ensureStorageAvailable()) return;
             const t = state.translations[state.currentLanguage];
             const completed = state.tasks.filter(task => task.completed && !task.archived);
             closeMenu();
@@ -2967,6 +3152,7 @@
             });
         }
         async function toggleTaskArchive(id) {
+            if (!ensureStorageAvailable()) return;
             const task = getTaskById(id);
             if (!task) return;
             const t = state.translations[state.currentLanguage];
@@ -2987,6 +3173,7 @@
             }
         }
         async function snoozeTaskReminder(id) {
+            if (!ensureStorageAvailable()) return;
             const task = getTaskById(id);
             if (!task || !shouldShowReminderIcon(task)) return;
             const t = state.translations[state.currentLanguage];
@@ -3021,6 +3208,7 @@
             utils.notify(utils.translate('messages.task.updateError'), 'error');
         }
         async function toggleNotifications() {
+            if (!ensureStorageAvailable()) return;
             if (state.notificationsEnabled) {
                 await setNotificationsEnabled(false);
                 utils.notify(utils.translate('notifications.disable'));
@@ -3140,7 +3328,7 @@
             task.lastReminderAt = lastReminderAt;
             task.snoozedUntil = null;
             state.notifiedTasks.add(notificationKey);
-            sessionStorage.setItem(CONFIG.STORAGE.NOTIFIED_TASKS, JSON.stringify([...state.notifiedTasks]));
+            safeSetStorageItem('sessionStorage', CONFIG.STORAGE.NOTIFIED_TASKS, JSON.stringify([...state.notifiedTasks]));
             markReminderIconNotified(task.id);
             if (dueState.missed) utils.notify(body, 'warning');
         }
@@ -3309,6 +3497,10 @@
         function renderTaskList() {
             const t = state.translations[state.currentLanguage];
             if (!t) return;
+            if (!state.storageAvailable) {
+                renderStorageUnavailableState();
+                return;
+            }
             syncViewSwitcher();
             renderProjectFilterOptions();
             updateFilterCounts();
@@ -4646,6 +4838,7 @@
             clearConfirmHandler();
         }
         function openModal(editingTask = null, options = {}) {
+            if (!ensureStorageAvailable()) return;
             state.elementToFocusOnClose = captureFocusReturnTarget();
             resetDialogToFormMode();
             if (editingTask) {
@@ -4835,6 +5028,7 @@
             ),
             getConfig: (key) => utils.dbOp(CONFIG.DB.STORES.CONFIG, 'readonly', s => s.get(key)).then(res => res ? res.value : null),
             setConfig: (key, value) => utils.dbOp(CONFIG.DB.STORES.CONFIG, 'readwrite', s => s.put({ key, value })),
+            deleteConfig: (key) => utils.dbOp(CONFIG.DB.STORES.CONFIG, 'readwrite', s => s.delete(key)),
             replaceAllTasks: (tasks) => dbActions.writeTaskTransaction(store => {
                 store.clear();
                 tasks.forEach(task => store.put(task));
@@ -4927,7 +5121,7 @@
             applyTheme: (theme) => {
                 const html = document.documentElement;
                 html.setAttribute('data-theme', theme);
-                localStorage.setItem(CONFIG.STORAGE.THEME, theme);
+                safeSetStorageItem('localStorage', CONFIG.STORAGE.THEME, theme);
                 if (window.__TASK_TRACER_SET_THEME_CHROME__) {
                     window.__TASK_TRACER_SET_THEME_CHROME__(theme);
                 } else {
@@ -5597,6 +5791,7 @@
             }, { offset: Number.NEGATIVE_INFINITY }).element;
         }
         async function saveNewOrder() {
+            if (!ensureStorageAvailable()) return;
             const newOrderIds = Array.from(DOM.taskList.children)
                 .map(el => Number(el.dataset.taskId))
                 .filter(id => !isNaN(id));
@@ -5757,6 +5952,7 @@
             await downloadTaskData('backup');
         }
         async function downloadTaskData(mode) {
+            if (!ensureStorageAvailable()) return;
             const t = state.translations[state.currentLanguage];
             try {
                 const tasks = await loadNormalizedTasks();
@@ -5841,6 +6037,10 @@
         }
         function importTasks(file) {
             if(!file) return;
+            if (!ensureStorageAvailable()) {
+                DOM.menu.fileInput.value = '';
+                return;
+            }
             closeMenu();
             const reader = new FileReader();
             const t = state.translations[state.currentLanguage];
