@@ -1181,7 +1181,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.54'
+                VERSION: '3.55'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1436,12 +1436,16 @@
             const message = String(error.message || '');
             return !state.db || /SecurityError|InvalidStateError|UnknownError|QuotaExceededError|AbortError|VersionError|NotFoundError|NotAllowedError/i.test(`${name} ${message}`);
         }
+        function getStorageUnavailableLanguage() {
+            if (state.eventsBound && isSupportedLanguage(state.currentLanguage)) return state.currentLanguage;
+            return resolvePreferredLanguage(getBrowserLanguageCodes());
+        }
         function handleStorageUnavailable(error) {
             state.storageAvailable = false;
             state.storageError = error;
             state.tasks = [];
             state.notificationsEnabled = false;
-            state.currentLanguage = resolvePreferredLanguage(getBrowserLanguageCodes());
+            state.currentLanguage = getStorageUnavailableLanguage();
             initLanguage();
             enhanceSelectControls();
             markDecorativeIcons();

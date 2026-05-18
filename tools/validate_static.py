@@ -327,6 +327,7 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             "Background backup health reads must route storage failures through fallback": ("scheduleBackupReminder().catch(handleBackgroundStorageFailure)", "function handleBackgroundStorageFailure(error)", "handleStorageUnavailable(error);", "updateBackupHealthStatus().catch(handleBackgroundStorageFailure)"),
             "Known missing backup state must not re-read config": ("async function updateBackupHealthStatus(knownLastBackupAt)", "arguments.length > 0", "normalizeStoredDate(await dbActions.getConfig(CONFIG.STORAGE.LAST_BACKUP_AT))"),
             "Storage fallback events must avoid duplicate theme handlers after normal init": ("eventsBound: false", "if (!state.eventsBound) DOM.themeBtn.addEventListener('click', utils.toggleTheme);", "state.eventsBound = true;"),
+            "Storage fallback must preserve the active language after normal init": ("function getStorageUnavailableLanguage()", "if (state.eventsBound && isSupportedLanguage(state.currentLanguage)) return state.currentLanguage;", "state.currentLanguage = getStorageUnavailableLanguage();"),
         }
         for message, fragments in state_consistency_checks.items():
             if not contains_in_order(index_html, fragments):
