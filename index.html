@@ -1458,7 +1458,7 @@
         function bindGlobalEvents() {
             DOM.themeBtn.addEventListener('click', utils.toggleTheme);
             window.addEventListener('scroll', () => DOM.backToTopBtn.classList.toggle(CONFIG.UI.CLASSES.SHOW, window.scrollY > 300));
-            DOM.backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            DOM.backToTopBtn.addEventListener('click', scrollToTop);
             document.addEventListener('keydown', handleKeyboardShortcuts);
             document.addEventListener('click', closeCustomSelectsOnOutsideClick);
             document.addEventListener('visibilitychange', handleVisibilityChange);
@@ -2023,7 +2023,7 @@
             if (meta && e.key === 'k') { e.preventDefault(); DOM.inputs.search.focus(); }
             if (meta && e.key === 'i') { e.preventDefault(); if (DOM.modal.style.display !== 'flex') openModal(); }
             if (meta && e.key === 'm') { e.preventDefault(); toggleMenu(DOM.menu.container, DOM.menu.btn); }
-            if (e.altKey && e.key.toLowerCase() === 't') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+            if (e.altKey && e.key.toLowerCase() === 't') { e.preventDefault(); scrollToTop(); }
             if (e.key === 'Escape') {
                 if (document.activeElement === DOM.inputs.search && DOM.inputs.search.value) clearSearchInput();
                 else if (document.activeElement === DOM.inputs.search) DOM.inputs.search.blur();
@@ -2083,6 +2083,18 @@
                 'textarea:not([disabled])',
                 '[tabindex]:not([tabindex="-1"])'
             ].join(','))).filter(el => Boolean(el.offsetParent) && el.getAttribute('aria-hidden') !== 'true' && !el.classList.contains('native-select-hidden'));
+        }
+        function prefersReducedMotion() {
+            return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        }
+        function getMotionAwareScrollBehavior() {
+            return prefersReducedMotion() ? 'auto' : 'smooth';
+        }
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: getMotionAwareScrollBehavior() });
+        }
+        function scrollIntoViewWithMotionPreference(el, options = {}) {
+            el.scrollIntoView({ ...options, behavior: getMotionAwareScrollBehavior() });
         }
         async function handleTaskSave(e) {
             e.preventDefault();
@@ -3804,15 +3816,16 @@
         function calculateTaskStats(tasks) {
             const archived = tasks.filter(task => task.archived).length;
             const activeScopeTasks = tasks.filter(task => !task.archived);
+            const completionHistoryTasks = tasks.filter(task => task.completed);
             const total = activeScopeTasks.length;
             const completed = activeScopeTasks.filter(task => task.completed).length;
             const deadlineTasks = activeScopeTasks.filter(hasTaskDueDate).length;
             const overdue = activeScopeTasks.filter(task => !task.completed && hasTaskDueDate(task) && calculateTaskTimeLeft(task) < 0).length;
-            const completedToday = activeScopeTasks.filter(task => getCompletionDateKey(task) === utils.formatDateInputValue()).length;
+            const completedToday = completionHistoryTasks.filter(task => getCompletionDateKey(task) === utils.formatDateInputValue()).length;
             const completionRate = total > 0 ? completed / total : 0;
             const overdueRate = deadlineTasks > 0 ? overdue / deadlineTasks : 0;
-            const streakDays = calculateCompletionStreak(activeScopeTasks);
-            const completionTrend = calculateCompletionTrend(activeScopeTasks);
+            const streakDays = calculateCompletionStreak(completionHistoryTasks);
+            const completionTrend = calculateCompletionTrend(completionHistoryTasks);
             return {
                 total,
                 completed,
@@ -5147,7 +5160,7 @@
             renderTaskList();
             requestAnimationFrame(() => {
                 const detail = DOM.taskList.querySelector('.calendar-day-detail');
-                if (detail) detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                if (detail) scrollIntoViewWithMotionPreference(detail, { block: 'nearest' });
                 const closeButton = detail ? detail.querySelector('.calendar-detail-close') : null;
                 if (closeButton) closeButton.focus();
             });
@@ -5216,6 +5229,9 @@
             setTaskActionPending(taskId, true);
             try {
                 await runGuardedTaskAction(action, taskId);
+            } catch (error) {
+                console.error('任务操作失败:', error);
+                utils.notify(state.translations[state.currentLanguage]['messages.task.updateError'], 'error');
             } finally {
                 state.pendingTaskActions.delete(key);
                 setTaskActionPending(taskId, false);
@@ -5788,11 +5804,13 @@
             appendImportNameList(wrapper, t['messages.import.previewFileDuplicates'], preview.fileDuplicateNames);
             appendImportNameList(wrapper, t['messages.import.previewExistingMatches'], preview.existingDuplicateNames);
             wrapper.appendChild(createImportConflictControls(preview, t));
+            syncImportConflictControls(wrapper);
             return wrapper;
         }
         function createImportConflictControls(preview, t) {
             const section = document.createElement('div');
             section.className = 'import-conflict-list';
+            section.dataset.importConflictSection = 'true';
             if (preview.conflicts.length === 0) return section;
             const title = document.createElement('strong');
             title.className = 'confirm-list-title';
@@ -5841,6 +5859,7 @@
             const input = document.createElement('input');
             input.type = 'checkbox';
             input.id = 'mergeImportMode';
+            input.addEventListener('change', () => syncImportConflictControls());
             const label = document.createElement('label');
             label.htmlFor = 'mergeImportMode';
             label.textContent = t['messages.import.mergeMode'];
@@ -5849,6 +5868,17 @@
             label.appendChild(hint);
             row.append(input, label);
             return row;
+        }
+        function syncImportConflictControls(root = document) {
+            const mergeEnabled = Boolean(document.getElementById('mergeImportMode')?.checked);
+            root.querySelectorAll('[data-import-conflict-section]').forEach(section => {
+                const hasConflicts = section.querySelector('[data-import-conflict-index]');
+                section.hidden = !mergeEnabled || !hasConflicts;
+                section.querySelectorAll('[data-import-conflict-index]').forEach(select => {
+                    select.disabled = !mergeEnabled;
+                });
+            });
+            syncAllCustomSelects(root);
         }
         function getImportOptions() {
             return {

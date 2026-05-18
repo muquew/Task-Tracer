@@ -274,6 +274,14 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             errors.append("Timer refresh must guard completed and archived records")
         if "date.getFullYear() !== year" not in index_html or "date.getMonth() !== month - 1" not in index_html:
             errors.append("Due-date normalization must reject rolled-over calendar dates")
+        if "pendingTaskActions: new Set()" not in index_html or "isGuardedTaskAction(action)" not in index_html:
+            errors.append("Task actions must guard against duplicate in-flight writes")
+        if "taskFormSaving" not in index_html or "quickAddSaving" not in index_html:
+            errors.append("Task creation forms must guard against duplicate submissions")
+        if "const activeScopeTasks = tasks.filter(task => !task.archived)" not in index_html:
+            errors.append("Stats total must exclude archived tasks")
+        if "const completionHistoryTasks = tasks.filter(task => task.completed)" not in index_html:
+            errors.append("Stats completion history must preserve archived completions")
     except AssertionError as error:
         errors.append(str(error))
 
@@ -283,6 +291,8 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Interactive controls must expose a visible keyboard focus style")
     if "@media (prefers-reduced-motion: reduce)" not in index_html:
         errors.append("CSS must respect prefers-reduced-motion")
+    if "getMotionAwareScrollBehavior" not in index_html or "prefersReducedMotion()" not in index_html:
+        errors.append("JavaScript scrolling must respect prefers-reduced-motion")
     if "setButtonLabel(toggleButton," not in index_html or "renderTaskToggleButton(toggleButton" not in index_html:
         errors.append("Task action icon buttons must receive accessible labels")
     if "summaryBar.setAttribute('aria-expanded'" not in index_html:
@@ -327,6 +337,8 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Decorative SVG icons must be hidden from the accessibility tree")
     if "notificationHideTimer" not in index_html or "clearTimeout(state.notificationHideTimer)" not in index_html:
         errors.append("Toast notifications must clear the previous hide timer before showing a new message")
+    if "syncImportConflictControls" not in index_html or "data-import-conflict-section" not in index_html:
+        errors.append("Import conflict controls must be scoped to merge import mode")
     if "id: createTaskId()" not in index_html or "function createTaskId(" not in index_html:
         errors.append("New task records must use the unique task id generator")
     if "id: Date.now()" in index_html:
