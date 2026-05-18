@@ -29,7 +29,7 @@ It works well for study plans, personal operations, project follow-ups, routine 
 | --- | --- |
 | Task lifecycle | Create, edit, complete, mark incomplete, delete, archive, restore from archive, clear completed tasks, and archive completed tasks. |
 | Fast entry | Quick add parses lightweight text such as `tomorrow 20:00 Review English #study /Personal` into title, date, time, tag, and project fields. |
-| Dates and deadlines | Optional local date and time, no-date tasks, timezone-aware legacy normalization, live countdowns, progress bars, and status colors. |
+| Dates and deadlines | Optional local date and time, no-date tasks, timezone-stable display, timezone-aware legacy normalization, live countdowns, progress bars, and status colors. |
 | Status model | Safe, warning, urgent, overdue, completed, archived, and no-deadline states are shown with distinct labels and visual treatment. |
 | Subtasks | Add subtasks, edit subtask text inline, complete subtasks independently, and track subtask progress on the parent task. |
 | Recurring tasks | Daily, weekly, selected weekdays, monthly, last-day-of-month, and custom-day recurrence; skip the current occurrence or pause recurrence without losing the task. |
@@ -38,7 +38,7 @@ It works well for study plans, personal operations, project follow-ups, routine 
 | Search and filters | Search task names, descriptions, projects, tags, and subtasks; use scoped search syntax for project, tag, status, and due-date queries. |
 | Sorting and ordering | Smart sorting, newest-created order, due-date order, alphabetical order, manual drag-and-drop order, touch reorder, and keyboard reorder. |
 | Views | List, calendar, timeline, and statistics views for daily work, date review, chronological scanning, and personal productivity feedback. |
-| Data portability | JSON export, import preview, same-name conflict choices, replace mode, merge mode, versioned local backups, and backup health status. |
+| Data portability | JSON export, import preview, duplicate-name and duplicate-ID checks, same-name conflict choices, replace mode, merge mode, versioned local backups, and backup health status. |
 | PWA behavior | Menu-based install entry, manual install guidance, offline loading, app icons, and update-ready refresh prompts. |
 | Comfort and polish | Light/dark themes, responsive layout, reduced-motion support, smooth state transitions, and bilingual UI. |
 | Accessibility | Keyboard navigation, visible focus, dialog focus trap, screen-reader labels, live status announcements, and automated axe checks. |
@@ -105,7 +105,7 @@ Task Tracer keeps the data controls separate so each action has a clear purpose.
 | Action | Purpose |
 | --- | --- |
 | Export | Download the current task set as JSON for transfer, manual inspection, or storage. |
-| Import | Read a JSON file, show a preview, report imported task count, duplicate names, and current-data impact, then replace, merge, keep both, skip, or replace same-name local tasks after confirmation. |
+| Import | Read a JSON file, show a preview, report imported task count, duplicate names, repeated task IDs, and current-data impact, then replace, merge, keep both, skip, or replace same-name local tasks after confirmation. |
 | Backup | Download a versioned snapshot with schema notes, local dates, reminder timing, repeat rules, completion dates, and archive state. The menu also shows whether the latest backup is healthy or due. |
 
 Backups record the latest backup time locally. When task data exists, Task Tracer can show whether data was backed up today, backed up recently, or should be backed up again.

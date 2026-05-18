@@ -305,6 +305,7 @@
       "previewReplaceValue": "当前 {current} 个任务会被替换，含 {completed} 个已完成、{archived} 个已归档",
       "previewDuplicates": "同名重复项",
       "previewFileDuplicates": "文件内重复",
+      "previewDuplicateIds": "重复任务 ID",
       "previewExistingMatches": "匹配当前任务",
     "mergeMode": "合并到当前任务，不替换现有数据",
     "mergeModeHint": "导入任务会追加到当前列表；重复名称会保留，导入任务会分配新的排序位置。",

@@ -1372,6 +1372,57 @@ def exercise_advanced_repeat_task(page: Page, weekly_name: str, paused_name: str
     delete_task_records_by_name(page, paused_name)
 
 
+def exercise_time_zone_stable_repeat(page: Page, task_name: str) -> None:
+    put_task_record(
+        page,
+        {
+            "id": int(time.time() * 1000) + 401,
+            "name": task_name,
+            "description": "Imported timezone-stable repeat smoke test.",
+            "dueDate": "2026-05-11T03:30:00.000Z",
+            "dueAt": "2026-05-11T03:30:00.000Z",
+            "dueLocalDate": "2026-05-10",
+            "dueLocalTime": "23:30",
+            "dueTimeZone": "America/New_York",
+            "reminderOffset": -1,
+            "reminderRepeat": -1,
+            "repeatType": "daily",
+            "repeatInterval": 1,
+            "repeatWeekdays": [],
+            "repeatPaused": False,
+            "repeatSourceId": None,
+            "repeatCreatedFrom": None,
+            "nextRepeatTaskId": None,
+            "subtasks": [],
+            "completed": False,
+            "completedAt": None,
+            "archived": False,
+            "archivedAt": None,
+            "snoozedUntil": None,
+            "lastReminderAt": None,
+            "createdAt": "2026-05-01T00:00:00.000Z",
+            "order": 24_000,
+        },
+    )
+    select_filter(page, "all")
+    task = task_locator(page, task_name)
+    expect(task).to_have_count(1)
+    expect(task.locator('[data-action="skip-repeat"]')).to_be_visible()
+    task.locator('[data-action="skip-repeat"]').click()
+    wait_for_notification(page, re.compile("跳过|skipped", re.I))
+    record = next((item for item in get_task_records(page) if item["name"] == task_name), None)
+    expected = {
+        "dueDate": "2026-05-12T03:30:00.000Z",
+        "dueAt": "2026-05-12T03:30:00.000Z",
+        "dueLocalDate": "2026-05-11",
+        "dueLocalTime": "23:30",
+        "dueTimeZone": "America/New_York",
+    }
+    if not record or any(record.get(key) != value for key, value in expected.items()):
+        raise AssertionError(f"Timezone-stable repeat did not preserve task timezone: {record}")
+    delete_task_records_by_name(page, task_name)
+
+
 def delete_task_records_by_name(page: Page, task_name: str) -> None:
     page.evaluate(
         """async (taskName) => {
@@ -1586,7 +1637,7 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
     payload = [
         {"id": 91001, "name": existing_name, "createdAt": "2025-05-10T00:00:00.000Z"},
         {"id": 91002, "name": "Preview Duplicate", "createdAt": "2025-05-10T00:00:00.000Z"},
-        {"id": 91003, "name": "Preview Duplicate", "createdAt": "2025-05-10T00:00:00.000Z"},
+        {"id": 91002, "name": "Preview Duplicate", "createdAt": "2025-05-10T00:00:00.000Z"},
     ]
 
     with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
@@ -1605,9 +1656,11 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         rows = page.locator(".confirm-row").all_inner_texts()
         if not any(re.search(r"(文件内重复|Repeated inside file)[\s\S]*1", row, re.I) for row in rows):
             raise AssertionError(f"Import preview did not report file duplicates: {rows}")
+        if not any(re.search(r"(重复任务 ID|Repeated task IDs)[\s\S]*1", row, re.I) for row in rows):
+            raise AssertionError(f"Import preview did not report duplicate IDs: {rows}")
         if not any(re.search(r"(匹配当前任务|Matches current tasks)[\s\S]*1", row, re.I) for row in rows):
             raise AssertionError(f"Import preview did not report current task matches: {rows}")
-        expect(page.locator(".confirm-list")).to_have_count(2)
+        expect(page.locator(".confirm-list")).to_have_count(3)
         expect(page.locator(".import-conflict-select")).to_have_count(1)
         expect(page.locator(".import-conflict-select")).to_have_value("keep")
         expect(page.locator("#confirm-message-text")).to_contain_text("Preview Duplicate")
@@ -1823,9 +1876,13 @@ def exercise_import_repeat_reference_remap(page: Page, prefix: str) -> None:
     source = next((task for task in records if task["name"] == source_name), None)
     next_task = next((task for task in records if task["name"] == next_name), None)
     if not source or not next_task:
-        raise AssertionError(f"Repeat remap import did not create expected tasks: {records}")
-    if next_task["id"] == 8 or source.get("nextRepeatTaskId") != next_task["id"]:
-        raise AssertionError(f"Repeat references were not remapped after duplicate id normalization: {records}")
+        raise AssertionError(f"Repeat duplicate-id import did not create expected tasks: {records}")
+    if next_task["id"] == 8:
+        raise AssertionError(f"Duplicate imported task id was not normalized: {records}")
+    if source.get("nextRepeatTaskId") is not None:
+        raise AssertionError(f"Ambiguous duplicate-id repeat reference should be cleared: {records}")
+    if next_task.get("repeatCreatedFrom") != source["id"]:
+        raise AssertionError(f"Unambiguous repeat reference should be preserved: {records}")
 
 
 def assert_pwa_resources(context: BrowserContext, base_url: str) -> None:
@@ -2060,6 +2117,7 @@ def smoke(url: str) -> None:
         exercise_subtask_draft_editor(page)
         exercise_repeating_task(page, repeat_name)
         exercise_advanced_repeat_task(page, advanced_repeat_name, paused_repeat_name)
+        exercise_time_zone_stable_repeat(page, f"{task_name} Timezone Repeat")
         add_task(page, alpha_name, no_deadline=True, project="Smoke Work", tags=["focus", "docs"], subtasks=["First smoke subtask", "Second smoke subtask"])
         add_task(page, beta_name, due_date=future_date(1), due_time="12:30", reminder_offset="15", project="Smoke Personal", tags=["deadline"])
         exercise_edit_focus_restore(page, alpha_name)

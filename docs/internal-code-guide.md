@@ -49,7 +49,7 @@
 - IndexedDB:
   - DB 名称: `TaskTrackerDB`
   - stores: `tasks`、`config`
-  - 所有数据库操作通过 `dbActions` 或 `utils.dbOp()` 进入。
+- 所有数据库操作通过 `dbActions` 或 `utils.dbOp()` 进入；单请求操作必须等 IndexedDB transaction `complete` 后才视为成功。
 
 - Task 主要字段:
   - `id`: 数字主键。
@@ -57,11 +57,11 @@
   - `description`: 描述。
   - `project`: 单个项目名，用作主分组。
   - `tags`: 标签数组，用于跨项目标记和搜索。
-  - `dueLocalDate`: 用户选择的本地截止日期，格式为 `YYYY-MM-DD`，无截止日期时为 `null`。
-  - `dueLocalTime`: 用户选择的本地截止时间，格式为 `HH:mm`，无截止日期时为 `null`。
+  - `dueLocalDate`: 任务时区下的截止日期，格式为 `YYYY-MM-DD`，无截止日期时为 `null`。
+  - `dueLocalTime`: 任务时区下的截止时间，格式为 `HH:mm`，无截止日期时为 `null`。
   - `dueAt`: 截止日期对应的真实时间点 ISO 字符串，用于提醒、逾期和剩余时间计算。
   - `dueDate`: 兼容字段，当前与 `dueAt` 保持一致；旧版数据会在加载时迁移。
-  - `dueTimeZone`: 创建或导入该截止时间时的浏览器时区名称。
+  - `dueTimeZone`: 该截止时间所属的 IANA 时区名称。
   - `reminderOffset`: 提前提醒分钟数，`-1` 表示不提醒。
   - `reminderRepeat`: 重复提醒间隔分钟数，`-1` 表示不重复。
   - `snoozedUntil`: 稍后提醒时间点，UTC ISO 字符串或 `null`。
@@ -106,7 +106,8 @@
 
 ## 日期语义、重复任务、日期视图与统计
 
-- 截止日期同时保存本地墙上时间和真实时间点。界面展示、日历和时间线使用 `dueLocalDate`/`dueLocalTime`；提醒、逾期和剩余时间使用 `dueAt`。
+- 截止日期以 `dueAt` 作为真实时间点来源，并使用 `dueTimeZone` 还原任务时区下的日期和时间。界面展示、日历和时间线使用按任务时区还原后的日期；提醒、逾期和剩余时间使用 `dueAt`。
+- 编辑任务时，如果截止日期和时间没有变化，会保留原任务的 `dueTimeZone`；如果用户修改日期或时间，则按当前浏览器时区重新生成 `dueAt`。
 - 旧版 `dueDate` 以本地墙上时间编码到 ISO 字符串中，`normalizeTaskDueFields()` 会通过 `legacyStoredDueDateToLocalDate()` 保留原先显示的日期时间，再写入新的 `dueLocalDate`、`dueLocalTime` 和 `dueAt`。
 - `completedAt`、`archivedAt`、`createdAt`、`snoozedUntil` 和 `lastReminderAt` 都是真实时间点，不能走旧版截止日期转换逻辑。
 - 重复任务由 `repeatType`、`repeatInterval`、`repeatWeekdays` 和 `repeatPaused` 表示。用户完成一个未暂停的重复任务时，`toggleTaskComplete()` 会保留当前完成记录，并通过 `createNextRepeatTask()` 生成下一期。
@@ -218,6 +219,9 @@
 - `normalizeTaskRepeatInterval(type, value)`: 规范化自定义重复天数。
 - `getTaskRepeatRule(task)`: 读取任务重复规则。
 - `hasTaskRepeat(task)`: 判断任务是否启用重复。
+- `getTaskDueDateKey(task)`: 按任务 `dueTimeZone` 还原用于展示和日期分组的日期键。
+- `getTaskDueTimeValue(task)`: 按任务 `dueTimeZone` 还原用于表单和重复任务推进的时间值。
+- `getTaskDueInstant(task)`: 读取真实截止时间点。
 
 ### 子任务
 
@@ -333,9 +337,9 @@
 - `utils.toggleTheme()`: 主题切换动画。
 - `utils.formatDateInputValue(date)`: `YYYY-MM-DD`。
 - `utils.formatTimeInputValue(date)`: `HH:mm`。
-- `utils.localDateTimeToInstantISO(dateValue, timeValue)`: 本地日期时间转真实时间点 ISO。
-- `utils.formatDateObject(date)`: 本地化格式化 `Date` 对象。
-- `utils.formatDate(iso)`: 本地化格式化真实时间点 ISO。
+- `utils.localDateTimeToInstantISO(dateValue, timeValue, timeZoneName)`: 指定时区下的日期时间转真实时间点 ISO。
+- `utils.formatDateObject(date, timeZone)`: 本地化格式化 `Date` 对象，可指定展示时区。
+- `utils.formatDate(iso, timeZone)`: 本地化格式化真实时间点 ISO，可指定展示时区。
 - `utils.formatTime(min)`: 本地化剩余/逾期时间。
 - `utils.getStatus(min)`: 根据剩余时间计算状态。
 - `utils.sortTasks(list)`: 当前排序策略。
@@ -395,7 +399,7 @@
 - `buildImportPreview(importedTasks)`: 统计导入数量、当前替换影响和重复项。
 - `getImportDuplicateNames(importedTasks)`: 统计导入文件内或与当前任务重名的任务。
 - `createImportPreviewContent(preview)`: 生成确认弹窗中的导入预览 DOM。
-- `normalizeImportedTasks(rawTasks)`: 导入任务规范化。
+- `normalizeImportedTasks(rawTasks)`: 导入任务规范化；重复任务 ID 会生成新 ID，指向重复 ID 的重复链路引用会被清空，避免误连。
 - `normalizeImportedTask(rawTask, index, normalizeId)`: 单任务规范化。
 - `normalizeImportedSubtasks(rawSubtasks)`: 导入子任务规范化。
 - `normalizeStoredDate(value)`: 日期字段校验。
@@ -403,7 +407,7 @@
 
 ## Service Worker 结构
 
-- `CACHE_NAME`: 缓存版本。修改运行时代码或缓存资源时应递增。
+- `CACHE_NAME`: Service Worker 缓存版本。修改运行时代码或缓存资源时应递增，并与 `CONFIG.APP.VERSION` 的版本号保持一致。
 - `ASSETS_TO_CACHE`: 预缓存 App Shell、manifest、语言资源和核心图标。
 - `install`: 打开缓存并预缓存资源，完成后 `skipWaiting()`。
 - `fetch`: 同源 GET 请求分三类处理：
@@ -421,7 +425,7 @@
 
 - 用户加载的运行时代码保持无注释；说明写在本文档。
 - 修改语言文件内容时，同步更新 `CONFIG.I18N.RESOURCE_VERSION` 和 `sw.js` 中语言资源 query。
-- 修改缓存资源或运行时代码时，同步递增 `CACHE_NAME`。
+- 修改缓存资源或运行时代码时，同步递增 `CONFIG.APP.VERSION` 和 `CACHE_NAME`，两者版本号必须一致。
 - 新增文案必须同时更新 `zh-CN.json` 和 `en.json`，并通过 `tools/validate_static.py`。
 - 新增交互控件必须有可访问名称，键盘路径要纳入 `tools/smoke_playwright.py`。
 - 修改交互结构、焦点流、颜色对比或翻译渲染时，运行 `tools/accessibility_i18n_audit.py`。

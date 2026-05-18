@@ -305,6 +305,7 @@
       "previewReplaceValue": "{current} current tasks will be replaced, including {completed} completed and {archived} archived",
       "previewDuplicates": "Duplicate names",
       "previewFileDuplicates": "Repeated inside file",
+      "previewDuplicateIds": "Repeated task IDs",
       "previewExistingMatches": "Matches current tasks",
     "mergeMode": "Merge into current tasks without replacing existing data",
     "mergeModeHint": "Imported tasks are appended to the current list; duplicate names are kept and imported tasks receive new sort positions.",

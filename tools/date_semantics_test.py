@@ -47,10 +47,15 @@ def assert_completion_timestamps_use_true_instants() -> None:
 def assert_due_dates_keep_wall_time_and_store_true_instants() -> None:
     source = (REPO_ROOT / "index.html").read_text(encoding="utf-8")
     required_fragments = [
-        "function createDueFields(dateValue, timeValue)",
+        "function createDueFields(dateValue, timeValue, timeZoneName",
         "dueLocalDate",
         "dueLocalTime",
         "dueAt",
+        "dueTimeZone",
+        "getInstantWallPartsInTimeZone",
+        "getTaskDueDateKey(task)",
+        "getTaskDueTimeValue(task)",
+        "utils.localDateTimeToInstantISO(dueLocalDate, dueLocalTime, dueTimeZone)",
         "legacyStoredDueDateToLocalDate",
         "const dueFields = normalizeTaskDueFields(task);",
         "formatTaskDueDate(task)",
@@ -66,6 +71,7 @@ def assert_due_dates_keep_wall_time_and_store_true_instants() -> None:
         "utils.localToUTC(",
         "utils.dateToStoredISO(",
         "utils.formatDate(task.dueDate)",
+        "new Date(`${dateValue}T${timeValue}`)",
     ]
     for fragment in forbidden_fragments:
         if fragment in source:

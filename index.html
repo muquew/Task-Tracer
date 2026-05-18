@@ -1154,7 +1154,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.50'
+                VERSION: '3.51'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1205,7 +1205,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.9'
+                RESOURCE_VERSION: '4.10'
             },
             BACKUP: {
                 FILE_VERSION: '2.2',
@@ -1830,7 +1830,7 @@
                     watchServiceWorkerUpdate(registration);
                     if (registration.waiting && navigator.serviceWorker.controller) showUpdatePrompt();
                 } catch (error) {
-                    console.log('SW failed:', error);
+                    console.warn('Service worker registration failed:', error);
                 }
             };
             if (document.readyState === 'complete') register();
@@ -2311,7 +2311,7 @@
         }
         function buildTaskPayloadFromForm() {
             const dueFields = (!DOM.inputs.noDeadline.checked && DOM.inputs.date.value)
-                ? createDueFields(DOM.inputs.date.value, DOM.inputs.time.value)
+                ? createDueFields(DOM.inputs.date.value, DOM.inputs.time.value, getFormDueTimeZoneForSave())
                 : clearDueFields();
             const hasDueDate = Boolean(dueFields.dueAt);
             const reminderOffset = hasDueDate ? parseInt(DOM.inputs.reminderOffset.value, 10) : -1;
@@ -2476,17 +2476,18 @@
         function createTaskId(usedIds = new Set(state.tasks.map(task => Number(task.id)).filter(Number.isFinite))) {
             return createUniqueNumericId(usedIds);
         }
-        function createDueFields(dateValue, timeValue) {
+        function createDueFields(dateValue, timeValue, timeZoneName = getCurrentTimeZone()) {
             const dueLocalDate = normalizeDueDateValue(dateValue);
             if (!dueLocalDate) return clearDueFields();
             const dueLocalTime = normalizeDueTimeValue(timeValue) || CONFIG.DEFAULTS.TIME;
-            const dueAt = utils.localDateTimeToInstantISO(dueLocalDate, dueLocalTime);
+            const dueTimeZone = normalizeTimeZoneName(timeZoneName);
+            const dueAt = utils.localDateTimeToInstantISO(dueLocalDate, dueLocalTime, dueTimeZone);
             return {
                 dueDate: dueAt,
                 dueAt,
                 dueLocalDate,
                 dueLocalTime,
-                dueTimeZone: getCurrentTimeZone()
+                dueTimeZone
             };
         }
         function clearDueFields() {
@@ -2503,38 +2504,45 @@
             const localTime = normalizeDueTimeValue(task.dueLocalTime);
             const dueAt = normalizeStoredDate(task.dueAt);
             const dueDate = normalizeStoredDate(task.dueDate);
+            const dueTimeZone = normalizeTimeZoneName(task.dueTimeZone);
+            if (dueAt) return createDueFieldsFromInstant(dueAt, dueTimeZone);
             if (localDate) {
                 const dueLocalTime = localTime || CONFIG.DEFAULTS.TIME;
-                const instant = dueAt || dueDate || utils.localDateTimeToInstantISO(localDate, dueLocalTime);
-                return {
-                    dueDate: instant,
-                    dueAt: instant,
-                    dueLocalDate: localDate,
-                    dueLocalTime,
-                    dueTimeZone: normalizeTimeZoneName(task.dueTimeZone)
-                };
+                if (dueDate) return createDueFieldsFromInstant(dueDate, dueTimeZone);
+                return createDueFields(localDate, dueLocalTime, dueTimeZone);
             }
-            if (dueAt) return createDueFieldsFromInstant(dueAt);
             if (dueDate) {
                 const legacy = legacyStoredDueDateToLocalDate(dueDate);
                 return createDueFields(utils.formatDateInputValue(legacy), utils.formatTimeInputValue(legacy));
             }
             return clearDueFields();
         }
-        function createDueFieldsFromDate(date) {
+        function createDueFieldsFromDate(date, timeZoneName = getCurrentTimeZone()) {
             if (!isValidDate(date)) return clearDueFields();
-            return createDueFields(utils.formatDateInputValue(date), utils.formatTimeInputValue(date));
+            return createDueFields(utils.formatDateInputValue(date), utils.formatTimeInputValue(date), timeZoneName);
         }
-        function createDueFieldsFromInstant(iso) {
-            const date = new Date(iso);
-            if (Number.isNaN(date.getTime())) return clearDueFields();
+        function createDueFieldsFromInstant(iso, timeZoneName = getCurrentTimeZone()) {
+            const dueTimeZone = normalizeTimeZoneName(timeZoneName);
+            const parts = getInstantWallPartsInTimeZone(iso, dueTimeZone);
+            if (!parts) return clearDueFields();
             return {
                 dueDate: iso,
                 dueAt: iso,
-                dueLocalDate: utils.formatDateInputValue(date),
-                dueLocalTime: utils.formatTimeInputValue(date),
-                dueTimeZone: getCurrentTimeZone()
+                dueLocalDate: parts.date,
+                dueLocalTime: parts.time,
+                dueTimeZone
             };
+        }
+        function getFormDueTimeZoneForSave() {
+            if (!isEditingTask()) return getCurrentTimeZone();
+            const original = getTaskById(state.editingTaskId);
+            if (!original || !hasTaskDueDate(original)) return getCurrentTimeZone();
+            const formDate = normalizeDueDateValue(DOM.inputs.date.value);
+            const formTime = normalizeDueTimeValue(DOM.inputs.time.value) || CONFIG.DEFAULTS.TIME;
+            if (formDate === getTaskDueDateKey(original) && formTime === getTaskDueTimeValue(original)) {
+                return getTaskDueTimeZone(original);
+            }
+            return getCurrentTimeZone();
         }
         function normalizeDueDateValue(value) {
             const text = String(value || '').trim();
@@ -2553,10 +2561,67 @@
             return text;
         }
         function getCurrentTimeZone() {
-            return Intl.DateTimeFormat().resolvedOptions().timeZone || 'local';
+            return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
         }
         function normalizeTimeZoneName(value) {
-            return typeof value === 'string' && value.trim() ? value.trim() : getCurrentTimeZone();
+            const timeZone = typeof value === 'string' && value.trim() ? value.trim() : getCurrentTimeZone();
+            return isValidTimeZoneName(timeZone) ? timeZone : getCurrentTimeZone();
+        }
+        function isValidTimeZoneName(value) {
+            try {
+                new Intl.DateTimeFormat('en-US', { timeZone: value }).format(new Date());
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
+        function getTaskDueTimeZone(task) {
+            return normalizeTimeZoneName(task?.dueTimeZone);
+        }
+        function getInstantWallPartsInTimeZone(iso, timeZoneName) {
+            const instant = new Date(iso);
+            if (Number.isNaN(instant.getTime())) return null;
+            const parts = new Intl.DateTimeFormat('en-US', {
+                timeZone: normalizeTimeZoneName(timeZoneName),
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hourCycle: 'h23'
+            }).formatToParts(instant).reduce((acc, part) => {
+                if (part.type !== 'literal') acc[part.type] = part.value;
+                return acc;
+            }, {});
+            if (!parts.year || !parts.month || !parts.day || !parts.hour || !parts.minute) return null;
+            return {
+                date: `${parts.year}-${parts.month}-${parts.day}`,
+                time: `${parts.hour}:${parts.minute}`
+            };
+        }
+        function getTimeZoneOffsetMs(instant, timeZoneName) {
+            const parts = getInstantWallPartsInTimeZone(instant.toISOString(), timeZoneName);
+            if (!parts) return 0;
+            const [year, month, day] = parts.date.split('-').map(Number);
+            const [hours, minutes] = parts.time.split(':').map(Number);
+            return Date.UTC(year, month - 1, day, hours, minutes, 0, 0) - instant.getTime();
+        }
+        function createWallDate(dateValue, timeValue = CONFIG.DEFAULTS.TIME) {
+            const dueLocalDate = normalizeDueDateValue(dateValue);
+            if (!dueLocalDate) return null;
+            const dueLocalTime = normalizeDueTimeValue(timeValue) || CONFIG.DEFAULTS.TIME;
+            const date = new Date(`${dueLocalDate}T${dueLocalTime}`);
+            return Number.isNaN(date.getTime()) ? null : date;
+        }
+        function getTaskDueDateKey(task) {
+            const dueAt = getTaskDueInstant(task);
+            if (dueAt) return getInstantWallPartsInTimeZone(dueAt, getTaskDueTimeZone(task))?.date || '';
+            return normalizeDueDateValue(task?.dueLocalDate);
+        }
+        function getTaskDueTimeValue(task) {
+            const dueAt = getTaskDueInstant(task);
+            if (dueAt) return getInstantWallPartsInTimeZone(dueAt, getTaskDueTimeZone(task))?.time || CONFIG.DEFAULTS.TIME;
+            return normalizeDueTimeValue(task?.dueLocalTime) || CONFIG.DEFAULTS.TIME;
         }
         function legacyStoredDueDateToLocalDate(iso) {
             const date = new Date(iso);
@@ -2566,16 +2631,14 @@
             return Boolean(getTaskDueLocalDate(task));
         }
         function getTaskDueLocalDate(task) {
-            const dateValue = normalizeDueDateValue(task?.dueLocalDate);
-            if (!dateValue) return null;
-            const timeValue = normalizeDueTimeValue(task?.dueLocalTime) || CONFIG.DEFAULTS.TIME;
-            const date = new Date(`${dateValue}T${timeValue}`);
-            return Number.isNaN(date.getTime()) ? null : date;
+            return createWallDate(getTaskDueDateKey(task), getTaskDueTimeValue(task));
         }
         function getTaskDueInstant(task) {
             return normalizeStoredDate(task?.dueAt) || normalizeStoredDate(task?.dueDate);
         }
         function getTaskDueSortValue(task) {
+            const dueAt = getTaskDueInstant(task);
+            if (dueAt) return new Date(dueAt).getTime();
             const date = getTaskDueLocalDate(task);
             return date ? date.getTime() : null;
         }
@@ -2586,6 +2649,8 @@
             return localDate ? (localDate - new Date()) / 60000 : null;
         }
         function formatTaskDueDate(task) {
+            const dueAt = getTaskDueInstant(task);
+            if (dueAt) return utils.formatDate(dueAt, getTaskDueTimeZone(task));
             const localDate = getTaskDueLocalDate(task);
             return localDate ? utils.formatDateObject(localDate) : '';
         }
@@ -2821,18 +2886,19 @@
         function calculateNextRepeatDueFields(task, rule) {
             const date = getTaskDueLocalDate(task);
             if (!date) return clearDueFields();
+            const timeZone = getTaskDueTimeZone(task);
             if (rule.type === 'weekly-days') {
-                return createDueFieldsFromDate(getNextWeeklyRepeatDate(date, rule.weekdays));
+                return createDueFieldsFromDate(getNextWeeklyRepeatDate(date, rule.weekdays), timeZone);
             }
             if (rule.type === 'monthly') {
-                return createDueFieldsFromDate(addMonthsClamped(date, 1));
+                return createDueFieldsFromDate(addMonthsClamped(date, 1), timeZone);
             }
             if (rule.type === 'monthly-last') {
-                return createDueFieldsFromDate(getLastDayOfNextMonth(date));
+                return createDueFieldsFromDate(getLastDayOfNextMonth(date), timeZone);
             }
             const days = rule.type === 'weekly' ? 7 : rule.type === 'custom' ? rule.interval : 1;
             date.setDate(date.getDate() + days);
-            return createDueFieldsFromDate(date);
+            return createDueFieldsFromDate(date, timeZone);
         }
         function getNextWeeklyRepeatDate(date, weekdays) {
             const selected = weekdays.length > 0 ? weekdays : [date.getDay()];
@@ -3737,8 +3803,7 @@
         function groupTasksByDateKey(tasks) {
             const groups = new Map();
             tasks.forEach(task => {
-                const dueLocalDate = getTaskDueLocalDate(task);
-                const key = dueLocalDate ? utils.formatDateInputValue(dueLocalDate) : '__none__';
+                const key = getTaskDueDateKey(task) || '__none__';
                 if (!groups.has(key)) groups.set(key, []);
                 groups.get(key).push(task);
             });
@@ -4787,8 +4852,12 @@
         const utils = {
             dbOp: (storeName, mode, callback) => new Promise((resolve, reject) => {
                 const tx = state.db.transaction([storeName], mode);
+                let result;
+                tx.oncomplete = () => resolve(result);
+                tx.onerror = () => reject(tx.error);
+                tx.onabort = () => reject(tx.error || new Error(`${storeName} transaction aborted`));
                 const req = callback(tx.objectStore(storeName));
-                req.onsuccess = () => resolve(req.result);
+                req.onsuccess = () => { result = req.result; };
                 req.onerror = () => reject(req.error);
             }),
             debounce: (func, delay = 300) => {
@@ -4911,19 +4980,37 @@
                 const minutes = String(d.getMinutes()).padStart(2, '0');
                 return `${hours}:${minutes}`;
             },
-            localDateTimeToInstantISO: (dateValue, timeValue) => new Date(`${dateValue}T${timeValue}`).toISOString(),
-            formatDateObject: (date) => {
+            localDateTimeToInstantISO: (dateValue, timeValue, timeZoneName = getCurrentTimeZone()) => {
+                const date = normalizeDueDateValue(dateValue);
+                const time = normalizeDueTimeValue(timeValue) || CONFIG.DEFAULTS.TIME;
+                const timeZone = normalizeTimeZoneName(timeZoneName);
+                const [year, month, day] = date.split('-').map(Number);
+                const [hours, minutes] = time.split(':').map(Number);
+                let utcTime = Date.UTC(year, month - 1, day, hours, minutes, 0, 0);
+                for (let i = 0; i < 4; i += 1) {
+                    const offset = getTimeZoneOffsetMs(new Date(utcTime), timeZone);
+                    const nextUtcTime = Date.UTC(year, month - 1, day, hours, minutes, 0, 0) - offset;
+                    if (Math.abs(nextUtcTime - utcTime) < 1) break;
+                    utcTime = nextUtcTime;
+                }
+                return new Date(utcTime).toISOString();
+            },
+            formatDateObject: (date, timeZone = null) => {
                 const d = date instanceof Date ? date : new Date(date);
-                const cacheKey = state.currentLanguage;
+                const cacheKey = `${state.currentLanguage}|${timeZone || 'local'}`;
                 if (!state.dateTimeFormatters[cacheKey]) {
+                    const options = {
+                        year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                    };
+                    if (timeZone) options.timeZone = normalizeTimeZoneName(timeZone);
                     state.dateTimeFormatters[cacheKey] = new Intl.DateTimeFormat(
-                        cacheKey, {
-                            year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
-                        });
+                        state.currentLanguage,
+                        options
+                    );
                 }
                 return state.dateTimeFormatters[cacheKey].format(d);
             },
-            formatDate: (iso) => utils.formatDateObject(new Date(iso)),
+            formatDate: (iso, timeZone = null) => utils.formatDateObject(new Date(iso), timeZone),
             formatTime: (min) => {
                 const t = state.translations[state.currentLanguage];
                 if (min < 0) {
@@ -5766,13 +5853,13 @@
                         return;
                     }
                     const importedTasks = normalizeImportedTasks(rawTasks);
-                    const preview = buildImportPreview(importedTasks);
+                    const preview = buildImportPreview(importedTasks, rawTasks);
                     utils.confirm(t['messages.import.previewTitle'], createImportPreviewContent(preview), async () => {
                         try {
-	                            const importOptions = getImportOptions();
-	                            const preparedImport = importOptions.merge
-	                                ? prepareImportedTasksForMerge(importedTasks, importOptions.conflictActions)
-	                                : { tasks: importedTasks, idsToDelete: [] };
+                            const importOptions = getImportOptions();
+                            const preparedImport = importOptions.merge
+                                ? prepareImportedTasksForMerge(importedTasks, importOptions.conflictActions)
+                                : { tasks: importedTasks, idsToDelete: [] };
                             if (importOptions.merge) await dbActions.mergeImportedTasks(preparedImport.tasks, preparedImport.idsToDelete);
                             else await dbActions.replaceAllTasks(preparedImport.tasks);
                             clearNotificationDeliveryState();
@@ -5798,12 +5885,13 @@
             if (data && typeof data === 'object' && Array.isArray(data.tasks)) return data.tasks;
             return null;
         }
-        function buildImportPreview(importedTasks) {
+        function buildImportPreview(importedTasks, rawTasks = []) {
             const importNameOccurrences = getImportNameOccurrences(importedTasks);
             const fileDuplicateNames = getImportFileDuplicateNames(importNameOccurrences);
             const existingByName = getExistingTasksByName();
             const existingDuplicateNames = getImportExistingDuplicateNames(importNameOccurrences, existingByName);
             const conflicts = getImportConflicts(importedTasks, existingByName);
+            const duplicateIds = getDuplicateImportIds(rawTasks);
             const completedCount = state.tasks.filter(task => task.completed).length;
             const archivedCount = state.tasks.filter(task => task.archived).length;
             return {
@@ -5812,6 +5900,7 @@
                 completedCount,
                 archivedCount,
                 fileDuplicateNames,
+                duplicateIds,
                 existingDuplicateNames,
                 conflicts
             };
@@ -5872,10 +5961,12 @@
                     .replace('{completed}', preview.completedCount)
                     .replace('{archived}', preview.archivedCount)),
                 createConfirmRow(t['messages.import.previewFileDuplicates'], String(preview.fileDuplicateNames.length)),
+                createConfirmRow(t['messages.import.previewDuplicateIds'], String(preview.duplicateIds.length)),
                 createConfirmRow(t['messages.import.previewExistingMatches'], String(preview.existingDuplicateNames.length))
             );
             wrapper.appendChild(createImportModeOption(t));
             appendImportNameList(wrapper, t['messages.import.previewFileDuplicates'], preview.fileDuplicateNames);
+            appendImportNameList(wrapper, t['messages.import.previewDuplicateIds'], preview.duplicateIds.map(String));
             appendImportNameList(wrapper, t['messages.import.previewExistingMatches'], preview.existingDuplicateNames);
             wrapper.appendChild(createImportConflictControls(preview, t));
             syncImportConflictControls(wrapper);
@@ -6023,15 +6114,27 @@
             return row;
         }
         function normalizeImportedTasks(rawTasks) {
+            const duplicateIds = new Set(getDuplicateImportIds(rawTasks));
             const usedIds = new Set();
             const idMap = new Map();
             const normalizeId = (value) => {
                 const originalId = Number(value);
                 const normalizedId = normalizeUniqueNumericId(value, usedIds);
-                if (Number.isFinite(originalId) && originalId !== normalizedId) idMap.set(originalId, normalizedId);
+                if (Number.isFinite(originalId) && !duplicateIds.has(originalId) && originalId !== normalizedId) idMap.set(originalId, normalizedId);
                 return normalizedId;
             };
-            return remapImportedTaskReferences(rawTasks.map((rawTask, index) => normalizeImportedTask(rawTask, index, normalizeId)), idMap);
+            const tasks = rawTasks.map((rawTask, index) => normalizeImportedTask(rawTask, index, normalizeId));
+            return sanitizeAmbiguousImportedReferences(remapImportedTaskReferences(tasks, idMap), duplicateIds);
+        }
+        function getDuplicateImportIds(rawTasks) {
+            const counts = new Map();
+            rawTasks.forEach(rawTask => {
+                if (!rawTask || typeof rawTask !== 'object') return;
+                const id = Number(rawTask.id);
+                if (!Number.isFinite(id)) return;
+                counts.set(id, (counts.get(id) || 0) + 1);
+            });
+            return [...counts.entries()].filter(([, count]) => count > 1).map(([id]) => id);
         }
         function remapImportedTaskReferences(tasks, idMap = new Map()) {
             if (idMap.size === 0) return tasks;
@@ -6041,6 +6144,16 @@
                     if (idMap.has(remappedTask[key])) remappedTask[key] = idMap.get(remappedTask[key]);
                 });
                 return remappedTask;
+            });
+        }
+        function sanitizeAmbiguousImportedReferences(tasks, duplicateIds = new Set()) {
+            if (duplicateIds.size === 0) return tasks;
+            return tasks.map(task => {
+                const sanitizedTask = { ...task };
+                ['repeatSourceId', 'repeatCreatedFrom', 'nextRepeatTaskId'].forEach(key => {
+                    if (duplicateIds.has(Number(sanitizedTask[key]))) sanitizedTask[key] = null;
+                });
+                return sanitizedTask;
             });
         }
         function normalizeImportedTask(rawTask, index, normalizeId) {
