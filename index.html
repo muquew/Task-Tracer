@@ -2735,8 +2735,8 @@
                 lastReminderAt: null
             };
             try {
-                clearTaskNotificationDeliveryState(task.id);
                 await dbActions.updateTask(updatedTask);
+                clearTaskNotificationDeliveryState(task.id);
                 utils.notify(t['messages.task.repeatSkipped']);
                 await refreshTasks();
             } catch (err) {
@@ -2845,13 +2845,10 @@
             if (completed.length === 0) return utils.notify(t['messages.archive.none'], 'warning');
             utils.confirm(t['actions.archiveCompleted'], t['messages.archive.confirm'].replace('{count}', completed.length), async () => {
                 const archivedAt = new Date().toISOString();
-                completed.forEach(task => {
-                    task.archived = true;
-                    task.archivedAt = archivedAt;
-                });
+                const archivedTasks = completed.map(task => ({ ...task, archived: true, archivedAt }));
                 try {
-                    await dbActions.updateTasks(completed);
-                    renderTaskList();
+                    await dbActions.updateTasks(archivedTasks);
+                    await refreshTasks();
                     utils.notify(t['messages.archive.success'].replace('{count}', completed.length));
                 } catch (error) {
                     console.error('归档已完成任务失败:', error);
@@ -2865,16 +2862,17 @@
             if (!task) return;
             const t = state.translations[state.currentLanguage];
             const wasArchived = !!task.archived;
-            const previousArchivedAt = task.archivedAt || null;
-            task.archived = !wasArchived;
-            task.archivedAt = task.archived ? new Date().toISOString() : null;
+            const updatedTask = {
+                ...task,
+                archived: !wasArchived,
+                archivedAt: !wasArchived ? new Date().toISOString() : null
+            };
             try {
-                await dbActions.updateTask(task);
+                await dbActions.updateTask(updatedTask);
+                Object.assign(task, { archived: updatedTask.archived, archivedAt: updatedTask.archivedAt });
                 renderTaskList();
-                utils.notify(task.archived ? t['messages.archive.taskArchived'] : t['messages.archive.taskRestored']);
+                utils.notify(updatedTask.archived ? t['messages.archive.taskArchived'] : t['messages.archive.taskRestored']);
             } catch (error) {
-                task.archived = wasArchived;
-                task.archivedAt = previousArchivedAt;
                 console.error('更新归档状态失败:', error);
                 utils.notify(t['messages.archive.error'], 'error');
             }
@@ -2883,10 +2881,12 @@
             const task = getTaskById(id);
             if (!task || !shouldShowReminderIcon(task)) return;
             const t = state.translations[state.currentLanguage];
-            task.snoozedUntil = new Date(Date.now() + CONFIG.NOTIFICATIONS.SNOOZE_MINUTES * 60000).toISOString();
-            clearTaskNotificationDeliveryState(task.id);
+            const snoozedUntilAt = new Date(Date.now() + CONFIG.NOTIFICATIONS.SNOOZE_MINUTES * 60000).toISOString();
+            const updatedTask = { ...task, snoozedUntil: snoozedUntilAt };
             try {
-                await dbActions.updateTask(task);
+                await dbActions.updateTask(updatedTask);
+                task.snoozedUntil = snoozedUntilAt;
+                clearTaskNotificationDeliveryState(task.id);
                 renderTaskList();
                 utils.notify(t['messages.task.snoozed'].replace('{minutes}', CONFIG.NOTIFICATIONS.SNOOZE_MINUTES));
             } catch (error) {
@@ -2981,6 +2981,7 @@
                 if (!dueState.due || !shouldDeliverTaskReminder(task, notificationKey, dueState) || state.pendingNotificationKeys.has(notificationKey)) return;
                 state.pendingNotificationKeys.add(notificationKey);
                 deliverTaskReminder(task, notificationKey, dueState)
+                    .catch(error => console.warn('提醒投递失败:', error))
                     .finally(() => {
                         state.pendingNotificationKeys.delete(notificationKey);
                     });
@@ -3019,9 +3020,11 @@
             const body = utils.translate(messageKey).replace('{taskName}', task.name);
             const sent = await sendNotification(body);
             if (!sent) return;
-            task.lastReminderAt = new Date().toISOString();
+            const lastReminderAt = new Date().toISOString();
+            const updatedTask = { ...task, lastReminderAt, snoozedUntil: null };
+            await dbActions.updateTask(updatedTask);
+            task.lastReminderAt = lastReminderAt;
             task.snoozedUntil = null;
-            await dbActions.updateTask(task);
             state.notifiedTasks.add(notificationKey);
             sessionStorage.setItem(CONFIG.STORAGE.NOTIFIED_TASKS, JSON.stringify([...state.notifiedTasks]));
             markReminderIconNotified(task.id);
@@ -3120,21 +3123,34 @@
             if (!task || !task.subtasks) return;
             const sub = task.subtasks.find(s => s.id === subtaskId);
             if (sub) {
-                sub.completed = !sub.completed;
-                await dbActions.updateTask(task);
-                const taskEl = document.querySelector(`.task-item[data-task-id="${taskId}"]`);
-                if (!taskEl) return;
-                const checkbox = taskEl.querySelector(`.subtask-checkbox[data-subtask-id="${subtaskId}"]`);
-                if (checkbox) {
-                    checkbox.checked = sub.completed;
-                    const row = checkbox.closest('.subtask-display-item');
-                    if (row) row.classList.toggle(CONFIG.UI.CLASSES.COMPLETED, sub.completed);
+                const nextCompleted = !sub.completed;
+                const updatedSubtasks = task.subtasks.map(item => item.id === subtaskId ? { ...item, completed: nextCompleted } : { ...item });
+                const updatedTask = { ...task, subtasks: updatedSubtasks };
+                try {
+                    await dbActions.updateTask(updatedTask);
+                    task.subtasks = updatedSubtasks;
+                    updateSubtaskCompletionDisplay(taskId, subtaskId, nextCompleted);
+                } catch (error) {
+                    console.error('更新子任务状态失败:', error);
+                    renderTaskList();
+                    utils.notify(state.translations[state.currentLanguage]['messages.task.updateError'], 'error');
                 }
-                const total = task.subtasks.length;
-                const completedCount = task.subtasks.filter(s => s.completed).length;
-                const progressText = taskEl.querySelector('.subtask-summary-bar .progress-text');
-                if (progressText) progressText.textContent = `${completedCount}/${total} ${state.translations[state.currentLanguage]['task.subtasks']}`;
             }
+        }
+        function updateSubtaskCompletionDisplay(taskId, subtaskId, completed) {
+            const task = getTaskById(taskId);
+            const taskEl = document.querySelector(`.task-item[data-task-id="${taskId}"]`);
+            if (!task || !taskEl) return;
+            const checkbox = taskEl.querySelector(`.subtask-checkbox[data-subtask-id="${subtaskId}"]`);
+            if (checkbox) {
+                checkbox.checked = completed;
+                const row = checkbox.closest('.subtask-display-item');
+                if (row) row.classList.toggle(CONFIG.UI.CLASSES.COMPLETED, completed);
+            }
+            const total = task.subtasks.length;
+            const completedCount = task.subtasks.filter(s => s.completed).length;
+            const progressText = taskEl.querySelector('.subtask-summary-bar .progress-text');
+            if (progressText) progressText.textContent = `${completedCount}/${total} ${state.translations[state.currentLanguage]['task.subtasks']}`;
         }
         function updateFilterCounts() {
             const counts = getFilterCounts();
@@ -5456,8 +5472,10 @@
             if (orderedTasks.length === 0) return;
             try {
                 await dbActions.updateTasks(orderedTasks);
+                applyTaskOrderUpdates(orderedTasks);
             } catch (err) {
                 console.error('排序保存失败:', err);
+                renderTaskList();
                 utils.notify(state.translations[state.currentLanguage]['messages.task.saveError'], 'error');
             }
         }
@@ -5469,10 +5487,13 @@
                 if (!visibleIds.has(task.id)) return task;
                 return visibleTasks[visibleIndex++] || task;
             });
-            mergedTasks.forEach((task, index) => {
-                task.order = index * CONFIG.DEFAULTS.MANUAL_ORDER_STEP;
+            return mergedTasks.map((task, index) => ({ ...task, order: index * CONFIG.DEFAULTS.MANUAL_ORDER_STEP }));
+        }
+        function applyTaskOrderUpdates(orderedTasks) {
+            const orderById = new Map(orderedTasks.map(task => [task.id, task.order]));
+            state.tasks.forEach(task => {
+                if (orderById.has(task.id)) task.order = orderById.get(task.id);
             });
-            return mergedTasks;
         }
         function sortTasksByManualOrder(tasks) {
             return [...tasks].sort((a, b) => {

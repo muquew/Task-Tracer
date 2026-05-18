@@ -282,6 +282,17 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             errors.append("Stats total must exclude archived tasks")
         if "const completionHistoryTasks = tasks.filter(task => task.completed)" not in index_html:
             errors.append("Stats completion history must preserve archived completions")
+        state_consistency_checks = {
+            "Archive completed must write cloned archived records": "const archivedTasks = completed.map(task => ({ ...task, archived: true, archivedAt }))",
+            "Snooze must persist before mutating the in-memory task": "const updatedTask = { ...task, snoozedUntil: snoozedUntilAt }",
+            "Notification delivery must persist a cloned task before updating memory": "const updatedTask = { ...task, lastReminderAt, snoozedUntil: null }",
+            "Subtask toggles must persist cloned subtasks before updating memory": "const updatedSubtasks = task.subtasks.map(item => item.id === subtaskId ? { ...item, completed: nextCompleted } : { ...item })",
+            "Manual reordering must avoid mutating state before persistence succeeds": "return mergedTasks.map((task, index) => ({ ...task, order: index * CONFIG.DEFAULTS.MANUAL_ORDER_STEP }))",
+            "Manual reordering must restore the rendered order after save failure": "renderTaskList();\n                utils.notify(state.translations[state.currentLanguage]['messages.task.saveError'], 'error');",
+        }
+        for message, snippet in state_consistency_checks.items():
+            if snippet not in index_html:
+                errors.append(message)
     except AssertionError as error:
         errors.append(str(error))
 
