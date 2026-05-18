@@ -67,6 +67,11 @@ def resource_version(index_html: str) -> str:
     return first_match(r"RESOURCE_VERSION:\s*['\"]([^'\"]+)['\"]", block, "CONFIG.I18N.RESOURCE_VERSION").group(1)
 
 
+def app_version(index_html: str) -> str:
+    block = first_match(r"APP:\s*{(.*?)}", index_html, "CONFIG.APP").group(1)
+    return first_match(r"VERSION:\s*['\"]([^'\"]+)['\"]", block, "CONFIG.APP.VERSION").group(1)
+
+
 def translation_references(index_html: str) -> set[str]:
     references = set(re.findall(r"data-i18n(?:-[\w-]+)?=['\"]([^'\"]+)['\"]", index_html))
     references.update(re.findall(r"translate\(\s*['\"]([A-Za-z0-9_.-]+)['\"]", index_html))
@@ -173,6 +178,10 @@ def service_worker_assets(sw_source: str) -> set[str]:
     return set(re.findall(r"['\"]([^'\"]+)['\"]", block))
 
 
+def service_worker_cache_name(sw_source: str) -> str:
+    return first_match(r"const CACHE_NAME = ['\"]([^'\"]+)['\"]", sw_source, "CACHE_NAME").group(1)
+
+
 def manifest_icon_paths(manifest: dict[str, Any]) -> list[str]:
     icons = manifest.get("icons")
     if not isinstance(icons, list) or not icons:
@@ -191,7 +200,9 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
         manifest = load_json(MANIFEST_PATH)
         languages = configured_languages(index_html)
         version = resource_version(index_html)
+        runtime_version = app_version(index_html)
         assets = service_worker_assets(sw_source)
+        cache_name = service_worker_cache_name(sw_source)
 
         if (REPO_ROOT / "fav" / "site.webmanifest").exists():
             errors.append("Use only manifest.json; fav/site.webmanifest must not exist")
@@ -222,6 +233,8 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
 
         if not re.search(r"const CACHE_NAME = ['\"]task-tracer-v\d+\.\d+['\"]", sw_source):
             errors.append("Service worker cache name must be versioned as task-tracer-v<major>.<minor>")
+        if cache_name != f"task-tracer-v{runtime_version}":
+            errors.append("CONFIG.APP.VERSION must match the service worker CACHE_NAME suffix")
         if "networkFirst(e.request, './index.html')" not in sw_source:
             errors.append("App shell requests must use networkFirst with an index.html fallback")
         if "url.pathname.includes('/resources/')" not in sw_source:
@@ -289,6 +302,12 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             "Subtask toggles must persist cloned subtasks before updating memory": "const updatedSubtasks = task.subtasks.map(item => item.id === subtaskId ? { ...item, completed: nextCompleted } : { ...item })",
             "Manual reordering must avoid mutating state before persistence succeeds": "return mergedTasks.map((task, index) => ({ ...task, order: index * CONFIG.DEFAULTS.MANUAL_ORDER_STEP }))",
             "Manual reordering must restore the rendered order after save failure": "renderTaskList();\n                utils.notify(state.translations[state.currentLanguage]['messages.task.saveError'], 'error');",
+            "Editing mode must accept task id 0": "function isEditingTask() {\n            return state.editingTaskId !== null;",
+            "Reminder delivery state must be cleared only after task update succeeds": "await dbActions.updateTask(updatedTask);\n                    if (shouldClearNotificationDelivery) clearTaskNotificationDeliveryState(original.id);",
+            "Notification toggle must handle persistence failures": "toggleNotifications().catch(handleNotificationToggleError)",
+            "Notification setting must persist before mutating in-memory state": "await dbActions.setConfig(CONFIG.STORAGE.NOTIFICATIONS, enabled);\n            state.notificationsEnabled = enabled",
+            "Language setting must roll back after persistence failure": "state.currentLanguage = previousLanguage;\n                initLanguage();",
+            "Replace import must remap repeat references after id normalization": "return remapImportedTaskReferences(rawTasks.map((rawTask, index) => normalizeImportedTask(rawTask, index, normalizeId)), idMap);",
         }
         for message, snippet in state_consistency_checks.items():
             if snippet not in index_html:

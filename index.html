@@ -1153,6 +1153,9 @@
 <script>
     (function() {
         const CONFIG = {
+            APP: {
+                VERSION: '3.50'
+            },
             DB: {
                 NAME: 'TaskTrackerDB',
                 VERSION: 2,
@@ -1619,7 +1622,7 @@
                     icon: 'icon-plus',
                     run: (returnFocus) => {
                         openModal();
-                        state.elementToFocusOnClose = returnFocus || DOM.openModalBtn;
+                        state.elementToFocusOnClose = captureFocusReturnTarget(returnFocus || DOM.openModalBtn);
                     }
                 },
                 {
@@ -1753,7 +1756,7 @@
             if (DOM.notificationToggleBtn) {
                 DOM.notificationToggleBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    toggleNotifications();
+                    toggleNotifications().catch(handleNotificationToggleError);
                 });
             } else {
                 console.error('Notification button not found in DOM');
@@ -2049,6 +2052,41 @@
         function trapCommandPaletteFocus(e) {
             trapFocusInElement(DOM.commandPalette.el, e);
         }
+        function captureFocusReturnTarget(element = document.activeElement) {
+            if (!element || element === document.body) return { type: 'element', element: DOM.openModalBtn };
+            const taskAction = element.closest?.('[data-action]');
+            const taskEl = element.closest?.('.task-item');
+            if (taskAction && taskEl?.dataset.taskId) {
+                return {
+                    type: 'task-action',
+                    taskId: taskEl.dataset.taskId,
+                    action: taskAction.dataset.action
+                };
+            }
+            if (element.id) return { type: 'id', id: element.id };
+            return { type: 'element', element };
+        }
+        function restoreFocusReturnTarget(target) {
+            const element = resolveFocusReturnElement(target);
+            if (isFocusableReturnElement(element)) {
+                element.focus();
+                return;
+            }
+            DOM.openModalBtn.focus();
+        }
+        function resolveFocusReturnElement(target) {
+            if (!target) return null;
+            if (target instanceof Element) return target;
+            if (target.type === 'task-action') {
+                return document.querySelector(`.task-item[data-task-id="${CSS.escape(String(target.taskId))}"] [data-action="${CSS.escape(target.action)}"]`);
+            }
+            if (target.type === 'id') return document.getElementById(target.id);
+            if (target.type === 'element') return target.element;
+            return null;
+        }
+        function isFocusableReturnElement(element) {
+            return Boolean(element && document.body.contains(element) && !element.disabled && element.offsetParent !== null && typeof element.focus === 'function');
+        }
         function trapFocusInElement(root, e) {
             const focusable = getFocusableElements(root);
             if (focusable.length === 0) {
@@ -2109,10 +2147,13 @@
             state.taskFormSaving = true;
             DOM.submitBtn.disabled = true;
             try {
-                if (state.editingTaskId) {
+                if (isEditingTask()) {
                     const original = getTaskById(state.editingTaskId);
                     if (!original) throw new Error(`Task not found: ${state.editingTaskId}`);
-                    await dbActions.updateTask(mergeTaskPayload(original, taskPayload));
+                    const updatedTask = mergeTaskPayload(original, taskPayload);
+                    const shouldClearNotificationDelivery = didReminderSettingsChange(original, updatedTask);
+                    await dbActions.updateTask(updatedTask);
+                    if (shouldClearNotificationDelivery) clearTaskNotificationDeliveryState(original.id);
                     utils.notify(t['messages.task.updated']);
                 } else {
                     await dbActions.addTask(createTaskRecord(taskPayload));
@@ -2288,7 +2329,7 @@
                 repeatInterval: normalizeTaskRepeatInterval(repeatType, DOM.inputs.repeatInterval.value),
                 repeatWeekdays: repeatType === 'weekly-days' ? getRepeatWeekdaysForForm() : [],
                 repeatPaused: repeatType !== 'none' && DOM.inputs.repeatPaused.checked,
-                order: state.editingTaskId ? undefined : getNextTaskOrder()
+                order: isEditingTask() ? undefined : getNextTaskOrder()
             };
         }
         function createTaskRecord(taskPayload) {
@@ -2315,9 +2356,11 @@
             if (didReminderSettingsChange(original, updatedTask)) {
                 updatedTask.snoozedUntil = null;
                 updatedTask.lastReminderAt = null;
-                clearTaskNotificationDeliveryState(original.id);
             }
             return updatedTask;
+        }
+        function isEditingTask() {
+            return state.editingTaskId !== null;
         }
         function didReminderSettingsChange(original, updatedTask) {
             return getTaskDueInstant(original) !== getTaskDueInstant(updatedTask) ||
@@ -2900,11 +2943,16 @@
                 return;
             }
             if (!supportsNotifications() || !hasNotificationPermission()) {
-                state.notificationsEnabled = false;
                 await dbActions.setConfig(CONFIG.STORAGE.NOTIFICATIONS, false);
+                state.notificationsEnabled = false;
                 return;
             }
             state.notificationsEnabled = true;
+        }
+        function handleNotificationToggleError(error) {
+            console.error('切换通知设置失败:', error);
+            updateNotificationBtnUI();
+            utils.notify(utils.translate('messages.task.updateError'), 'error');
         }
         async function toggleNotifications() {
             if (state.notificationsEnabled) {
@@ -2941,8 +2989,8 @@
             return false;
         }
         async function setNotificationsEnabled(enabled) {
-            state.notificationsEnabled = enabled;
             await dbActions.setConfig(CONFIG.STORAGE.NOTIFICATIONS, enabled);
+            state.notificationsEnabled = enabled;
         }
         function supportsNotifications() {
             return 'Notification' in window;
@@ -4533,7 +4581,7 @@
             clearConfirmHandler();
         }
         function openModal(editingTask = null, options = {}) {
-            state.elementToFocusOnClose = document.activeElement;
+            state.elementToFocusOnClose = captureFocusReturnTarget();
             resetDialogToFormMode();
             if (editingTask) {
                 prepareEditTaskForm(editingTask);
@@ -4682,10 +4730,8 @@
             state.tempSubtasks = [];
             state.editingSubtaskIndex = -1;
             resetDialogToFormMode();
-            if (state.elementToFocusOnClose) {
-                state.elementToFocusOnClose.focus();
-                state.elementToFocusOnClose = null;
-            }
+            restoreFocusReturnTarget(state.elementToFocusOnClose);
+            state.elementToFocusOnClose = null;
         }
         const dbActions = {
             init: () => new Promise((resolve, reject) => {
@@ -4804,7 +4850,7 @@
                 };
                 DOM.submitBtn._confirmHandler = handler;
                 DOM.submitBtn.addEventListener('click', handler);
-                state.elementToFocusOnClose = document.activeElement;
+                state.elementToFocusOnClose = captureFocusReturnTarget();
                 DOM.modal.style.display = 'flex';
                 syncPageModalOpenState();
                 DOM.submitBtn.focus();
@@ -5566,10 +5612,17 @@
             return ['ar', 'fa', 'he', 'ur'].includes(normalizeLanguageCode(code).split('-')[0]) ? 'rtl' : 'ltr';
         }
         function switchLanguage(code) {
-            if (!state.translations[code]) return;
+            if (!state.translations[code] || code === state.currentLanguage) return;
+            const previousLanguage = state.currentLanguage;
             state.currentLanguage = code;
-            dbActions.setConfig(CONFIG.STORAGE.LANG, code);
             initLanguage();
+            dbActions.setConfig(CONFIG.STORAGE.LANG, code).catch(error => {
+                console.error('保存语言设置失败:', error);
+                if (state.currentLanguage !== code) return;
+                state.currentLanguage = previousLanguage;
+                initLanguage();
+                utils.notify(utils.translate('messages.task.updateError'), 'error');
+            });
         }
         function startProgressTimer() {
             if (state.progressInterval) clearInterval(state.progressInterval);
@@ -5716,10 +5769,10 @@
                     const preview = buildImportPreview(importedTasks);
                     utils.confirm(t['messages.import.previewTitle'], createImportPreviewContent(preview), async () => {
                         try {
-                            const importOptions = getImportOptions();
-                            const preparedImport = importOptions.merge
-                                ? prepareImportedTasksForMerge(importedTasks, importOptions.conflictActions)
-                                : { tasks: importedTasks, idsToDelete: [] };
+	                            const importOptions = getImportOptions();
+	                            const preparedImport = importOptions.merge
+	                                ? prepareImportedTasksForMerge(importedTasks, importOptions.conflictActions)
+	                                : { tasks: importedTasks, idsToDelete: [] };
                             if (importOptions.merge) await dbActions.mergeImportedTasks(preparedImport.tasks, preparedImport.idsToDelete);
                             else await dbActions.replaceAllTasks(preparedImport.tasks);
                             clearNotificationDeliveryState();
@@ -5971,10 +6024,24 @@
         }
         function normalizeImportedTasks(rawTasks) {
             const usedIds = new Set();
+            const idMap = new Map();
             const normalizeId = (value) => {
-                return normalizeUniqueNumericId(value, usedIds);
+                const originalId = Number(value);
+                const normalizedId = normalizeUniqueNumericId(value, usedIds);
+                if (Number.isFinite(originalId) && originalId !== normalizedId) idMap.set(originalId, normalizedId);
+                return normalizedId;
             };
-            return rawTasks.map((rawTask, index) => normalizeImportedTask(rawTask, index, normalizeId));
+            return remapImportedTaskReferences(rawTasks.map((rawTask, index) => normalizeImportedTask(rawTask, index, normalizeId)), idMap);
+        }
+        function remapImportedTaskReferences(tasks, idMap = new Map()) {
+            if (idMap.size === 0) return tasks;
+            return tasks.map(task => {
+                const remappedTask = { ...task };
+                ['repeatSourceId', 'repeatCreatedFrom', 'nextRepeatTaskId'].forEach(key => {
+                    if (idMap.has(remappedTask[key])) remappedTask[key] = idMap.get(remappedTask[key]);
+                });
+                return remappedTask;
+            });
         }
         function normalizeImportedTask(rawTask, index, normalizeId) {
             const task = rawTask && typeof rawTask === 'object' ? rawTask : {};

@@ -781,6 +781,27 @@ def put_task_record(page: Page, task: dict[str, Any]) -> None:
     wait_for_app_ready(page)
 
 
+def get_task_records(page: Page) -> list[dict[str, Any]]:
+    return page.evaluate(
+        """async () => {
+            return await new Promise((resolve, reject) => {
+                const request = indexedDB.open('TaskTrackerDB', 2);
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readonly');
+                    const getAll = tx.objectStore('tasks').getAll();
+                    getAll.onsuccess = () => {
+                        db.close();
+                        resolve(getAll.result);
+                    };
+                    getAll.onerror = () => reject(getAll.error);
+                };
+            });
+        }"""
+    )
+
+
 def add_overdue_task_record(page: Page, task_name: str, order: int) -> None:
     now_ms = int(time.time() * 1000)
     put_task_record(
@@ -884,6 +905,18 @@ def edit_task(page: Page, task_name: str, updated_name: str) -> None:
     page.locator("#submitBtn").click()
     expect(task_locator(page, updated_name)).to_have_count(1)
     expect(task_locator(page, task_name)).to_have_count(0)
+
+
+def exercise_edit_focus_restore(page: Page, task_name: str) -> None:
+    task = task_locator(page, task_name)
+    edit_button = task.first.locator('[data-action="edit"]')
+    edit_button.focus()
+    expect(edit_button).to_be_focused()
+    edit_button.click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#cancelBtn").click()
+    expect(page.locator("#taskModal")).to_be_hidden()
+    expect(edit_button).to_be_focused()
 
 
 def exercise_subtasks(page: Page, task_name: str) -> None:
@@ -1714,6 +1747,87 @@ def exercise_import(page: Page, imported_name: str) -> None:
         Path(temp_path).unlink(missing_ok=True)
 
 
+def import_payload_replace(page: Page, payload: list[dict[str, Any]]) -> None:
+    with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
+        json.dump(payload, temp_file)
+        temp_path = temp_file.name
+
+    try:
+        page.locator("#openMenuBtn").click()
+        with page.expect_file_chooser() as chooser_info:
+            page.locator("#importBtn").click()
+        chooser_info.value.set_files(temp_path)
+        expect(page.locator("#taskModal")).to_be_visible()
+        page.locator("#submitBtn").click()
+        wait_for_notification(page, re.compile("导入|import", re.I))
+        select_filter(page, "all")
+    finally:
+        Path(temp_path).unlink(missing_ok=True)
+
+
+def exercise_imported_zero_id_edit(page: Page, imported_name: str) -> None:
+    edited_name = f"{imported_name} Edited"
+    import_payload_replace(page, [
+        {
+            "id": 0,
+            "name": imported_name,
+            "description": "Imported zero id task.",
+            "dueDate": None,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": False,
+            "order": 1000,
+        }
+    ])
+
+    expect(page.locator('.task-item[data-task-id="0"]')).to_have_count(1)
+    edit_task(page, imported_name, edited_name)
+    records = get_task_records(page)
+    if len(records) != 1 or records[0]["id"] != 0 or records[0]["name"] != edited_name:
+        raise AssertionError(f"Editing imported task id 0 should update in place: {records}")
+    delete_task(page, edited_name)
+
+
+def exercise_import_repeat_reference_remap(page: Page, prefix: str) -> None:
+    holder_name = f"{prefix} Holder"
+    source_name = f"{prefix} Source"
+    next_name = f"{prefix} Next"
+    import_payload_replace(page, [
+        {
+            "id": 8,
+            "name": holder_name,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": False,
+            "order": 1000,
+        },
+        {
+            "id": 7,
+            "name": source_name,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": True,
+            "repeatType": "daily",
+            "nextRepeatTaskId": 8,
+            "order": 2000,
+        },
+        {
+            "id": 8,
+            "name": next_name,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": False,
+            "repeatType": "daily",
+            "repeatCreatedFrom": 7,
+            "order": 3000,
+        },
+    ])
+
+    records = get_task_records(page)
+    source = next((task for task in records if task["name"] == source_name), None)
+    next_task = next((task for task in records if task["name"] == next_name), None)
+    if not source or not next_task:
+        raise AssertionError(f"Repeat remap import did not create expected tasks: {records}")
+    if next_task["id"] == 8 or source.get("nextRepeatTaskId") != next_task["id"]:
+        raise AssertionError(f"Repeat references were not remapped after duplicate id normalization: {records}")
+
+
 def assert_pwa_resources(context: BrowserContext, base_url: str) -> None:
     required_paths = ["index.html", "manifest.json", "sw.js", "resources/en.json", "resources/zh-CN.json"]
     responses = []
@@ -1948,6 +2062,7 @@ def smoke(url: str) -> None:
         exercise_advanced_repeat_task(page, advanced_repeat_name, paused_repeat_name)
         add_task(page, alpha_name, no_deadline=True, project="Smoke Work", tags=["focus", "docs"], subtasks=["First smoke subtask", "Second smoke subtask"])
         add_task(page, beta_name, due_date=future_date(1), due_time="12:30", reminder_offset="15", project="Smoke Personal", tags=["deadline"])
+        exercise_edit_focus_restore(page, alpha_name)
         exercise_command_palette(page, alpha_name, beta_name)
         expect(task_locator(page, beta_name).locator(".task-reminder-icon")).to_be_visible()
         snooze_task_reminder(page, beta_name)
@@ -1992,6 +2107,9 @@ def smoke(url: str) -> None:
         exercise_import(page, imported_name)
         cancel_delete_task(page, imported_name)
         delete_task(page, imported_name)
+        assert_empty_task_list(page)
+        exercise_import_repeat_reference_remap(page, f"{task_name} Repeat Import")
+        exercise_imported_zero_id_edit(page, f"{task_name} Zero Id")
         assert_empty_task_list(page)
 
         context.close()
