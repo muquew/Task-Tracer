@@ -583,6 +583,13 @@
         .restore-check-item.pass .restore-check-status { color: var(--color-success-dark); background: var(--color-success-light); }
         .restore-check-item.warn .restore-check-status { color: var(--color-warning-text); background: var(--color-warning-light); }
         .restore-check-item.risk .restore-check-status { color: var(--color-danger-text); background: var(--color-danger-light); }
+        .import-diff-preview { display: grid; gap: 8px; padding: 12px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface); }
+        .import-diff-title { color: var(--text-main); font-size: 13px; font-weight: 840; }
+        .import-diff-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+        .import-diff-item { min-width: 0; display: grid; gap: 5px; padding: 10px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface-alt); }
+        .import-diff-item strong { color: var(--text-main); font-size: 13px; font-weight: 820; line-height: 1.25; }
+        .import-diff-count { color: var(--color-primary); font-size: 20px; font-weight: 860; line-height: 1; }
+        .import-diff-detail { color: var(--text-secondary); font-size: 12px; font-weight: 620; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .import-conflict-list { display: grid; gap: 8px; }
         .import-conflict-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(150px, 190px); gap: 10px; align-items: center; padding: 11px 12px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface-alt); }
         .import-conflict-name { min-width: 0; font-size: 13px; font-weight: 760; color: var(--text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -782,6 +789,7 @@
             .repeat-custom-row label { margin-bottom: 0; }
             .restore-checklist-header { align-items: flex-start; flex-direction: column; }
             .restore-checklist-summary { text-align: left; }
+            .import-diff-grid { grid-template-columns: 1fr; }
             .import-conflict-row { grid-template-columns: 1fr; }
             header { flex-direction: row; align-items: flex-start; }
             .header-actions { display: flex; flex-direction: row; gap: 3px; align-items: flex-end; }
@@ -1306,7 +1314,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.69'
+                VERSION: '3.70'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1359,10 +1367,10 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.18'
+                RESOURCE_VERSION: '4.19'
             },
             BACKUP: {
-                FILE_VERSION: '2.3',
+                FILE_VERSION: '2.4',
                 REMINDER_DAYS: 7
             },
             NOTIFICATIONS: {
@@ -6832,6 +6840,11 @@
             downloadJsonPayload(payload, createTaskDataFilename('emergency-backup', date));
             utils.notify(utils.translate('storage.unavailable.emergencyBackupSuccess').replace('{count}', tasks.length));
         }
+        function downloadPreImportSnapshot(tasks) {
+            const date = new Date().toISOString();
+            const payload = createTaskDataPayload('pre-import-backup', date, cloneTaskSnapshot(tasks));
+            downloadJsonPayload(payload, createTaskDataFilename('pre-import-backup', date));
+        }
         function downloadJsonPayload(payload, filename) {
             const blob = new Blob([JSON.stringify(payload, null, 2)], {type: 'application/json'});
             const url = URL.createObjectURL(blob);
@@ -6849,9 +6862,10 @@
                 utils.translate('backup.versionNotes.compatibility')
             ];
             if (mode === 'emergency-backup') versionNotes.push(utils.translate('backup.versionNotes.emergency'));
-            return {
+            const payload = {
                 version: CONFIG.BACKUP.FILE_VERSION,
                 type: mode,
+                exportId: createTaskDataExportId(mode, date),
                 date,
                 app: 'Task Tracer',
                 schema: {
@@ -6862,6 +6876,35 @@
                 versionNotes,
                 tasks
             };
+            payload.checksum = createTaskDataChecksum(payload);
+            return payload;
+        }
+        function createTaskDataExportId(mode, date) {
+            return `${mode}-${date.replace(/[^0-9]/g, '').slice(0, 14)}-${Math.random().toString(36).slice(2, 10)}`;
+        }
+        function createTaskDataChecksum(payload) {
+            const copy = { ...payload };
+            delete copy.checksum;
+            return `fnv1a32:${createStableHash(copy)}`;
+        }
+        function createStableHash(value) {
+            const text = stableStringify(value);
+            let hash = 2166136261;
+            for (let index = 0; index < text.length; index += 1) {
+                hash ^= text.charCodeAt(index);
+                hash = Math.imul(hash, 16777619);
+            }
+            return (hash >>> 0).toString(16).padStart(8, '0');
+        }
+        function stableStringify(value) {
+            if (value === null) return 'null';
+            if (typeof value !== 'object') return JSON.stringify(value) ?? undefined;
+            if (Array.isArray(value)) return `[${value.map(item => stableStringify(item) ?? 'null').join(',')}]`;
+            const entries = Object.keys(value).sort().map(key => {
+                const serialized = stableStringify(value[key]);
+                return serialized === undefined ? null : `${JSON.stringify(key)}:${serialized}`;
+            }).filter(Boolean);
+            return `{${entries.join(',')}}`;
         }
         function createTaskDataFilename(mode, date) {
             const stamp = date.replace(/[:.]/g, '-').replace('T', '_').replace('Z', '');
@@ -6917,13 +6960,13 @@
             reader.onload = async (e) => {
                 try {
                     const data = JSON.parse(e.target.result.toString());
-                    const rawTasks = getImportTaskArray(data);
-                    if (!rawTasks) {
+                    const importPayload = migrateImportPayload(data);
+                    if (!importPayload.rawTasks) {
                         utils.notify(t['messages.import.formatError'], 'error');
                         return;
                     }
-                    const importedTasks = normalizeImportedTasks(rawTasks);
-                    const preview = buildImportPreview(importedTasks, rawTasks, data);
+                    const importedTasks = normalizeImportedTasks(importPayload.rawTasks);
+                    const preview = buildImportPreview(importedTasks, importPayload.rawTasks, importPayload.sourceData, importPayload.migrations);
                     utils.confirm(t['messages.import.previewTitle'], createImportPreviewContent(preview), async () => {
                         try {
                             const beforeTasks = captureUndoSnapshot();
@@ -6931,6 +6974,7 @@
                             const preparedImport = importOptions.merge
                                 ? prepareImportedTasksForMerge(importedTasks, importOptions.conflictActions)
                                 : { tasks: importedTasks, idsToDelete: [] };
+                            if (!importOptions.merge && beforeTasks.length > 0) downloadPreImportSnapshot(beforeTasks);
                             if (importOptions.merge) await dbActions.mergeImportedTasks(preparedImport.tasks, preparedImport.idsToDelete);
                             else await dbActions.replaceAllTasks(preparedImport.tasks);
                             clearNotificationDeliveryState();
@@ -6956,7 +7000,25 @@
             if (data && typeof data === 'object' && Array.isArray(data.tasks)) return data.tasks;
             return null;
         }
-        function buildImportPreview(importedTasks, rawTasks = [], sourceData = null) {
+        function migrateImportPayload(data) {
+            const rawTasks = getImportTaskArray(data);
+            if (!rawTasks) return { sourceData: data, rawTasks: null, migrations: [] };
+            if (Array.isArray(data)) return { sourceData: data, rawTasks, migrations: [{ from: 'legacy-array', to: CONFIG.BACKUP.FILE_VERSION }] };
+            const sourceData = { ...data, tasks: rawTasks };
+            const sourceVersion = getImportPayloadVersion(sourceData);
+            const migrations = sourceVersion && sourceVersion !== CONFIG.BACKUP.FILE_VERSION
+                ? [{ from: sourceVersion, to: CONFIG.BACKUP.FILE_VERSION }]
+                : [];
+            if (!sourceVersion) migrations.push({ from: 'unversioned', to: CONFIG.BACKUP.FILE_VERSION });
+            return { sourceData, rawTasks, migrations };
+        }
+        function getImportPayloadVersion(data) {
+            if (!data || typeof data !== 'object' || Array.isArray(data)) return '';
+            const schema = data.schema && typeof data.schema === 'object' ? data.schema : null;
+            const value = schema?.version ?? data.version ?? '';
+            return value === undefined || value === null ? '' : String(value);
+        }
+        function buildImportPreview(importedTasks, rawTasks = [], sourceData = null, migrations = []) {
             const importNameOccurrences = getImportNameOccurrences(importedTasks);
             const fileDuplicateNames = getImportFileDuplicateNames(importNameOccurrences);
             const existingByName = getExistingTasksByName();
@@ -6965,6 +7027,7 @@
             const duplicateIds = getDuplicateImportIds(rawTasks);
             const completedCount = state.tasks.filter(task => task.completed).length;
             const archivedCount = state.tasks.filter(task => task.archived).length;
+            const importDiff = getImportDiff(importedTasks, existingByName);
             return {
                 importCount: importedTasks.length,
                 currentCount: state.tasks.length,
@@ -6974,10 +7037,13 @@
                 duplicateIds,
                 existingDuplicateNames,
                 conflicts,
-                sourceInfo: getImportSourceInfo(sourceData)
+                sourceInfo: getImportSourceInfo(sourceData, migrations),
+                newTaskNames: importDiff.newTaskNames,
+                conflictTaskNames: importDiff.conflictTaskNames,
+                currentTaskNames: state.tasks.map(task => task.name)
             };
         }
-        function getImportSourceInfo(sourceData) {
+        function getImportSourceInfo(sourceData, migrations = []) {
             const objectSource = sourceData && typeof sourceData === 'object' && !Array.isArray(sourceData) ? sourceData : null;
             const schema = objectSource && objectSource.schema && typeof objectSource.schema === 'object' ? objectSource.schema : null;
             const type = objectSource && objectSource.type !== undefined ? String(objectSource.type) : (Array.isArray(sourceData) ? 'legacy-array' : '');
@@ -6988,7 +7054,19 @@
             const includes = Array.isArray(schema?.includes) ? schema.includes.map(item => String(item)) : [];
             const hasTasksEnvelope = Boolean(objectSource && Array.isArray(objectSource.tasks));
             const hasTemplate = Boolean(hasTasksEnvelope && app === 'Task Tracer' && schema && (version || schemaVersion));
-            return { type, version, schemaVersion, storage, app, includes, hasTemplate, hasTasksEnvelope };
+            const checksum = objectSource && objectSource.checksum !== undefined && objectSource.checksum !== null ? String(objectSource.checksum) : '';
+            const checksumStatus = checksum ? (checksum === createTaskDataChecksum(objectSource) ? 'valid' : 'invalid') : (objectSource ? 'missing' : 'unavailable');
+            return { type, version, schemaVersion, storage, app, includes, hasTemplate, hasTasksEnvelope, checksum, checksumStatus, migrations };
+        }
+        function getImportDiff(importedTasks, existingByName) {
+            const newTaskNames = [];
+            const conflictTaskNames = [];
+            importedTasks.forEach(task => {
+                const key = normalizeTaskNameForCompare(task.name);
+                if (key && existingByName.has(key)) conflictTaskNames.push(task.name);
+                else newTaskNames.push(task.name);
+            });
+            return { newTaskNames, conflictTaskNames };
         }
         function getImportNameOccurrences(importedTasks) {
             const names = new Map();
@@ -7040,6 +7118,7 @@
             const wrapper = document.createElement('div');
             wrapper.className = 'confirm-details';
             wrapper.appendChild(createImportRestoreChecklist(preview, t));
+            wrapper.appendChild(createImportDiffPreview(preview, t));
             wrapper.append(
                 createConfirmRow(t['messages.import.previewTasks'], String(preview.importCount)),
                 createConfirmRow(t['messages.import.previewReplace'], t['messages.import.previewReplaceValue']
@@ -7086,6 +7165,7 @@
             const sourceVersion = sourceInfo.schemaVersion || sourceInfo.version || t['messages.import.restoreUnknownVersion'];
             const sourceTypeLabel = getImportSourceTypeLabel(sourceInfo.type, t);
             const schemaMatches = sourceInfo.schemaVersion === CONFIG.BACKUP.FILE_VERSION || sourceInfo.version === CONFIG.BACKUP.FILE_VERSION;
+            const migration = sourceInfo.migrations?.[0];
             return [
                 {
                     status: sourceInfo.hasTemplate ? 'pass' : 'warn',
@@ -7099,7 +7179,14 @@
                     label: t['messages.import.restoreSchemaLabel'],
                     detail: schemaMatches
                         ? t['messages.import.restoreSchemaOk'].replace('{version}', sourceVersion)
-                        : t['messages.import.restoreSchemaWarn'].replace('{version}', sourceVersion).replace('{current}', CONFIG.BACKUP.FILE_VERSION)
+                        : (migration
+                            ? t['messages.import.restoreSchemaMigrate'].replace('{from}', migration.from).replace('{to}', migration.to)
+                            : t['messages.import.restoreSchemaWarn'].replace('{version}', sourceVersion).replace('{current}', CONFIG.BACKUP.FILE_VERSION))
+                },
+                {
+                    status: getImportIntegrityStatus(sourceInfo) === 'risk' ? 'risk' : (getImportIntegrityStatus(sourceInfo) === 'pass' ? 'pass' : 'warn'),
+                    label: t['messages.import.restoreIntegrityLabel'],
+                    detail: getImportIntegrityDetail(sourceInfo, t)
                 },
                 {
                     status: preview.importCount > 0 ? 'pass' : 'risk',
@@ -7128,12 +7215,31 @@
                     detail: preview.currentCount === 0
                         ? t['messages.import.restoreImpactOk']
                         : t['messages.import.restoreImpactWarn'].replace('{count}', preview.currentCount)
+                },
+                {
+                    status: 'pass',
+                    label: t['messages.import.restoreSnapshotLabel'],
+                    detail: preview.currentCount === 0
+                        ? t['messages.import.restoreSnapshotEmpty']
+                        : t['messages.import.restoreSnapshotAuto'].replace('{count}', preview.currentCount)
                 }
             ];
         }
+        function getImportIntegrityStatus(sourceInfo) {
+            if (sourceInfo.checksumStatus === 'valid') return 'pass';
+            if (sourceInfo.checksumStatus === 'invalid') return 'risk';
+            return 'warn';
+        }
+        function getImportIntegrityDetail(sourceInfo, t) {
+            if (sourceInfo.checksumStatus === 'valid') return t['messages.import.restoreIntegrityOk'];
+            if (sourceInfo.checksumStatus === 'invalid') return t['messages.import.restoreIntegrityInvalid'];
+            if (sourceInfo.checksumStatus === 'unavailable') return t['messages.import.restoreIntegrityLegacy'];
+            return t['messages.import.restoreIntegrityMissing'];
+        }
         function getImportSourceTypeLabel(type, t) {
             const key = `messages.import.sourceType.${type || 'unknown'}`;
-            return t[key] || t['messages.import.sourceType.unknown'].replace('{type}', type || '-');
+            if (type && t[key]) return t[key];
+            return t['messages.import.sourceType.unknown'].replace('{type}', type || '-');
         }
         function createRestoreCheckItem(item, t) {
             const li = document.createElement('li');
@@ -7157,6 +7263,43 @@
             if (status === 'pass') return t['messages.import.restoreStatusPass'];
             if (status === 'risk') return t['messages.import.restoreStatusRisk'];
             return t['messages.import.restoreStatusWarn'];
+        }
+        function createImportDiffPreview(preview, t) {
+            const section = document.createElement('section');
+            section.className = 'import-diff-preview';
+            section.setAttribute('aria-label', t['messages.import.diffTitle']);
+            const title = document.createElement('strong');
+            title.className = 'import-diff-title';
+            title.textContent = t['messages.import.diffTitle'];
+            const grid = document.createElement('div');
+            grid.className = 'import-diff-grid';
+            grid.append(
+                createImportDiffItem(t['messages.import.diffNew'], preview.newTaskNames.length, formatImportNamePreview(preview.newTaskNames, t)),
+                createImportDiffItem(t['messages.import.diffConflicts'], preview.conflictTaskNames.length, formatImportNamePreview(preview.conflictTaskNames, t)),
+                createImportDiffItem(t['messages.import.diffReplace'], preview.currentCount, formatImportNamePreview(preview.currentTaskNames, t))
+            );
+            section.append(title, grid);
+            return section;
+        }
+        function createImportDiffItem(label, count, detailText) {
+            const item = document.createElement('div');
+            item.className = 'import-diff-item';
+            const labelEl = document.createElement('strong');
+            labelEl.textContent = label;
+            const countEl = document.createElement('span');
+            countEl.className = 'import-diff-count';
+            countEl.textContent = String(count);
+            const detail = document.createElement('span');
+            detail.className = 'import-diff-detail';
+            detail.title = detailText;
+            detail.textContent = detailText;
+            item.append(labelEl, countEl, detail);
+            return item;
+        }
+        function formatImportNamePreview(names, t) {
+            if (!Array.isArray(names) || names.length === 0) return t['messages.import.diffNone'];
+            const visible = names.slice(0, 4).join(t['messages.import.diffSeparator']);
+            return names.length > 4 ? t['messages.import.diffMore'].replace('{names}', visible).replace('{count}', names.length - 4) : visible;
         }
         function createImportConflictControls(preview, t) {
             const section = document.createElement('div');

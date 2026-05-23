@@ -118,10 +118,10 @@ Browser reminders are not a guaranteed system alarm service. Delivery can depend
 
 | Action | Purpose |
 | --- | --- |
-| Export/Backup | Download complete task JSON for transfer, manual inspection, or storage, and update the latest backup time. |
-| Import | Preview a JSON file before writing it. The preview includes a restore checklist, task count, repeated IDs, duplicate names, current-data impact, and same-name conflict choices. |
+| Export/Backup | Download complete task JSON with an export ID, checksum, version notes, and latest-backup status update. |
+| Import | Preview a JSON file before writing it. The preview includes a restore checklist, difference summary, task count, repeated IDs, duplicate names, current-data impact, and same-name conflict choices. |
 
-The restore checklist identifies Task Tracer backup metadata, template version, task payload, repeated IDs, local name matches, and the impact of replacing current data. Import can replace the current task set or merge into it. Merge mode can keep both tasks, skip imported duplicates, or replace local same-name tasks.
+The restore checklist identifies Task Tracer backup metadata, template version migration, checksum status, task payload, repeated IDs, local name matches, and the impact of replacing current data. When replace import would overwrite existing tasks, Task Tracer downloads a pre-import snapshot first. Import can also merge into current data; merge mode can keep both tasks, skip imported duplicates, or replace local same-name tasks.
 
 Backup health appears in the app menu and helps indicate whether data was backed up today, recently, or should be backed up again.
 

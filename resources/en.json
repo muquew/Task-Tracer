@@ -413,6 +413,12 @@
       "restoreSchemaLabel": "Backup template version",
       "restoreSchemaOk": "Matches the current restore template {version}.",
       "restoreSchemaWarn": "File version is {version}; current template is {current}. Task Tracer will try a compatible import.",
+      "restoreSchemaMigrate": "Compatible import will migrate from {from} to the current template {to}.",
+      "restoreIntegrityLabel": "File integrity",
+      "restoreIntegrityOk": "Integrity check passed; the file content matches its checksum.",
+      "restoreIntegrityMissing": "The file has no checksum; Task Tracer can still import compatible task content.",
+      "restoreIntegrityInvalid": "Integrity check failed; the file may be truncated or manually changed. Import with care.",
+      "restoreIntegrityLegacy": "Legacy task arrays do not include an integrity check; tasks will be normalized before import.",
       "restoreTasksLabel": "Task payload",
       "restoreTasksOk": "The file contains {count} importable task(s).",
       "restoreTasksEmpty": "The file has no importable tasks; replace mode will clear the current list.",
@@ -425,9 +431,20 @@
       "restoreImpactLabel": "Current data impact",
       "restoreImpactOk": "There are no local tasks, so replace mode will not overwrite existing data.",
       "restoreImpactWarn": "Replace mode will overwrite {count} current task(s); choose merge mode to keep them.",
+      "restoreSnapshotLabel": "Pre-replace snapshot",
+      "restoreSnapshotAuto": "Before replacing, Task Tracer will automatically download a restore snapshot with {count} current task(s).",
+      "restoreSnapshotEmpty": "There are no local tasks, so no extra restore snapshot is needed.",
+      "diffTitle": "Import Difference",
+      "diffNew": "New tasks",
+      "diffConflicts": "Name conflicts",
+      "diffReplace": "Default replace scope",
+      "diffNone": "None",
+      "diffMore": "{names}, plus {count} more",
+      "diffSeparator": ", ",
       "sourceType": {
         "backup": "backup file",
         "emergency-backup": "emergency backup",
+        "pre-import-backup": "pre-import snapshot",
         "legacy-array": "legacy task array",
         "unknown": "{type}"
       },
@@ -527,8 +544,8 @@
       "daysAgo": "backed up {days} days ago"
     },
     "versionNotes": {
-      "schema": "Backup 2.3 includes local due dates, exact reminder instants, tasks, subtasks, projects, tags, advanced repeat rules, completion dates, archive state, and today plan.",
-      "compatibility": "The importer reads the tasks array; older export files remain importable.",
+      "schema": "Backup 2.4 includes an integrity checksum, export ID, local due dates, exact reminder instants, tasks, subtasks, projects, tags, advanced repeat rules, completion dates, archive state, and today plan.",
+      "compatibility": "The importer reads the tasks array; older export files remain importable through compatibility migration.",
       "emergency": "This file was created from an in-memory snapshot in protected storage-unavailable mode. Restore browser storage and import it as soon as practical."
     }
   }

@@ -1870,8 +1870,9 @@ def exercise_export_backup(page: Page) -> dict[str, Any]:
 
     backup = json.loads(Path(path).read_text(encoding="utf-8"))
     includes = set((backup.get("schema") or {}).get("includes") or [])
-    if backup.get("version") != "2.3" or backup.get("type") != "backup" or not backup.get("date") or not backup.get("versionNotes") or "todayPlan" not in includes:
+    if backup.get("version") != "2.4" or backup.get("type") != "backup" or not backup.get("date") or not backup.get("versionNotes") or "todayPlan" not in includes:
         raise AssertionError(f"Export/backup payload metadata is incomplete: {backup}")
+    assert_backup_payload_integrity(backup, "backup")
     if not isinstance(backup.get("tasks"), list) or not backup["tasks"]:
         raise AssertionError(f"Export/backup payload did not include tasks: {backup}")
     last_backup = page.evaluate(
@@ -1900,17 +1901,59 @@ def exercise_export_backup(page: Page) -> dict[str, Any]:
     return backup
 
 
+def assert_backup_payload_integrity(payload: dict[str, Any], expected_type: str) -> None:
+    if payload.get("type") != expected_type or not payload.get("exportId"):
+        raise AssertionError(f"Backup payload identity is incomplete: {payload}")
+    checksum = payload.get("checksum")
+    if not isinstance(checksum, str) or not re.fullmatch(r"fnv1a32:[0-9a-f]{8}", checksum):
+        raise AssertionError(f"Backup payload checksum is missing or malformed: {payload}")
+    clone = dict(payload)
+    clone.pop("checksum", None)
+    expected = f"fnv1a32:{stable_fnv1a32(stable_json(clone))}"
+    if checksum != expected:
+        raise AssertionError(f"Backup payload checksum mismatch: {checksum} != {expected}")
+
+
+def stable_json(value: Any) -> str:
+    if value is None:
+        return "null"
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    if isinstance(value, (int, float)):
+        return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+    if isinstance(value, str):
+        return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+    if isinstance(value, list):
+        return "[" + ",".join(stable_json(item) for item in value) + "]"
+    if isinstance(value, dict):
+        return "{" + ",".join(
+            json.dumps(key, ensure_ascii=False, separators=(",", ":")) + ":" + stable_json(value[key])
+            for key in sorted(value)
+        ) + "}"
+    return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+
+
+def stable_fnv1a32(text: str) -> str:
+    value = 2166136261
+    for char in text:
+        value ^= ord(char)
+        value = (value * 16777619) & 0xFFFFFFFF
+    return f"{value:08x}"
+
+
 def exercise_import_preview_details(page: Page, existing_name: str) -> None:
     payload = {
-        "version": "2.3",
+        "version": "2.4",
         "type": "backup",
+        "exportId": "invalid-preview-checksum",
         "date": "2025-05-10T00:00:00.000Z",
         "app": "Task Tracer",
         "schema": {
-            "version": "2.3",
+            "version": "2.4",
             "storage": "indexeddb",
             "includes": ["tasks", "subtasks", "projects", "tags", "todayPlan"],
         },
+        "checksum": "fnv1a32:00000000",
         "tasks": [
             {"id": 91001, "name": existing_name, "createdAt": "2025-05-10T00:00:00.000Z"},
             {"id": 91002, "name": "Preview Duplicate", "createdAt": "2025-05-10T00:00:00.000Z"},
@@ -1932,10 +1975,13 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         expect(page.locator("#mergeImportMode")).not_to_be_checked()
         expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("合并到当前任务|Merge into current tasks", re.I))
         expect(page.locator(".restore-checklist")).to_be_visible()
-        expect(page.locator(".restore-check-item")).to_have_count(6)
+        expect(page.locator(".restore-check-item")).to_have_count(8)
+        expect(page.locator(".import-diff-preview")).to_be_visible()
         expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("恢复检查清单|Restore Checklist", re.I))
+        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("导入差异|Import Difference", re.I))
         expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("备份文件|backup file", re.I))
-        expect(page.locator("#confirm-message-text")).to_contain_text("2.3")
+        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("完整性校验失败|Integrity check failed", re.I))
+        expect(page.locator("#confirm-message-text")).to_contain_text("2.4")
         rows = page.locator(".confirm-row").all_inner_texts()
         if not any(re.search(r"(文件内重复|Repeated inside file)[\s\S]*1", row, re.I) for row in rows):
             raise AssertionError(f"Import preview did not report file duplicates: {rows}")
@@ -1948,6 +1994,50 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         expect(page.locator(".import-conflict-select")).to_have_value("keep")
         expect(page.locator("#confirm-message-text")).to_contain_text("Preview Duplicate")
         expect(page.locator("#confirm-message-text")).to_contain_text(existing_name)
+        page.locator("#cancelBtn").click()
+        expect(page.locator("#taskModal")).to_be_hidden()
+    finally:
+        Path(temp_path).unlink(missing_ok=True)
+
+
+def exercise_restore_compatibility_previews(page: Page) -> None:
+    legacy_payload = [
+        {"id": 92001, "name": "Legacy Array Restore", "createdAt": "2025-05-10T00:00:00.000Z"}
+    ]
+    old_backup_payload = {
+        "version": "2.1",
+        "type": "backup",
+        "date": "2025-05-10T00:00:00.000Z",
+        "app": "Task Tracer",
+        "schema": {
+            "version": "2.1",
+            "storage": "indexeddb",
+            "includes": ["tasks", "subtasks"],
+        },
+        "tasks": [
+            {"id": 92002, "name": "Old Backup Restore", "createdAt": "2025-05-10T00:00:00.000Z"}
+        ],
+    }
+    assert_import_preview_text(page, legacy_payload, [r"传统任务数组|legacy task array", r"传统任务数组没有完整性校验|Legacy task arrays do not include an integrity check"])
+    assert_import_preview_text(page, old_backup_payload, [r"2\.1", r"2\.4", r"兼容规则|Compatible import", r"没有校验值|no checksum"])
+
+
+def assert_import_preview_text(page: Page, payload: Any, patterns: list[str]) -> None:
+    with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
+        json.dump(payload, temp_file)
+        temp_path = temp_file.name
+
+    try:
+        page.locator("#openMenuBtn").click()
+        with page.expect_file_chooser() as chooser_info:
+            page.locator("#importBtn").click()
+        chooser_info.value.set_files(temp_path)
+        expect(page.locator("#taskModal")).to_be_visible()
+        expect(page.locator(".restore-checklist")).to_be_visible()
+        expect(page.locator(".restore-check-item")).to_have_count(8)
+        expect(page.locator(".import-diff-preview")).to_be_visible()
+        for pattern in patterns:
+            expect(page.locator("#confirm-message-text")).to_contain_text(re.compile(pattern, re.I))
         page.locator("#cancelBtn").click()
         expect(page.locator("#taskModal")).to_be_hidden()
     finally:
@@ -2069,7 +2159,15 @@ def exercise_import(page: Page, imported_name: str) -> None:
         expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("替换|replace", re.I))
         expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("文件内重复|Repeated inside file", re.I))
         expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("匹配当前任务|Matches current tasks", re.I))
-        page.locator("#submitBtn").click()
+        with page.expect_download() as snapshot_info:
+            page.locator("#submitBtn").click()
+        snapshot_path = snapshot_info.value.path()
+        if not snapshot_path:
+            raise AssertionError("Replace import did not download a pre-import snapshot")
+        snapshot = json.loads(Path(snapshot_path).read_text(encoding="utf-8"))
+        assert_backup_payload_integrity(snapshot, "pre-import-backup")
+        if not isinstance(snapshot.get("tasks"), list) or len(snapshot["tasks"]) == 0:
+            raise AssertionError(f"Pre-import snapshot did not include current tasks: {snapshot}")
         select_filter(page, "all")
         imported_task = task_locator(page, imported_name)
         expect(imported_task).to_have_count(1)
@@ -2103,7 +2201,17 @@ def import_payload_replace(page: Page, payload: list[dict[str, Any]]) -> None:
             page.locator("#importBtn").click()
         chooser_info.value.set_files(temp_path)
         expect(page.locator("#taskModal")).to_be_visible()
-        page.locator("#submitBtn").click()
+        expects_snapshot = len(get_task_records(page)) > 0
+        if expects_snapshot:
+            with page.expect_download() as snapshot_info:
+                page.locator("#submitBtn").click()
+            snapshot_path = snapshot_info.value.path()
+            if not snapshot_path:
+                raise AssertionError("Replace import did not download a pre-import snapshot")
+            snapshot = json.loads(Path(snapshot_path).read_text(encoding="utf-8"))
+            assert_backup_payload_integrity(snapshot, "pre-import-backup")
+        else:
+            page.locator("#submitBtn").click()
         wait_for_notification(page, re.compile("导入|import", re.I))
         select_filter(page, "all")
     finally:
@@ -2666,6 +2774,7 @@ def smoke(url: str) -> None:
         cancel_delete_task(page, imported_name)
         delete_task(page, imported_name)
         assert_empty_task_list(page)
+        exercise_restore_compatibility_previews(page)
         exercise_import_repeat_reference_remap(page, f"{task_name} Repeat Import")
         exercise_import_dangling_repeat_reference_cleanup(page, f"{task_name} Repeat Import")
         assert_empty_task_list(page)
