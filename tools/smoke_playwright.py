@@ -1563,9 +1563,9 @@ def exercise_time_zone_stable_repeat(page: Page, task_name: str) -> None:
             "id": int(time.time() * 1000) + 401,
             "name": task_name,
             "description": "Imported timezone-stable repeat smoke test.",
-            "dueDate": "2026-05-11T03:30:00.000Z",
-            "dueAt": "2026-05-11T03:30:00.000Z",
-            "dueLocalDate": "2026-05-10",
+            "dueDate": "2025-05-11T03:30:00.000Z",
+            "dueAt": "2025-05-11T03:30:00.000Z",
+            "dueLocalDate": "2025-05-10",
             "dueLocalTime": "23:30",
             "dueTimeZone": "America/New_York",
             "reminderOffset": -1,
@@ -1584,7 +1584,7 @@ def exercise_time_zone_stable_repeat(page: Page, task_name: str) -> None:
             "archivedAt": None,
             "snoozedUntil": None,
             "lastReminderAt": None,
-            "createdAt": "2026-05-01T00:00:00.000Z",
+            "createdAt": "2025-05-01T00:00:00.000Z",
             "order": 24_000,
         },
     )
@@ -1596,9 +1596,9 @@ def exercise_time_zone_stable_repeat(page: Page, task_name: str) -> None:
     wait_for_notification(page, re.compile("跳过|skipped", re.I))
     record = next((item for item in get_task_records(page) if item["name"] == task_name), None)
     expected = {
-        "dueDate": "2026-05-12T03:30:00.000Z",
-        "dueAt": "2026-05-12T03:30:00.000Z",
-        "dueLocalDate": "2026-05-11",
+        "dueDate": "2025-05-12T03:30:00.000Z",
+        "dueAt": "2025-05-12T03:30:00.000Z",
+        "dueLocalDate": "2025-05-11",
         "dueLocalTime": "23:30",
         "dueTimeZone": "America/New_York",
     }

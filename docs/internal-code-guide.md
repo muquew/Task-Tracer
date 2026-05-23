@@ -126,7 +126,9 @@
 - 导出/备份由 `backupTasks()` 进入，下载带 `schema`、`versionNotes`、`exportId` 和 `checksum` 的版本化快照，并把时间写入 `lastBackupAt`。
 - 紧急备份由 `downloadEmergencyBackup()` 进入，仅在运行中存储故障且 `storageFallbackTasks` 仍有内存快照时开放；文件会标记 `type: emergency-backup` 和 `schema.storage: memory-fallback`，便于后续恢复时识别来源。
 - `scheduleBackupReminder()` 根据 `lastBackupAt` 和任务数量决定是否显示最近备份提醒。
-- `ensureStorageAvailable()` 是写入口保护层；当 IndexedDB 不可用时，新建、编辑、删除、完成、拖拽排序、导入、常规导出/备份、归档和通知开关都会被暂停，只有当前页面内存快照的紧急备份不经过 IndexedDB。
+- `runAppAction()` 是交互入口调度层；按钮、快捷键、菜单、命令面板、任务卡片和主下拉的动作统一进入这里。
+- `canRunAppAction()` 根据 `STORAGE_GATED_ACTIONS` 判断动作是否依赖持久化存储。IndexedDB 不可用时，任务写入、视图操作、搜索/筛选、导入、常规导出/备份、归档、通知开关、批量操作和命令面板会被拦截，并关闭已经打开的任务弹窗、菜单、下拉和命令面板。
+- `ensureStorageAvailable()` 是低层存储保护；核心写函数仍会调用它，作为绕过入口调度时的第二道防线。当前页面内存快照的紧急备份不经过 IndexedDB。
 
 ## 初始化流程
 
@@ -145,7 +147,7 @@
 11. `startProgressTimer()` 启动倒计时刷新。
 12. `scheduleBackupReminder()` 根据最近备份时间决定是否提示备份。
 
-如果 IndexedDB 被禁用、浏览器隐私模式阻止本地数据库，或写入探针失败，`initializeStorageOrFallback()` 会调用 `handleStorageUnavailable()` 进入保护模式：显示存储不可用横幅和任务区错误态，禁用任务写入口，只保留主题切换、重试检测，以及在内存快照存在时可用的紧急备份。非存储阶段的初始化错误不会被包装成本地存储不可用。
+如果 IndexedDB 被禁用、浏览器隐私模式阻止本地数据库，或写入探针失败，`initializeStorageOrFallback()` 会调用 `handleStorageUnavailable()` 进入保护模式：显示存储不可用横幅和任务区错误态，同步禁用任务相关控件，并由 `runAppAction()` 拦截后续入口；只保留主题切换、重试检测，以及在内存快照存在时可用的紧急备份。非存储阶段的初始化错误不会被包装成本地存储不可用。
 
 ## 主要函数清单
 
@@ -159,7 +161,11 @@
 - `handleStorageUnavailable(error)`: 切换到存储不可用保护模式。
 - `renderStorageUnavailableState()`: 渲染存储不可用的任务区状态。
 - `syncStorageAvailabilityUI()`: 同步横幅、按钮禁用态和 `aria-disabled`。
-- `ensureStorageAvailable()`: 写操作统一守卫。
+- `STORAGE_GATED_ACTIONS`: 需要持久化存储可用的交互动作集合。
+- `canRunAppAction(action, options)`: 交互入口守卫，必要时关闭已打开的浮层并提示存储不可用。
+- `runAppAction(action, payload, options)`: 统一调度按钮、菜单、快捷键、命令面板和任务列表触发的应用动作。
+- `closeStorageBlockedSurfaces()`: 存储不可用时关闭任务弹窗、菜单、下拉和命令面板。
+- `ensureStorageAvailable(options)`: 核心写函数的低层存储守卫。
 - `captureStorageFallbackSnapshot()`: 在进入运行时存储故障保护模式前复制当前任务内存快照。
 - `safeGetStorageItem()`、`safeSetStorageItem()`、`safeRemoveStorageItem()`: 包装 `localStorage`/`sessionStorage`，避免隐私模式抛错导致启动中断。
 - `loadSettings()`: 恢复配置。
@@ -197,6 +203,7 @@
 - `bindTaskListEvents()`: 任务列表委托点击。
 - `bindSubtaskInputEvents()`: 子任务输入。
 - `bindSubtaskPreviewEvents()`: 子任务草稿编辑。
+- 可能触发任务、配置、视图或筛选状态变化的事件应进入 `runAppAction()`；纯表单联动、弹窗关闭、提示条关闭和本地控件同步可以保持直接事件处理。
 
 ### 键盘与无障碍
 
@@ -387,6 +394,8 @@
 - `closeDropdownsOnOutsideClick(e)`: 外部点击关闭。
 - `syncDropdowns()`: 同步下拉选中态和按钮文字。
 - `updateDropdownUI(container, selected, btn)`: 更新选项 `selected` 与 `aria-selected`。
+- `runAppAction(action, payload, options)`: 菜单、快捷键、命令面板、下拉和任务卡片共用的动作调度入口。
+- `canRunAppAction(action, options)`: 动作执行前的存储可用性检查。
 - `toggleMenu(menu, btn)`: 主菜单开关。
 - `closeMenu()`: 关闭主菜单和语言子菜单。
 - `openPopover(container, btn)`、`closePopover(container, btn)`: 通用浮层状态。
@@ -466,7 +475,7 @@
 
 ## 维护约定
 
-- 用户加载的运行时代码保持无注释；说明写在本文档。
+- 复杂逻辑、数据字段和维护规则需要同步记录在本文档。
 - 修改语言文件内容时，同步更新 `CONFIG.I18N.RESOURCE_VERSION` 和 `sw.js` 中语言资源 query。
 - 修改缓存资源或运行时代码时，同步递增 `CONFIG.APP.VERSION` 和 `CACHE_NAME`，两者版本号必须一致。
 - 新增文案必须同时更新 `zh-CN.json` 和 `en.json`，并通过 `tools/validate_static.py`。

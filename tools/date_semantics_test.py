@@ -34,9 +34,9 @@ def assert_completion_timestamps_use_true_instants() -> None:
         raise AssertionError("completedAt must not use due-date wall-time conversion")
 
     cases = [
-        ("America/New_York", "2026-05-10T04:30:00.000Z", "2026-05-10"),
-        ("Asia/Shanghai", "2026-05-10T15:30:00.000Z", "2026-05-10"),
-        ("Europe/Berlin", "2026-05-10T21:30:00.000Z", "2026-05-10"),
+        ("America/New_York", "2025-05-10T04:30:00.000Z", "2025-05-10"),
+        ("Asia/Shanghai", "2025-05-10T15:30:00.000Z", "2025-05-10"),
+        ("Europe/Berlin", "2025-05-10T21:30:00.000Z", "2025-05-10"),
     ]
     for timezone_name, completed_at, expected in cases:
         actual = local_date_key(completed_at, timezone_name)
@@ -77,13 +77,13 @@ def assert_due_dates_keep_wall_time_and_store_true_instants() -> None:
         if fragment in source:
             raise AssertionError(f"Old due-date semantic path remains: {fragment}")
 
-    wall_date = "2026-05-10"
+    wall_date = "2025-05-10"
     wall_time = "23:30"
     new_york_instant = local_wall_time_to_utc_iso(wall_date, wall_time, "America/New_York")
     shanghai_instant = local_wall_time_to_utc_iso(wall_date, wall_time, "Asia/Shanghai")
     if new_york_instant == shanghai_instant:
         raise AssertionError("Different time zones must produce different exact instants")
-    if (new_york_instant, shanghai_instant) != ("2026-05-11T03:30Z", "2026-05-10T15:30Z"):
+    if (new_york_instant, shanghai_instant) != ("2025-05-11T03:30Z", "2025-05-10T15:30Z"):
         raise AssertionError(f"Unexpected wall-time conversion: {new_york_instant}, {shanghai_instant}")
 
 
