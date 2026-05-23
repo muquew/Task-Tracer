@@ -753,6 +753,61 @@ def exercise_command_palette(page: Page, alpha_name: str, beta_name: str) -> Non
     select_project(page, "all")
 
 
+def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name: str, overdue_name: str) -> None:
+    select_project(page, "all")
+    select_filter(page, "active")
+    clear_search(page)
+
+    page.locator("#searchInput").fill("tag:deadline")
+    expect(task_locator(page, beta_name)).to_have_count(1)
+    expect(task_locator(page, alpha_name)).to_have_count(0)
+    page.locator("#saveSmartViewBtn").click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#savedViewNameInput").fill("Smoke Deadline View")
+    page.locator("#submitBtn").click()
+    wait_for_notification(page, re.compile("智能视图|Smart view", re.I))
+    expect(page.locator("#savedViewsList .saved-view-chip")).to_have_count(1)
+    clear_search(page)
+    expect(task_locator(page, alpha_name)).to_have_count(1)
+    page.locator("#savedViewsList .saved-view-apply").first.click()
+    expect(page.locator("#searchInput")).to_have_value("tag:deadline")
+    expect(task_locator(page, beta_name)).to_have_count(1)
+    expect(task_locator(page, alpha_name)).to_have_count(0)
+
+    clear_search(page)
+    page.locator("#openMenuBtn").click()
+    page.locator("#batchModeBtn").click()
+    expect(page.locator("#batchToolbar")).to_be_visible()
+    page.locator("#batchSelectVisibleBtn").click()
+    expect(page.locator("#batchSelectionSummary")).to_contain_text(re.compile(r"3|三个|three", re.I))
+    page.locator("#batchFocusBtn").click()
+    wait_for_notification(page, re.compile("今日|today", re.I))
+    for name in (alpha_name, beta_name, overdue_name):
+        record = get_task_record_by_name(page, name)
+        if not record.get("focusDate"):
+            raise AssertionError(f"Batch add to today plan did not set focusDate for {name}: {record}")
+    expect(page.locator("#notificationUndoBtn")).to_be_visible()
+    page.locator("#notificationUndoBtn").click()
+    wait_for_notification(page, re.compile("撤销|Undone", re.I))
+    for name in (alpha_name, beta_name, overdue_name):
+        record = get_task_record_by_name(page, name)
+        if record.get("focusDate"):
+            raise AssertionError(f"Undo did not restore focusDate for {name}: {record}")
+
+    expect(page.locator("#batchToolbar")).to_be_visible()
+    page.locator("#exitBatchModeBtn").click()
+    expect(page.locator("#batchToolbar")).to_be_hidden()
+    task_locator(page, beta_name).locator('[data-action="focus"]').click()
+    wait_for_notification(page, re.compile("今日|today", re.I))
+    page.locator("#openMenuBtn").click()
+    page.locator("#focusModeBtn").click()
+    expect(page.locator("#focusModeBar")).to_be_visible()
+    expect(task_locator(page, beta_name)).to_have_count(1)
+    expect(task_locator(page, alpha_name)).to_have_count(0)
+    page.locator("#exitFocusModeBtn").click()
+    expect(page.locator("#focusModeBar")).to_be_hidden()
+
+
 def snooze_task_reminder(page: Page, task_name: str) -> None:
     task = task_locator(page, task_name)
     expect(task.locator('[data-action="snooze"]')).to_be_visible()
@@ -1813,7 +1868,8 @@ def exercise_export(page: Page) -> dict[str, Any]:
         raise AssertionError("Export did not produce a readable download file")
 
     exported = json.loads(Path(path).read_text(encoding="utf-8"))
-    if exported.get("version") != "2.2" or not exported.get("date") or not exported.get("versionNotes"):
+    includes = set((exported.get("schema") or {}).get("includes") or [])
+    if exported.get("version") != "2.3" or not exported.get("date") or not exported.get("versionNotes") or "todayPlan" not in includes:
         raise AssertionError(f"Export payload metadata is incomplete: {exported}")
     if not isinstance(exported.get("tasks"), list) or not exported["tasks"]:
         raise AssertionError(f"Export payload did not include tasks: {exported}")
@@ -1829,7 +1885,8 @@ def exercise_backup(page: Page) -> dict[str, Any]:
     if not path:
         raise AssertionError("Backup did not produce a readable download file")
     backup = json.loads(Path(path).read_text(encoding="utf-8"))
-    if backup.get("version") != "2.2" or backup.get("type") != "backup" or not backup.get("schema"):
+    includes = set((backup.get("schema") or {}).get("includes") or [])
+    if backup.get("version") != "2.3" or backup.get("type") != "backup" or not backup.get("schema") or "todayPlan" not in includes:
         raise AssertionError(f"Backup payload metadata is incomplete: {backup}")
     last_backup = page.evaluate(
         """async () => {
@@ -2570,6 +2627,7 @@ def smoke(url: str) -> None:
         snooze_task_reminder(page, beta_name)
         add_overdue_task_record(page, overdue_name, order=30_000)
         exercise_project_tags(page, alpha_name, beta_name)
+        exercise_smart_views_batch_focus_undo(page, alpha_name, beta_name, overdue_name)
         exercise_theme_fallback_transition(page)
         exercise_search_empty_state(page, f"{task_name} Missing")
         exercise_subtasks(page, alpha_name)

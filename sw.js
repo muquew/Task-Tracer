@@ -1,11 +1,11 @@
 const CACHE_PREFIX = 'task-tracer-';
-const CACHE_NAME = 'task-tracer-v3.64';
+const CACHE_NAME = 'task-tracer-v3.65';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './manifest.json',
-    './resources/en.json?v=4.13',
-    './resources/zh-CN.json?v=4.13',
+    './resources/en.json?v=4.14',
+    './resources/zh-CN.json?v=4.14',
     './fav/favicon-16x16.png',
     './fav/favicon-32x32.png',
     './fav/favicon.ico',

@@ -152,7 +152,7 @@
         .container, .task-item, .modal-content, input, textarea, select, .menu, .controls-bar { transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease); }
         .container { width: min(100%, var(--app-width)); margin: 0 auto; background: transparent; border-radius: 0; box-shadow: none; position: relative; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-        .icon-btn:focus-visible, .lang-btn:focus-visible, .menu-item:focus-visible, .dropdown-btn:focus-visible, .dropdown-option:focus-visible, .view-tab:focus-visible, .calendar-nav-btn:focus-visible, .calendar-date-number:focus-visible, .calendar-task:focus-visible, .calendar-more-btn:focus-visible, .calendar-detail-close:focus-visible, .stats-mini:focus-visible, .search-clear-btn:focus-visible, .command-item:focus-visible, .action-btn:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .btn-icon-small:focus-visible, .back-to-top:focus-visible, .subtask-summary-bar:focus-visible, .subtask-delete-btn:focus-visible, .subtask-checkbox:focus-visible, .subtask-preview-text:focus-visible, .drag-handle:focus-visible {
+        .icon-btn:focus-visible, .lang-btn:focus-visible, .menu-item:focus-visible, .dropdown-btn:focus-visible, .dropdown-option:focus-visible, .view-tab:focus-visible, .calendar-nav-btn:focus-visible, .calendar-date-number:focus-visible, .calendar-task:focus-visible, .calendar-more-btn:focus-visible, .calendar-detail-close:focus-visible, .stats-mini:focus-visible, .search-clear-btn:focus-visible, .command-item:focus-visible, .action-btn:focus-visible, .btn:focus-visible, .close-btn:focus-visible, .btn-icon-small:focus-visible, .back-to-top:focus-visible, .subtask-summary-bar:focus-visible, .subtask-delete-btn:focus-visible, .subtask-checkbox:focus-visible, .subtask-preview-text:focus-visible, .drag-handle:focus-visible, .saved-view-apply:focus-visible, .saved-view-delete:focus-visible, .task-select-checkbox:focus-visible, .notification-action:focus-visible {
             outline: 2px solid var(--color-primary);
             outline-offset: 2px;
             box-shadow: 0 0 0 4px var(--focus-ring);
@@ -232,6 +232,41 @@
         .quick-add-input-wrap .icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); pointer-events: none; }
         .quick-add-input { min-height: 42px; padding-left: 40px; padding-right: 12px; }
         .quick-add-submit { min-width: 88px; }
+        .saved-views-bar, .focus-mode-bar, .batch-toolbar {
+            position: relative;
+            z-index: 620;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 0 12px;
+            padding: 10px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-surface);
+            background: var(--controls-bg);
+            box-shadow: 0 8px 24px var(--shadow-base);
+            backdrop-filter: blur(14px);
+        }
+        .saved-views-heading, .focus-mode-copy, .batch-toolbar-summary { display: inline-flex; align-items: center; gap: 8px; min-width: 0; color: var(--text-secondary); font-size: 13px; font-weight: 800; }
+        .saved-views-heading svg, .focus-mode-copy svg, .batch-toolbar-summary svg { color: var(--color-primary); flex: 0 0 auto; }
+        .saved-views-list { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 7px; overflow-x: auto; scrollbar-width: thin; padding: 1px; }
+        .saved-view-empty { color: var(--text-tertiary); font-size: 12px; font-weight: 700; white-space: nowrap; }
+        .saved-view-chip { flex: 0 0 auto; display: inline-flex; align-items: stretch; min-width: 0; max-width: min(280px, 60vw); border: 1px solid var(--border-light); border-radius: var(--radius-pill); background: var(--bg-surface); overflow: hidden; }
+        .saved-view-apply, .saved-view-delete { border: 0; background: transparent; color: var(--text-main); font: inherit; cursor: pointer; transition: background-color var(--motion-fast), color var(--motion-fast); }
+        .saved-view-apply { min-width: 0; padding: 7px 10px 7px 12px; display: grid; gap: 1px; text-align: left; }
+        .saved-view-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 800; }
+        .saved-view-meta { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-secondary); font-size: 11px; font-weight: 650; }
+        .saved-view-delete { width: 32px; display: inline-flex; align-items: center; justify-content: center; color: var(--text-tertiary); border-left: 1px solid var(--border-light); }
+        .saved-view-apply:hover, .saved-view-delete:hover { background: var(--bg-hover); color: var(--color-primary); }
+        .saved-view-save-btn { flex: 0 0 auto; min-height: 34px; padding: 7px 11px; font-size: 13px; }
+        .focus-mode-bar { justify-content: space-between; border-color: color-mix(in srgb, var(--color-primary) 24%, var(--border-light)); background: color-mix(in srgb, var(--color-primary) 8%, var(--controls-bg)); }
+        .focus-mode-copy > div { display: grid; gap: 2px; min-width: 0; }
+        .focus-mode-copy strong { color: var(--text-main); font-size: 13px; }
+        .focus-mode-copy span { color: var(--text-secondary); font-size: 12px; font-weight: 700; }
+        .batch-toolbar { align-items: flex-start; justify-content: space-between; border-color: color-mix(in srgb, var(--color-accent) 24%, var(--border-light)); background: color-mix(in srgb, var(--color-accent) 7%, var(--controls-bg)); }
+        .batch-toolbar-summary { min-height: 40px; }
+        .batch-toolbar-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+        .batch-toolbar .btn { min-height: 34px; padding: 7px 11px; font-size: 13px; }
+        .batch-danger { color: var(--color-danger-text); background: var(--color-danger-light); }
         .storage-warning { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; margin: 12px 0 8px; padding: 14px; border: 1px solid color-mix(in srgb, var(--color-warning) 34%, var(--border-light)); border-left: 5px solid var(--color-warning); border-radius: var(--radius-surface); background: color-mix(in srgb, var(--color-warning) 12%, var(--bg-surface)); color: var(--text-main); box-shadow: 0 10px 28px var(--shadow-base); }
         .storage-warning-icon { display: inline-flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: var(--radius-control); background: var(--color-warning-light); color: var(--color-warning-text); }
         .storage-warning-copy { min-width: 0; display: grid; gap: 3px; }
@@ -374,6 +409,11 @@
         .task-item.completed .task-date { color: var(--text-tertiary); background: var(--bg-hover); font-weight: 500; }
         .task-item.completed .task-name,
         .completed-task .task-name { color: var(--text-tertiary); text-decoration-line: line-through; text-decoration-thickness: 2px; text-decoration-color: currentColor; }
+        .task-selection { flex: 0 0 46px; display: flex; align-items: stretch; justify-content: center; border-right: 1px solid var(--border-light); background: var(--bg-surface-alt); cursor: pointer; }
+        .task-select-checkbox { appearance: none; -webkit-appearance: none; width: 22px; height: 22px; align-self: flex-start; margin-top: 18px; border: 1px solid var(--border-base); border-radius: var(--radius-control); background: var(--bg-surface); cursor: pointer; transition: background-color var(--motion-fast), border-color var(--motion-fast), box-shadow var(--motion-fast); }
+        .task-select-checkbox:checked { border-color: var(--color-primary); background-color: var(--color-primary); background-image: var(--checkbox-check); background-size: 15px 15px; background-position: center; background-repeat: no-repeat; }
+        .task-select-checkbox:hover { border-color: var(--color-primary); background-color: var(--bg-hover); }
+        .task-select-checkbox:checked:hover { background-color: var(--color-primary-dark); }
         .task-item.animate-complete { animation: completeAnimation 0.5s ease; }
         @keyframes completeAnimation { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .task-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 10px; }
@@ -404,6 +444,8 @@
         .delete-btn:hover { color: var(--color-danger); background: var(--color-danger-light); }
         .complete-btn { color: var(--color-success); }
         .complete-btn:hover { color: var(--color-success-dark); background: var(--color-success-light); }
+        .focus-btn { color: var(--color-accent); }
+        .focus-btn:hover, .focus-btn.active { color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 12%, transparent); }
         .snooze-btn { color: var(--color-warning); }
         .snooze-btn:hover { color: var(--color-warning-text); background: var(--color-warning-light); }
         .skip-repeat-btn { color: var(--color-accent); }
@@ -544,6 +586,8 @@
         .notification.success { background: #047857; }
         .notification.error { background: var(--color-danger); }
         .notification.warning { background: var(--color-warning); color: var(--text-main); }
+        .notification-action { min-height: 30px; margin-left: 4px; padding: 5px 9px; border: 1px solid rgba(15, 23, 42, 0.18); border-radius: var(--radius-control); background: #ffffff; color: #111827; font: inherit; font-size: 12px; font-weight: 820; cursor: pointer; }
+        .notification-action:hover { background: #f8fafc; }
         .update-prompt { position: fixed; left: 50%; bottom: max(18px, env(safe-area-inset-bottom)); z-index: 1002; width: min(540px, calc(100vw - 28px)); transform: translateX(-50%); display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px; border: 1px solid color-mix(in srgb, var(--color-primary) 24%, var(--border-light)); border-radius: var(--radius-surface); background: var(--bg-surface); color: var(--text-main); box-shadow: 0 20px 48px var(--shadow-heavy); }
         .update-prompt-message { display: flex; align-items: center; gap: 10px; min-width: 0; font-size: 14px; font-weight: 720; line-height: 1.4; }
         .update-prompt-message svg { flex: 0 0 auto; color: var(--color-primary); }
@@ -563,6 +607,8 @@
         .command-palette-list { max-height: min(420px, 58vh); overflow-y: auto; display: grid; gap: 6px; padding: 2px; }
         .command-item { width: 100%; min-height: 48px; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; align-items: center; padding: 8px 10px; border: 1px solid transparent; border-radius: var(--radius-control); background: transparent; color: var(--text-main); cursor: pointer; text-align: left; font: inherit; }
         .command-item:hover, .command-item.selected { background: var(--bg-hover); border-color: color-mix(in srgb, var(--color-primary) 24%, transparent); }
+        .command-item:disabled { cursor: not-allowed; opacity: 0.54; }
+        .command-item:disabled:hover { background: transparent; border-color: transparent; }
         .command-item-icon { display: flex; width: 32px; height: 32px; align-items: center; justify-content: center; border-radius: var(--radius-control); background: var(--color-info-light); color: var(--color-primary); }
         .command-item-title { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 780; }
         .command-item-subtitle { display: block; min-width: 0; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-secondary); font-size: 12px; font-weight: 650; }
@@ -663,6 +709,11 @@
             .menu { top: 54px; right: 0; }
             .quick-add-bar { grid-template-columns: minmax(0, 1fr) auto; padding: 8px; gap: 8px; }
             .quick-add-submit { min-width: 68px; padding-inline: 12px; }
+            .saved-views-bar, .focus-mode-bar, .batch-toolbar { align-items: stretch; flex-direction: column; gap: 8px; padding: 8px; }
+            .saved-views-list { width: 100%; }
+            .saved-view-save-btn, .focus-mode-bar .btn { width: 100%; }
+            .batch-toolbar-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+            .batch-toolbar .btn { width: 100%; padding-inline: 8px; }
             .controls-bar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: 8px; gap: 8px; }
             .view-switcher { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
             .search-box { width: 100%; flex: none; min-width: 0; }
@@ -688,6 +739,8 @@
             .main-content { padding-top: 12px; }
             .task-item { padding: 13px; }
             .task-item::before { width: 4px; }
+            .task-selection { align-items: flex-start; border-right: 0; background: transparent; flex-basis: 30px; }
+            .task-select-checkbox { margin-top: 0; }
             .task-item-right { padding: 2px 0 0 12px; }
             .task-header { flex-direction: column; align-items: flex-start; }
             .task-title { width: 100%; }
@@ -804,6 +857,9 @@
     <symbol id="icon-bell-ring" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path><path d="M2 8C1 8 1 8 1 8"></path><path d="M22 8C23 8 23 8 23 8"></path></symbol>
     <symbol id="icon-bell-snooze" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 9A5 5 0 0 0 5 9C5 15 3 17 3 17H17S15 15 15 9"/><path d="M11.7 21A2 2 0 0 1 8.3 21"/><path d="M17 3H21L17 7H21"/><path d="M18 11H22L18 15H22"/></symbol>
     <symbol id="icon-repeat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1L21 5L17 9"/><path d="M3 11V9A4 4 0 0 1 7 5H21"/><path d="M7 23L3 19L7 15"/><path d="M21 13V15A4 4 0 0 1 17 19H3"/></symbol>
+    <symbol id="icon-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4H18A1 1 0 0 1 19 5V21L12 17L5 21V5A1 1 0 0 1 6 4Z"/></symbol>
+    <symbol id="icon-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2V5"/><path d="M12 19V22"/><path d="M2 12H5"/><path d="M19 12H22"/></symbol>
+    <symbol id="icon-check-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11L12 14L22 4"/><path d="M21 12V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H16"/></symbol>
     <symbol id="icon-subtask-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></symbol>
     <symbol id="icon-subtask-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></symbol>
     <symbol id="icon-empty-tasks" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15"/><path d="M12 12H15"/><path d="M12 16H15"/><path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"/><path d="M9 12H9.01"/><path d="M9 16H9.01"/></symbol>
@@ -849,6 +905,19 @@
                 <button class="menu-item" role="menuitem" data-i18n-title="pwa.install.menuTitle" id="installAppBtn" title="安装应用或查看安装方式" hidden>
                     <svg class="icon"><use href="#icon-install"></use></svg>
                     <span data-i18n="pwa.install.menu">安装应用</span>
+                </button>
+                <div class="menu-divider" role="separator"></div>
+                <button class="menu-item" role="menuitem" id="focusModeBtn" data-i18n-title="focus.menuTitle" title="打开今日计划">
+                    <svg class="icon"><use href="#icon-target"></use></svg>
+                    <span data-i18n="focus.menu">今日计划</span>
+                </button>
+                <button class="menu-item" role="menuitem" id="batchModeBtn" data-i18n-title="batch.menuTitle" title="进入批量操作">
+                    <svg class="icon"><use href="#icon-check-square"></use></svg>
+                    <span data-i18n="batch.menu">批量操作</span>
+                </button>
+                <button class="menu-item" role="menuitem" id="undoMenuBtn" data-i18n-title="undo.menuTitle" title="撤销上一步" disabled>
+                    <svg class="icon"><use href="#icon-undo"></use></svg>
+                    <span data-i18n="undo.menu">撤销上一步</span>
                 </button>
                 <div class="menu-divider" role="separator"></div>
                 <button class="menu-item" role="menuitem" data-i18n-title="actions.archiveCompletedTitle" id="archiveCompletedBtn" title="归档所有已完成任务">
@@ -958,6 +1027,39 @@
                 </div>
             </div>
         </div>
+        <section class="saved-views-bar" id="savedViewsBar" aria-label="保存的智能视图" data-i18n-aria-label="savedViews.label">
+            <div class="saved-views-heading">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-bookmark"></use></svg>
+                <span data-i18n="savedViews.label">智能视图</span>
+            </div>
+            <div class="saved-views-list" id="savedViewsList"></div>
+            <button class="btn btn-secondary saved-view-save-btn" id="saveSmartViewBtn" type="button" data-i18n="savedViews.saveCurrent" data-i18n-title="savedViews.saveCurrentTitle" title="保存当前搜索、筛选和视图">保存当前视图</button>
+        </section>
+        <section class="focus-mode-bar" id="focusModeBar" aria-live="polite" hidden>
+            <div class="focus-mode-copy">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-target"></use></svg>
+                <div>
+                    <strong data-i18n="focus.title">今日计划</strong>
+                    <span id="focusModeSummary">0 个任务</span>
+                </div>
+            </div>
+            <button class="btn btn-secondary" id="exitFocusModeBtn" type="button" data-i18n="focus.exit">退出专注</button>
+        </section>
+        <section class="batch-toolbar" id="batchToolbar" aria-live="polite" hidden>
+            <div class="batch-toolbar-summary">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-check-square"></use></svg>
+                <strong id="batchSelectionSummary">已选择 0 个任务</strong>
+            </div>
+            <div class="batch-toolbar-actions">
+                <button class="btn btn-secondary" id="batchSelectVisibleBtn" type="button" data-i18n="batch.selectVisible">选择当前</button>
+                <button class="btn btn-secondary" id="batchClearSelectionBtn" type="button" data-i18n="batch.clearSelection">清空选择</button>
+                <button class="btn btn-secondary" id="batchFocusBtn" type="button" data-i18n="batch.addToFocus">加入今日</button>
+                <button class="btn btn-secondary" id="batchCompleteBtn" type="button" data-i18n="batch.complete">标记完成</button>
+                <button class="btn btn-secondary" id="batchArchiveBtn" type="button" data-i18n="batch.archive">归档</button>
+                <button class="btn btn-secondary batch-danger" id="batchDeleteBtn" type="button" data-i18n="batch.delete">删除</button>
+                <button class="btn btn-secondary" id="exitBatchModeBtn" type="button" data-i18n="batch.exit">退出</button>
+            </div>
+        </section>
         <div class="tasks-section">
             <div id="taskList" role="tabpanel" aria-labelledby="viewTab-list">
                 <div class="loading-state" id="initial-loader">
@@ -1113,6 +1215,7 @@
 <div class="notification" id="notification" role="status" aria-live="polite" aria-atomic="true">
     <svg class="icon"><use href="#icon-check"></use></svg>
     <span id="notificationText"></span>
+    <button type="button" class="notification-action" id="notificationUndoBtn" data-i18n="undo.action" hidden>撤销</button>
 </div>
 <div class="update-prompt" id="updatePrompt" role="region" aria-live="polite" aria-atomic="true" aria-label="应用更新" data-i18n-aria-label="pwa.update.label" hidden>
     <div class="update-prompt-message">
@@ -1145,6 +1248,9 @@
                     <div class="status-dot" aria-hidden="true"></div>
                     <span class="status-text"></span> <span class="status-time-left"></span> </div>
                 <div class="task-actions">
+                    <button class="action-btn focus-btn" data-action="focus" title="加入今日计划">
+                        <svg class="icon"><use href="#icon-target"></use></svg>
+                    </button>
                     <button class="action-btn complete-btn" data-action="toggle" title="标记完成">
                         <svg class="icon"><use href="#icon-check"></use></svg>
                     </button>
@@ -1179,7 +1285,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.64'
+                VERSION: '3.65'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1195,6 +1301,7 @@
                 NOTIFICATIONS: 'notifications_enabled',
                 NOTIFIED_TASKS: 'notifiedTasks',
                 LAST_BACKUP_AT: 'lastBackupAt',
+                SAVED_VIEWS: 'savedViews',
                 PROBE: '__task_tracer_storage_probe__'
             },
             UI: {
@@ -1231,10 +1338,10 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.13'
+                RESOURCE_VERSION: '4.14'
             },
             BACKUP: {
-                FILE_VERSION: '2.2',
+                FILE_VERSION: '2.3',
                 REMINDER_DAYS: 7
             },
             NOTIFICATIONS: {
@@ -1262,8 +1369,12 @@
             sort: 'smart',
             projectFilter: 'all',
             viewMode: 'list',
+            focusMode: false,
             calendarMonthDate: new Date(),
             searchQuery: '',
+            savedViews: [],
+            batchMode: false,
+            selectedTaskIds: new Set(),
             editingTaskId: null,
             currentLanguage: 'zh-CN',
             translations: {},
@@ -1289,6 +1400,7 @@
             commandPaletteItems: [],
             commandPaletteActiveIndex: 0,
             commandPaletteReturnFocus: null,
+            undoAction: null,
             storageAvailable: true,
             storageError: null,
             storageFallbackTasks: [],
@@ -1307,6 +1419,21 @@
             DOM.emergencyBackupBtn = document.getElementById('emergencyBackupBtn');
             DOM.clearCompletedBtn = document.getElementById('clearCompletedBtn');
             DOM.clearSearchBtn = document.getElementById('clearSearchBtn');
+            DOM.savedViewsBar = document.getElementById('savedViewsBar');
+            DOM.savedViewsList = document.getElementById('savedViewsList');
+            DOM.saveSmartViewBtn = document.getElementById('saveSmartViewBtn');
+            DOM.focusModeBar = document.getElementById('focusModeBar');
+            DOM.focusModeSummary = document.getElementById('focusModeSummary');
+            DOM.exitFocusModeBtn = document.getElementById('exitFocusModeBtn');
+            DOM.batchToolbar = document.getElementById('batchToolbar');
+            DOM.batchSelectionSummary = document.getElementById('batchSelectionSummary');
+            DOM.batchSelectVisibleBtn = document.getElementById('batchSelectVisibleBtn');
+            DOM.batchClearSelectionBtn = document.getElementById('batchClearSelectionBtn');
+            DOM.batchFocusBtn = document.getElementById('batchFocusBtn');
+            DOM.batchCompleteBtn = document.getElementById('batchCompleteBtn');
+            DOM.batchArchiveBtn = document.getElementById('batchArchiveBtn');
+            DOM.batchDeleteBtn = document.getElementById('batchDeleteBtn');
+            DOM.exitBatchModeBtn = document.getElementById('exitBatchModeBtn');
             DOM.notificationToggleBtn = document.getElementById('notificationToggleBtn');
             DOM.quickAddForm = document.getElementById('quickAddForm');
             DOM.quickAddInput = document.getElementById('quickAddInput');
@@ -1355,6 +1482,9 @@
                 backupHealthText: document.getElementById('backupHealthText'),
                 importBtn: document.getElementById('importBtn'),
                 installBtn: document.getElementById('installAppBtn'),
+                focusModeBtn: document.getElementById('focusModeBtn'),
+                batchModeBtn: document.getElementById('batchModeBtn'),
+                undoBtn: document.getElementById('undoMenuBtn'),
                 archiveCompletedBtn: document.getElementById('archiveCompletedBtn'),
                 fileInput: document.getElementById('importFile')
             };
@@ -1365,7 +1495,8 @@
             };
             DOM.notification = {
                 el: document.getElementById('notification'),
-                text: document.getElementById('notificationText')
+                text: document.getElementById('notificationText'),
+                undoBtn: document.getElementById('notificationUndoBtn')
             };
             DOM.updatePrompt = {
                 el: document.getElementById('updatePrompt'),
@@ -1497,6 +1628,9 @@
         function renderStorageUnavailableState() {
             if (!DOM.taskList) return;
             syncViewSwitcher();
+            if (DOM.savedViewsBar) DOM.savedViewsBar.hidden = true;
+            if (DOM.focusModeBar) DOM.focusModeBar.hidden = true;
+            if (DOM.batchToolbar) DOM.batchToolbar.hidden = true;
             renderProjectFilterOptions();
             updateFilterCounts();
             syncDropdowns();
@@ -1525,6 +1659,15 @@
                 DOM.notificationToggleBtn,
                 DOM.quickAddInput,
                 DOM.quickAddForm?.querySelector('button[type="submit"]'),
+                DOM.saveSmartViewBtn,
+                DOM.exitFocusModeBtn,
+                DOM.batchSelectVisibleBtn,
+                DOM.batchClearSelectionBtn,
+                DOM.batchFocusBtn,
+                DOM.batchCompleteBtn,
+                DOM.batchArchiveBtn,
+                DOM.batchDeleteBtn,
+                DOM.exitBatchModeBtn,
                 DOM.inputs.search,
                 DOM.clearSearchBtn,
                 DOM.menu.btn,
@@ -1532,6 +1675,9 @@
                 DOM.menu.backupBtn,
                 DOM.menu.importBtn,
                 DOM.menu.fileInput,
+                DOM.menu.focusModeBtn,
+                DOM.menu.batchModeBtn,
+                DOM.menu.undoBtn,
                 DOM.menu.archiveCompletedBtn,
                 DOM.clearCompletedBtn,
                 DOM.dropdowns.project?.btn,
@@ -1543,6 +1689,7 @@
                 control.disabled = unavailable;
                 control.setAttribute('aria-disabled', String(unavailable));
             });
+            syncUndoControls();
         }
         function ensureStorageAvailable() {
             if (state.storageAvailable) return true;
@@ -1565,11 +1712,52 @@
                 return Array.isArray(tasks) ? tasks.map(task => ({ ...task })) : [];
             }
         }
+        function captureUndoSnapshot() {
+            return cloneTaskSnapshot(state.tasks);
+        }
+        function registerUndoSnapshot(label, beforeTasks) {
+            const snapshot = cloneTaskSnapshot(beforeTasks);
+            state.undoAction = {
+                label,
+                run: async () => {
+                    await dbActions.replaceAllTasks(snapshot);
+                    clearNotificationDeliveryState();
+                    await refreshTasks();
+                }
+            };
+            syncUndoControls();
+        }
+        async function performUndo() {
+            if (!state.undoAction || !ensureStorageAvailable()) return;
+            const action = state.undoAction;
+            state.undoAction = null;
+            syncUndoControls();
+            try {
+                await action.run();
+                closeMenu();
+                utils.notify(utils.translate('undo.restored').replace('{action}', action.label));
+            } catch (error) {
+                console.error('撤销失败:', error);
+                handleStorageOperationError(error, 'undo.error');
+            }
+        }
+        function syncUndoControls() {
+            const disabled = !state.undoAction || !state.storageAvailable;
+            if (DOM.menu?.undoBtn) {
+                DOM.menu.undoBtn.disabled = disabled;
+                DOM.menu.undoBtn.setAttribute('aria-disabled', String(disabled));
+            }
+            if (DOM.notification?.undoBtn) DOM.notification.undoBtn.hidden = true;
+        }
         async function loadSettings() {
             await restoreLanguageSetting();
+            await restoreSavedViews();
             await restoreNotificationSetting(await dbActions.getConfig(CONFIG.STORAGE.NOTIFICATIONS));
             updateNotificationBtnUI();
             restoreNotifiedTasks();
+        }
+        async function restoreSavedViews() {
+            state.savedViews = normalizeSavedViews(await dbActions.getConfig(CONFIG.STORAGE.SAVED_VIEWS));
         }
         async function restoreLanguageSetting() {
             const savedLang = await dbActions.getConfig(CONFIG.STORAGE.LANG);
@@ -1677,6 +1865,9 @@
             bindNotificationEvents();
             setupDropdowns();
             bindMenuEvents();
+            bindSavedViewEvents();
+            bindFocusModeEvents();
+            bindBatchModeEvents();
             bindQuickAddEvents();
             bindCommandPaletteEvents();
             bindTaskListEvents();
@@ -1684,6 +1875,7 @@
             bindSubtaskPreviewEvents();
             bindUpdatePromptEvents();
             setupDragAndDrop();
+            syncUndoControls();
             state.eventsBound = true;
         }
         function bindGlobalEvents() {
@@ -1733,6 +1925,22 @@
             });
             DOM.viewSwitcher.addEventListener('keydown', handleViewSwitcherKeydown);
         }
+        function bindSavedViewEvents() {
+            DOM.saveSmartViewBtn.addEventListener('click', promptSaveSmartView);
+            DOM.savedViewsList.addEventListener('click', handleSavedViewListClick);
+        }
+        function bindFocusModeEvents() {
+            DOM.exitFocusModeBtn.addEventListener('click', exitFocusMode);
+        }
+        function bindBatchModeEvents() {
+            DOM.batchSelectVisibleBtn.addEventListener('click', selectVisibleTasksForBatch);
+            DOM.batchClearSelectionBtn.addEventListener('click', clearBatchSelection);
+            DOM.batchFocusBtn.addEventListener('click', () => runBatchTaskUpdate('focus'));
+            DOM.batchCompleteBtn.addEventListener('click', () => runBatchTaskUpdate('complete'));
+            DOM.batchArchiveBtn.addEventListener('click', () => runBatchTaskUpdate('archive'));
+            DOM.batchDeleteBtn.addEventListener('click', () => runBatchTaskUpdate('delete'));
+            DOM.exitBatchModeBtn.addEventListener('click', () => setBatchMode(false));
+        }
         function bindQuickAddEvents() {
             DOM.quickAddForm.addEventListener('submit', handleQuickAddSubmit);
         }
@@ -1763,6 +1971,7 @@
         }
         function setViewMode(viewMode) {
             if (!['list', 'calendar', 'timeline', 'stats'].includes(viewMode) || state.viewMode === viewMode) return;
+            state.focusMode = false;
             state.viewMode = viewMode;
             if (viewMode === 'calendar') syncCalendarMonthToVisibleTasks();
             syncViewSwitcher();
@@ -1777,6 +1986,333 @@
                 tab.tabIndex = selected ? 0 : -1;
                 if (selected && tab.id) DOM.taskList.setAttribute('aria-labelledby', tab.id);
             });
+        }
+        function normalizeSavedViews(rawViews) {
+            if (!Array.isArray(rawViews)) return [];
+            const usedIds = new Set();
+            return rawViews.map((view, index) => normalizeSavedView(view, index, usedIds)).filter(Boolean).slice(0, 12);
+        }
+        function normalizeSavedView(view, index, usedIds) {
+            if (!view || typeof view !== 'object') return null;
+            const id = normalizeSavedViewId(view.id, usedIds);
+            const name = String(view.name || '').trim().replace(/\s+/g, ' ').slice(0, 48) || utils.translate('savedViews.defaultName').replace('{index}', index + 1);
+            const snapshot = normalizeSmartViewSnapshot(view);
+            return { id, name, ...snapshot };
+        }
+        function normalizeSavedViewId(value, usedIds) {
+            const base = String(value || '').trim() || `view-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+            let id = base;
+            let counter = 2;
+            while (usedIds.has(id)) id = `${base}-${counter++}`;
+            usedIds.add(id);
+            return id;
+        }
+        function normalizeSmartViewSnapshot(view) {
+            const validFilters = new Set(['all', 'active', 'completed', 'archived', 'overdue', 'no-deadline']);
+            const validSorts = new Set(['smart', 'created-desc', 'due-asc', 'alpha-asc', 'manual']);
+            const validViews = new Set(['list', 'calendar', 'timeline', 'stats']);
+            return {
+                searchQuery: normalizeSearchQuery(view.searchQuery || ''),
+                filter: validFilters.has(view.filter) ? view.filter : 'active',
+                projectFilter: typeof view.projectFilter === 'string' && view.projectFilter ? view.projectFilter : 'all',
+                sort: validSorts.has(view.sort) ? view.sort : 'smart',
+                viewMode: validViews.has(view.viewMode) ? view.viewMode : 'list'
+            };
+        }
+        function getCurrentSmartViewSnapshot() {
+            return normalizeSmartViewSnapshot({
+                searchQuery: state.searchQuery,
+                filter: state.filter,
+                projectFilter: state.projectFilter,
+                sort: state.sort,
+                viewMode: state.viewMode
+            });
+        }
+        function promptSaveSmartView() {
+            if (!ensureStorageAvailable()) return;
+            const t = state.translations[state.currentLanguage];
+            const wrapper = document.createElement('div');
+            wrapper.className = 'confirm-details';
+            const row = document.createElement('label');
+            row.className = 'form-field';
+            const label = document.createElement('span');
+            label.textContent = t['savedViews.nameLabel'];
+            const input = document.createElement('input');
+            input.id = 'savedViewNameInput';
+            input.type = 'text';
+            input.maxLength = 48;
+            input.value = getDefaultSavedViewName();
+            input.setAttribute('aria-label', t['savedViews.nameLabel']);
+            input.placeholder = t['savedViews.namePlaceholder'];
+            row.append(label, input);
+            wrapper.appendChild(row);
+            utils.confirm(t['savedViews.saveTitle'], wrapper, async () => {
+                await saveSmartView(input.value);
+            });
+            requestAnimationFrame(() => input.focus());
+        }
+        function getDefaultSavedViewName() {
+            const t = state.translations[state.currentLanguage];
+            const projectName = getProjectFilterLabel(state.projectFilter);
+            const filterName = t[`filters.${state.filter}`] || state.filter;
+            const viewName = t[`views.${state.viewMode}`] || state.viewMode;
+            if (state.searchQuery) return t['savedViews.nameFromSearch'].replace('{query}', state.searchQuery);
+            return `${projectName} · ${filterName} · ${viewName}`;
+        }
+        async function saveSmartView(name) {
+            const snapshot = getCurrentSmartViewSnapshot();
+            const savedView = normalizeSavedView({ id: createSavedViewId(), name, ...snapshot }, state.savedViews.length, new Set(state.savedViews.map(view => view.id)));
+            state.savedViews = [savedView, ...state.savedViews.filter(view => !isSameSmartView(view, savedView))].slice(0, 12);
+            await persistSavedViews();
+            renderSavedViews();
+            utils.notify(utils.translate('savedViews.saved'));
+        }
+        function createSavedViewId() {
+            return `view-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        }
+        function isSameSmartView(a, b) {
+            return a.searchQuery === b.searchQuery &&
+                a.filter === b.filter &&
+                a.projectFilter === b.projectFilter &&
+                a.sort === b.sort &&
+                a.viewMode === b.viewMode;
+        }
+        async function persistSavedViews() {
+            await dbActions.setConfig(CONFIG.STORAGE.SAVED_VIEWS, state.savedViews);
+        }
+        function renderSavedViews() {
+            if (!DOM.savedViewsBar || !DOM.savedViewsList) return;
+            DOM.savedViewsBar.hidden = !state.storageAvailable;
+            DOM.savedViewsList.textContent = '';
+            if (state.savedViews.length === 0) {
+                DOM.savedViewsList.removeAttribute('role');
+                const empty = document.createElement('span');
+                empty.className = 'saved-view-empty';
+                empty.textContent = utils.translate('savedViews.empty');
+                DOM.savedViewsList.appendChild(empty);
+                return;
+            }
+            DOM.savedViewsList.setAttribute('role', 'list');
+            const fragment = document.createDocumentFragment();
+            state.savedViews.forEach(view => fragment.appendChild(createSavedViewChip(view)));
+            DOM.savedViewsList.appendChild(fragment);
+        }
+        function createSavedViewChip(view) {
+            const item = document.createElement('div');
+            item.className = 'saved-view-chip';
+            item.setAttribute('role', 'listitem');
+            const apply = document.createElement('button');
+            apply.type = 'button';
+            apply.className = 'saved-view-apply';
+            apply.dataset.savedViewId = view.id;
+            apply.setAttribute('aria-label', utils.translate('savedViews.applyLabel').replace('{name}', view.name));
+            const name = document.createElement('span');
+            name.className = 'saved-view-name';
+            name.textContent = view.name;
+            const meta = document.createElement('span');
+            meta.className = 'saved-view-meta';
+            meta.textContent = getSavedViewMeta(view);
+            apply.append(name, meta);
+            const remove = document.createElement('button');
+            remove.type = 'button';
+            remove.className = 'saved-view-delete';
+            remove.dataset.savedViewDeleteId = view.id;
+            remove.setAttribute('aria-label', utils.translate('savedViews.deleteLabel').replace('{name}', view.name));
+            remove.innerHTML = '<svg class="icon icon-sm" aria-hidden="true"><use href="#icon-x"></use></svg>';
+            item.append(apply, remove);
+            return item;
+        }
+        function getSavedViewMeta(view) {
+            return [
+                getProjectFilterLabel(view.projectFilter),
+                utils.translate(`filters.${view.filter}`),
+                utils.translate(`views.${view.viewMode}`)
+            ].filter(Boolean).join(' · ');
+        }
+        function getProjectFilterLabel(value) {
+            if (value === 'all') return utils.translate('projects.all');
+            if (value === '__none__') return utils.translate('projects.none');
+            return value || utils.translate('projects.all');
+        }
+        function handleSavedViewListClick(e) {
+            const deleteButton = e.target.closest('[data-saved-view-delete-id]');
+            if (deleteButton) {
+                deleteSavedView(deleteButton.dataset.savedViewDeleteId).catch(error => {
+                    console.error('删除保存视图失败:', error);
+                    handleStorageOperationError(error);
+                });
+                return;
+            }
+            const applyButton = e.target.closest('[data-saved-view-id]');
+            if (applyButton) applySavedView(applyButton.dataset.savedViewId);
+        }
+        function applySavedView(id) {
+            const view = state.savedViews.find(item => item.id === id);
+            if (!view) return;
+            state.focusMode = false;
+            Object.assign(state, normalizeSmartViewSnapshot(view));
+            DOM.inputs.search.value = state.searchQuery;
+            syncSearchClearButton();
+            if (state.viewMode === 'calendar') syncCalendarMonthToVisibleTasks();
+            renderTaskList();
+            syncDropdowns();
+            utils.notify(utils.translate('savedViews.applied').replace('{name}', view.name));
+            announceTaskViewSummary();
+        }
+        async function deleteSavedView(id) {
+            const view = state.savedViews.find(item => item.id === id);
+            state.savedViews = state.savedViews.filter(item => item.id !== id);
+            await persistSavedViews();
+            renderSavedViews();
+            if (view) utils.notify(utils.translate('savedViews.deleted').replace('{name}', view.name));
+        }
+        function enterFocusMode() {
+            closeMenu();
+            closeAllDropdowns();
+            state.focusMode = true;
+            state.viewMode = 'list';
+            state.filter = 'all';
+            state.projectFilter = 'all';
+            state.sort = 'smart';
+            state.searchQuery = '';
+            DOM.inputs.search.value = '';
+            syncSearchClearButton();
+            syncViewSwitcher();
+            renderTaskList();
+            announceTaskViewSummary();
+        }
+        function exitFocusMode() {
+            state.focusMode = false;
+            renderTaskList();
+            announceTaskViewSummary();
+        }
+        function syncFocusModeUI() {
+            if (!DOM.focusModeBar) return;
+            DOM.focusModeBar.hidden = !state.focusMode;
+            if (!state.focusMode) return;
+            const tasks = getTodayPlanTasks();
+            const completed = tasks.filter(task => task.completed).length;
+            DOM.focusModeSummary.textContent = utils.translate('focus.summary')
+                .replace('{completed}', completed)
+                .replace('{total}', tasks.length);
+        }
+        function getTodayPlanTasks() {
+            const todayKey = getTodayPlanDateKey();
+            return state.tasks.filter(task => normalizeFocusDate(task.focusDate) === todayKey && !task.archived);
+        }
+        function getTodayPlanDateKey() {
+            return utils.formatDateInputValue();
+        }
+        function isTaskInTodayPlan(task) {
+            return normalizeFocusDate(task.focusDate) === getTodayPlanDateKey();
+        }
+        function normalizeFocusDate(value) {
+            return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : null;
+        }
+        function setBatchMode(enabled) {
+            if (!ensureStorageAvailable()) return;
+            closeMenu();
+            state.batchMode = Boolean(enabled);
+            if (state.batchMode) {
+                state.viewMode = 'list';
+                syncViewSwitcher();
+            } else {
+                state.selectedTaskIds.clear();
+            }
+            renderTaskList();
+        }
+        function syncBatchModeUI() {
+            if (!DOM.batchToolbar) return;
+            pruneBatchSelection();
+            DOM.batchToolbar.hidden = !state.batchMode;
+            if (!state.batchMode) return;
+            const count = state.selectedTaskIds.size;
+            DOM.batchSelectionSummary.textContent = utils.translate('batch.selected').replace('{count}', count);
+            [DOM.batchClearSelectionBtn, DOM.batchFocusBtn, DOM.batchCompleteBtn, DOM.batchArchiveBtn, DOM.batchDeleteBtn].forEach(button => {
+                button.disabled = count === 0;
+            });
+        }
+        function pruneBatchSelection() {
+            const ids = new Set((state.batchMode ? getVisibleTasks() : state.tasks).map(task => task.id));
+            [...state.selectedTaskIds].forEach(id => {
+                if (!ids.has(id)) state.selectedTaskIds.delete(id);
+            });
+        }
+        function selectVisibleTasksForBatch() {
+            getVisibleTasks().forEach(task => state.selectedTaskIds.add(task.id));
+            renderTaskList();
+            utils.announce(utils.translate('batch.selected').replace('{count}', state.selectedTaskIds.size));
+        }
+        function clearBatchSelection() {
+            state.selectedTaskIds.clear();
+            renderTaskList();
+            utils.announce(utils.translate('batch.selected').replace('{count}', 0));
+        }
+        function toggleBatchTaskSelection(id, selected) {
+            if (selected) state.selectedTaskIds.add(id);
+            else state.selectedTaskIds.delete(id);
+            syncBatchModeUI();
+        }
+        function getSelectedBatchTasks() {
+            const selected = state.selectedTaskIds;
+            return state.tasks.filter(task => selected.has(task.id));
+        }
+        async function runBatchTaskUpdate(action) {
+            if (!ensureStorageAvailable()) return;
+            const selectedTasks = getSelectedBatchTasks();
+            if (selectedTasks.length === 0) {
+                utils.notify(utils.translate('batch.noneSelected'), 'warning');
+                return;
+            }
+            if (action === 'delete') {
+                const message = utils.translate('batch.confirmDelete').replace('{count}', selectedTasks.length);
+                utils.confirm(utils.translate('batch.delete'), message, () => applyBatchTaskUpdate(action, selectedTasks));
+                return;
+            }
+            await applyBatchTaskUpdate(action, selectedTasks);
+        }
+        async function applyBatchTaskUpdate(action, selectedTasks) {
+            const beforeTasks = captureUndoSnapshot();
+            const now = new Date().toISOString();
+            try {
+                if (action === 'delete') {
+                    await dbActions.deleteTasks(selectedTasks.map(task => task.id));
+                } else if (action === 'archive') {
+                    await dbActions.updateTasks(selectedTasks.map(task => ({ ...task, archived: true, archivedAt: now })));
+                } else if (action === 'focus') {
+                    const focusDate = getTodayPlanDateKey();
+                    await dbActions.updateTasks(selectedTasks.map(task => ({ ...task, focusDate })));
+                } else if (action === 'complete') {
+                    const completeUpdates = buildBatchCompleteTasks(selectedTasks, now);
+                    if (completeUpdates.length === 0) {
+                        utils.notify(utils.translate('batch.nothingToComplete'), 'warning');
+                        return;
+                    }
+                    await dbActions.updateTasks(completeUpdates);
+                }
+                state.selectedTaskIds.clear();
+                await refreshTasks();
+                registerUndoSnapshot(utils.translate(`batch.undo.${action}`), beforeTasks);
+                utils.notify(utils.translate(`batch.success.${action}`).replace('{count}', selectedTasks.length), 'success', { undo: true });
+            } catch (error) {
+                console.error('批量操作失败:', error);
+                handleStorageOperationError(error, 'batch.error');
+            }
+        }
+        function buildBatchCompleteTasks(tasks, completedAt) {
+            const usedIds = new Set(state.tasks.map(task => Number(task.id)).filter(Number.isFinite));
+            const result = [];
+            tasks.forEach(task => {
+                if (task.completed || task.archived) return;
+                const updatedTask = { ...task, completed: true, completedAt };
+                if (shouldCreateNextRepeatTask(task)) {
+                    const nextTask = createNextRepeatTaskWithUsedIds(task, usedIds);
+                    updatedTask.nextRepeatTaskId = nextTask.id;
+                    result.push(nextTask);
+                }
+                result.push(updatedTask);
+            });
+            return result;
         }
         function openCommandPalette() {
             if (!ensureStorageAvailable()) return;
@@ -1844,6 +2380,14 @@
                 icon: 'icon-filter',
                 run: () => applyProjectFilter(project.value)
             }));
+            const savedViewItems = state.savedViews.map(view => ({
+                id: `saved-view-${view.id}`,
+                title: t['commandPalette.commands.savedView'].replace('{name}', view.name),
+                subtitle: t['commandPalette.groups.savedViews'],
+                keywords: `saved view smart ${view.name} ${view.searchQuery}`,
+                icon: 'icon-bookmark',
+                run: () => applySavedView(view.id)
+            }));
             return [
                 {
                     id: 'new-task',
@@ -1872,7 +2416,33 @@
                     icon: 'icon-filter',
                     run: () => DOM.inputs.search.focus()
                 },
+                {
+                    id: 'focus-mode',
+                    title: t['commandPalette.commands.focusMode'],
+                    subtitle: t['commandPalette.groups.tasks'],
+                    keywords: 'today plan focus',
+                    icon: 'icon-target',
+                    run: enterFocusMode
+                },
+                {
+                    id: 'batch-mode',
+                    title: t['commandPalette.commands.batchMode'],
+                    subtitle: t['commandPalette.groups.tasks'],
+                    keywords: 'batch multi select',
+                    icon: 'icon-check-square',
+                    run: () => setBatchMode(true)
+                },
+                {
+                    id: 'undo',
+                    title: t['commandPalette.commands.undo'],
+                    subtitle: t['commandPalette.groups.tasks'],
+                    keywords: 'undo restore',
+                    icon: 'icon-undo',
+                    disabled: !state.undoAction,
+                    run: performUndo
+                },
                 ...viewItems,
+                ...savedViewItems,
                 {
                     id: 'export',
                     title: t['commandPalette.commands.export'],
@@ -1900,6 +2470,7 @@
             button.setAttribute('role', 'option');
             button.setAttribute('aria-selected', 'false');
             button.dataset.index = String(index);
+            button.disabled = item.disabled === true;
             const icon = document.createElement('span');
             icon.className = 'command-item-icon';
             icon.appendChild(createIcon(item.icon, 'icon icon-sm'));
@@ -1968,7 +2539,7 @@
         }
         function executeCommandPaletteItem(index) {
             const item = state.commandPaletteItems[index];
-            if (!item) return;
+            if (!item || item.disabled) return;
             const returnFocus = state.commandPaletteReturnFocus;
             closeCommandPalette({ restoreFocus: false });
             item.run(returnFocus);
@@ -1993,6 +2564,7 @@
             } else {
                 console.error('Notification button not found in DOM');
             }
+            if (DOM.notification.undoBtn) DOM.notification.undoBtn.addEventListener('click', performUndo);
         }
         function bindUpdatePromptEvents() {
             DOM.updatePrompt.reloadBtn.addEventListener('click', applyServiceWorkerUpdate);
@@ -2111,6 +2683,9 @@
                 if (ensureStorageAvailable()) DOM.menu.fileInput.click();
             });
             DOM.menu.installBtn.addEventListener('click', handleInstallAppClick);
+            DOM.menu.focusModeBtn.addEventListener('click', enterFocusMode);
+            DOM.menu.batchModeBtn.addEventListener('click', () => setBatchMode(true));
+            DOM.menu.undoBtn.addEventListener('click', performUndo);
             DOM.menu.archiveCompletedBtn.addEventListener('click', handleArchiveCompleted);
             DOM.menu.fileInput.addEventListener('change', (e) => importTasks(e.target.files[0]));
         }
@@ -2260,6 +2835,7 @@
             }
             const meta = e.ctrlKey || e.metaKey;
             if (meta && e.key.toLowerCase() === 'p') { e.preventDefault(); openCommandPalette(); return; }
+            if (meta && e.key.toLowerCase() === 'z' && !e.shiftKey && !isEditableElement(document.activeElement)) { e.preventDefault(); performUndo(); return; }
             if (meta && e.key === 'k') { e.preventDefault(); DOM.inputs.search.focus(); }
             if (meta && e.key === 'i') { e.preventDefault(); if (DOM.modal.style.display !== 'flex') openModal(); }
             if (meta && e.key === 'm') { e.preventDefault(); toggleMenu(DOM.menu.container, DOM.menu.btn); }
@@ -2273,6 +2849,9 @@
                     closeMenu();
                 }
             }
+        }
+        function isEditableElement(element) {
+            return element && (element.matches('input, textarea, select') || element.isContentEditable);
         }
         function isDialogOpen() {
             return isTaskDialogOpen() || isCommandPaletteOpen();
@@ -2385,6 +2964,7 @@
             state.taskFormSaving = true;
             DOM.submitBtn.disabled = true;
             try {
+                const beforeTasks = captureUndoSnapshot();
                 if (isEditingTask()) {
                     const original = getTaskById(state.editingTaskId);
                     if (!original) throw new Error(`Task not found: ${state.editingTaskId}`);
@@ -2392,10 +2972,12 @@
                     const shouldClearNotificationDelivery = didReminderSettingsChange(original, updatedTask);
                     await dbActions.updateTask(updatedTask);
                     if (shouldClearNotificationDelivery) clearTaskNotificationDeliveryState(original.id);
-                    utils.notify(t['messages.task.updated']);
+                    registerUndoSnapshot(t['undo.labels.edit'], beforeTasks);
+                    utils.notify(t['messages.task.updated'], 'success', { undo: true });
                 } else {
                     await dbActions.addTask(createTaskRecord(taskPayload));
-                    utils.notify(t['messages.task.added']);
+                    registerUndoSnapshot(t['undo.labels.add'], beforeTasks);
+                    utils.notify(t['messages.task.added'], 'success', { undo: true });
                 }
                 await refreshTasks();
                 closeDialog();
@@ -2427,9 +3009,11 @@
             state.quickAddSaving = true;
             setQuickAddSaving(true);
             try {
+                const beforeTasks = captureUndoSnapshot();
                 await dbActions.addTask(createTaskRecord(taskPayload));
                 DOM.quickAddInput.value = '';
-                utils.notify(t['messages.task.added']);
+                registerUndoSnapshot(t['undo.labels.add'], beforeTasks);
+                utils.notify(t['messages.task.added'], 'success', { undo: true });
                 await refreshTasks();
             } catch (err) {
                 console.error('快速添加任务失败:', err);
@@ -2579,6 +3163,7 @@
                 completedAt: null,
                 archived: false,
                 archivedAt: null,
+                focusDate: null,
                 snoozedUntil: null,
                 lastReminderAt: null,
                 repeatSourceId: null,
@@ -2586,6 +3171,7 @@
                 nextRepeatTaskId: null,
                 repeatWeekdays: [],
                 repeatPaused: false,
+                focusDate: null,
                 ...taskPayload
             };
         }
@@ -2976,6 +3562,11 @@
                     normalizedTask.repeatPaused = repeatPaused;
                     changed = true;
                 }
+                const focusDate = normalizeFocusDate(normalizedTask.focusDate);
+                if (normalizedTask.focusDate !== focusDate) {
+                    normalizedTask.focusDate = focusDate;
+                    changed = true;
+                }
                 ['repeatSourceId', 'repeatCreatedFrom', 'nextRepeatTaskId'].forEach(key => {
                     if (normalizedTask[key] === undefined) {
                         normalizedTask[key] = null;
@@ -3050,10 +3641,12 @@
             const t = state.translations[state.currentLanguage];
             utils.confirm(t['task.actions.delete'], t['messages.task.confirmDelete'], async () => {
                 try {
+                    const beforeTasks = captureUndoSnapshot();
                     await dbActions.deleteTask(id);
                     state.tasks = state.tasks.filter(task => task.id !== id);
                     renderTaskList();
-                    utils.notify(t['messages.task.deleted']);
+                    registerUndoSnapshot(t['undo.labels.delete'], beforeTasks);
+                    utils.notify(t['messages.task.deleted'], 'success', { undo: true });
                 } catch (e) {
                     console.error('删除任务失败:', e);
                     handleStorageOperationError(e, 'messages.task.deleteError');
@@ -3065,6 +3658,7 @@
             const task = getTaskById(id);
             if (!task) return;
             const t = state.translations[state.currentLanguage];
+            const beforeTasks = captureUndoSnapshot();
             const previousCompleted = task.completed;
             const previousCompletedAt = task.completedAt || null;
             const previousNextRepeatTaskId = task.nextRepeatTaskId ?? null;
@@ -3083,7 +3677,8 @@
                     el.classList.add(CONFIG.UI.CLASSES.ANIMATE);
                     setTimeout(() => el.classList.remove(CONFIG.UI.CLASSES.ANIMATE), 500);
                 }
-                utils.notify(nextRepeatTask ? t['messages.task.repeatCreated'] : (task.completed ? t['messages.task.markedComplete'] : t['messages.task.markedIncomplete']));
+                registerUndoSnapshot(t['undo.labels.complete'], beforeTasks);
+                utils.notify(nextRepeatTask ? t['messages.task.repeatCreated'] : (task.completed ? t['messages.task.markedComplete'] : t['messages.task.markedIncomplete']), 'success', { undo: true });
                 await refreshTasks();
             } catch (err) {
                 console.error('更新任务状态失败:', err);
@@ -3099,6 +3694,7 @@
             const task = getTaskById(id);
             if (!task || !shouldShowSkipRepeatAction(task)) return;
             const t = state.translations[state.currentLanguage];
+            const beforeTasks = captureUndoSnapshot();
             const updatedTask = {
                 ...task,
                 ...calculateNextRepeatDueFields(task, getTaskRepeatRule(task)),
@@ -3108,7 +3704,8 @@
             try {
                 await dbActions.updateTask(updatedTask);
                 clearTaskNotificationDeliveryState(task.id);
-                utils.notify(t['messages.task.repeatSkipped']);
+                registerUndoSnapshot(t['undo.labels.skipRepeat'], beforeTasks);
+                utils.notify(t['messages.task.repeatSkipped'], 'success', { undo: true });
                 await refreshTasks();
             } catch (err) {
                 console.error('跳过重复任务失败:', err);
@@ -3123,6 +3720,9 @@
         }
         function createNextRepeatTask(task) {
             const usedIds = new Set(state.tasks.map(item => Number(item.id)).filter(Number.isFinite));
+            return createNextRepeatTaskWithUsedIds(task, usedIds);
+        }
+        function createNextRepeatTaskWithUsedIds(task, usedIds) {
             const nextId = createUniqueNumericId(usedIds);
             const now = new Date().toISOString();
             return {
@@ -3199,11 +3799,13 @@
             if (completed.length === 0) return utils.notify(t['messages.clearCompleted.none'], 'warning');
             utils.confirm(t['actions.clearCompleted'], t['messages.clearCompleted.confirm'].replace('{count}', completed.length), async () => {
                 try {
+                    const beforeTasks = captureUndoSnapshot();
                     const completedIds = new Set(completed.map(task => task.id));
                     await dbActions.deleteTasks([...completedIds]);
                     state.tasks = state.tasks.filter(task => !completedIds.has(task.id));
                     renderTaskList();
-                    utils.notify(t['messages.clearCompleted.success'].replace('{count}', completed.length));
+                    registerUndoSnapshot(t['undo.labels.clearCompleted'], beforeTasks);
+                    utils.notify(t['messages.clearCompleted.success'].replace('{count}', completed.length), 'success', { undo: true });
                 } catch (e) {
                     console.error('清除已完成任务失败:', e);
                     if (!handleStorageOperationError(e, 'messages.clearCompleted.error')) throw e;
@@ -3217,12 +3819,14 @@
             closeMenu();
             if (completed.length === 0) return utils.notify(t['messages.archive.none'], 'warning');
             utils.confirm(t['actions.archiveCompleted'], t['messages.archive.confirm'].replace('{count}', completed.length), async () => {
+                const beforeTasks = captureUndoSnapshot();
                 const archivedAt = new Date().toISOString();
                 const archivedTasks = completed.map(task => ({ ...task, archived: true, archivedAt }));
                 try {
                     await dbActions.updateTasks(archivedTasks);
                     await refreshTasks();
-                    utils.notify(t['messages.archive.success'].replace('{count}', completed.length));
+                    registerUndoSnapshot(t['undo.labels.archiveCompleted'], beforeTasks);
+                    utils.notify(t['messages.archive.success'].replace('{count}', completed.length), 'success', { undo: true });
                 } catch (error) {
                     console.error('归档已完成任务失败:', error);
                     if (!handleStorageOperationError(error, 'messages.archive.error')) throw error;
@@ -3234,6 +3838,7 @@
             const task = getTaskById(id);
             if (!task) return;
             const t = state.translations[state.currentLanguage];
+            const beforeTasks = captureUndoSnapshot();
             const wasArchived = !!task.archived;
             const updatedTask = {
                 ...task,
@@ -3244,10 +3849,30 @@
                 await dbActions.updateTask(updatedTask);
                 Object.assign(task, { archived: updatedTask.archived, archivedAt: updatedTask.archivedAt });
                 renderTaskList();
-                utils.notify(updatedTask.archived ? t['messages.archive.taskArchived'] : t['messages.archive.taskRestored']);
+                registerUndoSnapshot(t['undo.labels.archive'], beforeTasks);
+                utils.notify(updatedTask.archived ? t['messages.archive.taskArchived'] : t['messages.archive.taskRestored'], 'success', { undo: true });
             } catch (error) {
                 console.error('更新归档状态失败:', error);
                 handleStorageOperationError(error, 'messages.archive.error');
+            }
+        }
+        async function toggleTaskFocus(id) {
+            if (!ensureStorageAvailable()) return;
+            const task = getTaskById(id);
+            if (!task || task.archived) return;
+            const t = state.translations[state.currentLanguage];
+            const beforeTasks = captureUndoSnapshot();
+            const wasInFocus = isTaskInTodayPlan(task);
+            const updatedTask = { ...task, focusDate: wasInFocus ? null : getTodayPlanDateKey() };
+            try {
+                await dbActions.updateTask(updatedTask);
+                Object.assign(task, { focusDate: updatedTask.focusDate });
+                renderTaskList();
+                registerUndoSnapshot(t['undo.labels.focus'], beforeTasks);
+                utils.notify(wasInFocus ? t['focus.removed'] : t['focus.added'], 'success', { undo: true });
+            } catch (error) {
+                console.error('更新今日计划失败:', error);
+                handleStorageOperationError(error, 'messages.task.updateError');
             }
         }
         async function snoozeTaskReminder(id) {
@@ -3255,6 +3880,7 @@
             const task = getTaskById(id);
             if (!task || !shouldShowReminderIcon(task)) return;
             const t = state.translations[state.currentLanguage];
+            const beforeTasks = captureUndoSnapshot();
             const snoozedUntilAt = new Date(Date.now() + CONFIG.NOTIFICATIONS.SNOOZE_MINUTES * 60000).toISOString();
             const updatedTask = { ...task, snoozedUntil: snoozedUntilAt };
             try {
@@ -3262,7 +3888,8 @@
                 task.snoozedUntil = snoozedUntilAt;
                 clearTaskNotificationDeliveryState(task.id);
                 renderTaskList();
-                utils.notify(t['messages.task.snoozed'].replace('{minutes}', CONFIG.NOTIFICATIONS.SNOOZE_MINUTES));
+                registerUndoSnapshot(t['undo.labels.snooze'], beforeTasks);
+                utils.notify(t['messages.task.snoozed'].replace('{minutes}', CONFIG.NOTIFICATIONS.SNOOZE_MINUTES), 'success', { undo: true });
             } catch (error) {
                 console.error('稍后提醒失败:', error);
                 handleStorageOperationError(error);
@@ -3585,6 +4212,9 @@
                 return;
             }
             syncViewSwitcher();
+            renderSavedViews();
+            syncFocusModeUI();
+            syncBatchModeUI();
             renderProjectFilterOptions();
             updateFilterCounts();
             if (state.tasks.length === 0) {
@@ -3598,7 +4228,7 @@
                 return;
             }
             if (visibleTasks.length === 0) {
-                renderEmptyTaskList(getEmptyMatchHTML(t));
+                renderEmptyTaskList(state.focusMode ? getEmptyFocusHTML(t) : getEmptyMatchHTML(t));
                 return;
             }
             clearEmptyTaskList();
@@ -3621,6 +4251,7 @@
             return utils.sortTasks(state.tasks.filter(isTaskVisible));
         }
         function isTaskVisible(task) {
+            if (state.focusMode && !isTaskInTodayPlan(task)) return false;
             if (!matchesTaskProject(task)) return false;
             if (!matchesTaskSearch(task)) return false;
             if (hasSearchStatusFilter()) return shouldShowTaskForStatusSearch(task);
@@ -4371,6 +5002,7 @@
             renderTaskStatus(el, task, statusObj, timeLeft);
             renderTaskActionTitles(el, task, t);
             renderTaskDragHandle(el);
+            renderTaskSelectionControl(el, task);
             syncTaskAccessibility(el, task);
             markDecorativeIcons(el);
         }
@@ -4524,6 +5156,7 @@
             return (Date.now() - last.getTime()) / 60000 < repeat;
         }
         function renderTaskActionTitles(el, task, t) {
+            renderTaskFocusButton(el.querySelector('[data-action="focus"]'), task, t);
             const toggleButton = el.querySelector('[data-action="toggle"]');
             renderTaskToggleButton(toggleButton, task.completed);
             if (toggleButton) toggleButton.hidden = !!task.archived;
@@ -4536,6 +5169,16 @@
             setButtonLabel(editButton, t['task.actions.edit']);
             setButtonLabel(el.querySelector('[data-action="delete"]'), t['task.actions.delete']);
             syncTaskActionPendingState(el, task.id);
+        }
+        function renderTaskFocusButton(button, task, t) {
+            if (!button) return;
+            button.hidden = !!task.archived;
+            if (task.archived) return;
+            const inFocus = isTaskInTodayPlan(task);
+            button.classList.toggle(CONFIG.UI.CLASSES.ACTIVE, inFocus);
+            const iconUse = button.querySelector('use');
+            if (iconUse) iconUse.setAttribute('href', inFocus ? '#icon-check' : '#icon-target');
+            setButtonLabel(button, inFocus ? t['task.actions.removeFocus'] : t['task.actions.addFocus']);
         }
         function syncTaskAccessibility(el, task) {
             el.setAttribute('role', 'article');
@@ -4582,7 +5225,7 @@
         }
         function syncTaskActionPendingState(el, taskId) {
             const pending = isAnyTaskActionPending(taskId);
-            el.querySelectorAll('[data-action="toggle"], [data-action="snooze"], [data-action="skip-repeat"], [data-action="archive"]').forEach(button => {
+            el.querySelectorAll('[data-action="focus"], [data-action="toggle"], [data-action="snooze"], [data-action="skip-repeat"], [data-action="archive"]').forEach(button => {
                 button.disabled = pending;
                 button.setAttribute('aria-busy', String(pending));
             });
@@ -4596,6 +5239,30 @@
             el.setAttribute('draggable', 'true');
             el.classList.add('draggable-item');
             el.prepend(createDragHandle(el.querySelector('.task-name')?.textContent || ''));
+        }
+        function renderTaskSelectionControl(el, task) {
+            const existing = el.querySelector('.task-selection');
+            if (!state.batchMode) {
+                if (existing) existing.remove();
+                return;
+            }
+            const selected = state.selectedTaskIds.has(task.id);
+            let label = existing;
+            if (!label) {
+                label = document.createElement('label');
+                label.className = 'task-selection';
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'task-select-checkbox';
+                label.appendChild(checkbox);
+                const dragHandle = el.querySelector('.drag-handle');
+                if (dragHandle) dragHandle.after(label);
+                else el.prepend(label);
+            }
+            const checkbox = label.querySelector('.task-select-checkbox');
+            checkbox.checked = selected;
+            checkbox.dataset.taskId = String(task.id);
+            checkbox.setAttribute('aria-label', utils.translate('batch.selectTask').replace('{taskName}', task.name));
         }
         function createDragHandle(taskName) {
             const handle = document.createElement('button');
@@ -5187,7 +5854,7 @@
                 let id;
                 return (...args) => { clearTimeout(id); id = setTimeout(() => func(...args), delay); };
             },
-            notify: (msg, type = 'success') => {
+            notify: (msg, type = 'success', options = {}) => {
                 if (state.notificationHideTimer) {
                     clearTimeout(state.notificationHideTimer);
                     state.notificationHideTimer = null;
@@ -5195,10 +5862,16 @@
                 DOM.notification.text.textContent = msg;
                 DOM.notification.el.className = `notification ${type} show`;
                 DOM.notification.el.setAttribute('role', (type === 'error' || type === 'warning') ? 'alert' : 'status');
+                const showUndo = options.undo === true && Boolean(state.undoAction);
+                if (DOM.notification.undoBtn) {
+                    DOM.notification.undoBtn.hidden = !showUndo;
+                    DOM.notification.undoBtn.textContent = utils.translate('undo.action');
+                }
                 state.notificationHideTimer = setTimeout(() => {
                     DOM.notification.el.classList.remove(CONFIG.UI.CLASSES.SHOW);
+                    if (DOM.notification.undoBtn) DOM.notification.undoBtn.hidden = true;
                     state.notificationHideTimer = null;
-                }, 3000);
+                }, showUndo ? 6500 : 3000);
             },
             announce: (msg) => {
                 if (!DOM.srStatus) return;
@@ -5596,10 +6269,17 @@
             if (handleCalendarDetailClick(e)) return;
             if (handleCalendarAddClick(e)) return;
             if (handleCalendarTaskClick(e)) return;
+            if (handleTaskSelectionClick(e)) return;
             if (handleSubtaskCheckboxClick(e)) return;
             if (handleSubtaskRowClick(e)) return;
             if (handleSubtaskSummaryClick(e)) return;
             handleTaskActionClick(e);
+        }
+        function handleTaskSelectionClick(e) {
+            if (!e.target.classList.contains('task-select-checkbox')) return false;
+            e.stopPropagation();
+            toggleBatchTaskSelection(Number(e.target.dataset.taskId), e.target.checked);
+            return true;
         }
         function handleStatsShortcutClick(e) {
             const button = e.target.closest('[data-stats-filter]');
@@ -5731,17 +6411,18 @@
                 case 'snooze': return snoozeTaskReminder(taskId);
                 case 'skip-repeat': return skipRepeatOccurrence(taskId);
                 case 'archive': return toggleTaskArchive(taskId);
+                case 'focus': return toggleTaskFocus(taskId);
                 default: return Promise.resolve();
             }
         }
         function isGuardedTaskAction(action) {
-            return ['toggle', 'snooze', 'skip-repeat', 'archive'].includes(action);
+            return ['toggle', 'snooze', 'skip-repeat', 'archive', 'focus'].includes(action);
         }
         function getTaskActionKey(taskId, action) {
             return `${taskId}:${action}`;
         }
         function isAnyTaskActionPending(taskId) {
-            return ['toggle', 'snooze', 'skip-repeat', 'archive'].some(action => state.pendingTaskActions.has(getTaskActionKey(taskId, action)));
+            return ['toggle', 'snooze', 'skip-repeat', 'archive', 'focus'].some(action => state.pendingTaskActions.has(getTaskActionKey(taskId, action)));
         }
         function setTaskActionPending(taskId, pending) {
             const el = document.querySelector(`.task-item[data-task-id="${taskId}"]`);
@@ -5912,7 +6593,7 @@
             }
         }
         function canReorderTasks() {
-            return state.viewMode === 'list' && state.sort === 'manual' && !state.searchQuery;
+            return state.viewMode === 'list' && state.sort === 'manual' && !state.searchQuery && !state.batchMode && !state.focusMode;
         }
         function preventCancelableEvent(e) {
             if (e.cancelable) e.preventDefault();
@@ -6080,6 +6761,9 @@
         function getEmptyMatchHTML(t) {
             return `<div class="empty-state"><svg class="icon icon-lg icon-fill" aria-hidden="true" focusable="false"><use href="#icon-empty-search"></use></svg><h2>${t['empty.noMatches.title']}</h2><p>${t['empty.noMatches.description']}</p></div>`
         }
+        function getEmptyFocusHTML(t) {
+            return `<div class="empty-state"><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#icon-target"></use></svg><h2>${t['focus.emptyTitle']}</h2><p>${t['focus.emptyDescription']}</p></div>`;
+        }
         function handleVisibilityChange() {
             refreshTaskTimers();
             if (!state.progressInterval) startProgressTimer();
@@ -6147,7 +6831,7 @@
                 schema: {
                     version: CONFIG.BACKUP.FILE_VERSION,
                     storage,
-                    includes: ['tasks', 'subtasks', 'projects', 'tags', 'localDueDates', 'exactDueInstants', 'reminders', 'repeatRules', 'completionDates', 'archiveState']
+                    includes: ['tasks', 'subtasks', 'projects', 'tags', 'localDueDates', 'exactDueInstants', 'reminders', 'repeatRules', 'completionDates', 'archiveState', 'todayPlan']
                 },
                 versionNotes,
                 tasks
@@ -6216,6 +6900,7 @@
                     const preview = buildImportPreview(importedTasks, rawTasks);
                     utils.confirm(t['messages.import.previewTitle'], createImportPreviewContent(preview), async () => {
                         try {
+                            const beforeTasks = captureUndoSnapshot();
                             const importOptions = getImportOptions();
                             const preparedImport = importOptions.merge
                                 ? prepareImportedTasksForMerge(importedTasks, importOptions.conflictActions)
@@ -6224,7 +6909,8 @@
                             else await dbActions.replaceAllTasks(preparedImport.tasks);
                             clearNotificationDeliveryState();
                             await refreshTasks();
-                            utils.notify(t[importOptions.merge ? 'messages.import.successMerged' : 'messages.import.success'].replace('{count}', preparedImport.tasks.length));
+                            registerUndoSnapshot(t['undo.labels.import'], beforeTasks);
+                            utils.notify(t[importOptions.merge ? 'messages.import.successMerged' : 'messages.import.success'].replace('{count}', preparedImport.tasks.length), 'success', { undo: true });
                         } catch (err) {
                             console.error('导入任务失败:', err);
                             if (!handleStorageOperationError(err, 'messages.import.readError')) throw err;
@@ -6557,6 +7243,7 @@
                 completedAt: normalizeStoredDate(task.completedAt),
                 archived: normalizeBoolean(task.archived),
                 archivedAt: normalizeStoredDate(task.archivedAt),
+                focusDate: normalizeFocusDate(task.focusDate),
                 createdAt: normalizeStoredDate(task.createdAt) || new Date().toISOString(),
                 order: Number.isFinite(Number(task.order)) ? Number(task.order) : (index + 1) * CONFIG.DEFAULTS.ORDER_STEP
             };

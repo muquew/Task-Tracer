@@ -33,6 +33,82 @@
     "submit": "Add",
     "hint": "Enter a natural date, time, #tag, and /project."
   },
+  "savedViews": {
+    "label": "Smart Views",
+    "empty": "Save frequent search and filter combinations",
+    "saveCurrent": "Save Current View",
+    "saveCurrentTitle": "Save the current search, filters, and view",
+    "saveTitle": "Save Smart View",
+    "nameLabel": "View name",
+    "namePlaceholder": "For example: Study this week",
+    "defaultName": "Smart View {index}",
+    "nameFromSearch": "Search: {query}",
+    "saved": "Smart view saved",
+    "deleted": "Smart view deleted: {name}",
+    "applied": "Smart view opened: {name}",
+    "applyLabel": "Open smart view: {name}",
+    "deleteLabel": "Delete smart view: {name}"
+  },
+  "focus": {
+    "menu": "Today Plan",
+    "menuTitle": "Open today plan",
+    "title": "Today Plan",
+    "summary": "{completed}/{total} tasks completed",
+    "exit": "Exit Focus",
+    "added": "Added to today plan",
+    "removed": "Removed from today plan",
+    "emptyTitle": "Today plan is empty",
+    "emptyDescription": "Add tasks to today plan from task cards or batch actions."
+  },
+  "batch": {
+    "menu": "Batch Actions",
+    "menuTitle": "Enter batch action mode",
+    "selected": "{count} task(s) selected",
+    "selectVisible": "Select Visible",
+    "clearSelection": "Clear Selection",
+    "addToFocus": "Add Today",
+    "complete": "Complete",
+    "archive": "Archive",
+    "delete": "Delete",
+    "exit": "Exit",
+    "selectTask": "Select task: {taskName}",
+    "noneSelected": "Select tasks first",
+    "nothingToComplete": "The selected tasks have nothing to complete",
+    "confirmDelete": "Permanently delete {count} selected task(s)?",
+    "error": "Batch action failed. Please try again",
+    "success": {
+      "focus": "{count} task(s) added to today plan",
+      "complete": "{count} task(s) marked complete",
+      "archive": "{count} task(s) archived",
+      "delete": "{count} task(s) deleted"
+    },
+    "undo": {
+      "focus": "batch add to today plan",
+      "complete": "batch complete",
+      "archive": "batch archive",
+      "delete": "batch delete"
+    }
+  },
+  "undo": {
+    "menu": "Undo Last Action",
+    "menuTitle": "Undo the most recent task action",
+    "action": "Undo",
+    "restored": "Undone: {action}",
+    "error": "Undo failed. Please try again",
+    "labels": {
+      "add": "add task",
+      "edit": "edit task",
+      "delete": "delete task",
+      "complete": "update completion",
+      "skipRepeat": "skip repeat",
+      "clearCompleted": "clear completed",
+      "archiveCompleted": "archive completed",
+      "archive": "update archive state",
+      "focus": "update today plan",
+      "snooze": "snooze reminder",
+      "import": "import tasks"
+    }
+  },
   "commandPalette": {
     "title": "Command Palette",
     "close": "Close command palette",
@@ -45,15 +121,20 @@
       "tasks": "Tasks",
       "views": "Views",
       "data": "Data",
-      "projects": "Projects"
+      "projects": "Projects",
+      "savedViews": "Smart Views"
     },
     "commands": {
       "newTask": "New task",
       "quickAdd": "Focus quick add",
       "search": "Search tasks",
+      "focusMode": "Open today plan",
+      "batchMode": "Enter batch actions",
+      "undo": "Undo last action",
       "export": "Export tasks",
       "backup": "Back up now",
       "project": "Switch project: {project}",
+      "savedView": "Open smart view: {name}",
       "view": {
         "list": "Switch to list view",
         "calendar": "Switch to calendar view",
@@ -232,6 +313,8 @@
       "markIncomplete": "Mark as incomplete",
       "snooze": "Remind again in 10 minutes",
       "skipRepeat": "Skip this occurrence",
+      "addFocus": "Add to today plan",
+      "removeFocus": "Remove from today plan",
       "archive": "Archive task",
       "restoreArchive": "Restore from archive",
       "edit": "Edit task",
@@ -419,7 +502,7 @@
       "daysAgo": "backed up {days} days ago"
     },
     "versionNotes": {
-      "schema": "Backup 2.2 includes local due dates, exact reminder instants, tasks, subtasks, projects, tags, advanced repeat rules, completion dates, and archive state.",
+      "schema": "Backup 2.3 includes local due dates, exact reminder instants, tasks, subtasks, projects, tags, advanced repeat rules, completion dates, archive state, and today plan.",
       "compatibility": "The importer reads the tasks array; older export files remain importable.",
       "emergency": "This file was created from an in-memory snapshot in protected storage-unavailable mode. Restore browser storage and import it as soon as practical."
     }

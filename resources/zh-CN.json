@@ -33,6 +33,82 @@
     "submit": "添加",
     "hint": "可输入自然日期、时间、#标签 和 /项目。"
   },
+  "savedViews": {
+    "label": "智能视图",
+    "empty": "保存常用搜索和筛选组合",
+    "saveCurrent": "保存当前视图",
+    "saveCurrentTitle": "保存当前搜索、筛选和视图",
+    "saveTitle": "保存智能视图",
+    "nameLabel": "视图名称",
+    "namePlaceholder": "例如：本周学习任务",
+    "defaultName": "智能视图 {index}",
+    "nameFromSearch": "搜索：{query}",
+    "saved": "智能视图已保存",
+    "deleted": "已删除智能视图：{name}",
+    "applied": "已打开智能视图：{name}",
+    "applyLabel": "打开智能视图：{name}",
+    "deleteLabel": "删除智能视图：{name}"
+  },
+  "focus": {
+    "menu": "今日计划",
+    "menuTitle": "打开今日计划",
+    "title": "今日计划",
+    "summary": "{completed}/{total} 个任务已完成",
+    "exit": "退出专注",
+    "added": "已加入今日计划",
+    "removed": "已移出今日计划",
+    "emptyTitle": "今日计划为空",
+    "emptyDescription": "从任务卡片或批量操作中把任务加入今日计划。"
+  },
+  "batch": {
+    "menu": "批量操作",
+    "menuTitle": "进入批量操作",
+    "selected": "已选择 {count} 个任务",
+    "selectVisible": "选择当前",
+    "clearSelection": "清空选择",
+    "addToFocus": "加入今日",
+    "complete": "标记完成",
+    "archive": "归档",
+    "delete": "删除",
+    "exit": "退出",
+    "selectTask": "选择任务：{taskName}",
+    "noneSelected": "请先选择任务",
+    "nothingToComplete": "所选任务没有可标记完成的项目",
+    "confirmDelete": "确定永久删除 {count} 个选中任务吗？",
+    "error": "批量操作失败，请重试",
+    "success": {
+      "focus": "{count} 个任务已加入今日计划",
+      "complete": "{count} 个任务已标记完成",
+      "archive": "{count} 个任务已归档",
+      "delete": "{count} 个任务已删除"
+    },
+    "undo": {
+      "focus": "批量加入今日计划",
+      "complete": "批量完成",
+      "archive": "批量归档",
+      "delete": "批量删除"
+    }
+  },
+  "undo": {
+    "menu": "撤销上一步",
+    "menuTitle": "撤销最近一次任务操作",
+    "action": "撤销",
+    "restored": "已撤销：{action}",
+    "error": "撤销失败，请重试",
+    "labels": {
+      "add": "新增任务",
+      "edit": "编辑任务",
+      "delete": "删除任务",
+      "complete": "更新完成状态",
+      "skipRepeat": "跳过重复任务",
+      "clearCompleted": "清除已完成",
+      "archiveCompleted": "归档已完成",
+      "archive": "更新归档状态",
+      "focus": "更新今日计划",
+      "snooze": "稍后提醒",
+      "import": "导入任务"
+    }
+  },
   "commandPalette": {
     "title": "命令面板",
     "close": "关闭命令面板",
@@ -45,15 +121,20 @@
       "tasks": "任务",
       "views": "视图",
       "data": "数据",
-      "projects": "项目"
+      "projects": "项目",
+      "savedViews": "智能视图"
     },
     "commands": {
       "newTask": "新建任务",
       "quickAdd": "聚焦快速添加",
       "search": "搜索任务",
+      "focusMode": "打开今日计划",
+      "batchMode": "进入批量操作",
+      "undo": "撤销上一步",
       "export": "导出任务",
       "backup": "立即备份",
       "project": "切换项目：{project}",
+      "savedView": "打开智能视图：{name}",
       "view": {
         "list": "切换到列表视图",
         "calendar": "切换到日历视图",
@@ -232,6 +313,8 @@
       "markIncomplete": "标记为未完成",
       "snooze": "10 分钟后再提醒",
       "skipRepeat": "跳过本次重复",
+      "addFocus": "加入今日计划",
+      "removeFocus": "移出今日计划",
       "archive": "归档任务",
       "restoreArchive": "从归档恢复",
       "edit": "编辑任务",
@@ -419,7 +502,7 @@
       "daysAgo": "{days} 天前备份"
     },
     "versionNotes": {
-      "schema": "2.2 备份包含本地截止日期、真实提醒时间、任务、子任务、项目、标签、高级重复规则、完成时间和归档状态。",
+      "schema": "2.3 备份包含本地截止日期、真实提醒时间、任务、子任务、项目、标签、高级重复规则、完成时间、归档状态和今日计划。",
       "compatibility": "导入器会读取 tasks 数组；旧版导出文件仍可导入。",
       "emergency": "此文件来自存储不可用保护模式下的内存快照，请尽快修复浏览器存储后导入恢复。"
     }

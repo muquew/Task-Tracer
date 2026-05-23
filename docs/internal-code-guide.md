@@ -188,9 +188,12 @@
 - `bindFormEvents()`: 表单联动。
 - `bindSearchEvents()`: 搜索、项目视图和清除完成任务入口。
 - `bindViewEvents()`: 主视图切换入口。
+- `bindSavedViewEvents()`: 保存智能视图条的保存、打开和删除入口。
+- `bindFocusModeEvents()`: 今日计划专注模式退出入口。
+- `bindBatchModeEvents()`: 批量选择和批量任务操作入口。
 - `setViewMode(viewMode)`: 切换列表、日历、时间线或统计视图。
 - `syncViewSwitcher()`: 同步视图按钮选中态。
-- `bindNotificationEvents()`: 通知按钮。
+- `bindNotificationEvents()`: 通知按钮和通知条撤销按钮。
 - `bindMenuEvents()`: 主菜单、语言子菜单、导入、导出、备份和归档入口。
 - `bindTaskListEvents()`: 任务列表委托点击。
 - `bindSubtaskInputEvents()`: 子任务输入。
@@ -221,12 +224,19 @@
 - `toggleTaskComplete(id)`: 切换任务完成状态。
 - `shouldCreateNextRepeatTask(task)`: 判断完成后是否需要创建下一期重复任务。
 - `createNextRepeatTask(task)`: 克隆当前任务并推进截止日期，生成下一期。
+- `createNextRepeatTaskWithUsedIds(task, usedIds)`: 批量完成重复任务时复用 ID 集合生成下一期。
 - `resetRepeatedSubtasks(subtasks)`: 复制子任务并重置完成状态。
 - `calculateNextRepeatDueDate(iso, rule)`: 根据重复规则计算下一期截止时间。
 - `addMonthsClamped(date, months)`: 月重复时按月份天数夹取日期。
 - `handleClearCompleted()`: 批量清除已完成任务。
 - `handleArchiveCompleted()`: 批量归档未归档的已完成任务。
 - `toggleTaskArchive(id)`: 单任务归档和从归档恢复。
+- `toggleTaskFocus(id)`: 将单任务加入或移出今日计划。
+- `enterFocusMode()` / `exitFocusMode()`: 进入或退出今日计划专注模式。
+- `setBatchMode(enabled)`: 打开或关闭批量操作模式。
+- `runBatchTaskUpdate(action)`: 批量加入今日计划、完成、归档或删除。
+- `buildBatchCompleteTasks(tasks, completedAt)`: 批量完成时生成待写入任务，并为重复任务创建下一期。
+- `captureUndoSnapshot()` / `registerUndoSnapshot(label, beforeTasks)` / `performUndo()`: 捕获任务快照、登记撤销动作并恢复最近一次任务写入前状态。
 - `normalizeTaskProject(value)`: 规范化项目名。
 - `parseTagsInput(value)`: 将逗号分隔的标签输入转换为数组。
 - `normalizeTaskTags(tags)`: 去空、去 `#`、去重并规范化标签。
@@ -245,7 +255,7 @@
 - `createUniqueNumericId(usedIds)`: 生成唯一数字 ID。
 - `normalizeUniqueNumericId(value, usedIds)`: 保留合法唯一 ID，否则生成新 ID。
 - `createUniqueSubtaskId(subtasks)`: 新增草稿子任务时生成 ID。
-- `normalizeTaskRecords(tasks)`: 读取历史数据时修复任务字段、完成/归档布尔值、提醒字段和子任务 ID。
+- `normalizeTaskRecords(tasks)`: 读取历史数据时修复任务字段、完成/归档布尔值、提醒字段、今日计划日期和子任务 ID。
 - `normalizeSubtasksForTask(subtasks)`: 单任务内子任务 ID 去重，并修复子任务完成状态布尔值。
 - `normalizeBoolean(value, defaultValue = false)`: 兼容旧数据里的布尔字符串和 0/1 数值。
 - `handleAddSubtaskInput()`: 添加草稿子任务。
@@ -284,6 +294,11 @@
 - `isTaskVisible(task)`: 判断任务是否匹配当前筛选。
 - `matchesTaskSearch(task)`: 搜索匹配。
 - `matchesTaskProject(task)`: 项目视图匹配。
+- `normalizeSavedViews(rawViews)`: 读取并限制保存的智能视图配置。
+- `saveSmartView(name)`: 将当前搜索、筛选、排序和视图保存为智能视图。
+- `renderSavedViews()`: 渲染保存的智能视图条。
+- `applySavedView(id)`: 恢复保存的搜索、项目、筛选、排序和视图状态。
+- `deleteSavedView(id)`: 删除保存的智能视图并持久化。
 - `renderProjectFilterOptions()`: 根据任务项目生成项目下拉选项。
 - `renderGroupedTaskList(tasks)`: 全部项目智能视图下按项目分组渲染。
 - `renderCalendarView(tasks)`: 渲染月份日历视图。
@@ -308,14 +323,17 @@
 - `renderTaskStatus(el, task, statusObj, timeLeft)`: 状态文字。
 - `renderReminderIcon(el, task)`: 提醒图标。
 - `renderTaskActionTitles(el, task, t)`: 操作按钮标签。
+- `renderTaskFocusButton(button, task, t)`: 今日计划按钮状态。
 - `renderTaskToggleButton(button, completed)`: 完成/恢复图标切换。
 - `renderTaskSnoozeButton(button, task, t)`: 根据提醒状态显示稍后提醒按钮。
 - `renderTaskArchiveButton(button, task, t)`: 根据完成/归档状态显示归档或恢复按钮。
 - `renderTaskDragHandle(el)`: 手动排序手柄。
+- `renderTaskSelectionControl(el, task)`: 批量模式下的任务选择框。
 - `renderSubtaskList(el, task)`: 卡片内子任务列表。
 - `renderSubtaskPreview()`: 弹窗内草稿子任务列表。
 - `getEmptyStateHTML(t)`: 无任务空状态。
 - `getEmptyMatchHTML(t)`: 搜索/筛选无结果空状态。
+- `getEmptyFocusHTML(t)`: 今日计划为空时的空状态。
 
 ### 弹窗
 
@@ -327,8 +345,8 @@
 - `syncReminderRepeatControl()`: 根据截止日期和提醒设置启用或禁用重复提醒。
 - `syncRepeatControls()`: 根据截止日期和重复类型启用或禁用重复任务控件。
 - `openCommandPalette()` / `closeCommandPalette()`: 打开或关闭命令面板，并处理焦点恢复。
-- `renderCommandPalette()` / `getCommandPaletteItems()`: 根据当前任务、视图和项目状态生成命令候选项。
-- `executeCommandPaletteItem(index)`: 执行当前命令，覆盖新建任务、快速添加、搜索、视图切换、导出、备份和项目切换。
+- `renderCommandPalette()` / `getCommandPaletteItems()`: 根据当前任务、视图、项目、智能视图、今日计划、批量模式和撤销状态生成命令候选项。
+- `executeCommandPaletteItem(index)`: 执行当前命令，覆盖新建任务、快速添加、搜索、视图切换、智能视图、今日计划、批量操作、撤销、导出、备份和项目切换。
 - `closeDialog()`: 关闭并清理弹窗。
 - `resetDialogToFormMode()`: 从确认模式恢复表单模式。
 - `utils.confirm(title, msg, onConfirm)`: 复用任务弹窗显示确认流程。
@@ -348,7 +366,7 @@
 - `dbActions.writeTaskTransaction(write, abortMessage)`: 统一写事务。
 - `utils.dbOp(storeName, mode, callback)`: IndexedDB 单操作封装。
 - `utils.debounce(func, delay)`: 防抖。
-- `utils.notify(msg, type)`: 页面 toast。
+- `utils.notify(msg, type, options)`: 页面 toast，可显示撤销动作按钮。
 - `utils.applyTheme(theme)`: 应用主题并同步 manifest/theme-color。
 - `utils.toggleTheme()`: 主题切换动画。
 - `utils.formatDateInputValue(date)`: `YYYY-MM-DD`。
@@ -376,7 +394,7 @@
 - `handleTaskListClick(e)`: 任务列表点击委托入口。
 - `handleCalendarActionClick(e)`: 日历月份导航入口。
 - `handleCalendarTaskClick(e)`: 日历任务点击后打开编辑。
-- `runTaskAction(action, taskId)`: 执行完成、稍后提醒、归档/恢复归档、编辑、删除。
+- `runTaskAction(action, taskId)`: 执行加入今日计划、完成、稍后提醒、归档/恢复归档、编辑、删除。
 - `getTaskIdFromElement(el)`: 从 DOM 追溯任务 ID。
 
 ### 拖拽与排序

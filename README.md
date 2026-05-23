@@ -28,21 +28,25 @@ It fits study plans, personal operations, solo projects, recurring reviews, dead
 | Need | Task Tracer supports |
 | --- | --- |
 | Capture tasks quickly | Full task form, quick add parsing, due date/time, no-date tasks, subtasks, projects, and tags. |
-| Organize a growing list | Project grouping, multi-tag labeling, scoped filters, smart search, archived history, and manual order. |
+| Organize a growing list | Project grouping, multi-tag labeling, scoped filters, smart search, saved smart views, archived history, and manual order. |
 | Plan by time | List, calendar, timeline, live countdowns, status chips, progress bars, and timezone-stable dates. |
+| Execute today's work | Add tasks to Today Plan, enter a focused execution mode, and remove tasks from the plan without changing the task itself. |
+| Work in batches | Select visible tasks and complete, archive, delete, or add them to Today Plan together. |
 | Handle routines | Daily, weekly, selected weekdays, monthly, last-day-of-month, and custom interval recurrence. |
 | Stay aware | Browser reminders, reminder offsets, repeat reminders, snooze, missed-reminder notice, and clear delivery limits. |
 | Review progress | Completion rate, active overdue rate, archived count, today's completions, streak, and recent trend. |
-| Protect data | Export, import preview, merge/replace conflict handling, versioned backups, backup health, and emergency backup when storage is blocked. |
+| Protect data | Undo recent task changes, export, import preview, merge/replace conflict handling, versioned backups, backup health, and emergency backup when storage is blocked. |
 | Use it comfortably | Responsive layout, light/dark themes, reduced-motion support, keyboard navigation, screen-reader labels, and Chinese/English UI. |
 
 ## Everyday Workflow
 
 1. Add a task from the full dialog, or type a compact quick-add entry.
-2. Work from the list view for completion, edit, snooze, archive, delete, subtasks, and manual ordering.
-3. Switch to calendar or timeline when the date distribution matters more than list order.
-4. Use statistics to review active workload, completion behavior, archived history, and recent momentum.
-5. Export or back up before changing browsers, clearing site data, or testing imported files.
+2. Save frequent search and filter combinations as smart views when a list becomes part of your routine.
+3. Work from the list view for completion, edit, snooze, archive, delete, subtasks, batch actions, and manual ordering.
+4. Add selected tasks to Today Plan and switch into focus mode when it is time to execute.
+5. Switch to calendar or timeline when the date distribution matters more than list order.
+6. Use statistics to review active workload, completion behavior, archived history, and recent momentum.
+7. Export or back up before changing browsers, clearing site data, or testing imported files.
 
 ## Quick Add
 
@@ -54,7 +58,7 @@ tomorrow 20:00 Review English #study /Personal
 
 This creates a task named `Review English`, due tomorrow at 20:00, tagged `study`, and assigned to the `Personal` project.
 
-The command palette opens with `Ctrl/Cmd + P`. It can start a new task, focus quick add, switch views, run export/backup, search, and jump to projects.
+The command palette opens with `Ctrl/Cmd + P`. It can start a new task, focus quick add, switch views, open saved views, enter Today Plan, enter batch actions, undo the last task change, run export/backup, search, and jump to projects.
 
 ## Projects, Tags, and Search
 
@@ -83,6 +87,16 @@ Search matches task names, descriptions, projects, tags, and subtask text. Scope
 
 For multi-word project or tag names, search by a distinctive part of the name.
 
+Saved smart views store the current search, project, status filter, sort mode, and view. They are useful for repeatable scopes such as `project:Work status:overdue`, `tag:study due:week`, or a project-specific calendar view.
+
+## Today Plan, Batch Actions, and Undo
+
+Today Plan is a lightweight execution layer. Adding a task to Today Plan does not change its project, tags, due date, archive state, or recurrence rule; it only marks the task as part of today's working set.
+
+Batch Actions mode adds checkboxes to the visible list. Selected tasks can be added to Today Plan, marked complete, archived, or deleted together.
+
+Recent task-writing actions can be undone from the toast action, the app menu, or `Ctrl/Cmd + Z` when focus is not inside a text field. Undo restores the task snapshot from before the operation.
+
 ## Views
 
 | View | Best for |
@@ -106,7 +120,7 @@ Browser reminders are not a guaranteed system alarm service. Delivery can depend
 | --- | --- |
 | Export | Download the current task set as JSON for transfer, manual inspection, or storage. |
 | Import | Preview a JSON file before writing it. The preview shows task count, repeated IDs, duplicate names, current-data impact, and same-name conflict choices. |
-| Backup | Download a versioned snapshot with schema notes, local dates, reminder timing, repeat rules, completion dates, and archive state. |
+| Backup | Download a versioned snapshot with schema notes, local dates, reminder timing, repeat rules, completion dates, archive state, and Today Plan markers. |
 
 Import can replace the current task set or merge into it. Merge mode can keep both tasks, skip imported duplicates, or replace local same-name tasks.
 
