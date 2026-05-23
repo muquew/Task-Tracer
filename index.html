@@ -570,6 +570,19 @@
         .confirm-option span { display: block; color: var(--text-tertiary); font-size: 12px; font-weight: 650; margin-top: 3px; }
         .confirm-list-title { color: var(--text-main); font-size: 13px; font-weight: 800; }
         .confirm-list { margin: 0; padding-left: 18px; color: var(--text-secondary); font-size: 13px; }
+        .restore-checklist { display: grid; gap: 10px; padding: 12px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-alt); }
+        .restore-checklist-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .restore-checklist-title { color: var(--text-main); font-size: 13px; font-weight: 840; }
+        .restore-checklist-summary { color: var(--text-tertiary); font-size: 12px; font-weight: 720; text-align: right; }
+        .restore-check-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+        .restore-check-item { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 9px; align-items: start; padding: 9px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface); }
+        .restore-check-status { width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 13px; font-weight: 900; line-height: 1; }
+        .restore-check-copy { min-width: 0; display: grid; gap: 2px; }
+        .restore-check-copy strong { color: var(--text-main); font-size: 13px; font-weight: 820; line-height: 1.3; }
+        .restore-check-copy span { color: var(--text-secondary); font-size: 12px; font-weight: 620; line-height: 1.45; }
+        .restore-check-item.pass .restore-check-status { color: var(--color-success-dark); background: var(--color-success-light); }
+        .restore-check-item.warn .restore-check-status { color: var(--color-warning-text); background: var(--color-warning-light); }
+        .restore-check-item.risk .restore-check-status { color: var(--color-danger-text); background: var(--color-danger-light); }
         .import-conflict-list { display: grid; gap: 8px; }
         .import-conflict-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(150px, 190px); gap: 10px; align-items: center; padding: 11px 12px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface-alt); }
         .import-conflict-name { min-width: 0; font-size: 13px; font-weight: 760; color: var(--text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -767,6 +780,8 @@
             .form-actions .btn { width: 100%; padding-inline: 10px; }
             .repeat-custom-row { grid-template-columns: 1fr; gap: 6px; }
             .repeat-custom-row label { margin-bottom: 0; }
+            .restore-checklist-header { align-items: flex-start; flex-direction: column; }
+            .restore-checklist-summary { text-align: left; }
             .import-conflict-row { grid-template-columns: 1fr; }
             header { flex-direction: row; align-items: flex-start; }
             .header-actions { display: flex; flex-direction: row; gap: 3px; align-items: flex-end; }
@@ -1291,7 +1306,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.68'
+                VERSION: '3.69'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1344,7 +1359,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.17'
+                RESOURCE_VERSION: '4.18'
             },
             BACKUP: {
                 FILE_VERSION: '2.3',
@@ -6908,7 +6923,7 @@
                         return;
                     }
                     const importedTasks = normalizeImportedTasks(rawTasks);
-                    const preview = buildImportPreview(importedTasks, rawTasks);
+                    const preview = buildImportPreview(importedTasks, rawTasks, data);
                     utils.confirm(t['messages.import.previewTitle'], createImportPreviewContent(preview), async () => {
                         try {
                             const beforeTasks = captureUndoSnapshot();
@@ -6941,7 +6956,7 @@
             if (data && typeof data === 'object' && Array.isArray(data.tasks)) return data.tasks;
             return null;
         }
-        function buildImportPreview(importedTasks, rawTasks = []) {
+        function buildImportPreview(importedTasks, rawTasks = [], sourceData = null) {
             const importNameOccurrences = getImportNameOccurrences(importedTasks);
             const fileDuplicateNames = getImportFileDuplicateNames(importNameOccurrences);
             const existingByName = getExistingTasksByName();
@@ -6958,8 +6973,22 @@
                 fileDuplicateNames,
                 duplicateIds,
                 existingDuplicateNames,
-                conflicts
+                conflicts,
+                sourceInfo: getImportSourceInfo(sourceData)
             };
+        }
+        function getImportSourceInfo(sourceData) {
+            const objectSource = sourceData && typeof sourceData === 'object' && !Array.isArray(sourceData) ? sourceData : null;
+            const schema = objectSource && objectSource.schema && typeof objectSource.schema === 'object' ? objectSource.schema : null;
+            const type = objectSource && objectSource.type !== undefined ? String(objectSource.type) : (Array.isArray(sourceData) ? 'legacy-array' : '');
+            const version = objectSource && objectSource.version !== undefined && objectSource.version !== null ? String(objectSource.version) : '';
+            const schemaVersion = schema && schema.version !== undefined && schema.version !== null ? String(schema.version) : '';
+            const storage = schema && schema.storage !== undefined && schema.storage !== null ? String(schema.storage) : '';
+            const app = objectSource && objectSource.app !== undefined && objectSource.app !== null ? String(objectSource.app) : '';
+            const includes = Array.isArray(schema?.includes) ? schema.includes.map(item => String(item)) : [];
+            const hasTasksEnvelope = Boolean(objectSource && Array.isArray(objectSource.tasks));
+            const hasTemplate = Boolean(hasTasksEnvelope && app === 'Task Tracer' && schema && (version || schemaVersion));
+            return { type, version, schemaVersion, storage, app, includes, hasTemplate, hasTasksEnvelope };
         }
         function getImportNameOccurrences(importedTasks) {
             const names = new Map();
@@ -7010,6 +7039,7 @@
             const t = state.translations[state.currentLanguage];
             const wrapper = document.createElement('div');
             wrapper.className = 'confirm-details';
+            wrapper.appendChild(createImportRestoreChecklist(preview, t));
             wrapper.append(
                 createConfirmRow(t['messages.import.previewTasks'], String(preview.importCount)),
                 createConfirmRow(t['messages.import.previewReplace'], t['messages.import.previewReplaceValue']
@@ -7027,6 +7057,106 @@
             wrapper.appendChild(createImportConflictControls(preview, t));
             syncImportConflictControls(wrapper);
             return wrapper;
+        }
+        function createImportRestoreChecklist(preview, t) {
+            const section = document.createElement('section');
+            section.className = 'restore-checklist';
+            section.setAttribute('aria-label', t['messages.import.restoreCheckTitle']);
+            const items = getImportRestoreCheckItems(preview, t);
+            const warningCount = items.filter(item => item.status !== 'pass').length;
+            const header = document.createElement('div');
+            header.className = 'restore-checklist-header';
+            const title = document.createElement('strong');
+            title.className = 'restore-checklist-title';
+            title.textContent = t['messages.import.restoreCheckTitle'];
+            const summary = document.createElement('span');
+            summary.className = 'restore-checklist-summary';
+            summary.textContent = t['messages.import.restoreCheckSummary']
+                .replace('{warnings}', warningCount)
+                .replace('{total}', items.length);
+            const list = document.createElement('ul');
+            list.className = 'restore-check-items';
+            items.forEach(item => list.appendChild(createRestoreCheckItem(item, t)));
+            header.append(title, summary);
+            section.append(header, list);
+            return section;
+        }
+        function getImportRestoreCheckItems(preview, t) {
+            const sourceInfo = preview.sourceInfo || getImportSourceInfo(null);
+            const sourceVersion = sourceInfo.schemaVersion || sourceInfo.version || t['messages.import.restoreUnknownVersion'];
+            const sourceTypeLabel = getImportSourceTypeLabel(sourceInfo.type, t);
+            const schemaMatches = sourceInfo.schemaVersion === CONFIG.BACKUP.FILE_VERSION || sourceInfo.version === CONFIG.BACKUP.FILE_VERSION;
+            return [
+                {
+                    status: sourceInfo.hasTemplate ? 'pass' : 'warn',
+                    label: t['messages.import.restoreSourceLabel'],
+                    detail: sourceInfo.hasTemplate
+                        ? t['messages.import.restoreSourceTemplate'].replace('{type}', sourceTypeLabel).replace('{version}', sourceVersion)
+                        : t['messages.import.restoreSourceLegacy']
+                },
+                {
+                    status: schemaMatches ? 'pass' : 'warn',
+                    label: t['messages.import.restoreSchemaLabel'],
+                    detail: schemaMatches
+                        ? t['messages.import.restoreSchemaOk'].replace('{version}', sourceVersion)
+                        : t['messages.import.restoreSchemaWarn'].replace('{version}', sourceVersion).replace('{current}', CONFIG.BACKUP.FILE_VERSION)
+                },
+                {
+                    status: preview.importCount > 0 ? 'pass' : 'risk',
+                    label: t['messages.import.restoreTasksLabel'],
+                    detail: preview.importCount > 0
+                        ? t['messages.import.restoreTasksOk'].replace('{count}', preview.importCount)
+                        : t['messages.import.restoreTasksEmpty']
+                },
+                {
+                    status: preview.duplicateIds.length === 0 ? 'pass' : 'warn',
+                    label: t['messages.import.restoreIdsLabel'],
+                    detail: preview.duplicateIds.length === 0
+                        ? t['messages.import.restoreIdsOk']
+                        : t['messages.import.restoreIdsWarn'].replace('{count}', preview.duplicateIds.length)
+                },
+                {
+                    status: preview.existingDuplicateNames.length === 0 ? 'pass' : 'warn',
+                    label: t['messages.import.restoreNamesLabel'],
+                    detail: preview.existingDuplicateNames.length === 0
+                        ? t['messages.import.restoreNamesOk']
+                        : t['messages.import.restoreNamesWarn'].replace('{count}', preview.existingDuplicateNames.length)
+                },
+                {
+                    status: preview.currentCount === 0 ? 'pass' : 'risk',
+                    label: t['messages.import.restoreImpactLabel'],
+                    detail: preview.currentCount === 0
+                        ? t['messages.import.restoreImpactOk']
+                        : t['messages.import.restoreImpactWarn'].replace('{count}', preview.currentCount)
+                }
+            ];
+        }
+        function getImportSourceTypeLabel(type, t) {
+            const key = `messages.import.sourceType.${type || 'unknown'}`;
+            return t[key] || t['messages.import.sourceType.unknown'].replace('{type}', type || '-');
+        }
+        function createRestoreCheckItem(item, t) {
+            const li = document.createElement('li');
+            li.className = `restore-check-item ${item.status}`;
+            const status = document.createElement('span');
+            status.className = 'restore-check-status';
+            status.textContent = item.status === 'pass' ? '✓' : '!';
+            status.setAttribute('role', 'img');
+            status.setAttribute('aria-label', getRestoreCheckStatusLabel(item.status, t));
+            const copy = document.createElement('span');
+            copy.className = 'restore-check-copy';
+            const label = document.createElement('strong');
+            label.textContent = item.label;
+            const detail = document.createElement('span');
+            detail.textContent = item.detail;
+            copy.append(label, detail);
+            li.append(status, copy);
+            return li;
+        }
+        function getRestoreCheckStatusLabel(status, t) {
+            if (status === 'pass') return t['messages.import.restoreStatusPass'];
+            if (status === 'risk') return t['messages.import.restoreStatusRisk'];
+            return t['messages.import.restoreStatusWarn'];
         }
         function createImportConflictControls(preview, t) {
             const section = document.createElement('div');

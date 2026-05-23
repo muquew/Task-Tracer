@@ -1901,11 +1901,22 @@ def exercise_export_backup(page: Page) -> dict[str, Any]:
 
 
 def exercise_import_preview_details(page: Page, existing_name: str) -> None:
-    payload = [
-        {"id": 91001, "name": existing_name, "createdAt": "2025-05-10T00:00:00.000Z"},
-        {"id": 91002, "name": "Preview Duplicate", "createdAt": "2025-05-10T00:00:00.000Z"},
-        {"id": 91002, "name": "Preview Duplicate", "createdAt": "2025-05-10T00:00:00.000Z"},
-    ]
+    payload = {
+        "version": "2.3",
+        "type": "backup",
+        "date": "2025-05-10T00:00:00.000Z",
+        "app": "Task Tracer",
+        "schema": {
+            "version": "2.3",
+            "storage": "indexeddb",
+            "includes": ["tasks", "subtasks", "projects", "tags", "todayPlan"],
+        },
+        "tasks": [
+            {"id": 91001, "name": existing_name, "createdAt": "2025-05-10T00:00:00.000Z"},
+            {"id": 91002, "name": "Preview Duplicate", "createdAt": "2025-05-10T00:00:00.000Z"},
+            {"id": 91002, "name": "Preview Duplicate", "createdAt": "2025-05-10T00:00:00.000Z"},
+        ],
+    }
 
     with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
         json.dump(payload, temp_file)
@@ -1920,6 +1931,11 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         expect(page.locator("#modalTitle")).to_have_text(re.compile("导入预览|Import Preview", re.I))
         expect(page.locator("#mergeImportMode")).not_to_be_checked()
         expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("合并到当前任务|Merge into current tasks", re.I))
+        expect(page.locator(".restore-checklist")).to_be_visible()
+        expect(page.locator(".restore-check-item")).to_have_count(6)
+        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("恢复检查清单|Restore Checklist", re.I))
+        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("备份文件|backup file", re.I))
+        expect(page.locator("#confirm-message-text")).to_contain_text("2.3")
         rows = page.locator(".confirm-row").all_inner_texts()
         if not any(re.search(r"(文件内重复|Repeated inside file)[\s\S]*1", row, re.I) for row in rows):
             raise AssertionError(f"Import preview did not report file duplicates: {rows}")
