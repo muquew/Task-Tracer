@@ -342,6 +342,7 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             "Known missing backup state must not re-read config": ("async function updateBackupHealthStatus(knownLastBackupAt)", "arguments.length > 0", "normalizeStoredDate(await dbActions.getConfig(CONFIG.STORAGE.LAST_BACKUP_AT))"),
             "Storage fallback events must avoid duplicate theme handlers after normal init": ("eventsBound: false", "if (!state.eventsBound) DOM.themeBtn.addEventListener('click', utils.toggleTheme);", "state.eventsBound = true;"),
             "Storage fallback must preserve the active language after normal init": ("function getStorageUnavailableLanguage()", "if (state.eventsBound && isSupportedLanguage(state.currentLanguage)) return state.currentLanguage;", "state.currentLanguage = getStorageUnavailableLanguage();"),
+            "Runtime storage fallback must preserve an emergency export snapshot": ("storageFallbackTasks: []", "function captureStorageFallbackSnapshot()", "state.storageFallbackTasks = cloneTaskSnapshot(state.tasks);", "function downloadEmergencyBackup()", "memory-fallback"),
         }
         for message, fragments in state_consistency_checks.items():
             if not contains_in_order(index_html, fragments):
@@ -381,6 +382,10 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("View tabs must use a roving keyboard tablist model")
     if 'id="taskList" role="tabpanel"' not in index_html:
         errors.append("Task view content must be exposed as the selected tab panel")
+    if re.search(r'id="taskList"[^>]*aria-live=', index_html):
+        errors.append("Task view content must not be a broad live region")
+    if "function announceTaskViewSummary()" not in index_html or "messages.view.summary" not in index_html:
+        errors.append("Task view changes must announce a concise summary through the screen-reader status region")
     if 'id="menu" role="menu"' not in index_html or "handleMenuKeydown" not in index_html:
         errors.append("Main app menu must expose menu semantics and keyboard navigation")
     if re.search(r"<label\b[^>]*for=['\"][^'\"]+['\"][^>]*>\s*</label>", index_html, re.DOTALL):
@@ -397,6 +402,10 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Confirmation dialogs must expose aria-describedby")
     if 'id="srStatus" class="sr-only" aria-live="polite" aria-atomic="true"' not in index_html:
         errors.append("Keyboard-only status updates must use a screen-reader live region")
+    if "formatControlAccessibleValue(getSelectAccessibleName(select), selectedOption?.textContent || '')" not in index_html:
+        errors.append("Custom select accessible labels must include the current selected value")
+    if "function getDropdownAccessibleName(btn)" not in index_html or "formatControlAccessibleValue(baseLabel, span.textContent)" not in index_html:
+        errors.append("Custom dropdown accessible labels must include their current selected value")
     if "handleTaskReorderKeydown" not in index_html or "task.actions.reorder" not in index_html:
         errors.append("Manual task ordering must support keyboard reordering")
     if "syncTaskAccessibility(el, task)" not in index_html or "role', 'article'" not in index_html:

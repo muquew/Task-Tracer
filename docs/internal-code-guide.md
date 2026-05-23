@@ -90,7 +90,7 @@
   - `notificationsEnabled`、`notifiedTasks`、`pendingNotificationKeys`: 通知投递状态。
   - `commandPaletteItems`、`commandPaletteActiveIndex`、`commandPaletteReturnFocus`: 命令面板候选项、当前选中项和关闭后的焦点恢复目标。
   - `currentLanguage`、`translations`、`dateTimeFormatters`: i18n 与本地化缓存。
-  - `storageAvailable`、`storageError`、`storageFailureEventsBound`: 本地存储可用性、失败原因和降级态事件绑定状态。
+  - `storageAvailable`、`storageError`、`storageFallbackTasks`、`storageFailureEventsBound`: 本地存储可用性、失败原因、降级态内存快照和降级态事件绑定状态。
 
 - `config` store 常用键:
   - `language`: 当前语言。
@@ -125,8 +125,9 @@
 - 导出由 `exportTasks()` 进入，下载当前任务 JSON，适合迁移、查看或手动保存。
 - 导入由 `importTasks(file)` 进入，会先构建预览，展示导入数量、文件内同名重复、重复任务 ID、与当前任务同名项和替换影响。默认确认后通过 `replaceAllTasks()` 全量替换当前任务；开启合并模式后会读取冲突策略，并通过 `mergeImportedTasks()` 合并、跳过或替换同名本地任务。
 - 备份由 `backupTasks()` 进入，下载带 `schema` 和 `versionNotes` 的版本化快照，并把时间写入 `lastBackupAt`。
+- 紧急备份由 `downloadEmergencyBackup()` 进入，仅在运行中存储故障且 `storageFallbackTasks` 仍有内存快照时开放；文件会标记 `type: emergency-backup` 和 `schema.storage: memory-fallback`，便于后续恢复时识别来源。
 - `scheduleBackupReminder()` 根据 `lastBackupAt` 和任务数量决定是否显示最近备份提醒。
-- `ensureStorageAvailable()` 是写入口保护层；当 IndexedDB 不可用时，新建、编辑、删除、完成、拖拽排序、导入、导出、备份、归档和通知开关都会被暂停。
+- `ensureStorageAvailable()` 是写入口保护层；当 IndexedDB 不可用时，新建、编辑、删除、完成、拖拽排序、导入、常规导出、常规备份、归档和通知开关都会被暂停，只有当前页面内存快照的紧急备份不经过 IndexedDB。
 
 ## 初始化流程
 
@@ -145,7 +146,7 @@
 11. `startProgressTimer()` 启动倒计时刷新。
 12. `scheduleBackupReminder()` 根据最近备份时间决定是否提示备份。
 
-如果 IndexedDB 被禁用、浏览器隐私模式阻止本地数据库，或写入探针失败，`initializeStorageOrFallback()` 会调用 `handleStorageUnavailable()` 进入保护模式：显示存储不可用横幅和任务区错误态，禁用任务写入口，只保留主题切换和重试检测。非存储阶段的初始化错误不会被包装成本地存储不可用。
+如果 IndexedDB 被禁用、浏览器隐私模式阻止本地数据库，或写入探针失败，`initializeStorageOrFallback()` 会调用 `handleStorageUnavailable()` 进入保护模式：显示存储不可用横幅和任务区错误态，禁用任务写入口，只保留主题切换、重试检测，以及在内存快照存在时可用的紧急备份。非存储阶段的初始化错误不会被包装成本地存储不可用。
 
 ## 主要函数清单
 
@@ -160,6 +161,7 @@
 - `renderStorageUnavailableState()`: 渲染存储不可用的任务区状态。
 - `syncStorageAvailabilityUI()`: 同步横幅、按钮禁用态和 `aria-disabled`。
 - `ensureStorageAvailable()`: 写操作统一守卫。
+- `captureStorageFallbackSnapshot()`: 在进入运行时存储故障保护模式前复制当前任务内存快照。
 - `safeGetStorageItem()`、`safeSetStorageItem()`、`safeRemoveStorageItem()`: 包装 `localStorage`/`sessionStorage`，避免隐私模式抛错导致启动中断。
 - `loadSettings()`: 恢复配置。
 - `restoreLanguageSetting()`: 恢复或解析首选语言。
@@ -405,7 +407,9 @@
 - `exportTasks()`: 导出任务 JSON。
 - `backupTasks()`: 下载版本化本地备份。
 - `downloadTaskData(mode)`: 导出和备份的统一下载入口。
-- `createTaskDataPayload(mode, date, tasks)`: 构建带版本说明的数据文件。
+- `downloadEmergencyBackup()`: 在运行时存储故障后下载当前内存快照。
+- `downloadJsonPayload(payload, filename)`: 执行 JSON 文件下载。
+- `createTaskDataPayload(mode, date, tasks, storage = 'indexeddb')`: 构建带版本说明的数据文件。
 - `createTaskDataFilename(mode, date)`: 生成导出或备份文件名。
 - `scheduleBackupReminder()`: 根据最近备份时间提示备份。
 - `importTasks(file)`: 读取 JSON、展示导入预览，并按替换模式或合并模式写入任务。

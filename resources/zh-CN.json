@@ -266,11 +266,16 @@
       "title": "本地存储不可用",
       "message": "当前浏览器阻止了本地数据库，任务无法读取或保存。请调整隐私设置后重试；存储恢复后可使用已有导出/备份文件恢复数据。",
       "emptyDescription": "应用已进入保护模式，所有会写入任务数据的操作都已暂停，避免产生无法保存的更改。",
+      "snapshotDescription": "应用已进入保护模式，任务写入已暂停。当前页面仍保留 {count} 个任务的内存快照，请先下载紧急备份。",
       "retry": "重试",
       "retrying": "正在重试...",
       "retryFailed": "本地存储仍不可用",
       "short": "本地存储不可用，已暂停任务操作",
-      "actionsDisabled": "本地存储不可用，任务操作已暂停"
+      "actionsDisabled": "本地存储不可用，任务操作已暂停",
+      "emergencyBackup": "紧急备份",
+      "emergencyBackupTitle": "下载当前内存快照",
+      "emergencyBackupSuccess": "已下载 {count} 个任务的紧急备份",
+      "noSnapshot": "没有可下载的任务快照"
     }
   },
   "status": {
@@ -353,6 +358,9 @@
       "first": "{taskName} 已经在第一位",
       "last": "{taskName} 已经在最后一位"
     },
+    "view": {
+      "summary": "{view}已更新，当前范围 {count} 个任务"
+    },
     "initDBError": "数据库初始化失败，请刷新页面重试"
   },
   "time": {
@@ -413,7 +421,8 @@
     },
     "versionNotes": {
       "schema": "2.2 备份包含本地截止日期、真实提醒时间、任务、子任务、项目、标签、高级重复规则、完成时间和归档状态。",
-      "compatibility": "导入器会读取 tasks 数组；旧版导出文件仍可导入。"
+      "compatibility": "导入器会读取 tasks 数组；旧版导出文件仍可导入。",
+      "emergency": "此文件来自存储不可用保护模式下的内存快照，请尽快修复浏览器存储后导入恢复。"
     }
   }
 }

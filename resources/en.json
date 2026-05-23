@@ -266,11 +266,16 @@
       "title": "Local storage is unavailable",
       "message": "This browser is blocking the local database, so tasks cannot be read or saved. Adjust privacy settings and retry; after storage is available again, restore data from an existing export or backup file.",
       "emptyDescription": "Task Tracer is in protected mode. All task-writing actions are paused to avoid changes that cannot be saved.",
+      "snapshotDescription": "Task Tracer is in protected mode and task writes are paused. This page still holds an in-memory snapshot of {count} task(s), so download an emergency backup first.",
       "retry": "Retry",
       "retrying": "Retrying...",
       "retryFailed": "Local storage is still unavailable",
       "short": "Local storage is unavailable; task actions are paused",
-      "actionsDisabled": "Local storage is unavailable, so task actions are paused"
+      "actionsDisabled": "Local storage is unavailable, so task actions are paused",
+      "emergencyBackup": "Emergency Backup",
+      "emergencyBackupTitle": "Download the current in-memory snapshot",
+      "emergencyBackupSuccess": "Emergency backup downloaded with {count} task(s)",
+      "noSnapshot": "No task snapshot is available to download"
     }
   },
   "status": {
@@ -353,6 +358,9 @@
       "first": "{taskName} is already first",
       "last": "{taskName} is already last"
     },
+    "view": {
+      "summary": "{view} updated, {count} task(s) in the current scope"
+    },
     "initDBError": "Failed to init Database, Please refresh the page and try again."
   },
   "time": {
@@ -413,7 +421,8 @@
     },
     "versionNotes": {
       "schema": "Backup 2.2 includes local due dates, exact reminder instants, tasks, subtasks, projects, tags, advanced repeat rules, completion dates, and archive state.",
-      "compatibility": "The importer reads the tasks array; older export files remain importable."
+      "compatibility": "The importer reads the tasks array; older export files remain importable.",
+      "emergency": "This file was created from an in-memory snapshot in protected storage-unavailable mode. Restore browser storage and import it as soon as practical."
     }
   }
 }

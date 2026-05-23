@@ -306,6 +306,25 @@ def assert_accessibility_baseline(page: Page, label: str) -> None:
             if (!normalize(html.lang)) issues.push('documentElement.lang is empty');
             if (!['ltr', 'rtl', 'auto'].includes(normalize(html.dir))) issues.push('documentElement.dir is invalid or empty');
 
+            const taskList = document.getElementById('taskList');
+            if (taskList?.hasAttribute('aria-live')) issues.push('#taskList must not be a broad live region');
+
+            document.querySelectorAll('.custom-select').forEach((wrapper) => {
+                if (isHidden(wrapper)) return;
+                const select = wrapper.querySelector('select');
+                const button = wrapper.querySelector('.custom-select-btn');
+                const selectedText = normalize(select?.options?.[select.selectedIndex]?.textContent || '');
+                const name = accessibleName(button);
+                if (selectedText && name && !name.includes(selectedText)) {
+                    issues.push(`${describe(button)} accessible name does not include selected value`);
+                }
+            });
+            const projectButton = document.getElementById('projectFilterBtn');
+            const currentProject = normalize(document.getElementById('currentProjectLabel')?.textContent || '');
+            if (projectButton && currentProject && !accessibleName(projectButton).includes(currentProject)) {
+                issues.push('#projectFilterBtn accessible name does not include selected project');
+            }
+
             document.querySelectorAll('[role="listbox"]').forEach((listbox) => {
                 if (!listbox.getAttribute('aria-labelledby') && !listbox.getAttribute('aria-label')) {
                     issues.push(`${describe(listbox)} listbox is not labelled`);
@@ -482,6 +501,7 @@ def exercise_keyboard_navigation_patterns(page: Page) -> None:
 def exercise_custom_select_escape_keeps_modal_open(page: Page) -> None:
     page.locator("#openModalBtn").click()
     expect(page.locator("#taskModal")).to_be_visible()
+    expect(page.locator("#reminderOffset-custom-button")).to_have_attribute("aria-label", re.compile("提醒设置.*15|Reminder.*15", re.I))
     page.locator("#reminderOffset-custom-button").click()
     page.wait_for_function(
         "() => document.querySelector('#reminderOffset')?.closest('.custom-select')?.classList.contains('open')"
@@ -882,6 +902,8 @@ def select_project(page: Page, value: str) -> None:
     expect(selected_option).to_have_class(
         re.compile(r"(^|\s)selected(\s|$)")
     )
+    selected_text = selected_option.locator("span").first.text_content() or ""
+    expect(project_btn).to_have_attribute("aria-label", re.compile(re.escape(selected_text.strip())))
 
 
 def select_sort(page: Page, value: str) -> None:
@@ -2308,6 +2330,45 @@ def assert_storage_unavailable_mode(browser: Browser, base_url: str) -> None:
         context.close()
 
 
+def assert_runtime_storage_fallback_preserves_snapshot(browser: Browser, base_url: str) -> None:
+    context = browser.new_context(accept_downloads=True)
+    page_errors: list[str] = []
+    page = context.new_page()
+    page.on("pageerror", lambda error: page_errors.append(str(error)))
+    task_name = f"Storage fallback snapshot {int(time.time())}"
+    try:
+        clear_app_data(page, base_url)
+        add_task(page, task_name, no_deadline=True)
+        page.evaluate(
+            """() => {
+                IDBDatabase.prototype.transaction = function () {
+                    throw new DOMException('transaction blocked by test', 'SecurityError');
+                };
+            }"""
+        )
+        page.locator("#openMenuBtn").click()
+        expect(page.locator("#storageUnavailableBanner")).to_be_visible()
+        expect(page.locator("#taskList .storage-empty-state")).to_contain_text(re.compile("1"))
+        expect(page.locator("#emergencyBackupBtn")).to_be_visible()
+        expect(page.locator("#openMenuBtn")).to_be_disabled()
+        assert_accessibility_baseline(page, "runtime storage fallback")
+        with page.expect_download() as download_info:
+            page.locator("#emergencyBackupBtn").click()
+        download = download_info.value
+        path = download.path()
+        if not path:
+            raise AssertionError("Emergency backup did not produce a readable download file")
+        payload = json.loads(Path(path).read_text(encoding="utf-8"))
+        if payload.get("type") != "emergency-backup" or payload.get("schema", {}).get("storage") != "memory-fallback":
+            raise AssertionError(f"Emergency backup metadata is incomplete: {payload}")
+        names = {task.get("name") for task in payload.get("tasks", [])}
+        if task_name not in names:
+            raise AssertionError(f"Emergency backup did not include the in-memory task snapshot: {payload}")
+        assert_no_page_errors(page_errors)
+    finally:
+        context.close()
+
+
 def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[str]) -> None:
     visual_page = context.new_page()
     visual_page.on("pageerror", lambda error: errors.append(str(error)))
@@ -2437,6 +2498,7 @@ def smoke(url: str) -> None:
 
         assert_pwa_resources(context, url)
         assert_storage_unavailable_mode(browser, url)
+        assert_runtime_storage_fallback_preserves_snapshot(browser, url)
         clear_app_data(page, url)
         assert_empty_task_list(page)
         assert_accessibility_baseline(page, "empty task list")

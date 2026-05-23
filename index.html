@@ -238,7 +238,7 @@
         .storage-warning-copy { min-width: 0; display: grid; gap: 3px; }
         .storage-warning-title { font-size: 14px; font-weight: 820; color: var(--text-main); }
         .storage-warning p { margin: 0; color: var(--text-secondary); font-size: 13px; line-height: 1.45; }
-        .storage-warning-actions { display: flex; justify-content: flex-end; }
+        .storage-warning-actions { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
         .storage-empty-state { border-style: solid; border-color: color-mix(in srgb, var(--color-warning) 34%, var(--border-base)); background: color-mix(in srgb, var(--color-warning) 8%, var(--bg-surface)); }
         .storage-empty-state .icon { color: var(--color-warning-text); opacity: 0.86; }
         .search-box { position: relative; display: flex; align-items: center; flex: 1; margin-bottom: 0; }
@@ -882,6 +882,7 @@
             <p data-i18n="storage.unavailable.message">当前浏览器阻止了本地数据库，任务无法读取或保存。请调整隐私设置后重试；存储恢复后可使用已有导出/备份文件恢复数据。</p>
         </div>
         <div class="storage-warning-actions">
+            <button class="btn btn-primary" id="emergencyBackupBtn" type="button" data-i18n="storage.unavailable.emergencyBackup" data-i18n-title="storage.unavailable.emergencyBackupTitle" title="下载当前内存快照" hidden>紧急备份</button>
             <button class="btn btn-secondary" id="retryStorageBtn" type="button" data-i18n="storage.unavailable.retry">重试</button>
         </div>
     </div>
@@ -961,7 +962,7 @@
             </div>
         </div>
         <div class="tasks-section">
-            <div id="taskList" role="tabpanel" aria-labelledby="viewTab-list" aria-live="polite">
+            <div id="taskList" role="tabpanel" aria-labelledby="viewTab-list">
                 <div class="loading-state" id="initial-loader">
                     <div class="spinner"></div>
                 </div>
@@ -1181,7 +1182,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.62'
+                VERSION: '3.63'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1233,7 +1234,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.11'
+                RESOURCE_VERSION: '4.12'
             },
             BACKUP: {
                 FILE_VERSION: '2.2',
@@ -1293,6 +1294,7 @@
             commandPaletteReturnFocus: null,
             storageAvailable: true,
             storageError: null,
+            storageFallbackTasks: [],
             storageFailureEventsBound: false,
             eventsBound: false
         };
@@ -1305,6 +1307,7 @@
             DOM.backToTopBtn = document.getElementById('backToTopBtn');
             DOM.storageUnavailableBanner = document.getElementById('storageUnavailableBanner');
             DOM.retryStorageBtn = document.getElementById('retryStorageBtn');
+            DOM.emergencyBackupBtn = document.getElementById('emergencyBackupBtn');
             DOM.clearCompletedBtn = document.getElementById('clearCompletedBtn');
             DOM.clearSearchBtn = document.getElementById('clearSearchBtn');
             DOM.notificationToggleBtn = document.getElementById('notificationToggleBtn');
@@ -1424,6 +1427,7 @@
             await verifyPersistentStorage();
             state.storageAvailable = true;
             state.storageError = null;
+            state.storageFallbackTasks = [];
         }
         async function verifyPersistentStorage() {
             const stamp = new Date().toISOString();
@@ -1443,6 +1447,7 @@
         function handleStorageUnavailable(error) {
             state.storageAvailable = false;
             state.storageError = error;
+            captureStorageFallbackSnapshot();
             state.tasks = [];
             state.notificationsEnabled = false;
             state.currentLanguage = getStorageUnavailableLanguage();
@@ -1472,6 +1477,7 @@
             state.storageFailureEventsBound = true;
             if (!state.eventsBound) DOM.themeBtn.addEventListener('click', utils.toggleTheme);
             DOM.retryStorageBtn.addEventListener('click', retryStorageAvailability);
+            if (DOM.emergencyBackupBtn) DOM.emergencyBackupBtn.addEventListener('click', downloadEmergencyBackup);
         }
         function handleBackgroundStorageFailure(error) {
             console.error('后台存储状态刷新失败:', error);
@@ -1499,7 +1505,9 @@
             syncDropdowns();
             removeInitialLoader();
             const title = utils.translate('storage.unavailable.title');
-            const description = utils.translate('storage.unavailable.emptyDescription');
+            const description = hasStorageFallbackSnapshot()
+                ? utils.translate('storage.unavailable.snapshotDescription').replace('{count}', state.storageFallbackTasks.length)
+                : utils.translate('storage.unavailable.emptyDescription');
             DOM.taskList.innerHTML = `<div class="empty-state storage-empty-state"><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#icon-backup"></use></svg><h2>${title}</h2><p>${description}</p></div>`;
         }
         function syncStorageAvailabilityUI() {
@@ -1509,6 +1517,11 @@
             if (DOM.retryStorageBtn) {
                 DOM.retryStorageBtn.disabled = false;
                 DOM.retryStorageBtn.textContent = utils.translate('storage.unavailable.retry');
+            }
+            if (DOM.emergencyBackupBtn) {
+                const canExportSnapshot = unavailable && hasStorageFallbackSnapshot();
+                DOM.emergencyBackupBtn.hidden = !canExportSnapshot;
+                DOM.emergencyBackupBtn.disabled = !canExportSnapshot;
             }
             const controls = [
                 DOM.openModalBtn,
@@ -1539,6 +1552,21 @@
             syncStorageAvailabilityUI();
             utils.notify(utils.translate('storage.unavailable.actionsDisabled'), 'warning');
             return false;
+        }
+        function captureStorageFallbackSnapshot() {
+            if (Array.isArray(state.tasks) && state.tasks.length > 0) {
+                state.storageFallbackTasks = cloneTaskSnapshot(state.tasks);
+            }
+        }
+        function hasStorageFallbackSnapshot() {
+            return Array.isArray(state.storageFallbackTasks) && state.storageFallbackTasks.length > 0;
+        }
+        function cloneTaskSnapshot(tasks) {
+            try {
+                return JSON.parse(JSON.stringify(Array.isArray(tasks) ? tasks : []));
+            } catch (error) {
+                return Array.isArray(tasks) ? tasks.map(task => ({ ...task })) : [];
+            }
         }
         async function loadSettings() {
             await restoreLanguageSetting();
@@ -1694,6 +1722,7 @@
             DOM.inputs.search.addEventListener('input', utils.debounce(() => {
                 state.searchQuery = normalizeSearchQuery(DOM.inputs.search.value);
                 renderTaskList();
+                announceTaskViewSummary();
             }, 300));
             DOM.clearSearchBtn.addEventListener('click', () => clearSearchInput());
             syncSearchClearButton();
@@ -1741,6 +1770,7 @@
             if (viewMode === 'calendar') syncCalendarMonthToVisibleTasks();
             syncViewSwitcher();
             renderTaskList();
+            announceTaskViewSummary();
         }
         function syncViewSwitcher() {
             DOM.viewSwitcher.querySelectorAll('.view-tab').forEach(tab => {
@@ -1950,6 +1980,7 @@
             state.projectFilter = value;
             renderTaskList();
             syncDropdowns();
+            announceTaskViewSummary();
         }
         function syncPageModalOpenState() {
             const open = isDialogOpen();
@@ -3605,7 +3636,14 @@
             state.searchQuery = '';
             syncSearchClearButton();
             renderTaskList();
+            announceTaskViewSummary();
             if (keepFocus) DOM.inputs.search.focus();
+        }
+        function announceTaskViewSummary() {
+            if (!state.storageAvailable) return;
+            const view = utils.translate(`views.${state.viewMode}`);
+            const count = state.viewMode === 'stats' ? getStatsScopeTasks().length : getVisibleTasks().length;
+            utils.announce(utils.translate('messages.view.summary').replace('{view}', view).replace('{count}', count));
         }
         function syncSearchClearButton() {
             DOM.clearSearchBtn.hidden = DOM.inputs.search.value.length === 0;
@@ -4730,7 +4768,7 @@
             const value = wrapper.querySelector('.custom-select-value');
             const selectedOption = select.options[select.selectedIndex] || select.options[0];
             button.disabled = select.disabled;
-            button.setAttribute('aria-label', getSelectAccessibleName(select));
+            button.setAttribute('aria-label', formatControlAccessibleValue(getSelectAccessibleName(select), selectedOption?.textContent || ''));
             if (value) value.textContent = selectedOption ? selectedOption.textContent : '';
             renderCustomSelectOptions(select);
         }
@@ -4765,6 +4803,13 @@
         function getSelectAccessibleName(select) {
             const label = select.id ? document.querySelector(`label[for="${CSS.escape(select.id)}"]`) : null;
             return select.getAttribute('aria-label') || label?.textContent?.trim() || select.name || 'Select';
+        }
+        function formatControlAccessibleValue(label, value) {
+            const cleanLabel = String(label || '').trim();
+            const cleanValue = String(value || '').trim();
+            if (!cleanValue) return cleanLabel;
+            if (!cleanLabel) return cleanValue;
+            return `${cleanLabel}: ${cleanValue}`;
         }
         function handleCustomSelectButtonClick(e) {
             e.preventDefault();
@@ -5423,6 +5468,7 @@
             state.projectFilter = option.dataset.project;
             renderTaskList();
             syncDropdowns({ focusTrigger: DOM.dropdowns.project.btn });
+            announceTaskViewSummary();
         }
         function handleFilterDropdownClick(e) {
             const option = e.target.closest('.dropdown-option');
@@ -5430,6 +5476,7 @@
             state.filter = option.dataset.filter;
             renderTaskList();
             syncDropdowns({ focusTrigger: DOM.dropdowns.filter.btn });
+            announceTaskViewSummary();
         }
         function handleSortDropdownClick(e) {
             const option = e.target.closest('.dropdown-option');
@@ -5437,6 +5484,7 @@
             state.sort = option.dataset.sort;
             renderTaskList();
             syncDropdowns({ focusTrigger: DOM.dropdowns.sort.btn });
+            announceTaskViewSummary();
         }
         function closeDropdownsOnOutsideClick(e) {
             if (!e.target.closest('.dropdown-container')) {
@@ -5492,7 +5540,12 @@
             if (span) {
                 const targetSpan = btn.querySelector('[id^="current"]');
                 if (targetSpan) targetSpan.textContent = span.textContent;
+                const baseLabel = getDropdownAccessibleName(btn);
+                if (baseLabel) btn.setAttribute('aria-label', formatControlAccessibleValue(baseLabel, span.textContent));
             }
+        }
+        function getDropdownAccessibleName(btn) {
+            return btn.dataset.i18nAriaLabel ? utils.translate(btn.dataset.i18nAriaLabel) : '';
         }
         function toggleMenu(menu, btn) {
             const opening = !isElementOpen(menu);
@@ -5538,6 +5591,7 @@
             syncViewSwitcher();
             renderTaskList();
             syncDropdowns({ focusTrigger: DOM.dropdowns.filter.btn });
+            announceTaskViewSummary();
             return true;
         }
         function handleCalendarActionClick(e) {
@@ -6026,13 +6080,7 @@
                 state.tasks = tasks;
                 const date = new Date().toISOString();
                 const payload = createTaskDataPayload(mode, date, tasks);
-                const blob = new Blob([JSON.stringify(payload, null, 2)], {type: 'application/json'});
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = createTaskDataFilename(mode, date);
-                document.body.appendChild(a); a.click(); document.body.removeChild(a);
-                URL.revokeObjectURL(url);
+                downloadJsonPayload(payload, createTaskDataFilename(mode, date));
                 if (mode === 'backup') {
                     await dbActions.setConfig(CONFIG.STORAGE.LAST_BACKUP_AT, date);
                     await updateBackupHealthStatus(date);
@@ -6044,7 +6092,35 @@
                 handleStorageOperationError(err, mode === 'backup' ? 'messages.backup.error' : 'messages.export.error');
             }
         }
-        function createTaskDataPayload(mode, date, tasks) {
+        function downloadEmergencyBackup() {
+            const tasks = cloneTaskSnapshot(state.storageFallbackTasks);
+            if (tasks.length === 0) {
+                syncStorageAvailabilityUI();
+                utils.notify(utils.translate('storage.unavailable.noSnapshot'), 'warning');
+                return;
+            }
+            const date = new Date().toISOString();
+            const payload = createTaskDataPayload('emergency-backup', date, tasks, 'memory-fallback');
+            downloadJsonPayload(payload, createTaskDataFilename('emergency-backup', date));
+            utils.notify(utils.translate('storage.unavailable.emergencyBackupSuccess').replace('{count}', tasks.length));
+        }
+        function downloadJsonPayload(payload, filename) {
+            const blob = new Blob([JSON.stringify(payload, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        function createTaskDataPayload(mode, date, tasks, storage = 'indexeddb') {
+            const versionNotes = [
+                utils.translate('backup.versionNotes.schema'),
+                utils.translate('backup.versionNotes.compatibility')
+            ];
+            if (mode === 'emergency-backup') versionNotes.push(utils.translate('backup.versionNotes.emergency'));
             return {
                 version: CONFIG.BACKUP.FILE_VERSION,
                 type: mode,
@@ -6052,13 +6128,10 @@
                 app: 'Task Tracer',
                 schema: {
                     version: CONFIG.BACKUP.FILE_VERSION,
-                    storage: 'indexeddb',
+                    storage,
                     includes: ['tasks', 'subtasks', 'projects', 'tags', 'localDueDates', 'exactDueInstants', 'reminders', 'repeatRules', 'completionDates', 'archiveState']
                 },
-                versionNotes: [
-                    utils.translate('backup.versionNotes.schema'),
-                    utils.translate('backup.versionNotes.compatibility')
-                ],
+                versionNotes,
                 tasks
             };
         }
