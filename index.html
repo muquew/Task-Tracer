@@ -1326,7 +1326,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.74'
+                VERSION: '3.75'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -2757,8 +2757,16 @@
         }
         function handleMainMenuClick(e) {
             e.stopPropagation();
+            if (!canOpenMainMenu()) {
+                closeMenu();
+                ensureStorageAvailable();
+                return;
+            }
             updateBackupHealthStatus().catch(handleBackgroundStorageFailure);
             toggleMenu(DOM.menu.container, DOM.menu.btn);
+        }
+        function canOpenMainMenu() {
+            return state.storageAvailable && DOM.menu.btn && !DOM.menu.btn.disabled;
         }
         function closeMainMenuOnOutsideClick(e) {
             if (isElementOpen(DOM.menu.container) && !DOM.menu.container.contains(e.target) && !DOM.menu.btn.contains(e.target)) {
@@ -2903,10 +2911,19 @@
             const key = e.key.toLowerCase();
             if (meta && key === 'p') { e.preventDefault(); openCommandPalette(); return; }
             if (meta && key === 'z' && !e.shiftKey && !isEditableElement(document.activeElement)) { e.preventDefault(); performUndo(); return; }
-            if (meta && key === 'k') { e.preventDefault(); DOM.inputs.search.focus(); }
-            if (meta && key === 'i') { e.preventDefault(); if (DOM.modal.style.display !== 'flex') openModal(); }
-            if (meta && key === 'm') { e.preventDefault(); toggleMenu(DOM.menu.container, DOM.menu.btn); }
-            if (e.altKey && key === 't') { e.preventDefault(); scrollToTop(); }
+            if (meta && key === 'k') { e.preventDefault(); DOM.inputs.search.focus(); return; }
+            if (meta && key === 'i') { e.preventDefault(); if (DOM.modal.style.display !== 'flex') openModal(); return; }
+            if (meta && key === 'm') {
+                e.preventDefault();
+                if (!canOpenMainMenu()) {
+                    closeMenu();
+                    ensureStorageAvailable();
+                    return;
+                }
+                toggleMenu(DOM.menu.container, DOM.menu.btn);
+                return;
+            }
+            if (e.altKey && key === 't') { e.preventDefault(); scrollToTop(); return; }
             if (e.key === 'Escape') {
                 if (document.activeElement === DOM.inputs.search && DOM.inputs.search.value) clearSearchInput();
                 else if (document.activeElement === DOM.inputs.search) DOM.inputs.search.blur();
