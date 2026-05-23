@@ -172,7 +172,6 @@
         }
         h1 { font-size: 21px; font-weight: 760; line-height: 1.1; }
         html[lang="en"] h1 { font-size: 23px; }
-        .subtitle { color: var(--text-secondary); font-size: 13px; opacity: 1; line-height: 1.35; margin-top: 3px; }
         .header-actions { display: flex; gap: 8px; align-items: center; }
         .icon-btn, .lang-btn { background: var(--bg-surface-alt); color: var(--color-primary); border: 1px solid var(--border-light); padding: 7px 10px; border-radius: var(--radius-control); cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 4px; transition: background 0.2s, transform 0.2s, box-shadow 0.2s, border-color 0.2s, color 0.2s; }
         .icon-btn { font-weight: 700; min-width: 36px; min-height: 36px; justify-content: center; }
@@ -661,7 +660,6 @@
             body { padding: 10px; background-size: 34px 34px, 34px 34px, auto; }
             header { padding: 12px; }
             h1 { font-size: 19px; }
-            .subtitle { font-size: 12px; }
             .menu { top: 54px; right: 0; }
             .quick-add-bar { grid-template-columns: minmax(0, 1fr) auto; padding: 8px; gap: 8px; }
             .quick-add-submit { min-width: 68px; padding-inline: 12px; }
@@ -816,7 +814,6 @@
     <header>
         <div>
             <h1 data-i18n="app.title">任务跟踪器</h1>
-            <p class="subtitle" data-i18n="app.subtitle">基于截止日期的任务管理</p>
         </div>
         <div class="header-actions">
             <button class="icon-btn" id="themeToggleBtn" aria-label="切换主题" data-i18n-aria-label="tooltips.theme" data-i18n-title="tooltips.theme" title="切换主题">
@@ -1182,7 +1179,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.63'
+                VERSION: '3.64'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1234,7 +1231,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.12'
+                RESOURCE_VERSION: '4.13'
             },
             BACKUP: {
                 FILE_VERSION: '2.2',
@@ -2915,8 +2912,14 @@
                         changed = true;
                     }
                 });
-                if (typeof normalizedTask.archived !== 'boolean') {
-                    normalizedTask.archived = false;
+                const completed = normalizeBoolean(normalizedTask.completed);
+                if (normalizedTask.completed !== completed) {
+                    normalizedTask.completed = completed;
+                    changed = true;
+                }
+                const archived = normalizeBoolean(normalizedTask.archived);
+                if (normalizedTask.archived !== archived) {
+                    normalizedTask.archived = archived;
                     changed = true;
                 }
                 if (normalizedTask.archivedAt && !normalizeStoredDate(normalizedTask.archivedAt)) {
@@ -3017,10 +3020,25 @@
             const normalizedSubtasks = subtasks.map(subtask => {
                 const sourceSubtask = subtask && typeof subtask === 'object' ? subtask : {};
                 const normalizedId = normalizeUniqueNumericId(sourceSubtask.id, usedIds);
+                const completed = normalizeBoolean(sourceSubtask.completed);
                 if (sourceSubtask.id !== normalizedId) changed = true;
-                return { ...sourceSubtask, id: normalizedId };
+                if (sourceSubtask.completed !== completed) changed = true;
+                return { ...sourceSubtask, id: normalizedId, completed };
             });
             return { subtasks: normalizedSubtasks, changed };
+        }
+        function normalizeBoolean(value, defaultValue = false) {
+            if (typeof value === 'boolean') return value;
+            if (typeof value === 'string') {
+                const normalized = value.trim().toLowerCase();
+                if (normalized === 'true') return true;
+                if (normalized === 'false') return false;
+            }
+            if (typeof value === 'number') {
+                if (value === 1) return true;
+                if (value === 0) return false;
+            }
+            return defaultValue;
         }
         function editTask(id) {
             const task = getTaskById(id);
@@ -6528,16 +6546,16 @@
                 repeatType,
                 repeatInterval: normalizeTaskRepeatInterval(repeatType, task.repeatInterval),
                 repeatWeekdays: repeatType === 'weekly-days' ? (normalizeTaskRepeatWeekdays(task.repeatWeekdays).length ? normalizeTaskRepeatWeekdays(task.repeatWeekdays) : [1]) : [],
-                repeatPaused: task.repeatPaused === true,
+                repeatPaused: normalizeBoolean(task.repeatPaused),
                 repeatSourceId: Number.isFinite(Number(task.repeatSourceId)) ? Number(task.repeatSourceId) : null,
                 repeatCreatedFrom: Number.isFinite(Number(task.repeatCreatedFrom)) ? Number(task.repeatCreatedFrom) : null,
                 nextRepeatTaskId: Number.isFinite(Number(task.nextRepeatTaskId)) ? Number(task.nextRepeatTaskId) : null,
                 snoozedUntil: normalizeStoredDate(task.snoozedUntil),
                 lastReminderAt: normalizeStoredDate(task.lastReminderAt),
                 subtasks: normalizeImportedSubtasks(task.subtasks),
-                completed: typeof task.completed === 'boolean' ? task.completed : false,
+                completed: normalizeBoolean(task.completed),
                 completedAt: normalizeStoredDate(task.completedAt),
-                archived: typeof task.archived === 'boolean' ? task.archived : false,
+                archived: normalizeBoolean(task.archived),
                 archivedAt: normalizeStoredDate(task.archivedAt),
                 createdAt: normalizeStoredDate(task.createdAt) || new Date().toISOString(),
                 order: Number.isFinite(Number(task.order)) ? Number(task.order) : (index + 1) * CONFIG.DEFAULTS.ORDER_STEP
@@ -6551,7 +6569,7 @@
                 return {
                     id: normalizeUniqueNumericId(subtask.id, usedIds),
                     text: String(subtask.text || '').trim(),
-                    completed: !!subtask.completed
+                    completed: normalizeBoolean(subtask.completed)
                 };
             }).filter(subtask => subtask.text);
         }

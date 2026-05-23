@@ -179,6 +179,8 @@ def validate_translations(index_html: str, errors: list[str]) -> None:
         unknown_refs = sorted(translation_references(index_html) - base_keys)
         if unknown_refs:
             errors.append(f"Unknown i18n references in index.html: {unknown_refs[:12]}")
+        if "app.subtitle" in base_keys or 'data-i18n="app.subtitle"' in index_html:
+            errors.append("The header subtitle must remain removed; app.subtitle should not be used")
     except AssertionError as error:
         errors.append(str(error))
 
@@ -249,6 +251,8 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
             errors.append("Service worker must only delete Task Tracer caches during activation")
         if "networkFirst(e.request, './index.html')" not in sw_source:
             errors.append("App shell requests must use networkFirst with an index.html fallback")
+        if "if (networkResponse.ok)" not in sw_source or "getCachedFallback(request, fallbackUrl)" not in sw_source:
+            errors.append("Network-first requests must fall back to cache on non-OK HTTP responses")
         if "url.pathname.includes('/resources/')" not in sw_source:
             errors.append("Language resources must have an explicit service worker fetch strategy")
         if "cacheFirst(e.request)" not in sw_source:
@@ -328,6 +332,10 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             "Notification setting must persist before mutating in-memory state": ("await dbActions.setConfig(CONFIG.STORAGE.NOTIFICATIONS, enabled);", "state.notificationsEnabled = enabled"),
             "Language setting must roll back after persistence failure": ("state.currentLanguage = previousLanguage;", "initLanguage();"),
             "Single IndexedDB operations must resolve after transaction completion": ("tx.oncomplete = () => resolve(result);", "req.onsuccess = () => { result = req.result; };"),
+            "Historical completed fields must normalize to real booleans": ("function normalizeTaskRecords(tasks)", "const completed = normalizeBoolean(normalizedTask.completed);", "normalizedTask.completed = completed;", "function normalizeBoolean(value, defaultValue = false)"),
+            "Historical subtask completed fields must normalize to real booleans": ("function normalizeSubtasksForTask(subtasks)", "const completed = normalizeBoolean(sourceSubtask.completed);", "return { ...sourceSubtask, id: normalizedId, completed };"),
+            "Imported task boolean fields must normalize to real booleans": ("function normalizeImportedTask(rawTask, index, normalizeId)", "repeatPaused: normalizeBoolean(task.repeatPaused)", "completed: normalizeBoolean(task.completed)", "archived: normalizeBoolean(task.archived)"),
+            "Imported subtask completed fields must normalize to real booleans": ("function normalizeImportedSubtasks(rawSubtasks)", "completed: normalizeBoolean(subtask.completed)"),
             "Due dates must format and group by the task timezone": ("function getTaskDueDateKey(task)", "getInstantWallPartsInTimeZone(dueAt, getTaskDueTimeZone(task))", "function formatTaskDueDate(task)"),
             "Imported duplicate IDs must not produce ambiguous repeat links": ("const duplicateIds = new Set(getDuplicateImportIds(rawTasks));", "sanitizeAmbiguousImportedReferences", "if (duplicateIds.has(Number(sanitizedTask[key]))) sanitizedTask[key] = null;"),
             "Imported repeat links must only point to final imported tasks": ("function sanitizeDanglingTaskReferences(tasks)", "const ids = new Set(tasks.map(task => Number(task.id)).filter(Number.isFinite));", "sanitizedTask[key] = Number.isFinite(value) && ids.has(value) ? value : null;"),

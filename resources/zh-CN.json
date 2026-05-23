@@ -2,7 +2,6 @@
   "app": {
     "language": "简体中文",
     "title": "任务跟踪器",
-    "subtitle": "基于截止日期的任务管理",
     "toolbar": "任务工具栏"
   },
   "actions": {

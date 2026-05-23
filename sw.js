@@ -1,11 +1,11 @@
 const CACHE_PREFIX = 'task-tracer-';
-const CACHE_NAME = 'task-tracer-v3.63';
+const CACHE_NAME = 'task-tracer-v3.64';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './manifest.json',
-    './resources/en.json?v=4.12',
-    './resources/zh-CN.json?v=4.12',
+    './resources/en.json?v=4.13',
+    './resources/zh-CN.json?v=4.13',
     './fav/favicon-16x16.png',
     './fav/favicon-32x32.png',
     './fav/favicon.ico',
@@ -78,19 +78,29 @@ function isAppShellRequest(url) {
 async function networkFirst(request, fallbackUrl) {
     try {
         const networkResponse = await fetch(request);
-        cacheResponse(request, networkResponse).catch((error) => {
-            console.warn('[Service Worker] Cache update failed:', error);
-        });
+        if (networkResponse.ok) {
+            cacheResponse(request, networkResponse).catch((error) => {
+                console.warn('[Service Worker] Cache update failed:', error);
+            });
+            return networkResponse;
+        }
+        const fallbackResponse = await getCachedFallback(request, fallbackUrl);
+        if (fallbackResponse) return fallbackResponse;
         return networkResponse;
     } catch (error) {
-        const cachedResponse = await caches.match(request);
-        if (cachedResponse) return cachedResponse;
-        if (fallbackUrl) {
-            const fallbackResponse = await caches.match(fallbackUrl);
-            if (fallbackResponse) return fallbackResponse;
-        }
+        const fallbackResponse = await getCachedFallback(request, fallbackUrl);
+        if (fallbackResponse) return fallbackResponse;
         throw error;
     }
+}
+async function getCachedFallback(request, fallbackUrl) {
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) return cachedResponse;
+    if (fallbackUrl) {
+        const fallbackResponse = await caches.match(fallbackUrl);
+        if (fallbackResponse) return fallbackResponse;
+    }
+    return null;
 }
 async function cacheFirst(request) {
     const cachedResponse = await caches.match(request);

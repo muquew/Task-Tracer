@@ -2,7 +2,6 @@
   "app": {
     "language": "English",
     "title": "Task Tracker",
-    "subtitle": "Deadline-based Task Management",
     "toolbar": "Task toolbar"
   },
   "actions": {

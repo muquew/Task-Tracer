@@ -1984,11 +1984,13 @@ def exercise_import(page: Page, imported_name: str) -> None:
             "description": "Imported by Playwright smoke test.",
             "dueDate": None,
             "createdAt": "2025-05-10T00:00:00.000Z",
-            "completed": False,
+            "completed": "false",
+            "archived": "false",
+            "repeatPaused": "false",
             "order": 1000,
             "subtasks": [
-                {"id": 20001, "text": "Imported subtask A", "completed": False},
-                {"id": 20001, "text": "Imported subtask B", "completed": False},
+                {"id": 20001, "text": "Imported subtask A", "completed": "false"},
+                {"id": 20001, "text": "Imported subtask B", "completed": 0},
             ],
         }
     ]
@@ -2013,6 +2015,13 @@ def exercise_import(page: Page, imported_name: str) -> None:
         imported_task = task_locator(page, imported_name)
         expect(imported_task).to_have_count(1)
         expect(page.locator(".task-item")).to_have_count(1)
+        record = next((item for item in get_task_records(page) if item["name"] == imported_name), None)
+        if not record:
+            raise AssertionError("Imported task was not written to IndexedDB")
+        if record.get("completed") is not False or record.get("archived") is not False or record.get("repeatPaused") is not False:
+            raise AssertionError(f"Imported task booleans were not normalized: {record}")
+        if any(subtask.get("completed") is not False for subtask in record.get("subtasks", [])):
+            raise AssertionError(f"Imported subtask booleans were not normalized: {record}")
         expect(imported_task.locator(".subtasks-wrapper .progress-text")).to_contain_text("0/2")
         imported_task.locator(".subtask-summary-bar").click()
         expect(imported_task.locator(".subtask-display-item")).to_have_count(2)
@@ -2369,6 +2378,36 @@ def assert_runtime_storage_fallback_preserves_snapshot(browser: Browser, base_ur
         context.close()
 
 
+def exercise_legacy_boolean_normalization(page: Page) -> None:
+    task_name = f"Legacy Boolean {int(time.time())}"
+    put_task_record(
+        page,
+        {
+            "id": int(time.time() * 1000) + 77,
+            "name": task_name,
+            "description": "Legacy dirty boolean smoke test.",
+            "completed": "false",
+            "archived": "false",
+            "createdAt": iso_minutes_from_now(0),
+            "order": 777,
+            "subtasks": [
+                {"id": 1, "text": "Legacy subtask", "completed": "false"},
+            ],
+        },
+    )
+    select_filter(page, "active")
+    expect(task_locator(page, task_name)).to_have_count(1)
+    record = next((item for item in get_task_records(page) if item["name"] == task_name), None)
+    if not record:
+        raise AssertionError("Legacy boolean task was not preserved after normalization")
+    if record.get("completed") is not False or record.get("archived") is not False:
+        raise AssertionError(f"Legacy task booleans were not normalized: {record}")
+    subtasks = record.get("subtasks") or []
+    if not subtasks or subtasks[0].get("completed") is not False:
+        raise AssertionError(f"Legacy subtask boolean was not normalized: {record}")
+    delete_task_records_by_name(page, task_name)
+
+
 def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[str]) -> None:
     visual_page = context.new_page()
     visual_page.on("pageerror", lambda error: errors.append(str(error)))
@@ -2502,6 +2541,8 @@ def smoke(url: str) -> None:
         clear_app_data(page, url)
         assert_empty_task_list(page)
         assert_accessibility_baseline(page, "empty task list")
+        exercise_legacy_boolean_normalization(page)
+        assert_empty_task_list(page)
 
         exercise_shortcuts_and_modal_closing(page)
         exercise_keyboard_navigation_patterns(page)

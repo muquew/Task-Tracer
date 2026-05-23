@@ -245,8 +245,9 @@
 - `createUniqueNumericId(usedIds)`: 生成唯一数字 ID。
 - `normalizeUniqueNumericId(value, usedIds)`: 保留合法唯一 ID，否则生成新 ID。
 - `createUniqueSubtaskId(subtasks)`: 新增草稿子任务时生成 ID。
-- `normalizeTaskRecords(tasks)`: 读取历史数据时修复任务字段、归档字段、提醒字段和子任务 ID。
-- `normalizeSubtasksForTask(subtasks)`: 单任务内子任务 ID 去重。
+- `normalizeTaskRecords(tasks)`: 读取历史数据时修复任务字段、完成/归档布尔值、提醒字段和子任务 ID。
+- `normalizeSubtasksForTask(subtasks)`: 单任务内子任务 ID 去重，并修复子任务完成状态布尔值。
+- `normalizeBoolean(value, defaultValue = false)`: 兼容旧数据里的布尔字符串和 0/1 数值。
 - `handleAddSubtaskInput()`: 添加草稿子任务。
 - `toggleSubtaskComplete(taskId, subtaskId)`: 切换子任务完成状态。
 - `removeTempSubtask(index)`: 删除草稿子任务。
@@ -420,8 +421,8 @@
 - `prepareImportedTasksForMerge(importedTasks, conflictActions)`: 根据 keep、skip、replace 策略准备合并任务和需要删除的本地任务 ID。
 - `createImportPreviewContent(preview)`: 生成确认弹窗中的导入预览 DOM。
 - `normalizeImportedTasks(rawTasks)`: 导入任务规范化；重复任务 ID 会生成新 ID，指向重复 ID 的重复链路引用会被清空，避免误连。
-- `normalizeImportedTask(rawTask, index, normalizeId)`: 单任务规范化。
-- `normalizeImportedSubtasks(rawSubtasks)`: 导入子任务规范化。
+- `normalizeImportedTask(rawTask, index, normalizeId)`: 单任务规范化，并修复完成、归档、暂停重复等布尔值。
+- `normalizeImportedSubtasks(rawSubtasks)`: 导入子任务规范化，并修复子任务完成状态布尔值。
 - `normalizeStoredDate(value)`: 日期字段校验。
 - `addSampleTasks()`: 首次启动示例数据。
 
@@ -437,7 +438,7 @@
 - `notificationclick`: 点击通知时聚焦已有窗口或打开首页。
 - `activate`: 删除旧缓存并 `clients.claim()`。
 - `isAppShellRequest(url)`: 判断首页请求。
-- `networkFirst(request, fallbackUrl)`: 网络优先，失败时回退缓存。
+- `networkFirst(request, fallbackUrl)`: 网络优先，网络异常或非 OK 响应时回退缓存。
 - `cacheFirst(request)`: 缓存优先，未命中时请求网络。
 - `cacheResponse(request, response)`: 写入有效响应副本。
 
