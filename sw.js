@@ -1,4 +1,5 @@
-const CACHE_NAME = 'task-tracer-v3.59';
+const CACHE_PREFIX = 'task-tracer-';
+const CACHE_NAME = 'task-tracer-v3.60';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -61,7 +62,7 @@ self.addEventListener('activate', (e) => {
         caches.keys()
             .then((keyList) => {
                 return Promise.all(keyList.map((key) => {
-                    if (key !== CACHE_NAME) {
+                    if (key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME) {
                         return caches.delete(key);
                     }
                 }));

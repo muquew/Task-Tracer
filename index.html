@@ -1181,7 +1181,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.59'
+                VERSION: '3.60'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -3435,6 +3435,7 @@
         }
         function vibrateNotification() {
             if ('vibrate' in navigator && typeof navigator.vibrate === 'function') {
+                if (navigator.userActivation && !navigator.userActivation.hasBeenActive) return;
                 try {
                     navigator.vibrate(CONFIG.NOTIFICATIONS.VIBRATE_PATTERN);
                 } catch (error) {
@@ -3570,7 +3571,7 @@
         function isTaskVisible(task) {
             if (!matchesTaskProject(task)) return false;
             if (!matchesTaskSearch(task)) return false;
-            if (hasSearchStatusFilter()) return true;
+            if (hasSearchStatusFilter()) return shouldShowTaskForStatusSearch(task);
             if (state.filter === 'archived') return !!task.archived;
             if (task.archived) return false;
             switch (state.filter) {
@@ -3610,7 +3611,16 @@
             return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
         }
         function hasSearchStatusFilter() {
-            return state.searchQuery && parseSearchQuery(state.searchQuery).statuses.length > 0;
+            return getSearchStatusFilters().length > 0;
+        }
+        function getSearchStatusFilters() {
+            return state.searchQuery ? parseSearchQuery(state.searchQuery).statuses : [];
+        }
+        function shouldShowTaskForStatusSearch(task) {
+            return !task.archived || searchStatusIncludesArchived();
+        }
+        function searchStatusIncludesArchived() {
+            return getSearchStatusFilters().some(isArchivedStatusSearch);
         }
         function parseSearchQuery(query) {
             const parsed = { terms: [], projects: [], tags: [], statuses: [], due: [] };
@@ -3645,7 +3655,7 @@
                 .some(tag => tag.includes(value));
         }
         function matchesTaskStatusSearch(task, value) {
-            if (matchesSearchAlias(value, ['archived', 'archive', '已归档'])) return !!task.archived;
+            if (isArchivedStatusSearch(value)) return !!task.archived;
             if (matchesSearchAlias(value, ['completed', 'complete', 'done', '已完成'])) return !!task.completed && !task.archived;
             if (matchesSearchAlias(value, ['active', 'open', 'todo', '进行中'])) return !task.completed && !task.archived;
             if (matchesSearchAlias(value, ['overdue', 'expired', '已过期'])) return !task.completed && hasTaskDueDate(task) && calculateTaskTimeLeft(task) < 0;
@@ -3658,6 +3668,9 @@
             if (matchesSearchAlias(value, ['warning', 'warn', '警告'])) return status === CONFIG.UI.STATUS.WARNING;
             if (matchesSearchAlias(value, ['urgent', 'danger', '紧急'])) return status === CONFIG.UI.STATUS.DANGER;
             return false;
+        }
+        function isArchivedStatusSearch(value) {
+            return matchesSearchAlias(value, ['archived', 'archive', '已归档']);
         }
         function matchesTaskDueSearch(task, value) {
             const dueLocalDate = getTaskDueLocalDate(task);
@@ -4434,10 +4447,19 @@
             reminderIcon.style.display = 'inline-block';
             reminderIcon.setAttribute('aria-label', utils.translate('notifications.reminderSet'));
             reminderIcon.setAttribute('role', 'img');
-            reminderIcon.style.color = state.notifiedTasks.has(getTaskNotificationKey(task)) ? 'var(--text-tertiary)' : 'var(--color-warning)';
+            reminderIcon.style.color = hasTaskReminderBeenDelivered(task) ? 'var(--text-tertiary)' : 'var(--color-warning)';
         }
         function shouldShowReminderIcon(task) {
             return hasTaskDueDate(task) && !task.completed && !task.archived && getTaskReminderOffset(task) !== -1;
+        }
+        function hasTaskReminderBeenDelivered(task) {
+            if (state.notifiedTasks.has(getTaskNotificationKey(task))) return true;
+            if (!task.lastReminderAt) return false;
+            const last = new Date(task.lastReminderAt);
+            if (Number.isNaN(last.getTime())) return false;
+            const repeat = getTaskReminderRepeat(task);
+            if (repeat === -1) return true;
+            return (Date.now() - last.getTime()) / 60000 < repeat;
         }
         function renderTaskActionTitles(el, task, t) {
             const toggleButton = el.querySelector('[data-action="toggle"]');

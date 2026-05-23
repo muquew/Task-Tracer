@@ -1480,6 +1480,10 @@ def archive_and_restore_task(page: Page, completed_name: str) -> None:
     select_filter(page, "active")
     page.locator("#searchInput").fill("status:archived")
     expect(task_locator(page, completed_name)).to_have_count(1)
+    page.locator("#searchInput").fill("status:no-deadline")
+    expect(task_locator(page, completed_name)).to_have_count(0)
+    page.locator("#searchInput").fill("status:archived")
+    expect(task_locator(page, completed_name)).to_have_count(1)
     clear_search(page)
     select_filter(page, "archived")
     archived = task_locator(page, completed_name)
@@ -1660,10 +1664,13 @@ def exercise_one_time_reminder_persists_across_reload(page: Page) -> None:
     page.wait_for_timeout(1200)
     second_count = page.evaluate("() => (window.__taskTracerNotificationEvents || []).length")
     second_last_reminder = get_task_record_by_name(page, task_name).get("lastReminderAt")
+    reminder_color = task_locator(page, task_name).locator(".task-reminder-icon").evaluate("(el) => el.style.color")
     if second_count != 0:
         raise AssertionError("One-time reminder was delivered again after session reload")
     if second_last_reminder != first_last_reminder:
         raise AssertionError("One-time reminder timestamp changed after reload")
+    if "text-tertiary" not in reminder_color:
+        raise AssertionError(f"One-time reminder icon did not reflect persisted delivery: {reminder_color}")
     delete_task_records_by_name(page, task_name)
 
 

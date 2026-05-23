@@ -245,6 +245,8 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
             errors.append("Service worker cache name must be versioned as task-tracer-v<major>.<minor>")
         if cache_name != f"task-tracer-v{runtime_version}":
             errors.append("CONFIG.APP.VERSION must match the service worker CACHE_NAME suffix")
+        if "const CACHE_PREFIX = 'task-tracer-';" not in sw_source or "key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME" not in sw_source:
+            errors.append("Service worker must only delete Task Tracer caches during activation")
         if "networkFirst(e.request, './index.html')" not in sw_source:
             errors.append("App shell requests must use networkFirst with an index.html fallback")
         if "url.pathname.includes('/resources/')" not in sw_source:
@@ -316,6 +318,9 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             "Reminder delivery state must be cleared only after task update succeeds": ("await dbActions.updateTask(updatedTask);", "if (shouldClearNotificationDelivery) clearTaskNotificationDeliveryState(original.id);"),
             "Missed reminders must surface outside the normal delivery window": ("function checkNotifications()", "if ((!dueState.due && !dueState.missed) || !shouldDeliverTaskReminder(task, notificationKey, dueState) || state.pendingNotificationKeys.has(notificationKey)) return;"),
             "One-time reminders must use persisted delivery state across reloads": ("function shouldDeliverTaskReminder(task, notificationKey, dueState)", "const deliveredInSession = state.notifiedTasks.has(notificationKey);", "if (repeat === -1) return false;"),
+            "Reminder icons must reflect persisted one-time delivery": ("function renderReminderIcon(el, task)", "hasTaskReminderBeenDelivered(task)", "function hasTaskReminderBeenDelivered(task)", "if (repeat === -1) return true;"),
+            "Vibration feedback must require user activation when browsers expose it": ("function vibrateNotification()", "navigator.userActivation", "!navigator.userActivation.hasBeenActive"),
+            "Status search must keep archived records isolated unless archived is explicit": ("function isTaskVisible(task)", "if (hasSearchStatusFilter()) return shouldShowTaskForStatusSearch(task);", "function shouldShowTaskForStatusSearch(task)", "return !task.archived || searchStatusIncludesArchived();"),
             "Notification toggle must handle persistence failures": ("toggleNotifications().catch(handleNotificationToggleError)",),
             "Notification setting must persist before mutating in-memory state": ("await dbActions.setConfig(CONFIG.STORAGE.NOTIFICATIONS, enabled);", "state.notificationsEnabled = enabled"),
             "Language setting must roll back after persistence failure": ("state.currentLanguage = previousLanguage;", "initLanguage();"),
