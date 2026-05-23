@@ -1326,7 +1326,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.73'
+                VERSION: '3.74'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -2348,6 +2348,7 @@
         async function applyBatchTaskUpdate(action, selectedTasks) {
             const beforeTasks = captureUndoSnapshot();
             const now = new Date().toISOString();
+            let affectedCount = selectedTasks.length;
             try {
                 if (action === 'delete') {
                     await dbActions.deleteTasks(selectedTasks.map(task => task.id));
@@ -2362,12 +2363,13 @@
                         utils.notify(utils.translate('batch.nothingToComplete'), 'warning');
                         return;
                     }
+                    affectedCount = selectedTasks.filter(task => !task.completed && !task.archived).length;
                     await dbActions.updateTasks(completeUpdates);
                 }
                 state.selectedTaskIds.clear();
                 await refreshTasks();
                 registerUndoSnapshot(utils.translate(`batch.undo.${action}`), beforeTasks);
-                utils.notify(utils.translate(`batch.success.${action}`).replace('{count}', selectedTasks.length), 'success', { undo: true });
+                utils.notify(utils.translate(`batch.success.${action}`).replace('{count}', affectedCount), 'success', { undo: true });
             } catch (error) {
                 console.error('批量操作失败:', error);
                 handleStorageOperationError(error, 'batch.error');
@@ -2376,11 +2378,13 @@
         function buildBatchCompleteTasks(tasks, completedAt) {
             const usedIds = new Set(state.tasks.map(task => Number(task.id)).filter(Number.isFinite));
             const result = [];
+            let nextOrder = getNextTaskOrder();
             tasks.forEach(task => {
                 if (task.completed || task.archived) return;
                 const updatedTask = { ...task, completed: true, completedAt };
                 if (shouldCreateNextRepeatTask(task)) {
-                    const nextTask = createNextRepeatTaskWithUsedIds(task, usedIds);
+                    const nextTask = createNextRepeatTaskWithUsedIds(task, usedIds, nextOrder);
+                    nextOrder += CONFIG.DEFAULTS.ORDER_STEP;
                     updatedTask.nextRepeatTaskId = nextTask.id;
                     result.push(nextTask);
                 }
@@ -2896,12 +2900,13 @@
                 return;
             }
             const meta = e.ctrlKey || e.metaKey;
-            if (meta && e.key.toLowerCase() === 'p') { e.preventDefault(); openCommandPalette(); return; }
-            if (meta && e.key.toLowerCase() === 'z' && !e.shiftKey && !isEditableElement(document.activeElement)) { e.preventDefault(); performUndo(); return; }
-            if (meta && e.key === 'k') { e.preventDefault(); DOM.inputs.search.focus(); }
-            if (meta && e.key === 'i') { e.preventDefault(); if (DOM.modal.style.display !== 'flex') openModal(); }
-            if (meta && e.key === 'm') { e.preventDefault(); toggleMenu(DOM.menu.container, DOM.menu.btn); }
-            if (e.altKey && e.key.toLowerCase() === 't') { e.preventDefault(); scrollToTop(); }
+            const key = e.key.toLowerCase();
+            if (meta && key === 'p') { e.preventDefault(); openCommandPalette(); return; }
+            if (meta && key === 'z' && !e.shiftKey && !isEditableElement(document.activeElement)) { e.preventDefault(); performUndo(); return; }
+            if (meta && key === 'k') { e.preventDefault(); DOM.inputs.search.focus(); }
+            if (meta && key === 'i') { e.preventDefault(); if (DOM.modal.style.display !== 'flex') openModal(); }
+            if (meta && key === 'm') { e.preventDefault(); toggleMenu(DOM.menu.container, DOM.menu.btn); }
+            if (e.altKey && key === 't') { e.preventDefault(); scrollToTop(); }
             if (e.key === 'Escape') {
                 if (document.activeElement === DOM.inputs.search && DOM.inputs.search.value) clearSearchInput();
                 else if (document.activeElement === DOM.inputs.search) DOM.inputs.search.blur();
@@ -3784,7 +3789,7 @@
             const usedIds = new Set(state.tasks.map(item => Number(item.id)).filter(Number.isFinite));
             return createNextRepeatTaskWithUsedIds(task, usedIds);
         }
-        function createNextRepeatTaskWithUsedIds(task, usedIds) {
+        function createNextRepeatTaskWithUsedIds(task, usedIds, order = getNextTaskOrder()) {
             const nextId = createUniqueNumericId(usedIds);
             const now = new Date().toISOString();
             return {
@@ -3802,7 +3807,7 @@
                 repeatSourceId: task.repeatSourceId || task.id,
                 repeatCreatedFrom: task.id,
                 nextRepeatTaskId: null,
-                order: getNextTaskOrder()
+                order
             };
         }
         function resetRepeatedSubtasks(subtasks) {

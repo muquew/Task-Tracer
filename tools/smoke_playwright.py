@@ -1432,6 +1432,45 @@ def exercise_repeating_task(page: Page, task_name: str) -> None:
     delete_task_records_by_name(page, task_name)
 
 
+def exercise_batch_repeat_completion_order(page: Page, prefix: str) -> None:
+    names = [f"{prefix} Batch Repeat A", f"{prefix} Batch Repeat B"]
+    project = f"{prefix} Batch Repeat Project"
+    for index, name in enumerate(names, start=1):
+        add_task(
+            page,
+            name,
+            description="Batch repeating completion smoke test.",
+            due_date=future_date(index + 1),
+            due_time="09:15",
+            repeat_type="daily",
+            project=project,
+            tags=["batch-repeat"],
+        )
+
+    select_project(page, project)
+    select_filter(page, "active")
+    clear_search(page)
+    page.locator("#batchModeBtn").click()
+    page.locator("#batchSelectVisibleBtn").click()
+    expect(page.locator("#batchSelectionSummary")).to_contain_text(re.compile(r"2|two|两个", re.I))
+    page.locator("#batchCompleteBtn").click()
+    wait_for_notification(page, re.compile("完成|completed", re.I))
+
+    records = [record for record in get_task_records(page) if record.get("name") in names]
+    completed = [record for record in records if record.get("completed")]
+    active = [record for record in records if not record.get("completed")]
+    orders = [record.get("order") for record in active]
+    if len(records) != 4 or len(completed) != 2 or len(active) != 2:
+        raise AssertionError(f"Batch repeating completion did not create next occurrences: {records}")
+    if len(set(orders)) != len(orders):
+        raise AssertionError(f"Batch-created repeat tasks should have unique manual orders: {records}")
+
+    for name in names:
+        delete_task_records_by_name(page, name)
+    select_project(page, "all")
+    select_filter(page, "active")
+
+
 def exercise_advanced_repeat_task(page: Page, weekly_name: str, paused_name: str) -> None:
     start_date = future_js_weekday(1)
     add_task(
@@ -2755,6 +2794,7 @@ def smoke(url: str) -> None:
         exercise_quick_add(page, quick_name)
         exercise_subtask_draft_editor(page)
         exercise_repeating_task(page, repeat_name)
+        exercise_batch_repeat_completion_order(page, task_name)
         exercise_advanced_repeat_task(page, advanced_repeat_name, paused_repeat_name)
         exercise_time_zone_stable_repeat(page, f"{task_name} Timezone Repeat")
         add_task(page, alpha_name, no_deadline=True, project="Smoke Work", tags=["focus", "docs"], subtasks=["First smoke subtask", "Second smoke subtask"])
