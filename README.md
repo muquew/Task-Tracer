@@ -4,10 +4,11 @@
 
 <h1 align="center">Task Tracer</h1>
 
-<p align="center"><strong>A single-file, local-first PWA for personal tasks, routines, reminders, and review.</strong></p>
+<p align="center"><strong>A single-file, local-first PWA for tasks, routines, reminders, and personal review.</strong></p>
 
 <p align="center">
-  <a href="https://todo.muquew.com/" rel="noopener noreferrer">Live Demo</a> · <a href="./README_zh_cn.md">中文说明</a>
+  <a href="https://todo.muquew.com/" rel="noopener noreferrer">Live Demo</a> ·
+  <a href="./README_zh_cn.md">中文说明</a>
 </p>
 
 <p align="center">
@@ -19,54 +20,52 @@
   <img alt="License" src="https://img.shields.io/badge/License-Personal%20Use-475569?style=flat-square">
 </p>
 
-Task Tracer is a personal task workspace that runs as an installable web app while keeping task data in the current browser. It is designed for everyday task capture, project follow-up, recurring routines, reminders, archives, and personal productivity review without requiring an account or cloud sync.
+Task Tracer is a personal task workspace that runs in the browser and keeps task data local to the current device/browser profile. It is built for everyday capture, project follow-up, deadline work, recurring routines, local reminders, task archives, and lightweight productivity review without requiring an account or cloud sync.
 
-It fits study plans, personal operations, solo projects, recurring reviews, deadline work, and any task system where local control, clear status, and reliable data export matter.
+## Highlights
 
-## What You Can Do
-
-| Need | Task Tracer supports |
+| Area | What Task Tracer provides |
 | --- | --- |
-| Capture tasks quickly | Full task form, quick add parsing, due date/time, no-date tasks, subtasks, projects, and tags. |
-| Organize a growing list | Project grouping, multi-tag labeling, scoped filters, smart search, saved smart views, archived history, and manual order. |
-| Plan by time | List, calendar, timeline, live countdowns, status chips, progress bars, and timezone-stable dates. |
-| Execute today's work | Add tasks to Today Plan, enter a focused execution mode, and remove tasks from the plan without changing the task itself. |
-| Work in batches | Select visible tasks and complete, archive, delete, or add them to Today Plan together. |
-| Handle routines | Daily, weekly, selected weekdays, monthly, last-day-of-month, and custom interval recurrence. |
-| Stay aware | Browser reminders, reminder offsets, repeat reminders, snooze, missed-reminder notice, and clear delivery limits. |
-| Review progress | Completion rate, active overdue rate, archived count, today's completions, streak, and recent trend. |
-| Protect data | Undo recent task changes, export/backup, import preview, merge/replace conflict handling, backup health, and emergency backup when storage is blocked. |
-| Use it comfortably | Responsive layout, light/dark themes, reduced-motion support, keyboard navigation, screen-reader labels, and Chinese/English UI. |
+| Capture | Full task dialog, quick add parsing, due date and time, no-date tasks, descriptions, subtasks, projects, and tags. |
+| Organization | Project grouping, multi-tag labels, smart search, status filters, saved smart views, manual ordering, and archived history. |
+| Planning | List, calendar, timeline, and statistics views with timezone-stable due dates and clear status chips. |
+| Execution | Header shortcuts for Today Plan, batch actions, undo, new task, notifications, theme, and the app menu. |
+| Routines | Daily, weekly, selected weekdays, monthly, last-day-of-month, and custom interval recurrence. |
+| Reminders | Reminder offsets, repeat reminders, snooze, missed-reminder notice, and an explicit browser-delivery limitation note. |
+| Review | Completion rate, active overdue rate, archive count, today's completions, completion streak, and recent trend. |
+| Data safety | Export/backup, backup health, import preview, merge/replace conflict handling, checksums, pre-replace snapshots, undo, and emergency backup when storage is blocked. |
+| Comfort | Responsive layout, light/dark themes, reduced-motion support, keyboard navigation, screen-reader labels, and Chinese/English UI. |
 
-## Everyday Workflow
+## Everyday Flow
 
-1. Add a task from the full dialog, or type a compact quick-add entry.
-2. Save frequent search and filter combinations as smart views when a list becomes part of your routine.
-3. Work from the list view for completion, edit, snooze, archive, delete, subtasks, batch actions, and manual ordering.
-4. Add selected tasks to Today Plan and use the header Today Plan button when it is time to focus.
-5. Switch to calendar or timeline when the date distribution matters more than list order.
-6. Use statistics to review active workload, completion behavior, archived history, and recent momentum.
-7. Export/back up before changing browsers, clearing site data, or testing imported files.
+1. Capture a task from the full dialog or with quick add.
+2. Use projects for primary grouping and tags for cross-project context.
+3. Save repeatable search/filter combinations as smart views.
+4. Work from the list view for completion, editing, snoozing, subtasks, archive, batch actions, and manual sorting.
+5. Move the current working set into Today Plan and use the header Today button when it is time to focus.
+6. Switch to calendar or timeline when date distribution matters more than list order.
+7. Check statistics for current workload, overdue pressure, archived history, and recent completion momentum.
+8. Export/back up before clearing browser data, changing devices, testing imports, or reinstalling the app.
 
-## Quick Add
+## Quick Add and Command Palette
 
-Quick add turns lightweight text into structured task fields.
+Quick add turns compact text into structured task fields:
 
 ```text
 tomorrow 20:00 Review English #study /Personal
 ```
 
-This creates a task named `Review English`, due tomorrow at 20:00, tagged `study`, and assigned to the `Personal` project.
+This creates `Review English`, due tomorrow at 20:00, tagged `study`, and assigned to the `Personal` project.
 
-The command palette opens with `Ctrl/Cmd + P`. It can start a new task, focus quick add, switch views, open saved views, enter Today Plan, enter batch actions, undo the last task change, export/back up data, search, and jump to projects.
+The command palette opens with `Ctrl/Cmd + P`. It can start a new task, focus quick add, switch views, open saved views, enter Today Plan, enter batch actions, undo the latest task change, export/back up data, search, and jump to projects.
 
 ## Projects, Tags, and Search
 
-Projects are the primary grouping layer. Each task belongs to one project such as `Work`, `Personal`, or a named initiative. The project selector narrows the workspace, and the all-project list keeps tasks grouped by project.
+Projects are the main grouping layer. A task can belong to one project, such as `Work`, `Personal`, or a named initiative. The project selector narrows the workspace, and the all-project list groups tasks by project.
 
-Tags are flexible secondary labels. A task can have multiple tags such as `study`, `design`, or `follow-up`. Tags help connect related work across different projects.
+Tags are flexible secondary labels. A task can have multiple tags such as `study`, `design`, or `follow-up`, making it easier to connect related work across projects.
 
-Search matches task names, descriptions, projects, tags, and subtask text. Scoped search can be combined with normal keywords:
+Search matches task names, descriptions, projects, tags, and subtask text. Scoped search can be mixed with normal keywords:
 
 | Query | Finds |
 | --- | --- |
@@ -85,26 +84,24 @@ Search matches task names, descriptions, projects, tags, and subtask text. Scope
 | `due:no-deadline` | Tasks without a due date. |
 | `project:Work tag:report` | Tasks matching both scopes. |
 
-For multi-word project or tag names, search by a distinctive part of the name.
-
-Saved smart views store the current search, project, status filter, sort mode, and view. They are useful for repeatable scopes such as `project:Work status:overdue`, `tag:study due:week`, or a project-specific calendar view.
-
-## Today Plan, Batch Actions, and Undo
-
-Today Plan is a lightweight execution layer. The header target button opens it directly. Adding a task to Today Plan does not change its project, tags, due date, archive state, or recurrence rule; it only marks the task as part of today's working set.
-
-Batch Actions mode adds checkboxes to the visible list. Selected tasks can be added to Today Plan, marked complete, archived, or deleted together.
-
-Recent task-writing actions can be undone from the toast action, the app menu, or `Ctrl/Cmd + Z` when focus is not inside a text field. Undo restores the task snapshot from before the operation.
+Saved smart views store the current search, project filter, status filter, sort mode, and view. They are useful for repeatable scopes such as overdue work, weekly study, or a project-specific calendar.
 
 ## Views
 
 | View | Best for |
 | --- | --- |
-| List | Daily execution with full actions, subtasks, status labels, reminders, archive controls, and manual ordering. |
-| Calendar | Month-based review with real calendar layout, previous/next month, previous/next year, today jump, date details, and no-date grouping. |
+| List | Daily execution with full task actions, subtasks, reminders, status labels, progress bars, archive controls, and manual ordering. |
+| Calendar | Month-based planning with a real calendar grid, month/year navigation, today jump, date details, and no-date grouping. |
 | Timeline | Chronological scanning of upcoming or historical tasks by date. |
-| Statistics | Personal feedback on completion, overdue active tasks, archived volume, today's completions, streak, and recent trend. |
+| Statistics | Personal feedback on completion, active overdue tasks, archive volume, today's completions, streak, and recent trend. |
+
+## Today Plan, Batch Actions, and Undo
+
+Today Plan is a lightweight execution layer. Adding a task to Today Plan does not change its project, tags, due date, archive state, or recurrence rule; it only marks the task as part of today's working set.
+
+Batch Actions mode adds selection checkboxes to the visible list. Selected tasks can be added to Today Plan, marked complete, archived, or deleted together.
+
+Undo restores the task snapshot from before the most recent task-writing operation. It is available from the header undo button, the toast action, the command palette, and `Ctrl/Cmd + Z` when focus is not inside a text field.
 
 ## Recurrence and Reminders
 
@@ -114,20 +111,20 @@ Browser notifications are available when the browser supports them and permissio
 
 Browser reminders are not a guaranteed system alarm service. Delivery can depend on browser policy, operating system behavior, battery settings, tab lifecycle, and whether the app is opened or woken by the browser.
 
-## Import and Export/Backup
+## Import, Export, and Backup
 
 | Action | Purpose |
 | --- | --- |
 | Export/Backup | Download complete task JSON with an export ID, checksum, version notes, and latest-backup status update. |
-| Import | Preview a JSON file before writing it. The preview includes a restore checklist, difference summary, task count, repeated IDs, duplicate names, current-data impact, and same-name conflict choices. |
+| Import | Preview a JSON file before writing it, including restore checks, task counts, differences, repeated IDs, duplicate names, current-data impact, and same-name conflict choices. |
 
-The restore checklist identifies Task Tracer backup metadata, template compatibility, checksum status, task payload, repeated IDs, local name matches, and the impact of replacing current data. When replace import would overwrite existing tasks, Task Tracer downloads a pre-import snapshot first and waits for a second confirmation. If the checksum fails, replace import also requires an explicit risk confirmation; merge mode remains available for safer recovery.
+The restore checklist identifies Task Tracer backup metadata, template compatibility, checksum status, task payload, repeated IDs, local name matches, and the impact of replacing current data. Replace import downloads a pre-import snapshot before overwriting existing tasks. If the checksum fails, replace import requires an explicit risk confirmation; merge mode remains available for safer recovery.
 
-Backup health appears in the app menu and helps indicate whether data was backed up today, recently, or should be backed up again.
+Backup health appears in the app menu and indicates whether data was backed up today, recently, or should be backed up again.
 
 ## Install, Offline, and Updates
 
-Task Tracer is a PWA, which means it can behave like an installable app when the browser supports that web standard. The app menu includes an install entry. If the browser does not expose an automatic prompt, the same entry shows manual installation steps for desktop Chrome/Edge, Android Chrome, and iOS Safari.
+Task Tracer is a PWA: when the browser supports the standard, it can be installed and opened like an app. The app menu includes an install entry. If the browser does not expose an automatic prompt, the same entry shows manual installation steps for desktop Chrome/Edge, Android Chrome, and iOS Safari.
 
 The app shell can load offline after it has been cached. When a newer cached version is ready, Task Tracer shows an update prompt with a refresh action.
 

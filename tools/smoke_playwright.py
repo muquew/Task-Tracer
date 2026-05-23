@@ -775,9 +775,9 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
     expect(task_locator(page, alpha_name)).to_have_count(0)
 
     clear_search(page)
-    page.locator("#openMenuBtn").click()
     page.locator("#batchModeBtn").click()
     expect(page.locator("#batchToolbar")).to_be_visible()
+    expect(page.locator("#batchModeBtn")).to_have_attribute("aria-pressed", "true")
     page.locator("#batchSelectVisibleBtn").click()
     expect(page.locator("#batchSelectionSummary")).to_contain_text(re.compile(r"3|三个|three", re.I))
     page.locator("#batchFocusBtn").click()
@@ -786,8 +786,9 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
         record = get_task_record_by_name(page, name)
         if not record.get("focusDate"):
             raise AssertionError(f"Batch add to today plan did not set focusDate for {name}: {record}")
-    expect(page.locator("#notificationUndoBtn")).to_be_visible()
-    page.locator("#notificationUndoBtn").click()
+    expect(page.locator("#undoBtn")).to_be_enabled()
+    expect(page.locator("#undoBtn")).to_have_attribute("aria-label", re.compile("撤销|Undo", re.I))
+    page.locator("#undoBtn").click()
     wait_for_notification(page, re.compile("撤销|Undone", re.I))
     for name in (alpha_name, beta_name, overdue_name):
         record = get_task_record_by_name(page, name)
@@ -797,6 +798,7 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
     expect(page.locator("#batchToolbar")).to_be_visible()
     page.locator("#exitBatchModeBtn").click()
     expect(page.locator("#batchToolbar")).to_be_hidden()
+    expect(page.locator("#batchModeBtn")).to_have_attribute("aria-pressed", "false")
     task_locator(page, beta_name).locator('[data-action="focus"]').click()
     wait_for_notification(page, re.compile("今日|today", re.I))
     page.locator("#focusModeToggleBtn").click()

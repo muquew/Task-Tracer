@@ -173,9 +173,12 @@
         h1 { font-size: 21px; font-weight: 760; line-height: 1.1; }
         html[lang="en"] h1 { font-size: 23px; }
         .header-actions { display: flex; gap: 8px; align-items: center; }
+        .header-action-divider { width: 1px; height: 24px; margin-inline: 2px; background: var(--border-light); }
         .icon-btn, .lang-btn { background: var(--bg-surface-alt); color: var(--color-primary); border: 1px solid var(--border-light); padding: 7px 10px; border-radius: var(--radius-control); cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 4px; transition: background 0.2s, transform 0.2s, box-shadow 0.2s, border-color 0.2s, color 0.2s; }
         .icon-btn { font-weight: 700; min-width: 36px; min-height: 36px; justify-content: center; }
         .icon-btn:disabled { cursor: not-allowed; opacity: 0.56; transform: none; box-shadow: none; }
+        .batch-mode-btn[aria-pressed="true"] { background: var(--color-primary); color: var(--text-inverse); border-color: var(--color-primary); box-shadow: 0 8px 18px var(--shadow-base); }
+        .undo-btn:not(:disabled) { color: var(--color-secondary); }
         .icon-btn.notifications-enabled { background: var(--color-primary); color: var(--text-inverse); border-color: var(--color-primary); box-shadow: 0 8px 18px var(--shadow-base); }
         @media (hover: hover) { .icon-btn.notifications-enabled:hover { background: var(--color-primary-dark); border-color: var(--color-primary-dark); color: var(--text-inverse); } }
         .focus-mode-toggle { width: auto; padding-inline: 12px; gap: 7px; color: var(--text-main); }
@@ -187,7 +190,7 @@
         html[data-theme="dark"] .focus-mode-toggle[aria-pressed="true"] { background: #9d174d; border-color: #be185d; color: #ffffff; }
         .icon-btn:active { background: var(--color-primary-dark); color: var(--text-inverse); transform: scale(0.95); }
         @media (hover: hover) { .icon-btn:hover { background: var(--color-primary); color: var(--text-inverse); border-color: var(--color-primary); transform: translateY(-1px); box-shadow: 0 8px 18px var(--shadow-base); } }
-        .menu { display: none; position: absolute; top: 58px; right: 0; background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-surface); box-shadow: 0 18px 42px var(--shadow-float); z-index: 900; min-width: 190px; padding: 6px; }
+        .menu { display: none; position: absolute; top: calc(100% + 8px); right: 0; background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-surface); box-shadow: 0 18px 42px var(--shadow-float); z-index: 900; min-width: 190px; padding: 6px; }
         .menu.show { display: block; }
         .menu-item { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: none; border-radius: var(--radius-control); background: none; text-align: left; cursor: pointer; font-size: 14px; color: var(--text-main); }
         .menu-item:active { background: var(--bg-active); }
@@ -737,9 +740,14 @@
         }
         @media (max-width: 600px) {
             body { padding: 10px; background-size: 34px 34px, 34px 34px, auto; }
-            header { padding: 12px; }
+            header { display: grid; grid-template-columns: 1fr; align-items: stretch; gap: 10px; padding: 12px; }
+            .header-actions { width: 100%; justify-content: space-between; gap: 5px; }
+            .header-action-divider { display: none; }
+            .icon-btn { min-width: 34px; min-height: 34px; padding: 6px; }
+            .focus-mode-toggle { width: 34px; padding-inline: 6px; }
+            .focus-toggle-label { display: none; }
             h1 { font-size: 19px; }
-            .menu { top: 54px; right: 0; }
+            .menu { top: calc(100% + 8px); right: 0; }
             .quick-add-bar { grid-template-columns: minmax(0, 1fr) auto; padding: 8px; gap: 8px; }
             .quick-add-submit { min-width: 68px; padding-inline: 12px; }
             .saved-views-bar { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 8px; }
@@ -797,7 +805,7 @@
             .restore-checklist-summary { text-align: left; }
             .import-diff-grid { grid-template-columns: 1fr; }
             .import-conflict-row { grid-template-columns: 1fr; }
-            header { flex-direction: row; align-items: flex-start; }
+            header { align-items: stretch; }
             .header-actions { display: flex; flex-direction: row; gap: 3px; align-items: flex-end; }
             .icon-btn { font-size: 10px; padding: 6px 8px; min-width: 32px; min-height: 32px; }
             .focus-mode-toggle { padding-inline: 8px; }
@@ -922,6 +930,13 @@
                 <svg class="icon"><use href="#icon-target"></use></svg>
                 <span class="focus-toggle-label" id="focusModeToggleText">今日计划</span>
             </button>
+            <span class="header-action-divider" aria-hidden="true"></span>
+            <button class="icon-btn batch-mode-btn" id="batchModeBtn" aria-label="进入批量操作" data-i18n-aria-label="batch.menuTitle" data-i18n-title="batch.menuTitle" aria-pressed="false" title="进入批量操作">
+                <svg class="icon"><use href="#icon-check-square"></use></svg>
+            </button>
+            <button class="icon-btn undo-btn" id="undoBtn" aria-label="没有可撤销操作" data-i18n-aria-label="undo.unavailableTitle" data-i18n-title="undo.unavailableTitle" title="没有可撤销操作" disabled>
+                <svg class="icon"><use href="#icon-undo"></use></svg>
+            </button>
             <button class="icon-btn" id="openModalBtn" aria-label="添加新任务" data-i18n-aria-label="modal.addTitle" data-i18n-title="tooltips.addTask" title="添加新任务 (Ctrl+I)">
                 <svg class="icon"><use href="#icon-plus"></use></svg>
             </button>
@@ -944,15 +959,6 @@
                 <button class="menu-item" role="menuitem" data-i18n-title="pwa.install.menuTitle" id="installAppBtn" title="安装应用或查看安装方式" hidden>
                     <svg class="icon"><use href="#icon-install"></use></svg>
                     <span data-i18n="pwa.install.menu">安装应用</span>
-                </button>
-                <div class="menu-divider" role="separator"></div>
-                <button class="menu-item" role="menuitem" id="batchModeBtn" data-i18n-title="batch.menuTitle" title="进入批量操作">
-                    <svg class="icon"><use href="#icon-check-square"></use></svg>
-                    <span data-i18n="batch.menu">批量操作</span>
-                </button>
-                <button class="menu-item" role="menuitem" id="undoMenuBtn" data-i18n-title="undo.menuTitle" title="撤销上一步" disabled>
-                    <svg class="icon"><use href="#icon-undo"></use></svg>
-                    <span data-i18n="undo.menu">撤销上一步</span>
                 </button>
                 <div class="menu-divider" role="separator"></div>
                 <button class="menu-item" role="menuitem" data-i18n-title="actions.archiveCompletedTitle" id="archiveCompletedBtn" title="归档所有已完成任务">
@@ -1320,7 +1326,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.72'
+                VERSION: '3.73'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1373,7 +1379,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.21'
+                RESOURCE_VERSION: '4.22'
             },
             BACKUP: {
                 FILE_VERSION: '2.4',
@@ -1477,6 +1483,8 @@
             DOM.modal = document.getElementById('taskModal');
             DOM.form = document.getElementById('taskForm');
             DOM.openModalBtn = document.getElementById('openModalBtn');
+            DOM.batchModeBtn = document.getElementById('batchModeBtn');
+            DOM.undoBtn = document.getElementById('undoBtn');
             DOM.closeModalBtn = document.getElementById('closeModalBtn');
             DOM.cancelBtn = document.getElementById('cancelBtn');
             DOM.modalTitle = document.getElementById('modalTitle');
@@ -1518,8 +1526,6 @@
                 backupHealthText: document.getElementById('backupHealthText'),
                 importBtn: document.getElementById('importBtn'),
                 installBtn: document.getElementById('installAppBtn'),
-                batchModeBtn: document.getElementById('batchModeBtn'),
-                undoBtn: document.getElementById('undoMenuBtn'),
                 archiveCompletedBtn: document.getElementById('archiveCompletedBtn'),
                 fileInput: document.getElementById('importFile')
             };
@@ -1692,6 +1698,8 @@
             const controls = [
                 DOM.openModalBtn,
                 DOM.notificationToggleBtn,
+                DOM.batchModeBtn,
+                DOM.undoBtn,
                 DOM.quickAddInput,
                 DOM.quickAddForm?.querySelector('button[type="submit"]'),
                 DOM.saveSmartViewBtn,
@@ -1710,8 +1718,6 @@
                 DOM.menu.backupBtn,
                 DOM.menu.importBtn,
                 DOM.menu.fileInput,
-                DOM.menu.batchModeBtn,
-                DOM.menu.undoBtn,
                 DOM.menu.archiveCompletedBtn,
                 DOM.clearCompletedBtn,
                 DOM.dropdowns.project?.btn,
@@ -1777,9 +1783,14 @@
         }
         function syncUndoControls() {
             const disabled = !state.undoAction || !state.storageAvailable;
-            if (DOM.menu?.undoBtn) {
-                DOM.menu.undoBtn.disabled = disabled;
-                DOM.menu.undoBtn.setAttribute('aria-disabled', String(disabled));
+            if (DOM.undoBtn) {
+                const label = disabled
+                    ? utils.translate('undo.unavailableTitle')
+                    : utils.translate('undo.availableTitle').replace('{action}', state.undoAction.label);
+                DOM.undoBtn.disabled = disabled;
+                DOM.undoBtn.setAttribute('aria-disabled', String(disabled));
+                DOM.undoBtn.setAttribute('aria-label', label);
+                DOM.undoBtn.title = label;
             }
             if (DOM.notification?.undoBtn) DOM.notification.undoBtn.hidden = true;
         }
@@ -1914,6 +1925,8 @@
         }
         function bindGlobalEvents() {
             DOM.themeBtn.addEventListener('click', utils.toggleTheme);
+            DOM.batchModeBtn.addEventListener('click', () => setBatchMode(!state.batchMode));
+            DOM.undoBtn.addEventListener('click', performUndo);
             window.addEventListener('scroll', () => DOM.backToTopBtn.classList.toggle(CONFIG.UI.CLASSES.SHOW, window.scrollY > 300));
             DOM.backToTopBtn.addEventListener('click', scrollToTop);
             document.addEventListener('keydown', handleKeyboardShortcuts);
@@ -2276,12 +2289,22 @@
             if (!DOM.batchToolbar) return;
             pruneBatchSelection();
             DOM.batchToolbar.hidden = !state.batchMode;
+            syncBatchModeButton();
             if (!state.batchMode) return;
             const count = state.selectedTaskIds.size;
             DOM.batchSelectionSummary.textContent = utils.translate('batch.selected').replace('{count}', count);
             [DOM.batchClearSelectionBtn, DOM.batchFocusBtn, DOM.batchCompleteBtn, DOM.batchArchiveBtn, DOM.batchDeleteBtn].forEach(button => {
                 button.disabled = count === 0;
             });
+        }
+        function syncBatchModeButton() {
+            if (!DOM.batchModeBtn) return;
+            const active = Boolean(state.batchMode);
+            const key = active ? 'batch.activeTitle' : 'batch.menuTitle';
+            const label = utils.translate(key);
+            DOM.batchModeBtn.setAttribute('aria-pressed', String(active));
+            DOM.batchModeBtn.setAttribute('aria-label', label);
+            DOM.batchModeBtn.title = label;
         }
         function pruneBatchSelection() {
             const ids = new Set((state.batchMode ? getVisibleTasks() : state.tasks).map(task => task.id));
@@ -2725,8 +2748,6 @@
                 if (ensureStorageAvailable()) DOM.menu.fileInput.click();
             });
             DOM.menu.installBtn.addEventListener('click', handleInstallAppClick);
-            DOM.menu.batchModeBtn.addEventListener('click', () => setBatchMode(true));
-            DOM.menu.undoBtn.addEventListener('click', performUndo);
             DOM.menu.archiveCompletedBtn.addEventListener('click', handleArchiveCompleted);
             DOM.menu.fileInput.addEventListener('change', (e) => importTasks(e.target.files[0]));
         }
@@ -6131,6 +6152,7 @@
                 });
                 syncDropdowns();
                 syncAllCustomSelects();
+                syncUndoControls();
                 renderTaskList();
             },
             translate: (key) => {

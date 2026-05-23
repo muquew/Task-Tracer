@@ -63,6 +63,7 @@
   "batch": {
     "menu": "批量操作",
     "menuTitle": "进入批量操作",
+    "activeTitle": "退出批量操作",
     "selected": "已选择 {count} 个任务",
     "selectVisible": "选择当前",
     "clearSelection": "清空选择",
@@ -92,6 +93,8 @@
   "undo": {
     "menu": "撤销上一步",
     "menuTitle": "撤销最近一次任务操作",
+    "availableTitle": "撤销：{action}",
+    "unavailableTitle": "没有可撤销操作",
     "action": "撤销",
     "restored": "已撤销：{action}",
     "error": "撤销失败，请重试",

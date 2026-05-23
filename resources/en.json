@@ -63,6 +63,7 @@
   "batch": {
     "menu": "Batch Actions",
     "menuTitle": "Enter batch action mode",
+    "activeTitle": "Exit batch action mode",
     "selected": "{count} task(s) selected",
     "selectVisible": "Select Visible",
     "clearSelection": "Clear Selection",
@@ -92,6 +93,8 @@
   "undo": {
     "menu": "Undo Last Action",
     "menuTitle": "Undo the most recent task action",
+    "availableTitle": "Undo: {action}",
+    "unavailableTitle": "No action to undo",
     "action": "Undo",
     "restored": "Undone: {action}",
     "error": "Undo failed. Please try again",
