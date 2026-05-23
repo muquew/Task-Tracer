@@ -1181,7 +1181,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.58'
+                VERSION: '3.59'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -3340,10 +3340,11 @@
         function shouldDeliverTaskReminder(task, notificationKey, dueState) {
             if (dueState.snoozed) return true;
             const repeat = getTaskReminderRepeat(task);
-            if (repeat === -1) return !state.notifiedTasks.has(notificationKey);
-            if (!task.lastReminderAt) return true;
+            const deliveredInSession = state.notifiedTasks.has(notificationKey);
+            if (!task.lastReminderAt) return !deliveredInSession;
             const last = new Date(task.lastReminderAt);
-            if (Number.isNaN(last.getTime())) return true;
+            if (Number.isNaN(last.getTime())) return !deliveredInSession;
+            if (repeat === -1) return false;
             return (Date.now() - last.getTime()) / 60000 >= repeat;
         }
         async function deliverTaskReminder(task, notificationKey, dueState) {

@@ -1563,6 +1563,125 @@ def exercise_notifications(page: Page) -> None:
     expect(page.locator("#notificationToggleBtn")).not_to_have_class(re.compile(r"(^|\s)notifications-enabled(\s|$)"))
 
 
+def exercise_one_time_reminder_persists_across_reload(page: Page) -> None:
+    task_name = f"Smoke One Time Reminder {int(time.time() * 1000)}"
+    page.add_init_script(
+        """(() => {
+            window.__taskTracerNotificationEvents = [];
+            const record = (title, options = {}) => {
+                window.__taskTracerNotificationEvents.push(String(options.body || title || ''));
+            };
+            const NativeNotification = window.Notification;
+            if (NativeNotification && !NativeNotification.__taskTracerSmokeWrapped) {
+                function SmokeNotification(title, options = {}) {
+                    record(title, options);
+                    return { close() {}, onclick: null };
+                }
+                Object.defineProperty(SmokeNotification, 'permission', {
+                    configurable: true,
+                    get: () => 'granted'
+                });
+                SmokeNotification.requestPermission = () => Promise.resolve('granted');
+                SmokeNotification.__taskTracerSmokeWrapped = true;
+                try {
+                    Object.defineProperty(window, 'Notification', {
+                        configurable: true,
+                        writable: true,
+                        value: SmokeNotification
+                    });
+                } catch (error) {
+                    window.Notification = SmokeNotification;
+                }
+            }
+            const registrationPrototype = window.ServiceWorkerRegistration && window.ServiceWorkerRegistration.prototype;
+            if (registrationPrototype && !registrationPrototype.__taskTracerSmokeWrapped) {
+                registrationPrototype.showNotification = function(title, options = {}) {
+                    record(title, options);
+                    return Promise.resolve();
+                };
+                registrationPrototype.__taskTracerSmokeWrapped = true;
+            }
+        })();"""
+    )
+    task = {
+        "id": int(time.time() * 1000) + 1557,
+        "name": task_name,
+        "description": "One-time reminder reload regression.",
+        **due_fields_from_now(-90),
+        "reminderOffset": 15,
+        "reminderRepeat": -1,
+        "snoozedUntil": None,
+        "lastReminderAt": None,
+        "repeatType": "none",
+        "repeatInterval": 1,
+        "repeatWeekdays": [],
+        "repeatPaused": False,
+        "repeatSourceId": None,
+        "repeatCreatedFrom": None,
+        "nextRepeatTaskId": None,
+        "subtasks": [],
+        "completed": False,
+        "completedAt": None,
+        "archived": False,
+        "archivedAt": None,
+        "createdAt": iso_minutes_from_now(-120),
+        "order": 100,
+    }
+    page.evaluate(
+        """async (task) => {
+            await new Promise((resolve, reject) => {
+                const request = indexedDB.open('TaskTrackerDB', 2);
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks', 'config'], 'readwrite');
+                    tx.objectStore('tasks').put(task);
+                    const config = tx.objectStore('config');
+                    config.put({ key: 'notifications_enabled', value: true });
+                    tx.oncomplete = () => {
+                        db.close();
+                        resolve();
+                    };
+                    tx.onerror = () => reject(tx.error);
+                    tx.onabort = () => reject(tx.error);
+                };
+            });
+            sessionStorage.clear();
+        }""",
+        task,
+    )
+    page.reload(wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    page.wait_for_function("() => (window.__taskTracerNotificationEvents || []).length === 1")
+    first_last_reminder = wait_for_task_last_reminder(page, task_name)
+    page.evaluate("sessionStorage.clear()")
+    page.reload(wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    page.wait_for_timeout(1200)
+    second_count = page.evaluate("() => (window.__taskTracerNotificationEvents || []).length")
+    second_last_reminder = get_task_record_by_name(page, task_name).get("lastReminderAt")
+    if second_count != 0:
+        raise AssertionError("One-time reminder was delivered again after session reload")
+    if second_last_reminder != first_last_reminder:
+        raise AssertionError("One-time reminder timestamp changed after reload")
+    delete_task_records_by_name(page, task_name)
+
+
+def get_task_record_by_name(page: Page, task_name: str) -> dict[str, Any]:
+    records = get_task_records(page)
+    return next((record for record in records if record.get("name") == task_name), {})
+
+
+def wait_for_task_last_reminder(page: Page, task_name: str) -> str:
+    deadline = time.monotonic() + 5
+    while time.monotonic() < deadline:
+        value = get_task_record_by_name(page, task_name).get("lastReminderAt")
+        if value:
+            return str(value)
+        page.wait_for_timeout(100)
+    raise AssertionError("One-time reminder did not persist lastReminderAt")
+
+
 def exercise_import_error(page: Page) -> None:
     with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
         json.dump({"notTasks": []}, temp_file)
@@ -2248,6 +2367,7 @@ def smoke(url: str) -> None:
         exercise_language(page)
         exercise_notifications(page)
         assert_service_worker_and_offline_load(context, page)
+        exercise_one_time_reminder_persists_across_reload(page)
         assert_pwa_installability(page)
 
         exercise_quick_add(page, quick_name)
