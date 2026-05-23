@@ -305,8 +305,10 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             errors.append("Task creation forms must guard against duplicate submissions")
         if "const activeScopeTasks = tasks.filter(task => !task.archived)" not in index_html:
             errors.append("Stats total must exclude archived tasks")
-        if "const completionHistoryTasks = tasks.filter(task => task.completed)" not in index_html:
-            errors.append("Stats completion history must preserve archived completions")
+        if "const completionHistoryTasks = activeScopeTasks.filter(task => task.completed)" not in index_html:
+            errors.append("Stats completion history must exclude archived tasks")
+        if not contains_in_order(index_html, ("function shiftCalendarMonth(delta)", "date.setDate(1);", "date.setMonth(date.getMonth() + delta);", "state.calendarDetailDateKey = '';")):
+            errors.append("Calendar month navigation must clamp to day one and clear stale day details")
         state_consistency_checks = {
             "Archive completed must write cloned archived records": ("const archivedTasks = completed.map(task => ({ ...task, archived: true, archivedAt }))",),
             "Snooze must persist before mutating the in-memory task": ("const updatedTask = {", "snoozedUntil: snoozedUntilAt", "await dbActions.updateTask(updatedTask);"),

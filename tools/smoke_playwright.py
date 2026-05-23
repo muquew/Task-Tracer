@@ -909,6 +909,16 @@ def visible_task_names(page: Page) -> list[str]:
     return page.locator(".task-item .task-name").all_text_contents()
 
 
+def calendar_month_title(page: Page, year: int, month_index: int) -> str:
+    return page.evaluate(
+        """([year, monthIndex]) => new Intl.DateTimeFormat(
+            document.documentElement.lang || 'zh-CN',
+            { year: 'numeric', month: 'long' }
+        ).format(new Date(year, monthIndex, 1))""",
+        [year, month_index],
+    )
+
+
 def assert_task_order(page: Page, expected_names: list[str]) -> None:
     actual_names = visible_task_names(page)
     if actual_names != expected_names:
@@ -1105,6 +1115,7 @@ def exercise_filters_and_sort(page: Page, alpha_name: str, beta_name: str, overd
 
 def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_name: str) -> None:
     extra_names = [f"Calendar Overflow Extra {index} {int(time.time())}" for index in range(1, 4)]
+    month_end_name = f"Calendar Month End {int(time.time())}"
     for index, extra_name in enumerate(extra_names, start=1):
         put_task_record(
             page,
@@ -1124,7 +1135,6 @@ def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_nam
                 "order": 40_000 + index,
             },
         )
-
     select_filter(page, "all")
     select_view(page, "calendar")
     expect(page.locator(".calendar-view")).to_be_visible()
@@ -1163,6 +1173,12 @@ def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_nam
     page.locator("#cancelBtn").click()
     page.locator(".calendar-more-btn").click()
     expect(page.locator(".calendar-day-detail")).to_be_visible()
+    page.locator('[data-calendar-action="next"]').click()
+    expect(page.locator(".calendar-day-detail")).to_have_count(0)
+    page.locator('[data-calendar-action="prev"]').click()
+    expect(page.locator(".calendar-day-detail")).to_have_count(0)
+    page.locator(".calendar-more-btn").click()
+    expect(page.locator(".calendar-day-detail")).to_be_visible()
     page.locator(".calendar-detail-close").click()
     expect(page.locator(".calendar-day-detail")).to_have_count(0)
     add_button = page.locator(".calendar-day:not(.outside-month) .calendar-date-number[data-calendar-add-date]").first
@@ -1176,8 +1192,38 @@ def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_nam
     expect(page.locator("#taskName")).to_have_value(beta_name)
     page.locator("#cancelBtn").click()
 
+    put_task_record(
+        page,
+        {
+            "id": int(time.time() * 1000) + 50_000,
+            "name": month_end_name,
+            "description": "Month-end navigation regression check.",
+            "dueDate": None,
+            "dueAt": None,
+            "dueLocalDate": "2025-01-31",
+            "dueLocalTime": "12:00",
+            "dueTimeZone": None,
+            "reminderOffset": -1,
+            "subtasks": [],
+            "completed": False,
+            "createdAt": iso_minutes_from_now(2),
+            "order": 50_000,
+        },
+    )
+    select_view(page, "list")
+    page.locator("#searchInput").fill(month_end_name)
+    page.wait_for_timeout(350)
+    select_view(page, "calendar")
+    expect(page.locator(".calendar-title")).to_have_text(calendar_month_title(page, 2025, 0))
+    page.locator('[data-calendar-action="next"]').click()
+    expect(page.locator(".calendar-title")).to_have_text(calendar_month_title(page, 2025, 1))
+    page.locator('[data-calendar-action="prev"]').click()
+    expect(page.locator(".calendar-title")).to_have_text(calendar_month_title(page, 2025, 0))
+
     for extra_name in extra_names:
         delete_task_records_by_name(page, extra_name)
+    delete_task_records_by_name(page, month_end_name)
+    clear_search(page)
 
     select_filter(page, "all")
     select_view(page, "timeline")
@@ -1490,6 +1536,12 @@ def archive_and_restore_task(page: Page, completed_name: str) -> None:
     select_view(page, "stats")
     archived_shortcut = page.locator('.stats-mini[data-stats-filter="archived"]')
     expect(archived_shortcut.locator("strong")).to_have_text("1")
+    expect(page.locator(".stats-mini").nth(4).locator("strong")).to_have_text("0")
+    archived_trend_counts = page.locator(".stats-trend-bar").evaluate_all(
+        "bars => bars.map((bar) => Number(bar.dataset.trendCount || 0))"
+    )
+    if sum(archived_trend_counts) != 0:
+        raise AssertionError(f"Archived completions leaked into the completion trend: {archived_trend_counts}")
     archived_shortcut.click()
     expect(page.locator("#currentFilterLabel")).to_have_text(re.compile("已归档|Archived", re.I))
     archived = task_locator(page, completed_name)

@@ -1181,7 +1181,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.61'
+                VERSION: '3.62'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -4063,8 +4063,10 @@
         }
         function shiftCalendarMonth(delta) {
             const date = new Date(state.calendarMonthDate);
+            date.setDate(1);
             date.setMonth(date.getMonth() + delta);
             state.calendarMonthDate = date;
+            state.calendarDetailDateKey = '';
             renderTaskList();
         }
         function getStatsScopeTasks() {
@@ -4184,7 +4186,7 @@
         function calculateTaskStats(tasks) {
             const archived = tasks.filter(task => task.archived).length;
             const activeScopeTasks = tasks.filter(task => !task.archived);
-            const completionHistoryTasks = tasks.filter(task => task.completed);
+            const completionHistoryTasks = activeScopeTasks.filter(task => task.completed);
             const total = activeScopeTasks.length;
             const completed = activeScopeTasks.filter(task => task.completed).length;
             const deadlineTasks = activeScopeTasks.filter(hasTaskDueDate).length;
@@ -5548,6 +5550,7 @@
             if (action === 'next-year') shiftCalendarMonth(12);
             if (action === 'today') {
                 state.calendarMonthDate = new Date();
+                state.calendarDetailDateKey = '';
                 renderTaskList();
             }
             return true;
