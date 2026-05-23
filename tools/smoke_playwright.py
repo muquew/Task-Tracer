@@ -2594,8 +2594,11 @@ def assert_runtime_storage_fallback_preserves_snapshot(browser: Browser, base_ur
         expect(page.locator("#taskList .storage-empty-state")).to_contain_text(re.compile("1"))
         expect(page.locator("#emergencyBackupBtn")).to_be_visible()
         expect(page.locator("#openMenuBtn")).to_be_disabled()
-        press_control_shortcut(page, "m")
-        wait_for_class(page, "#menu", "show", present=False)
+        for shortcut in ["p", "i", "k", "m", "z"]:
+            press_control_shortcut(page, shortcut)
+            expect(page.locator("#commandPalette")).to_be_hidden()
+            expect(page.locator("#taskModal")).to_be_hidden()
+            wait_for_class(page, "#menu", "show", present=False)
         assert_accessibility_baseline(page, "runtime storage fallback")
         with page.expect_download() as download_info:
             page.locator("#emergencyBackupBtn").click()

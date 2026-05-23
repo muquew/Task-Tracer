@@ -1326,7 +1326,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.75'
+                VERSION: '3.76'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1731,11 +1731,109 @@
             });
             syncUndoControls();
         }
-        function ensureStorageAvailable() {
+        function ensureStorageAvailable(options = {}) {
             if (state.storageAvailable) return true;
             syncStorageAvailabilityUI();
-            utils.notify(utils.translate('storage.unavailable.actionsDisabled'), 'warning');
+            if (options.notify !== false) utils.notify(utils.translate('storage.unavailable.actionsDisabled'), 'warning');
             return false;
+        }
+        const STORAGE_GATED_ACTIONS = new Set([
+            'archive.completed',
+            'batch.clearSelection',
+            'batch.selectVisible',
+            'batch.toggle',
+            'batch.update',
+            'command.open',
+            'data.backup',
+            'data.import.file',
+            'data.import.open',
+            'dropdown.open',
+            'dropdown.toggle',
+            'filter.set',
+            'focus.enter',
+            'focus.exit',
+            'focus.toggle',
+            'language.switch',
+            'menu.toggle',
+            'notifications.toggle',
+            'order.save',
+            'project.filter',
+            'quickAdd.focus',
+            'savedView.apply',
+            'savedView.delete',
+            'savedView.promptSave',
+            'search.clear',
+            'search.focus',
+            'sort.set',
+            'subtask.toggle',
+            'task.action',
+            'task.edit',
+            'task.new',
+            'task.quickAddSubmit',
+            'task.save',
+            'tasks.clearCompleted',
+            'undo.perform',
+            'view.set'
+        ]);
+        function canRunAppAction(action, options = {}) {
+            if (!STORAGE_GATED_ACTIONS.has(action)) return true;
+            if (state.storageAvailable) return true;
+            if (options.closeSurfaces !== false) closeStorageBlockedSurfaces();
+            ensureStorageAvailable({ notify: options.notify });
+            return false;
+        }
+        function closeStorageBlockedSurfaces() {
+            closeMenu();
+            closeAllDropdowns();
+            closeAllCustomSelects();
+            if (isCommandPaletteOpen()) closeCommandPalette({ restoreFocus: false });
+            if (isTaskDialogOpen()) closeDialog();
+        }
+        function runAppAction(action, payload = {}, options = {}) {
+            if (!canRunAppAction(action, options)) return false;
+            switch (action) {
+                case 'archive.completed': handleArchiveCompleted(); break;
+                case 'batch.clearSelection': clearBatchSelection(); break;
+                case 'batch.selectVisible': selectVisibleTasksForBatch(); break;
+                case 'batch.toggle': setBatchMode(payload.enabled ?? !state.batchMode); break;
+                case 'batch.update': runBatchTaskUpdate(payload.batchAction); break;
+                case 'command.open': openCommandPalette(); break;
+                case 'data.backup': backupTasks(); break;
+                case 'data.import.file': importTasks(payload.file); break;
+                case 'data.import.open': DOM.menu.fileInput.click(); break;
+                case 'dropdown.open': openDropdownAndFocusOption(payload.dropdown, payload.key); break;
+                case 'dropdown.toggle': toggleDropdown(payload.dropdown); break;
+                case 'filter.set': applyTaskFilter(payload.value); break;
+                case 'focus.enter': enterFocusMode(); break;
+                case 'focus.exit': exitFocusMode(); break;
+                case 'focus.toggle': toggleFocusMode(); break;
+                case 'language.switch': switchLanguage(payload.code); break;
+                case 'menu.toggle': toggleMainMenu(); break;
+                case 'notifications.toggle': toggleNotifications().catch(handleNotificationToggleError); break;
+                case 'order.save': saveNewOrder(); break;
+                case 'project.filter': applyProjectFilter(payload.value); break;
+                case 'quickAdd.focus': DOM.quickAddInput.focus(); break;
+                case 'savedView.apply': applySavedView(payload.id); break;
+                case 'savedView.delete': deleteSavedView(payload.id).catch(error => {
+                    console.error('删除保存视图失败:', error);
+                    handleStorageOperationError(error);
+                }); break;
+                case 'savedView.promptSave': promptSaveSmartView(); break;
+                case 'scroll.top': scrollToTop(); break;
+                case 'search.clear': clearSearchInput(payload.options || {}); break;
+                case 'search.focus': DOM.inputs.search.focus(); break;
+                case 'sort.set': applyTaskSort(payload.value); break;
+                case 'subtask.toggle': toggleSubtaskComplete(payload.taskId, payload.subtaskId); break;
+                case 'task.action': runTaskAction(payload.taskAction, payload.taskId); break;
+                case 'task.edit': editTask(payload.taskId); break;
+                case 'task.new': openModal(null, payload.options || {}); break;
+                case 'tasks.clearCompleted': handleClearCompleted(); break;
+                case 'theme.toggle': utils.toggleTheme(); break;
+                case 'undo.perform': performUndo(); break;
+                case 'view.set': setViewMode(payload.view); break;
+                default: return false;
+            }
+            return true;
         }
         function captureStorageFallbackSnapshot() {
             if (Array.isArray(state.tasks) && state.tasks.length > 0) {
@@ -1924,17 +2022,17 @@
             state.eventsBound = true;
         }
         function bindGlobalEvents() {
-            DOM.themeBtn.addEventListener('click', utils.toggleTheme);
-            DOM.batchModeBtn.addEventListener('click', () => setBatchMode(!state.batchMode));
-            DOM.undoBtn.addEventListener('click', performUndo);
+            DOM.themeBtn.addEventListener('click', () => runAppAction('theme.toggle'));
+            DOM.batchModeBtn.addEventListener('click', () => runAppAction('batch.toggle'));
+            DOM.undoBtn.addEventListener('click', () => runAppAction('undo.perform'));
             window.addEventListener('scroll', () => DOM.backToTopBtn.classList.toggle(CONFIG.UI.CLASSES.SHOW, window.scrollY > 300));
-            DOM.backToTopBtn.addEventListener('click', scrollToTop);
+            DOM.backToTopBtn.addEventListener('click', () => runAppAction('scroll.top'));
             document.addEventListener('keydown', handleKeyboardShortcuts);
             document.addEventListener('click', closeCustomSelectsOnOutsideClick);
             document.addEventListener('visibilitychange', handleVisibilityChange);
         }
         function bindDialogEvents() {
-            DOM.openModalBtn.addEventListener('click', () => openModal());
+            DOM.openModalBtn.addEventListener('click', () => runAppAction('task.new'));
             DOM.closeModalBtn.addEventListener('click', closeDialog);
             DOM.cancelBtn.addEventListener('click', closeDialog);
             DOM.modal.addEventListener('click', (e) => { if (e.target === DOM.modal) closeDialog(); });
@@ -1956,38 +2054,39 @@
         function bindSearchEvents() {
             DOM.inputs.search.addEventListener('input', syncSearchClearButton);
             DOM.inputs.search.addEventListener('input', utils.debounce(() => {
+                if (!state.storageAvailable) return;
                 state.searchQuery = normalizeSearchQuery(DOM.inputs.search.value);
                 renderTaskList();
                 announceTaskViewSummary();
             }, 300));
-            DOM.clearSearchBtn.addEventListener('click', () => clearSearchInput());
+            DOM.clearSearchBtn.addEventListener('click', () => runAppAction('search.clear'));
             syncSearchClearButton();
-            DOM.clearCompletedBtn.addEventListener('click', handleClearCompleted);
+            DOM.clearCompletedBtn.addEventListener('click', () => runAppAction('tasks.clearCompleted'));
         }
         function bindViewEvents() {
             DOM.viewSwitcher.addEventListener('click', (e) => {
                 const tab = e.target.closest('.view-tab');
                 if (!tab) return;
-                setViewMode(tab.dataset.view);
+                runAppAction('view.set', { view: tab.dataset.view });
             });
             DOM.viewSwitcher.addEventListener('keydown', handleViewSwitcherKeydown);
         }
         function bindSavedViewEvents() {
-            DOM.saveSmartViewBtn.addEventListener('click', promptSaveSmartView);
+            DOM.saveSmartViewBtn.addEventListener('click', () => runAppAction('savedView.promptSave'));
             DOM.savedViewsList.addEventListener('click', handleSavedViewListClick);
         }
         function bindFocusModeEvents() {
-            DOM.focusModeToggleBtn.addEventListener('click', toggleFocusMode);
-            DOM.exitFocusModeBtn.addEventListener('click', exitFocusMode);
+            DOM.focusModeToggleBtn.addEventListener('click', () => runAppAction('focus.toggle'));
+            DOM.exitFocusModeBtn.addEventListener('click', () => runAppAction('focus.exit'));
         }
         function bindBatchModeEvents() {
-            DOM.batchSelectVisibleBtn.addEventListener('click', selectVisibleTasksForBatch);
-            DOM.batchClearSelectionBtn.addEventListener('click', clearBatchSelection);
-            DOM.batchFocusBtn.addEventListener('click', () => runBatchTaskUpdate('focus'));
-            DOM.batchCompleteBtn.addEventListener('click', () => runBatchTaskUpdate('complete'));
-            DOM.batchArchiveBtn.addEventListener('click', () => runBatchTaskUpdate('archive'));
-            DOM.batchDeleteBtn.addEventListener('click', () => runBatchTaskUpdate('delete'));
-            DOM.exitBatchModeBtn.addEventListener('click', () => setBatchMode(false));
+            DOM.batchSelectVisibleBtn.addEventListener('click', () => runAppAction('batch.selectVisible'));
+            DOM.batchClearSelectionBtn.addEventListener('click', () => runAppAction('batch.clearSelection'));
+            DOM.batchFocusBtn.addEventListener('click', () => runAppAction('batch.update', { batchAction: 'focus' }));
+            DOM.batchCompleteBtn.addEventListener('click', () => runAppAction('batch.update', { batchAction: 'complete' }));
+            DOM.batchArchiveBtn.addEventListener('click', () => runAppAction('batch.update', { batchAction: 'archive' }));
+            DOM.batchDeleteBtn.addEventListener('click', () => runAppAction('batch.update', { batchAction: 'delete' }));
+            DOM.exitBatchModeBtn.addEventListener('click', () => runAppAction('batch.toggle', { enabled: false }));
         }
         function bindQuickAddEvents() {
             DOM.quickAddForm.addEventListener('submit', handleQuickAddSubmit);
@@ -2011,13 +2110,14 @@
             e.preventDefault();
             const nextTab = tabs[nextIndex];
             if (!nextTab) return;
-            setViewMode(nextTab.dataset.view);
+            runAppAction('view.set', { view: nextTab.dataset.view });
             nextTab.focus();
         }
         function getViewTabs() {
             return Array.from(DOM.viewSwitcher.querySelectorAll('.view-tab'));
         }
         function setViewMode(viewMode) {
+            if (!ensureStorageAvailable()) return;
             if (!['list', 'calendar', 'timeline', 'stats'].includes(viewMode) || state.viewMode === viewMode) return;
             state.focusMode = false;
             state.viewMode = viewMode;
@@ -2108,6 +2208,7 @@
             return `${projectName} · ${filterName} · ${viewName}`;
         }
         async function saveSmartView(name) {
+            if (!ensureStorageAvailable()) return;
             const snapshot = getCurrentSmartViewSnapshot();
             const savedView = normalizeSavedView({ id: createSavedViewId(), name, ...snapshot }, state.savedViews.length, new Set(state.savedViews.map(view => view.id)));
             state.savedViews = [savedView, ...state.savedViews.filter(view => !isSameSmartView(view, savedView))].slice(0, 12);
@@ -2185,16 +2286,14 @@
         function handleSavedViewListClick(e) {
             const deleteButton = e.target.closest('[data-saved-view-delete-id]');
             if (deleteButton) {
-                deleteSavedView(deleteButton.dataset.savedViewDeleteId).catch(error => {
-                    console.error('删除保存视图失败:', error);
-                    handleStorageOperationError(error);
-                });
+                runAppAction('savedView.delete', { id: deleteButton.dataset.savedViewDeleteId });
                 return;
             }
             const applyButton = e.target.closest('[data-saved-view-id]');
-            if (applyButton) applySavedView(applyButton.dataset.savedViewId);
+            if (applyButton) runAppAction('savedView.apply', { id: applyButton.dataset.savedViewId });
         }
         function applySavedView(id) {
+            if (!ensureStorageAvailable()) return;
             const view = state.savedViews.find(item => item.id === id);
             if (!view) return;
             state.focusMode = false;
@@ -2208,6 +2307,7 @@
             announceTaskViewSummary();
         }
         async function deleteSavedView(id) {
+            if (!ensureStorageAvailable()) return;
             const view = state.savedViews.find(item => item.id === id);
             state.savedViews = state.savedViews.filter(item => item.id !== id);
             await persistSavedViews();
@@ -2215,6 +2315,7 @@
             if (view) utils.notify(utils.translate('savedViews.deleted').replace('{name}', view.name));
         }
         function enterFocusMode() {
+            if (!ensureStorageAvailable()) return;
             closeMenu();
             closeAllDropdowns();
             state.focusMode = true;
@@ -2234,6 +2335,7 @@
             else enterFocusMode();
         }
         function exitFocusMode() {
+            if (!ensureStorageAvailable()) return;
             state.focusMode = false;
             renderTaskList();
             announceTaskViewSummary();
@@ -2313,16 +2415,19 @@
             });
         }
         function selectVisibleTasksForBatch() {
+            if (!ensureStorageAvailable() || !state.batchMode) return;
             getVisibleTasks().forEach(task => state.selectedTaskIds.add(task.id));
             renderTaskList();
             utils.announce(utils.translate('batch.selected').replace('{count}', state.selectedTaskIds.size));
         }
         function clearBatchSelection() {
+            if (!ensureStorageAvailable() || !state.batchMode) return;
             state.selectedTaskIds.clear();
             renderTaskList();
             utils.announce(utils.translate('batch.selected').replace('{count}', 0));
         }
         function toggleBatchTaskSelection(id, selected) {
+            if (!state.storageAvailable || !state.batchMode) return;
             if (selected) state.selectedTaskIds.add(id);
             else state.selectedTaskIds.delete(id);
             syncBatchModeUI();
@@ -2444,7 +2549,7 @@
                 subtitle: t['commandPalette.groups.views'],
                 keywords: `${view} ${t[`views.${view}`]}`,
                 icon: view === 'calendar' ? 'icon-calendar' : view === 'timeline' ? 'icon-timeline' : view === 'stats' ? 'icon-chart' : 'icon-list',
-                run: () => setViewMode(view)
+                run: () => runAppAction('view.set', { view })
             }));
             const projectItems = [
                 { value: 'all', label: t['projects.all'] },
@@ -2456,7 +2561,7 @@
                 subtitle: t['commandPalette.groups.projects'],
                 keywords: `project p ${project.label}`,
                 icon: 'icon-filter',
-                run: () => applyProjectFilter(project.value)
+                run: () => runAppAction('project.filter', { value: project.value })
             }));
             const savedViewItems = state.savedViews.map(view => ({
                 id: `saved-view-${view.id}`,
@@ -2464,7 +2569,7 @@
                 subtitle: t['commandPalette.groups.savedViews'],
                 keywords: `saved view smart ${view.name} ${view.searchQuery}`,
                 icon: 'icon-bookmark',
-                run: () => applySavedView(view.id)
+                run: () => runAppAction('savedView.apply', { id: view.id })
             }));
             return [
                 {
@@ -2474,7 +2579,7 @@
                     keywords: 'new add create task',
                     icon: 'icon-plus',
                     run: (returnFocus) => {
-                        openModal();
+                        runAppAction('task.new');
                         state.elementToFocusOnClose = captureFocusReturnTarget(returnFocus || DOM.openModalBtn);
                     }
                 },
@@ -2484,7 +2589,7 @@
                     subtitle: t['commandPalette.groups.tasks'],
                     keywords: 'quick add input',
                     icon: 'icon-plus',
-                    run: () => DOM.quickAddInput.focus()
+                    run: () => runAppAction('quickAdd.focus')
                 },
                 {
                     id: 'search',
@@ -2492,7 +2597,7 @@
                     subtitle: t['commandPalette.groups.tasks'],
                     keywords: 'find filter search',
                     icon: 'icon-filter',
-                    run: () => DOM.inputs.search.focus()
+                    run: () => runAppAction('search.focus')
                 },
                 {
                     id: 'focus-mode',
@@ -2500,7 +2605,7 @@
                     subtitle: t['commandPalette.groups.tasks'],
                     keywords: 'today plan focus',
                     icon: 'icon-target',
-                    run: enterFocusMode
+                    run: () => runAppAction('focus.enter')
                 },
                 {
                     id: 'batch-mode',
@@ -2508,7 +2613,7 @@
                     subtitle: t['commandPalette.groups.tasks'],
                     keywords: 'batch multi select',
                     icon: 'icon-check-square',
-                    run: () => setBatchMode(true)
+                    run: () => runAppAction('batch.toggle', { enabled: true })
                 },
                 {
                     id: 'undo',
@@ -2517,7 +2622,7 @@
                     keywords: 'undo restore',
                     icon: 'icon-undo',
                     disabled: !state.undoAction,
-                    run: performUndo
+                    run: () => runAppAction('undo.perform')
                 },
                 ...viewItems,
                 ...savedViewItems,
@@ -2527,7 +2632,7 @@
                     subtitle: t['commandPalette.groups.data'],
                     keywords: 'download export backup json snapshot save',
                     icon: 'icon-backup',
-                    run: backupTasks
+                    run: () => runAppAction('data.backup')
                 },
                 ...projectItems
             ];
@@ -2615,9 +2720,24 @@
             item.run(returnFocus);
         }
         function applyProjectFilter(value) {
+            if (!ensureStorageAvailable()) return;
             state.projectFilter = value;
             renderTaskList();
-            syncDropdowns();
+            syncDropdowns({ focusTrigger: DOM.dropdowns.project.btn });
+            announceTaskViewSummary();
+        }
+        function applyTaskFilter(value) {
+            if (!ensureStorageAvailable()) return;
+            state.filter = value;
+            renderTaskList();
+            syncDropdowns({ focusTrigger: DOM.dropdowns.filter.btn });
+            announceTaskViewSummary();
+        }
+        function applyTaskSort(value) {
+            if (!ensureStorageAvailable()) return;
+            state.sort = value;
+            renderTaskList();
+            syncDropdowns({ focusTrigger: DOM.dropdowns.sort.btn });
             announceTaskViewSummary();
         }
         function syncPageModalOpenState() {
@@ -2629,12 +2749,12 @@
             if (DOM.notificationToggleBtn) {
                 DOM.notificationToggleBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    toggleNotifications().catch(handleNotificationToggleError);
+                    runAppAction('notifications.toggle');
                 });
             } else {
                 console.error('Notification button not found in DOM');
             }
-            if (DOM.notification.undoBtn) DOM.notification.undoBtn.addEventListener('click', performUndo);
+            if (DOM.notification.undoBtn) DOM.notification.undoBtn.addEventListener('click', () => runAppAction('undo.perform'));
         }
         function bindUpdatePromptEvents() {
             DOM.updatePrompt.reloadBtn.addEventListener('click', applyServiceWorkerUpdate);
@@ -2747,26 +2867,21 @@
             DOM.menu.langToggle.addEventListener('click', toggleLanguageSubmenu);
             DOM.menu.langContainer.addEventListener('click', handleLanguageMenuClick);
             DOM.menu.container.addEventListener('keydown', handleMenuKeydown);
-            DOM.menu.backupBtn.addEventListener('click', backupTasks);
-            DOM.menu.importBtn.addEventListener('click', () => {
-                if (ensureStorageAvailable()) DOM.menu.fileInput.click();
-            });
+            DOM.menu.backupBtn.addEventListener('click', () => runAppAction('data.backup'));
+            DOM.menu.importBtn.addEventListener('click', () => runAppAction('data.import.open'));
             DOM.menu.installBtn.addEventListener('click', handleInstallAppClick);
-            DOM.menu.archiveCompletedBtn.addEventListener('click', handleArchiveCompleted);
-            DOM.menu.fileInput.addEventListener('change', (e) => importTasks(e.target.files[0]));
+            DOM.menu.archiveCompletedBtn.addEventListener('click', () => runAppAction('archive.completed'));
+            DOM.menu.fileInput.addEventListener('change', (e) => runAppAction('data.import.file', { file: e.target.files[0] }));
         }
         function handleMainMenuClick(e) {
             e.stopPropagation();
-            if (!canOpenMainMenu()) {
-                closeMenu();
-                ensureStorageAvailable();
-                return;
-            }
+            runAppAction('menu.toggle');
+        }
+        function toggleMainMenu() {
+            if (!DOM.menu.btn || DOM.menu.btn.disabled) return false;
             updateBackupHealthStatus().catch(handleBackgroundStorageFailure);
             toggleMenu(DOM.menu.container, DOM.menu.btn);
-        }
-        function canOpenMainMenu() {
-            return state.storageAvailable && DOM.menu.btn && !DOM.menu.btn.disabled;
+            return true;
         }
         function closeMainMenuOnOutsideClick(e) {
             if (isElementOpen(DOM.menu.container) && !DOM.menu.container.contains(e.target) && !DOM.menu.btn.contains(e.target)) {
@@ -2775,6 +2890,7 @@
         }
         function toggleLanguageSubmenu(e) {
             e.stopPropagation();
+            if (!canRunAppAction('language.switch')) return;
             const isExpanded = DOM.menu.langSubmenu.classList.toggle(CONFIG.UI.CLASSES.SHOW);
             DOM.menu.langToggle.classList.toggle(CONFIG.UI.CLASSES.OPEN, isExpanded);
             setExpanded(DOM.menu.langToggle, isExpanded);
@@ -2782,7 +2898,7 @@
         }
         function handleLanguageMenuClick(e) {
             if (e.target.classList.contains('lang-btn')) {
-                switchLanguage(e.target.dataset.lang);
+                runAppAction('language.switch', { code: e.target.dataset.lang });
             }
         }
         function handleMenuKeydown(e) {
@@ -2828,6 +2944,7 @@
             if (item) item.focus();
         }
         function openLanguageSubmenu() {
+            if (!canRunAppAction('language.switch')) return;
             DOM.menu.langSubmenu.classList.add(CONFIG.UI.CLASSES.SHOW);
             DOM.menu.langToggle.classList.add(CONFIG.UI.CLASSES.OPEN);
             setExpanded(DOM.menu.langToggle, true);
@@ -2909,21 +3026,12 @@
             }
             const meta = e.ctrlKey || e.metaKey;
             const key = e.key.toLowerCase();
-            if (meta && key === 'p') { e.preventDefault(); openCommandPalette(); return; }
-            if (meta && key === 'z' && !e.shiftKey && !isEditableElement(document.activeElement)) { e.preventDefault(); performUndo(); return; }
-            if (meta && key === 'k') { e.preventDefault(); DOM.inputs.search.focus(); return; }
-            if (meta && key === 'i') { e.preventDefault(); if (DOM.modal.style.display !== 'flex') openModal(); return; }
-            if (meta && key === 'm') {
-                e.preventDefault();
-                if (!canOpenMainMenu()) {
-                    closeMenu();
-                    ensureStorageAvailable();
-                    return;
-                }
-                toggleMenu(DOM.menu.container, DOM.menu.btn);
-                return;
-            }
-            if (e.altKey && key === 't') { e.preventDefault(); scrollToTop(); return; }
+            if (meta && key === 'p') { e.preventDefault(); runAppAction('command.open'); return; }
+            if (meta && key === 'z' && !e.shiftKey && !isEditableElement(document.activeElement)) { e.preventDefault(); runAppAction('undo.perform'); return; }
+            if (meta && key === 'k') { e.preventDefault(); runAppAction('search.focus'); return; }
+            if (meta && key === 'i') { e.preventDefault(); if (DOM.modal.style.display !== 'flex') runAppAction('task.new'); return; }
+            if (meta && key === 'm') { e.preventDefault(); runAppAction('menu.toggle'); return; }
+            if (e.altKey && key === 't') { e.preventDefault(); runAppAction('scroll.top'); return; }
             if (e.key === 'Escape') {
                 if (document.activeElement === DOM.inputs.search && DOM.inputs.search.value) clearSearchInput();
                 else if (document.activeElement === DOM.inputs.search) DOM.inputs.search.blur();
@@ -3037,7 +3145,7 @@
         async function handleTaskSave(e) {
             e.preventDefault();
             if (state.taskFormSaving) return;
-            if (!ensureStorageAvailable()) return;
+            if (!canRunAppAction('task.save', { closeSurfaces: false })) return;
             const t = state.translations[state.currentLanguage];
             const taskPayload = buildTaskPayloadFromForm();
             if (!taskPayload.name) {
@@ -3076,7 +3184,7 @@
         async function handleQuickAddSubmit(e) {
             e.preventDefault();
             if (state.quickAddSaving) return;
-            if (!ensureStorageAvailable()) return;
+            if (!canRunAppAction('task.quickAddSubmit', { closeSurfaces: false })) return;
             const t = state.translations[state.currentLanguage];
             const rawInput = DOM.quickAddInput.value.trim();
             if (!rawInput) {
@@ -4215,6 +4323,7 @@
             DOM.inputs.subtask.focus();
         }
         async function toggleSubtaskComplete(taskId, subtaskId) {
+            if (!ensureStorageAvailable()) return;
             const task = getTaskById(taskId);
             if (!task || !task.subtasks) return;
             const sub = task.subtasks.find(s => s.id === subtaskId);
@@ -4365,6 +4474,7 @@
                 && query.due.every(value => matchesTaskDueSearch(task, value));
         }
         function clearSearchInput({ keepFocus = true } = {}) {
+            if (!ensureStorageAvailable()) return;
             DOM.inputs.search.value = '';
             state.searchQuery = '';
             syncSearchClearButton();
@@ -6203,7 +6313,7 @@
         function bindDropdownToggle(dropdown) {
             dropdown.btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                toggleDropdown(dropdown);
+                runAppAction('dropdown.toggle', { dropdown });
             });
             dropdown.btn.addEventListener('keydown', (e) => handleDropdownButtonKeydown(e, dropdown));
             getDropdownMenu(dropdown).addEventListener('keydown', (e) => handleDropdownMenuKeydown(e, dropdown));
@@ -6211,7 +6321,7 @@
         function handleDropdownButtonKeydown(e, dropdown) {
             if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) return;
             e.preventDefault();
-            openDropdownAndFocusOption(dropdown, e.key);
+            runAppAction('dropdown.open', { dropdown, key: e.key });
         }
         function handleDropdownMenuKeydown(e, dropdown) {
             if (e.key === 'Escape') {
@@ -6247,26 +6357,17 @@
         function handleProjectDropdownClick(e) {
             const option = e.target.closest('.dropdown-option');
             if (!option) return;
-            state.projectFilter = option.dataset.project;
-            renderTaskList();
-            syncDropdowns({ focusTrigger: DOM.dropdowns.project.btn });
-            announceTaskViewSummary();
+            runAppAction('project.filter', { value: option.dataset.project });
         }
         function handleFilterDropdownClick(e) {
             const option = e.target.closest('.dropdown-option');
             if (!option) return;
-            state.filter = option.dataset.filter;
-            renderTaskList();
-            syncDropdowns({ focusTrigger: DOM.dropdowns.filter.btn });
-            announceTaskViewSummary();
+            runAppAction('filter.set', { value: option.dataset.filter });
         }
         function handleSortDropdownClick(e) {
             const option = e.target.closest('.dropdown-option');
             if (!option) return;
-            state.sort = option.dataset.sort;
-            renderTaskList();
-            syncDropdowns({ focusTrigger: DOM.dropdowns.sort.btn });
-            announceTaskViewSummary();
+            runAppAction('sort.set', { value: option.dataset.sort });
         }
         function closeDropdownsOnOutsideClick(e) {
             if (!e.target.closest('.dropdown-container')) {
@@ -6369,12 +6470,14 @@
         function handleTaskSelectionClick(e) {
             if (!e.target.classList.contains('task-select-checkbox')) return false;
             e.stopPropagation();
+            if (!canRunAppAction('batch.selectVisible', { closeSurfaces: false })) return true;
             toggleBatchTaskSelection(Number(e.target.dataset.taskId), e.target.checked);
             return true;
         }
         function handleStatsShortcutClick(e) {
             const button = e.target.closest('[data-stats-filter]');
             if (!button) return false;
+            if (!canRunAppAction('filter.set')) return true;
             state.filter = button.dataset.statsFilter;
             state.viewMode = 'list';
             syncViewSwitcher();
@@ -6426,7 +6529,7 @@
         function handleCalendarAddClick(e) {
             const button = e.target.closest('[data-calendar-add-date]');
             if (!button) return false;
-            openModal(null, { dueDate: parseDateKey(button.dataset.calendarAddDate), dueTime: CONFIG.DEFAULTS.TIME });
+            runAppAction('task.new', { options: { dueDate: parseDateKey(button.dataset.calendarAddDate), dueTime: CONFIG.DEFAULTS.TIME } });
             return true;
         }
         function parseDateKey(dateKey) {
@@ -6437,13 +6540,13 @@
         function handleCalendarTaskClick(e) {
             const button = e.target.closest('[data-calendar-task-id]');
             if (!button) return false;
-            editTask(Number(button.dataset.calendarTaskId));
+            runAppAction('task.edit', { taskId: Number(button.dataset.calendarTaskId) });
             return true;
         }
         function handleSubtaskCheckboxClick(e) {
             if (!e.target.classList.contains('subtask-checkbox')) return false;
             e.stopPropagation();
-            toggleSubtaskComplete(getTaskIdFromElement(e.target), Number(e.target.dataset.subtaskId));
+            runAppAction('subtask.toggle', { taskId: getTaskIdFromElement(e.target), subtaskId: Number(e.target.dataset.subtaskId) });
             return true;
         }
         function handleSubtaskRowClick(e) {
@@ -6468,10 +6571,11 @@
             const btn = e.target.closest('.action-btn');
             if (!btn) return false;
             if (btn.disabled) return true;
-            runTaskAction(btn.dataset.action, getTaskIdFromElement(btn));
+            runAppAction('task.action', { taskAction: btn.dataset.action, taskId: getTaskIdFromElement(btn) });
             return true;
         }
         async function runTaskAction(action, taskId) {
+            if (!canRunAppAction('task.action', { closeSurfaces: false })) return;
             if (!isGuardedTaskAction(action)) {
                 runUnguardedTaskAction(action, taskId);
                 return;
@@ -6684,7 +6788,7 @@
             }
         }
         function canReorderTasks() {
-            return state.viewMode === 'list' && state.sort === 'manual' && !state.searchQuery && !state.batchMode && !state.focusMode;
+            return state.storageAvailable && state.viewMode === 'list' && state.sort === 'manual' && !state.searchQuery && !state.batchMode && !state.focusMode;
         }
         function preventCancelableEvent(e) {
             if (e.cancelable) e.preventDefault();
@@ -6702,7 +6806,7 @@
             }, { offset: Number.NEGATIVE_INFINITY }).element;
         }
         async function saveNewOrder() {
-            if (!ensureStorageAvailable()) return;
+            if (!canRunAppAction('order.save', { closeSurfaces: false })) return;
             const newOrderIds = Array.from(DOM.taskList.children)
                 .map(el => Number(el.dataset.taskId))
                 .filter(id => !isNaN(id));
@@ -6807,6 +6911,7 @@
         }
         function switchLanguage(code) {
             if (!state.translations[code] || code === state.currentLanguage) return;
+            if (!ensureStorageAvailable()) return;
             const previousLanguage = state.currentLanguage;
             state.currentLanguage = code;
             initLanguage();
