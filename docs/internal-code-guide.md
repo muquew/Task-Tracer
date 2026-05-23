@@ -26,8 +26,8 @@
    - 动态创建的 SVG 通过 `createIcon()` 默认标记为装饰性图标。
 
 4. App shell HTML
-   - Header 放主题、通知、新建、菜单入口。
-   - 主菜单放导出、备份、导入、归档已完成、清除已完成和语言切换。
+   - Header 放主题、通知、今日计划、新建和菜单入口。
+   - 主菜单放导出/备份、导入、归档已完成、清除已完成和语言切换。
    - Controls bar 放搜索、项目视图、筛选、排序。
    - View switcher 放列表、日历、时间线和统计视图入口。
    - `#taskList` 是任务列表的唯一渲染容器。
@@ -96,7 +96,7 @@
   - `language`: 当前语言。
   - `notifications_enabled`: 通知开关。
   - `sampleTasksAdded`: 是否已经写入示例任务。
-  - `lastBackupAt`: 最近一次点击“立即备份”的时间。
+  - `lastBackupAt`: 最近一次点击“导出/备份”的时间。
   - `__task_tracer_storage_probe__`: 启动探针临时键，写入后立即删除，用于验证 IndexedDB 真的可写。
 
 ## 项目、标签与搜索规则
@@ -120,14 +120,13 @@
 - 时间线视图按本地日期分组，继续复用任务卡片模板，因此任务按钮、子任务和归档逻辑保持一致。
 - 统计视图使用 `getStatsScopeTasks()`，只受项目和搜索范围影响，不受主状态筛选影响；状态搜索会复用列表视图的归档隔离规则，只有显式 `status:archived` 才会纳入归档任务。完成率按当前范围任务计算，逾期率按未归档且有截止日期的任务计算，连续完成天数基于 `completedAt`，并单独展示归档数量。
 
-## 导入、导出与备份边界
+## 导入与导出/备份边界
 
-- 导出由 `exportTasks()` 进入，下载当前任务 JSON，适合迁移、查看或手动保存。
 - 导入由 `importTasks(file)` 进入，会先构建预览，展示导入数量、文件内同名重复、重复任务 ID、与当前任务同名项和替换影响。默认确认后通过 `replaceAllTasks()` 全量替换当前任务；开启合并模式后会读取冲突策略，并通过 `mergeImportedTasks()` 合并、跳过或替换同名本地任务。
-- 备份由 `backupTasks()` 进入，下载带 `schema` 和 `versionNotes` 的版本化快照，并把时间写入 `lastBackupAt`。
+- 导出/备份由 `backupTasks()` 进入，下载带 `schema` 和 `versionNotes` 的版本化快照，并把时间写入 `lastBackupAt`。
 - 紧急备份由 `downloadEmergencyBackup()` 进入，仅在运行中存储故障且 `storageFallbackTasks` 仍有内存快照时开放；文件会标记 `type: emergency-backup` 和 `schema.storage: memory-fallback`，便于后续恢复时识别来源。
 - `scheduleBackupReminder()` 根据 `lastBackupAt` 和任务数量决定是否显示最近备份提醒。
-- `ensureStorageAvailable()` 是写入口保护层；当 IndexedDB 不可用时，新建、编辑、删除、完成、拖拽排序、导入、常规导出、常规备份、归档和通知开关都会被暂停，只有当前页面内存快照的紧急备份不经过 IndexedDB。
+- `ensureStorageAvailable()` 是写入口保护层；当 IndexedDB 不可用时，新建、编辑、删除、完成、拖拽排序、导入、常规导出/备份、归档和通知开关都会被暂停，只有当前页面内存快照的紧急备份不经过 IndexedDB。
 
 ## 初始化流程
 
@@ -194,7 +193,7 @@
 - `setViewMode(viewMode)`: 切换列表、日历、时间线或统计视图。
 - `syncViewSwitcher()`: 同步视图按钮选中态。
 - `bindNotificationEvents()`: 通知按钮和通知条撤销按钮。
-- `bindMenuEvents()`: 主菜单、语言子菜单、导入、导出、备份和归档入口。
+- `bindMenuEvents()`: 主菜单、语言子菜单、导入、导出/备份和归档入口。
 - `bindTaskListEvents()`: 任务列表委托点击。
 - `bindSubtaskInputEvents()`: 子任务输入。
 - `bindSubtaskPreviewEvents()`: 子任务草稿编辑。
@@ -346,7 +345,7 @@
 - `syncRepeatControls()`: 根据截止日期和重复类型启用或禁用重复任务控件。
 - `openCommandPalette()` / `closeCommandPalette()`: 打开或关闭命令面板，并处理焦点恢复。
 - `renderCommandPalette()` / `getCommandPaletteItems()`: 根据当前任务、视图、项目、智能视图、今日计划、批量模式和撤销状态生成命令候选项。
-- `executeCommandPaletteItem(index)`: 执行当前命令，覆盖新建任务、快速添加、搜索、视图切换、智能视图、今日计划、批量操作、撤销、导出、备份和项目切换。
+- `executeCommandPaletteItem(index)`: 执行当前命令，覆盖新建任务、快速添加、搜索、视图切换、智能视图、今日计划、批量操作、撤销、导出/备份和项目切换。
 - `closeDialog()`: 关闭并清理弹窗。
 - `resetDialogToFormMode()`: 从确认模式恢复表单模式。
 - `utils.confirm(title, msg, onConfirm)`: 复用任务弹窗显示确认流程。
@@ -418,18 +417,17 @@
 - `mergeVisibleManualOrder(visibleOrderIds)`: 将局部可见任务顺序合并回全局手动排序。
 - `sortTasksByManualOrder(tasks)`: 按 `order` 和 `id` 得到稳定手动顺序。
 
-### 导入、导出、备份、示例与定时器
+### 导入、导出/备份、示例与定时器
 
 - `startProgressTimer()`: 启动定时刷新。
 - `refreshTaskTimers()`: 局部刷新倒计时和状态样式。
 - `handleVisibilityChange()`: 页面恢复时刷新。
-- `exportTasks()`: 导出任务 JSON。
-- `backupTasks()`: 下载版本化本地备份。
-- `downloadTaskData(mode)`: 导出和备份的统一下载入口。
+- `backupTasks()`: 下载版本化本地备份，并更新最近备份时间。
+- `downloadTaskData(mode)`: 常规导出/备份下载入口。
 - `downloadEmergencyBackup()`: 在运行时存储故障后下载当前内存快照。
 - `downloadJsonPayload(payload, filename)`: 执行 JSON 文件下载。
 - `createTaskDataPayload(mode, date, tasks, storage = 'indexeddb')`: 构建带版本说明的数据文件。
-- `createTaskDataFilename(mode, date)`: 生成导出或备份文件名。
+- `createTaskDataFilename(mode, date)`: 生成导出/备份文件名。
 - `scheduleBackupReminder()`: 根据最近备份时间提示备份。
 - `importTasks(file)`: 读取 JSON、展示导入预览，并按替换模式或合并模式写入任务。
 - `buildImportPreview(importedTasks, rawTasks)`: 统计导入数量、当前数据影响、文件内同名重复、重复任务 ID、与当前任务同名项和冲突列表。

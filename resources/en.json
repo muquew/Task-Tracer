@@ -5,10 +5,8 @@
     "toolbar": "Task toolbar"
   },
   "actions": {
-    "export": "Export",
-    "exportTitle": "Export task data file",
-    "backupTitle": "Download local backup",
-    "backup": "Back Up Now",
+    "exportBackup": "Export/Backup",
+    "exportBackupTitle": "Export complete task data and update backup status",
     "import": "Import",
     "importTitle": "Import and replace current task data",
     "addTask": "Add Task",
@@ -133,8 +131,7 @@
       "focusMode": "Open today plan",
       "batchMode": "Enter batch actions",
       "undo": "Undo last action",
-      "export": "Export tasks",
-      "backup": "Back up now",
+      "exportBackup": "Export/Backup",
       "project": "Switch project: {project}",
       "savedView": "Open smart view: {name}",
       "view": {
@@ -387,13 +384,9 @@
       "deleteError": "Failed to delete task, please try again",
       "updateError": "Failed to update task status, please try again"
     },
-    "export": {
-      "success": "Task data exported successfully!",
-      "error": "Failed to export task data. Please try again"
-    },
     "backup": {
-      "success": "Local backup downloaded",
-      "error": "Local backup failed. Please try again",
+      "success": "Export/backup file downloaded",
+      "error": "Export/backup failed. Please try again",
       "reminder": "Download a recent backup to avoid losing tasks if browser data is cleared."
     },
     "import": {
@@ -496,7 +489,7 @@
   "backup": {
     "health": {
       "empty": "No task data to back up",
-      "never": "No backup yet. Back up now",
+      "never": "No backup yet. Export/back up now",
       "ok": "Backup healthy · {age}",
       "due": "Backup recommended · {age}",
       "today": "backed up today",

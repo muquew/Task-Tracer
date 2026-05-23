@@ -5,10 +5,8 @@
     "toolbar": "任务工具栏"
   },
   "actions": {
-    "export": "导出",
-    "exportTitle": "导出任务数据文件",
-    "backupTitle": "下载本地备份",
-    "backup": "立即备份",
+    "exportBackup": "导出/备份",
+    "exportBackupTitle": "导出完整任务数据并记录备份时间",
     "import": "导入",
     "importTitle": "导入并替换当前任务数据",
     "addTask": "添加任务",
@@ -133,8 +131,7 @@
       "focusMode": "打开今日计划",
       "batchMode": "进入批量操作",
       "undo": "撤销上一步",
-      "export": "导出任务",
-      "backup": "立即备份",
+      "exportBackup": "导出/备份",
       "project": "切换项目：{project}",
       "savedView": "打开智能视图：{name}",
       "view": {
@@ -387,13 +384,9 @@
       "deleteError": "删除任务失败，请重试",
       "updateError": "更新任务状态失败，请重试"
     },
-    "export": {
-      "success": "任务数据导出成功！",
-      "error": "任务数据导出失败，请重试"
-    },
     "backup": {
-      "success": "本地备份已下载",
-      "error": "本地备份失败，请重试",
+      "success": "导出/备份文件已下载",
+      "error": "导出/备份失败，请重试",
       "reminder": "建议下载一份最近备份，避免浏览器数据被清理后丢失任务。"
     },
     "import": {
@@ -496,7 +489,7 @@
   "backup": {
     "health": {
       "empty": "暂无任务数据需要备份",
-      "never": "尚未备份，建议立即备份",
+      "never": "尚未备份，建议导出/备份",
       "ok": "备份正常 · {age}",
       "due": "建议备份 · {age}",
       "today": "今天已备份",

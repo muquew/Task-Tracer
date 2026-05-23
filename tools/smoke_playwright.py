@@ -483,9 +483,9 @@ def exercise_keyboard_navigation_patterns(page: Page) -> None:
     page.locator("#openMenuBtn").focus()
     page.keyboard.press("Enter")
     wait_for_class(page, "#menu", "show")
-    expect(page.locator("#exportBtn")).to_be_focused()
-    page.keyboard.press("ArrowDown")
     expect(page.locator("#backupBtn")).to_be_focused()
+    page.keyboard.press("ArrowDown")
+    expect(page.locator("#importBtn")).to_be_focused()
     page.keyboard.press("End")
     expect(page.locator("#langMenuToggle")).to_be_focused()
     page.keyboard.press("ArrowRight")
@@ -745,7 +745,7 @@ def exercise_command_palette(page: Page, alpha_name: str, beta_name: str) -> Non
 
     page.keyboard.press("Control+P")
     page.locator("#commandPaletteInput").fill("backup")
-    expect(page.locator("#commandPaletteList .command-item").first).to_contain_text(re.compile("备份|Back up", re.I))
+    expect(page.locator("#commandPaletteList .command-item").first).to_contain_text(re.compile("导出/备份|Export/Backup", re.I))
     page.keyboard.press("Escape")
     expect(page.locator("#commandPalette")).to_be_hidden()
 
@@ -1859,36 +1859,21 @@ def exercise_import_error(page: Page) -> None:
     page.keyboard.press("Escape")
 
 
-def exercise_export(page: Page) -> dict[str, Any]:
-    page.locator("#openMenuBtn").click()
-    with page.expect_download() as download_info:
-        page.locator("#exportBtn").click()
-    download = download_info.value
-    path = download.path()
-    if not path:
-        raise AssertionError("Export did not produce a readable download file")
-
-    exported = json.loads(Path(path).read_text(encoding="utf-8"))
-    includes = set((exported.get("schema") or {}).get("includes") or [])
-    if exported.get("version") != "2.3" or not exported.get("date") or not exported.get("versionNotes") or "todayPlan" not in includes:
-        raise AssertionError(f"Export payload metadata is incomplete: {exported}")
-    if not isinstance(exported.get("tasks"), list) or not exported["tasks"]:
-        raise AssertionError(f"Export payload did not include tasks: {exported}")
-    return exported
-
-
-def exercise_backup(page: Page) -> dict[str, Any]:
+def exercise_export_backup(page: Page) -> dict[str, Any]:
     page.locator("#openMenuBtn").click()
     with page.expect_download() as download_info:
         page.locator("#backupBtn").click()
     download = download_info.value
     path = download.path()
     if not path:
-        raise AssertionError("Backup did not produce a readable download file")
+        raise AssertionError("Export/backup did not produce a readable download file")
+
     backup = json.loads(Path(path).read_text(encoding="utf-8"))
     includes = set((backup.get("schema") or {}).get("includes") or [])
-    if backup.get("version") != "2.3" or backup.get("type") != "backup" or not backup.get("schema") or "todayPlan" not in includes:
-        raise AssertionError(f"Backup payload metadata is incomplete: {backup}")
+    if backup.get("version") != "2.3" or backup.get("type") != "backup" or not backup.get("date") or not backup.get("versionNotes") or "todayPlan" not in includes:
+        raise AssertionError(f"Export/backup payload metadata is incomplete: {backup}")
+    if not isinstance(backup.get("tasks"), list) or not backup["tasks"]:
+        raise AssertionError(f"Export/backup payload did not include tasks: {backup}")
     last_backup = page.evaluate(
         """async () => {
             return await new Promise((resolve, reject) => {
@@ -2654,14 +2639,10 @@ def smoke(url: str) -> None:
         select_filter(page, "all")
         expect(task_locator(page, beta_name)).to_have_count(1)
         expect(task_locator(page, overdue_name)).to_have_count(1)
-        exported = exercise_export(page)
-        exported_names = {task["name"] for task in exported["tasks"]}
-        if exported_names != {beta_name, overdue_name}:
-            raise AssertionError(f"Exported tasks did not match remaining tasks: {exported}")
-        backup = exercise_backup(page)
+        backup = exercise_export_backup(page)
         backup_names = {task["name"] for task in backup["tasks"]}
         if backup_names != {beta_name, overdue_name}:
-            raise AssertionError(f"Backup tasks did not match remaining tasks: {backup}")
+            raise AssertionError(f"Export/backup tasks did not match remaining tasks: {backup}")
 
         exercise_import_merge(page, f"{task_name} Merged", beta_name)
         exercise_import_preview_details(page, beta_name)

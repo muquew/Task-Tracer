@@ -35,7 +35,7 @@ It fits study plans, personal operations, solo projects, recurring reviews, dead
 | Handle routines | Daily, weekly, selected weekdays, monthly, last-day-of-month, and custom interval recurrence. |
 | Stay aware | Browser reminders, reminder offsets, repeat reminders, snooze, missed-reminder notice, and clear delivery limits. |
 | Review progress | Completion rate, active overdue rate, archived count, today's completions, streak, and recent trend. |
-| Protect data | Undo recent task changes, export, import preview, merge/replace conflict handling, versioned backups, backup health, and emergency backup when storage is blocked. |
+| Protect data | Undo recent task changes, export/backup, import preview, merge/replace conflict handling, backup health, and emergency backup when storage is blocked. |
 | Use it comfortably | Responsive layout, light/dark themes, reduced-motion support, keyboard navigation, screen-reader labels, and Chinese/English UI. |
 
 ## Everyday Workflow
@@ -46,7 +46,7 @@ It fits study plans, personal operations, solo projects, recurring reviews, dead
 4. Add selected tasks to Today Plan and use the header Today Plan button when it is time to focus.
 5. Switch to calendar or timeline when the date distribution matters more than list order.
 6. Use statistics to review active workload, completion behavior, archived history, and recent momentum.
-7. Export or back up before changing browsers, clearing site data, or testing imported files.
+7. Export/back up before changing browsers, clearing site data, or testing imported files.
 
 ## Quick Add
 
@@ -58,7 +58,7 @@ tomorrow 20:00 Review English #study /Personal
 
 This creates a task named `Review English`, due tomorrow at 20:00, tagged `study`, and assigned to the `Personal` project.
 
-The command palette opens with `Ctrl/Cmd + P`. It can start a new task, focus quick add, switch views, open saved views, enter Today Plan, enter batch actions, undo the last task change, run export/backup, search, and jump to projects.
+The command palette opens with `Ctrl/Cmd + P`. It can start a new task, focus quick add, switch views, open saved views, enter Today Plan, enter batch actions, undo the last task change, export/back up data, search, and jump to projects.
 
 ## Projects, Tags, and Search
 
@@ -114,13 +114,12 @@ Browser notifications are available when the browser supports them and permissio
 
 Browser reminders are not a guaranteed system alarm service. Delivery can depend on browser policy, operating system behavior, battery settings, tab lifecycle, and whether the app is opened or woken by the browser.
 
-## Import, Export, and Backup
+## Import and Export/Backup
 
 | Action | Purpose |
 | --- | --- |
-| Export | Download the current task set as JSON for transfer, manual inspection, or storage. |
+| Export/Backup | Download complete task JSON for transfer, manual inspection, or storage, and update the latest backup time. |
 | Import | Preview a JSON file before writing it. The preview shows task count, repeated IDs, duplicate names, current-data impact, and same-name conflict choices. |
-| Backup | Download a versioned snapshot with schema notes, local dates, reminder timing, repeat rules, completion dates, archive state, and Today Plan markers. |
 
 Import can replace the current task set or merge into it. Merge mode can keep both tasks, skip imported duplicates, or replace local same-name tasks.
 
@@ -138,7 +137,7 @@ Task data is stored in the current browser's IndexedDB. Task Tracer does not req
 
 If the browser blocks local storage, Task Tracer enters a storage-unavailable mode instead of pretending changes can be saved. When an in-memory task snapshot is still available, download the emergency backup before refreshing or closing the page. After changing browser privacy settings, use Retry to re-check local storage.
 
-Before changing browsers, clearing site data, reinstalling the app, or moving devices, use Back Up Now or Export to download a JSON file.
+Before changing browsers, clearing site data, reinstalling the app, or moving devices, use Export/Backup to download a JSON file.
 
 ## Screenshots
 
