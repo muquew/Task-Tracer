@@ -1181,7 +1181,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.57'
+                VERSION: '3.58'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -6309,14 +6309,14 @@
                 return { ...task, id };
             });
             let order = getNextTaskOrder();
-            const tasks = remapped.map(task => {
+            const tasks = sanitizeDanglingTaskReferences(remapped.map(task => {
                 const mergedTask = { ...task, order };
                 order += CONFIG.DEFAULTS.ORDER_STEP;
                 ['repeatSourceId', 'repeatCreatedFrom', 'nextRepeatTaskId'].forEach(key => {
                     if (idMap.has(mergedTask[key])) mergedTask[key] = idMap.get(mergedTask[key]);
                 });
                 return mergedTask;
-            });
+            }));
             return { tasks, idsToDelete: [...idsToDelete] };
         }
         function appendImportNameList(wrapper, label, names) {
@@ -6354,7 +6354,7 @@
                 return normalizedId;
             };
             const tasks = rawTasks.map((rawTask, index) => normalizeImportedTask(rawTask, index, normalizeId));
-            return sanitizeAmbiguousImportedReferences(remapImportedTaskReferences(tasks, idMap), duplicateIds);
+            return sanitizeDanglingTaskReferences(sanitizeAmbiguousImportedReferences(remapImportedTaskReferences(tasks, idMap), duplicateIds));
         }
         function getDuplicateImportIds(rawTasks) {
             const counts = new Map();
@@ -6382,6 +6382,21 @@
                 const sanitizedTask = { ...task };
                 ['repeatSourceId', 'repeatCreatedFrom', 'nextRepeatTaskId'].forEach(key => {
                     if (duplicateIds.has(Number(sanitizedTask[key]))) sanitizedTask[key] = null;
+                });
+                return sanitizedTask;
+            });
+        }
+        function sanitizeDanglingTaskReferences(tasks) {
+            const ids = new Set(tasks.map(task => Number(task.id)).filter(Number.isFinite));
+            return tasks.map(task => {
+                const sanitizedTask = { ...task };
+                ['repeatSourceId', 'repeatCreatedFrom', 'nextRepeatTaskId'].forEach(key => {
+                    if (sanitizedTask[key] === null || sanitizedTask[key] === undefined) {
+                        sanitizedTask[key] = null;
+                        return;
+                    }
+                    const value = Number(sanitizedTask[key]);
+                    sanitizedTask[key] = Number.isFinite(value) && ids.has(value) ? value : null;
                 });
                 return sanitizedTask;
             });

@@ -1885,6 +1885,91 @@ def exercise_import_repeat_reference_remap(page: Page, prefix: str) -> None:
         raise AssertionError(f"Unambiguous repeat reference should be preserved: {records}")
 
 
+def exercise_import_dangling_repeat_reference_cleanup(page: Page, prefix: str) -> None:
+    task_name = f"{prefix} Dangling"
+    import_payload_replace(page, [
+        {
+            "id": 201,
+            "name": task_name,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": False,
+            "repeatType": "daily",
+            "repeatSourceId": 999,
+            "repeatCreatedFrom": 999,
+            "nextRepeatTaskId": 202,
+            "order": 1000,
+        }
+    ])
+
+    records = get_task_records(page)
+    record = next((task for task in records if task["name"] == task_name), None)
+    if not record:
+        raise AssertionError(f"Dangling repeat reference import did not create expected task: {records}")
+    dangling_values = {key: record.get(key) for key in ("repeatSourceId", "repeatCreatedFrom", "nextRepeatTaskId")}
+    if any(value is not None for value in dangling_values.values()):
+        raise AssertionError(f"Dangling repeat references should be cleared: {records}")
+    delete_task_records_by_name(page, task_name)
+
+
+def exercise_import_merge_skip_reference_cleanup(page: Page, prefix: str) -> None:
+    source_name = f"{prefix} Local Source"
+    child_name = f"{prefix} Child"
+    put_task_record(page, {
+        "id": 77,
+        "name": source_name,
+        "createdAt": "2025-05-10T00:00:00.000Z",
+        "completed": False,
+        "order": 1000,
+    })
+    payload = [
+        {
+            "id": 77,
+            "name": source_name,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": False,
+            "repeatType": "daily",
+            "order": 1000,
+        },
+        {
+            "id": 101,
+            "name": child_name,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": False,
+            "repeatType": "daily",
+            "repeatCreatedFrom": 77,
+            "order": 2000,
+        },
+    ]
+
+    with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
+        json.dump(payload, temp_file)
+        temp_path = temp_file.name
+
+    try:
+        page.locator("#openMenuBtn").click()
+        with page.expect_file_chooser() as chooser_info:
+            page.locator("#importBtn").click()
+        chooser_info.value.set_files(temp_path)
+        expect(page.locator("#taskModal")).to_be_visible()
+        page.locator("#mergeImportMode").check()
+        page.locator(".import-conflict-select").select_option("skip")
+        page.locator("#submitBtn").click()
+        wait_for_notification(page, re.compile("合并|merged", re.I))
+        select_filter(page, "all")
+        records = get_task_records(page)
+        child = next((task for task in records if task["name"] == child_name), None)
+        if not child:
+            raise AssertionError(f"Merge skip reference import did not create child task: {records}")
+        if child.get("repeatCreatedFrom") is not None:
+            raise AssertionError(f"Skipped imported source should not remain referenced: {records}")
+        if len([task for task in records if task["name"] == source_name]) != 1:
+            raise AssertionError(f"Merge skip should keep exactly one local source task: {records}")
+    finally:
+        Path(temp_path).unlink(missing_ok=True)
+    delete_task_records_by_name(page, child_name)
+    delete_task_records_by_name(page, source_name)
+
+
 def assert_pwa_resources(context: BrowserContext, base_url: str) -> None:
     required_paths = ["index.html", "manifest.json", "sw.js", "resources/en.json", "resources/zh-CN.json"]
     responses = []
@@ -2219,6 +2304,9 @@ def smoke(url: str) -> None:
         delete_task(page, imported_name)
         assert_empty_task_list(page)
         exercise_import_repeat_reference_remap(page, f"{task_name} Repeat Import")
+        exercise_import_dangling_repeat_reference_cleanup(page, f"{task_name} Repeat Import")
+        assert_empty_task_list(page)
+        exercise_import_merge_skip_reference_cleanup(page, f"{task_name} Repeat Import")
         exercise_imported_zero_id_edit(page, f"{task_name} Zero Id")
         assert_empty_task_list(page)
 
