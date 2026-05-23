@@ -178,7 +178,11 @@
         .icon-btn:disabled { cursor: not-allowed; opacity: 0.56; transform: none; box-shadow: none; }
         .icon-btn.notifications-enabled { background: var(--color-primary); color: var(--text-inverse); border-color: var(--color-primary); box-shadow: 0 8px 18px var(--shadow-base); }
         @media (hover: hover) { .icon-btn.notifications-enabled:hover { background: var(--color-primary-dark); border-color: var(--color-primary-dark); color: var(--text-inverse); } }
+        .focus-mode-toggle { width: auto; padding-inline: 12px; gap: 7px; color: var(--text-main); }
+        .focus-mode-toggle .icon { color: var(--color-accent); }
+        .focus-toggle-label { font-size: 12px; font-weight: 820; white-space: nowrap; }
         .focus-mode-toggle[aria-pressed="true"] { background: var(--color-accent); color: var(--text-inverse); border-color: var(--color-accent); box-shadow: 0 8px 18px var(--shadow-base); }
+        .focus-mode-toggle[aria-pressed="true"] .icon { color: currentColor; }
         @media (hover: hover) { .focus-mode-toggle[aria-pressed="true"]:hover { background: #be185d; border-color: #be185d; color: var(--text-inverse); } }
         html[data-theme="dark"] .focus-mode-toggle[aria-pressed="true"] { background: #9d174d; border-color: #be185d; color: #ffffff; }
         .icon-btn:active { background: var(--color-primary-dark); color: var(--text-inverse); transform: scale(0.95); }
@@ -260,7 +264,7 @@
         .saved-view-meta { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-secondary); font-size: 11px; font-weight: 650; }
         .saved-view-delete { width: 32px; display: inline-flex; align-items: center; justify-content: center; color: var(--text-tertiary); border-left: 1px solid var(--border-light); }
         .saved-view-apply:hover, .saved-view-delete:hover { background: var(--bg-hover); color: var(--color-primary); }
-        .saved-view-save-btn { flex: 0 0 auto; min-height: 34px; padding: 7px 11px; font-size: 13px; }
+        .saved-view-save-btn { flex: 0 0 auto; min-height: 34px; padding: 7px 11px; font-size: 13px; white-space: nowrap; }
         .focus-mode-bar { justify-content: space-between; border-color: color-mix(in srgb, var(--color-primary) 24%, var(--border-light)); background: color-mix(in srgb, var(--color-primary) 8%, var(--controls-bg)); }
         .focus-mode-copy > div { display: grid; gap: 2px; min-width: 0; }
         .focus-mode-copy strong { color: var(--text-main); font-size: 13px; }
@@ -437,8 +441,8 @@
         .status-indicator { display: inline-flex; align-items: center; min-height: 30px; padding: 5px 10px; border: 1px solid var(--border-light); border-radius: var(--radius-pill); background: var(--bg-surface-alt); font-size: 13px; font-weight: 700; color: var(--text-main); }
         .status-dot { width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; background-color: var(--task-color); box-shadow: 0 0 0 3px color-mix(in srgb, var(--task-color) 16%, transparent); }
         .status-time-left { margin-left: 5px; color: var(--text-secondary); }
-        .task-actions { display: flex; gap: 7px; }
-        .action-btn { width: 32px; height: 32px; background: var(--bg-surface); border: 1px solid var(--border-light); cursor: pointer; font-size: 16px; transition: color 0.2s, background-color 0.2s, transform 0.2s, border-color 0.2s; padding: 6px; border-radius: var(--radius-control); display: flex; align-items: center; justify-content: center; }
+        .task-actions { display: flex; gap: 3px; padding: 3px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface-alt); }
+        .action-btn { width: 32px; height: 32px; background: transparent; border: 1px solid transparent; cursor: pointer; font-size: 16px; transition: color 0.2s, background-color 0.2s, transform 0.2s, border-color 0.2s; padding: 6px; border-radius: calc(var(--radius-control) - 2px); display: flex; align-items: center; justify-content: center; }
         .action-btn:hover { transform: translateY(-1px); }
         .action-btn:disabled { cursor: wait; opacity: 0.56; transform: none; }
         .edit-btn { color: var(--color-primary); }
@@ -712,9 +716,11 @@
             .menu { top: 54px; right: 0; }
             .quick-add-bar { grid-template-columns: minmax(0, 1fr) auto; padding: 8px; gap: 8px; }
             .quick-add-submit { min-width: 68px; padding-inline: 12px; }
-            .saved-views-bar, .focus-mode-bar, .batch-toolbar { align-items: stretch; flex-direction: column; gap: 8px; padding: 8px; }
-            .saved-views-list { width: 100%; }
-            .saved-view-save-btn, .focus-mode-bar .btn { width: 100%; }
+            .saved-views-bar { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 8px; }
+            .focus-mode-bar, .batch-toolbar { align-items: stretch; flex-direction: column; gap: 8px; padding: 8px; }
+            .saved-views-list { grid-column: 1 / -1; width: 100%; }
+            .saved-view-save-btn { width: auto; padding-inline: 10px; }
+            .focus-mode-bar .btn { width: 100%; }
             .batch-toolbar-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
             .batch-toolbar .btn { width: 100%; padding-inline: 8px; }
             .controls-bar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: 8px; gap: 8px; }
@@ -765,6 +771,8 @@
             header { flex-direction: row; align-items: flex-start; }
             .header-actions { display: flex; flex-direction: row; gap: 3px; align-items: flex-end; }
             .icon-btn { font-size: 10px; padding: 6px 8px; min-width: 32px; min-height: 32px; }
+            .focus-mode-toggle { padding-inline: 8px; }
+            .focus-toggle-label { display: none; }
             .notification {
                 top: auto;
                 right: 10px;
@@ -884,6 +892,7 @@
             </button>
             <button class="icon-btn focus-mode-toggle" id="focusModeToggleBtn" aria-label="打开今日计划" data-i18n-aria-label="focus.openTitle" data-i18n-title="focus.openTitle" aria-pressed="false" title="打开今日计划">
                 <svg class="icon"><use href="#icon-target"></use></svg>
+                <span class="focus-toggle-label" id="focusModeToggleText">今日计划</span>
             </button>
             <button class="icon-btn" id="openModalBtn" aria-label="添加新任务" data-i18n-aria-label="modal.addTitle" data-i18n-title="tooltips.addTask" title="添加新任务 (Ctrl+I)">
                 <svg class="icon"><use href="#icon-plus"></use></svg>
@@ -1287,7 +1296,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.66'
+                VERSION: '3.67'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1340,7 +1349,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.15'
+                RESOURCE_VERSION: '4.16'
             },
             BACKUP: {
                 FILE_VERSION: '2.3',
@@ -1428,6 +1437,7 @@
             DOM.focusModeSummary = document.getElementById('focusModeSummary');
             DOM.exitFocusModeBtn = document.getElementById('exitFocusModeBtn');
             DOM.focusModeToggleBtn = document.getElementById('focusModeToggleBtn');
+            DOM.focusModeToggleText = document.getElementById('focusModeToggleText');
             DOM.batchToolbar = document.getElementById('batchToolbar');
             DOM.batchSelectionSummary = document.getElementById('batchSelectionSummary');
             DOM.batchSelectVisibleBtn = document.getElementById('batchSelectVisibleBtn');
@@ -2208,10 +2218,12 @@
             if (!DOM.focusModeToggleBtn) return;
             const active = state.focusMode;
             const label = utils.translate(active ? 'focus.activeTitle' : 'focus.openTitle');
+            const shortLabel = utils.translate(active ? 'focus.activeShort' : 'focus.openShort');
             DOM.focusModeToggleBtn.classList.toggle('focus-active', active);
             DOM.focusModeToggleBtn.setAttribute('aria-pressed', String(active));
             DOM.focusModeToggleBtn.setAttribute('aria-label', label);
             DOM.focusModeToggleBtn.title = label;
+            if (DOM.focusModeToggleText) DOM.focusModeToggleText.textContent = shortLabel;
         }
         function getTodayPlanTasks() {
             const todayKey = getTodayPlanDateKey();
@@ -5052,8 +5064,9 @@
             renderReminderIcon(el, task);
             const dateEl = el.querySelector('.task-date');
             dateEl.id = `task-date-${task.id}`;
-            dateEl.textContent = hasTaskDueDate(task) ?
-                `${t['task.deadline']}: ${formatTaskDueDate(task)}` : t['task.noDeadline'];
+            const hasDueDate = hasTaskDueDate(task);
+            dateEl.hidden = !hasDueDate;
+            dateEl.textContent = hasDueDate ? `${t['task.deadline']}: ${formatTaskDueDate(task)}` : '';
         }
         function renderTaskDescription(el, task) {
             let descEl = el.querySelector('.task-desc');
@@ -5193,13 +5206,13 @@
             const inFocus = isTaskInTodayPlan(task);
             button.classList.toggle(CONFIG.UI.CLASSES.ACTIVE, inFocus);
             const iconUse = button.querySelector('use');
-            if (iconUse) iconUse.setAttribute('href', inFocus ? '#icon-check' : '#icon-target');
+            if (iconUse) iconUse.setAttribute('href', '#icon-target');
             setButtonLabel(button, inFocus ? t['task.actions.removeFocus'] : t['task.actions.addFocus']);
         }
         function syncTaskAccessibility(el, task) {
             el.setAttribute('role', 'article');
             el.setAttribute('aria-labelledby', `task-name-${task.id}`);
-            el.setAttribute('aria-describedby', `task-date-${task.id} task-status-${task.id}`);
+            el.setAttribute('aria-describedby', hasTaskDueDate(task) ? `task-date-${task.id} task-status-${task.id}` : `task-status-${task.id}`);
         }
         function renderTaskSnoozeButton(button, task, t) {
             if (!button) return;

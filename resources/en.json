@@ -36,7 +36,7 @@
   "savedViews": {
     "label": "Smart Views",
     "empty": "Save frequent search and filter combinations",
-    "saveCurrent": "Save Current View",
+    "saveCurrent": "Save View",
     "saveCurrentTitle": "Save the current search, filters, and view",
     "saveTitle": "Save Smart View",
     "nameLabel": "View name",
@@ -52,6 +52,8 @@
   "focus": {
     "openTitle": "Open Today Plan",
     "activeTitle": "Exit Today Plan",
+    "openShort": "Today",
+    "activeShort": "Focused",
     "title": "Today Plan",
     "summary": "{completed}/{total} tasks completed",
     "exit": "Exit Focus",
