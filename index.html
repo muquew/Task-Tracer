@@ -1181,7 +1181,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.56'
+                VERSION: '3.57'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1446,6 +1446,11 @@
             state.tasks = [];
             state.notificationsEnabled = false;
             state.currentLanguage = getStorageUnavailableLanguage();
+            closeAllCustomSelects();
+            closeAllDropdowns();
+            closeMenu();
+            if (isTaskDialogOpen()) closeDialog();
+            if (isCommandPaletteOpen()) closeCommandPalette({ restoreFocus: false });
             initLanguage();
             enhanceSelectControls();
             markDecorativeIcons();
@@ -1453,6 +1458,14 @@
             syncStorageAvailabilityUI();
             renderStorageUnavailableState();
             utils.notify(utils.translate('storage.unavailable.short'), 'error');
+        }
+        function handleStorageOperationError(error, messageKey = 'messages.task.updateError') {
+            if (shouldUseStorageUnavailableMode(error)) {
+                handleStorageUnavailable(error);
+                return true;
+            }
+            utils.notify(utils.translate(messageKey), 'error');
+            return false;
         }
         function bindStorageUnavailableEvents() {
             if (state.storageFailureEventsBound) return;
@@ -1462,11 +1475,7 @@
         }
         function handleBackgroundStorageFailure(error) {
             console.error('后台存储状态刷新失败:', error);
-            if (shouldUseStorageUnavailableMode(error)) {
-                handleStorageUnavailable(error);
-                return;
-            }
-            utils.notify(utils.translate('messages.task.updateError'), 'error');
+            handleStorageOperationError(error);
         }
         async function retryStorageAvailability() {
             if (!DOM.retryStorageBtn || DOM.retryStorageBtn.disabled) return;
@@ -2361,7 +2370,7 @@
                 closeDialog();
             } catch (err) {
                 console.error('保存任务失败:', err);
-                utils.notify(t['messages.task.saveError'], 'error');
+                handleStorageOperationError(err, 'messages.task.saveError');
             } finally {
                 state.taskFormSaving = false;
                 if (isTaskDialogOpen()) DOM.submitBtn.disabled = false;
@@ -2393,7 +2402,7 @@
                 await refreshTasks();
             } catch (err) {
                 console.error('快速添加任务失败:', err);
-                utils.notify(t['messages.task.saveError'], 'error');
+                handleStorageOperationError(err, 'messages.task.saveError');
             } finally {
                 state.quickAddSaving = false;
                 setQuickAddSaving(false);
@@ -2995,7 +3004,7 @@
                     utils.notify(t['messages.task.deleted']);
                 } catch (e) {
                     console.error('删除任务失败:', e);
-                    utils.notify(t['messages.task.deleteError'], 'error');
+                    handleStorageOperationError(e, 'messages.task.deleteError');
                 }
             });
         }
@@ -3030,7 +3039,7 @@
                 task.completedAt = previousCompletedAt;
                 task.nextRepeatTaskId = previousNextRepeatTaskId;
                 renderTaskList();
-                utils.notify(t['messages.task.updateError'], 'error');
+                handleStorageOperationError(err);
             }
         }
         async function skipRepeatOccurrence(id) {
@@ -3051,7 +3060,7 @@
                 await refreshTasks();
             } catch (err) {
                 console.error('跳过重复任务失败:', err);
-                utils.notify(t['messages.task.updateError'], 'error');
+                handleStorageOperationError(err);
             }
         }
         function shouldCreateNextRepeatTask(task) {
@@ -3145,8 +3154,7 @@
                     utils.notify(t['messages.clearCompleted.success'].replace('{count}', completed.length));
                 } catch (e) {
                     console.error('清除已完成任务失败:', e);
-                    utils.notify(t['messages.clearCompleted.error'], 'error');
-                    throw e;
+                    if (!handleStorageOperationError(e, 'messages.clearCompleted.error')) throw e;
                 }
             });
         }
@@ -3165,8 +3173,7 @@
                     utils.notify(t['messages.archive.success'].replace('{count}', completed.length));
                 } catch (error) {
                     console.error('归档已完成任务失败:', error);
-                    utils.notify(t['messages.archive.error'], 'error');
-                    throw error;
+                    if (!handleStorageOperationError(error, 'messages.archive.error')) throw error;
                 }
             });
         }
@@ -3188,7 +3195,7 @@
                 utils.notify(updatedTask.archived ? t['messages.archive.taskArchived'] : t['messages.archive.taskRestored']);
             } catch (error) {
                 console.error('更新归档状态失败:', error);
-                utils.notify(t['messages.archive.error'], 'error');
+                handleStorageOperationError(error, 'messages.archive.error');
             }
         }
         async function snoozeTaskReminder(id) {
@@ -3206,7 +3213,7 @@
                 utils.notify(t['messages.task.snoozed'].replace('{minutes}', CONFIG.NOTIFICATIONS.SNOOZE_MINUTES));
             } catch (error) {
                 console.error('稍后提醒失败:', error);
-                utils.notify(t['messages.task.updateError'], 'error');
+                handleStorageOperationError(error);
             }
         }
         async function restoreNotificationSetting(savedNotify) {
@@ -3224,7 +3231,7 @@
         function handleNotificationToggleError(error) {
             console.error('切换通知设置失败:', error);
             updateNotificationBtnUI();
-            utils.notify(utils.translate('messages.task.updateError'), 'error');
+            handleStorageOperationError(error);
         }
         async function toggleNotifications() {
             if (!ensureStorageAvailable()) return;
@@ -3302,7 +3309,10 @@
                 if ((!dueState.due && !dueState.missed) || !shouldDeliverTaskReminder(task, notificationKey, dueState) || state.pendingNotificationKeys.has(notificationKey)) return;
                 state.pendingNotificationKeys.add(notificationKey);
                 deliverTaskReminder(task, notificationKey, dueState)
-                    .catch(error => console.warn('提醒投递失败:', error))
+                    .catch(error => {
+                        console.warn('提醒投递失败:', error);
+                        handleStorageOperationError(error);
+                    })
                     .finally(() => {
                         state.pendingNotificationKeys.delete(notificationKey);
                     });
@@ -3454,7 +3464,7 @@
                 } catch (error) {
                     console.error('更新子任务状态失败:', error);
                     renderTaskList();
-                    utils.notify(state.translations[state.currentLanguage]['messages.task.updateError'], 'error');
+                    handleStorageOperationError(error);
                 }
             }
         }
@@ -5593,7 +5603,7 @@
                 await runGuardedTaskAction(action, taskId);
             } catch (error) {
                 console.error('任务操作失败:', error);
-                utils.notify(state.translations[state.currentLanguage]['messages.task.updateError'], 'error');
+                handleStorageOperationError(error);
             } finally {
                 state.pendingTaskActions.delete(key);
                 setTaskActionPending(taskId, false);
@@ -5823,7 +5833,7 @@
             } catch (err) {
                 console.error('排序保存失败:', err);
                 renderTaskList();
-                utils.notify(state.translations[state.currentLanguage]['messages.task.saveError'], 'error');
+                handleStorageOperationError(err, 'messages.task.saveError');
             }
         }
         function mergeVisibleManualOrder(visibleOrderIds) {
@@ -5922,7 +5932,7 @@
                 if (state.currentLanguage !== code) return;
                 state.currentLanguage = previousLanguage;
                 initLanguage();
-                utils.notify(utils.translate('messages.task.updateError'), 'error');
+                handleStorageOperationError(error);
             });
         }
         function startProgressTimer() {
@@ -5993,7 +6003,7 @@
                 utils.notify(mode === 'backup' ? t['messages.backup.success'] : t['messages.export.success']);
             } catch (err) {
                 console.error('导出/备份任务失败:', err);
-                utils.notify(mode === 'backup' ? t['messages.backup.error'] : t['messages.export.error'], 'error');
+                handleStorageOperationError(err, mode === 'backup' ? 'messages.backup.error' : 'messages.export.error');
             }
         }
         function createTaskDataPayload(mode, date, tasks) {
@@ -6088,8 +6098,7 @@
                             utils.notify(t[importOptions.merge ? 'messages.import.successMerged' : 'messages.import.success'].replace('{count}', preparedImport.tasks.length));
                         } catch (err) {
                             console.error('导入任务失败:', err);
-                            utils.notify(t['messages.import.readError'], 'error');
-                            throw err;
+                            if (!handleStorageOperationError(err, 'messages.import.readError')) throw err;
                         }
                     });
                 } catch(err) {
