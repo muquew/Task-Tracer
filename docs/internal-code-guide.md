@@ -189,7 +189,7 @@
 - `bindSearchEvents()`: 搜索、项目视图和清除完成任务入口。
 - `bindViewEvents()`: 主视图切换入口。
 - `bindSavedViewEvents()`: 保存智能视图条的保存、打开和删除入口。
-- `bindFocusModeEvents()`: 今日计划专注模式退出入口。
+- `bindFocusModeEvents()`: 顶部今日计划按钮和专注模式退出入口。
 - `bindBatchModeEvents()`: 批量选择和批量任务操作入口。
 - `setViewMode(viewMode)`: 切换列表、日历、时间线或统计视图。
 - `syncViewSwitcher()`: 同步视图按钮选中态。

@@ -799,13 +799,14 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
     expect(page.locator("#batchToolbar")).to_be_hidden()
     task_locator(page, beta_name).locator('[data-action="focus"]').click()
     wait_for_notification(page, re.compile("今日|today", re.I))
-    page.locator("#openMenuBtn").click()
-    page.locator("#focusModeBtn").click()
+    page.locator("#focusModeToggleBtn").click()
     expect(page.locator("#focusModeBar")).to_be_visible()
+    expect(page.locator("#focusModeToggleBtn")).to_have_attribute("aria-pressed", "true")
     expect(task_locator(page, beta_name)).to_have_count(1)
     expect(task_locator(page, alpha_name)).to_have_count(0)
     page.locator("#exitFocusModeBtn").click()
     expect(page.locator("#focusModeBar")).to_be_hidden()
+    expect(page.locator("#focusModeToggleBtn")).to_have_attribute("aria-pressed", "false")
 
 
 def snooze_task_reminder(page: Page, task_name: str) -> None:

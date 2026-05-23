@@ -178,6 +178,9 @@
         .icon-btn:disabled { cursor: not-allowed; opacity: 0.56; transform: none; box-shadow: none; }
         .icon-btn.notifications-enabled { background: var(--color-primary); color: var(--text-inverse); border-color: var(--color-primary); box-shadow: 0 8px 18px var(--shadow-base); }
         @media (hover: hover) { .icon-btn.notifications-enabled:hover { background: var(--color-primary-dark); border-color: var(--color-primary-dark); color: var(--text-inverse); } }
+        .focus-mode-toggle[aria-pressed="true"] { background: var(--color-accent); color: var(--text-inverse); border-color: var(--color-accent); box-shadow: 0 8px 18px var(--shadow-base); }
+        @media (hover: hover) { .focus-mode-toggle[aria-pressed="true"]:hover { background: #be185d; border-color: #be185d; color: var(--text-inverse); } }
+        html[data-theme="dark"] .focus-mode-toggle[aria-pressed="true"] { background: #9d174d; border-color: #be185d; color: #ffffff; }
         .icon-btn:active { background: var(--color-primary-dark); color: var(--text-inverse); transform: scale(0.95); }
         @media (hover: hover) { .icon-btn:hover { background: var(--color-primary); color: var(--text-inverse); border-color: var(--color-primary); transform: translateY(-1px); box-shadow: 0 8px 18px var(--shadow-base); } }
         .menu { display: none; position: absolute; top: 58px; right: 0; background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-surface); box-shadow: 0 18px 42px var(--shadow-float); z-index: 900; min-width: 190px; padding: 6px; }
@@ -879,6 +882,9 @@
             <button class="icon-btn" id="notificationToggleBtn" aria-label="开启/关闭通知" title="开启通知">
                 <svg class="icon"><use href="#icon-bell-off"></use></svg>
             </button>
+            <button class="icon-btn focus-mode-toggle" id="focusModeToggleBtn" aria-label="打开今日计划" data-i18n-aria-label="focus.openTitle" data-i18n-title="focus.openTitle" aria-pressed="false" title="打开今日计划">
+                <svg class="icon"><use href="#icon-target"></use></svg>
+            </button>
             <button class="icon-btn" id="openModalBtn" aria-label="添加新任务" data-i18n-aria-label="modal.addTitle" data-i18n-title="tooltips.addTask" title="添加新任务 (Ctrl+I)">
                 <svg class="icon"><use href="#icon-plus"></use></svg>
             </button>
@@ -907,10 +913,6 @@
                     <span data-i18n="pwa.install.menu">安装应用</span>
                 </button>
                 <div class="menu-divider" role="separator"></div>
-                <button class="menu-item" role="menuitem" id="focusModeBtn" data-i18n-title="focus.menuTitle" title="打开今日计划">
-                    <svg class="icon"><use href="#icon-target"></use></svg>
-                    <span data-i18n="focus.menu">今日计划</span>
-                </button>
                 <button class="menu-item" role="menuitem" id="batchModeBtn" data-i18n-title="batch.menuTitle" title="进入批量操作">
                     <svg class="icon"><use href="#icon-check-square"></use></svg>
                     <span data-i18n="batch.menu">批量操作</span>
@@ -1285,7 +1287,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.65'
+                VERSION: '3.66'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1338,7 +1340,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.14'
+                RESOURCE_VERSION: '4.15'
             },
             BACKUP: {
                 FILE_VERSION: '2.3',
@@ -1425,6 +1427,7 @@
             DOM.focusModeBar = document.getElementById('focusModeBar');
             DOM.focusModeSummary = document.getElementById('focusModeSummary');
             DOM.exitFocusModeBtn = document.getElementById('exitFocusModeBtn');
+            DOM.focusModeToggleBtn = document.getElementById('focusModeToggleBtn');
             DOM.batchToolbar = document.getElementById('batchToolbar');
             DOM.batchSelectionSummary = document.getElementById('batchSelectionSummary');
             DOM.batchSelectVisibleBtn = document.getElementById('batchSelectVisibleBtn');
@@ -1482,7 +1485,6 @@
                 backupHealthText: document.getElementById('backupHealthText'),
                 importBtn: document.getElementById('importBtn'),
                 installBtn: document.getElementById('installAppBtn'),
-                focusModeBtn: document.getElementById('focusModeBtn'),
                 batchModeBtn: document.getElementById('batchModeBtn'),
                 undoBtn: document.getElementById('undoMenuBtn'),
                 archiveCompletedBtn: document.getElementById('archiveCompletedBtn'),
@@ -1660,6 +1662,7 @@
                 DOM.quickAddInput,
                 DOM.quickAddForm?.querySelector('button[type="submit"]'),
                 DOM.saveSmartViewBtn,
+                DOM.focusModeToggleBtn,
                 DOM.exitFocusModeBtn,
                 DOM.batchSelectVisibleBtn,
                 DOM.batchClearSelectionBtn,
@@ -1675,7 +1678,6 @@
                 DOM.menu.backupBtn,
                 DOM.menu.importBtn,
                 DOM.menu.fileInput,
-                DOM.menu.focusModeBtn,
                 DOM.menu.batchModeBtn,
                 DOM.menu.undoBtn,
                 DOM.menu.archiveCompletedBtn,
@@ -1930,6 +1932,7 @@
             DOM.savedViewsList.addEventListener('click', handleSavedViewListClick);
         }
         function bindFocusModeEvents() {
+            DOM.focusModeToggleBtn.addEventListener('click', toggleFocusMode);
             DOM.exitFocusModeBtn.addEventListener('click', exitFocusMode);
         }
         function bindBatchModeEvents() {
@@ -2181,12 +2184,17 @@
             renderTaskList();
             announceTaskViewSummary();
         }
+        function toggleFocusMode() {
+            if (state.focusMode) exitFocusMode();
+            else enterFocusMode();
+        }
         function exitFocusMode() {
             state.focusMode = false;
             renderTaskList();
             announceTaskViewSummary();
         }
         function syncFocusModeUI() {
+            syncFocusModeButton();
             if (!DOM.focusModeBar) return;
             DOM.focusModeBar.hidden = !state.focusMode;
             if (!state.focusMode) return;
@@ -2195,6 +2203,15 @@
             DOM.focusModeSummary.textContent = utils.translate('focus.summary')
                 .replace('{completed}', completed)
                 .replace('{total}', tasks.length);
+        }
+        function syncFocusModeButton() {
+            if (!DOM.focusModeToggleBtn) return;
+            const active = state.focusMode;
+            const label = utils.translate(active ? 'focus.activeTitle' : 'focus.openTitle');
+            DOM.focusModeToggleBtn.classList.toggle('focus-active', active);
+            DOM.focusModeToggleBtn.setAttribute('aria-pressed', String(active));
+            DOM.focusModeToggleBtn.setAttribute('aria-label', label);
+            DOM.focusModeToggleBtn.title = label;
         }
         function getTodayPlanTasks() {
             const todayKey = getTodayPlanDateKey();
@@ -2683,7 +2700,6 @@
                 if (ensureStorageAvailable()) DOM.menu.fileInput.click();
             });
             DOM.menu.installBtn.addEventListener('click', handleInstallAppClick);
-            DOM.menu.focusModeBtn.addEventListener('click', enterFocusMode);
             DOM.menu.batchModeBtn.addEventListener('click', () => setBatchMode(true));
             DOM.menu.undoBtn.addEventListener('click', performUndo);
             DOM.menu.archiveCompletedBtn.addEventListener('click', handleArchiveCompleted);
@@ -6709,6 +6725,7 @@
             document.documentElement.lang = state.currentLanguage;
             document.documentElement.dir = getLanguageDirection(state.currentLanguage);
             utils.applyTranslations();
+            syncFocusModeButton();
         }
         function getLanguageDirection(code) {
             return ['ar', 'fa', 'he', 'ur'].includes(normalizeLanguageCode(code).split('-')[0]) ? 'rtl' : 'ltr';

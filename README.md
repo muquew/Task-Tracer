@@ -43,7 +43,7 @@ It fits study plans, personal operations, solo projects, recurring reviews, dead
 1. Add a task from the full dialog, or type a compact quick-add entry.
 2. Save frequent search and filter combinations as smart views when a list becomes part of your routine.
 3. Work from the list view for completion, edit, snooze, archive, delete, subtasks, batch actions, and manual ordering.
-4. Add selected tasks to Today Plan and switch into focus mode when it is time to execute.
+4. Add selected tasks to Today Plan and use the header Today Plan button when it is time to focus.
 5. Switch to calendar or timeline when the date distribution matters more than list order.
 6. Use statistics to review active workload, completion behavior, archived history, and recent momentum.
 7. Export or back up before changing browsers, clearing site data, or testing imported files.
@@ -91,7 +91,7 @@ Saved smart views store the current search, project, status filter, sort mode, a
 
 ## Today Plan, Batch Actions, and Undo
 
-Today Plan is a lightweight execution layer. Adding a task to Today Plan does not change its project, tags, due date, archive state, or recurrence rule; it only marks the task as part of today's working set.
+Today Plan is a lightweight execution layer. The header target button opens it directly. Adding a task to Today Plan does not change its project, tags, due date, archive state, or recurrence rule; it only marks the task as part of today's working set.
 
 Batch Actions mode adds checkboxes to the visible list. Selected tasks can be added to Today Plan, marked complete, archived, or deleted together.
 

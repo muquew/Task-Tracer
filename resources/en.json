@@ -50,8 +50,8 @@
     "deleteLabel": "Delete smart view: {name}"
   },
   "focus": {
-    "menu": "Today Plan",
-    "menuTitle": "Open today plan",
+    "openTitle": "Open Today Plan",
+    "activeTitle": "Exit Today Plan",
     "title": "Today Plan",
     "summary": "{completed}/{total} tasks completed",
     "exit": "Exit Focus",

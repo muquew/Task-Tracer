@@ -50,8 +50,8 @@
     "deleteLabel": "删除智能视图：{name}"
   },
   "focus": {
-    "menu": "今日计划",
-    "menuTitle": "打开今日计划",
+    "openTitle": "打开今日计划",
+    "activeTitle": "退出今日计划",
     "title": "今日计划",
     "summary": "{completed}/{total} 个任务已完成",
     "exit": "退出专注",

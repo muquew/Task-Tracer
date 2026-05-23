@@ -341,6 +341,7 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             "Batch mode must avoid drag reordering and support undo": ("function applyBatchTaskUpdate(action, selectedTasks)", "registerUndoSnapshot(utils.translate(`batch.undo.${action}`), beforeTasks);", "function canReorderTasks()", "!state.batchMode"),
             "Undo must restore a full task snapshot": ("function registerUndoSnapshot(label, beforeTasks)", "await dbActions.replaceAllTasks(snapshot);", "function performUndo()"),
             "Focus mode must be a separate visible task scope": ("function enterFocusMode()", "state.focusMode = true;", "if (state.focusMode && !isTaskInTodayPlan(task)) return false;"),
+            "Focus mode entry must be independent of the overflow menu": ('id="focusModeToggleBtn"', 'aria-pressed="false"', "DOM.focusModeToggleBtn.addEventListener('click', toggleFocusMode)", "function syncFocusModeButton()"),
             "Due dates must format and group by the task timezone": ("function getTaskDueDateKey(task)", "getInstantWallPartsInTimeZone(dueAt, getTaskDueTimeZone(task))", "function formatTaskDueDate(task)"),
             "Imported duplicate IDs must not produce ambiguous repeat links": ("const duplicateIds = new Set(getDuplicateImportIds(rawTasks));", "sanitizeAmbiguousImportedReferences", "if (duplicateIds.has(Number(sanitizedTask[key]))) sanitizedTask[key] = null;"),
             "Imported repeat links must only point to final imported tasks": ("function sanitizeDanglingTaskReferences(tasks)", "const ids = new Set(tasks.map(task => Number(task.id)).filter(Number.isFinite));", "sanitizedTask[key] = Number.isFinite(value) && ids.has(value) ? value : null;"),
@@ -401,6 +402,8 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Task view changes must announce a concise summary through the screen-reader status region")
     if 'id="menu" role="menu"' not in index_html or "handleMenuKeydown" not in index_html:
         errors.append("Main app menu must expose menu semantics and keyboard navigation")
+    if 'id="focusModeBtn"' in index_html:
+        errors.append("Today Plan must not be hidden inside the overflow menu")
     if re.search(r"<label\b[^>]*for=['\"][^'\"]+['\"][^>]*>\s*</label>", index_html, re.DOTALL):
         errors.append("Form labels must not be empty")
     if '<html lang="zh-CN" dir="ltr">' not in index_html or "document.documentElement.dir = getLanguageDirection" not in index_html:
