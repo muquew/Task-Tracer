@@ -314,6 +314,7 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             "Manual reordering must restore the rendered order after save failure": ("catch (err)", "renderTaskList();", "messages.task.saveError"),
             "Editing mode must accept task id 0": ("function isEditingTask()", "state.editingTaskId !== null"),
             "Reminder delivery state must be cleared only after task update succeeds": ("await dbActions.updateTask(updatedTask);", "if (shouldClearNotificationDelivery) clearTaskNotificationDeliveryState(original.id);"),
+            "Missed reminders must surface outside the normal delivery window": ("function checkNotifications()", "if ((!dueState.due && !dueState.missed) || !shouldDeliverTaskReminder(task, notificationKey, dueState) || state.pendingNotificationKeys.has(notificationKey)) return;"),
             "Notification toggle must handle persistence failures": ("toggleNotifications().catch(handleNotificationToggleError)",),
             "Notification setting must persist before mutating in-memory state": ("await dbActions.setConfig(CONFIG.STORAGE.NOTIFICATIONS, enabled);", "state.notificationsEnabled = enabled"),
             "Language setting must roll back after persistence failure": ("state.currentLanguage = previousLanguage;", "initLanguage();"),

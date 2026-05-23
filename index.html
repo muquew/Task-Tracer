@@ -1181,7 +1181,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.55'
+                VERSION: '3.56'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -3299,7 +3299,7 @@
                 if (offset === -1) return;
                 const notificationKey = getTaskNotificationKey(task, offset);
                 const dueState = getTaskReminderDueState(task, timeLeft, offset);
-                if (!dueState.due || !shouldDeliverTaskReminder(task, notificationKey, dueState) || state.pendingNotificationKeys.has(notificationKey)) return;
+                if ((!dueState.due && !dueState.missed) || !shouldDeliverTaskReminder(task, notificationKey, dueState) || state.pendingNotificationKeys.has(notificationKey)) return;
                 state.pendingNotificationKeys.add(notificationKey);
                 deliverTaskReminder(task, notificationKey, dueState)
                     .catch(error => console.warn('提醒投递失败:', error))
