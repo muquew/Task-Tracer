@@ -1994,12 +1994,28 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         expect(page.locator(".import-conflict-select")).to_have_value("keep")
         expect(page.locator("#confirm-message-text")).to_contain_text("Preview Duplicate")
         expect(page.locator("#confirm-message-text")).to_contain_text(existing_name)
+        expect(page.locator("#submitBtn")).to_have_text(re.compile("确认完整性风险|Confirm Integrity Risk", re.I))
         page.locator("#submitBtn").click()
         wait_for_notification(page, re.compile("完整性校验失败|Integrity check failed", re.I))
         expect(page.locator("#taskModal")).to_be_visible()
+        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("下一次确认会先下载|next confirmation downloads", re.I))
+        expect(page.locator("#submitBtn")).to_have_text(re.compile("下载导入前快照|Download Pre-import Snapshot", re.I))
+        with page.expect_download() as snapshot_info:
+            page.locator("#submitBtn").click()
+        snapshot_path = snapshot_info.value.path()
+        if not snapshot_path:
+            raise AssertionError("Invalid-checksum replace import did not download a pre-import snapshot")
+        snapshot = json.loads(Path(snapshot_path).read_text(encoding="utf-8"))
+        assert_backup_payload_integrity(snapshot, "pre-import-backup")
+        if not isinstance(snapshot.get("tasks"), list) or len(snapshot["tasks"]) == 0:
+            raise AssertionError(f"Invalid-checksum snapshot did not include current tasks: {snapshot}")
         expect(page.locator("#submitBtn")).to_have_text(re.compile("继续替换导入|Continue Replace Import", re.I))
-        page.locator("#cancelBtn").click()
+        page.locator("#submitBtn").click()
+        wait_for_notification(page, re.compile("导入|import", re.I))
         expect(page.locator("#taskModal")).to_be_hidden()
+        select_filter(page, "all")
+        expect(page.locator(".task-item")).to_have_count(3)
+        expect(task_locator(page, existing_name)).to_have_count(1)
     finally:
         Path(temp_path).unlink(missing_ok=True)
 

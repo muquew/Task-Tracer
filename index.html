@@ -1320,7 +1320,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.71'
+                VERSION: '3.72'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1373,7 +1373,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.20'
+                RESOURCE_VERSION: '4.21'
             },
             BACKUP: {
                 FILE_VERSION: '2.4',
@@ -5945,6 +5945,7 @@
                 DOM.submitBtn.removeAttribute('data-i18n');
                 DOM.submitBtn.type = 'button';
                 DOM.submitBtn.disabled = false;
+                updateImportSafetyGate(getImportPreviewRoot(p));
                 const handler = async () => {
                     DOM.submitBtn.disabled = true;
                     try {
@@ -7178,10 +7179,18 @@
         }
         function getImportSafetyText(currentCount, checksumStatus, snapshotConfirmed, checksumConfirmed, t) {
             if (checksumStatus === 'invalid' && !checksumConfirmed) return t['messages.import.importSafetyChecksumRisk'];
-            if (checksumStatus === 'invalid' && checksumConfirmed && currentCount === 0) return t['messages.import.importSafetyChecksumConfirmed'];
             if (snapshotConfirmed) return t['messages.import.importSafetySnapshotReady'];
+            if (checksumStatus === 'invalid' && checksumConfirmed && currentCount > 0) return t['messages.import.importSafetyChecksumSnapshot'].replace('{count}', currentCount);
+            if (checksumStatus === 'invalid' && checksumConfirmed) return t['messages.import.importSafetyChecksumConfirmed'];
             if (currentCount > 0) return t['messages.import.importSafetyReplace'].replace('{count}', currentCount);
             return t['messages.import.importSafetyClean'];
+        }
+        function getImportSubmitLabelKey(currentCount, checksumStatus, snapshotConfirmed, checksumConfirmed, mergeEnabled) {
+            if (mergeEnabled) return 'actions.confirm';
+            if (checksumStatus === 'invalid' && !checksumConfirmed) return 'messages.import.confirmChecksumRisk';
+            if (currentCount > 0 && !snapshotConfirmed) return 'messages.import.downloadSnapshot';
+            if (snapshotConfirmed || (checksumStatus === 'invalid' && checksumConfirmed)) return 'messages.import.continueReplace';
+            return 'actions.confirm';
         }
         function getImportPreviewRoot(root = document) {
             return root.querySelector ? root.querySelector('[data-import-preview]') : null;
@@ -7220,8 +7229,8 @@
             }
             if (detail) detail.textContent = getImportSafetyText(currentCount, checksumStatus, snapshotConfirmed, checksumConfirmed, state.translations[state.currentLanguage]);
             if (DOM.submitBtn && root.closest('#confirm-message-text')) {
-                const needsContinueLabel = !mergeEnabled && (snapshotConfirmed || checksumConfirmed);
-                DOM.submitBtn.textContent = state.translations[state.currentLanguage][needsContinueLabel ? 'messages.import.continueReplace' : 'actions.confirm'];
+                const labelKey = getImportSubmitLabelKey(currentCount, checksumStatus, snapshotConfirmed, checksumConfirmed, mergeEnabled);
+                DOM.submitBtn.textContent = state.translations[state.currentLanguage][labelKey];
             }
         }
         function createImportRestoreChecklist(preview, t) {
