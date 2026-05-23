@@ -321,6 +321,7 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             "Reminder icons must reflect persisted one-time delivery": ("function renderReminderIcon(el, task)", "hasTaskReminderBeenDelivered(task)", "function hasTaskReminderBeenDelivered(task)", "if (repeat === -1) return true;"),
             "Vibration feedback must require user activation when browsers expose it": ("function vibrateNotification()", "navigator.userActivation", "!navigator.userActivation.hasBeenActive"),
             "Status search must keep archived records isolated unless archived is explicit": ("function isTaskVisible(task)", "if (hasSearchStatusFilter()) return shouldShowTaskForStatusSearch(task);", "function shouldShowTaskForStatusSearch(task)", "return !task.archived || searchStatusIncludesArchived();"),
+            "Stats status search must keep archived records isolated unless archived is explicit": ("function getStatsScopeTasks()", ".filter(matchesTaskSearch)", ".filter(task => !hasSearchStatusFilter() || shouldShowTaskForStatusSearch(task));"),
             "Notification toggle must handle persistence failures": ("toggleNotifications().catch(handleNotificationToggleError)",),
             "Notification setting must persist before mutating in-memory state": ("await dbActions.setConfig(CONFIG.STORAGE.NOTIFICATIONS, enabled);", "state.notificationsEnabled = enabled"),
             "Language setting must roll back after persistence failure": ("state.currentLanguage = previousLanguage;", "initLanguage();"),
@@ -370,6 +371,10 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Custom dropdowns must support keyboard navigation")
     if "openCustomSelect(select, (e.key === 'Enter' || e.key === ' ') ? 'selected' : e.key)" not in index_html:
         errors.append("Custom select buttons must focus the selected option when opened with Enter or Space")
+    if not contains_in_order(index_html, ("function handleCustomSelectMenuKeydown(e)", "if (e.key === 'Escape') {", "e.stopPropagation();", "closeCustomSelect(option.closest('.custom-select'), true);")):
+        errors.append("Custom select Escape handling must stop propagation before closing the menu")
+    if not contains_in_order(index_html, ("if (isTaskDialogOpen())", "else if (e.key === 'Escape') {", "if (!closeOpenCustomSelect(DOM.modal)) closeDialog();", "function closeOpenCustomSelect(root = document)")):
+        errors.append("Dialog Escape handling must close an open custom select before closing the dialog")
     if "handleViewSwitcherKeydown" not in index_html or 'role="tab" aria-selected="true" aria-controls="taskList" tabindex="0"' not in index_html:
         errors.append("View tabs must use a roving keyboard tablist model")
     if 'id="taskList" role="tabpanel"' not in index_html:

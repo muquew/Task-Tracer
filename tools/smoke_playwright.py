@@ -479,6 +479,25 @@ def exercise_keyboard_navigation_patterns(page: Page) -> None:
     select_sort(page, "smart")
 
 
+def exercise_custom_select_escape_keeps_modal_open(page: Page) -> None:
+    page.locator("#openModalBtn").click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#reminderOffset-custom-button").click()
+    page.wait_for_function(
+        "() => document.querySelector('#reminderOffset')?.closest('.custom-select')?.classList.contains('open')"
+    )
+    page.keyboard.press("Escape")
+    expect(page.locator("#taskModal")).to_be_visible()
+    expect(page.locator("#reminderOffset-custom-button")).to_be_focused()
+    select_is_open = page.evaluate(
+        "() => document.querySelector('#reminderOffset')?.closest('.custom-select')?.classList.contains('open')"
+    )
+    if select_is_open:
+        raise AssertionError("Custom select stayed open after Escape")
+    page.keyboard.press("Escape")
+    expect(page.locator("#taskModal")).to_be_hidden()
+
+
 def exercise_modal_focus_trap(page: Page) -> None:
     expect(page.locator("#taskName")).to_be_focused()
     page.keyboard.press("Shift+Tab")
@@ -1482,6 +1501,11 @@ def archive_and_restore_task(page: Page, completed_name: str) -> None:
     expect(task_locator(page, completed_name)).to_have_count(1)
     page.locator("#searchInput").fill("status:no-deadline")
     expect(task_locator(page, completed_name)).to_have_count(0)
+    select_view(page, "stats")
+    expect(page.locator('.stats-mini[data-stats-filter="archived"] strong')).to_have_text("0")
+    page.locator("#searchInput").fill("status:archived")
+    expect(page.locator('.stats-mini[data-stats-filter="archived"] strong')).to_have_text("1")
+    select_view(page, "list")
     page.locator("#searchInput").fill("status:archived")
     expect(task_locator(page, completed_name)).to_have_count(1)
     clear_search(page)
@@ -2367,6 +2391,7 @@ def smoke(url: str) -> None:
 
         exercise_shortcuts_and_modal_closing(page)
         exercise_keyboard_navigation_patterns(page)
+        exercise_custom_select_escape_keeps_modal_open(page)
         exercise_task_name_validation(page)
         exercise_empty_state_actions(page)
         exercise_import_error(page)

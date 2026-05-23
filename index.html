@@ -1181,7 +1181,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.60'
+                VERSION: '3.61'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -2224,7 +2224,10 @@
             }
             if (isTaskDialogOpen()) {
                 if (e.key === 'Tab') trapDialogFocus(e);
-                else if (e.key === 'Escape') closeDialog();
+                else if (e.key === 'Escape') {
+                    e.preventDefault();
+                    if (!closeOpenCustomSelect(DOM.modal)) closeDialog();
+                }
                 return;
             }
             const meta = e.ctrlKey || e.metaKey;
@@ -4067,7 +4070,8 @@
         function getStatsScopeTasks() {
             return state.tasks
                 .filter(matchesTaskProject)
-                .filter(matchesTaskSearch);
+                .filter(matchesTaskSearch)
+                .filter(task => !hasSearchStatusFilter() || shouldShowTaskForStatusSearch(task));
         }
         function renderStatsView(tasks) {
             DOM.taskList.textContent = '';
@@ -4783,11 +4787,13 @@
             if (!option) return;
             if (e.key === 'Escape') {
                 e.preventDefault();
+                e.stopPropagation();
                 closeCustomSelect(option.closest('.custom-select'), true);
                 return;
             }
             if (!['ArrowDown', 'ArrowUp', 'Home', 'End', 'Enter', ' '].includes(e.key)) return;
             e.preventDefault();
+            e.stopPropagation();
             if (e.key === 'Enter' || e.key === ' ') {
                 chooseCustomSelectOption(option);
                 return;
@@ -4858,6 +4864,12 @@
             document.querySelectorAll('.custom-select.open').forEach(wrapper => {
                 if (wrapper !== except) closeCustomSelect(wrapper, false);
             });
+        }
+        function closeOpenCustomSelect(root = document) {
+            const wrapper = root.querySelector('.custom-select.open');
+            if (!wrapper) return false;
+            closeCustomSelect(wrapper, true);
+            return true;
         }
         function closeCustomSelectsOnOutsideClick(e) {
             if (!e.target.closest('.custom-select')) closeAllCustomSelects();
