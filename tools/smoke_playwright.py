@@ -1994,6 +1994,10 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         expect(page.locator(".import-conflict-select")).to_have_value("keep")
         expect(page.locator("#confirm-message-text")).to_contain_text("Preview Duplicate")
         expect(page.locator("#confirm-message-text")).to_contain_text(existing_name)
+        page.locator("#submitBtn").click()
+        wait_for_notification(page, re.compile("完整性校验失败|Integrity check failed", re.I))
+        expect(page.locator("#taskModal")).to_be_visible()
+        expect(page.locator("#submitBtn")).to_have_text(re.compile("继续替换导入|Continue Replace Import", re.I))
         page.locator("#cancelBtn").click()
         expect(page.locator("#taskModal")).to_be_hidden()
     finally:
@@ -2019,7 +2023,7 @@ def exercise_restore_compatibility_previews(page: Page) -> None:
         ],
     }
     assert_import_preview_text(page, legacy_payload, [r"传统任务数组|legacy task array", r"传统任务数组没有完整性校验|Legacy task arrays do not include an integrity check"])
-    assert_import_preview_text(page, old_backup_payload, [r"2\.1", r"2\.4", r"兼容规则|Compatible import", r"没有校验值|no checksum"])
+    assert_import_preview_text(page, old_backup_payload, [r"2\.1", r"2\.4", r"兼容规则|compatibility rules", r"没有校验值|no checksum"])
 
 
 def assert_import_preview_text(page: Page, payload: Any, patterns: list[str]) -> None:
@@ -2168,6 +2172,10 @@ def exercise_import(page: Page, imported_name: str) -> None:
         assert_backup_payload_integrity(snapshot, "pre-import-backup")
         if not isinstance(snapshot.get("tasks"), list) or len(snapshot["tasks"]) == 0:
             raise AssertionError(f"Pre-import snapshot did not include current tasks: {snapshot}")
+        expect(page.locator("#taskModal")).to_be_visible()
+        expect(page.locator("#submitBtn")).to_have_text(re.compile("继续替换导入|Continue Replace Import", re.I))
+        page.locator("#submitBtn").click()
+        wait_for_notification(page, re.compile("导入|import", re.I))
         select_filter(page, "all")
         imported_task = task_locator(page, imported_name)
         expect(imported_task).to_have_count(1)
@@ -2210,6 +2218,8 @@ def import_payload_replace(page: Page, payload: list[dict[str, Any]]) -> None:
                 raise AssertionError("Replace import did not download a pre-import snapshot")
             snapshot = json.loads(Path(snapshot_path).read_text(encoding="utf-8"))
             assert_backup_payload_integrity(snapshot, "pre-import-backup")
+            expect(page.locator("#taskModal")).to_be_visible()
+            page.locator("#submitBtn").click()
         else:
             page.locator("#submitBtn").click()
         wait_for_notification(page, re.compile("导入|import", re.I))

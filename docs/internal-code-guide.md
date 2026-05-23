@@ -122,7 +122,7 @@
 
 ## 导入与导出/备份边界
 
-- 导入由 `importTasks(file)` 进入，会先经过 `migrateImportPayload()`，再构建预览，展示恢复检查清单、导入差异、导入数量、文件内同名重复、重复任务 ID、与当前任务同名项和替换影响。默认确认后通过 `replaceAllTasks()` 全量替换当前任务；如果替换前已有任务，会先下载 `pre-import-backup` 快照。开启合并模式后会读取冲突策略，并通过 `mergeImportedTasks()` 合并、跳过或替换同名本地任务。
+- 导入由 `importTasks(file)` 进入，会先经过 `prepareImportPayload()`，再构建预览，展示恢复检查清单、导入差异、导入数量、文件内同名重复、重复任务 ID、与当前任务同名项和替换影响。默认确认后通过 `replaceAllTasks()` 全量替换当前任务；如果替换前已有任务，会先下载 `pre-import-backup` 快照并停留在确认弹窗，等待用户第二次确认。完整性校验失败且用户仍选择替换时，也会先停留并要求显式风险确认。开启合并模式后会读取冲突策略，并通过 `mergeImportedTasks()` 合并、跳过或替换同名本地任务。
 - 导出/备份由 `backupTasks()` 进入，下载带 `schema`、`versionNotes`、`exportId` 和 `checksum` 的版本化快照，并把时间写入 `lastBackupAt`。
 - 紧急备份由 `downloadEmergencyBackup()` 进入，仅在运行中存储故障且 `storageFallbackTasks` 仍有内存快照时开放；文件会标记 `type: emergency-backup` 和 `schema.storage: memory-fallback`，便于后续恢复时识别来源。
 - `scheduleBackupReminder()` 根据 `lastBackupAt` 和任务数量决定是否显示最近备份提醒。
@@ -425,16 +425,16 @@
 - `backupTasks()`: 下载版本化本地备份，并更新最近备份时间。
 - `downloadTaskData(mode)`: 常规导出/备份下载入口。
 - `downloadEmergencyBackup()`: 在运行时存储故障后下载当前内存快照。
-- `downloadPreImportSnapshot(tasks)`: 替换导入写入前下载当前任务快照，避免用户误覆盖后没有可恢复文件。
+- `downloadPreImportSnapshot(tasks)`: 替换导入写入前下载当前任务快照；下载触发后不会立刻写入，必须再次确认。
 - `downloadJsonPayload(payload, filename)`: 执行 JSON 文件下载。
 - `createTaskDataPayload(mode, date, tasks, storage = 'indexeddb')`: 构建带版本说明、导出 ID 和完整性校验的数据文件。
 - `createTaskDataChecksum(payload)`: 基于稳定序列化结果生成备份校验值；导入预览会用它判断文件是否被修改。
 - `createTaskDataFilename(mode, date)`: 生成导出/备份文件名。
 - `scheduleBackupReminder()`: 根据最近备份时间提示备份。
 - `importTasks(file)`: 读取 JSON、展示导入预览，并按替换模式或合并模式写入任务。
-- `migrateImportPayload(data)`: 统一传统数组、旧版备份和当前备份入口，记录从旧模板到当前模板的兼容迁移信息。
-- `buildImportPreview(importedTasks, rawTasks, sourceData, migrations)`: 统计导入数量、当前数据影响、文件内同名重复、重复任务 ID、与当前任务同名项、冲突列表、差异摘要和备份来源信息。
-- `getImportSourceInfo(sourceData, migrations)`: 从导入 JSON 中提取 Task Tracer 备份模板、文件类型、版本、存储来源、包含项和完整性状态。
+- `prepareImportPayload(data)`: 统一传统数组、旧版备份和当前备份入口，记录兼容读取信息。
+- `buildImportPreview(importedTasks, rawTasks, sourceData, compatibilitySteps)`: 统计导入数量、当前数据影响、文件内同名重复、重复任务 ID、与当前任务同名项、冲突列表、差异摘要和备份来源信息。
+- `getImportSourceInfo(sourceData, compatibilitySteps)`: 从导入 JSON 中提取 Task Tracer 备份模板、文件类型、版本、存储来源、包含项、兼容读取信息和完整性状态。
 - `createImportRestoreChecklist(preview, t)`: 生成恢复前检查清单，提示模板版本、任务内容、重复 ID、本地同名项和替换影响。
 - `createImportDiffPreview(preview, t)`: 生成新增任务、同名冲突和默认替换范围的导入差异摘要。
 - `getImportFileDuplicateNames(names)`: 统计导入文件内同名任务。

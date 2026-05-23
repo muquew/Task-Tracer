@@ -590,6 +590,12 @@
         .import-diff-item strong { color: var(--text-main); font-size: 13px; font-weight: 820; line-height: 1.25; }
         .import-diff-count { color: var(--color-primary); font-size: 20px; font-weight: 860; line-height: 1; }
         .import-diff-detail { color: var(--text-secondary); font-size: 12px; font-weight: 620; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .import-safety-gate { display: grid; gap: 4px; padding: 11px 12px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface-alt); }
+        .import-safety-gate strong { color: var(--text-main); font-size: 13px; font-weight: 820; }
+        .import-safety-gate span { color: var(--text-secondary); font-size: 12px; font-weight: 640; line-height: 1.45; }
+        .import-safety-gate.warn { border-color: color-mix(in srgb, var(--color-warning) 34%, var(--border-light)); background: var(--color-warning-light); }
+        .import-safety-gate.risk { border-color: color-mix(in srgb, var(--color-danger) 34%, var(--border-light)); background: var(--color-danger-light); }
+        .import-safety-gate.risk span { color: var(--color-danger-text); }
         .import-conflict-list { display: grid; gap: 8px; }
         .import-conflict-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(150px, 190px); gap: 10px; align-items: center; padding: 11px 12px; border: 1px solid var(--border-light); border-radius: var(--radius-control); background: var(--bg-surface-alt); }
         .import-conflict-name { min-width: 0; font-size: 13px; font-weight: 760; color: var(--text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -1314,7 +1320,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.70'
+                VERSION: '3.71'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1367,7 +1373,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.19'
+                RESOURCE_VERSION: '4.20'
             },
             BACKUP: {
                 FILE_VERSION: '2.4',
@@ -5942,7 +5948,11 @@
                 const handler = async () => {
                     DOM.submitBtn.disabled = true;
                     try {
-                        await onConfirm();
+                        const result = await onConfirm();
+                        if (result === false) {
+                            DOM.submitBtn.disabled = false;
+                            return;
+                        }
                         closeDialog();
                     } catch (error) {
                         console.error('确认操作失败:', error);
@@ -6960,21 +6970,31 @@
             reader.onload = async (e) => {
                 try {
                     const data = JSON.parse(e.target.result.toString());
-                    const importPayload = migrateImportPayload(data);
+                    const importPayload = prepareImportPayload(data);
                     if (!importPayload.rawTasks) {
                         utils.notify(t['messages.import.formatError'], 'error');
                         return;
                     }
                     const importedTasks = normalizeImportedTasks(importPayload.rawTasks);
-                    const preview = buildImportPreview(importedTasks, importPayload.rawTasks, importPayload.sourceData, importPayload.migrations);
+                    const preview = buildImportPreview(importedTasks, importPayload.rawTasks, importPayload.sourceData, importPayload.compatibilitySteps);
                     utils.confirm(t['messages.import.previewTitle'], createImportPreviewContent(preview), async () => {
                         try {
                             const beforeTasks = captureUndoSnapshot();
                             const importOptions = getImportOptions();
+                            if (!importOptions.merge && preview.sourceInfo.checksumStatus === 'invalid' && !isImportChecksumRiskConfirmed()) {
+                                markImportChecksumRiskConfirmed();
+                                utils.notify(t['messages.import.integrityReplaceConfirm'], 'warning');
+                                return false;
+                            }
+                            if (!importOptions.merge && beforeTasks.length > 0 && !isPreImportSnapshotConfirmed()) {
+                                downloadPreImportSnapshot(beforeTasks);
+                                markPreImportSnapshotConfirmed();
+                                utils.notify(t['messages.import.snapshotDownloaded'], 'warning');
+                                return false;
+                            }
                             const preparedImport = importOptions.merge
                                 ? prepareImportedTasksForMerge(importedTasks, importOptions.conflictActions)
                                 : { tasks: importedTasks, idsToDelete: [] };
-                            if (!importOptions.merge && beforeTasks.length > 0) downloadPreImportSnapshot(beforeTasks);
                             if (importOptions.merge) await dbActions.mergeImportedTasks(preparedImport.tasks, preparedImport.idsToDelete);
                             else await dbActions.replaceAllTasks(preparedImport.tasks);
                             clearNotificationDeliveryState();
@@ -7000,17 +7020,17 @@
             if (data && typeof data === 'object' && Array.isArray(data.tasks)) return data.tasks;
             return null;
         }
-        function migrateImportPayload(data) {
+        function prepareImportPayload(data) {
             const rawTasks = getImportTaskArray(data);
-            if (!rawTasks) return { sourceData: data, rawTasks: null, migrations: [] };
-            if (Array.isArray(data)) return { sourceData: data, rawTasks, migrations: [{ from: 'legacy-array', to: CONFIG.BACKUP.FILE_VERSION }] };
+            if (!rawTasks) return { sourceData: data, rawTasks: null, compatibilitySteps: [] };
+            if (Array.isArray(data)) return { sourceData: data, rawTasks, compatibilitySteps: [{ from: 'legacy-array', to: CONFIG.BACKUP.FILE_VERSION }] };
             const sourceData = { ...data, tasks: rawTasks };
             const sourceVersion = getImportPayloadVersion(sourceData);
-            const migrations = sourceVersion && sourceVersion !== CONFIG.BACKUP.FILE_VERSION
+            const compatibilitySteps = sourceVersion && sourceVersion !== CONFIG.BACKUP.FILE_VERSION
                 ? [{ from: sourceVersion, to: CONFIG.BACKUP.FILE_VERSION }]
                 : [];
-            if (!sourceVersion) migrations.push({ from: 'unversioned', to: CONFIG.BACKUP.FILE_VERSION });
-            return { sourceData, rawTasks, migrations };
+            if (!sourceVersion) compatibilitySteps.push({ from: 'unversioned', to: CONFIG.BACKUP.FILE_VERSION });
+            return { sourceData, rawTasks, compatibilitySteps };
         }
         function getImportPayloadVersion(data) {
             if (!data || typeof data !== 'object' || Array.isArray(data)) return '';
@@ -7018,7 +7038,7 @@
             const value = schema?.version ?? data.version ?? '';
             return value === undefined || value === null ? '' : String(value);
         }
-        function buildImportPreview(importedTasks, rawTasks = [], sourceData = null, migrations = []) {
+        function buildImportPreview(importedTasks, rawTasks = [], sourceData = null, compatibilitySteps = []) {
             const importNameOccurrences = getImportNameOccurrences(importedTasks);
             const fileDuplicateNames = getImportFileDuplicateNames(importNameOccurrences);
             const existingByName = getExistingTasksByName();
@@ -7037,13 +7057,13 @@
                 duplicateIds,
                 existingDuplicateNames,
                 conflicts,
-                sourceInfo: getImportSourceInfo(sourceData, migrations),
+                sourceInfo: getImportSourceInfo(sourceData, compatibilitySteps),
                 newTaskNames: importDiff.newTaskNames,
                 conflictTaskNames: importDiff.conflictTaskNames,
                 currentTaskNames: state.tasks.map(task => task.name)
             };
         }
-        function getImportSourceInfo(sourceData, migrations = []) {
+        function getImportSourceInfo(sourceData, compatibilitySteps = []) {
             const objectSource = sourceData && typeof sourceData === 'object' && !Array.isArray(sourceData) ? sourceData : null;
             const schema = objectSource && objectSource.schema && typeof objectSource.schema === 'object' ? objectSource.schema : null;
             const type = objectSource && objectSource.type !== undefined ? String(objectSource.type) : (Array.isArray(sourceData) ? 'legacy-array' : '');
@@ -7056,7 +7076,7 @@
             const hasTemplate = Boolean(hasTasksEnvelope && app === 'Task Tracer' && schema && (version || schemaVersion));
             const checksum = objectSource && objectSource.checksum !== undefined && objectSource.checksum !== null ? String(objectSource.checksum) : '';
             const checksumStatus = checksum ? (checksum === createTaskDataChecksum(objectSource) ? 'valid' : 'invalid') : (objectSource ? 'missing' : 'unavailable');
-            return { type, version, schemaVersion, storage, app, includes, hasTemplate, hasTasksEnvelope, checksum, checksumStatus, migrations };
+            return { type, version, schemaVersion, storage, app, includes, hasTemplate, hasTasksEnvelope, checksum, checksumStatus, compatibilitySteps };
         }
         function getImportDiff(importedTasks, existingByName) {
             const newTaskNames = [];
@@ -7117,6 +7137,11 @@
             const t = state.translations[state.currentLanguage];
             const wrapper = document.createElement('div');
             wrapper.className = 'confirm-details';
+            wrapper.dataset.importPreview = 'true';
+            wrapper.dataset.preImportSnapshotConfirmed = 'false';
+            wrapper.dataset.checksumRiskConfirmed = 'false';
+            wrapper.dataset.checksumStatus = preview.sourceInfo.checksumStatus || '';
+            wrapper.dataset.currentCount = String(preview.currentCount);
             wrapper.appendChild(createImportRestoreChecklist(preview, t));
             wrapper.appendChild(createImportDiffPreview(preview, t));
             wrapper.append(
@@ -7130,12 +7155,74 @@
                 createConfirmRow(t['messages.import.previewExistingMatches'], String(preview.existingDuplicateNames.length))
             );
             wrapper.appendChild(createImportModeOption(t));
+            wrapper.appendChild(createImportSafetyGate(preview, t));
             appendImportNameList(wrapper, t['messages.import.previewFileDuplicates'], preview.fileDuplicateNames);
             appendImportNameList(wrapper, t['messages.import.previewDuplicateIds'], preview.duplicateIds.map(String));
             appendImportNameList(wrapper, t['messages.import.previewExistingMatches'], preview.existingDuplicateNames);
             wrapper.appendChild(createImportConflictControls(preview, t));
             syncImportConflictControls(wrapper);
             return wrapper;
+        }
+        function createImportSafetyGate(preview, t) {
+            const gate = document.createElement('div');
+            gate.className = 'import-safety-gate';
+            gate.dataset.importSafetyGate = 'true';
+            gate.hidden = preview.currentCount === 0 && preview.sourceInfo.checksumStatus !== 'invalid';
+            const title = document.createElement('strong');
+            title.textContent = t['messages.import.importSafetyTitle'];
+            const detail = document.createElement('span');
+            detail.dataset.importSafetyDetail = 'true';
+            detail.textContent = getImportSafetyText(preview.currentCount, preview.sourceInfo.checksumStatus, false, false, t);
+            gate.append(title, detail);
+            return gate;
+        }
+        function getImportSafetyText(currentCount, checksumStatus, snapshotConfirmed, checksumConfirmed, t) {
+            if (checksumStatus === 'invalid' && !checksumConfirmed) return t['messages.import.importSafetyChecksumRisk'];
+            if (checksumStatus === 'invalid' && checksumConfirmed && currentCount === 0) return t['messages.import.importSafetyChecksumConfirmed'];
+            if (snapshotConfirmed) return t['messages.import.importSafetySnapshotReady'];
+            if (currentCount > 0) return t['messages.import.importSafetyReplace'].replace('{count}', currentCount);
+            return t['messages.import.importSafetyClean'];
+        }
+        function getImportPreviewRoot(root = document) {
+            return root.querySelector ? root.querySelector('[data-import-preview]') : null;
+        }
+        function isPreImportSnapshotConfirmed() {
+            return getImportPreviewRoot()?.dataset.preImportSnapshotConfirmed === 'true';
+        }
+        function isImportChecksumRiskConfirmed() {
+            return getImportPreviewRoot()?.dataset.checksumRiskConfirmed === 'true';
+        }
+        function markPreImportSnapshotConfirmed() {
+            const root = getImportPreviewRoot();
+            if (!root) return;
+            root.dataset.preImportSnapshotConfirmed = 'true';
+            updateImportSafetyGate(root);
+        }
+        function markImportChecksumRiskConfirmed() {
+            const root = getImportPreviewRoot();
+            if (!root) return;
+            root.dataset.checksumRiskConfirmed = 'true';
+            updateImportSafetyGate(root);
+        }
+        function updateImportSafetyGate(root = getImportPreviewRoot()) {
+            if (!root) return;
+            const gate = root.querySelector('[data-import-safety-gate]');
+            const detail = root.querySelector('[data-import-safety-detail]');
+            const mergeEnabled = Boolean(document.getElementById('mergeImportMode')?.checked);
+            const currentCount = Number(root.dataset.currentCount || 0);
+            const checksumStatus = root.dataset.checksumStatus || '';
+            const snapshotConfirmed = root.dataset.preImportSnapshotConfirmed === 'true';
+            const checksumConfirmed = root.dataset.checksumRiskConfirmed === 'true';
+            if (gate) {
+                gate.hidden = mergeEnabled || (currentCount === 0 && checksumStatus !== 'invalid');
+                gate.classList.toggle('risk', checksumStatus === 'invalid' && !checksumConfirmed);
+                gate.classList.toggle('warn', snapshotConfirmed || checksumConfirmed);
+            }
+            if (detail) detail.textContent = getImportSafetyText(currentCount, checksumStatus, snapshotConfirmed, checksumConfirmed, state.translations[state.currentLanguage]);
+            if (DOM.submitBtn && root.closest('#confirm-message-text')) {
+                const needsContinueLabel = !mergeEnabled && (snapshotConfirmed || checksumConfirmed);
+                DOM.submitBtn.textContent = state.translations[state.currentLanguage][needsContinueLabel ? 'messages.import.continueReplace' : 'actions.confirm'];
+            }
         }
         function createImportRestoreChecklist(preview, t) {
             const section = document.createElement('section');
@@ -7165,7 +7252,7 @@
             const sourceVersion = sourceInfo.schemaVersion || sourceInfo.version || t['messages.import.restoreUnknownVersion'];
             const sourceTypeLabel = getImportSourceTypeLabel(sourceInfo.type, t);
             const schemaMatches = sourceInfo.schemaVersion === CONFIG.BACKUP.FILE_VERSION || sourceInfo.version === CONFIG.BACKUP.FILE_VERSION;
-            const migration = sourceInfo.migrations?.[0];
+            const compatibilityStep = sourceInfo.compatibilitySteps?.[0];
             return [
                 {
                     status: sourceInfo.hasTemplate ? 'pass' : 'warn',
@@ -7179,8 +7266,8 @@
                     label: t['messages.import.restoreSchemaLabel'],
                     detail: schemaMatches
                         ? t['messages.import.restoreSchemaOk'].replace('{version}', sourceVersion)
-                        : (migration
-                            ? t['messages.import.restoreSchemaMigrate'].replace('{from}', migration.from).replace('{to}', migration.to)
+                        : (compatibilityStep
+                            ? t['messages.import.restoreSchemaCompatible'].replace('{from}', compatibilityStep.from).replace('{to}', compatibilityStep.to)
                             : t['messages.import.restoreSchemaWarn'].replace('{version}', sourceVersion).replace('{current}', CONFIG.BACKUP.FILE_VERSION))
                 },
                 {
@@ -7372,6 +7459,7 @@
                     select.disabled = !mergeEnabled;
                 });
             });
+            updateImportSafetyGate(getImportPreviewRoot(root));
             syncAllCustomSelects(root);
         }
         function getImportOptions() {

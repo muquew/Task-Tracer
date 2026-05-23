@@ -413,7 +413,7 @@
       "restoreSchemaLabel": "Backup template version",
       "restoreSchemaOk": "Matches the current restore template {version}.",
       "restoreSchemaWarn": "File version is {version}; current template is {current}. Task Tracer will try a compatible import.",
-      "restoreSchemaMigrate": "Compatible import will migrate from {from} to the current template {to}.",
+      "restoreSchemaCompatible": "Task Tracer will read the {from} file with compatibility rules and import it into the current template {to}.",
       "restoreIntegrityLabel": "File integrity",
       "restoreIntegrityOk": "Integrity check passed; the file content matches its checksum.",
       "restoreIntegrityMissing": "The file has no checksum; Task Tracer can still import compatible task content.",
@@ -432,8 +432,17 @@
       "restoreImpactOk": "There are no local tasks, so replace mode will not overwrite existing data.",
       "restoreImpactWarn": "Replace mode will overwrite {count} current task(s); choose merge mode to keep them.",
       "restoreSnapshotLabel": "Pre-replace snapshot",
-      "restoreSnapshotAuto": "Before replacing, Task Tracer will automatically download a restore snapshot with {count} current task(s).",
+      "restoreSnapshotAuto": "Before replacing, Task Tracer will download a restore snapshot with {count} current task(s) and require another confirmation.",
       "restoreSnapshotEmpty": "There are no local tasks, so no extra restore snapshot is needed.",
+      "importSafetyTitle": "Replace import protection",
+      "importSafetyReplace": "The first confirmation downloads a pre-import snapshot with {count} current task(s); the next confirmation replaces data.",
+      "importSafetySnapshotReady": "The pre-import snapshot download was triggered. Confirm the file is saved, then confirm again to replace data.",
+      "importSafetyChecksumRisk": "Integrity check failed. Switch to merge mode, or confirm the risk again before replacing data.",
+      "importSafetyChecksumConfirmed": "Integrity risk confirmed. Confirm again to replace current data.",
+      "importSafetyClean": "There are no local tasks, so replace mode will not overwrite existing data.",
+      "snapshotDownloaded": "Pre-import snapshot download was triggered. Confirm the file is saved, then confirm replacement again.",
+      "integrityReplaceConfirm": "Integrity check failed. Switch to merge mode, or confirm the risk again to continue replacing.",
+      "continueReplace": "Continue Replace Import",
       "diffTitle": "Import Difference",
       "diffNew": "New tasks",
       "diffConflicts": "Name conflicts",
@@ -545,7 +554,7 @@
     },
     "versionNotes": {
       "schema": "Backup 2.4 includes an integrity checksum, export ID, local due dates, exact reminder instants, tasks, subtasks, projects, tags, advanced repeat rules, completion dates, archive state, and today plan.",
-      "compatibility": "The importer reads the tasks array; older export files remain importable through compatibility migration.",
+      "compatibility": "The importer reads the tasks array; older export files remain importable through compatibility rules.",
       "emergency": "This file was created from an in-memory snapshot in protected storage-unavailable mode. Restore browser storage and import it as soon as practical."
     }
   }

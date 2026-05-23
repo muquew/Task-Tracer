@@ -413,7 +413,7 @@
       "restoreSchemaLabel": "备份模板版本",
       "restoreSchemaOk": "与当前恢复模板 {version} 匹配。",
       "restoreSchemaWarn": "文件版本为 {version}，当前模板为 {current}；将尝试兼容导入。",
-      "restoreSchemaMigrate": "将按兼容规则从 {from} 迁移到当前模板 {to}。",
+      "restoreSchemaCompatible": "将按兼容规则读取 {from} 文件，并按当前模板 {to} 导入。",
       "restoreIntegrityLabel": "文件完整性",
       "restoreIntegrityOk": "完整性校验通过，文件内容与校验值匹配。",
       "restoreIntegrityMissing": "文件没有校验值；仍可按任务内容兼容导入。",
@@ -432,8 +432,17 @@
       "restoreImpactOk": "当前没有本地任务，替换不会覆盖已有数据。",
       "restoreImpactWarn": "默认替换会覆盖当前 {count} 个任务；如需保留，请勾选合并模式。",
       "restoreSnapshotLabel": "替换前快照",
-      "restoreSnapshotAuto": "确认替换前会自动下载当前 {count} 个任务的恢复快照。",
+      "restoreSnapshotAuto": "替换前会先下载当前 {count} 个任务的恢复快照，并要求再次确认。",
       "restoreSnapshotEmpty": "当前没有本地任务，不需要额外恢复快照。",
+      "importSafetyTitle": "替换导入保护",
+      "importSafetyReplace": "首次确认会先下载当前 {count} 个任务的导入前快照；再次确认才会替换。",
+      "importSafetySnapshotReady": "导入前快照已触发下载。确认文件已保存后，再次确认才会替换。",
+      "importSafetyChecksumRisk": "完整性校验失败。建议切换到合并模式；如果仍要替换，需要再次确认风险。",
+      "importSafetyChecksumConfirmed": "完整性风险已确认。再次确认才会替换当前数据。",
+      "importSafetyClean": "当前没有本地任务，替换不会覆盖现有数据。",
+      "snapshotDownloaded": "导入前快照已触发下载，请确认文件已保存后再次确认替换。",
+      "integrityReplaceConfirm": "完整性校验失败；请切换到合并模式，或再次确认风险后继续替换。",
+      "continueReplace": "继续替换导入",
       "diffTitle": "导入差异",
       "diffNew": "新增任务",
       "diffConflicts": "同名冲突",
@@ -545,7 +554,7 @@
     },
     "versionNotes": {
       "schema": "2.4 备份包含完整性校验、导出 ID、本地截止日期、真实提醒时间、任务、子任务、项目、标签、高级重复规则、完成时间、归档状态和今日计划。",
-      "compatibility": "导入器会读取 tasks 数组；旧版导出文件仍可通过兼容迁移导入。",
+      "compatibility": "导入器会读取 tasks 数组；旧版导出文件仍可通过兼容规则导入。",
       "emergency": "此文件来自存储不可用保护模式下的内存快照，请尽快修复浏览器存储后导入恢复。"
     }
   }
