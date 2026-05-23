@@ -16,6 +16,10 @@ MANIFEST_PATH = REPO_ROOT / "manifest.json"
 SW_PATH = REPO_ROOT / "sw.js"
 RESOURCE_DIR = REPO_ROOT / "resources"
 VERCEL_PATH = REPO_ROOT / "vercel.json"
+ROBOTS_PATH = REPO_ROOT / "robots.txt"
+SITEMAP_PATH = REPO_ROOT / "sitemap.xml"
+SEO_URL = "https://todo.muquew.com/"
+SEO_DESCRIPTION = "Task Tracer is a local-first PWA for tasks, routines, reminders, calendar planning, statistics, import/export backups, and offline use."
 
 
 def read_text(path: Path) -> str:
@@ -258,7 +262,70 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
         if "cacheFirst(e.request)" not in sw_source:
             errors.append("Static assets should keep a cacheFirst fallback strategy")
     except AssertionError as error:
+            errors.append(str(error))
+
+
+def validate_seo(index_html: str, errors: list[str]) -> None:
+    required_head_fragments = [
+        f'<meta name="description" content="{SEO_DESCRIPTION}">',
+        '<meta name="robots" content="index,follow">',
+        f'<link rel="canonical" href="{SEO_URL}">',
+        '<meta property="og:type" content="website">',
+        '<meta property="og:site_name" content="Task Tracer">',
+        f'<meta property="og:url" content="{SEO_URL}">',
+        '<meta property="og:image" content="https://todo.muquew.com/screenshots/task-list-en.png">',
+        '<meta property="og:image:width" content="1365">',
+        '<meta property="og:image:height" content="1227">',
+        '<meta property="og:locale" content="en_US">',
+        '<meta property="og:locale:alternate" content="zh_CN">',
+        '<meta name="twitter:card" content="summary_large_image">',
+        '<meta name="twitter:image" content="https://todo.muquew.com/screenshots/task-list-en.png">',
+    ]
+    for fragment in required_head_fragments:
+        if fragment not in index_html:
+            errors.append(f"Missing SEO head fragment: {fragment}")
+
+    try:
+        ld_match = first_match(
+            r'<script type="application/ld\+json">\s*(.*?)\s*</script>',
+            index_html,
+            "SoftwareApplication JSON-LD",
+        )
+        data = json.loads(ld_match.group(1))
+        required_values = {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Task Tracer",
+            "url": SEO_URL,
+            "softwareVersion": app_version(index_html),
+        }
+        for key, expected in required_values.items():
+            if data.get(key) != expected:
+                errors.append(f"JSON-LD {key} changed: expected {expected!r}, got {data.get(key)!r}")
+        if data.get("applicationCategory") != "ProductivityApplication":
+            errors.append("JSON-LD applicationCategory must be ProductivityApplication")
+        if not isinstance(data.get("featureList"), list) or len(data["featureList"]) < 5:
+            errors.append("JSON-LD featureList must describe the app capabilities")
+    except (AssertionError, json.JSONDecodeError) as error:
         errors.append(str(error))
+
+    if not ROBOTS_PATH.is_file():
+        errors.append("robots.txt must exist")
+    else:
+        robots = read_text(ROBOTS_PATH)
+        if "User-agent: *" not in robots or "Allow: /" not in robots:
+            errors.append("robots.txt must allow crawling")
+        if f"Sitemap: {SEO_URL}sitemap.xml" not in robots:
+            errors.append("robots.txt must reference the canonical sitemap")
+
+    if not SITEMAP_PATH.is_file():
+        errors.append("sitemap.xml must exist")
+    else:
+        sitemap = read_text(SITEMAP_PATH)
+        if f"<loc>{SEO_URL}</loc>" not in sitemap:
+            errors.append("sitemap.xml must include the canonical app URL")
+        if "http://www.sitemaps.org/schemas/sitemap/0.9" not in sitemap:
+            errors.append("sitemap.xml must use the standard sitemap namespace")
 
 
 def validate_loaded_code_is_comment_free(index_html: str, errors: list[str]) -> None:
@@ -491,6 +558,7 @@ def main() -> int:
 
     validate_translations(index_html, errors)
     validate_pwa(index_html, errors)
+    validate_seo(index_html, errors)
     validate_loaded_code_is_comment_free(index_html, errors)
     validate_task_state_styles(index_html, errors)
     validate_accessibility_styles(index_html, errors)

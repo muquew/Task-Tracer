@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Task Tracer",
   "short_name": "TaskTracer",
-  "description": "A local-first personal task, routine, and reminder manager.",
+  "description": "A local-first PWA for tasks, routines, reminders, calendar planning, statistics, import/export backups, and offline use.",
   "lang": "en",
   "dir": "ltr",
   "start_url": "./",
@@ -23,6 +23,20 @@
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/task-list-en.png",
+      "type": "image/png",
+      "sizes": "1365x1227",
+      "label": "Task Tracer task list"
+    },
+    {
+      "src": "screenshots/add-task-en.png",
+      "type": "image/png",
+      "sizes": "1365x1227",
+      "label": "Task Tracer add task dialog"
     }
   ]
 }

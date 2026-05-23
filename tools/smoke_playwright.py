@@ -1142,9 +1142,9 @@ def exercise_language(page: Page) -> None:
     page.locator("#openMenuBtn").click()
     page.locator("#langMenuToggle").click()
     page.locator('#lang-container .lang-btn[data-lang="en"]').click()
-    expect(page.locator("h1")).to_have_text("Task Tracker")
+    expect(page.locator("h1")).to_have_text("Task Tracer")
     expect(page.locator("#currentFilterLabel")).to_have_text("Active")
-    if page.title() != "Task Tracker":
+    if page.title() != "Task Tracer":
         raise AssertionError(f"Expected English document title, got {page.title()!r}")
     expect(page.locator("html")).to_have_attribute("lang", "en")
     expect(page.locator("html")).to_have_attribute("dir", "ltr")
@@ -2438,7 +2438,7 @@ def exercise_import_merge_skip_reference_cleanup(page: Page, prefix: str) -> Non
 
 
 def assert_pwa_resources(context: BrowserContext, base_url: str) -> None:
-    required_paths = ["index.html", "manifest.json", "sw.js", "resources/en.json", "resources/zh-CN.json"]
+    required_paths = ["index.html", "manifest.json", "sw.js", "robots.txt", "sitemap.xml", "resources/en.json", "resources/zh-CN.json"]
     responses = []
     for path in required_paths:
         response = context.request.get(urljoin(base_url, path))
@@ -2456,6 +2456,14 @@ def assert_pwa_resources(context: BrowserContext, base_url: str) -> None:
         responses.append(f"{response.status} {src}")
         if not response.ok:
             raise AssertionError(f"Manifest icon failed: {response.status} {src}")
+    for screenshot in manifest.get("screenshots", []):
+        src = screenshot.get("src")
+        if not src:
+            raise AssertionError(f"Manifest screenshot is missing src: {screenshot}")
+        response = context.request.get(urljoin(base_url, src))
+        responses.append(f"{response.status} {src}")
+        if not response.ok:
+            raise AssertionError(f"Manifest screenshot failed: {response.status} {src}")
 
 
 def assert_pwa_installability(page: Page) -> None:

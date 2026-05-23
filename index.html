@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title data-i18n="app.title">任务跟踪器</title>
+    <title data-i18n="app.title">Task Tracer - Local-first Task Manager</title>
+    <meta name="description" content="Task Tracer is a local-first PWA for tasks, routines, reminders, calendar planning, statistics, import/export backups, and offline use.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="muquew">
+    <meta name="creator" content="muquew">
+    <meta name="publisher" content="muquew">
+    <meta name="color-scheme" content="light dark">
+    <link rel="canonical" href="https://todo.muquew.com/">
     <link rel="manifest" id="manifestLink" href="./manifest.json">
     <meta name="theme-color" content="#2563eb">
     <meta name="application-name" content="Task Tracer">
@@ -17,6 +24,62 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./fav/favicon-32x32.png">
     <link rel="shortcut icon" href="./fav/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="./fav/apple-touch-icon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Task Tracer">
+    <meta property="og:title" content="Task Tracer - Local-first Task Manager">
+    <meta property="og:description" content="A local-first PWA for tasks, routines, reminders, calendar planning, statistics, import/export backups, and offline use.">
+    <meta property="og:url" content="https://todo.muquew.com/">
+    <meta property="og:image" content="https://todo.muquew.com/screenshots/task-list-en.png">
+    <meta property="og:image:secure_url" content="https://todo.muquew.com/screenshots/task-list-en.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1365">
+    <meta property="og:image:height" content="1227">
+    <meta property="og:image:alt" content="Task Tracer task list interface">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Task Tracer - Local-first Task Manager">
+    <meta name="twitter:description" content="A local-first PWA for tasks, routines, reminders, calendar planning, statistics, import/export backups, and offline use.">
+    <meta name="twitter:image" content="https://todo.muquew.com/screenshots/task-list-en.png">
+    <meta name="twitter:image:alt" content="Task Tracer task list interface">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Task Tracer",
+            "alternateName": "Task Tracer 任务跟踪器",
+            "applicationCategory": "ProductivityApplication",
+            "operatingSystem": "Any",
+            "url": "https://todo.muquew.com/",
+            "image": "https://todo.muquew.com/screenshots/task-list-en.png",
+            "description": "Task Tracer is a local-first PWA for tasks, routines, reminders, calendar planning, statistics, import/export backups, and offline use.",
+            "inLanguage": ["en", "zh-CN"],
+            "softwareVersion": "4.0",
+            "author": {
+                "@type": "Person",
+                "name": "muquew"
+            },
+            "publisher": {
+                "@type": "Person",
+                "name": "muquew"
+            },
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock"
+            },
+            "featureList": [
+                "Local-first task management",
+                "Quick add parsing for date, time, project, and tags",
+                "List, calendar, timeline, and statistics views",
+                "Recurring tasks and browser reminders",
+                "Import, export, backup, checksum, and emergency backup",
+                "Installable offline PWA",
+                "Keyboard and screen-reader friendly interface"
+            ]
+        }
+    </script>
     <style>
         :root {
             --app-width: 1080px;
@@ -1326,7 +1389,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '3.76'
+                VERSION: '4.0'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1379,7 +1442,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.22'
+                RESOURCE_VERSION: '4.23'
             },
             BACKUP: {
                 FILE_VERSION: '2.4',

@@ -7,13 +7,14 @@
 - `index.html`: 单文件 PWA 主应用，包含样式、SVG 图标、HTML 模板和全部前端业务逻辑。
 - `sw.js`: Service Worker，负责 App Shell 缓存、语言资源更新策略、静态资源缓存和通知点击回到应用。
 - `manifest.json`: PWA manifest。
+- `robots.txt`、`sitemap.xml`: 站点索引入口，指向正式域名 `https://todo.muquew.com/`。
 - `resources/zh-CN.json`、`resources/en.json`: 外置语言文件，避免主 HTML 继续膨胀。
 - `docs/accessibility-i18n-audit.md`: 无障碍、键盘、读屏器语义和 i18n 审计基线。
 
 ## index.html 结构
 
 1. Head 与主题预加载
-   - 设置 PWA 主题色、manifest、favicon。
+   - 设置 SEO description、canonical、Open Graph、Twitter Card、SoftwareApplication JSON-LD、PWA 主题色、manifest、favicon。
    - 早期主题脚本在页面渲染前写入 `data-theme`，减少暗色模式刷新闪烁。
 
 2. CSS
