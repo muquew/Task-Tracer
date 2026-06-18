@@ -282,11 +282,10 @@
         .tools-drawer-handle {
             grid-column: 2;
             grid-row: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 2px;
+            position: relative;
+            display: block;
+            width: 38px;
+            height: 70px;
             min-height: 0;
             margin: 0;
             padding: 3px;
@@ -296,10 +295,10 @@
             box-shadow: 0 8px 20px color-mix(in srgb, var(--shadow-base) 58%, transparent);
             backdrop-filter: blur(12px);
             transform-origin: top right;
-            animation: toolsCapsuleExpand 0.18s var(--motion-theme-ease);
-            transition: background-color var(--motion-fast), border-color var(--motion-fast), box-shadow var(--motion-fast), transform var(--motion-fast);
+            transition: width 220ms var(--motion-theme-ease), height 220ms var(--motion-theme-ease), background-color var(--motion-fast), border-color var(--motion-fast), box-shadow var(--motion-fast), transform 220ms var(--motion-theme-ease);
         }
         .tools-drawer-btn {
+            position: absolute;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -312,15 +311,17 @@
             color: var(--text-secondary);
             cursor: pointer;
             box-shadow: none;
-            transition: background-color var(--motion-fast), color var(--motion-fast), transform var(--motion-fast);
+            transition: top 220ms var(--motion-theme-ease), left 220ms var(--motion-theme-ease), background-color var(--motion-fast), color var(--motion-fast), transform 220ms var(--motion-theme-ease);
         }
+        .tools-drawer-toggle-btn { top: 3px; left: 3px; }
+        .tools-drawer-pin-btn { top: 35px; left: 3px; }
         .tools-drawer-btn:hover {
             background: var(--bg-hover);
             color: var(--color-primary);
             transform: translateY(-1px);
         }
         .tools-drawer-btn:active { transform: scale(0.96); }
-        .tools-drawer-toggle-icon { transition: transform var(--motion-fast); }
+        .tools-drawer-toggle-icon, .tools-drawer-pin-btn .icon { transition: transform 220ms var(--motion-theme-ease); }
         .tools-drawer:not(.is-collapsed) .tools-drawer-toggle-icon { transform: rotate(180deg); }
         .tools-drawer.is-pinned .tools-drawer-pin-btn {
             background: var(--color-primary);
@@ -336,19 +337,12 @@
             position: absolute;
             top: 0;
             right: 0;
-            flex-direction: row;
-            justify-content: flex-end;
+            width: 70px;
+            height: 38px;
             margin-bottom: 0;
-            animation-name: toolsCapsuleCollapse;
         }
-        @keyframes toolsCapsuleExpand {
-            from { opacity: 0.86; transform: translateX(4px) scale(0.96); }
-            to { opacity: 1; transform: translateX(0) scale(1); }
-        }
-        @keyframes toolsCapsuleCollapse {
-            from { opacity: 0.86; transform: translateY(-4px) scale(0.96); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
+        .tools-drawer.is-collapsed .tools-drawer-pin-btn { top: 3px; left: 35px; }
+        .tools-drawer.is-collapsed .tools-drawer-pin-btn .icon { transform: rotate(-18deg); }
         .tools-drawer-content[hidden] { display: none; }
         .tools-drawer-content {
             grid-column: 1;
