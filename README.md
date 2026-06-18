@@ -67,7 +67,7 @@ https://todo.muquew.com/?add=Buy%20milk&save=1
 
 `capture=1` opens the app focused on quick add. `add=` pre-fills quick add and waits for confirmation. `save=1` saves immediately after the app opens. Capture parameters are removed after processing so refreshing the page does not create duplicates.
 
-Installed PWAs expose a `Quick Capture` shortcut that opens `./?capture=1`. Browsers that support Web Share Target can share title, text, and URL into Task Tracer; the shared content is placed in quick add for review.
+Installed PWAs expose a `Quick Capture` shortcut that opens `./?capture=1`. Browsers that support Web Share Target can send shared title, text, and URL to Task Tracer: the title appears in quick add for confirmation, while the shared text and URL are saved into the task description after confirmation.
 
 ## Projects, Tags, and Search
 

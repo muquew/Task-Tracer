@@ -145,7 +145,7 @@
 8. 必要时 `addSampleTasks()` 添加示例。
 9. `bindEvents()` 绑定事件。
 10. `renderTaskList()` 首次渲染。
-11. `handleLaunchCapture()` 处理 `capture`、`add`、`save`、`title`、`text` 和 `url` 启动参数，必要时聚焦快速添加或自动保存。
+11. `handleLaunchCapture()` 处理 `capture`、`add`、`save`、`title`、`text` 和 `url` 启动参数，必要时聚焦快速添加或自动保存；分享目标会把标题作为快速添加文本，把正文和 URL 暂存为确认后写入的描述。
 12. `startProgressTimer()` 启动倒计时刷新。
 13. `scheduleBackupReminder()` 根据最近备份时间决定是否提示备份。
 
@@ -172,6 +172,8 @@
 - `safeGetStorageItem()`、`safeSetStorageItem()`、`safeRemoveStorageItem()`: 包装 `localStorage`/`sessionStorage`，避免隐私模式抛错导致启动中断。
 - `handleLaunchCapture()`: 处理 PWA 快捷入口、URL 预填、自动保存和分享目标传入内容。
 - `getLaunchCaptureRequest()`: 从 URL 参数读取捕获请求；`add` 优先于分享参数，文本长度由 `CONFIG.CAPTURE.MAX_TEXT_LENGTH` 限制。
+- `getSharedCapturePayload(params)`: 将分享目标参数拆成快速添加标题和可写入描述的正文/URL。
+- `setQuickAddCaptureDraft(request)` / `getQuickAddCaptureOptions(options)`: 暂存分享描述，并在用户确认同一条分享标题时传给快速添加保存入口。
 - `clearLaunchCaptureParams()`: 捕获参数处理后从地址栏移除，避免刷新重复添加。
 - `loadSettings()`: 恢复配置。
 - `restoreLanguageSetting()`: 恢复或解析首选语言。
@@ -358,8 +360,8 @@
 - `openCommandPalette()` / `closeCommandPalette()`: 打开或关闭命令面板，并处理焦点恢复。
 - `renderCommandPalette()` / `getCommandPaletteItems()`: 根据当前任务、视图、项目、智能视图、今日计划、批量模式和撤销状态生成命令候选项。
 - `executeCommandPaletteItem(index)`: 执行当前命令，覆盖新建任务、快速添加、搜索、视图切换、智能视图、今日计划、批量操作、撤销、导出/备份和项目切换。
-- `saveQuickAddText(rawInput, options)`: 快速添加和 URL 自动保存共用的写入入口；未指定 `/项目` 时任务进入 `Inbox`。
-- `buildTaskPayloadFromQuickAdd(rawInput)`: 将快速添加文本解析为任务 payload，复用日期、时间、标签和项目解析。
+- `saveQuickAddText(rawInput, options)`: 快速添加和 URL 自动保存共用的写入入口；未指定 `/项目` 时任务进入 `Inbox`，分享目标确认保存时会把暂存的正文和 URL 写入描述。
+- `buildTaskPayloadFromQuickAdd(rawInput, options)`: 将快速添加文本解析为任务 payload，复用日期、时间、标签、项目解析和可选捕获描述。
 - `closeDialog()`: 关闭并清理弹窗。
 - `resetDialogToFormMode()`: 从确认模式恢复表单模式。
 - `utils.confirm(title, msg, onConfirm)`: 复用任务弹窗显示确认流程。
@@ -469,7 +471,7 @@
 - `CACHE_NAME`: Service Worker 缓存版本。修改运行时代码或缓存资源时应递增，并与 `CONFIG.APP.VERSION` 的版本号保持一致。
 - `ASSETS_TO_CACHE`: 预缓存 App Shell、manifest、语言资源和核心图标。
 - `manifest.json.shortcuts`: 暴露 `Quick Capture` 安装快捷入口，URL 为 `./?capture=1`。
-- `manifest.json.share_target`: 使用 GET 分享目标，把系统分享的 `title`、`text`、`url` 作为 URL 参数传回 `handleLaunchCapture()`。
+- `manifest.json.share_target`: 使用 GET 分享目标，把系统分享的 `title`、`text`、`url` 作为 URL 参数传回 `handleLaunchCapture()`；标题用于快速确认，正文和 URL 在确认后进入任务描述。
 - `install`: 打开缓存并预缓存资源，完成后 `skipWaiting()`。
 - `fetch`: 同源 GET 请求分三类处理：
   - 导航和 App Shell: `networkFirst(request, './index.html')`

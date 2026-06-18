@@ -727,22 +727,55 @@ def exercise_quick_capture_entries(page: Page, base_url: str, prefix: str) -> No
     if len(records_after_reload) != 1:
         raise AssertionError(f"Auto capture repeated after reload: {records_after_reload}")
 
+    shared_title = f"{prefix} Shared Title"
     shared_url = "https://example.com/article"
     page.goto(
         urljoin(base_url, "?" + urlencode({
             "capture": "1",
-            "title": f"{prefix} Shared Title",
+            "title": shared_title,
             "text": "Shared body",
             "url": shared_url,
         })),
         wait_until="domcontentloaded",
     )
     wait_for_app_ready(page)
-    value = page.locator("#quickAddInput").input_value()
-    if f"{prefix} Shared Title" not in value or "Shared body" not in value or shared_url not in value:
-        raise AssertionError(f"Share target capture did not preserve title/text/url: {value!r}")
+    expect(page.locator("#quickAddInput")).to_have_value(shared_title)
     if page.evaluate("location.search") != "":
         raise AssertionError("Share target URL parameters were not cleared")
+    page.locator("#quickAddInput").press("Enter")
+    expect(task_locator(page, shared_title)).to_have_count(1)
+    shared_records = [task for task in get_task_records(page) if task.get("name") == shared_title]
+    if len(shared_records) != 1:
+        raise AssertionError(f"Share target capture should create one task: {shared_records}")
+    shared_record = shared_records[0]
+    if shared_record.get("project") != "Inbox":
+        raise AssertionError(f"Share target capture should land in Inbox: {shared_record}")
+    shared_description = shared_record.get("description") or ""
+    if "Shared body" not in shared_description or shared_url not in shared_description:
+        raise AssertionError(f"Share target capture did not preserve text/url in description: {shared_record}")
+    page.reload(wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    records_after_share_reload = [task for task in get_task_records(page) if task.get("name") == shared_title]
+    if len(records_after_share_reload) != 1:
+        raise AssertionError(f"Share target capture repeated after reload: {records_after_share_reload}")
+
+    replacement_name = f"{prefix} Manual Replacement"
+    page.goto(
+        urljoin(base_url, "?" + urlencode({
+            "capture": "1",
+            "title": f"{prefix} Ignored Share",
+            "text": "This shared body should not be attached",
+            "url": shared_url,
+        })),
+        wait_until="domcontentloaded",
+    )
+    wait_for_app_ready(page)
+    page.locator("#quickAddInput").fill(replacement_name)
+    page.locator("#quickAddInput").press("Enter")
+    expect(task_locator(page, replacement_name)).to_have_count(1)
+    replacement_records = [task for task in get_task_records(page) if task.get("name") == replacement_name]
+    if len(replacement_records) != 1 or replacement_records[0].get("description"):
+        raise AssertionError(f"Replacing shared quick-add text should drop stale shared details: {replacement_records}")
     clear_app_data(page, base_url)
 
 

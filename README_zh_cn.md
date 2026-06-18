@@ -67,7 +67,7 @@ https://todo.muquew.com/?add=买牛奶&save=1
 
 `capture=1` 会打开应用并聚焦快速添加。`add=` 会预填快速添加并等待确认。`save=1` 会在应用打开后立即保存。捕获参数处理后会从地址栏移除，因此刷新页面不会重复创建任务。
 
-安装为 PWA 后，系统入口会提供 `Quick Capture` 快捷方式，打开 `./?capture=1`。支持 Web Share Target 的浏览器可以把标题、正文和 URL 分享到 Task Tracer，分享内容会进入快速添加框供确认。
+安装为 PWA 后，系统入口会提供 `Quick Capture` 快捷方式，打开 `./?capture=1`。支持 Web Share Target 的浏览器可以把标题、正文和 URL 分享到 Task Tracer：标题会进入快速添加框供确认，确认后正文和 URL 会保存到任务描述。
 
 ## 项目、标签与搜索
 

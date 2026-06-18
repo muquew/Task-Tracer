@@ -1494,6 +1494,7 @@
             notificationHideTimer: null,
             taskFormSaving: false,
             quickAddSaving: false,
+            quickAddCaptureDraft: null,
             pendingTaskActions: new Set(),
             elementToFocusOnClose: null,
             calendarDetailDateKey: '',
@@ -2159,6 +2160,7 @@
         }
         function bindQuickAddEvents() {
             DOM.quickAddForm.addEventListener('submit', handleQuickAddSubmit);
+            DOM.quickAddInput.addEventListener('input', handleQuickAddInput);
         }
         function bindCommandPaletteEvents() {
             DOM.commandPalette.closeBtn.addEventListener('click', () => closeCommandPalette());
@@ -3252,18 +3254,25 @@
         }
         async function handleQuickAddSubmit(e) {
             e.preventDefault();
-            await saveQuickAddText(DOM.quickAddInput.value.trim());
+            await saveQuickAddText(DOM.quickAddInput.value.trim(), getQuickAddCaptureOptions());
+        }
+        function handleQuickAddInput() {
+            const draft = state.quickAddCaptureDraft;
+            if (!draft) return;
+            const currentText = DOM.quickAddInput.value.trim();
+            if (!currentText || !isCaptureDraftTextRelated(draft.text, currentText)) clearQuickAddCaptureDraft();
         }
         async function saveQuickAddText(rawInput, options = {}) {
-            if (state.quickAddSaving) return;
-            if (!canRunAppAction('task.quickAddSubmit', { closeSurfaces: false })) return;
+            if (state.quickAddSaving) return false;
+            if (!canRunAppAction('task.quickAddSubmit', { closeSurfaces: false })) return false;
             const t = state.translations[state.currentLanguage];
             if (!rawInput) {
                 utils.notify(t['messages.task.nameRequired'], 'warning');
                 if (options.focusOnError !== false) DOM.quickAddInput.focus();
+                clearQuickAddCaptureDraft();
                 return false;
             }
-            const taskPayload = buildTaskPayloadFromQuickAdd(rawInput);
+            const taskPayload = buildTaskPayloadFromQuickAdd(rawInput, options);
             if (!taskPayload.name) {
                 utils.notify(t['messages.task.nameRequired'], 'warning');
                 if (options.focusOnError !== false) DOM.quickAddInput.focus();
@@ -3275,6 +3284,7 @@
                 const beforeTasks = captureUndoSnapshot();
                 await dbActions.addTask(createTaskRecord(taskPayload));
                 DOM.quickAddInput.value = '';
+                clearQuickAddCaptureDraft();
                 registerUndoSnapshot(t['undo.labels.add'], beforeTasks);
                 utils.notify(t['messages.task.added'], 'success', { undo: true });
                 await refreshTasks();
@@ -3297,9 +3307,9 @@
             const request = getLaunchCaptureRequest();
             if (!request) return;
             clearLaunchCaptureParams();
-            if (request.text) DOM.quickAddInput.value = request.text;
+            setQuickAddCaptureDraft(request);
             if (request.text && request.save) {
-                const saved = await saveQuickAddText(request.text, { focusOnError: false });
+                const saved = await saveQuickAddText(request.text, getQuickAddCaptureOptions({ focusOnError: false }));
                 if (saved) return;
             }
             focusQuickAddForCapture(request.text);
@@ -3308,22 +3318,34 @@
             const params = new URLSearchParams(window.location.search);
             const captureRequested = params.get('capture') === '1';
             const addText = normalizeCaptureText(params.get('add'));
-            const sharedText = normalizeCaptureText(composeSharedCaptureText(params));
-            const text = addText || sharedText;
+            const shared = getSharedCapturePayload(params);
+            const text = addText || shared.text;
             if (!captureRequested && !text) return null;
             return {
                 text,
+                description: addText ? '' : shared.description,
                 save: params.get('save') === '1' && Boolean(text)
             };
         }
-        function composeSharedCaptureText(params) {
-            return [params.get('title'), params.get('text'), params.get('url')]
+        function getSharedCapturePayload(params) {
+            const title = normalizeCaptureText(params.get('title'));
+            const text = normalizeCaptureText(params.get('text'));
+            const url = normalizeCaptureText(params.get('url'));
+            const displayText = title || text || url;
+            const description = [title && text !== title ? text : '', url]
                 .map(value => String(value || '').trim())
                 .filter(Boolean)
-                .join(' ');
+                .join('\n');
+            return {
+                text: displayText,
+                description: normalizeCaptureDescription(description)
+            };
         }
         function normalizeCaptureText(value) {
             return String(value || '').replace(/\s+/g, ' ').trim().slice(0, CONFIG.CAPTURE.MAX_TEXT_LENGTH);
+        }
+        function normalizeCaptureDescription(value) {
+            return String(value || '').replace(/\r\n?/g, '\n').trim().slice(0, CONFIG.CAPTURE.MAX_TEXT_LENGTH * 2);
         }
         function clearLaunchCaptureParams() {
             const url = new URL(window.location.href);
@@ -3348,13 +3370,37 @@
                 }
             });
         }
-        function buildTaskPayloadFromQuickAdd(rawInput) {
+        function setQuickAddCaptureDraft(request) {
+            clearQuickAddCaptureDraft();
+            if (!request.text) return;
+            DOM.quickAddInput.value = request.text;
+            state.quickAddCaptureDraft = {
+                text: request.text,
+                description: normalizeCaptureDescription(request.description)
+            };
+        }
+        function getQuickAddCaptureOptions(options = {}) {
+            const draft = state.quickAddCaptureDraft;
+            const currentText = DOM.quickAddInput.value.trim();
+            if (!draft || !draft.description || !currentText || !isCaptureDraftTextRelated(draft.text, currentText)) return options;
+            return { ...options, description: draft.description };
+        }
+        function isCaptureDraftTextRelated(originalText, currentText) {
+            const original = normalizeCaptureText(originalText).toLowerCase();
+            const current = normalizeCaptureText(currentText).toLowerCase();
+            if (!original || !current) return false;
+            return original === current || original.includes(current) || current.includes(original);
+        }
+        function clearQuickAddCaptureDraft() {
+            state.quickAddCaptureDraft = null;
+        }
+        function buildTaskPayloadFromQuickAdd(rawInput, options = {}) {
             const parsed = parseQuickAddInput(rawInput);
             const dueFields = parsed.date ? createDueFields(parsed.date, parsed.time || CONFIG.DEFAULTS.TIME) : clearDueFields();
             const hasDueDate = Boolean(dueFields.dueAt);
             return {
                 name: parsed.name,
-                description: '',
+                description: normalizeCaptureDescription(options.description),
                 project: parsed.project || CONFIG.CAPTURE.INBOX_PROJECT,
                 tags: parsed.tags,
                 subtasks: [],
