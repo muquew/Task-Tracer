@@ -24,7 +24,7 @@ import threading
 import time
 from pathlib import Path
 from typing import Any, Iterator
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urlencode, urljoin, urlparse
 
 from playwright.sync_api import Browser, BrowserContext, Page, Request, TimeoutError, expect, sync_playwright
 
@@ -690,6 +690,60 @@ def exercise_quick_add(page: Page, task_name: str) -> None:
     if record["dueLocalTime"] != "20:00" or not record["dueLocalDate"]:
         raise AssertionError(f"Quick add did not parse due date/time: {record}")
     delete_task_records_by_name(page, task_name)
+
+
+def exercise_quick_capture_entries(page: Page, base_url: str, prefix: str) -> None:
+    clear_app_data(page, base_url)
+    page.goto(urljoin(base_url, "?capture=1"), wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    page.wait_for_function("() => document.activeElement && document.activeElement.id === 'quickAddInput'")
+    if page.evaluate("location.search") != "":
+        raise AssertionError("Capture URL parameters were not cleared")
+    if get_task_records(page):
+        raise AssertionError("Capture focus should not create a task")
+
+    prefill_name = f"{prefix} Prefill"
+    page.goto(urljoin(base_url, "?" + urlencode({"add": prefill_name})), wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    expect(page.locator("#quickAddInput")).to_have_value(prefill_name)
+    page.wait_for_function("() => document.activeElement && document.activeElement.id === 'quickAddInput'")
+    if page.evaluate("location.search") != "":
+        raise AssertionError("Add URL parameters were not cleared")
+    if get_task_records(page):
+        raise AssertionError("Prefill capture should wait for user confirmation")
+
+    auto_name = f"{prefix} Auto Save"
+    page.goto(urljoin(base_url, "?" + urlencode({"add": auto_name, "save": "1"})), wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    expect(task_locator(page, auto_name)).to_have_count(1)
+    records = [task for task in get_task_records(page) if task.get("name") == auto_name]
+    if len(records) != 1 or records[0].get("project") != "Inbox":
+        raise AssertionError(f"Auto capture should create one Inbox task: {records}")
+    if page.evaluate("location.search") != "":
+        raise AssertionError("Auto-save capture URL parameters were not cleared")
+    page.reload(wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    records_after_reload = [task for task in get_task_records(page) if task.get("name") == auto_name]
+    if len(records_after_reload) != 1:
+        raise AssertionError(f"Auto capture repeated after reload: {records_after_reload}")
+
+    shared_url = "https://example.com/article"
+    page.goto(
+        urljoin(base_url, "?" + urlencode({
+            "capture": "1",
+            "title": f"{prefix} Shared Title",
+            "text": "Shared body",
+            "url": shared_url,
+        })),
+        wait_until="domcontentloaded",
+    )
+    wait_for_app_ready(page)
+    value = page.locator("#quickAddInput").input_value()
+    if f"{prefix} Shared Title" not in value or "Shared body" not in value or shared_url not in value:
+        raise AssertionError(f"Share target capture did not preserve title/text/url: {value!r}")
+    if page.evaluate("location.search") != "":
+        raise AssertionError("Share target URL parameters were not cleared")
+    clear_app_data(page, base_url)
 
 
 def exercise_project_tags(page: Page, alpha_name: str, beta_name: str) -> None:
@@ -2483,6 +2537,16 @@ def assert_pwa_installability(page: Page) -> None:
     for key, expected in required_values.items():
         if manifest_data.get(key) != expected:
             raise AssertionError(f"Manifest {key} changed: expected {expected!r}, got {manifest_data.get(key)!r}")
+    shortcuts = manifest_data.get("shortcuts") or []
+    if not any(item.get("name") == "Quick Capture" and item.get("url") == "./?capture=1" for item in shortcuts):
+        raise AssertionError(f"Manifest Quick Capture shortcut is missing: {shortcuts}")
+    share_target = manifest_data.get("share_target") or {}
+    if (
+        share_target.get("action") != "./?capture=1"
+        or share_target.get("method") != "GET"
+        or share_target.get("enctype") != "application/x-www-form-urlencoded"
+    ):
+        raise AssertionError(f"Manifest share_target changed: {share_target}")
 
     installability_result = session.send("Page.getInstallabilityErrors")
     installability_errors = installability_result.get("installabilityErrors", [])
@@ -2804,6 +2868,7 @@ def smoke(url: str) -> None:
         exercise_one_time_reminder_persists_across_reload(page)
         assert_pwa_installability(page)
 
+        exercise_quick_capture_entries(page, url, f"{task_name} Capture")
         exercise_quick_add(page, quick_name)
         exercise_subtask_draft_editor(page)
         exercise_repeating_task(page, repeat_name)

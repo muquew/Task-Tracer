@@ -243,6 +243,43 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
                 errors.append(f"Manifest icon is missing: {icon_path}")
             required_assets.add(f"./{icon_path}")
 
+        shortcuts = manifest.get("shortcuts")
+        if not isinstance(shortcuts, list) or not shortcuts:
+            errors.append("manifest.json must expose a Quick Capture shortcut")
+        else:
+            quick_capture = next((item for item in shortcuts if isinstance(item, dict) and item.get("url") == "./?capture=1"), None)
+            if not quick_capture:
+                errors.append("manifest.json shortcuts must include ./?capture=1")
+            elif quick_capture.get("name") != "Quick Capture":
+                errors.append("Quick Capture shortcut must use the expected name")
+
+        share_target = manifest.get("share_target")
+        if not isinstance(share_target, dict):
+            errors.append("manifest.json must define share_target")
+        else:
+            if share_target.get("action") != "./?capture=1" or share_target.get("method") != "GET":
+                errors.append("share_target must use GET ./?capture=1")
+            if share_target.get("enctype") != "application/x-www-form-urlencoded":
+                errors.append("share_target must declare application/x-www-form-urlencoded enctype")
+            params = share_target.get("params") or {}
+            for key in ("title", "text", "url"):
+                if params.get(key) != key:
+                    errors.append(f"share_target params must map {key} to {key}")
+
+        capture_fragments = [
+            "CAPTURE:",
+            "INBOX_PROJECT: 'Inbox'",
+            "MAX_TEXT_LENGTH: 300",
+            "await handleLaunchCapture();",
+            "function handleLaunchCapture()",
+            "function getLaunchCaptureRequest()",
+            "function clearLaunchCaptureParams()",
+            "project: parsed.project || CONFIG.CAPTURE.INBOX_PROJECT",
+        ]
+        for fragment in capture_fragments:
+            if fragment not in index_html:
+                errors.append(f"Quick capture runtime is missing: {fragment}")
+
         missing_assets = sorted(required_assets - assets)
         if missing_assets:
             errors.append(f"Service worker does not precache required assets: {missing_assets}")

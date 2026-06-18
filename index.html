@@ -54,7 +54,7 @@
             "image": "https://todo.muquew.com/screenshots/task-list-en.png",
             "description": "Task Tracer is a local-first PWA for tasks, routines, reminders, calendar planning, statistics, import/export backups, and offline use.",
             "inLanguage": ["en", "zh-CN"],
-            "softwareVersion": "4.0",
+            "softwareVersion": "4.1",
             "author": {
                 "@type": "Person",
                 "name": "muquew"
@@ -1389,7 +1389,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '4.0'
+                VERSION: '4.1'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -1442,7 +1442,12 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.23'
+                RESOURCE_VERSION: '4.24'
+            },
+            CAPTURE: {
+                INBOX_PROJECT: 'Inbox',
+                MAX_TEXT_LENGTH: 300,
+                PARAMS: ['capture', 'add', 'save', 'title', 'text', 'url']
             },
             BACKUP: {
                 FILE_VERSION: '2.4',
@@ -1634,6 +1639,7 @@
                 }
                 bindEvents();
                 renderTaskList();
+                await handleLaunchCapture();
                 startProgressTimer();
                 scheduleBackupReminder().catch(handleBackgroundStorageFailure);
                 initInstallPrompt();
@@ -3246,20 +3252,22 @@
         }
         async function handleQuickAddSubmit(e) {
             e.preventDefault();
+            await saveQuickAddText(DOM.quickAddInput.value.trim());
+        }
+        async function saveQuickAddText(rawInput, options = {}) {
             if (state.quickAddSaving) return;
             if (!canRunAppAction('task.quickAddSubmit', { closeSurfaces: false })) return;
             const t = state.translations[state.currentLanguage];
-            const rawInput = DOM.quickAddInput.value.trim();
             if (!rawInput) {
                 utils.notify(t['messages.task.nameRequired'], 'warning');
-                DOM.quickAddInput.focus();
-                return;
+                if (options.focusOnError !== false) DOM.quickAddInput.focus();
+                return false;
             }
             const taskPayload = buildTaskPayloadFromQuickAdd(rawInput);
             if (!taskPayload.name) {
                 utils.notify(t['messages.task.nameRequired'], 'warning');
-                DOM.quickAddInput.focus();
-                return;
+                if (options.focusOnError !== false) DOM.quickAddInput.focus();
+                return false;
             }
             state.quickAddSaving = true;
             setQuickAddSaving(true);
@@ -3270,9 +3278,11 @@
                 registerUndoSnapshot(t['undo.labels.add'], beforeTasks);
                 utils.notify(t['messages.task.added'], 'success', { undo: true });
                 await refreshTasks();
+                return true;
             } catch (err) {
                 console.error('快速添加任务失败:', err);
                 handleStorageOperationError(err, 'messages.task.saveError');
+                return false;
             } finally {
                 state.quickAddSaving = false;
                 setQuickAddSaving(false);
@@ -3283,6 +3293,61 @@
             const button = DOM.quickAddForm.querySelector('button[type="submit"]');
             if (button) button.disabled = saving || !state.storageAvailable;
         }
+        async function handleLaunchCapture() {
+            const request = getLaunchCaptureRequest();
+            if (!request) return;
+            clearLaunchCaptureParams();
+            if (request.text) DOM.quickAddInput.value = request.text;
+            if (request.text && request.save) {
+                const saved = await saveQuickAddText(request.text, { focusOnError: false });
+                if (saved) return;
+            }
+            focusQuickAddForCapture(request.text);
+        }
+        function getLaunchCaptureRequest() {
+            const params = new URLSearchParams(window.location.search);
+            const captureRequested = params.get('capture') === '1';
+            const addText = normalizeCaptureText(params.get('add'));
+            const sharedText = normalizeCaptureText(composeSharedCaptureText(params));
+            const text = addText || sharedText;
+            if (!captureRequested && !text) return null;
+            return {
+                text,
+                save: params.get('save') === '1' && Boolean(text)
+            };
+        }
+        function composeSharedCaptureText(params) {
+            return [params.get('title'), params.get('text'), params.get('url')]
+                .map(value => String(value || '').trim())
+                .filter(Boolean)
+                .join(' ');
+        }
+        function normalizeCaptureText(value) {
+            return String(value || '').replace(/\s+/g, ' ').trim().slice(0, CONFIG.CAPTURE.MAX_TEXT_LENGTH);
+        }
+        function clearLaunchCaptureParams() {
+            const url = new URL(window.location.href);
+            let changed = false;
+            CONFIG.CAPTURE.PARAMS.forEach(param => {
+                if (url.searchParams.has(param)) {
+                    url.searchParams.delete(param);
+                    changed = true;
+                }
+            });
+            if (!changed) return;
+            const nextUrl = `${url.pathname}${url.search}${url.hash}`;
+            window.history.replaceState(window.history.state, document.title, nextUrl);
+        }
+        function focusQuickAddForCapture(hasText) {
+            requestAnimationFrame(() => {
+                if (!state.storageAvailable || DOM.quickAddInput.disabled) return;
+                DOM.quickAddInput.focus();
+                if (hasText) {
+                    DOM.quickAddInput.setSelectionRange(DOM.quickAddInput.value.length, DOM.quickAddInput.value.length);
+                    utils.announce(utils.translate('quickAdd.captureReady'));
+                }
+            });
+        }
         function buildTaskPayloadFromQuickAdd(rawInput) {
             const parsed = parseQuickAddInput(rawInput);
             const dueFields = parsed.date ? createDueFields(parsed.date, parsed.time || CONFIG.DEFAULTS.TIME) : clearDueFields();
@@ -3290,7 +3355,7 @@
             return {
                 name: parsed.name,
                 description: '',
-                project: parsed.project,
+                project: parsed.project || CONFIG.CAPTURE.INBOX_PROJECT,
                 tags: parsed.tags,
                 subtasks: [],
                 ...dueFields,

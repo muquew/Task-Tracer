@@ -145,8 +145,9 @@
 8. 必要时 `addSampleTasks()` 添加示例。
 9. `bindEvents()` 绑定事件。
 10. `renderTaskList()` 首次渲染。
-11. `startProgressTimer()` 启动倒计时刷新。
-12. `scheduleBackupReminder()` 根据最近备份时间决定是否提示备份。
+11. `handleLaunchCapture()` 处理 `capture`、`add`、`save`、`title`、`text` 和 `url` 启动参数，必要时聚焦快速添加或自动保存。
+12. `startProgressTimer()` 启动倒计时刷新。
+13. `scheduleBackupReminder()` 根据最近备份时间决定是否提示备份。
 
 如果 IndexedDB 被禁用、浏览器隐私模式阻止本地数据库，或写入探针失败，`initializeStorageOrFallback()` 会调用 `handleStorageUnavailable()` 进入保护模式：显示存储不可用横幅和任务区错误态，同步禁用任务相关控件，并由 `runAppAction()` 拦截后续入口；只保留主题切换、重试检测，以及在内存快照存在时可用的紧急备份。非存储阶段的初始化错误不会被包装成本地存储不可用。
 
@@ -169,6 +170,9 @@
 - `ensureStorageAvailable(options)`: 核心写函数的低层存储守卫。
 - `captureStorageFallbackSnapshot()`: 在进入运行时存储故障保护模式前复制当前任务内存快照。
 - `safeGetStorageItem()`、`safeSetStorageItem()`、`safeRemoveStorageItem()`: 包装 `localStorage`/`sessionStorage`，避免隐私模式抛错导致启动中断。
+- `handleLaunchCapture()`: 处理 PWA 快捷入口、URL 预填、自动保存和分享目标传入内容。
+- `getLaunchCaptureRequest()`: 从 URL 参数读取捕获请求；`add` 优先于分享参数，文本长度由 `CONFIG.CAPTURE.MAX_TEXT_LENGTH` 限制。
+- `clearLaunchCaptureParams()`: 捕获参数处理后从地址栏移除，避免刷新重复添加。
 - `loadSettings()`: 恢复配置。
 - `restoreLanguageSetting()`: 恢复或解析首选语言。
 - `restoreNotificationSetting(savedNotify)`: 恢复通知开关。
@@ -354,6 +358,8 @@
 - `openCommandPalette()` / `closeCommandPalette()`: 打开或关闭命令面板，并处理焦点恢复。
 - `renderCommandPalette()` / `getCommandPaletteItems()`: 根据当前任务、视图、项目、智能视图、今日计划、批量模式和撤销状态生成命令候选项。
 - `executeCommandPaletteItem(index)`: 执行当前命令，覆盖新建任务、快速添加、搜索、视图切换、智能视图、今日计划、批量操作、撤销、导出/备份和项目切换。
+- `saveQuickAddText(rawInput, options)`: 快速添加和 URL 自动保存共用的写入入口；未指定 `/项目` 时任务进入 `Inbox`。
+- `buildTaskPayloadFromQuickAdd(rawInput)`: 将快速添加文本解析为任务 payload，复用日期、时间、标签和项目解析。
 - `closeDialog()`: 关闭并清理弹窗。
 - `resetDialogToFormMode()`: 从确认模式恢复表单模式。
 - `utils.confirm(title, msg, onConfirm)`: 复用任务弹窗显示确认流程。
@@ -462,6 +468,8 @@
 
 - `CACHE_NAME`: Service Worker 缓存版本。修改运行时代码或缓存资源时应递增，并与 `CONFIG.APP.VERSION` 的版本号保持一致。
 - `ASSETS_TO_CACHE`: 预缓存 App Shell、manifest、语言资源和核心图标。
+- `manifest.json.shortcuts`: 暴露 `Quick Capture` 安装快捷入口，URL 为 `./?capture=1`。
+- `manifest.json.share_target`: 使用 GET 分享目标，把系统分享的 `title`、`text`、`url` 作为 URL 参数传回 `handleLaunchCapture()`。
 - `install`: 打开缓存并预缓存资源，完成后 `skipWaiting()`。
 - `fetch`: 同源 GET 请求分三类处理：
   - 导航和 App Shell: `networkFirst(request, './index.html')`

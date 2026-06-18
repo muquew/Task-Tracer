@@ -28,7 +28,7 @@ PWA means Progressive Web App: when the browser supports it, Task Tracer can be 
 
 | Need | Built-in support |
 | --- | --- |
-| Capture tasks quickly | Full task dialog, quick add parsing, descriptions, subtasks, projects, tags, due date/time, and no-date tasks. |
+| Capture tasks quickly | Full task dialog, quick add parsing, URL capture, install shortcut capture, share target capture, Inbox default, descriptions, subtasks, projects, tags, due date/time, and no-date tasks. |
 | Keep work organized | Project grouping, multi-tag labels, saved smart views, manual ordering, archives, and batch actions. |
 | Plan from different angles | List, calendar, timeline, and statistics views. |
 | Work through today | Today Plan, task actions, snooze, skip repeat occurrence, complete/archive/delete, and undo. |
@@ -53,11 +53,25 @@ tomorrow 20:00 Review English #study /Personal
 
 This creates a task named `Review English`, due tomorrow at 20:00, tagged `study`, and assigned to the `Personal` project.
 
+When quick add text does not include a `/project`, the task is saved to `Inbox` so unprocessed ideas have a predictable place to land.
+
 The command palette opens with `Ctrl/Cmd + P`. It can start a new task, focus quick add, switch views, open saved views, enter Today Plan, enter batch actions, undo the latest task change, export/back up data, search, and jump to projects.
+
+Task Tracer also supports direct capture links:
+
+```text
+https://todo.muquew.com/?capture=1
+https://todo.muquew.com/?add=Buy%20milk
+https://todo.muquew.com/?add=Buy%20milk&save=1
+```
+
+`capture=1` opens the app focused on quick add. `add=` pre-fills quick add and waits for confirmation. `save=1` saves immediately after the app opens. Capture parameters are removed after processing so refreshing the page does not create duplicates.
+
+Installed PWAs expose a `Quick Capture` shortcut that opens `./?capture=1`. Browsers that support Web Share Target can share title, text, and URL into Task Tracer; the shared content is placed in quick add for review.
 
 ## Projects, Tags, and Search
 
-Projects are the main grouping layer. A task belongs to one project such as `Work`, `Personal`, or a named initiative. The project selector narrows the workspace, and the all-project list groups visible tasks by project.
+Projects are the main grouping layer. A task belongs to one project such as `Inbox`, `Work`, `Personal`, or a named initiative. The project selector narrows the workspace, and the all-project list groups visible tasks by project.
 
 Tags are flexible secondary labels. A task can have multiple tags such as `study`, `design`, or `follow-up`, which makes related work searchable across projects.
 

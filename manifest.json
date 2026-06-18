@@ -38,5 +38,30 @@
       "sizes": "1365x1227",
       "label": "Task Tracer add task dialog"
     }
-  ]
+  ],
+  "shortcuts": [
+    {
+      "name": "Quick Capture",
+      "short_name": "Capture",
+      "description": "Open Task Tracer focused on quick add.",
+      "url": "./?capture=1",
+      "icons": [
+        {
+          "src": "fav/android-chrome-192x192.png",
+          "type": "image/png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "./?capture=1",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
 }

@@ -29,7 +29,8 @@
     "label": "Quick add task",
     "placeholder": "tomorrow 20:00 Review English #study /Personal",
     "submit": "Add",
-    "hint": "Enter a natural date, time, #tag, and /project."
+    "hint": "Enter a natural date, time, #tag, and /project. Without /project, the task goes to Inbox.",
+    "captureReady": "Quick capture is ready. Review the text, then press Enter to add it."
   },
   "savedViews": {
     "label": "Smart Views",
