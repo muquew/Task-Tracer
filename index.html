@@ -273,22 +273,22 @@
         .tools-drawer {
             position: relative;
             z-index: 690;
-            margin: 8px 0 14px;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 32px;
+            align-items: start;
+            gap: 8px;
+            margin: 12px 0 14px;
         }
         .tools-drawer-handle {
+            grid-column: 2;
+            grid-row: 1;
             display: flex;
-            justify-content: flex-end;
+            flex-direction: column;
+            justify-content: flex-start;
             align-items: center;
             gap: 6px;
-            min-height: 28px;
-            margin: -2px 0 4px;
-        }
-        .tools-drawer-handle::before {
-            content: "";
-            flex: 1 1 auto;
-            height: 1px;
-            min-width: 0;
-            background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--border-light) 78%, transparent));
+            min-height: 0;
+            margin: 0;
         }
         .tools-drawer-btn {
             display: inline-flex;
@@ -319,9 +319,22 @@
             border-color: var(--color-primary);
             color: var(--text-inverse);
         }
-        .tools-drawer.is-collapsed { margin-bottom: 8px; }
-        .tools-drawer.is-collapsed .tools-drawer-handle { margin-bottom: 0; }
+        .tools-drawer.is-collapsed {
+            display: flex;
+            justify-content: flex-end;
+            margin: 2px 0 8px;
+        }
+        .tools-drawer.is-collapsed .tools-drawer-handle {
+            flex-direction: row;
+            justify-content: flex-end;
+            margin-bottom: 0;
+        }
         .tools-drawer-content[hidden] { display: none; }
+        .tools-drawer-content {
+            grid-column: 1;
+            grid-row: 1;
+            min-width: 0;
+        }
         .tools-drawer .quick-add-bar { margin: 0 0 8px; }
         .tools-drawer .controls-bar { margin: 0; }
         .controls-bar {
