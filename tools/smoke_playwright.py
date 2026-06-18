@@ -844,6 +844,17 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
     select_project(page, "all")
     select_filter(page, "active")
     clear_search(page)
+    expect(page.locator("#savedViewsBar")).to_be_hidden()
+
+    page.locator("#saveSmartViewBtn").click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#submitBtn").click()
+    wait_for_notification(page, re.compile("智能视图|Smart view", re.I))
+    expect(page.locator("#savedViewsList .saved-view-chip")).to_have_count(1)
+    expect(page.locator("#savedViewsList .saved-view-meta")).to_have_count(0)
+    page.locator("#savedViewsList .saved-view-delete").first.click()
+    wait_for_notification(page, re.compile("删除|deleted", re.I))
+    expect(page.locator("#savedViewsBar")).to_be_hidden()
 
     page.locator("#searchInput").fill("tag:deadline")
     expect(task_locator(page, beta_name)).to_have_count(1)
@@ -854,6 +865,10 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
     page.locator("#submitBtn").click()
     wait_for_notification(page, re.compile("智能视图|Smart view", re.I))
     expect(page.locator("#savedViewsList .saved-view-chip")).to_have_count(1)
+    expect(page.locator("#savedViewsList .saved-view-meta")).to_have_count(1)
+    chip_box = page.locator("#savedViewsList .saved-view-chip").first.bounding_box()
+    if not chip_box or chip_box["height"] > 44:
+        raise AssertionError(f"Saved smart view chip should stay compact: {chip_box}")
     clear_search(page)
     expect(task_locator(page, alpha_name)).to_have_count(1)
     page.locator("#savedViewsList .saved-view-apply").first.click()

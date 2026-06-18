@@ -34,7 +34,6 @@
   },
   "savedViews": {
     "label": "智能视图",
-    "empty": "保存常用搜索和筛选组合",
     "saveCurrent": "保存视图",
     "saveCurrentTitle": "保存当前搜索、筛选和视图",
     "saveTitle": "保存智能视图",

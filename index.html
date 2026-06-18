@@ -274,7 +274,7 @@
             position: relative;
             z-index: 700;
             display: grid;
-            grid-template-columns: minmax(260px, auto) minmax(180px, 1fr) minmax(130px, 180px) auto auto;
+            grid-template-columns: minmax(260px, auto) minmax(180px, 1fr) minmax(130px, 180px) auto auto auto;
             gap: 10px;
             margin: 6px 0 14px;
             align-items: center;
@@ -319,18 +319,27 @@
             box-shadow: 0 8px 24px var(--shadow-base);
             backdrop-filter: blur(14px);
         }
+        .saved-views-bar {
+            margin: -4px 0 10px;
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+            backdrop-filter: none;
+        }
         .saved-views-heading, .focus-mode-copy, .batch-toolbar-summary { display: inline-flex; align-items: center; gap: 8px; min-width: 0; color: var(--text-secondary); font-size: 13px; font-weight: 800; }
         .saved-views-heading svg, .focus-mode-copy svg, .batch-toolbar-summary svg { color: var(--color-primary); flex: 0 0 auto; }
-        .saved-views-list { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 7px; overflow-x: auto; scrollbar-width: thin; padding: 1px; }
-        .saved-view-empty { color: var(--text-tertiary); font-size: 12px; font-weight: 700; white-space: nowrap; }
-        .saved-view-chip { flex: 0 0 auto; display: inline-flex; align-items: stretch; min-width: 0; max-width: min(280px, 60vw); border: 1px solid var(--border-light); border-radius: var(--radius-pill); background: var(--bg-surface); overflow: hidden; }
+        .saved-views-list { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 7px; overflow-x: auto; scrollbar-width: thin; padding: 1px 0; }
+        .saved-view-chip { flex: 0 0 auto; display: inline-flex; align-items: stretch; min-width: 0; max-width: min(360px, 70vw); border: 1px solid var(--border-light); border-radius: var(--radius-pill); background: color-mix(in srgb, var(--bg-surface) 88%, transparent); overflow: hidden; box-shadow: 0 5px 14px color-mix(in srgb, var(--shadow-base) 62%, transparent); }
         .saved-view-apply, .saved-view-delete { border: 0; background: transparent; color: var(--text-main); font: inherit; cursor: pointer; transition: background-color var(--motion-fast), color var(--motion-fast); }
-        .saved-view-apply { min-width: 0; padding: 7px 10px 7px 12px; display: grid; gap: 1px; text-align: left; }
+        .saved-view-apply { min-width: 0; padding: 7px 10px 7px 12px; display: inline-flex; align-items: baseline; gap: 6px; text-align: left; }
         .saved-view-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 800; }
         .saved-view-meta { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-secondary); font-size: 11px; font-weight: 650; }
+        .saved-view-meta::before { content: "· "; }
         .saved-view-delete { width: 32px; display: inline-flex; align-items: center; justify-content: center; color: var(--text-tertiary); border-left: 1px solid var(--border-light); }
         .saved-view-apply:hover, .saved-view-delete:hover { background: var(--bg-hover); color: var(--color-primary); }
-        .saved-view-save-btn { flex: 0 0 auto; min-height: 34px; padding: 7px 11px; font-size: 13px; white-space: nowrap; }
+        .saved-view-save-btn { min-height: 42px; padding: 8px 11px; font-size: 13px; white-space: nowrap; justify-content: center; }
         .focus-mode-bar { justify-content: space-between; border-color: color-mix(in srgb, var(--color-primary) 24%, var(--border-light)); background: color-mix(in srgb, var(--color-primary) 8%, var(--controls-bg)); }
         .focus-mode-copy > div { display: grid; gap: 2px; min-width: 0; }
         .focus-mode-copy strong { color: var(--text-main); font-size: 13px; }
@@ -758,9 +767,10 @@
             }
             .view-switcher { grid-column: 1 / 2; justify-self: start; width: max-content; max-width: 100%; }
             .search-box { grid-column: 2 / -1; min-width: 0; width: 100%; }
-            .project-filter { grid-column: 1 / 3; min-width: 0; }
-            #filterDropdown { grid-column: 3 / 4; min-width: 0; }
-            #sortDropdown { grid-column: 4 / 5; min-width: 0; }
+            .project-filter { grid-column: 1 / 2; min-width: 0; }
+            #filterDropdown { grid-column: 2 / 3; min-width: 0; }
+            #sortDropdown { grid-column: 3 / 4; min-width: 0; }
+            .saved-view-save-btn { grid-column: 4 / 5; min-height: 36px; padding-block: 7px; }
             .dropdown-btn { width: 100%; min-width: 0; justify-content: space-between; }
             .dropdown-menu-content { width: 100%; }
         }
@@ -780,6 +790,7 @@
             .project-filter { grid-column: 1 / 2; min-width: 0; }
             #filterDropdown { grid-column: 2 / 3; min-width: 0; }
             #sortDropdown { grid-column: 3 / 4; min-width: 0; }
+            .saved-view-save-btn { grid-column: 1 / -1; justify-self: end; min-height: 36px; padding-block: 7px; }
             .dropdown-btn { width: 100%; min-width: 0; justify-content: space-between; }
             .dropdown-menu-content { width: 100%; }
             .view-tab { min-width: 0; padding-inline: 6px; }
@@ -798,6 +809,7 @@
             }
             .search-box { grid-column: 1 / -1; min-width: 0; width: 100%; }
             .project-filter, .dropdown-container { min-width: 0; }
+            .saved-view-save-btn { min-height: 36px; padding-block: 7px; }
             .dropdown-btn { width: 100%; min-width: 0; justify-content: space-between; }
             .dropdown-menu-content { width: 100%; }
         }
@@ -813,10 +825,11 @@
             .menu { top: calc(100% + 8px); right: 0; }
             .quick-add-bar { grid-template-columns: minmax(0, 1fr) auto; padding: 8px; gap: 8px; }
             .quick-add-submit { min-width: 68px; padding-inline: 12px; }
-            .saved-views-bar { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 8px; }
+            .saved-views-bar { margin: -2px 0 8px; }
             .focus-mode-bar, .batch-toolbar { align-items: stretch; flex-direction: column; gap: 8px; padding: 8px; }
-            .saved-views-list { grid-column: 1 / -1; width: 100%; }
-            .saved-view-save-btn { width: auto; padding-inline: 10px; }
+            .saved-views-list { width: 100%; }
+            .saved-view-chip { max-width: min(320px, 82vw); }
+            .saved-view-save-btn { width: 100%; min-height: 38px; padding-inline: 8px; }
             .focus-mode-bar .btn { width: 100%; }
             .batch-toolbar-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
             .batch-toolbar .btn { width: 100%; padding-inline: 8px; }
@@ -1130,14 +1143,17 @@
                     <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="manual"><span data-i18n="sort.manual">自定义排序 (拖拽)</span></button>
                 </div>
             </div>
+            <button class="btn btn-secondary saved-view-save-btn" id="saveSmartViewBtn" type="button" data-i18n-title="savedViews.saveCurrentTitle" title="保存当前搜索、筛选和视图">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-bookmark"></use></svg>
+                <span data-i18n="savedViews.saveCurrent">保存视图</span>
+            </button>
         </div>
         <section class="saved-views-bar" id="savedViewsBar" aria-label="保存的智能视图" data-i18n-aria-label="savedViews.label">
-            <div class="saved-views-heading">
+            <div class="saved-views-heading sr-only">
                 <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-bookmark"></use></svg>
                 <span data-i18n="savedViews.label">智能视图</span>
             </div>
             <div class="saved-views-list" id="savedViewsList"></div>
-            <button class="btn btn-secondary saved-view-save-btn" id="saveSmartViewBtn" type="button" data-i18n="savedViews.saveCurrent" data-i18n-title="savedViews.saveCurrentTitle" title="保存当前搜索、筛选和视图">保存当前视图</button>
         </section>
         <section class="focus-mode-bar" id="focusModeBar" aria-live="polite" hidden>
             <div class="focus-mode-copy">
@@ -1442,7 +1458,7 @@
             },
             I18N: {
                 RESOURCE_PATH: './resources',
-                RESOURCE_VERSION: '4.24'
+                RESOURCE_VERSION: '4.25'
             },
             CAPTURE: {
                 INBOX_PROJECT: 'Inbox',
@@ -2302,14 +2318,10 @@
         }
         function renderSavedViews() {
             if (!DOM.savedViewsBar || !DOM.savedViewsList) return;
-            DOM.savedViewsBar.hidden = !state.storageAvailable;
+            DOM.savedViewsBar.hidden = !state.storageAvailable || state.savedViews.length === 0;
             DOM.savedViewsList.textContent = '';
             if (state.savedViews.length === 0) {
                 DOM.savedViewsList.removeAttribute('role');
-                const empty = document.createElement('span');
-                empty.className = 'saved-view-empty';
-                empty.textContent = utils.translate('savedViews.empty');
-                DOM.savedViewsList.appendChild(empty);
                 return;
             }
             DOM.savedViewsList.setAttribute('role', 'list');
@@ -2329,10 +2341,14 @@
             const name = document.createElement('span');
             name.className = 'saved-view-name';
             name.textContent = view.name;
-            const meta = document.createElement('span');
-            meta.className = 'saved-view-meta';
-            meta.textContent = getSavedViewMeta(view);
-            apply.append(name, meta);
+            apply.appendChild(name);
+            const metaText = getSavedViewMeta(view);
+            if (metaText) {
+                const meta = document.createElement('span');
+                meta.className = 'saved-view-meta';
+                meta.textContent = metaText;
+                apply.appendChild(meta);
+            }
             const remove = document.createElement('button');
             remove.type = 'button';
             remove.className = 'saved-view-delete';
@@ -2343,11 +2359,15 @@
             return item;
         }
         function getSavedViewMeta(view) {
-            return [
+            const meta = [
                 getProjectFilterLabel(view.projectFilter),
                 utils.translate(`filters.${view.filter}`),
                 utils.translate(`views.${view.viewMode}`)
             ].filter(Boolean).join(' · ');
+            return normalizeSavedViewLabel(view.name) === normalizeSavedViewLabel(meta) ? '' : meta;
+        }
+        function normalizeSavedViewLabel(value) {
+            return String(value || '').replace(/\s+/g, '').toLowerCase();
         }
         function getProjectFilterLabel(value) {
             if (value === 'all') return utils.translate('projects.all');
