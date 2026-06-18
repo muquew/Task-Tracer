@@ -295,7 +295,9 @@
             background: color-mix(in srgb, var(--controls-bg) 92%, var(--bg-surface));
             box-shadow: 0 8px 20px color-mix(in srgb, var(--shadow-base) 58%, transparent);
             backdrop-filter: blur(12px);
-            transition: background-color var(--motion-fast), border-color var(--motion-fast), box-shadow var(--motion-fast);
+            transform-origin: top right;
+            animation: toolsCapsuleExpand 0.18s var(--motion-theme-ease);
+            transition: background-color var(--motion-fast), border-color var(--motion-fast), box-shadow var(--motion-fast), transform var(--motion-fast);
         }
         .tools-drawer-btn {
             display: inline-flex;
@@ -334,9 +336,18 @@
             position: absolute;
             top: 0;
             right: 0;
-            flex-direction: column;
+            flex-direction: row;
             justify-content: flex-end;
             margin-bottom: 0;
+            animation-name: toolsCapsuleCollapse;
+        }
+        @keyframes toolsCapsuleExpand {
+            from { opacity: 0.86; transform: translateX(4px) scale(0.96); }
+            to { opacity: 1; transform: translateX(0) scale(1); }
+        }
+        @keyframes toolsCapsuleCollapse {
+            from { opacity: 0.86; transform: translateY(-4px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
         .tools-drawer-content[hidden] { display: none; }
         .tools-drawer-content {
