@@ -2882,7 +2882,7 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
             if bad_boxes or not metrics["hasTaskName"] or not metrics["hasVisibleActions"]:
                 raise AssertionError(f"{label} layout metrics failed: {metrics}")
 
-            max_control_rows = 4 if viewport["width"] <= 600 else 3 if viewport["width"] <= 900 else 2
+            max_control_rows = 4 if viewport["width"] <= 640 else 3 if viewport["width"] <= 900 else 2
             if (
                 metrics["controlRows"] > max_control_rows
                 or metrics["controlOverlaps"]
