@@ -270,6 +270,60 @@
         .submenu .lang-btn.active { background: var(--bg-active); font-weight: bold; }
         #langMenuToggle.open svg:last-child { transform: rotate(90deg); }
         .main-content { padding: 6px 0 0; }
+        .tools-drawer {
+            position: relative;
+            z-index: 690;
+            margin: 8px 0 14px;
+        }
+        .tools-drawer-handle {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 6px;
+            min-height: 28px;
+            margin: -2px 0 4px;
+        }
+        .tools-drawer-handle::before {
+            content: "";
+            flex: 1 1 auto;
+            height: 1px;
+            min-width: 0;
+            background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--border-light) 78%, transparent));
+        }
+        .tools-drawer-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 30px;
+            padding: 0;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-control);
+            background: color-mix(in srgb, var(--controls-bg) 90%, var(--bg-surface));
+            color: var(--text-secondary);
+            cursor: pointer;
+            box-shadow: 0 5px 14px color-mix(in srgb, var(--shadow-base) 55%, transparent);
+            transition: background-color var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast), transform var(--motion-fast), box-shadow var(--motion-fast);
+        }
+        .tools-drawer-btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            transform: translateY(-1px);
+        }
+        .tools-drawer-btn:active { transform: scale(0.96); }
+        .tools-drawer-toggle-icon { transition: transform var(--motion-fast); }
+        .tools-drawer:not(.is-collapsed) .tools-drawer-toggle-icon { transform: rotate(180deg); }
+        .tools-drawer.is-pinned .tools-drawer-pin-btn {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: var(--text-inverse);
+        }
+        .tools-drawer.is-collapsed { margin-bottom: 8px; }
+        .tools-drawer.is-collapsed .tools-drawer-handle { margin-bottom: 0; }
+        .tools-drawer-content[hidden] { display: none; }
+        .tools-drawer .quick-add-bar { margin: 0 0 8px; }
+        .tools-drawer .controls-bar { margin: 0; }
         .controls-bar {
             position: relative;
             z-index: 700;
@@ -1002,6 +1056,7 @@
     <symbol id="icon-bell-snooze" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 9A5 5 0 0 0 5 9C5 15 3 17 3 17H17S15 15 15 9"/><path d="M11.7 21A2 2 0 0 1 8.3 21"/><path d="M17 3H21L17 7H21"/><path d="M18 11H22L18 15H22"/></symbol>
     <symbol id="icon-repeat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1L21 5L17 9"/><path d="M3 11V9A4 4 0 0 1 7 5H21"/><path d="M7 23L3 19L7 15"/><path d="M21 13V15A4 4 0 0 1 17 19H3"/></symbol>
     <symbol id="icon-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4H18A1 1 0 0 1 19 5V21L12 17L5 21V5A1 1 0 0 1 6 4Z"/></symbol>
+    <symbol id="icon-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3.5L20.5 9.5"/><path d="M9 14L4 19"/><path d="M7.5 11.5L12.5 6.5L17.5 11.5L12.5 16.5Z"/><path d="M12.5 16.5L15.5 19.5"/></symbol>
     <symbol id="icon-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2V5"/><path d="M12 19V22"/><path d="M2 12H5"/><path d="M19 12H22"/></symbol>
     <symbol id="icon-check-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11L12 14L22 4"/><path d="M21 12V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H16"/></symbol>
     <symbol id="icon-subtask-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></symbol>
@@ -1091,88 +1146,100 @@
         </div>
     </div>
     <main class="main-content" id="mainContent">
-        <form class="quick-add-bar" id="quickAddForm" aria-label="快速添加任务" data-i18n-aria-label="quickAdd.label">
-            <div class="quick-add-input-wrap">
-                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-plus"></use></svg>
-                <label for="quickAddInput" class="sr-only" data-i18n="quickAdd.label">快速添加任务</label>
-                <input id="quickAddInput" class="quick-add-input" data-i18n-placeholder="quickAdd.placeholder" placeholder="明天 20:00 复习英语 #学习 /个人" aria-describedby="quickAddHint" autocomplete="off" type="text">
-            </div>
-            <button class="btn btn-primary quick-add-submit" data-i18n="quickAdd.submit" type="submit">添加</button>
-            <p id="quickAddHint" class="sr-only" data-i18n="quickAdd.hint">可输入自然日期、时间、#标签 和 /项目。</p>
-        </form>
-        <div class="controls-bar" role="toolbar" aria-label="任务工具栏" data-i18n-aria-label="app.toolbar">
-            <div class="toolbar-main-row">
-                <div class="view-switcher" id="viewSwitcher" role="tablist" aria-label="视图切换" data-i18n-aria-label="views.label">
-                    <button class="view-tab selected" id="viewTab-list" type="button" role="tab" aria-selected="true" aria-controls="taskList" tabindex="0" aria-label="列表" data-i18n-aria-label="views.list" data-i18n-title="views.list" title="列表" data-view="list">
-                        <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-list"></use></svg>
-                        <span data-i18n="views.list">列表</span>
-                    </button>
-                    <button class="view-tab" id="viewTab-calendar" type="button" role="tab" aria-selected="false" aria-controls="taskList" tabindex="-1" aria-label="日历" data-i18n-aria-label="views.calendar" data-i18n-title="views.calendar" title="日历" data-view="calendar">
-                        <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-calendar"></use></svg>
-                        <span data-i18n="views.calendar">日历</span>
-                    </button>
-                    <button class="view-tab" id="viewTab-timeline" type="button" role="tab" aria-selected="false" aria-controls="taskList" tabindex="-1" aria-label="时间线" data-i18n-aria-label="views.timeline" data-i18n-title="views.timeline" title="时间线" data-view="timeline">
-                        <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-timeline"></use></svg>
-                        <span data-i18n="views.timeline">时间线</span>
-                    </button>
-                    <button class="view-tab" id="viewTab-stats" type="button" role="tab" aria-selected="false" aria-controls="taskList" tabindex="-1" aria-label="统计" data-i18n-aria-label="views.stats" data-i18n-title="views.stats" title="统计" data-view="stats">
-                        <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-chart"></use></svg>
-                        <span data-i18n="views.stats">统计</span>
-                    </button>
-                </div>
-                <div class="search-box">
-                    <label for="searchInput" class="sr-only" data-i18n="search.placeholder">搜索任务...</label>
-                    <input class="search-input" data-i18n-placeholder="search.placeholder" data-i18n-title="search.syntaxTitle" id="searchInput" placeholder="搜索任务..." title="支持 project:工作、tag:学习、status:completed、due:today 和 #标签" aria-describedby="searchSyntaxHint" type="text">
-                    <span id="searchSyntaxHint" class="sr-only" data-i18n="search.syntaxHint">支持限定搜索：project:项目、tag:标签、status:状态、due:日期。</span>
-                    <button type="button" class="search-clear-btn" id="clearSearchBtn" data-i18n-aria-label="search.clear" data-i18n-title="search.clear" aria-label="清空搜索" title="清空搜索" hidden>
-                        <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-x"></use></svg>
-                    </button>
-                    <div class="shortcut-hint" aria-hidden="true"><kbd class="shortcut-kbd" data-i18n-title="tooltips.searchShortcut" title="搜索快捷键：Ctrl/Cmd + K">⌘K</kbd></div>
-                </div>
-                <button class="btn btn-secondary saved-view-save-btn" id="saveSmartViewBtn" type="button" aria-label="保存当前搜索、筛选和视图" data-i18n-aria-label="savedViews.saveCurrentTitle" data-i18n-title="savedViews.saveCurrentTitle" title="保存当前搜索、筛选和视图">
-                    <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-bookmark"></use></svg>
-                    <span data-i18n="savedViews.saveCurrent">保存视图</span>
+        <section class="tools-drawer is-pinned" id="toolsDrawer" aria-label="快速添加和筛选工具" data-i18n-aria-label="tools.label">
+            <div class="tools-drawer-handle">
+                <button class="tools-drawer-btn tools-drawer-toggle-btn" id="toolsDrawerToggleBtn" type="button" aria-expanded="true" aria-controls="toolsDrawerContent" aria-label="收起添加和筛选工具" data-i18n-aria-label="tools.collapse" data-i18n-title="tools.collapse" title="收起添加和筛选工具">
+                    <svg class="icon icon-sm tools-drawer-toggle-icon" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+                </button>
+                <button class="tools-drawer-btn tools-drawer-pin-btn" id="toolsDrawerPinBtn" type="button" aria-pressed="true" aria-label="取消钉住添加和筛选工具" data-i18n-aria-label="tools.unpin" data-i18n-title="tools.unpin" title="取消钉住添加和筛选工具">
+                    <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-pin"></use></svg>
                 </button>
             </div>
-            <div class="toolbar-filter-row">
-                <div class="dropdown-container project-filter" id="projectDropdown">
-                    <button class="dropdown-btn" id="projectFilterBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="projectFilterMenu" aria-label="项目视图" data-i18n-aria-label="projects.filterLabel">
-                        <span id="currentProjectLabel" data-i18n="projects.all">全部项目</span>
-                        <svg class="icon icon-sm chevron"><use href="#icon-chevron-down"></use></svg>
-                    </button>
-                    <div class="dropdown-menu-content" id="projectFilterMenu" role="listbox" aria-labelledby="projectFilterBtn"></div>
-                </div>
-                <div class="dropdown-container" id="filterDropdown">
-                    <button class="dropdown-btn" id="filterBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="filterMenu">
-                        <svg class="icon icon-sm" style="opacity: 0.7;"><use href="#icon-filter"></use></svg>
-                        <span id="currentFilterLabel" data-i18n="filters.active">进行中</span>
-                        <svg class="icon icon-sm chevron"><use href="#icon-chevron-down"></use></svg>
-                    </button>
-                    <div class="dropdown-menu-content" id="filterMenu" role="listbox" aria-labelledby="filterBtn">
-                        <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="all"><span data-i18n="filters.all">全部</span><span class="filter-count" id="count-all">(0)</span></button>
-                        <button type="button" class="dropdown-option selected" role="option" aria-selected="true" data-filter="active"><span data-i18n="filters.active">进行中</span><span class="filter-count" id="count-active">(0)</span></button>
-                        <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="completed"><span data-i18n="filters.completed">已完成</span><span class="filter-count" id="count-completed">(0)</span></button>
-                        <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="archived"><span data-i18n="filters.archived">已归档</span><span class="filter-count" id="count-archived">(0)</span></button>
-                        <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="overdue"><span data-i18n="filters.overdue">已过期</span><span class="filter-count" id="count-overdue">(0)</span></button>
-                        <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="no-deadline"><span data-i18n="filters.noDeadline">无截止日期</span><span class="filter-count" id="count-no-deadline">(0)</span></button>
+            <div class="tools-drawer-content" id="toolsDrawerContent">
+                <form class="quick-add-bar" id="quickAddForm" aria-label="快速添加任务" data-i18n-aria-label="quickAdd.label">
+                    <div class="quick-add-input-wrap">
+                        <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-plus"></use></svg>
+                        <label for="quickAddInput" class="sr-only" data-i18n="quickAdd.label">快速添加任务</label>
+                        <input id="quickAddInput" class="quick-add-input" data-i18n-placeholder="quickAdd.placeholder" placeholder="明天 20:00 复习英语 #学习 /个人" aria-describedby="quickAddHint" autocomplete="off" type="text">
                     </div>
-                </div>
-                <div class="dropdown-container" id="sortDropdown">
-                    <button class="dropdown-btn" id="sortBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="sortMenu">
-                        <svg class="icon icon-sm" style="opacity: 0.7;"><use href="#icon-sort"></use></svg>
-                        <span id="currentSortLabel" data-i18n="sort.smart">智能排序</span>
-                        <svg class="icon icon-sm chevron"><use href="#icon-chevron-down"></use></svg>
-                    </button>
-                    <div class="dropdown-menu-content" id="sortMenu" role="listbox" aria-labelledby="sortBtn">
-                        <button type="button" class="dropdown-option selected" role="option" aria-selected="true" data-sort="smart"><span data-i18n="sort.smart">智能排序</span></button>
-                        <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="created-desc"><span data-i18n="sort.created">新创建</span></button>
-                        <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="due-asc"><span data-i18n="sort.due">截止日期</span></button>
-                        <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="alpha-asc"><span data-i18n="sort.alpha">A-Z</span></button>
-                        <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="manual"><span data-i18n="sort.manual">自定义排序 (拖拽)</span></button>
+                    <button class="btn btn-primary quick-add-submit" data-i18n="quickAdd.submit" type="submit">添加</button>
+                    <p id="quickAddHint" class="sr-only" data-i18n="quickAdd.hint">可输入自然日期、时间、#标签 和 /项目。</p>
+                </form>
+                <div class="controls-bar" role="toolbar" aria-label="任务工具栏" data-i18n-aria-label="app.toolbar">
+                    <div class="toolbar-main-row">
+                        <div class="view-switcher" id="viewSwitcher" role="tablist" aria-label="视图切换" data-i18n-aria-label="views.label">
+                            <button class="view-tab selected" id="viewTab-list" type="button" role="tab" aria-selected="true" aria-controls="taskList" tabindex="0" aria-label="列表" data-i18n-aria-label="views.list" data-i18n-title="views.list" title="列表" data-view="list">
+                                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-list"></use></svg>
+                                <span data-i18n="views.list">列表</span>
+                            </button>
+                            <button class="view-tab" id="viewTab-calendar" type="button" role="tab" aria-selected="false" aria-controls="taskList" tabindex="-1" aria-label="日历" data-i18n-aria-label="views.calendar" data-i18n-title="views.calendar" title="日历" data-view="calendar">
+                                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-calendar"></use></svg>
+                                <span data-i18n="views.calendar">日历</span>
+                            </button>
+                            <button class="view-tab" id="viewTab-timeline" type="button" role="tab" aria-selected="false" aria-controls="taskList" tabindex="-1" aria-label="时间线" data-i18n-aria-label="views.timeline" data-i18n-title="views.timeline" title="时间线" data-view="timeline">
+                                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-timeline"></use></svg>
+                                <span data-i18n="views.timeline">时间线</span>
+                            </button>
+                            <button class="view-tab" id="viewTab-stats" type="button" role="tab" aria-selected="false" aria-controls="taskList" tabindex="-1" aria-label="统计" data-i18n-aria-label="views.stats" data-i18n-title="views.stats" title="统计" data-view="stats">
+                                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-chart"></use></svg>
+                                <span data-i18n="views.stats">统计</span>
+                            </button>
+                        </div>
+                        <div class="search-box">
+                            <label for="searchInput" class="sr-only" data-i18n="search.placeholder">搜索任务...</label>
+                            <input class="search-input" data-i18n-placeholder="search.placeholder" data-i18n-title="search.syntaxTitle" id="searchInput" placeholder="搜索任务..." title="支持 project:工作、tag:学习、status:completed、due:today 和 #标签" aria-describedby="searchSyntaxHint" type="text">
+                            <span id="searchSyntaxHint" class="sr-only" data-i18n="search.syntaxHint">支持限定搜索：project:项目、tag:标签、status:状态、due:日期。</span>
+                            <button type="button" class="search-clear-btn" id="clearSearchBtn" data-i18n-aria-label="search.clear" data-i18n-title="search.clear" aria-label="清空搜索" title="清空搜索" hidden>
+                                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-x"></use></svg>
+                            </button>
+                            <div class="shortcut-hint" aria-hidden="true"><kbd class="shortcut-kbd" data-i18n-title="tooltips.searchShortcut" title="搜索快捷键：Ctrl/Cmd + K">⌘K</kbd></div>
+                        </div>
+                        <button class="btn btn-secondary saved-view-save-btn" id="saveSmartViewBtn" type="button" aria-label="保存当前搜索、筛选和视图" data-i18n-aria-label="savedViews.saveCurrentTitle" data-i18n-title="savedViews.saveCurrentTitle" title="保存当前搜索、筛选和视图">
+                            <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-bookmark"></use></svg>
+                            <span data-i18n="savedViews.saveCurrent">保存视图</span>
+                        </button>
+                    </div>
+                    <div class="toolbar-filter-row">
+                        <div class="dropdown-container project-filter" id="projectDropdown">
+                            <button class="dropdown-btn" id="projectFilterBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="projectFilterMenu" aria-label="项目视图" data-i18n-aria-label="projects.filterLabel">
+                                <span id="currentProjectLabel" data-i18n="projects.all">全部项目</span>
+                                <svg class="icon icon-sm chevron"><use href="#icon-chevron-down"></use></svg>
+                            </button>
+                            <div class="dropdown-menu-content" id="projectFilterMenu" role="listbox" aria-labelledby="projectFilterBtn"></div>
+                        </div>
+                        <div class="dropdown-container" id="filterDropdown">
+                            <button class="dropdown-btn" id="filterBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="filterMenu">
+                                <svg class="icon icon-sm" style="opacity: 0.7;"><use href="#icon-filter"></use></svg>
+                                <span id="currentFilterLabel" data-i18n="filters.active">进行中</span>
+                                <svg class="icon icon-sm chevron"><use href="#icon-chevron-down"></use></svg>
+                            </button>
+                            <div class="dropdown-menu-content" id="filterMenu" role="listbox" aria-labelledby="filterBtn">
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="all"><span data-i18n="filters.all">全部</span><span class="filter-count" id="count-all">(0)</span></button>
+                                <button type="button" class="dropdown-option selected" role="option" aria-selected="true" data-filter="active"><span data-i18n="filters.active">进行中</span><span class="filter-count" id="count-active">(0)</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="completed"><span data-i18n="filters.completed">已完成</span><span class="filter-count" id="count-completed">(0)</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="archived"><span data-i18n="filters.archived">已归档</span><span class="filter-count" id="count-archived">(0)</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="overdue"><span data-i18n="filters.overdue">已过期</span><span class="filter-count" id="count-overdue">(0)</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="no-deadline"><span data-i18n="filters.noDeadline">无截止日期</span><span class="filter-count" id="count-no-deadline">(0)</span></button>
+                            </div>
+                        </div>
+                        <div class="dropdown-container" id="sortDropdown">
+                            <button class="dropdown-btn" id="sortBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="sortMenu">
+                                <svg class="icon icon-sm" style="opacity: 0.7;"><use href="#icon-sort"></use></svg>
+                                <span id="currentSortLabel" data-i18n="sort.smart">智能排序</span>
+                                <svg class="icon icon-sm chevron"><use href="#icon-chevron-down"></use></svg>
+                            </button>
+                            <div class="dropdown-menu-content" id="sortMenu" role="listbox" aria-labelledby="sortBtn">
+                                <button type="button" class="dropdown-option selected" role="option" aria-selected="true" data-sort="smart"><span data-i18n="sort.smart">智能排序</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="created-desc"><span data-i18n="sort.created">新创建</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="due-asc"><span data-i18n="sort.due">截止日期</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="alpha-asc"><span data-i18n="sort.alpha">A-Z</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="manual"><span data-i18n="sort.manual">自定义排序 (拖拽)</span></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
         <section class="saved-views-bar" id="savedViewsBar" aria-label="保存的智能视图" data-i18n-aria-label="savedViews.label">
             <div class="saved-views-heading sr-only">
                 <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-bookmark"></use></svg>
@@ -1447,6 +1514,8 @@
                 NOTIFIED_TASKS: 'notifiedTasks',
                 LAST_BACKUP_AT: 'lastBackupAt',
                 SAVED_VIEWS: 'savedViews',
+                TOOLS_DRAWER_COLLAPSED: 'toolsDrawerCollapsed',
+                TOOLS_DRAWER_PINNED: 'toolsDrawerPinned',
                 PROBE: '__task_tracer_storage_probe__'
             },
             UI: {
@@ -1519,6 +1588,8 @@
             sort: 'smart',
             projectFilter: 'all',
             viewMode: 'list',
+            toolsDrawerCollapsed: false,
+            toolsDrawerPinned: true,
             focusMode: false,
             calendarMonthDate: new Date(),
             searchQuery: '',
@@ -1556,6 +1627,7 @@
             storageError: null,
             storageFallbackTasks: [],
             storageFailureEventsBound: false,
+            toolsDrawerEventsBound: false,
             eventsBound: false
         };
         const DOM = {};
@@ -1568,6 +1640,10 @@
             DOM.storageUnavailableBanner = document.getElementById('storageUnavailableBanner');
             DOM.retryStorageBtn = document.getElementById('retryStorageBtn');
             DOM.emergencyBackupBtn = document.getElementById('emergencyBackupBtn');
+            DOM.toolsDrawer = document.getElementById('toolsDrawer');
+            DOM.toolsDrawerContent = document.getElementById('toolsDrawerContent');
+            DOM.toolsDrawerToggleBtn = document.getElementById('toolsDrawerToggleBtn');
+            DOM.toolsDrawerPinBtn = document.getElementById('toolsDrawerPinBtn');
             DOM.clearCompletedBtn = document.getElementById('clearCompletedBtn');
             DOM.clearSearchBtn = document.getElementById('clearSearchBtn');
             DOM.savedViewsBar = document.getElementById('savedViewsBar');
@@ -1670,7 +1746,9 @@
                 createLangButtons();
                 if (!(await initializeStorageOrFallback())) return;
                 await loadSettings();
+                restoreToolsDrawerState();
                 initLanguage();
+                syncToolsDrawer();
                 enhanceSelectControls();
                 markDecorativeIcons();
                 state.tasks = await loadNormalizedTasks();
@@ -1739,6 +1817,8 @@
             initLanguage();
             enhanceSelectControls();
             markDecorativeIcons();
+            restoreToolsDrawerState();
+            syncToolsDrawer();
             bindStorageUnavailableEvents();
             syncStorageAvailabilityUI();
             renderStorageUnavailableState();
@@ -1756,6 +1836,7 @@
             if (state.storageFailureEventsBound) return;
             state.storageFailureEventsBound = true;
             if (!state.eventsBound) DOM.themeBtn.addEventListener('click', utils.toggleTheme);
+            if (!state.eventsBound) bindToolsDrawerEvents();
             DOM.retryStorageBtn.addEventListener('click', retryStorageAvailability);
             if (DOM.emergencyBackupBtn) DOM.emergencyBackupBtn.addEventListener('click', downloadEmergencyBackup);
         }
@@ -1923,7 +2004,7 @@
                 case 'notifications.toggle': toggleNotifications().catch(handleNotificationToggleError); break;
                 case 'order.save': saveNewOrder(); break;
                 case 'project.filter': applyProjectFilter(payload.value); break;
-                case 'quickAdd.focus': DOM.quickAddInput.focus(); break;
+                case 'quickAdd.focus': expandToolsDrawerForFocus(); DOM.quickAddInput.focus(); break;
                 case 'savedView.apply': applySavedView(payload.id); break;
                 case 'savedView.delete': deleteSavedView(payload.id).catch(error => {
                     console.error('删除保存视图失败:', error);
@@ -1932,7 +2013,7 @@
                 case 'savedView.promptSave': promptSaveSmartView(); break;
                 case 'scroll.top': scrollToTop(); break;
                 case 'search.clear': clearSearchInput(payload.options || {}); break;
-                case 'search.focus': DOM.inputs.search.focus(); break;
+                case 'search.focus': expandToolsDrawerForFocus(); DOM.inputs.search.focus(); break;
                 case 'sort.set': applyTaskSort(payload.value); break;
                 case 'subtask.toggle': toggleSubtaskComplete(payload.taskId, payload.subtaskId); break;
                 case 'task.action': runTaskAction(payload.taskAction, payload.taskId); break;
@@ -1940,6 +2021,8 @@
                 case 'task.new': openModal(null, payload.options || {}); break;
                 case 'tasks.clearCompleted': handleClearCompleted(); break;
                 case 'theme.toggle': utils.toggleTheme(); break;
+                case 'tools.drawer.pin': toggleToolsDrawerPin(); break;
+                case 'tools.drawer.toggle': toggleToolsDrawer(); break;
                 case 'undo.perform': performUndo(); break;
                 case 'view.set': setViewMode(payload.view); break;
                 default: return false;
@@ -2088,6 +2171,80 @@
                 return false;
             }
         }
+        function readStoredBoolean(key, fallback) {
+            const value = safeGetStorageItem('localStorage', key);
+            if (value === 'true') return true;
+            if (value === 'false') return false;
+            return fallback;
+        }
+        function restoreToolsDrawerState() {
+            const pinned = readStoredBoolean(CONFIG.STORAGE.TOOLS_DRAWER_PINNED, true);
+            const collapsed = readStoredBoolean(CONFIG.STORAGE.TOOLS_DRAWER_COLLAPSED, false);
+            state.toolsDrawerPinned = pinned;
+            state.toolsDrawerCollapsed = pinned ? false : collapsed;
+        }
+        function persistToolsDrawerState() {
+            safeSetStorageItem('localStorage', CONFIG.STORAGE.TOOLS_DRAWER_PINNED, String(state.toolsDrawerPinned));
+            safeSetStorageItem('localStorage', CONFIG.STORAGE.TOOLS_DRAWER_COLLAPSED, String(state.toolsDrawerCollapsed));
+        }
+        function setToolsDrawerState(options = {}) {
+            const nextPinned = typeof options.pinned === 'boolean' ? options.pinned : state.toolsDrawerPinned;
+            let nextCollapsed = typeof options.collapsed === 'boolean' ? options.collapsed : state.toolsDrawerCollapsed;
+            if (nextPinned) nextCollapsed = false;
+            state.toolsDrawerPinned = nextPinned;
+            state.toolsDrawerCollapsed = nextCollapsed;
+            if (options.persist !== false) persistToolsDrawerState();
+            syncToolsDrawer();
+        }
+        function toggleToolsDrawer() {
+            const nextCollapsed = !state.toolsDrawerCollapsed;
+            setToolsDrawerState({
+                collapsed: nextCollapsed,
+                pinned: nextCollapsed ? false : state.toolsDrawerPinned
+            });
+        }
+        function toggleToolsDrawerPin() {
+            const nextPinned = !state.toolsDrawerPinned;
+            setToolsDrawerState({
+                pinned: nextPinned,
+                collapsed: nextPinned ? false : state.toolsDrawerCollapsed
+            });
+        }
+        function expandToolsDrawerForFocus() {
+            if (state.toolsDrawerCollapsed) {
+                setToolsDrawerState({ collapsed: false, persist: false });
+            }
+        }
+        function setTranslatedControlLabel(element, key) {
+            if (!element) return;
+            const label = utils.translate(key);
+            element.setAttribute('data-i18n-aria-label', key);
+            element.setAttribute('data-i18n-title', key);
+            element.setAttribute('aria-label', label);
+            element.title = label;
+        }
+        function syncToolsDrawer() {
+            if (!DOM.toolsDrawer || !DOM.toolsDrawerContent) return;
+            const collapsed = Boolean(state.toolsDrawerCollapsed);
+            const pinned = Boolean(state.toolsDrawerPinned);
+            DOM.toolsDrawer.classList.toggle('is-collapsed', collapsed);
+            DOM.toolsDrawer.classList.toggle('is-pinned', pinned);
+            DOM.toolsDrawerContent.hidden = collapsed;
+            DOM.toolsDrawerContent.setAttribute('aria-hidden', String(collapsed));
+            if ('inert' in DOM.toolsDrawerContent) DOM.toolsDrawerContent.inert = collapsed;
+            if (DOM.toolsDrawerToggleBtn) {
+                DOM.toolsDrawerToggleBtn.setAttribute('aria-expanded', String(!collapsed));
+                setTranslatedControlLabel(DOM.toolsDrawerToggleBtn, collapsed ? 'tools.expand' : 'tools.collapse');
+            }
+            if (DOM.toolsDrawerPinBtn) {
+                DOM.toolsDrawerPinBtn.setAttribute('aria-pressed', String(pinned));
+                setTranslatedControlLabel(DOM.toolsDrawerPinBtn, pinned ? 'tools.unpin' : 'tools.pin');
+            }
+            if (collapsed) {
+                closeAllDropdowns();
+                if (DOM.toolsDrawerContent.contains(document.activeElement)) DOM.toolsDrawerToggleBtn?.focus();
+            }
+        }
         function restoreNotifiedTasks() {
             try {
                 const notified = safeGetStorageItem('sessionStorage', CONFIG.STORAGE.NOTIFIED_TASKS);
@@ -2112,6 +2269,7 @@
         }
         function bindEvents() {
             bindGlobalEvents();
+            bindToolsDrawerEvents();
             bindDialogEvents();
             bindFormEvents();
             bindSearchEvents();
@@ -2141,6 +2299,12 @@
             document.addEventListener('keydown', handleKeyboardShortcuts);
             document.addEventListener('click', closeCustomSelectsOnOutsideClick);
             document.addEventListener('visibilitychange', handleVisibilityChange);
+        }
+        function bindToolsDrawerEvents() {
+            if (state.toolsDrawerEventsBound) return;
+            state.toolsDrawerEventsBound = true;
+            DOM.toolsDrawerToggleBtn?.addEventListener('click', () => runAppAction('tools.drawer.toggle'));
+            DOM.toolsDrawerPinBtn?.addEventListener('click', () => runAppAction('tools.drawer.pin'));
         }
         function bindDialogEvents() {
             DOM.openModalBtn.addEventListener('click', () => runAppAction('task.new'));
@@ -3408,6 +3572,7 @@
         function focusQuickAddForCapture(hasText) {
             requestAnimationFrame(() => {
                 if (!state.storageAvailable || DOM.quickAddInput.disabled) return;
+                expandToolsDrawerForFocus();
                 DOM.quickAddInput.focus();
                 if (hasText) {
                     DOM.quickAddInput.setSelectionRange(DOM.quickAddInput.value.length, DOM.quickAddInput.value.length);
@@ -6504,6 +6669,7 @@
                 syncDropdowns();
                 syncAllCustomSelects();
                 syncUndoControls();
+                syncToolsDrawer();
                 renderTaskList();
             },
             translate: (key) => {

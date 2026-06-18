@@ -32,6 +32,13 @@
     "hint": "Enter a natural date, time, #tag, and /project. Without /project, the task goes to Inbox.",
     "captureReady": "Quick capture is ready. Review the text, then press Enter to add it."
   },
+  "tools": {
+    "label": "Quick add and filter tools",
+    "collapse": "Collapse quick add and filter tools",
+    "expand": "Expand quick add and filter tools",
+    "pin": "Pin quick add and filter tools",
+    "unpin": "Unpin quick add and filter tools"
+  },
   "savedViews": {
     "label": "Smart Views",
     "saveCurrent": "Save View",
