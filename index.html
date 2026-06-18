@@ -274,9 +274,10 @@
             position: relative;
             z-index: 700;
             display: grid;
-            grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
-            gap: 10px;
-            align-items: stretch;
+            grid-template-columns: auto minmax(0, 1fr);
+            grid-template-rows: auto auto;
+            gap: 8px 10px;
+            align-items: center;
             margin: 6px 0 14px;
             background-color: var(--controls-bg);
             border: 1px solid var(--border-light);
@@ -286,12 +287,10 @@
             backdrop-filter: blur(14px);
             transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), box-shadow var(--motion-theme-duration) var(--motion-theme-ease), transform var(--motion-fast);
         }
-        .toolbar-query {
-            display: grid;
-            gap: 8px;
-            min-width: 0;
-        }
+        .toolbar-query { display: contents; }
         .toolbar-search-row {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
             display: grid;
             grid-template-columns: minmax(0, 1fr) auto;
             gap: 8px;
@@ -299,8 +298,10 @@
             min-width: 0;
         }
         .toolbar-filter-row {
+            grid-column: 1 / 3;
+            grid-row: 2 / 3;
             display: grid;
-            grid-template-columns: minmax(120px, 1fr) minmax(120px, 170px) minmax(120px, 170px);
+            grid-template-columns: minmax(160px, 1fr) minmax(130px, 170px) minmax(140px, 180px);
             gap: 8px;
             align-items: center;
             min-width: 0;
@@ -393,7 +394,7 @@
         .project-filter { min-width: 0; }
         .dropdown-container.show { z-index: 800; }
         .dropdown-btn { max-width: 100%; background-color: var(--field-bg); border: 1px solid var(--border-base); color: var(--text-main); padding: 8px 12px; border-radius: var(--radius-control); font-size: 14px; cursor: pointer; display: flex; align-items: center; transition: background-color var(--motion-theme-duration) var(--motion-theme-ease), border-color var(--motion-theme-duration) var(--motion-theme-ease), color var(--motion-theme-duration) var(--motion-theme-ease), transform var(--motion-fast), box-shadow var(--motion-fast); height: 42px; white-space: nowrap; gap: 8px; min-width: 150px; }
-        .dropdown-btn [id^="current"] { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+        .dropdown-btn [id^="current"] { flex: 1 1 auto; min-width: 0; overflow: hidden; text-align: left; text-overflow: ellipsis; }
         .dropdown-btn .chevron { margin-left: auto; opacity: 0.5; }
         .dropdown-btn:hover { background: var(--bg-hover); border-color: var(--color-primary); }
         .dropdown-btn.active { background: var(--bg-active); border-color: var(--color-primary); }
@@ -409,7 +410,7 @@
         .dropdown-option svg { opacity: 0; color: var(--color-primary); }
         .dropdown-option.selected svg { opacity: 1; }
         .filter-count { margin-left: auto; opacity: 0.6; font-size: 12px; padding-left: 8px; }
-        .view-switcher { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 4px; min-width: 0; width: 100%; height: 100%; padding: 4px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-alt); }
+        .view-switcher { grid-column: 1 / 2; grid-row: 1 / 2; display: grid; grid-template-columns: repeat(4, minmax(0, auto)); gap: 4px; min-width: 0; width: max-content; max-width: 100%; padding: 4px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: var(--bg-surface-alt); }
         .view-tab { min-height: 34px; border: 1px solid transparent; border-radius: var(--radius-control); padding: 7px 8px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: transparent; color: var(--text-secondary); font: inherit; font-size: 13px; font-weight: 760; cursor: pointer; white-space: nowrap; transition: background-color var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast), transform var(--motion-fast); }
         .view-tab:hover { color: var(--color-primary); background: var(--bg-hover); }
         .view-tab:disabled, .dropdown-btn:disabled, .btn:disabled, .search-input:disabled, .quick-add-input:disabled, .menu-item:disabled { cursor: not-allowed; opacity: 0.56; transform: none; box-shadow: none; }
@@ -789,15 +790,15 @@
             to { opacity: 1; }
         }
         @media (max-width: 1100px) and (min-width: 901px) {
-            .controls-bar { grid-template-columns: minmax(210px, 240px) minmax(0, 1fr); }
-            .toolbar-filter-row { grid-template-columns: minmax(0, 1fr) minmax(125px, 150px) minmax(125px, 150px); }
+            .toolbar-filter-row { grid-template-columns: minmax(0, 1fr) minmax(125px, 150px) minmax(132px, 160px); }
+            .view-tab { padding-inline: 7px; }
             .dropdown-btn { width: 100%; min-width: 0; justify-content: space-between; }
             .dropdown-menu-content { width: 100%; }
         }
         @media (max-width: 900px) and (min-width: 701px) {
             body { padding: 18px; }
-            .controls-bar { grid-template-columns: minmax(200px, 230px) minmax(0, 1fr); gap: 9px; }
-            .toolbar-filter-row { grid-template-columns: minmax(0, 1fr) minmax(116px, 140px) minmax(116px, 140px); }
+            .controls-bar { gap: 8px; }
+            .toolbar-filter-row { grid-template-columns: minmax(0, 1fr) minmax(116px, 140px) minmax(128px, 152px); }
             .search-box { min-width: 0; width: 100%; }
             .dropdown-btn { width: 100%; min-width: 0; justify-content: space-between; }
             .dropdown-menu-content { width: 100%; }
@@ -805,19 +806,23 @@
         }
         @media (max-width: 700px) and (min-width: 641px) {
             body { padding: 18px; }
-            .controls-bar { grid-template-columns: minmax(190px, 210px) minmax(0, 1fr); gap: 9px; }
+            .controls-bar { grid-template-columns: auto minmax(0, 1fr); gap: 8px; }
             .toolbar-filter-row { grid-template-columns: minmax(0, 1fr) minmax(108px, 128px) minmax(132px, 148px); }
             .search-box { min-width: 0; width: 100%; }
             .dropdown-btn { width: 100%; min-width: 0; justify-content: space-between; }
             .dropdown-menu-content { width: 100%; }
-            .view-tab { min-width: 0; padding-inline: 6px; }
+            .view-switcher { grid-template-columns: repeat(4, 38px); width: max-content; }
+            .view-tab { min-width: 0; padding-inline: 8px; }
+            .view-tab span { display: none; }
         }
         @media (max-width: 640px) and (min-width: 601px) {
             .controls-bar { grid-template-columns: minmax(0, 1fr); padding: 8px; gap: 8px; }
-            .toolbar-query, .toolbar-search-row, .toolbar-filter-row { gap: 8px; }
+            .toolbar-query { display: grid; gap: 8px; min-width: 0; }
+            .toolbar-search-row, .toolbar-filter-row { grid-column: auto; grid-row: auto; gap: 8px; }
             .toolbar-search-row { grid-template-columns: minmax(0, 1fr) 42px; }
             .toolbar-filter-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-            .view-switcher { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; min-height: 84px; }
+            .view-switcher { grid-column: auto; grid-row: auto; grid-template-columns: repeat(4, minmax(0, 1fr)); width: 100%; }
+            .view-tab span { display: none; }
             .search-box { width: 100%; flex: none; min-width: 0; }
             .project-filter { grid-column: 1 / -1; }
             #filterDropdown { grid-column: 1 / 2; }
@@ -854,10 +859,12 @@
             .batch-toolbar-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
             .batch-toolbar .btn { width: 100%; padding-inline: 8px; }
             .controls-bar { grid-template-columns: minmax(0, 1fr); padding: 8px; gap: 8px; }
-            .toolbar-query, .toolbar-search-row, .toolbar-filter-row { gap: 8px; }
+            .toolbar-query { display: grid; gap: 8px; min-width: 0; }
+            .toolbar-search-row, .toolbar-filter-row { grid-column: auto; grid-row: auto; gap: 8px; }
             .toolbar-search-row { grid-template-columns: minmax(0, 1fr) 42px; }
             .toolbar-filter-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-            .view-switcher { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+            .view-switcher { grid-column: auto; grid-row: auto; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); width: 100%; }
+            .view-tab span { display: none; }
             .search-box { width: 100%; flex: none; min-width: 0; }
             .project-filter { grid-column: 1 / -1; }
             #filterDropdown { grid-column: 1 / 2; }
@@ -1106,19 +1113,19 @@
         </form>
         <div class="controls-bar" role="toolbar" aria-label="任务工具栏" data-i18n-aria-label="app.toolbar">
             <div class="view-switcher" id="viewSwitcher" role="tablist" aria-label="视图切换" data-i18n-aria-label="views.label">
-                <button class="view-tab selected" id="viewTab-list" type="button" role="tab" aria-selected="true" aria-controls="taskList" tabindex="0" data-view="list">
+                <button class="view-tab selected" id="viewTab-list" type="button" role="tab" aria-selected="true" aria-controls="taskList" tabindex="0" aria-label="列表" data-i18n-aria-label="views.list" data-i18n-title="views.list" title="列表" data-view="list">
                     <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-list"></use></svg>
                     <span data-i18n="views.list">列表</span>
                 </button>
-                <button class="view-tab" id="viewTab-calendar" type="button" role="tab" aria-selected="false" aria-controls="taskList" tabindex="-1" data-view="calendar">
+                <button class="view-tab" id="viewTab-calendar" type="button" role="tab" aria-selected="false" aria-controls="taskList" tabindex="-1" aria-label="日历" data-i18n-aria-label="views.calendar" data-i18n-title="views.calendar" title="日历" data-view="calendar">
                     <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-calendar"></use></svg>
                     <span data-i18n="views.calendar">日历</span>
                 </button>
-                <button class="view-tab" id="viewTab-timeline" type="button" role="tab" aria-selected="false" aria-controls="taskList" tabindex="-1" data-view="timeline">
+                <button class="view-tab" id="viewTab-timeline" type="button" role="tab" aria-selected="false" aria-controls="taskList" tabindex="-1" aria-label="时间线" data-i18n-aria-label="views.timeline" data-i18n-title="views.timeline" title="时间线" data-view="timeline">
                     <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-timeline"></use></svg>
                     <span data-i18n="views.timeline">时间线</span>
                 </button>
-                <button class="view-tab" id="viewTab-stats" type="button" role="tab" aria-selected="false" aria-controls="taskList" tabindex="-1" data-view="stats">
+                <button class="view-tab" id="viewTab-stats" type="button" role="tab" aria-selected="false" aria-controls="taskList" tabindex="-1" aria-label="统计" data-i18n-aria-label="views.stats" data-i18n-title="views.stats" title="统计" data-view="stats">
                     <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-chart"></use></svg>
                     <span data-i18n="views.stats">统计</span>
                 </button>
