@@ -2773,6 +2773,10 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
     try:
         for label, viewport in (
             ("desktop", {"width": 1280, "height": 720}),
+            ("wide tablet", {"width": 1100, "height": 844}),
+            ("tablet", {"width": 900, "height": 844}),
+            ("narrow tablet", {"width": 700, "height": 844}),
+            ("large mobile", {"width": 600, "height": 844}),
             ("mobile", {"width": 390, "height": 844}),
             ("compact mobile", {"width": 320, "height": 568}),
         ):
@@ -2788,6 +2792,9 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                     const viewportWidth = window.innerWidth;
                     const doc = document.documentElement;
                     const selectors = ['header', '.controls-bar', '.task-item', '.task-actions'];
+                    const controlSelectors = ['.view-switcher', '.search-box', '#projectDropdown', '#filterDropdown', '#sortDropdown', '#saveSmartViewBtn'];
+                    const controlBar = document.querySelector('.controls-bar');
+                    const controlRect = controlBar.getBoundingClientRect();
                     const boxes = selectors.map((selector) => {
                         const el = document.querySelector(selector);
                         if (!el) return { selector, missing: true };
@@ -2802,12 +2809,55 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                             height: rect.height
                         };
                     });
+                    const controlItems = controlSelectors.map((selector) => {
+                        const el = document.querySelector(selector);
+                        if (!el) return { selector, missing: true };
+                        const rect = el.getBoundingClientRect();
+                        return {
+                            selector,
+                            left: rect.left,
+                            right: rect.right,
+                            top: rect.top,
+                            bottom: rect.bottom,
+                            width: rect.width,
+                            height: rect.height
+                        };
+                    });
+                    const controlRows = [];
+                    controlItems
+                        .filter((item) => !item.missing)
+                        .map((item) => item.top)
+                        .sort((a, b) => a - b)
+                        .forEach((top) => {
+                            if (!controlRows.some((rowTop) => Math.abs(rowTop - top) <= 18)) controlRows.push(top);
+                        });
+                    const controlOverlaps = [];
+                    for (let i = 0; i < controlItems.length; i += 1) {
+                        for (let j = i + 1; j < controlItems.length; j += 1) {
+                            const a = controlItems[i];
+                            const b = controlItems[j];
+                            if (a.missing || b.missing) continue;
+                            const overlapX = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left));
+                            const overlapY = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+                            if (overlapX > 1 && overlapY > 1) controlOverlaps.push(`${a.selector}<->${b.selector}`);
+                        }
+                    }
+                    const controlOutside = controlItems.filter((item) => item.missing
+                        || item.width <= 0
+                        || item.height <= 0
+                        || item.left < controlRect.left - 1
+                        || item.right > controlRect.right + 1
+                        || item.top < controlRect.top - 1
+                        || item.bottom > controlRect.bottom + 1);
 
                     return {
                         label,
                         viewportWidth,
                         scrollWidth: doc.scrollWidth,
                         boxes,
+                        controlRows: controlRows.length,
+                        controlOverlaps,
+                        controlOutside,
                         hasTaskName: Boolean(document.querySelector('.task-name')?.textContent.trim()),
                         hasVisibleActions: [...document.querySelectorAll('.task-actions .action-btn')]
                             .filter((button) => !button.hidden && button.offsetParent !== null)
@@ -2831,6 +2881,14 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
             ]
             if bad_boxes or not metrics["hasTaskName"] or not metrics["hasVisibleActions"]:
                 raise AssertionError(f"{label} layout metrics failed: {metrics}")
+
+            max_control_rows = 4 if viewport["width"] <= 600 else 3 if viewport["width"] <= 700 else 2 if viewport["width"] <= 1100 else 1
+            if (
+                metrics["controlRows"] > max_control_rows
+                or metrics["controlOverlaps"]
+                or metrics["controlOutside"]
+            ):
+                raise AssertionError(f"{label} controls layout failed: {metrics}")
 
             screenshot = visual_page.screenshot(full_page=True)
             if len(screenshot) < 10_000:
