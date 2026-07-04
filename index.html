@@ -610,6 +610,9 @@
         }
         .task-item::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: linear-gradient(180deg, var(--task-color), color-mix(in srgb, var(--task-color) 64%, var(--color-primary))); }
         .task-item-right { flex: 1; min-width: 0; padding: 17px 18px 16px 28px; }
+        .task-card-grid { display: grid; grid-template-columns: 1fr; gap: 13px; align-items: stretch; min-width: 0; }
+        .task-main { min-width: 0; display: grid; align-content: start; }
+        .task-rail { min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
         .task-item:hover { transform: translateY(-1px); border-color: color-mix(in srgb, var(--task-color) 36%, var(--border-light)); box-shadow: 0 16px 34px rgba(15, 23, 42, 0.11); }
         .task-item:focus-within { box-shadow: 0 0 0 3px var(--focus-ring), 0 16px 34px rgba(15, 23, 42, 0.11); }
         .task-item.status-safe { --task-color: var(--color-success); }
@@ -634,10 +637,10 @@
         .task-select-checkbox:checked:hover { background-color: var(--color-primary-dark); }
         .task-item.animate-complete { animation: completeAnimation 0.5s ease; }
         @keyframes completeAnimation { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        .task-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 10px; }
+        .task-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 8px; }
         .task-title { min-width: 0; font-size: 16px; font-weight: 820; color: var(--text-main); display: flex; align-items: center; gap: 9px; word-break: break-word; overflow-wrap: anywhere; line-height: 1.35; }
         .task-name { min-width: 0; overflow-wrap: anywhere; }
-        .task-date { flex: 0 1 auto; max-width: 46%; font-size: 12px; color: var(--text-secondary); background: var(--bg-hover); padding: 5px 10px; border-radius: var(--radius-pill); line-height: 1.45; white-space: normal; overflow-wrap: anywhere; text-align: right; border: 1px solid color-mix(in srgb, currentColor 16%, transparent); font-weight: 760; }
+        .task-date { flex: 0 1 auto; max-width: 100%; font-size: 12px; color: var(--text-secondary); background: var(--bg-hover); padding: 5px 10px; border-radius: var(--radius-pill); line-height: 1.45; white-space: normal; overflow-wrap: anywhere; text-align: left; border: 1px solid color-mix(in srgb, currentColor 16%, transparent); font-weight: 760; }
         .task-desc { color: var(--text-secondary); margin: 0 0 12px; line-height: 1.55; font-size: 14px; word-break: break-word; }
         .task-meta { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
         .task-chip { display: inline-flex; align-items: center; max-width: 100%; min-height: 24px; padding: 3px 8px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); background: var(--bg-surface-alt); color: var(--text-secondary); font-size: 12px; font-weight: 740; line-height: 1.35; overflow-wrap: anywhere; }
@@ -648,7 +651,7 @@
         .task-group-header::after { content: ""; flex: 1; height: 1px; background: var(--border-light); }
         .progress-bar { height: 7px; background: var(--bg-hover); border-radius: var(--radius-pill); margin: 10px 0 12px; overflow: hidden; }
         .progress-fill { height: 100%; border-radius: var(--radius-pill); transition: width 0.5s ease; background: linear-gradient(90deg, var(--task-color), color-mix(in srgb, var(--task-color) 70%, var(--color-accent))); }
-        .task-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .task-footer { display: flex; justify-content: flex-end; align-items: center; gap: 10px; flex-wrap: wrap; margin-left: auto; }
         .status-indicator { display: inline-flex; align-items: center; min-height: 30px; padding: 5px 10px; border: 1px solid var(--border-light); border-radius: var(--radius-pill); background: color-mix(in srgb, var(--bg-surface-alt) 88%, var(--task-color)); font-size: 13px; font-weight: 760; color: var(--text-main); }
         .status-dot { width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; background-color: var(--task-color); box-shadow: 0 0 0 3px color-mix(in srgb, var(--task-color) 16%, transparent); }
         .status-time-left { margin-left: 5px; color: var(--text-secondary); }
@@ -679,10 +682,11 @@
         .task-item.dragging { opacity: 0.4; background: var(--bg-surface-alt); border: 2px dashed var(--color-primary); box-shadow: none; transform: scale(0.98); }
         .task-item.touch-dragging { background: var(--bg-surface); box-shadow: 0 10px 20px var(--shadow-heavy); z-index: 1000; opacity: 0.4; transform: scale(1.02);  border-left: 5px solid var(--color-primary);}
         .task-header { align-items: center; }
-        .subtask-input-wrapper { display: flex; gap: 8px; margin-bottom: 10px; }
+        .subtask-input-wrapper { display: flex; gap: 8px; margin-bottom: 0; }
         .btn-icon-small { background: var(--bg-hover); border: 1px solid var(--border-base); border-radius: var(--radius-control); cursor: pointer; color: var(--text-main); width: 40px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .btn-icon-small:hover { background: var(--color-primary); color: white; border-color: var(--color-primary); }
-        .subtask-preview-list { list-style: none; padding: 0; margin: 0 0 72px; max-height: 150px; overflow-y: auto; }
+        .subtask-preview-list { list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; }
+        .subtask-preview-list:not(:empty) { margin-top: 8px; }
         .subtask-preview-item span { flex: 1; min-width: 0; word-wrap: break-word; word-break: break-all; line-height: 1.4; cursor: text; transition: background 0.2s; padding: 2px 4px; border-radius: 4px; }
         .subtask-preview-item span:hover { background: var(--bg-active); }
         .subtask-delete-btn { background: none; border: none; color: var(--text-tertiary); cursor: pointer; padding: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
@@ -707,21 +711,25 @@
         .subtask-checkbox:hover { border-color: var(--color-success); background-color: var(--bg-hover); }
         .subtask-checkbox:checked { border-color: var(--color-success); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E"); background-size: 80%; background-position: center; background-repeat: no-repeat; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .modal { display: none; position: fixed; inset: 0; width: 100%; min-height: 100dvh; background-color: var(--bg-overlay); z-index: 1010; justify-content: center; align-items: center; padding: clamp(12px, 3vw, 28px); overflow-y: auto; overscroll-behavior: contain; }
-        .modal-content { background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-surface); width: min(760px, calc(100vw - 32px)); max-height: min(860px, calc(100dvh - 32px)); box-shadow: 0 24px 60px var(--shadow-heavy); animation: modalAppear 0.24s var(--motion-theme-ease); overflow: hidden; display: flex; flex-direction: column; }
+        .modal-content { background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-surface); width: min(800px, calc(100vw - 32px)); max-height: min(860px, calc(100dvh - 32px)); box-shadow: 0 24px 60px var(--shadow-heavy); animation: modalAppear 0.24s var(--motion-theme-ease); overflow: hidden; display: flex; flex-direction: column; }
         @keyframes modalAppear { from { opacity: 0; transform: translateY(12px) scale(0.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
         .modal-header { background: linear-gradient(135deg, var(--bg-surface-raised), var(--bg-surface)); color: var(--text-main); padding: 15px 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-light); }
         .modal-title { font-size: 18px; font-weight: 840; line-height: 1.25; }
         .close-btn { background: transparent; border: 1px solid transparent; color: var(--text-secondary); font-size: 20px; cursor: pointer; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-control); transition: background-color var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast), transform var(--motion-fast); }
         .close-btn:hover { background: var(--bg-hover); border-color: var(--border-light); color: var(--color-primary); }
         .modal-body { padding: 0; overflow: hidden; }
-        #taskForm { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 14px; max-height: calc(min(860px, calc(100dvh - 32px)) - 67px); padding: 16px 18px 0; overflow-y: auto; overscroll-behavior: contain; background: linear-gradient(180deg, var(--bg-surface), color-mix(in srgb, var(--bg-surface-alt) 46%, var(--bg-surface))); }
+        #taskForm { display: grid; grid-template-columns: 1fr; gap: 10px; max-height: calc(min(860px, calc(100dvh - 32px)) - 67px); padding: 14px 18px 0; overflow-y: auto; overscroll-behavior: contain; background: linear-gradient(180deg, var(--bg-surface), color-mix(in srgb, var(--bg-surface-alt) 46%, var(--bg-surface))); }
+        .form-panel { min-width: 0; display: grid; gap: 10px; align-content: start; }
+        .form-panel-primary { grid-template-columns: repeat(2, minmax(0, 1fr)); align-self: start; padding: 10px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: color-mix(in srgb, var(--bg-surface) 82%, var(--bg-surface-alt)); }
+        .form-panel-secondary { align-self: start; }
+        .form-panel .span-full { grid-column: 1 / -1; }
         .form-group { display: grid; gap: 7px; align-content: start; min-width: 0; margin-bottom: 0; }
         .form-group.span-full, .form-actions, .confirm-message, .confirm-details { grid-column: 1 / -1; }
         .form-group > label, .form-field > label { margin-bottom: 0; }
         .form-label-row { display: flex; align-items: baseline; gap: 8px; min-width: 0; flex-wrap: wrap; }
         .form-label-row label { margin: 0; flex: 0 0 auto; }
         .form-label-note { color: var(--text-tertiary); font-size: 12px; font-weight: 650; line-height: 1.35; }
-        .form-card { gap: 10px; padding: 12px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: color-mix(in srgb, var(--bg-surface-raised) 90%, var(--bg-surface-alt)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.56); }
+        .form-card { gap: 8px; padding: 10px 12px; border: 1px solid var(--border-light); border-radius: var(--radius-surface); background: color-mix(in srgb, var(--bg-surface-raised) 90%, var(--bg-surface-alt)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.56); }
         .form-section-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 0; }
         .form-section-header > label { margin: 0; min-width: 0; }
         .form-field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -995,20 +1003,24 @@
             .stat-value { font-size: 26px; }
             .container { border-radius: 0; }
             .main-content { padding-top: 12px; }
-            .task-item { padding: 13px; }
+            .task-item { padding: 0; }
             .task-item::before { width: 4px; }
             .task-selection { align-items: flex-start; border-right: 0; background: transparent; flex-basis: 30px; }
             .task-select-checkbox { margin-top: 0; }
-            .task-item-right { padding: 2px 0 0 12px; }
+            .task-item-right { padding: 14px 13px 13px 18px; }
+            .task-card-grid { grid-template-columns: 1fr; gap: 12px; }
+            .task-rail { flex-direction: column; align-items: stretch; gap: 10px; }
             .task-header { flex-direction: column; align-items: flex-start; }
             .task-title { width: 100%; }
             .task-date { max-width: 100%; margin-top: 5px; text-align: left; }
             .task-desc, .task-meta, .progress-bar, .subtasks-wrapper, .task-footer { margin-left: 0; padding-left: 0; }
-            .task-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .task-footer { flex-direction: column; align-items: stretch; gap: 10px; }
             .task-actions { align-self: flex-end; }
             .modal { padding: 10px; }
             .modal-content { width: 100%; max-height: calc(100dvh - 20px); }
             #taskForm { grid-template-columns: 1fr; gap: 13px; max-height: calc(100dvh - 85px); padding: 14px 14px 0; }
+            .form-panel-primary { grid-template-columns: 1fr; padding: 0; border: 0; background: transparent; }
+            .form-panel { gap: 13px; }
             .form-card { padding: 13px; gap: 14px; }
             .form-section-header { align-items: flex-start; }
             .form-field-grid, .datetime-group { grid-template-columns: 1fr; gap: 10px; }
@@ -1359,26 +1371,29 @@
         </div>
         <div class="modal-body">
             <form id="taskForm">
-                <div class="form-group span-full">
-                    <label data-i18n="form.taskName.label" for="taskName">任务名称 *</label>
-                    <input data-i18n-placeholder="form.taskName.placeholder" id="taskName" name="taskName" placeholder="输入任务名称" required type="text">
-                </div>
-                <div class="form-group span-full">
-                    <label data-i18n="form.description.label" for="taskDesc">任务描述 (可选)</label>
-                    <textarea data-i18n-placeholder="form.description.placeholder" id="taskDesc" placeholder="输入任务描述"></textarea>
-                </div>
-                <div class="form-group">
-                    <label data-i18n="form.project.label" for="taskProject">项目 (可选)</label>
-                    <input data-i18n-placeholder="form.project.placeholder" id="taskProject" name="taskProject" placeholder="例如：工作 / 个人" type="text" autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <div class="form-label-row">
-                        <label data-i18n="form.tags.label" for="taskTags">标签 (可选)</label>
-                        <span class="form-label-note" data-i18n="form.tags.hint">标签会参与搜索。</span>
+                <section class="form-panel form-panel-primary">
+                    <div class="form-group span-full">
+                        <label data-i18n="form.taskName.label" for="taskName">任务名称 *</label>
+                        <input data-i18n-placeholder="form.taskName.placeholder" id="taskName" name="taskName" placeholder="输入任务名称" required type="text">
                     </div>
-                    <input data-i18n-placeholder="form.tags.placeholder" id="taskTags" name="taskTags" placeholder="用逗号分隔标签" type="text" autocomplete="off">
-                </div>
-                <div class="form-group span-full form-card">
+                    <div class="form-group span-full">
+                        <label data-i18n="form.description.label" for="taskDesc">任务描述 (可选)</label>
+                        <textarea data-i18n-placeholder="form.description.placeholder" id="taskDesc" placeholder="输入任务描述"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="form.project.label" for="taskProject">项目 (可选)</label>
+                        <input data-i18n-placeholder="form.project.placeholder" id="taskProject" name="taskProject" placeholder="例如：工作 / 个人" type="text" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-label-row">
+                            <label data-i18n="form.tags.label" for="taskTags">标签 (可选)</label>
+                            <span class="form-label-note" data-i18n="form.tags.hint">标签会参与搜索。</span>
+                        </div>
+                        <input data-i18n-placeholder="form.tags.placeholder" id="taskTags" name="taskTags" placeholder="用逗号分隔标签" type="text" autocomplete="off">
+                    </div>
+                </section>
+                <section class="form-panel form-panel-secondary">
+                <div class="form-group form-card">
                     <div class="form-section-header">
                         <label data-i18n="form.dueDate.label" for="dueDate">截止日期</label>
                         <div class="checkbox-group">
@@ -1392,7 +1407,7 @@
                         <input class="time-input" id="dueTime" type="time" value="23:59">
                     </div>
                 </div>
-                <div class="form-group span-full form-card" id="reminderGroup">
+                <div class="form-group form-card" id="reminderGroup">
                     <div class="form-field-grid">
                         <div class="form-field">
                             <label data-i18n="form.reminder.label" for="reminderOffset">提醒设置</label>
@@ -1416,7 +1431,7 @@
                     </div>
                     <p class="form-hint" data-i18n="form.reminderRepeat.backgroundLimit">浏览器只会在应用打开或被唤醒时检查提醒；系统级后台提醒不能保证。</p>
                 </div>
-                <div class="form-group span-full form-card" id="repeatGroup">
+                <div class="form-group form-card" id="repeatGroup">
                     <div class="form-field">
                         <div class="form-label-row">
                             <label data-i18n="form.repeat.label" for="repeatType">重复任务</label>
@@ -1453,7 +1468,7 @@
                         <label data-i18n="form.repeat.pause" for="repeatPaused">暂停重复任务</label>
                     </div>
                 </div>
-                <div class="form-group span-full">
+                <div class="form-group form-card">
                     <label data-i18n="form.subtasks.label" for="subtaskInput">子任务 (可选)</label>
                     <div class="subtask-input-wrapper">
                         <input type="text" id="subtaskInput" data-i18n-placeholder="form.subtasks.placeholder" placeholder="添加子任务..." autocomplete="off">
@@ -1463,6 +1478,7 @@
                     </div>
                     <ul id="subtaskListPreview" class="subtask-preview-list"></ul>
                 </div>
+                </section>
                 <div class="form-actions">
                     <button class="btn btn-secondary" data-i18n="actions.cancel" id="cancelBtn" type="button">取消</button>
                     <button class="btn btn-primary" data-i18n="actions.addTask" id="submitBtn" type="submit">添加任务</button>
@@ -1512,42 +1528,48 @@
 <template id="task-template">
     <div class="task-item">
         <div class="task-item-right">
-            <div class="task-header">
-                <div class="task-title">
-                    <span class="task-name"></span>
-                    <svg class="icon icon-sm task-reminder-icon" role="img" aria-label="提醒已设置" style="display:none; color: var(--color-warning); margin-left: 6px; width: 14px; height: 14px;"><use href="#icon-bell"></use></svg>
+            <div class="task-card-grid">
+                <div class="task-main">
+                    <div class="task-header">
+                        <div class="task-title">
+                            <span class="task-name"></span>
+                            <svg class="icon icon-sm task-reminder-icon" role="img" aria-label="提醒已设置" style="display:none; color: var(--color-warning); margin-left: 6px; width: 14px; height: 14px;"><use href="#icon-bell"></use></svg>
+                        </div>
+                    </div>
+                    <div class="task-desc"></div>
+                    <div class="progress-bar" aria-hidden="true"><div class="progress-fill"></div></div>
                 </div>
-                <div class="task-date"></div>
-            </div>
-            <div class="task-desc"></div>
-            <div class="subtasks-list"></div>
-            <div class="progress-bar" aria-hidden="true"><div class="progress-fill"></div></div>
-            <div class="task-footer">
-                <div class="status-indicator">
-                    <div class="status-dot" aria-hidden="true"></div>
-                    <span class="status-text"></span> <span class="status-time-left"></span> </div>
-                <div class="task-actions">
-                    <button class="action-btn focus-btn" data-action="focus" title="加入今日计划">
-                        <svg class="icon"><use href="#icon-target"></use></svg>
-                    </button>
-                    <button class="action-btn complete-btn" data-action="toggle" title="标记完成">
-                        <svg class="icon"><use href="#icon-check"></use></svg>
-                    </button>
-                    <button class="action-btn snooze-btn" data-action="snooze" title="稍后提醒" hidden>
-                        <svg class="icon"><use href="#icon-bell-snooze"></use></svg>
-                    </button>
-                    <button class="action-btn skip-repeat-btn" data-action="skip-repeat" title="跳过本次" hidden>
-                        <svg class="icon"><use href="#icon-repeat"></use></svg>
-                    </button>
-                    <button class="action-btn archive-btn" data-action="archive" title="归档" hidden>
-                        <svg class="icon"><use href="#icon-archive"></use></svg>
-                    </button>
-                    <button class="action-btn edit-btn" data-action="edit" title="编辑">
-                        <svg class="icon"><use href="#icon-edit"></use></svg>
-                    </button>
-                    <button class="action-btn delete-btn" data-action="delete" title="删除">
-                        <svg class="icon"><use href="#icon-trash"></use></svg>
-                    </button>
+                <div class="task-rail">
+                    <div class="task-date"></div>
+                    <div class="task-footer">
+                        <div class="status-indicator">
+                            <div class="status-dot" aria-hidden="true"></div>
+                            <span class="status-text"></span> <span class="status-time-left"></span>
+                        </div>
+                        <div class="task-actions">
+                            <button class="action-btn focus-btn" data-action="focus" title="加入今日计划">
+                                <svg class="icon"><use href="#icon-target"></use></svg>
+                            </button>
+                            <button class="action-btn complete-btn" data-action="toggle" title="标记完成">
+                                <svg class="icon"><use href="#icon-check"></use></svg>
+                            </button>
+                            <button class="action-btn snooze-btn" data-action="snooze" title="稍后提醒" hidden>
+                                <svg class="icon"><use href="#icon-bell-snooze"></use></svg>
+                            </button>
+                            <button class="action-btn skip-repeat-btn" data-action="skip-repeat" title="跳过本次" hidden>
+                                <svg class="icon"><use href="#icon-repeat"></use></svg>
+                            </button>
+                            <button class="action-btn archive-btn" data-action="archive" title="归档" hidden>
+                                <svg class="icon"><use href="#icon-archive"></use></svg>
+                            </button>
+                            <button class="action-btn edit-btn" data-action="edit" title="编辑">
+                                <svg class="icon"><use href="#icon-edit"></use></svg>
+                            </button>
+                            <button class="action-btn delete-btn" data-action="delete" title="删除">
+                                <svg class="icon"><use href="#icon-trash"></use></svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
