@@ -359,8 +359,12 @@
             grid-column: 1;
             grid-row: 1;
             min-width: 0;
+            display: grid;
+            grid-template-columns: minmax(248px, 0.42fr) minmax(0, 1fr);
+            gap: 10px;
+            align-items: stretch;
         }
-        .tools-drawer .quick-add-bar { margin: 0 0 8px; }
+        .tools-drawer .quick-add-bar { margin: 0; }
         .tools-drawer .controls-bar { margin: 0; }
         .controls-bar {
             position: relative;
@@ -404,10 +408,24 @@
             box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.62);
             backdrop-filter: blur(14px);
         }
+        .tools-drawer .quick-add-bar {
+            grid-template-columns: minmax(0, 1fr);
+            grid-auto-rows: min-content;
+            align-content: stretch;
+            gap: 9px;
+            min-height: 100%;
+            padding: 12px;
+            background: linear-gradient(145deg, color-mix(in srgb, var(--color-primary) 9%, var(--controls-bg)), color-mix(in srgb, var(--color-accent) 7%, var(--controls-bg)));
+            border-color: color-mix(in srgb, var(--color-primary) 18%, var(--border-light));
+        }
         .quick-add-input-wrap { position: relative; min-width: 0; }
         .quick-add-input-wrap .icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); pointer-events: none; }
         .quick-add-input { min-height: 42px; padding-left: 40px; padding-right: 12px; }
         .quick-add-submit { min-width: 88px; }
+        .tools-drawer .quick-add-submit {
+            width: 100%;
+            min-height: 42px;
+        }
         .saved-views-bar, .focus-mode-bar, .batch-toolbar {
             position: relative;
             z-index: 620;
@@ -886,6 +904,9 @@
         }
         @media (max-width: 900px) and (min-width: 701px) {
             body { padding: 18px; }
+            .tools-drawer-content { grid-template-columns: 1fr; }
+            .tools-drawer .quick-add-bar { grid-template-columns: minmax(0, 1fr) auto; min-height: 0; padding: 9px; }
+            .tools-drawer .quick-add-submit { width: auto; }
             .controls-bar { gap: 8px; }
             .toolbar-main-row .search-box { min-width: 200px; }
             .controls-bar .project-filter { flex-basis: 128px; max-width: 170px; }
@@ -897,6 +918,9 @@
         }
         @media (max-width: 700px) and (min-width: 641px) {
             body { padding: 18px; }
+            .tools-drawer-content { grid-template-columns: 1fr; }
+            .tools-drawer .quick-add-bar { grid-template-columns: minmax(0, 1fr) auto; min-height: 0; padding: 9px; }
+            .tools-drawer .quick-add-submit { width: auto; }
             .controls-bar { gap: 8px; }
             .toolbar-main-row .search-box { min-width: 0; }
             .controls-bar .project-filter { flex-basis: 128px; max-width: 170px; }
@@ -907,6 +931,9 @@
             .view-tab { min-width: 0; padding-inline: 8px; }
         }
         @media (max-width: 640px) and (min-width: 601px) {
+            .tools-drawer-content { grid-template-columns: 1fr; }
+            .tools-drawer .quick-add-bar { grid-template-columns: minmax(0, 1fr) auto; min-height: 0; padding: 8px; }
+            .tools-drawer .quick-add-submit { width: auto; }
             .controls-bar { padding: 8px; gap: 8px; }
             .toolbar-main-row, .toolbar-filter-row { display: flex; flex-wrap: wrap; }
             .view-switcher { flex: 1 0 100%; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); width: 100%; }
@@ -933,8 +960,10 @@
             .focus-toggle-label { display: none; }
             h1 { font-size: 19px; }
             .menu { top: calc(100% + 8px); right: 0; }
-            .quick-add-bar { grid-template-columns: minmax(0, 1fr) auto; padding: 8px; gap: 8px; }
+            .tools-drawer-content { grid-template-columns: 1fr; }
+            .quick-add-bar, .tools-drawer .quick-add-bar { grid-template-columns: minmax(0, 1fr) auto; min-height: 0; padding: 8px; gap: 8px; }
             .quick-add-submit { min-width: 68px; padding-inline: 12px; }
+            .tools-drawer .quick-add-submit { width: auto; }
             .saved-views-bar { margin: -2px 0 8px; }
             .focus-mode-bar, .batch-toolbar { align-items: stretch; flex-direction: column; gap: 8px; padding: 8px; }
             .saved-views-list { width: 100%; }
