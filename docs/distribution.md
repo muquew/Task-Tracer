@@ -1,4 +1,4 @@
-# Task Tracer 4.12.0 — static distribution
+# Task Tracer 4.13.0 — static distribution
 
 This archive contains the browser application, deployment headers, icons, translations, third-party notices and an SHA-256 integrity manifest. It does not contain an account service, cloud sync or a payment service.
 
@@ -10,7 +10,9 @@ Use **Add task** in the top bar to open Quick capture. Review the parsed deadlin
 
 List, Calendar, Timeline and Statistics are always available in the desktop sidebar and the mobile bottom navigation, including when the search and filter tools are collapsed. Open **Settings & data** for five category panels: **Appearance & language**, **Backups & transfer**, **Reminders & installation**, **Task maintenance**, and **Help & about**. Only the selected panel is shown, and the current category is retained while the page stays open. Returning to a task view preserves the current filters and any unfinished Quick capture text. Archive completed and Delete completed are in **Task maintenance** and act on completed, unarchived tasks across the workspace; they do not use the current project or search filter. The eligible workspace-wide count is shown before acting; both controls are disabled when it is zero.
 
-Language and appearance controls are in **Settings & data → Appearance & language**. Choose **简体中文** or **English** for the interface, and **Light**, **Dark** or **System** for appearance. Choose an independent **Accent colour**: **Iris**, **Ocean**, **Pine** or **Berry**. System follows that window’s operating-system color preference; changing appearance or accent keeps your current input and task data. These local preferences do not translate or rewrite your task names, descriptions, projects or tags.
+Open **Settings & data → Appearance & language** for four complete **Workspace theme** previews: **Iris**, **Ocean**, **Pine** and **Berry**. The native radio choices preview the sidebar, canvas, header and content; each theme also supplies its own fields, raised menus, text, controls and selected states in light and dark appearance. Appearance (**Light**, **Dark**, **System**) and interface language (**简体中文**, **English**) remain separate native dropdowns. System follows the operating system’s colour preference. Changing a theme preserves current input, tasks and selection without rewriting user content.
+
+Theme preferences stay in this browser profile. Existing Iris/Ocean/Pine/Berry choices carry forward to the matching workspace themes; task JSON backups still exclude app preferences. Themes are included in the local application, with the same initial-cache and browser limits for offline use described below.
 
 Mark a task complete with its leading completion control. Open its **Task actions** menu for available actions such as editing, adding it to today’s plan, snoozing, skipping a repeat occurrence, archiving or deleting. Actions that do not apply to a task are unavailable. The top-bar Undo action restores the latest eligible task change; concurrent newer work can make an old Undo unavailable.
 

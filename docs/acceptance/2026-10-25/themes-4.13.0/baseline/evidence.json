@@ -1,0 +1,1841 @@
+{
+  "status": "accepted-all-eight-manually-viewed",
+  "at": "2026-10-25T22:14:26.415958+08:00",
+  "index_sha256": "4e251ecbd557fede104a8707fe68ddfdf510df4474c65f19c52f010a6ac6c929",
+  "fixture": "six real editor-created synthetic tasks, one completed; normal CSP and motion; no task database injection",
+  "errors": [],
+  "records": [
+    {
+      "file": "01-iris-light-list.png",
+      "sha256": "90523c31a272e8c45830cececa2914b2a610e5d3ce1805cebbdf8a6ca7f15738",
+      "language": "zh-CN",
+      "theme": "light",
+      "accent": "iris",
+      "metrics": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "scrollY": 0,
+        "selectors": [
+          {
+            "selector": "body",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1000
+            },
+            "background": "rgb(244, 245, 249)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-sidebar",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 210,
+              "height": 1000
+            },
+            "background": "rgb(240, 242, 248)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "24px 16px 18px",
+            "gap": "normal"
+          },
+          {
+            "selector": "header.workspace-topbar",
+            "visible": true,
+            "rect": {
+              "x": 210,
+              "y": 0,
+              "width": 1230,
+              "height": 66
+            },
+            "background": "rgba(250, 251, 255, 0.9)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "10px 32px",
+            "gap": "12px"
+          },
+          {
+            "selector": "#mainContent",
+            "visible": true,
+            "rect": {
+              "x": 210,
+              "y": 66,
+              "width": 1230,
+              "height": 792.390625
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "30px 32px 24px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-page-header",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 96,
+              "width": 1166,
+              "height": 76
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "18px"
+          },
+          {
+            "selector": ".workspace-content-grid",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 194,
+              "width": 1166,
+              "height": 640.390625
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "24px"
+          },
+          {
+            "selector": ".workspace-task-surface",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 194,
+              "width": 862,
+              "height": 596.390625
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "rgba(40, 52, 88, 0.043) 0px 4px 18px 0px, rgba(40, 52, 88, 0.024) 0px 1px 3px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#toolsDrawer",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 194,
+              "width": 862,
+              "height": 67
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "12px 16px",
+            "gap": "8px"
+          },
+          {
+            "selector": "#taskList",
+            "visible": true,
+            "rect": {
+              "x": 260,
+              "y": 261,
+              "width": 826,
+              "height": 529.390625
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#workspaceOverview",
+            "visible": true,
+            "rect": {
+              "x": 1128,
+              "y": 194,
+              "width": 280,
+              "height": 626
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#settingsWorkspace",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#settingsAppearance",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".modal-content",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "rgba(17, 25, 49, 0.22) 0px 24px 70px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        ]
+      },
+      "image_measurements": {
+        "exact_white_fraction": 0.4007,
+        "pale_neutral_fraction": 0.9575,
+        "definition": "Pale neutral = each RGB channel >=235 and max-min<=18; descriptive image measurement, not usability score."
+      }
+    },
+    {
+      "file": "02-ocean-light-list.png",
+      "sha256": "594753364ef254d5c4ba60ec475d0be01c35c74f07e956d3bb3d965178a01823",
+      "language": "zh-CN",
+      "theme": "light",
+      "accent": "ocean",
+      "metrics": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "scrollY": 0,
+        "selectors": [
+          {
+            "selector": "body",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1000
+            },
+            "background": "rgb(244, 245, 249)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-sidebar",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 210,
+              "height": 1000
+            },
+            "background": "rgb(240, 242, 248)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "24px 16px 18px",
+            "gap": "normal"
+          },
+          {
+            "selector": "header.workspace-topbar",
+            "visible": true,
+            "rect": {
+              "x": 210,
+              "y": 0,
+              "width": 1230,
+              "height": 66
+            },
+            "background": "rgba(250, 251, 255, 0.9)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "10px 32px",
+            "gap": "12px"
+          },
+          {
+            "selector": "#mainContent",
+            "visible": true,
+            "rect": {
+              "x": 210,
+              "y": 66,
+              "width": 1230,
+              "height": 792.390625
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "30px 32px 24px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-page-header",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 96,
+              "width": 1166,
+              "height": 76
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "18px"
+          },
+          {
+            "selector": ".workspace-content-grid",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 194,
+              "width": 1166,
+              "height": 640.390625
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "24px"
+          },
+          {
+            "selector": ".workspace-task-surface",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 194,
+              "width": 862,
+              "height": 596.390625
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "rgba(40, 52, 88, 0.043) 0px 4px 18px 0px, rgba(40, 52, 88, 0.024) 0px 1px 3px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#toolsDrawer",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 194,
+              "width": 862,
+              "height": 67
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "12px 16px",
+            "gap": "8px"
+          },
+          {
+            "selector": "#taskList",
+            "visible": true,
+            "rect": {
+              "x": 260,
+              "y": 261,
+              "width": 826,
+              "height": 529.390625
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#workspaceOverview",
+            "visible": true,
+            "rect": {
+              "x": 1128,
+              "y": 194,
+              "width": 280,
+              "height": 626
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#settingsWorkspace",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#settingsAppearance",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".modal-content",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "rgba(17, 25, 49, 0.22) 0px 24px 70px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        ]
+      },
+      "image_measurements": {
+        "exact_white_fraction": 0.4007,
+        "pale_neutral_fraction": 0.9478,
+        "definition": "Pale neutral = each RGB channel >=235 and max-min<=18; descriptive image measurement, not usability score."
+      }
+    },
+    {
+      "file": "03-ocean-light-stats.png",
+      "sha256": "d9d0c2a8a4fb24e14f212700a64dd3ad39ff7350deb031f793b7952039f9584f",
+      "language": "zh-CN",
+      "theme": "light",
+      "accent": "ocean",
+      "metrics": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "scrollY": 0,
+        "selectors": [
+          {
+            "selector": "body",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1116.8125
+            },
+            "background": "rgb(244, 245, 249)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-sidebar",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 210,
+              "height": 1000
+            },
+            "background": "rgb(240, 242, 248)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "24px 16px 18px",
+            "gap": "normal"
+          },
+          {
+            "selector": "header.workspace-topbar",
+            "visible": true,
+            "rect": {
+              "x": 210,
+              "y": 0,
+              "width": 1230,
+              "height": 66
+            },
+            "background": "rgba(250, 251, 255, 0.9)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "10px 32px",
+            "gap": "12px"
+          },
+          {
+            "selector": "#mainContent",
+            "visible": true,
+            "rect": {
+              "x": 210,
+              "y": 66,
+              "width": 1230,
+              "height": 1050.8125
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "30px 32px 24px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-page-header",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 96,
+              "width": 1166,
+              "height": 61.5
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "18px"
+          },
+          {
+            "selector": ".workspace-content-grid",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 179.5,
+              "width": 1166,
+              "height": 913.3125
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "24px"
+          },
+          {
+            "selector": ".workspace-task-surface",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 179.5,
+              "width": 1166,
+              "height": 913.3125
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "rgba(40, 52, 88, 0.043) 0px 4px 18px 0px, rgba(40, 52, 88, 0.024) 0px 1px 3px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#toolsDrawer",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 179.5,
+              "width": 1166,
+              "height": 67
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "12px 16px",
+            "gap": "8px"
+          },
+          {
+            "selector": "#taskList",
+            "visible": true,
+            "rect": {
+              "x": 260,
+              "y": 246.5,
+              "width": 1130,
+              "height": 846.3125
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#workspaceOverview",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#settingsWorkspace",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#settingsAppearance",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".modal-content",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "rgba(17, 25, 49, 0.22) 0px 24px 70px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        ]
+      },
+      "image_measurements": {
+        "exact_white_fraction": 0.4928,
+        "pale_neutral_fraction": 0.9479,
+        "definition": "Pale neutral = each RGB channel >=235 and max-min<=18; descriptive image measurement, not usability score."
+      }
+    },
+    {
+      "file": "04-ocean-light-appearance.png",
+      "sha256": "f1dba511908083d9603ed02adf0c3556205c948eafce653539d1dac5cf9f865a",
+      "language": "zh-CN",
+      "theme": "light",
+      "accent": "ocean",
+      "metrics": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "scrollY": 0,
+        "selectors": [
+          {
+            "selector": "body",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1000
+            },
+            "background": "rgb(244, 245, 249)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-sidebar",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 210,
+              "height": 1000
+            },
+            "background": "rgb(240, 242, 248)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "24px 16px 18px",
+            "gap": "normal"
+          },
+          {
+            "selector": "header.workspace-topbar",
+            "visible": true,
+            "rect": {
+              "x": 210,
+              "y": 0,
+              "width": 1230,
+              "height": 66
+            },
+            "background": "rgba(250, 251, 255, 0.9)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "10px 32px",
+            "gap": "12px"
+          },
+          {
+            "selector": "#mainContent",
+            "visible": true,
+            "rect": {
+              "x": 210,
+              "y": 66,
+              "width": 1230,
+              "height": 479.359375
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "30px 32px 24px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-page-header",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "18px"
+          },
+          {
+            "selector": ".workspace-content-grid",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "24px"
+          },
+          {
+            "selector": ".workspace-task-surface",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "rgba(40, 52, 88, 0.043) 0px 4px 18px 0px, rgba(40, 52, 88, 0.024) 0px 1px 3px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#toolsDrawer",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "12px 16px",
+            "gap": "8px"
+          },
+          {
+            "selector": "#taskList",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#workspaceOverview",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#settingsWorkspace",
+            "visible": true,
+            "rect": {
+              "x": 275,
+              "y": 96,
+              "width": 1100,
+              "height": 425.359375
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#settingsAppearance",
+            "visible": true,
+            "rect": {
+              "x": 463,
+              "y": 184.796875,
+              "width": 912,
+              "height": 336.5625
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".modal-content",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "rgba(17, 25, 49, 0.22) 0px 24px 70px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        ]
+      },
+      "image_measurements": {
+        "exact_white_fraction": 0.1611,
+        "pale_neutral_fraction": 0.9629,
+        "definition": "Pale neutral = each RGB channel >=235 and max-min<=18; descriptive image measurement, not usability score."
+      }
+    },
+    {
+      "file": "05-ocean-light-editor.png",
+      "sha256": "5584dee28bb47848593e3564a7ddbda3b46f55718eb92baa489042a99c13974b",
+      "language": "zh-CN",
+      "theme": "light",
+      "accent": "ocean",
+      "metrics": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "scrollY": 0,
+        "selectors": [
+          {
+            "selector": "body",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1000
+            },
+            "background": "rgb(244, 245, 249)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-sidebar",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 210,
+              "height": 1000
+            },
+            "background": "rgb(240, 242, 248)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "24px 16px 18px",
+            "gap": "normal"
+          },
+          {
+            "selector": "header.workspace-topbar",
+            "visible": true,
+            "rect": {
+              "x": 210,
+              "y": 0,
+              "width": 1230,
+              "height": 66
+            },
+            "background": "rgba(250, 251, 255, 0.9)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "10px 32px",
+            "gap": "12px"
+          },
+          {
+            "selector": "#mainContent",
+            "visible": true,
+            "rect": {
+              "x": 210,
+              "y": 66,
+              "width": 1230,
+              "height": 792.390625
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "30px 32px 24px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-page-header",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 96,
+              "width": 1166,
+              "height": 76
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "18px"
+          },
+          {
+            "selector": ".workspace-content-grid",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 194,
+              "width": 1166,
+              "height": 640.390625
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "24px"
+          },
+          {
+            "selector": ".workspace-task-surface",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 194,
+              "width": 862,
+              "height": 596.390625
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "rgba(40, 52, 88, 0.043) 0px 4px 18px 0px, rgba(40, 52, 88, 0.024) 0px 1px 3px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#toolsDrawer",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 194,
+              "width": 862,
+              "height": 67
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "12px 16px",
+            "gap": "8px"
+          },
+          {
+            "selector": "#taskList",
+            "visible": true,
+            "rect": {
+              "x": 260,
+              "y": 261,
+              "width": 826,
+              "height": 529.390625
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#workspaceOverview",
+            "visible": true,
+            "rect": {
+              "x": 1128,
+              "y": 194,
+              "width": 280,
+              "height": 626
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#settingsWorkspace",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#settingsAppearance",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".modal-content",
+            "visible": true,
+            "rect": {
+              "x": 350,
+              "y": 70,
+              "width": 740,
+              "height": 860
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "rgba(17, 25, 49, 0.22) 0px 24px 70px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        ]
+      },
+      "image_measurements": {
+        "exact_white_fraction": 0.365,
+        "pale_neutral_fraction": 0.4185,
+        "definition": "Pale neutral = each RGB channel >=235 and max-min<=18; descriptive image measurement, not usability score."
+      }
+    },
+    {
+      "file": "06-ocean-light-mobile-list.png",
+      "sha256": "94bee8e348fd15f91207dbfbd764fb672c13862c17954a7d5b912e0534391622",
+      "language": "zh-CN",
+      "theme": "light",
+      "accent": "ocean",
+      "metrics": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scrollY": 0,
+        "selectors": [
+          {
+            "selector": "body",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 390,
+              "height": 1085.78125
+            },
+            "background": "rgb(244, 245, 249)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-sidebar",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgb(240, 242, 248)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "rgba(33, 42, 74, 0.16) 12px 0px 36px 0px",
+            "padding": "24px 16px 18px",
+            "gap": "normal"
+          },
+          {
+            "selector": "header.workspace-topbar",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 390,
+              "height": 60
+            },
+            "background": "rgba(250, 251, 255, 0.9)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "8px 14px",
+            "gap": "8px"
+          },
+          {
+            "selector": "#mainContent",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 60,
+              "width": 390,
+              "height": 961.78125
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "20px 16px 16px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-page-header",
+            "visible": true,
+            "rect": {
+              "x": 16,
+              "y": 80,
+              "width": 358,
+              "height": 30
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "12px"
+          },
+          {
+            "selector": ".workspace-content-grid",
+            "visible": true,
+            "rect": {
+              "x": 16,
+              "y": 192,
+              "width": 358,
+              "height": 813.78125
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "24px"
+          },
+          {
+            "selector": ".workspace-task-surface",
+            "visible": true,
+            "rect": {
+              "x": 16,
+              "y": 192,
+              "width": 358,
+              "height": 779.28125
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "rgba(40, 52, 88, 0.043) 0px 4px 18px 0px, rgba(40, 52, 88, 0.024) 0px 1px 3px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#toolsDrawer",
+            "visible": true,
+            "rect": {
+              "x": 16,
+              "y": 192,
+              "width": 358,
+              "height": 99
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "9px 12px",
+            "gap": "8px"
+          },
+          {
+            "selector": "#taskList",
+            "visible": true,
+            "rect": {
+              "x": 28,
+              "y": 291,
+              "width": 334,
+              "height": 680.28125
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#workspaceOverview",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "0px"
+          },
+          {
+            "selector": "#settingsWorkspace",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#settingsAppearance",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".modal-content",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "rgba(17, 25, 49, 0.22) 0px 24px 70px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        ]
+      },
+      "image_measurements": {
+        "exact_white_fraction": 0.5228,
+        "pale_neutral_fraction": 0.8599,
+        "definition": "Pale neutral = each RGB channel >=235 and max-min<=18; descriptive image measurement, not usability score."
+      }
+    },
+    {
+      "file": "07-ocean-light-mobile-appearance.png",
+      "sha256": "e5c7cdcc0818a851395945815472c304348164fb0f1a0998fe68557b6535ea76",
+      "language": "zh-CN",
+      "theme": "light",
+      "accent": "ocean",
+      "metrics": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scrollY": 0,
+        "selectors": [
+          {
+            "selector": "body",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 390,
+              "height": 844
+            },
+            "background": "rgb(244, 245, 249)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-sidebar",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgb(240, 242, 248)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "rgba(33, 42, 74, 0.16) 12px 0px 36px 0px",
+            "padding": "24px 16px 18px",
+            "gap": "normal"
+          },
+          {
+            "selector": "header.workspace-topbar",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 390,
+              "height": 60
+            },
+            "background": "rgba(250, 251, 255, 0.9)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "8px 14px",
+            "gap": "8px"
+          },
+          {
+            "selector": "#mainContent",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 60,
+              "width": 390,
+              "height": 619.109375
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "20px 16px 16px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-page-header",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "12px"
+          },
+          {
+            "selector": ".workspace-content-grid",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "24px"
+          },
+          {
+            "selector": ".workspace-task-surface",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "rgba(40, 52, 88, 0.043) 0px 4px 18px 0px, rgba(40, 52, 88, 0.024) 0px 1px 3px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#toolsDrawer",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "9px 12px",
+            "gap": "8px"
+          },
+          {
+            "selector": "#taskList",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#workspaceOverview",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "0px"
+          },
+          {
+            "selector": "#settingsWorkspace",
+            "visible": true,
+            "rect": {
+              "x": 16,
+              "y": 80,
+              "width": 358,
+              "height": 583.109375
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#settingsAppearance",
+            "visible": true,
+            "rect": {
+              "x": 16,
+              "y": 212.9375,
+              "width": 358,
+              "height": 450.171875
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".modal-content",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(38, 48, 71)",
+            "border": "0px none rgb(38, 48, 71)",
+            "boxShadow": "rgba(17, 25, 49, 0.22) 0px 24px 70px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        ]
+      },
+      "image_measurements": {
+        "exact_white_fraction": 0.392,
+        "pale_neutral_fraction": 0.9269,
+        "definition": "Pale neutral = each RGB channel >=235 and max-min<=18; descriptive image measurement, not usability score."
+      }
+    },
+    {
+      "file": "08-ocean-dark-list.png",
+      "sha256": "e9c93b3f9304e5dfa26c72dc90556a986026c7ab58552d14e8753467d63d1b70",
+      "language": "zh-CN",
+      "theme": "dark",
+      "accent": "ocean",
+      "metrics": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "scrollY": 0,
+        "selectors": [
+          {
+            "selector": "body",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1000
+            },
+            "background": "rgb(21, 25, 37)",
+            "color": "rgb(237, 240, 251)",
+            "border": "0px none rgb(237, 240, 251)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-sidebar",
+            "visible": true,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 210,
+              "height": 1000
+            },
+            "background": "rgb(29, 34, 50)",
+            "color": "rgb(237, 240, 251)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "24px 16px 18px",
+            "gap": "normal"
+          },
+          {
+            "selector": "header.workspace-topbar",
+            "visible": true,
+            "rect": {
+              "x": 210,
+              "y": 0,
+              "width": 1230,
+              "height": 66
+            },
+            "background": "rgba(25, 31, 46, 0.9)",
+            "color": "rgb(237, 240, 251)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "10px 32px",
+            "gap": "12px"
+          },
+          {
+            "selector": "#mainContent",
+            "visible": true,
+            "rect": {
+              "x": 210,
+              "y": 66,
+              "width": 1230,
+              "height": 792.390625
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(237, 240, 251)",
+            "border": "0px none rgb(237, 240, 251)",
+            "boxShadow": "none",
+            "padding": "30px 32px 24px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".workspace-page-header",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 96,
+              "width": 1166,
+              "height": 76
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(237, 240, 251)",
+            "border": "0px none rgb(237, 240, 251)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "18px"
+          },
+          {
+            "selector": ".workspace-content-grid",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 194,
+              "width": 1166,
+              "height": 640.390625
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(237, 240, 251)",
+            "border": "0px none rgb(237, 240, 251)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "24px"
+          },
+          {
+            "selector": ".workspace-task-surface",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 194,
+              "width": 862,
+              "height": 596.390625
+            },
+            "background": "rgb(35, 43, 60)",
+            "color": "rgb(237, 240, 251)",
+            "border": "0px none rgb(237, 240, 251)",
+            "boxShadow": "rgba(0, 0, 0, 0.1) 0px 4px 18px 0px, rgba(0, 0, 0, 0.08) 0px 1px 3px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#toolsDrawer",
+            "visible": true,
+            "rect": {
+              "x": 242,
+              "y": 194,
+              "width": 862,
+              "height": 67
+            },
+            "background": "rgb(35, 43, 60)",
+            "color": "rgb(237, 240, 251)",
+            "border": "",
+            "boxShadow": "none",
+            "padding": "12px 16px",
+            "gap": "8px"
+          },
+          {
+            "selector": "#taskList",
+            "visible": true,
+            "rect": {
+              "x": 260,
+              "y": 261,
+              "width": 826,
+              "height": 529.390625
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(237, 240, 251)",
+            "border": "0px none rgb(237, 240, 251)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#workspaceOverview",
+            "visible": true,
+            "rect": {
+              "x": 1128,
+              "y": 194,
+              "width": 280,
+              "height": 626
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(237, 240, 251)",
+            "border": "0px none rgb(237, 240, 251)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#settingsWorkspace",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(237, 240, 251)",
+            "border": "0px none rgb(237, 240, 251)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": "#settingsAppearance",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(237, 240, 251)",
+            "border": "0px none rgb(237, 240, 251)",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          {
+            "selector": ".modal-content",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "background": "rgb(45, 55, 76)",
+            "color": "rgb(237, 240, 251)",
+            "border": "0px none rgb(237, 240, 251)",
+            "boxShadow": "rgba(0, 0, 0, 0.5) 0px 24px 70px 0px",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        ]
+      },
+      "image_measurements": {
+        "exact_white_fraction": 0.0,
+        "pale_neutral_fraction": 0.0037,
+        "definition": "Pale neutral = each RGB channel >=235 and max-min<=18; descriptive image measurement, not usability score."
+      }
+    }
+  ]
+}

@@ -911,12 +911,12 @@
     "statsRangeHint": "统计按项目和搜索范围汇总，不使用任务状态下拉筛选。"
   },
   "craft": {
-    "accentLabel": "强调色",
-    "accentDescription": "主要按钮、选中项和键盘焦点将使用此颜色。",
-    "accentIris": "鸢尾紫",
-    "accentOcean": "海湾蓝",
-    "accentPine": "松柏绿",
-    "accentBerry": "莓果红",
+    "accentLabel": "工作区主题",
+    "accentDescription": "同步改变侧栏、背景、面板和选中状态，可搭配浅色或深色外观。",
+    "accentIris": "雾紫",
+    "accentOcean": "海湾",
+    "accentPine": "松林",
+    "accentBerry": "莓暮",
     "batchMore": "更多操作",
     "batchMoveProject": "移动到项目",
     "batchMoveTitle": "移动选中的任务",
@@ -938,7 +938,12 @@
     "deleteTaskTitle": "删除任务？",
     "deleteTaskMessage": "删除“{task}”？可以撤销此次删除。",
     "snoozeDeliveryHint": "提醒需要浏览器通知权限，且依赖应用打开或被浏览器唤醒；无法保证关闭应用后的通知。",
-    "returnToStats": "返回统计"
+    "returnToStats": "返回统计",
+    "themeChooser": "选择工作区主题",
+    "themeIrisDescription": "冷紫底面，深墨导航",
+    "themeOceanDescription": "蓝灰底面，海湾导航",
+    "themePineDescription": "浅绿底面，松林导航",
+    "themeBerryDescription": "灰粉底面，莓色导航"
   },
   "statsInsights": {
     "workloadTitle": "待处理",

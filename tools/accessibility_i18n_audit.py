@@ -139,12 +139,26 @@ def run_axe(page: Page, axe_source: str, label: str) -> None:
 
 
 def assert_focus_visible(page: Page, selector: str, label: str) -> None:
-    page.locator(selector).focus()
-    expect(page.locator(selector)).to_be_focused()
+    control = page.locator(selector)
+    control.focus()
+    if control.evaluate('node => node.matches("input[type=radio][name=workspaceTheme]") && Number(getComputedStyle(node).opacity) === 0'):
+        control.press('Tab')
+        page.keyboard.press('Shift+Tab')
+    expect(control).to_be_focused()
     visible = page.evaluate(
         """() => {
             const el = document.activeElement;
             const style = getComputedStyle(el);
+            if (el.matches('input[type=radio][name=workspaceTheme]') && Number(style.opacity) === 0) {
+                return el.matches(':focus-visible') && [...el.labels].some(label => {
+                    const paint = getComputedStyle(label);
+                    const box = label.getBoundingClientRect();
+                    return !label.closest('[hidden],[inert],[aria-hidden="true"]')
+                        && paint.display !== 'none' && paint.visibility !== 'hidden' && Number(paint.opacity) > 0
+                        && box.width > 0 && box.height > 0
+                        && Number.parseFloat(paint.outlineWidth || '0') > 0 && paint.outlineStyle !== 'none';
+                });
+            }
             const outline = Number.parseFloat(style.outlineWidth || '0');
             const boxShadow = style.boxShadow && style.boxShadow !== 'none';
             return outline > 0 || boxShadow;
@@ -172,6 +186,7 @@ def assert_focus_baseline(page: Page, label: str) -> None:
     ]
     if page.locator('#settingsWorkspace').is_visible():
         selectors = ['#settingsBackBtn', '#themeToggleBtn', '#languageSelect',
+                     'input[type="radio"][name="workspaceTheme"]:checked',
                      '#backupBtn', '#importBtn', '#recoveryBtn', '#storageHealthBtn',
                      '#notificationToggleBtn', '#archiveCompletedBtn', '#clearCompletedBtn', '#helpMenuBtn']
     for selector in selectors:
@@ -358,6 +373,45 @@ def audit_page_state(page: Page, axe_source: str, label: str) -> None:
     run_axe(page, axe_source, label)
     assert_focus_baseline(page, label)
     assert_layout(page, label)
+
+
+def assert_workspace_theme_gallery(page: Page) -> None:
+    choices = page.locator('#workspaceThemeChoices')
+    expect(choices).to_be_visible()
+    expect(choices).to_have_role('group')
+    expect(choices.locator('legend')).to_be_visible()
+    radios = choices.locator('input[type="radio"][name="workspaceTheme"]')
+    expect(radios).to_have_count(4)
+    checked = choices.locator('input[type="radio"][name="workspaceTheme"]:checked')
+    expect(checked).to_have_count(1)
+    expect(checked).to_have_value(page.locator('html').get_attribute('data-accent'))
+    for radio in radios.all():
+        expect(radio).to_be_visible()
+        expect(radio).to_be_enabled()
+        expect(radio).to_have_role('radio')
+        assert radio.evaluate('node => [...node.labels].some(label => label.textContent.trim())'), 'Workspace theme radio has no real label'
+    expect(page.locator('#accentSelect')).to_be_hidden()
+
+
+def audit_workspace_navigation(page: Page, axe_source: str, label: str) -> None:
+    """Audit the real coloured sidebar, including its mobile drawer state."""
+    before = stored(page)
+    sidebar = page.locator('#workspaceSidebar')
+    toggle = page.locator('#workspaceNavToggle')
+    mobile = toggle.is_visible()
+    was_open = mobile and toggle.get_attribute('aria-expanded') == 'true'
+    if mobile and not was_open:
+        toggle.click()
+        expect(toggle).to_have_attribute('aria-expanded', 'true')
+    expect(sidebar).to_be_visible()
+    assert not sidebar.evaluate('node => Boolean(node.closest("[hidden],[inert],[aria-hidden=true]"))')
+    for selector in ('#workspaceAllTasks', '#workspaceAllProjects', '#workspaceSettingsBtn'):
+        if page.locator(selector).is_visible() and page.locator(selector).is_enabled():
+            assert_focus_visible(page, selector, label)
+    audit_page_state(page, axe_source, label)
+    if mobile and not was_open:
+        close_workspace_navigation(page)
+    assert stored(page) == before, 'Auditing navigation changed task or configuration data'
 
 
 def seed_tasks(page: Page) -> None:
@@ -613,6 +667,7 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False, *, in
         seed_tasks(page)
         audit_subtask_checkbox_visibility(page, '390px' if reduced_motion else '1280px')
         audit_page_state(page, axe_source, "task list")
+        audit_workspace_navigation(page, axe_source, 'light workspace navigation')
         audit_batch_project(page, axe_source)
 
         ensure_capture(page)
@@ -632,6 +687,8 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False, *, in
         audit_page_state(page, axe_source, "english task list")
         for section in ('appearance', 'data', 'experience', 'cleanup', 'help'):
             open_settings(page, section)
+            if section == 'appearance':
+                assert_workspace_theme_gallery(page)
             audit_page_state(page, axe_source, f'english settings {section}')
         return_to_task_workspace(page)
         audit_views_transfer(page, axe_source, 'light')
@@ -662,8 +719,13 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False, *, in
         expect(page.locator('html')).to_have_attribute('data-theme', 'dark')
         close_workspace_navigation(page)
         audit_page_state(page, axe_source, 'dark settings page')
+        open_settings(page, 'appearance')
+        assert_workspace_theme_gallery(page)
+        audit_page_state(page, axe_source, 'dark workspace theme gallery')
+        open_settings(page, 'data')
         return_to_task_workspace(page)
         audit_page_state(page, axe_source, 'dark task list')
+        audit_workspace_navigation(page, axe_source, 'dark workspace navigation')
         audit_views_transfer(page, axe_source, 'dark')
         audit_view_delete(page, axe_source, 'dark')
         audit_task_draft_guard(page, axe_source, 'dark')

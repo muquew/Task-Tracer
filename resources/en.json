@@ -911,8 +911,8 @@
     "statsRangeHint": "Statistics use your project and search scope, not the task-status dropdown."
   },
   "craft": {
-    "accentLabel": "Accent colour",
-    "accentDescription": "Applies to primary buttons, selections and keyboard focus.",
+    "accentLabel": "Workspace theme",
+    "accentDescription": "Changes the sidebar, background, panels and selection states. Combine any theme with light or dark appearance.",
     "accentIris": "Iris",
     "accentOcean": "Ocean",
     "accentPine": "Pine",
@@ -938,7 +938,12 @@
     "deleteTaskTitle": "Delete task?",
     "deleteTaskMessage": "Delete “{task}”? You can undo this deletion.",
     "snoozeDeliveryHint": "Reminders need notification permission and depend on the app being open or woken by the browser. Delivery after closing the app is not guaranteed.",
-    "returnToStats": "Back to statistics"
+    "returnToStats": "Back to statistics",
+    "themeChooser": "Choose a workspace theme",
+    "themeIrisDescription": "Cool lavender surfaces with an ink sidebar.",
+    "themeOceanDescription": "Blue-grey surfaces with a deep coastal sidebar.",
+    "themePineDescription": "Muted green surfaces with a forest sidebar.",
+    "themeBerryDescription": "Dusty rose surfaces with a berry sidebar."
   },
   "statsInsights": {
     "workloadTitle": "Needs attention",

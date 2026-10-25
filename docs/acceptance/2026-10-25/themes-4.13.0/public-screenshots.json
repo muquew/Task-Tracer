@@ -1,0 +1,32 @@
+{
+  "version": "4.13.0",
+  "frozen": true,
+  "index_sha256": "870040199e037aced45efc513d6651a9bc2522855e90eed0b5afdb1d52fc2eaa",
+  "screenshots": [
+    {
+      "path": "screenshots/task-list.png",
+      "bytes": 162132,
+      "sha256": "cd5364d367a03823e1a775491557c152b99575dc3bb14ef2cce94aee97d58106",
+      "reviewed": true
+    },
+    {
+      "path": "screenshots/task-list-en.png",
+      "bytes": 161780,
+      "sha256": "a8a32c75532095237d3d2c1222c2c85fe30b00a5b121d88a05aa4c7e78fe6fbd",
+      "reviewed": true
+    },
+    {
+      "path": "screenshots/add-task.png",
+      "bytes": 231335,
+      "sha256": "d65ff01b7e45786180511fb2f96bccefc7622247e8acad8b81d6e6b8ecb2bdef",
+      "reviewed": true
+    },
+    {
+      "path": "screenshots/add-task-en.png",
+      "bytes": 232880,
+      "sha256": "649d3e9e74fc924889d9bb637f2760b3a4cc83a9a88c4bdf67726f6a5bdcc813",
+      "reviewed": true
+    }
+  ],
+  "notes": "Each PNG opened and visually reviewed individually. Default Iris workspace theme, light appearance, 1440x1000, normal motion and production CSP. Two fresh profiles; six real editor-created illustrative tasks per language; All filter shows the real completed task. One task has description and two subtasks; unsaved editor draft has name, description, project, future date/time and two subtasks. Real capture-day dates. No task-data injection, no runtime/docs/tools changes, no page errors. Browser and server closed."
+}

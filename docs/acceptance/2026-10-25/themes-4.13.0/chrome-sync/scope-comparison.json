@@ -1,0 +1,8 @@
+{
+  "current_index_sha256": "27a6fab4c64b48aea1cf1eda595d5086a8fa58f7b40a8bfb001378843bb15c16",
+  "reconstructed_previous_index_sha256": "870040199e037aced45efc513d6651a9bc2522855e90eed0b5afdb1d52fc2eaa",
+  "previous_matches_accepted_visual_input": true,
+  "css_byte_identical": true,
+  "html_outside_scripts_byte_identical": true,
+  "scope": "Only browser theme-color synchronization and the accent-change hook. Previous bytes reconstructed by reversing those exact edits; original acceptance input hash retained."
+}

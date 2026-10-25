@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-10-25T14:46:20.518031+00:00",
+  "status": "passed_scoped_release_acceptance",
+  "repository": "/workspace/Task-Tracer-themes",
+  "app_version": "4.13.0",
+  "resource_version": "4.41",
+  "scope": [
+    "native static7",
+    "two independent reproducible builds and extracted persistence/offline",
+    "actual 4.12.0 ZIP upgrade/rollback/re-upgrade"
+  ],
+  "source_inputs": 23,
+  "verification_inputs": 75,
+  "source_sha256": "b041c8c30228156a9ed48526499859628fa4a6de6e13de522c2c8deca4a224ad",
+  "verification_sha256": "e7e2fcfd01ea1b4adfb042f476fd1682c939ffaa2d288d2b1b875c97141cb74d",
+  "source_and_verification_unchanged": true,
+  "index_sha256": "870040199e037aced45efc513d6651a9bc2522855e90eed0b5afdb1d52fc2eaa",
+  "vcs_initial": {
+    "commit": "cb778fac03b54a6079873619e1d39a5a490ef1cd",
+    "working_tree_dirty": true
+  },
+  "vcs_final": {
+    "commit": "cb778fac03b54a6079873619e1d39a5a490ef1cd",
+    "working_tree_dirty": true
+  },
+  "record": "/tmp/task-tracer-4.13.0-release/05a68cc7-8dca-4bd4-af91-3499acb8f360/report.json",
+  "record_sha256": "fdf1cdb446bc94f04e1b75abfb10f50258dd950440f01f3702dc22d77e460ea2",
+  "native_static7": "/tmp/task-tracer-4.13.0-release/05a68cc7-8dca-4bd4-af91-3499acb8f360/static7.json",
+  "native_static7_sha256": "9f5c18eca2482cf1b71d73ceb8ea45934169869d3214659fdac501edaa088b21",
+  "phases": [
+    {
+      "name": "static7",
+      "arguments": [
+        "tools/check.py",
+        "--static-only",
+        "--keep-going",
+        "--report",
+        "/tmp/task-tracer-4.13.0-release/05a68cc7-8dca-4bd4-af91-3499acb8f360/static7.json"
+      ],
+      "started_at": "2026-10-25T14:44:48.922049+00:00",
+      "finished_at": "2026-10-25T14:45:04.157250+00:00",
+      "duration_seconds": 15.235,
+      "exit_code": 0,
+      "stdout": "static7.stdout.log",
+      "stderr": "static7.stderr.log"
+    },
+    {
+      "name": "release",
+      "arguments": [
+        "tools/release_playwright.py"
+      ],
+      "started_at": "2026-10-25T14:45:04.172058+00:00",
+      "finished_at": "2026-10-25T14:45:07.581181+00:00",
+      "duration_seconds": 3.409,
+      "exit_code": 0,
+      "stdout": "release.stdout.log",
+      "stderr": "release.stderr.log"
+    },
+    {
+      "name": "actual-4.12.0-upgrade",
+      "arguments": [
+        "tools/upgrade_playwright.py",
+        "--baseline-archive",
+        "dist/task-tracer-4.12.0.zip"
+      ],
+      "started_at": "2026-10-25T14:45:07.596601+00:00",
+      "finished_at": "2026-10-25T14:45:28.625573+00:00",
+      "duration_seconds": 21.029,
+      "exit_code": 0,
+      "stdout": "actual-4.12.0-upgrade.stdout.log",
+      "stderr": "actual-4.12.0-upgrade.stderr.log"
+    }
+  ],
+  "reproducible_zip_sha256": "5b89456c4dbb263d2047aa08d3db26ff1cb543efcc597e585635014b1b6a3e3e",
+  "distribution_file_count": 24,
+  "baseline_archive": {
+    "path": "/workspace/Task-Tracer-themes/dist/task-tracer-4.12.0.zip",
+    "bytes": 964425,
+    "sha256": "0b392b6efe58ae94f40901b02cf612a533904889b3f941f015bb7b1a9f9475e8"
+  },
+  "temporary_test_archives_retained": false,
+  "csp_scope": {
+    "static_hash_checks": "Original security_policy.py checks ran successfully, including build prerequisites.",
+    "browser_contexts": "Original release/upgrade contexts do not set bypass_csp.",
+    "http_handlers": "Original extracted release and actual upgrade HTTP handlers do not attach CSP headers; these two programs do not prove runtime CSP enforcement.",
+    "enforcement_evidence": "Separate normal/production-header and real-domain browser evidence is required for runtime CSP claims."
+  },
+  "not_run": [
+    "full registered suite",
+    "full browser matrix",
+    "scale/performance",
+    "production verification",
+    "Git commit or push",
+    "canonical build"
+  ]
+}

@@ -1,0 +1,282 @@
+{
+  "viewport": {
+    "w": 1440,
+    "h": 1000
+  },
+  "scrollY": 0,
+  "docHeight": 1000,
+  "title": "任务跟踪器",
+  "headings": [
+    "项目",
+    "设置与数据",
+    "外观与语言"
+  ],
+  "surfaces": [
+    {
+      "selector": "#openModalBtn",
+      "visible": true,
+      "text": "添加任务",
+      "x": 1307,
+      "y": 11,
+      "w": 109,
+      "h": 40
+    },
+    {
+      "selector": "#quickAddForm",
+      "visible": 0,
+      "text": "\n                    \n                        \n                        快速记录\n    ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#quickAddInput",
+      "visible": 0,
+      "text": "",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#toolsDrawer",
+      "visible": 0,
+      "text": "\n            \n                    \n                        \n                    ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceOverview",
+      "visible": 0,
+      "text": "\n            2026年10月周一周二周三周四周五周六周日282930123456789101112131415161718192021222324",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceWeekIndex",
+      "visible": 0,
+      "text": "10月未来7天周日25周一26周二27周三28周四29周五30周六31",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#taskList",
+      "visible": 0,
+      "text": "还没有任务从顶部“添加任务”开始，记下第一件待办。用示例了解功能",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceTitle",
+      "visible": 0,
+      "text": "全部任务",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#settingsWorkspace",
+      "visible": true,
+      "text": "设置与数据\n\n管理外观、提醒与本地数据。\n\n外观与语言\n备份与迁移\n提醒与安装\n任务维护\n帮助与关于\n外观与语言\n\n设置外观和界面语言。\n\n工作区主题\n\n同步改",
+      "x": 274,
+      "y": 82,
+      "w": 1120,
+      "h": 831
+    }
+  ],
+  "buttons": [
+    {
+      "id": "viewTab-list",
+      "text": "列表",
+      "x": 16,
+      "y": 79,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "viewTab-calendar",
+      "text": "日历",
+      "x": 16,
+      "y": 127,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "viewTab-timeline",
+      "text": "时间线",
+      "x": 16,
+      "y": 175,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "viewTab-stats",
+      "text": "统计",
+      "x": 16,
+      "y": 223,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "workspaceAllTasks",
+      "text": "全部任务\n0",
+      "x": 16,
+      "y": 304,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "focusModeToggleBtn",
+      "text": "今日计划",
+      "x": 16,
+      "y": 351,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "workspaceAllProjects",
+      "text": "全部项目",
+      "x": 16,
+      "y": 453,
+      "w": 196,
+      "h": 40
+    },
+    {
+      "id": "workspaceSettingsBtn",
+      "text": "设置与数据",
+      "x": 16,
+      "y": 626,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "settingsBackBtn",
+      "text": "返回任务",
+      "x": 1192,
+      "y": 11,
+      "w": 108,
+      "h": 40
+    },
+    {
+      "id": "openModalBtn",
+      "text": "添加任务",
+      "x": 1307,
+      "y": 11,
+      "w": 109,
+      "h": 40
+    },
+    {
+      "id": "tab-settingsAppearance",
+      "text": "外观与语言",
+      "x": 281,
+      "y": 211,
+      "w": 152,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsData",
+      "text": "备份与迁移",
+      "x": 281,
+      "y": 258,
+      "w": 152,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsExperience",
+      "text": "提醒与安装",
+      "x": 281,
+      "y": 305,
+      "w": 152,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsCleanup",
+      "text": "任务维护",
+      "x": 281,
+      "y": 352,
+      "w": 152,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsHelp",
+      "text": "帮助与关于",
+      "x": 281,
+      "y": 399,
+      "w": 152,
+      "h": 42
+    }
+  ],
+  "fields": [
+    {
+      "id": "workspaceTheme-iris",
+      "type": "radio",
+      "value": "iris",
+      "placeholder": "",
+      "x": 464,
+      "y": 346,
+      "w": 456,
+      "h": 172
+    },
+    {
+      "id": "workspaceTheme-ocean",
+      "type": "radio",
+      "value": "ocean",
+      "placeholder": "",
+      "x": 936,
+      "y": 346,
+      "w": 456,
+      "h": 172
+    },
+    {
+      "id": "workspaceTheme-pine",
+      "type": "radio",
+      "value": "pine",
+      "placeholder": "",
+      "x": 464,
+      "y": 542,
+      "w": 456,
+      "h": 172
+    },
+    {
+      "id": "workspaceTheme-berry",
+      "type": "radio",
+      "value": "berry",
+      "placeholder": "",
+      "x": 936,
+      "y": 542,
+      "w": 456,
+      "h": 172
+    },
+    {
+      "id": "themeToggleBtn",
+      "type": "select-one",
+      "value": "system",
+      "placeholder": null,
+      "x": 1194,
+      "y": 765,
+      "w": 180,
+      "h": 42
+    },
+    {
+      "id": "languageSelect",
+      "type": "select-one",
+      "value": "zh-CN",
+      "placeholder": null,
+      "x": 1194,
+      "y": 850,
+      "w": 180,
+      "h": 42
+    }
+  ],
+  "pageErrors": []
+}

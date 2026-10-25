@@ -391,14 +391,22 @@ def select_theme_preference(page: Page, preference: str) -> str:
 
 
 def select_accent_preference(page: Page, preference: str) -> None:
-    """Change the one native accent control through Appearance settings."""
+    """Choose a workspace theme through its visible native radio tile."""
     assert preference in {'iris', 'ocean', 'pine', 'berry'}, preference
     origin = _preference_origin(page)
     open_settings(page, 'appearance')
-    select = page.locator('#accentSelect')
-    expect(select).to_be_visible()
-    select.select_option(preference)
-    expect(select).to_have_value(preference)
+    radio = page.locator(f'input[type="radio"][name="workspaceTheme"][value="{preference}"]')
+    if radio.count():
+        expect(radio).to_be_visible()
+        expect(radio).to_be_enabled()
+        radio.check()
+        expect(radio).to_be_checked()
+        expect(page.locator('input[name="workspaceTheme"]:checked')).to_have_count(1)
+    else:
+        legacy = page.locator('#accentSelect')
+        expect(legacy).to_be_visible()
+        legacy.select_option(preference)
+        expect(legacy).to_have_value(preference)
     expect(page.locator('html')).to_have_attribute('data-accent', preference)
     _return_from_preference(page, origin)
 
@@ -1623,13 +1631,13 @@ def exercise_subtasks(page: Page, task_name: str) -> None:
     clear_search(page)
 
 
-def assert_theme_chrome(page: Page) -> None:
-    page.evaluate("""async () => {
-        getComputedStyle(document.body).backgroundColor;
-        await Promise.all(document.getAnimations()
-            .filter(animation => animation.effect?.getTiming().iterations !== Infinity)
-            .map(animation => animation.finished.catch(() => {})));
+def assert_theme_chrome(page: Page) -> dict[str, Any]:
+    expected = page.evaluate("""() => {
+        const root = document.documentElement;
+        return getComputedStyle(root).getPropertyValue('--chrome-solid').trim()
+            || (root.getAttribute('data-theme') === 'dark' ? '#151925' : '#f4f5f9');
     }""")
+    expect(page.locator('meta[name="theme-color"]')).to_have_attribute('content', expected)
     chrome = page.evaluate("""() => {
         const meta = document.querySelector('meta[name="theme-color"]')?.content || '';
         const canvas = document.createElement('canvas');
@@ -1641,14 +1649,18 @@ def assert_theme_chrome(page: Page) -> None:
             context.fillRect(0, 0, 1, 1);
             return Array.from(context.getImageData(0, 0, 1, 1).data);
         };
-        let background = getComputedStyle(document.body).backgroundColor;
-        if (pixel(background)[3] === 0) background = getComputedStyle(document.documentElement).backgroundColor;
-        return {meta, metaColor: pixel(meta), background, canvasColor: pixel(background),
+        const root = document.documentElement;
+        const solid = getComputedStyle(root).getPropertyValue('--chrome-solid').trim();
+        const background = solid || (root.getAttribute('data-theme') === 'dark' ? '#151925' : '#f4f5f9');
+        return {meta, metaColor: pixel(meta), background, chromeColor: pixel(background),
+            metaValid: CSS.supports('color', meta), chromeValid: CSS.supports('color', background),
+            usedLegacyFallback: !solid,
             manifestPath: new URL(document.querySelector('#manifestLink').href).pathname};
     }""")
-    assert chrome['meta'] and chrome['metaColor'][3] == 255, chrome
-    assert chrome['canvasColor'][3] == 255 and chrome['metaColor'] == chrome['canvasColor'], chrome
+    assert chrome['meta'] and chrome['metaValid'] and chrome['chromeValid'] and chrome['metaColor'][3] == 255, chrome
+    assert chrome['chromeColor'][3] == 255 and chrome['metaColor'] == chrome['chromeColor'], chrome
     assert chrome['manifestPath'].endswith('/manifest.json'), chrome
+    return chrome
 
 
 def exercise_theme(page: Page) -> None:

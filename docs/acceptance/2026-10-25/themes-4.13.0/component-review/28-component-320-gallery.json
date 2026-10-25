@@ -1,0 +1,265 @@
+{
+  "viewport": {
+    "w": 320,
+    "h": 844
+  },
+  "scrollY": 0,
+  "docHeight": 1534,
+  "title": "Task Tracer",
+  "headings": [
+    "Settings & data",
+    "Appearance & language"
+  ],
+  "surfaces": [
+    {
+      "selector": "#openModalBtn",
+      "visible": true,
+      "text": "Add task",
+      "x": 204,
+      "y": 10,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "selector": "#quickAddForm",
+      "visible": 0,
+      "text": "\n                    \n                        \n                        Quick cap",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#quickAddInput",
+      "visible": 0,
+      "text": "",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#toolsDrawer",
+      "visible": 0,
+      "text": "\n            \n                    \n                        \n                    ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceOverview",
+      "visible": 0,
+      "text": "\n            October 2026MonTueWedThuFriSatSun2829301234567891011121314151617181",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceWeekIndex",
+      "visible": 0,
+      "text": "OctNext 7 daysSun25Mon26Tue27Wed28Thu29Fri30Sat31",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#taskList",
+      "visible": 0,
+      "text": "Needs attentionFind tasks to handle first, or plan work with no deadline. Due to",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceTitle",
+      "visible": 0,
+      "text": "Stats",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#settingsWorkspace",
+      "visible": true,
+      "text": "Settings & data\n\nManage appearance, reminders and local data.\n\nAppearance & lang",
+      "x": 14,
+      "y": 76,
+      "w": 292,
+      "h": 1374
+    }
+  ],
+  "buttons": [
+    {
+      "id": "workspaceNavToggle",
+      "text": "Open navigation",
+      "x": 14,
+      "y": 10,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "settingsBackBtn",
+      "text": "Back to tasks",
+      "x": 90,
+      "y": 10,
+      "w": 38,
+      "h": 40
+    },
+    {
+      "id": "undoBtn",
+      "text": "Undo",
+      "x": 133,
+      "y": 10,
+      "w": 67,
+      "h": 40
+    },
+    {
+      "id": "openModalBtn",
+      "text": "Add task",
+      "x": 204,
+      "y": 10,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "id": "tab-settingsAppearance",
+      "text": "Appearance & language",
+      "x": 17,
+      "y": 151,
+      "w": 157,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsData",
+      "text": "Backups & transfer",
+      "x": 178,
+      "y": 151,
+      "w": 121,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsExperience",
+      "text": "Reminders & installation",
+      "x": 303,
+      "y": 151,
+      "w": 149,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsCleanup",
+      "text": "Task maintenance",
+      "x": 457,
+      "y": 151,
+      "w": 117,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsHelp",
+      "text": "Help & about",
+      "x": 577,
+      "y": 151,
+      "w": 89,
+      "h": 42
+    },
+    {
+      "id": "viewTab-list",
+      "text": "List",
+      "x": 10,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    },
+    {
+      "id": "viewTab-calendar",
+      "text": "Calendar",
+      "x": 86,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    },
+    {
+      "id": "viewTab-timeline",
+      "text": "Timeline",
+      "x": 162,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    },
+    {
+      "id": "viewTab-stats",
+      "text": "Stats",
+      "x": 238,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    }
+  ],
+  "fields": [
+    {
+      "id": "workspaceTheme-iris",
+      "type": "radio",
+      "value": "iris",
+      "placeholder": "",
+      "x": 16,
+      "y": 393,
+      "w": 288,
+      "h": 166
+    },
+    {
+      "id": "workspaceTheme-ocean",
+      "type": "radio",
+      "value": "ocean",
+      "placeholder": "",
+      "x": 16,
+      "y": 581,
+      "w": 288,
+      "h": 185
+    },
+    {
+      "id": "workspaceTheme-pine",
+      "type": "radio",
+      "value": "pine",
+      "placeholder": "",
+      "x": 16,
+      "y": 789,
+      "w": 288,
+      "h": 166
+    },
+    {
+      "id": "workspaceTheme-berry",
+      "type": "radio",
+      "value": "berry",
+      "placeholder": "",
+      "x": 16,
+      "y": 977,
+      "w": 288,
+      "h": 166
+    },
+    {
+      "id": "themeToggleBtn",
+      "type": "select-one",
+      "value": "dark",
+      "placeholder": null,
+      "x": 30,
+      "y": 1253,
+      "w": 260,
+      "h": 42
+    },
+    {
+      "id": "languageSelect",
+      "type": "select-one",
+      "value": "en",
+      "placeholder": null,
+      "x": 30,
+      "y": 1392,
+      "w": 260,
+      "h": 42
+    }
+  ],
+  "pageErrors": []
+}

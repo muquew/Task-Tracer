@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-10-25T14:56:26.734677+00:00",
+  "status": "passed_scoped_release_acceptance",
+  "repository": "/workspace/Task-Tracer-themes",
+  "app_version": "4.13.0",
+  "resource_version": "4.41",
+  "scope": [
+    "native static7",
+    "two independent reproducible builds and extracted persistence/offline",
+    "actual 4.12.0 ZIP upgrade/rollback/re-upgrade"
+  ],
+  "source_inputs": 23,
+  "verification_inputs": 75,
+  "source_sha256": "ec90af64e257a5e808addbb658fb887c789730773d94452cdbaa8b4bd446ddce",
+  "verification_sha256": "734eed40f024ed41acf58ceed70f81db2d0977a8f62a97f2a6ab592bea6d5e7a",
+  "index_sha256": "27a6fab4c64b48aea1cf1eda595d5086a8fa58f7b40a8bfb001378843bb15c16",
+  "source_and_verification_unchanged": true,
+  "vcs_initial": {
+    "commit": "cb778fac03b54a6079873619e1d39a5a490ef1cd",
+    "working_tree_dirty": true
+  },
+  "vcs_final": {
+    "commit": "cb778fac03b54a6079873619e1d39a5a490ef1cd",
+    "working_tree_dirty": true
+  },
+  "record": "/tmp/task-tracer-4.13.0-release/f018fdd3-9ff6-4a86-aaf8-0ac343de09d0/report.json",
+  "record_sha256": "4451ee65286741d613b333694c997edca75365f709191dc9dcb2d9c4b8fa86b6",
+  "native_static7": "/tmp/task-tracer-4.13.0-release/f018fdd3-9ff6-4a86-aaf8-0ac343de09d0/static7.json",
+  "native_static7_sha256": "2de05cd34f5d96deba86f3635a841899ffe0f0f4e1e6b1c0afc2d4029ac8eb18",
+  "phases": [
+    {
+      "name": "static7",
+      "arguments": [
+        "tools/check.py",
+        "--static-only",
+        "--keep-going",
+        "--report",
+        "/tmp/task-tracer-4.13.0-release/f018fdd3-9ff6-4a86-aaf8-0ac343de09d0/static7.json"
+      ],
+      "started_at": "2026-10-25T14:55:08.560517+00:00",
+      "finished_at": "2026-10-25T14:55:24.791888+00:00",
+      "duration_seconds": 16.231,
+      "exit_code": 0,
+      "stdout": "static7.stdout.log",
+      "stderr": "static7.stderr.log"
+    },
+    {
+      "name": "release",
+      "arguments": [
+        "tools/release_playwright.py"
+      ],
+      "started_at": "2026-10-25T14:55:24.810239+00:00",
+      "finished_at": "2026-10-25T14:55:28.976309+00:00",
+      "duration_seconds": 4.166,
+      "exit_code": 0,
+      "stdout": "release.stdout.log",
+      "stderr": "release.stderr.log"
+    },
+    {
+      "name": "actual-4.12.0-upgrade",
+      "arguments": [
+        "tools/upgrade_playwright.py",
+        "--baseline-archive",
+        "dist/task-tracer-4.12.0.zip"
+      ],
+      "started_at": "2026-10-25T14:55:28.995322+00:00",
+      "finished_at": "2026-10-25T14:55:51.178262+00:00",
+      "duration_seconds": 22.183,
+      "exit_code": 0,
+      "stdout": "actual-4.12.0-upgrade.stdout.log",
+      "stderr": "actual-4.12.0-upgrade.stderr.log"
+    }
+  ],
+  "reproducible_zip_sha256": "ab2caf489b6bd2f80acd42319aaa0c9ca5be13b7eba566960727dd389451d05b",
+  "distribution_file_count": 24,
+  "baseline_archive": {
+    "path": "/workspace/Task-Tracer-themes/dist/task-tracer-4.12.0.zip",
+    "bytes": 964425,
+    "sha256": "0b392b6efe58ae94f40901b02cf612a533904889b3f941f015bb7b1a9f9475e8"
+  },
+  "temporary_test_archives_retained": false,
+  "changed_sources_from_870_candidate": [
+    "index.html",
+    "vercel.json"
+  ],
+  "changed_tools_from_870_candidate": [
+    "tools/craft_accent_playwright.py",
+    "tools/smoke_playwright.py"
+  ],
+  "previous_run_preserved": "/tmp/task-tracer-4.13.0-release/05a68cc7-8dca-4bd4-af91-3499acb8f360/report.json",
+  "root_chrome_only_scope_comparison": {
+    "path": "/workspace/design-research/task-tracer-themes-2026-10-25/chrome-sync/scope-comparison.json",
+    "sha256": "b2ae8ae820d5870c5cbcd531ee9d708e6dae35ddfad2cca69d97249ac7fdf57f"
+  },
+  "csp_scope": {
+    "static_hash_checks_passed": true,
+    "bypass_csp_context_option_used": false,
+    "artifact_upgrade_http_handlers": "Original handlers do not add CSP headers; runtime enforcement is covered separately by normal/production header browser evidence."
+  },
+  "not_run": [
+    "full registered suite",
+    "full browser matrix",
+    "scale/performance",
+    "production verification",
+    "Git commit or push",
+    "canonical build"
+  ]
+}

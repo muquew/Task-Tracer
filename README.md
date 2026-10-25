@@ -24,7 +24,9 @@ Task Tracer is a personal task manager that runs in the browser and keeps task d
 
 The continuing development goal, acceptance criteria and current work queue are recorded in [GOAL.md](./GOAL.md).
 
-The current release is **[4.12.0](./docs/releases/4.12.0.md)**, refining actionable statistics, task organization and interface materials. The [product review](./docs/product-review-4.12.0.md) explains these choices; validation and publication status are recorded separately in the release record.
+The current candidate is **[4.13.0](./docs/releases/4.13.0.md)**, with four complete workspace themes and revised surfaces and component materials. The [theme brief](./THEME_BRIEF.md) records the direction; visual acceptance, validation and publication are still tracked separately.
+
+The published [4.12.0 baseline](./docs/releases/4.12.0.md) retains its functional changes and original [product review](./docs/product-review-4.12.0.md). Its results do not establish acceptance of the 4.13.0 candidate.
 
 **[4.11.1](./docs/releases/4.11.1.md)** reorganizes capture, task editing, mobile views, settings and data tools after a hands-on whole-site review. See the [before-and-after review](./docs/acceptance/2026-10-25/usability-4.11.0/README.md).
 
@@ -51,11 +53,13 @@ The workspace keeps projects and saved views in the sidebar, with a focused task
 
 - Choose **Add task** in the top bar to open Quick capture, then review the parsed deadline, project and tags before adding. **More options** carries the entered text into the full form for a description and subtasks; expand **More settings** for tags, reminders and recurrence.
 - Open **Settings & data** from the header or sidebar, or press `Ctrl/Cmd + M`. Choose one of five category panels: **Appearance & language**, **Backups & transfer**, **Reminders & installation**, **Task maintenance**, or **Help & about**. The selected category is retained while the page stays open; **Back to tasks** returns to your current view, search, filters and Quick capture text.
-- Language and appearance controls are in **Settings & data → Appearance & language**. Choose Chinese or English, **Light**, **Dark** or **System**, and an independent **Accent colour**: **Iris**, **Ocean**, **Pine** or **Berry**. System follows the operating system’s appearance; a manual choice stays selected when the system changes. These local preferences preserve current input and task data; user content keeps its original text.
+- Open **Settings & data → Appearance & language** to choose a **Workspace theme**: **Iris**, **Ocean**, **Pine** or **Berry**. Each native radio preview shows the sidebar, canvas, header and content surfaces; the theme also supplies field, menu, text and selection colours. **Light**, **Dark** and **System** appearance and the interface language remain separate native dropdowns. System follows the operating system; a manual appearance choice stays selected. Theme changes preserve current input, tasks and selections, and user content keeps its original text.
 - Mark a task complete with its leading completion control. Open its **Task actions** menu for editing and the other actions available for that task, such as adding it to today's plan, snoozing, skipping a repeat occurrence, archiving or deleting.
 - **Today's plan** is a manually chosen working set. **Due today** and the deadline overview reflect saved task dates; a task due today is not automatically added to the plan.
 
-The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.12.0 record](./docs/releases/4.12.0.md) records this release’s changes and acceptance.
+Workspace themes are saved in this browser profile and keep the existing four preference choices when upgrading. They remain independent of task data and task backups; database 2, task JSON 2.4 and saved-view 1.1/1.0 import compatibility are unchanged. The themes are part of the local application and retain the offline-use boundaries described below.
+
+The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.13.0 record](./docs/releases/4.13.0.md) tracks this candidate’s changes and release status.
 
 ## Getting Started
 
@@ -263,7 +267,7 @@ The application needs no build step. For pinned browser-test dependencies, valid
 python3 tools/check.py --static-only
 ```
 
-Current-release validation is recorded in the [4.12.0 record](./docs/releases/4.12.0.md). The following completed records belong to their named historical releases.
+Current-candidate validation and publication status are tracked in the [4.13.0 record](./docs/releases/4.13.0.md). The following completed records belong to their named historical releases.
 
 The [4.9.0 release](./docs/releases/4.9.0.md) delivers the redesigned workspace, direct language selection, Light/Dark/System preferences and revised bilingual copy. Clean application commit `e7d58e2` freezes 23 source and 70 verification inputs. The full 59-program checker passed, with program durations totaling 1645.602 seconds; Chromium 154.0.8037.57, Firefox 153.0 and WebKit 26.5 each passed all 32 registered matrix programs. Two independent builds produced the same 797,361-byte, 24-file ZIP, SHA-256 `197bc587145d65f986320ce4b69bd0a2937ce8d48ca3ceb3183a49dfc8849b7b`, with `working_tree_dirty=false`. Actual 4.8.6-archive upgrade/rollback/re-upgrade and an additional 10,000-task/six-subtask full-workspace correctness exercise passed. The [input and artifact record](./docs/releases/inputs-4.9.0.json) binds these results to the frozen candidate; program viewport scopes and live-CDP exclusions remain explicit.
 
