@@ -29,7 +29,7 @@
     "label": "快速记录",
     "placeholder": "例如：周三 14:00 讨论方案 #工作 /项目",
     "submit": "添加",
-    "hint": "日期、时间、#标签和 /项目之间请用空格分隔。未指定项目时保存到 Inbox。",
+    "hint": "日期、时间、#标签、/项目请用空格分隔。默认沿用当前项目范围（全部项目为 Inbox）。",
     "captureReady": "请检查文字，按 Enter 添加任务。"
   },
   "tools": {
@@ -181,7 +181,17 @@
       "label": "应用更新",
       "message": "新版本已准备好，刷新后即可使用最新功能。",
       "reload": "刷新更新",
-      "dismiss": "暂不更新"
+      "dismiss": "暂不更新",
+      "check": "检查更新",
+      "checking": "正在检查更新…",
+      "latest": "已是最新版本（{version}）。",
+      "ready": "新版本已准备好，可以刷新更新。",
+      "offline": "当前离线，联网后再检查更新。",
+      "error": "暂时无法检查或准备更新，请稍后重试。",
+      "unsupported": "当前浏览器不支持应用内检查更新。",
+      "description": "主动检查新版本；刷新更新前请先保存正在编辑的内容。",
+      "saveFirst": "请先保存或处理未完成的输入与草稿，再刷新更新。",
+      "busy": "正在保存，请稍后再更新。"
     }
   },
   "projects": {
@@ -377,7 +387,7 @@
     },
     "noMatches": {
       "title": "没有匹配的任务",
-      "description": "当前搜索或筛选下没有任务。清除条件后查看全部任务。"
+      "description": "当前搜索或筛选下没有任务。可清除条件重新查看。"
     }
   },
   "storage": {
@@ -705,7 +715,7 @@
     "menu": "使用帮助与支持",
     "intro": "Task Tracer {version} · 任务保存在当前浏览器配置中。先添加一个任务，再按需要整理。",
     "captureTitle": "记录与计划",
-    "captureBody": "点击顶部“添加任务”，展开快速记录。可输入日期、时间、#标签和 /项目，用空格分隔，例如：周三 14:00 讨论方案 #工作 /项目。添加前核对预览；需要描述、子任务、提醒或重复规则时，打开“更多选项”。在任务的“任务操作”中可选择“加入今日计划”，也可以批量添加。",
+    "captureBody": "点击顶部“添加任务”打开完整表单，有未完成的草稿时继续编辑；点击旁边的箭头可展开“快速记录”。可输入日期、时间、#标签和 /项目，用空格分隔，例如：周三 14:00 讨论方案 #工作 /项目。添加前核对预览；需要描述、子任务、提醒或重复规则时，打开“完整表单”接着编辑。在任务的“任务操作”中可选择“加入今日计划”，也可以批量添加。",
     "findTitle": "查找任务",
     "findBody": "通过左侧导航切换列表、日历、时间线和统计；手机上使用底部导航。搜索支持 project:工作、tag:学习、status:completed、due:today 和 #标签，可组合条件。使用“保存视图”保留常用搜索、筛选和布局；没有结果时可直接清除条件。",
     "backupTitle": "保护与迁移任务",
@@ -868,8 +878,9 @@
   },
   "usability": {
     "captureTitle": "添加任务",
+    "quickCapture": "快速记录",
     "capturePlaceholder": "例如：周三 14:00 讨论方案 #工作 /项目",
-    "captureDetails": "更多选项",
+    "captureDetails": "完整表单",
     "captureClose": "收起添加",
     "capturePreview": "添加前确认",
     "captureNoDate": "无截止日期",
@@ -878,7 +889,7 @@
     "advanced": "更多设置",
     "timingHelp": "日期与时区说明",
     "reminderDetails": "提醒与重复",
-    "resetFilters": "清除筛选",
+    "resetFilters": "清除搜索与筛选",
     "clearSearch": "清除搜索",
     "emptyHint": "从顶部“添加任务”开始，记下第一件待办。",
     "examplesAction": "用示例了解功能",
@@ -891,7 +902,7 @@
     "noDayTasks": "这一天没有安排。",
     "calendarUndated": "未安排日期",
     "captureDraft": "继续添加",
-    "captureHint": "日期、时间、#标签和 /项目之间请用空格分隔。未指定项目时保存到 Inbox。",
+    "captureHint": "日期、时间、#标签、/项目请用空格分隔。默认沿用当前项目范围（全部项目为 Inbox）。",
     "captureParsedTitle": "任务",
     "captureProject": "项目",
     "captureTags": "标签",

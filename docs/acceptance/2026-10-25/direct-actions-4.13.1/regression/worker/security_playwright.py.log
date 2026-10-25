@@ -1,0 +1,2 @@
+Deployment CSP hashes match application scripts
+Security passed: hash-authorized app runs; unsigned inline scripts and event handlers are blocked

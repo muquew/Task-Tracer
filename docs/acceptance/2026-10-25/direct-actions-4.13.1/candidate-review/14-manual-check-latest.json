@@ -1,0 +1,276 @@
+{
+  "viewport": {
+    "w": 1440,
+    "h": 1000
+  },
+  "scrollY": 0,
+  "docHeight": 1000,
+  "docWidth": 1440,
+  "title": "任务跟踪器",
+  "themeColor": "#D3D2E0",
+  "skin": {
+    "accent": "iris",
+    "theme": "light",
+    "chromeSolid": "#D3D2E0"
+  },
+  "headings": [
+    "项目",
+    "设置与数据",
+    "帮助与关于"
+  ],
+  "surfaces": [
+    {
+      "selector": "#openModalBtn",
+      "visible": true,
+      "text": "添加任务",
+      "x": 1270,
+      "y": 11,
+      "w": 109,
+      "h": 40
+    },
+    {
+      "selector": "#quickAddForm",
+      "visible": 0,
+      "text": "\n                    \n                        \n                        快速记录\n    ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#quickAddInput",
+      "visible": 0,
+      "text": "",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#toolsDrawer",
+      "visible": 0,
+      "text": "\n            \n                    \n                        \n                    ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceOverview",
+      "visible": 0,
+      "text": "\n            2026年10月周一周二周三周四周五周六周日282930123456789101112131415161718192021222324",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceWeekIndex",
+      "visible": 0,
+      "text": "10月未来7天周日25周一26周二27周三28周四29周五30周六31",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#taskList",
+      "visible": 0,
+      "text": "Inbox · 1 个任务\n        \n        \n            审查常用操作细节\n            Inbox无截止日期\n    ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceTitle",
+      "visible": 0,
+      "text": "全部任务",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#settingsWorkspace",
+      "visible": true,
+      "text": "设置与数据\n\n管理外观、提醒与本地数据。\n\n外观与语言\n备份与迁移\n提醒与安装\n任务维护\n帮助与关于\n帮助与关于\n应用更新\n\n主动检查新版本；刷新更新前请先保存",
+      "x": 274,
+      "y": 82,
+      "w": 1120,
+      "h": 661
+    }
+  ],
+  "buttons": [
+    {
+      "id": "viewTab-list",
+      "text": "列表",
+      "x": 16,
+      "y": 79,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "viewTab-calendar",
+      "text": "日历",
+      "x": 16,
+      "y": 127,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "viewTab-timeline",
+      "text": "时间线",
+      "x": 16,
+      "y": 175,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "viewTab-stats",
+      "text": "统计",
+      "x": 16,
+      "y": 223,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "workspaceAllTasks",
+      "text": "全部任务\n1",
+      "x": 16,
+      "y": 304,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "focusModeToggleBtn",
+      "text": "今日计划",
+      "x": 16,
+      "y": 351,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "",
+      "text": "Inbox\n1",
+      "x": 16,
+      "y": 453,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "workspaceAllProjects",
+      "text": "全部项目",
+      "x": 16,
+      "y": 495,
+      "w": 196,
+      "h": 40
+    },
+    {
+      "id": "workspaceSettingsBtn",
+      "text": "设置与数据",
+      "x": 16,
+      "y": 668,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "settingsBackBtn",
+      "text": "返回任务",
+      "x": 1086,
+      "y": 11,
+      "w": 108,
+      "h": 40
+    },
+    {
+      "id": "undoBtn",
+      "text": "撤销",
+      "x": 1201,
+      "y": 11,
+      "w": 62,
+      "h": 40
+    },
+    {
+      "id": "openModalBtn",
+      "text": "添加任务",
+      "x": 1270,
+      "y": 11,
+      "w": 109,
+      "h": 40
+    },
+    {
+      "id": "quickCaptureBtn",
+      "text": "快速记录",
+      "x": 1380,
+      "y": 11,
+      "w": 36,
+      "h": 40
+    },
+    {
+      "id": "tab-settingsAppearance",
+      "text": "外观与语言",
+      "x": 281,
+      "y": 211,
+      "w": 152,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsData",
+      "text": "备份与迁移",
+      "x": 281,
+      "y": 258,
+      "w": 152,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsExperience",
+      "text": "提醒与安装",
+      "x": 281,
+      "y": 305,
+      "w": 152,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsCleanup",
+      "text": "任务维护",
+      "x": 281,
+      "y": 352,
+      "w": 152,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsHelp",
+      "text": "帮助与关于",
+      "x": 281,
+      "y": 399,
+      "w": 152,
+      "h": 42
+    },
+    {
+      "id": "checkUpdateBtn",
+      "text": "检查更新",
+      "x": 1290,
+      "y": 271,
+      "w": 84,
+      "h": 42
+    },
+    {
+      "id": "helpMenuBtn",
+      "text": "使用帮助与支持",
+      "x": 1226,
+      "y": 369,
+      "w": 148,
+      "h": 42
+    },
+    {
+      "id": "settingsDiagnosticsBtn",
+      "text": "查看诊断信息",
+      "x": 1264,
+      "y": 466,
+      "w": 110,
+      "h": 42
+    }
+  ],
+  "fields": [],
+  "pageErrors": []
+}

@@ -1,0 +1,14 @@
+PASS: latest
+PASS: offline
+PASS: worker-503
+PASS: required-resource-failure
+PASS: install-remains-checking
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer/tools/manual_update_playwright.py", line 382, in <module>
+    main()
+  File "/workspace/Task-Tracer/tools/manual_update_playwright.py", line 366, in main
+    assert_manual_update(browser, release, report)
+  File "/workspace/Task-Tracer/tools/manual_update_playwright.py", line 193, in assert_manual_update
+    assert not any(version == candidate.version and path.startswith('/resources/zh-CN.json')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Server completed the blocked request before the UI timeout

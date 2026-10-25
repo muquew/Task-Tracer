@@ -430,7 +430,7 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
             "function getQuickAddCaptureOptions(options = {})",
             "description: normalizeCaptureDescription(options.description)",
             "function clearLaunchCaptureParams()",
-            "project: parsed.project || CONFIG.CAPTURE.INBOX_PROJECT",
+            "project: parsed.project || (Object.hasOwn(options, 'project') ? normalizeTaskProject(options.project) : CONFIG.CAPTURE.INBOX_PROJECT)",
         ]
         for fragment in capture_fragments:
             if fragment not in index_html:
@@ -612,7 +612,8 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             "Startup must verify IndexedDB is writable before normal app mode": ("if (!(await initializeStorageOrFallback())) return;", "function initPersistentStorage()", "await verifyPersistentStorage();", "function verifyPersistentStorage()", "await dbActions.deleteConfig(CONFIG.STORAGE.PROBE);"),
             "Storage fallback must be scoped to the storage initialization stage": ("function initializeStorageOrFallback()", "await initPersistentStorage();", "if (!shouldUseStorageUnavailableMode(error)) throw error;", "handleStorageUnavailable(error);"),
             "Storage-unavailable mode must pause task-writing actions": ("function handleStorageUnavailable(error)", "function syncStorageAvailabilityUI()", "function ensureStorageAvailable(options = {})", "storage.unavailable.actionsDisabled"),
-            "Interactive entrypoints must route through a central action guard": ("DOM.openModalBtn.addEventListener('click', () => runAppAction('capture.toggle'))", "const STORAGE_GATED_ACTIONS = new Set([", "function canRunAppAction(action", "function runAppAction(action", "DOM.menu.backupBtn.addEventListener('click', () => runAppAction('data.backup'))", "if (meta && key === 'm') { e.preventDefault(); runAppAction('menu.toggle'); return; }"),
+            "Interactive entrypoints must route through a central action guard": ("DOM.openModalBtn.addEventListener('click', () => runAppAction('task.new'))", "const STORAGE_GATED_ACTIONS = new Set([", "function canRunAppAction(action", "function runAppAction(action", "DOM.menu.backupBtn.addEventListener('click', () => runAppAction('data.backup'))", "if (meta && key === 'm') { e.preventDefault(); runAppAction('menu.toggle'); return; }"),
+            "Quick capture must remain a separate optional control beside direct task creation": ('id="quickCaptureBtn"', 'aria-controls="captureShelf"', "DOM.quickCaptureBtn.addEventListener('click', () => runAppAction('capture.toggle'))"),
             "Web Storage access must be guarded for privacy modes": ("function safeGetStorageItem(kind, key)", "function safeSetStorageItem(kind, key, value)", "function safeRemoveStorageItem(kind, key)"),
             "Runtime storage failures must route through storage-unavailable fallback": ("function handleStorageOperationError(error", "if (shouldUseStorageUnavailableMode(error))", "handleStorageUnavailable(error);", "return true;"),
             "Background backup health reads must route storage failures through fallback": ("scheduleBackupReminder().catch(handleBackgroundStorageFailure)", "function handleBackgroundStorageFailure(error)", "handleStorageOperationError(error);", "updateBackupHealthStatus().catch(handleBackgroundStorageFailure)"),

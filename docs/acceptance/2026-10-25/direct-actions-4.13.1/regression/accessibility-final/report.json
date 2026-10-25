@@ -1,0 +1,19 @@
+{
+  "index_sha256": "428dd0489d3002883848bbaeb71d1c8dd86bcc88993bf9c81e26a8bafeb176a9",
+  "results": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/Task-Tracer/docs/acceptance/2026-10-25/themes-4.13.0/protection/csp_wait_bootstrap.py",
+        "/workspace/Task-Tracer/tools/accessibility_i18n_audit.py",
+        "--skip-scaled",
+        "--viewport",
+        "both"
+      ],
+      "exit_code": 0,
+      "seconds": 143.72,
+      "log": "accessibility_i18n_audit.py.log"
+    }
+  ],
+  "index_sha256_after": "428dd0489d3002883848bbaeb71d1c8dd86bcc88993bf9c81e26a8bafeb176a9"
+}

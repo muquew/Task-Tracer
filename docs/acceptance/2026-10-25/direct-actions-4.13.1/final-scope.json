@@ -1,0 +1,13 @@
+{
+  "earlier_index_sha256": "e3a0d79e5c0eb044ee5c94207862117e1934bd8f21465793958792440f2a0de4",
+  "final_index_sha256": "428dd0489d3002883848bbaeb71d1c8dd86bcc88993bf9c81e26a8bafeb176a9",
+  "main_script_byte_identical": true,
+  "main_script_sha256": "acac310e7748cf0b6f8238b3a703c8834484c108294e12bf5eac4f0e6caf559c",
+  "changes": [
+    "Task action menu CSS z-index 500 to 1000",
+    "Hidden reload button description references a nonempty description",
+    "Two generic empty-result/clear-action translation strings and their bundled copies",
+    "CSP script hashes updated for matching bundled translations"
+  ],
+  "scope": "Earlier manual-update 20-case and independent three-flow reviews retain their original e3a0 source identity. Final capture/context, normal accessibility and release checks use the final source."
+}

@@ -1,0 +1,111 @@
+{
+  "started_at": "2026-10-25T15:31:26.922839+00:00",
+  "index_sha256": "428dd0489d3002883848bbaeb71d1c8dd86bcc88993bf9c81e26a8bafeb176a9",
+  "passed": true,
+  "runs": [
+    {
+      "width": 1280,
+      "passed": true,
+      "checks": [
+        {
+          "name": "All, project and unassigned form/quick creation retain their scope; cancel never writes",
+          "passed": true,
+          "seconds": 4.76
+        },
+        {
+          "name": "Explicit slash project overrides current scope and survives cancelled handoff",
+          "passed": true,
+          "seconds": 1.83
+        },
+        {
+          "name": "Today forms and quick capture inherit focusDate across all/project/unassigned scopes",
+          "passed": true,
+          "seconds": 2.95
+        },
+        {
+          "name": "Today no-match search/status/project reset restores tasks while retaining the plan",
+          "passed": true,
+          "seconds": 1.19
+        },
+        {
+          "name": "Failed Today form retains original focusDate and project through recovery in another scope",
+          "passed": true,
+          "seconds": 1.83
+        }
+      ],
+      "page_errors": [],
+      "tasks_saved": 17
+    },
+    {
+      "width": 390,
+      "passed": true,
+      "checks": [
+        {
+          "name": "All, project and unassigned form/quick creation retain their scope; cancel never writes",
+          "passed": true,
+          "seconds": 3.77
+        },
+        {
+          "name": "Explicit slash project overrides current scope and survives cancelled handoff",
+          "passed": true,
+          "seconds": 1.59
+        },
+        {
+          "name": "Today forms and quick capture inherit focusDate across all/project/unassigned scopes",
+          "passed": true,
+          "seconds": 2.2
+        },
+        {
+          "name": "Today no-match search/status/project reset restores tasks while retaining the plan",
+          "passed": true,
+          "seconds": 0.87
+        },
+        {
+          "name": "Failed Today form retains original focusDate and project through recovery in another scope",
+          "passed": true,
+          "seconds": 1.07
+        }
+      ],
+      "page_errors": [],
+      "tasks_saved": 17
+    },
+    {
+      "width": 320,
+      "passed": true,
+      "checks": [
+        {
+          "name": "All, project and unassigned form/quick creation retain their scope; cancel never writes",
+          "passed": true,
+          "seconds": 2.75
+        },
+        {
+          "name": "Explicit slash project overrides current scope and survives cancelled handoff",
+          "passed": true,
+          "seconds": 1.0
+        },
+        {
+          "name": "Today forms and quick capture inherit focusDate across all/project/unassigned scopes",
+          "passed": true,
+          "seconds": 2.1
+        },
+        {
+          "name": "Today no-match search/status/project reset restores tasks while retaining the plan",
+          "passed": true,
+          "seconds": 0.94
+        },
+        {
+          "name": "Failed Today form retains original focusDate and project through recovery in another scope",
+          "passed": true,
+          "seconds": 1.09
+        }
+      ],
+      "page_errors": [],
+      "tasks_saved": 17
+    }
+  ],
+  "browser": {
+    "engine": "chromium",
+    "version": "154.0.8037.57"
+  },
+  "completed_at": "2026-10-25T15:32:04.034807+00:00"
+}

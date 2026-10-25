@@ -1,0 +1,626 @@
+{
+  "status": "passed",
+  "started_at": "2026-10-25T15:25:55.421362+00:00",
+  "source_version": "4.13.1",
+  "browser": "chromium",
+  "fixture": "In-memory synthetic next-version bundles, served by UpdateServer",
+  "source_sha256": {
+    "index.html": "e3a0d79e5c0eb044ee5c94207862117e1934bd8f21465793958792440f2a0de4",
+    "sw.js": "a2e33c5583a6857504a2e94f7c398d272e9886d0241599636e116329aa6618f2",
+    "resources/en.json": "daaea7c8930bdb2668af314e016ff6a80d70a0f7f8558fc17d8e56a64372f83f",
+    "resources/zh-CN.json": "ff842cbd59c6e1e50e6d4324ad2b93b259e83680c01392b7205a160464400002"
+  },
+  "test_sha256": "6224364554cb62677ebd1270e857555a42074381f9f1554deaf731c5ffa4665f",
+  "checks": [
+    {
+      "name": "latest",
+      "status": "passed"
+    },
+    {
+      "name": "offline",
+      "status": "passed"
+    },
+    {
+      "name": "worker-503",
+      "status": "passed"
+    },
+    {
+      "name": "required-resource-failure",
+      "status": "passed",
+      "synthetic_candidate": "4.13.2"
+    },
+    {
+      "name": "install-remains-checking",
+      "status": "passed"
+    },
+    {
+      "name": "install-timeout-restores-control",
+      "status": "passed",
+      "observed_wait_seconds": 30.03
+    },
+    {
+      "name": "ready-after-background-activation",
+      "status": "passed",
+      "synthetic_candidate": "4.13.2"
+    },
+    {
+      "name": "dismissed-activated-update-rediscovered",
+      "status": "passed"
+    },
+    {
+      "name": "ready-takes-precedence-over-offline",
+      "status": "passed"
+    },
+    {
+      "name": "quick-add-draft-blocks-refresh",
+      "status": "passed"
+    },
+    {
+      "name": "full-editor-draft-blocks-refresh",
+      "status": "passed"
+    },
+    {
+      "name": "pending-save-blocks-refresh",
+      "status": "passed",
+      "fixture": "Real committed IDB transaction; only application completion callback held"
+    },
+    {
+      "name": "retained-recovery-draft-blocks-refresh",
+      "status": "passed",
+      "fixture": "One synthetic QuotaExceededError on task add"
+    },
+    {
+      "name": "cleared-drafts-permit-real-reload",
+      "status": "passed",
+      "synthetic_candidate": "4.13.2",
+      "task_count": 2,
+      "saved_view_count": 1
+    },
+    {
+      "name": "existing-waiting-update-ready-offline",
+      "status": "passed",
+      "synthetic_candidate": "4.13.2",
+      "fixture": "Only the fixture install handler omits its two skipWaiting calls"
+    },
+    {
+      "name": "waiting-update-activates-and-reloads-offline",
+      "status": "passed",
+      "synthetic_candidate": "4.13.2"
+    },
+    {
+      "name": "initial-storage-fallback-checks-latest",
+      "status": "passed",
+      "fixture": "TaskTrackerDB open throws SecurityError before initialization"
+    },
+    {
+      "name": "initial-storage-fallback-checks-offline",
+      "status": "passed"
+    },
+    {
+      "name": "initial-storage-fallback-finds-update",
+      "status": "passed",
+      "synthetic_candidate": "4.13.2"
+    },
+    {
+      "name": "initial-storage-fallback-applies-update",
+      "status": "passed",
+      "synthetic_candidate": "4.13.2"
+    }
+  ],
+  "http_requests": [
+    [
+      "4.13.1",
+      "/",
+      200
+    ],
+    [
+      "4.13.1",
+      "/resources/zh-CN.json?v=4.42",
+      200
+    ],
+    [
+      "4.13.1",
+      "/resources/en.json?v=4.42",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/favicon.ico",
+      200
+    ],
+    [
+      "4.13.1",
+      "/sw.js",
+      200
+    ],
+    [
+      "4.13.1",
+      "/",
+      200
+    ],
+    [
+      "4.13.1",
+      "/manifest.json",
+      200
+    ],
+    [
+      "4.13.1",
+      "/index.html",
+      200
+    ],
+    [
+      "4.13.1",
+      "/THIRD_PARTY_NOTICES.md",
+      200
+    ],
+    [
+      "4.13.1",
+      "/resources/en.json?v=4.42",
+      200
+    ],
+    [
+      "4.13.1",
+      "/resources/zh-CN.json?v=4.42",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/favicon-16x16.png",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/favicon-32x32.png",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/favicon.ico",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/apple-touch-icon.png",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/android-chrome-192x192.png",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/android-chrome-512x512.png",
+      200
+    ],
+    [
+      "4.13.1",
+      "/sw.js",
+      200
+    ],
+    [
+      "4.13.1",
+      "/sw.js",
+      503
+    ],
+    [
+      "4.13.2",
+      "/sw.js",
+      200
+    ],
+    [
+      "4.13.2",
+      "/",
+      200
+    ],
+    [
+      "4.13.2",
+      "/index.html",
+      200
+    ],
+    [
+      "4.13.2",
+      "/manifest.json",
+      200
+    ],
+    [
+      "4.13.2",
+      "/THIRD_PARTY_NOTICES.md",
+      200
+    ],
+    [
+      "4.13.2",
+      "/resources/en.json?v=4.43",
+      503
+    ],
+    [
+      "4.13.2",
+      "/resources/zh-CN.json?v=4.43",
+      503
+    ],
+    [
+      "4.13.2",
+      "/fav/favicon-16x16.png",
+      200
+    ],
+    [
+      "4.13.2",
+      "/sw.js",
+      200
+    ],
+    [
+      "4.13.2",
+      "/",
+      200
+    ],
+    [
+      "4.13.2",
+      "/index.html",
+      200
+    ],
+    [
+      "4.13.2",
+      "/manifest.json",
+      200
+    ],
+    [
+      "4.13.2",
+      "/THIRD_PARTY_NOTICES.md",
+      200
+    ],
+    [
+      "4.13.2",
+      "/resources/en.json?v=4.43",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/favicon-32x32.png",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/favicon-16x16.png",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/favicon.ico",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/apple-touch-icon.png",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/android-chrome-192x192.png",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/android-chrome-512x512.png",
+      200
+    ],
+    [
+      "4.13.2",
+      "/resources/zh-CN.json?v=4.43",
+      200
+    ]
+  ],
+  "page_errors": [],
+  "native_dialogs": [],
+  "waiting_fixture_http_requests": [
+    [
+      "4.13.1",
+      "/",
+      200
+    ],
+    [
+      "4.13.1",
+      "/resources/zh-CN.json?v=4.42",
+      200
+    ],
+    [
+      "4.13.1",
+      "/resources/en.json?v=4.42",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/favicon.ico",
+      200
+    ],
+    [
+      "4.13.1",
+      "/sw.js",
+      200
+    ],
+    [
+      "4.13.1",
+      "/index.html",
+      200
+    ],
+    [
+      "4.13.1",
+      "/",
+      200
+    ],
+    [
+      "4.13.1",
+      "/manifest.json",
+      200
+    ],
+    [
+      "4.13.1",
+      "/THIRD_PARTY_NOTICES.md",
+      200
+    ],
+    [
+      "4.13.1",
+      "/resources/zh-CN.json?v=4.42",
+      200
+    ],
+    [
+      "4.13.1",
+      "/resources/en.json?v=4.42",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/favicon-16x16.png",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/favicon-32x32.png",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/favicon.ico",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/apple-touch-icon.png",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/android-chrome-192x192.png",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/android-chrome-512x512.png",
+      200
+    ],
+    [
+      "4.13.2",
+      "/sw.js",
+      200
+    ],
+    [
+      "4.13.2",
+      "/",
+      200
+    ],
+    [
+      "4.13.2",
+      "/index.html",
+      200
+    ],
+    [
+      "4.13.2",
+      "/manifest.json",
+      200
+    ],
+    [
+      "4.13.2",
+      "/THIRD_PARTY_NOTICES.md",
+      200
+    ],
+    [
+      "4.13.2",
+      "/resources/en.json?v=4.43",
+      200
+    ],
+    [
+      "4.13.2",
+      "/resources/zh-CN.json?v=4.43",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/favicon-16x16.png",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/favicon-32x32.png",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/favicon.ico",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/android-chrome-192x192.png",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/apple-touch-icon.png",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/android-chrome-512x512.png",
+      200
+    ]
+  ],
+  "waiting_fixture_page_errors": [],
+  "initial_storage_fallback_http_requests": [
+    [
+      "4.13.1",
+      "/",
+      200
+    ],
+    [
+      "4.13.1",
+      "/resources/zh-CN.json?v=4.42",
+      200
+    ],
+    [
+      "4.13.1",
+      "/resources/en.json?v=4.42",
+      200
+    ],
+    [
+      "4.13.1",
+      "/sw.js",
+      200
+    ],
+    [
+      "4.13.1",
+      "/",
+      200
+    ],
+    [
+      "4.13.1",
+      "/manifest.json",
+      200
+    ],
+    [
+      "4.13.1",
+      "/index.html",
+      200
+    ],
+    [
+      "4.13.1",
+      "/THIRD_PARTY_NOTICES.md",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/favicon.ico",
+      200
+    ],
+    [
+      "4.13.1",
+      "/resources/en.json?v=4.42",
+      200
+    ],
+    [
+      "4.13.1",
+      "/resources/zh-CN.json?v=4.42",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/favicon-16x16.png",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/favicon-32x32.png",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/favicon.ico",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/apple-touch-icon.png",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/android-chrome-192x192.png",
+      200
+    ],
+    [
+      "4.13.1",
+      "/fav/android-chrome-512x512.png",
+      200
+    ],
+    [
+      "4.13.1",
+      "/sw.js",
+      200
+    ],
+    [
+      "4.13.2",
+      "/sw.js",
+      200
+    ],
+    [
+      "4.13.2",
+      "/",
+      200
+    ],
+    [
+      "4.13.2",
+      "/index.html",
+      200
+    ],
+    [
+      "4.13.2",
+      "/manifest.json",
+      200
+    ],
+    [
+      "4.13.2",
+      "/THIRD_PARTY_NOTICES.md",
+      200
+    ],
+    [
+      "4.13.2",
+      "/resources/en.json?v=4.43",
+      200
+    ],
+    [
+      "4.13.2",
+      "/resources/zh-CN.json?v=4.43",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/favicon-16x16.png",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/favicon-32x32.png",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/favicon.ico",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/apple-touch-icon.png",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/android-chrome-192x192.png",
+      200
+    ],
+    [
+      "4.13.2",
+      "/fav/android-chrome-512x512.png",
+      200
+    ]
+  ],
+  "initial_storage_fallback_page_errors": [],
+  "finished_at": "2026-10-25T15:26:42.453810+00:00"
+}

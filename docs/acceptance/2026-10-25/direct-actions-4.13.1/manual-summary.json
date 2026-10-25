@@ -1,0 +1,13 @@
+{
+  "index_sha256": "428dd0489d3002883848bbaeb71d1c8dd86bcc88993bf9c81e26a8bafeb176a9",
+  "manual_update_original_index": "e3a0d79e5c0eb044ee5c94207862117e1934bd8f21465793958792440f2a0de4",
+  "manual_update_scope": "20 real UI/worker checks, main application JS byte-identical to final; see final-scope.json",
+  "root_review": "Fresh normal CSP profiles; desktop,390/320px, Chinese/English and light/dark; direct create, existing quick draft, cancel, save, manual check and narrow header. Recorded candidate observations include a wrong #taskDescription selector; real field is #taskDesc, corrected without source change. This is a review-driver error, not a product failure.",
+  "independent_review": "Three additional real workflow defects found and fixed; six desktop/mobile cases re-reviewed, ten accepted images; original e3a identity retained.",
+  "public_images": "Four actual UI screenshots with six synthetic tasks per profile; see public-final-images.json.",
+  "limits": [
+    "DOM composition is not native OS IME testing",
+    "Browser viewports are not physical device tests",
+    "No complete engine or scale matrix rerun for this patch"
+  ]
+}

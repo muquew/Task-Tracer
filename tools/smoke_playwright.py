@@ -223,12 +223,13 @@ def open_settings(page: Page, section: str | None = 'data') -> None:
 
 
 def ensure_capture(page: Page) -> Locator:
-    """Open the one global capture area through its visible Add task control."""
+    """Open optional quick capture, including the archived shared Add control."""
     shelf = page.locator('#captureShelf')
     if shelf.count():
         close_workspace_navigation(page)
         if not shelf.is_visible():
-            page.locator('#openModalBtn').click()
+            quick_entry = page.locator('#quickCaptureBtn')
+            (quick_entry if quick_entry.count() else page.locator('#openModalBtn')).click()
         expect(shelf).to_be_visible()
     else:
         return_to_task_workspace(page)
@@ -239,10 +240,13 @@ def ensure_capture(page: Page) -> Locator:
 
 
 def open_task_editor(page: Page, *, independent: bool = False) -> None:
-    """Enter the full editor through capture's visible More options action."""
+    """Use the direct Add task action, with the real archived entry as fallback."""
     return_to_task_workspace(page)
     if independent and page.locator('#captureShelf').count():
         page.keyboard.press('Control+i')
+    elif page.locator('#quickCaptureBtn').count():
+        close_workspace_navigation(page)
+        page.locator('#openModalBtn').click()
     elif page.locator('#captureShelf').count():
         ensure_capture(page)
         page.locator('#captureDetailsBtn').click()

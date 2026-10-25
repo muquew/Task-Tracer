@@ -1,0 +1,19 @@
+Creation context 1280px passed: All, project and unassigned form/quick creation retain their scope; cancel never writes
+Creation context 1280px passed: Explicit slash project overrides current scope and survives cancelled handoff
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer/tools/context_creation_playwright.py", line 273, in <module>
+    run(parser.parse_args())
+  File "/workspace/Task-Tracer/tools/context_creation_playwright.py", line 243, in run
+    check()
+  File "/workspace/Task-Tracer/tools/context_creation_playwright.py", line 238, in <lambda>
+    ('Today forms and quick capture inherit focusDate across all/project/unassigned scopes', lambda: check_today_creation(page)),
+                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Task-Tracer/tools/context_creation_playwright.py", line 137, in check_today_creation
+    save_quick(page, 'Today all-project quick creation', 'Inbox', today)
+  File "/workspace/Task-Tracer/tools/context_creation_playwright.py", line 61, in save_quick
+    return assert_added(page, before, name, project if explicit_project is None else explicit_project, focus_date)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Task-Tracer/tools/context_creation_playwright.py", line 35, in assert_added
+    assert task['name'] == name and task['project'] == project, task
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'id': 1792942565321, 'createdAt': '2026-10-25T15:30:53.378Z', 'completed': False, 'completedAt': None, 'archived': False, 'archivedAt': None, 'focusDate': '2026-10-25', 'snoozedUntil': None, 'lastReminderAt': None, 'repeatSourceId': None, 'repeatCreatedFrom': None, 'nextRepeatTaskId': None, 'repeatWeekdays': [], 'repeatPaused': False, 'name': 'all-project quick creation', 'description': '', 'project': 'Inbox', 'tags': [], 'subtasks': [], 'dueDate': '2026-10-25T23:59:00.000Z', 'dueAt': '2026-10-25T23:59:00.000Z', 'dueLocalDate': '2026-10-25', 'dueLocalTime': '23:59', 'dueTimeZone': 'UTC', 'reminderOffset': 15, 'reminderRepeat': -1, 'repeatType': 'none', 'repeatInterval': 1, 'order': 120000}

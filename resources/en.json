@@ -29,7 +29,7 @@
     "label": "Quick capture",
     "placeholder": "For example: tomorrow 14:00 Discuss the plan #work /Project",
     "submit": "Add",
-    "hint": "Separate the date, time, #tags and /project with spaces. Tasks without a project go to Inbox.",
+    "hint": "Separate the date, time, #tags and /project with spaces. The current project scope is used by default (All projects uses Inbox).",
     "captureReady": "Review the text, then press Enter to add the task."
   },
   "tools": {
@@ -181,7 +181,17 @@
       "label": "App update",
       "message": "A new version is ready. Refresh to use the latest app.",
       "reload": "Refresh",
-      "dismiss": "Not now"
+      "dismiss": "Not now",
+      "check": "Check for updates",
+      "checking": "Checking for updates…",
+      "latest": "You’re up to date ({version}).",
+      "ready": "An update is ready. Reload when you’re ready.",
+      "offline": "You’re offline. Connect to check for updates.",
+      "error": "Couldn’t check or prepare an update. Try again shortly.",
+      "unsupported": "This browser doesn’t support in-app update checks.",
+      "description": "Check for a new version. Save your work before reloading.",
+      "saveFirst": "Save or resolve unfinished input and drafts before reloading.",
+      "busy": "Saving is in progress. Try updating afterward."
     }
   },
   "projects": {
@@ -377,7 +387,7 @@
     },
     "noMatches": {
       "title": "No matching tasks",
-      "description": "No tasks match this search or filter. Clear the conditions to see all tasks."
+      "description": "No tasks match the current search or filters. Clear them to see tasks in this view."
     }
   },
   "storage": {
@@ -705,7 +715,7 @@
     "menu": "Help and support",
     "intro": "Task Tracer {version} · Your tasks stay in this browser profile. Start with a task, then organize it as needed.",
     "captureTitle": "Capture and plan",
-    "captureBody": "Choose Add task in the top bar to open Quick capture. Separate a date, time, #tag and /project with spaces, for example: tomorrow 14:00 Discuss the plan #work /Project. Check the preview before adding. Open More options for a description, subtasks, reminders or recurrence. Use a task’s Task actions menu to add it to today’s plan; you can also add tasks in bulk.",
+    "captureBody": "Choose Add task in the top bar to open the full form and continue any unfinished draft. Use the arrow beside it to open Quick capture. Separate a date, time, #tag and /project with spaces, for example: tomorrow 14:00 Discuss the plan #work /Project. Check the preview before adding. Open Full form to continue editing a description, subtasks, reminders or recurrence. Use a task’s Task actions menu to add it to today’s plan; you can also add tasks in bulk.",
     "findTitle": "Find your work",
     "findBody": "Use the left navigation for List, Calendar, Timeline and Stats, or the bottom navigation on mobile. Search supports project:work, tag:study, status:completed, due:today and #tag; combine terms to narrow the results. Save view keeps searches, filters and layouts you use often. Clear the conditions directly when no tasks match.",
     "backupTitle": "Protect and move tasks",
@@ -868,8 +878,9 @@
   },
   "usability": {
     "captureTitle": "Add task",
+    "quickCapture": "Quick capture",
     "capturePlaceholder": "For example: tomorrow 14:00 Discuss the plan #work /Project",
-    "captureDetails": "More options",
+    "captureDetails": "Full form",
     "captureClose": "Close capture",
     "capturePreview": "Before adding",
     "captureNoDate": "No deadline",
@@ -878,7 +889,7 @@
     "advanced": "More settings",
     "timingHelp": "About dates and time zones",
     "reminderDetails": "Reminders and repeat",
-    "resetFilters": "Clear filters",
+    "resetFilters": "Clear search & filters",
     "clearSearch": "Clear search",
     "emptyHint": "Use Add task above to capture your first task.",
     "examplesAction": "Try example tasks",
@@ -891,7 +902,7 @@
     "noDayTasks": "Nothing scheduled for this day.",
     "calendarUndated": "No date assigned",
     "captureDraft": "Continue draft",
-    "captureHint": "Separate the date, time, #tags and /project with spaces. Tasks without a project go to Inbox.",
+    "captureHint": "Separate the date, time, #tags and /project with spaces. The current project scope is used by default (All projects uses Inbox).",
     "captureParsedTitle": "Task",
     "captureProject": "Project",
     "captureTags": "Tags",

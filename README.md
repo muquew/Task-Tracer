@@ -24,7 +24,9 @@ Task Tracer is a personal task manager that runs in the browser and keeps task d
 
 The continuing development goal, acceptance criteria and current work queue are recorded in [GOAL.md](./GOAL.md).
 
-The current release is **[4.13.0](./docs/releases/4.13.0.md)**, with four complete workspace themes and revised surfaces and component materials. The [theme brief](./THEME_BRIEF.md) records the direction. Hands-on visual review, targeted protection, packaging, a real 4.12 upgrade and live-site verification are complete; the release record identifies each scope.
+The current candidate is **[4.13.1](./docs/releases/4.13.1.md)**: one-click full task entry and an explicit in-app update check. Final acceptance and publication are pending; the following 4.13.0 results retain their original scope.
+
+The published **[4.13.0 baseline](./docs/releases/4.13.0.md)** provides four complete workspace themes and revised surfaces and component materials. The [theme brief](./THEME_BRIEF.md) records the direction. Its hands-on visual review, targeted protection, packaging, real 4.12 upgrade and live-site verification are complete; the release record identifies each scope.
 
 The published [4.12.0 baseline](./docs/releases/4.12.0.md) retains its functional changes and original [product review](./docs/product-review-4.12.0.md). The 4.13.0 release has its own acceptance record.
 
@@ -38,7 +40,7 @@ PWA means Progressive Web App: when the browser supports it, Task Tracer can be 
 
 | Need | Built-in support |
 | --- | --- |
-| Capture tasks quickly | Full task dialog, quick add parsing, URL capture, install shortcut capture, share target capture, Inbox default, descriptions, subtasks, projects, tags, due date/time, and no-date tasks. |
+| Capture tasks quickly | Full task dialog, quick add parsing, URL capture, install shortcut capture, share target capture, project defaults from the current scope, descriptions, subtasks, tags, due date/time, and no-date tasks. |
 | Keep work organized | Project grouping, multi-tag labels, saved views, manual ordering, archives, and batch actions. |
 | Plan from different angles | List, calendar, timeline, and statistics views. |
 | Work through today | Today's plan, task actions, snooze, skip repeat occurrence, complete/archive/delete, and undo. |
@@ -51,19 +53,19 @@ PWA means Progressive Web App: when the browser supports it, Task Tracer can be 
 
 The workspace keeps projects and saved views in the sidebar, with a focused task area and a separate deadline overview. **List**, **Calendar**, **Timeline**, and **Statistics** have permanent, labeled navigation in the desktop sidebar and the narrow-screen bottom bar. Collapsing search and filters keeps those four entries available. On narrow screens, **Open navigation** reveals project navigation, and **Show schedule** opens the compact calendar. The date index and small calendar open the existing calendar/date-detail view; they do not change task deadlines.
 
-- Choose **Add task** in the top bar to open Quick capture, then review the parsed deadline, project and tags before adding. **More options** carries the entered text into the full form for a description and subtasks; expand **More settings** for tags, reminders and recurrence.
+- Choose **Add task** in the top bar to open the full form directly. The adjacent arrow, **Quick capture**, opens compact text entry with a parsed deadline, project and tag preview; **Full form** carries that text into the full form. If Quick capture already has unsubmitted text, **Add task** continues it in the form. `Ctrl/Cmd + I` opens an independent new form. Tags, reminders and recurrence remain under **More settings**.
 - Open **Settings & data** from the header or sidebar, or press `Ctrl/Cmd + M`. Choose one of five category panels: **Appearance & language**, **Backups & transfer**, **Reminders & installation**, **Task maintenance**, or **Help & about**. The selected category is retained while the page stays open; **Back to tasks** returns to your current view, search, filters and Quick capture text.
 - Open **Settings & data → Appearance & language** to choose a **Workspace theme**: **Iris**, **Ocean**, **Pine** or **Berry**. Each native radio preview shows the sidebar, canvas, header and content surfaces; the theme also supplies field, menu, text and selection colours. **Light**, **Dark** and **System** appearance and the interface language remain separate native dropdowns. System follows the operating system; a manual appearance choice stays selected. Theme changes preserve current input, tasks and selections, and user content keeps its original text.
 - Mark a task complete with its leading completion control. Open its **Task actions** menu for editing and the other actions available for that task, such as adding it to today's plan, snoozing, skipping a repeat occurrence, archiving or deleting.
-- **Today's plan** is a manually chosen working set. **Due today** and the deadline overview reflect saved task dates; a task due today is not automatically added to the plan.
+- **Today’s plan** is a manually chosen working set. Tasks created while it is active are added to the current plan without changing their deadline. **Due today** and the deadline overview reflect saved dates; a task due today is not otherwise added to the plan automatically.
 
 Workspace themes are saved in this browser profile and keep the existing four preference choices when upgrading. They remain independent of task data and task backups; database 2, task JSON 2.4 and saved-view 1.1/1.0 import compatibility are unchanged. The themes are part of the local application and retain the offline-use boundaries described below.
 
-The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.13.0 record](./docs/releases/4.13.0.md) documents the current release’s changes and completed acceptance.
+The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.13.1 record](./docs/releases/4.13.1.md) tracks this candidate’s changes, acceptance and publication status.
 
 ## Getting Started
 
-A new workspace starts empty. Choose **Add task (+)** in the top bar to capture your first task, or choose **Try example tasks** in the empty state to add three examples. Examples are clearly labeled, have reminders off, and can be edited, deleted or undone. Refreshing an empty workspace does not add examples automatically. You can backfill a past deadline and edit an overdue task without first moving its date forward. Editing only its name or description keeps the exact stored due instant and timezone, including repeated clock times when daylight saving time ends.
+A new workspace starts empty. Choose **Add task (+)** in the top bar to enter your first task in the full form, or choose **Try example tasks** in the empty state to add three examples. Examples are clearly labeled, have reminders off, and can be edited, deleted or undone. Refreshing an empty workspace does not add examples automatically. You can backfill a past deadline and edit an overdue task without first moving its date forward. Editing only its name or description keeps the exact stored due instant and timezone, including repeated clock times when daylight saving time ends.
 
 Open **Settings & data → Help & about → Help and support** for command-palette, diagnostics and support actions, followed by keyboard shortcuts. Expand the capture, search, dates, backup, offline or privacy sections as needed. Diagnostics are also available directly in **Help & about**. Settings and help remain available when local storage is blocked; actions that need task storage keep their storage checks. For troubleshooting and feedback, see [SUPPORT.md](./SUPPORT.md).
 
@@ -75,7 +77,7 @@ Open **Settings & data → Help & about → Help and support** for command-palet
 
 ## Fast Input
 
-Open **Add task** in the top bar to use Quick capture. It turns compact text into structured task fields:
+Open the **Quick capture** arrow beside **Add task** in the top bar. It turns compact text into structured task fields:
 
 ```text
 tomorrow 20:00 Review English #study /Personal
@@ -83,7 +85,7 @@ tomorrow 20:00 Review English #study /Personal
 
 This creates a task named `Review English`, due tomorrow at 20:00, tagged `study`, and assigned to the `Personal` project.
 
-When quick add text does not include a `/project`, the task is saved to `Inbox` so unprocessed ideas have a predictable place to land.
+New full-form and Quick capture tasks inherit the selected project. In the scope for tasks without a project, they remain unassigned; in **All projects**, the default is `Inbox`. An explicit `/project` in Quick capture takes priority.
 
 If storage fails while Quick add has text, the input stays read-only and selectable for copying. Retry keeps it in the same page, along with captured source details, even if a retry fails again. After storage recovers, submit explicitly; the app does not automatically replay the failed add. Quick-add text remains memory-only and is not included in the retained full-form draft download, so copy important text before refreshing or leaving.
 
@@ -153,13 +155,15 @@ The dated seven-day bars, completed-today count and streak use retained tasks wi
 
 ## Today's plan, batch actions, and Undo
 
-Today's plan is a lightweight execution layer. Adding a task to it does not change its project, tags, due date, archive state, or recurrence rule; it only marks the task as part of today's working set. A newly generated repeat occurrence does not inherit the prior occurrence’s manual plan selection.
+Today’s plan is a lightweight execution layer. Adding a task, including creating it from the plan, does not change its project, tags, due date, archive state or recurrence rule. A newly generated repeat occurrence does not inherit the prior occurrence’s manual plan selection. If planned tasks exist but the current search or filters match none, clear those conditions to see the plan again; the app keeps Today’s plan active.
 
 Batch Actions mode initially renders 100 matching tasks with selection controls and Show more. **Select all matching** selects the entire current search/project/status result, including unloaded pages; selected tasks can be added to today’s plan, completed, archived or deleted together. **More actions → Move to project** shows the selection count and accepts an existing or new project name; the move supports Undo. Single-task and batch archiving both accept unfinished, unarchived tasks and preserve completion state. Changing the range drops selections outside it. Pagination also applies to batch timeline/calendar sections and any batch sort; non-batch manual ordering retains full rendering.
 
 **Archive completed** and **Delete completed** in **Settings & data → Task maintenance** apply to completed, unarchived tasks across the entire workspace, regardless of the current project, search or filter. The eligible count is shown before acting, and both controls are disabled at zero. Review the confirmation before proceeding. Use batch actions when you need to choose a particular matching set.
 
 Undo reverts the most recent task change while its task state is still current. A newer concurrent task change can withhold or invalidate that Undo, preserving the newer data; review the current tasks and start a fresh action. Use the header button, command palette, or `Ctrl/Cmd + Z` when focus is not inside a text field.
+
+On very narrow screens, the header Undo control uses its icon and retains an accessible name.
 
 ## Unsaved Task Forms
 
@@ -223,6 +227,8 @@ Use **Settings & data → Reminders & installation → Install app** to install 
 
 After the app shell is cached, Task Tracer can load offline. When a newer cached version is ready, the app shows an update prompt with a refresh action. The HTML includes matching language data for startup if a separate translation request fails. Initial offline use still requires a completed online cache; clearing site data removes that copy. Older open windows keep their installed worker policy, so save drafts and close or refresh those windows after upgrading.
 
+**Settings & data → Help & about → Check for updates** checks explicitly and shows the current result: checking, up to date, update ready, offline, unsupported or a failed check. **Refresh** appears when an update is ready. Resolve unfinished Quick capture text, task-form changes and retained drafts before reloading; saving or pending task changes also block the refresh. The app waits for the prepared worker to take control before reloading, without a timed forced refresh.
+
 ## Accessibility and Languages
 
 Task Tracer includes Chinese and English UI, synchronized document language, keyboard-friendly controls, labelled icon buttons, focus traps for dialogs, live-region announcements, reduced-motion support, and responsive layouts for desktop and mobile.
@@ -267,7 +273,7 @@ The application needs no build step. For pinned browser-test dependencies, valid
 python3 tools/check.py --static-only
 ```
 
-Current-release validation and publication are documented in the [4.13.0 record](./docs/releases/4.13.0.md). The following completed records belong to their named historical releases.
+Current-candidate acceptance and publication status are tracked in the [4.13.1 record](./docs/releases/4.13.1.md). The following completed records belong to their named historical releases.
 
 The [4.9.0 release](./docs/releases/4.9.0.md) delivers the redesigned workspace, direct language selection, Light/Dark/System preferences and revised bilingual copy. Clean application commit `e7d58e2` freezes 23 source and 70 verification inputs. The full 59-program checker passed, with program durations totaling 1645.602 seconds; Chromium 154.0.8037.57, Firefox 153.0 and WebKit 26.5 each passed all 32 registered matrix programs. Two independent builds produced the same 797,361-byte, 24-file ZIP, SHA-256 `197bc587145d65f986320ce4b69bd0a2937ce8d48ca3ceb3183a49dfc8849b7b`, with `working_tree_dirty=false`. Actual 4.8.6-archive upgrade/rollback/re-upgrade and an additional 10,000-task/six-subtask full-workspace correctness exercise passed. The [input and artifact record](./docs/releases/inputs-4.9.0.json) binds these results to the frozen candidate; program viewport scopes and live-CDP exclusions remain explicit.
 

@@ -1,4 +1,4 @@
-# Task Tracer 4.13.0 — static distribution
+# Task Tracer 4.13.1 — static distribution
 
 This archive contains the browser application, deployment headers, icons, translations, third-party notices and an SHA-256 integrity manifest. It does not contain an account service, cloud sync or a payment service.
 
@@ -6,7 +6,9 @@ This archive contains the browser application, deployment headers, icons, transl
 
 A new workspace starts empty. **Try example tasks** optionally adds three labeled ordinary tasks with reminders off; they can be edited, deleted or undone. Empty workspaces are not repopulated on reload. **Settings & data → Help & about → Help and support** opens actions and shortcuts first, with capture, search, dates, backup, offline and privacy details in expandable sections. Diagnostics are also directly available in **Help & about**, even when storage is blocked.
 
-Use **Add task** in the top bar to open Quick capture. Review the parsed deadline, project and tags, then add the task or choose **More options** to carry the text into the full form. Description and subtasks are in the main form; tags, reminders and recurrence expand under **More settings**. The sidebar opens all tasks, your manually chosen **Today’s plan**, projects and saved views. On narrow screens, the navigation button at the top opens the sidebar. Search and project/status filters continue to apply to the complete workspace, including tasks beyond the displayed page. **Save view** stores the current search, filters and view; saved views can then be reopened from the sidebar.
+Use **Add task** in the top bar to open the full form directly. The adjacent **Quick capture** arrow opens text capture with a deadline, project and tag preview; **Full form** carries its text into the full form. Unsubmitted Quick capture text is continued by the main **Add task** action, while `Ctrl/Cmd + I` opens an independent new form. Description and subtasks are in the main form; tags, reminders and recurrence expand under **More settings**. The sidebar opens all tasks, your manually chosen **Today’s plan**, projects and saved views. On narrow screens, the navigation button opens the sidebar. Search and project/status filters cover the complete workspace. **Save view** stores the current search, filters and view for reopening from the sidebar.
+
+New tasks in the full form and Quick capture inherit a selected project. The tasks-without-a-project scope keeps them unassigned; **All projects** defaults to `Inbox`. An explicit `/project` in Quick capture takes priority. Creating a task while **Today’s plan** is active adds it to that plan without changing its deadline. If the plan has tasks but search or filters hide them, clear those conditions while staying in the plan.
 
 List, Calendar, Timeline and Statistics are always available in the desktop sidebar and the mobile bottom navigation, including when the search and filter tools are collapsed. Open **Settings & data** for five category panels: **Appearance & language**, **Backups & transfer**, **Reminders & installation**, **Task maintenance**, and **Help & about**. Only the selected panel is shown, and the current category is retained while the page stays open. Returning to a task view preserves the current filters and any unfinished Quick capture text. Archive completed and Delete completed are in **Task maintenance** and act on completed, unarchived tasks across the workspace; they do not use the current project or search filter. The eligible workspace-wide count is shown before acting; both controls are disabled when it is zero.
 
@@ -14,7 +16,7 @@ Open **Settings & data → Appearance & language** for four complete **Workspace
 
 Theme preferences stay in this browser profile. Existing Iris/Ocean/Pine/Berry choices carry forward to the matching workspace themes; task JSON backups still exclude app preferences. Themes are included in the local application, with the same initial-cache and browser limits for offline use described below.
 
-Mark a task complete with its leading completion control. Open its **Task actions** menu for available actions such as editing, adding it to today’s plan, snoozing, skipping a repeat occurrence, archiving or deleting. Actions that do not apply to a task are unavailable. The top-bar Undo action restores the latest eligible task change; concurrent newer work can make an old Undo unavailable.
+Mark a task complete with its leading completion control. Open its **Task actions** menu for available actions such as editing, adding it to today’s plan, snoozing, skipping a repeat occurrence, archiving or deleting. Actions that do not apply to a task are unavailable. The top-bar Undo action restores the latest eligible task change; concurrent newer work can make an old Undo unavailable. On very narrow screens, header Undo uses its icon and retains an accessible name.
 
 Single-task and batch archiving both move unarchived tasks out of everyday lists, including unfinished tasks; their completion state is kept. A new occurrence generated from a repeating task does not inherit the previous occurrence’s manual today-plan selection. Snoozed tasks keep the scheduled reminder time visible, with **Notifications are off** when permission or the app setting prevents notifications. A saved reminder time does not guarantee delivery after the app closes.
 
@@ -71,6 +73,8 @@ The saved-view × opens a confirmation naming that view, with Cancel focused by 
 ## Offline use and diagnostics
 
 Offline startup requires a completed initial app-shell cache. HTML includes its own matching translation data if an external language request fails; this does not replace caching the other required files. Old open windows retain their installed worker policy. Deploy all files together, save drafts before refreshing, and close older windows after upgrading. Clearing site data also removes the offline copy.
+
+Use **Settings & data → Help & about → Check for updates** for an explicit update check and its status. An update must finish preparing before **Refresh** is offered. Finish or resolve unsubmitted capture text, unsaved forms and retained drafts first; saving or pending task changes also block the refresh. When applying a prepared update, the app waits for the worker to take control instead of forcing a reload after a fixed delay. Offline, unsupported and failed checks keep their own status and can be retried when conditions allow.
 
 **Settings & data → Help & about → Review diagnostic information** opens a local JSON preview with a separate download action. The same action is available in **Help and support**. The report contains app/browser versions, capabilities, permission status and storage estimates; it excludes task content, saved views, app settings, URLs and raw error messages. Nothing is uploaded automatically. Diagnostic files are not task backups.
 

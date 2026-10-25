@@ -110,7 +110,7 @@ def check_close_paths(page: Page) -> None:
         expect(page.locator('#subtaskInput')).to_have_value('Unsubmitted subtask text')
         expect(page.locator('#submitBtn')).to_be_enabled()
         discard(page)
-        origin = '#quickAddInput' if page.locator('#captureShelf').count() else '#openModalBtn'
+        origin = '#openModalBtn' if page.locator('#quickCaptureBtn').count() or not page.locator('#captureShelf').count() else '#quickAddInput'
         expect(page.locator(origin)).to_be_focused()
         assert get_task_records(page) == []
     open_task_editor(page)
