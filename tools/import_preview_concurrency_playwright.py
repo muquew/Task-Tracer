@@ -167,7 +167,7 @@ def run_confirmation_case(browser, url, action):
                 };
                 open.onerror = () => reject(open.error);
             })""")
-        open_settings(first)
+        open_settings(first, 'data' if action == 'recovery' else 'cleanup')
         first.locator({'clear': '#clearCompletedBtn', 'archive': '#archiveCompletedBtn',
                        'recovery': '#recoveryBtn'}[action]).click()
         expect(first.locator('#taskModal')).to_be_visible()

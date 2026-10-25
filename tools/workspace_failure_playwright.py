@@ -2,6 +2,8 @@
 """Check full-workspace rollback and explicit recovery after injected write failures."""
 from __future__ import annotations
 
+from smoke_playwright import open_task_editor, reveal_task_field, ensure_capture
+
 import argparse
 from datetime import datetime, timezone
 import hashlib
@@ -236,11 +238,11 @@ def retry(page, before):
 
 
 def quota_form(page, before):
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill(DRAFT_NAME)
     page.locator('#taskDesc').fill('Retain this exact draft after a failed checkpoint')
     page.locator('#taskProject').fill('Recovery')
-    page.locator('#taskTags').fill('retained, workspace')
+    reveal_task_field(page, '#taskTags').fill('retained, workspace')
     page.locator('#noDeadline').check()
     page.locator('#subtaskInput').fill('Saved draft child 中文')
     page.locator('#addSubtaskBtn').click()
@@ -274,8 +276,10 @@ def quota_form(page, before):
 
 
 def quota_quick(page, before):
+    ensure_capture(page)
     page.locator('#quickAddInput').fill(RAW_QUICK)
     inject(page, 'add', 'tasks', quota=True, queued=True)
+    ensure_capture(page)
     page.locator('#quickAddInput').press('Enter')
     expect(page.locator('#storageUnavailableBanner')).to_be_visible()
     expect(page.locator('#quickAddInput')).to_have_value(RAW_QUICK)
@@ -286,6 +290,7 @@ def quota_quick(page, before):
     retry(page, before)
     expect(page.locator('#quickAddInput')).to_have_value(RAW_QUICK)
     expect(page.locator('#quickAddInput')).not_to_have_attribute('readonly', '')
+    ensure_capture(page)
     page.locator('#quickAddInput').press('Enter')
     expect(page.locator('#quickAddInput')).to_have_value('')
     after = stored(page)
@@ -375,7 +380,9 @@ def asynchronous_request_error(page, before, url):
         };
     }""", before['tasks'][0]['id'])
     raw = 'Recovered real asynchronous request failure'
+    ensure_capture(page)
     page.locator('#quickAddInput').fill(raw)
+    ensure_capture(page)
     page.locator('#quickAddInput').press('Enter')
     page.wait_for_function('window.workspaceAsyncFailure.caught !== null && window.workspaceAsyncFailure.abortObserved')
     observed = page.evaluate('window.workspaceAsyncFailure')
@@ -391,6 +398,7 @@ def asynchronous_request_error(page, before, url):
     expect(page.locator('#quickAddInput')).to_have_value(raw)
     expect(page.locator('#storageUnavailableBanner')).to_be_hidden()
     expect(page.locator('#quickAddForm button[type="submit"]')).to_be_enabled()
+    ensure_capture(page)
     page.locator('#quickAddInput').press('Enter')
     expect(page.locator('#quickAddInput')).to_have_value('')
     after = stored(page)

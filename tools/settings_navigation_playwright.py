@@ -2,6 +2,8 @@
 """Exercise permanent view navigation and the independent settings workspace."""
 from __future__ import annotations
 
+from smoke_playwright import ensure_capture
+
 import argparse
 import contextlib
 import json
@@ -11,6 +13,7 @@ import threading
 from playwright.sync_api import expect, sync_playwright
 
 from security_playwright import ProductionHeaderHandler
+from task_draft_playwright import inject_quota_failure
 from smoke_playwright import (
     ThreadingHTTPServer, add_task, assert_accessibility_baseline,
     browser_launch_options, clear_app_data, get_task_records, open_settings,
@@ -83,6 +86,7 @@ def assert_mobile_targets(page):
 
 
 def assert_dialog_return(page, action, content):
+    open_settings(page, 'help' if action == '#helpMenuBtn' else 'data')
     page.locator(action).click()
     expect(page.locator(content)).to_be_visible()
     expect(page.locator('#taskModal')).to_be_visible()
@@ -112,6 +116,7 @@ def exercise_workspace(browser, url, width, language):
         expect(page.locator('.task-item')).to_have_count(2)
         page.locator('#batchModeBtn').click()
         task_locator(page, 'Settings retained task A').locator('.task-select-checkbox').check()
+        ensure_capture(page)
         page.locator('#quickAddInput').fill('Keep this unsaved quick draft #design')
         preserved = {
             'tasks': get_task_records(page),
@@ -138,7 +143,18 @@ def exercise_workspace(browser, url, width, language):
         assert_view_destinations(page, None)
         for selector in ('#settingsAppearance', '#settingsData', '#settingsExperience',
                          '#settingsCleanup', '#settingsHelp'):
-            expect(page.locator(selector)).to_have_count(1)
+            panel = page.locator(selector)
+            expect(panel).to_have_count(1)
+            expect(panel).to_have_role('tabpanel')
+            if selector == '#settingsData':
+                expect(panel).to_be_visible()
+            else:
+                expect(panel).to_be_hidden()
+        expect(page.locator('#settingsWorkspace [data-settings-section][aria-selected="true"]')).to_have_count(1)
+        expect(page.locator('#languageSelect')).to_have_count(1)
+        expect(page.locator('#themeToggleBtn')).to_have_count(1)
+        expect(page.locator('#settingsLanguageSelect, #settingsThemeSelect')).to_have_count(0)
+        expect(page.locator('header #languageSelect, header #themeToggleBtn')).to_have_count(0)
         for action in ('backupBtn', 'exportCsvBtn', 'importBtn', 'recoveryBtn', 'storageHealthBtn',
                        'notificationToggleBtn', 'archiveCompletedBtn', 'clearCompletedBtn',
                        'savedViewsTransferBtn', 'helpMenuBtn'):
@@ -156,19 +172,20 @@ def exercise_workspace(browser, url, width, language):
         expect(page.locator('#backupHealthText')).to_have_text(
             initial_health['ok'].replace('{age}', initial_health['today']))
         expect(page.locator('#backupBtn')).to_be_focused()
+        open_settings(page, 'appearance')
         for theme in ('dark', 'light', 'system'):
-            page.locator('#settingsThemeSelect').select_option(theme)
-            expect(page.locator('#settingsThemeSelect')).to_have_value(theme)
+            page.locator('#themeToggleBtn').select_option(theme)
             expect(page.locator('#themeToggleBtn')).to_have_value(theme)
             resolved = theme if theme != 'system' else page.evaluate(
                 "matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'")
             expect(page.locator('html')).to_have_attribute('data-theme', resolved)
         other_language = 'en' if language == 'zh-CN' else 'zh-CN'
         for next_language in (other_language, language):
-            page.locator('#settingsLanguageSelect').select_option(next_language)
+            open_settings(page, 'appearance')
+            page.locator('#languageSelect').select_option(next_language)
             expect(page.locator('html')).to_have_attribute('lang', next_language)
             expect(page.locator('#languageSelect')).to_have_value(next_language)
-            expect(page.locator('#settingsLanguageSelect')).to_have_value(next_language)
+            open_settings(page, 'data')
             target_health = json.loads((ROOT / 'resources' / f'{next_language}.json').read_text())['backup']['health']
             expect(page.locator('#backupHealthText')).to_have_text(
                 target_health['ok'].replace('{age}', target_health['today']))
@@ -176,12 +193,14 @@ def exercise_workspace(browser, url, width, language):
         assert_accessibility_baseline(page, f'{width}px {language} settings')
         if width <= 779:
             assert_mobile_targets(page)
+            open_settings(page, 'help')
             page.locator('#helpMenuBtn').click(trial=True)
             action_box = page.locator('#helpMenuBtn').bounding_box()
             dock_box = page.locator('#viewSwitcher').bounding_box()
             assert action_box and dock_box and action_box['y'] + action_box['height'] <= dock_box['y'] + 1, \
                 'The final settings action is obscured by the mobile dock'
         return_to_task_workspace(page)
+        ensure_capture(page)
         expect(page.locator('#searchInput')).to_have_value(preserved['query'])
         expect(page.locator('#currentFilterLabel')).to_have_text(preserved['filter'])
         expect(page.locator('#projectFilterBtn')).to_have_text(preserved['project'])
@@ -193,7 +212,7 @@ def exercise_workspace(browser, url, width, language):
 
         # Collapsing auxiliary tools must never conceal the primary view destinations.
         pin = page.locator('#toolsDrawerPinBtn')
-        if pin.get_attribute('aria-pressed') == 'true':
+        if pin.count() and pin.get_attribute('aria-pressed') == 'true':
             pin.click()
         toggle = page.locator('#toolsDrawerToggleBtn')
         if toggle.get_attribute('aria-expanded') == 'true':
@@ -235,16 +254,17 @@ def exercise_empty_backup_language(browser, url, width):
         initial_health = json.loads((ROOT / 'resources' / 'zh-CN.json').read_text())['backup']['health']
         expect(page.locator('#backupHealthText')).to_have_text(initial_health['empty'])
         for language in ('en', 'zh-CN'):
-            page.locator('#settingsLanguageSelect').select_option(language)
+            open_settings(page, 'appearance')
+            page.locator('#languageSelect').select_option(language)
             expect(page.locator('html')).to_have_attribute('lang', language)
-            expect(page.locator('#settingsLanguageSelect')).to_have_value(language)
             expect(page.locator('#languageSelect')).to_have_value(language)
+            open_settings(page, 'data')
             target_health = json.loads((ROOT / 'resources' / f'{language}.json').read_text())['backup']['health']
             expect(page.locator('#backupHealthText')).to_have_text(target_health['empty'])
             expect(page.locator('#settingsWorkspace')).to_be_visible()
             assert get_task_records(page) == before, 'Translating the empty backup status changed task data'
         assert not errors, errors
-        print(f'{width}px empty backup status: both language directions update the exact status in the same settings screen without task changes', flush=True)
+        print(f'{width}px empty backup status: both language directions update the exact backup status through real appearance/data categories without task changes', flush=True)
     finally:
         context.close()
 
@@ -267,13 +287,14 @@ def exercise_unavailable_storage(browser, url):
         expect(page.locator('#storageUnavailableBanner')).to_be_visible()
         expect(page.locator('#openModalBtn')).to_be_disabled()
         expect(page.locator('#openMenuBtn')).to_be_enabled()
-        open_settings(page)
+        open_settings(page, 'help')
         for action in ('backupBtn', 'importBtn', 'recoveryBtn', 'notificationToggleBtn',
                        'archiveCompletedBtn', 'clearCompletedBtn'):
             expect(page.locator(f'#{action}')).to_be_disabled()
         expect(page.locator('#helpMenuBtn')).to_be_enabled()
         assert_dialog_return(page, '#helpMenuBtn', '.help-guide')
-        page.locator('#settingsThemeSelect').select_option('dark')
+        open_settings(page, 'appearance')
+        page.locator('#themeToggleBtn').select_option('dark')
         expect(page.locator('html')).to_have_attribute('data-theme', 'dark')
         expect(page.locator('#themeToggleBtn')).to_have_value('dark')
         return_to_task_workspace(page)
@@ -281,15 +302,36 @@ def exercise_unavailable_storage(browser, url):
         page.locator('#retryStorageBtn').click()
         expect(page.locator('#storageUnavailableBanner')).to_be_hidden()
         expect(page.locator('#quickAddInput')).to_be_enabled()
+        expect(page.locator('#openModalBtn')).to_be_enabled()
         assert get_task_records(page) == [], 'Recovering storage invented a task record'
+
+        raw = 'Keep this raw capture available to copy after storage failure'
+        ensure_capture(page).fill(raw)
+        inject_quota_failure(page)
+        page.locator('#quickAddInput').press('Enter')
+        expect(page.locator('#storageUnavailableBanner')).to_be_visible()
+        expect(page.locator('#openModalBtn')).to_be_enabled()
+        page.locator('#captureCloseBtn').click()
+        expect(page.locator('#captureShelf')).to_be_hidden()
+        page.locator('#openModalBtn').click()
+        expect(page.locator('#quickAddInput')).to_be_visible()
+        expect(page.locator('#quickAddInput')).to_have_value(raw)
+        expect(page.locator('#quickAddInput')).to_have_attribute('readonly', '')
+        assert get_task_records(page) == [], 'Failed retained capture wrote a partial task'
+        page.locator('#retryStorageBtn').click()
+        expect(page.locator('#storageUnavailableBanner')).to_be_hidden()
+        expect(page.locator('#openModalBtn')).to_be_enabled()
+        expect(page.locator('#quickAddInput')).to_have_value(raw)
+        expect(page.locator('#quickAddInput')).not_to_have_attribute('readonly', '')
+        assert get_task_records(page) == [], 'Retry saved a retained capture without explicit submission'
         assert not errors, errors
-        print('Unavailable storage: settings/help/theme remain accessible, data actions stay guarded, and real retry recovers safely', flush=True)
+        print('Unavailable storage: empty Add is disabled; retained raw capture can reopen for copying; settings/help/theme and real retry preserve data', flush=True)
     finally:
         context.close()
 
 
 def exercise_language_rollback(browser, url):
-    for selector in ('#languageSelect', '#settingsLanguageSelect'):
+    for selector in ('#languageSelect',):
         context = browser.new_context(reduced_motion='reduce')
         try:
             page = context.new_page()
@@ -299,8 +341,7 @@ def exercise_language_rollback(browser, url):
             add_task(page, 'Language rollback keeps real task data', no_deadline=True)
             before = get_task_records(page)
             previous = page.locator('html').get_attribute('lang')
-            if selector == '#settingsLanguageSelect':
-                open_settings(page)
+            open_settings(page, 'appearance')
             page.evaluate("""() => {
                 const put = IDBObjectStore.prototype.put;
                 window.__languageAbortInjected = false;
@@ -318,26 +359,28 @@ def exercise_language_rollback(browser, url):
             page.wait_for_function('window.__languageAbortInjected === true')
             expect(page.locator('html')).to_have_attribute('lang', previous)
             expect(page.locator('#languageSelect')).to_have_value(previous)
-            expect(page.locator('#settingsLanguageSelect')).to_have_value(previous)
             assert get_task_records(page) == before, 'Failed language preference write changed task data'
             assert not errors, errors
-            print(f'Language rollback: aborted config write from {selector} restores both controls and document language', flush=True)
+            print(f'Language rollback: aborted config write from {selector} restores the canonical control and document language', flush=True)
         finally:
             context.close()
 
 
-def run(engine):
+def run(engine, case='all'):
     with production_server() as url, sync_playwright() as p:
         options = browser_launch_options() if engine == 'chromium' else {'headless': True}
         browser = getattr(p, engine).launch(timeout=30000, **options)
         try:
             print(f'Settings/navigation {engine}: {browser.version}; deployment CSP enforced', flush=True)
-            for width in (1440, 390):
-                for language in ('zh-CN', 'en'):
-                    exercise_workspace(browser, url, width, language)
-                exercise_empty_backup_language(browser, url, width)
-            exercise_unavailable_storage(browser, url)
-            exercise_language_rollback(browser, url)
+            if case == 'all':
+                for width in (1440, 390):
+                    for language in ('zh-CN', 'en'):
+                        exercise_workspace(browser, url, width, language)
+                    exercise_empty_backup_language(browser, url, width)
+            if case in ('all', 'storage'):
+                exercise_unavailable_storage(browser, url)
+            if case in ('all', 'language'):
+                exercise_language_rollback(browser, url)
         finally:
             browser.close()
 
@@ -345,4 +388,6 @@ def run(engine):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--browser', choices=('chromium', 'firefox', 'webkit'), default='chromium')
-    run(parser.parse_args().browser)
+    parser.add_argument('--case', choices=('all', 'storage', 'language'), default='all')
+    args = parser.parse_args()
+    run(args.browser, args.case)

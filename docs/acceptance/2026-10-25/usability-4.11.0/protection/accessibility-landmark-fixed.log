@@ -1,0 +1,34 @@
+Subtask checkbox visibility: {"label": "1280px", "theme": "light", "interaction": "resting", "unchecked": {"checked": false, "background": [255, 255, 255, 255], "marker": null, "image": "none", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [0, 0, 0, 255]}, "checked": {"checked": true, "background": [40, 125, 100, 255], "marker": [255, 255, 255, 255], "image": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E\")", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [0, 0, 0, 255]}, "marker_contrast": 4.990862576698121, "state_contrast": 4.990862576698121}
+Subtask checkbox visibility: {"label": "1280px", "theme": "light", "interaction": "hover", "unchecked": {"checked": false, "background": [255, 255, 255, 255], "marker": null, "image": "none", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [0, 0, 0, 255]}, "checked": {"checked": true, "background": [40, 125, 100, 255], "marker": [255, 255, 255, 255], "image": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E\")", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [0, 0, 0, 255]}, "marker_contrast": 4.990862576698121, "state_contrast": 4.990862576698121}
+Subtask checkbox visibility: {"label": "1280px", "theme": "light", "interaction": "keyboard-focus", "unchecked": {"checked": false, "background": [255, 255, 255, 255], "marker": null, "image": "none", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [0, 0, 0, 255]}, "checked": {"checked": true, "background": [40, 125, 100, 255], "marker": [255, 255, 255, 255], "image": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E\")", "focusVisible": true, "outlineWidth": 2, "outlineStyle": "solid", "outline": [89, 97, 198, 255]}, "marker_contrast": 4.990862576698121, "state_contrast": 4.990862576698121}
+Subtask checkbox visibility: {"label": "1280px", "theme": "dark", "interaction": "resting", "unchecked": {"checked": false, "background": [37, 43, 61, 255], "marker": null, "image": "none", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [255, 255, 255, 255]}, "checked": {"checked": true, "background": [46, 141, 111, 255], "marker": [255, 255, 255, 255], "image": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E\")", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [255, 255, 255, 255]}, "marker_contrast": 4.073194570797023, "state_contrast": 3.4564662322708433}
+Subtask checkbox visibility: {"label": "1280px", "theme": "dark", "interaction": "hover", "unchecked": {"checked": false, "background": [37, 43, 61, 255], "marker": null, "image": "none", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [255, 255, 255, 255]}, "checked": {"checked": true, "background": [46, 141, 111, 255], "marker": [255, 255, 255, 255], "image": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E\")", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [255, 255, 255, 255]}, "marker_contrast": 4.073194570797023, "state_contrast": 3.4564662322708433}
+Subtask checkbox visibility: {"label": "1280px", "theme": "dark", "interaction": "keyboard-focus", "unchecked": {"checked": false, "background": [37, 43, 61, 255], "marker": null, "image": "none", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [255, 255, 255, 255]}, "checked": {"checked": true, "background": [46, 141, 111, 255], "marker": [255, 255, 255, 255], "image": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E\")", "focusVisible": true, "outlineWidth": 2, "outlineStyle": "solid", "outline": [167, 175, 255, 255]}, "marker_contrast": 4.073194570797023, "state_contrast": 3.4564662322708433}
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer-usability/tools/accessibility_i18n_audit.py", line 613, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/workspace/Task-Tracer-usability/tools/accessibility_i18n_audit.py", line 606, in main
+    audit_context(local_url, axe_source, include_scaled=not args.skip_scaled)
+  File "/workspace/Task-Tracer-usability/tools/accessibility_i18n_audit.py", line 535, in audit_context
+    audit_page_state(page, axe_source, "english task list")
+  File "/workspace/Task-Tracer-usability/tools/accessibility_i18n_audit.py", line 295, in audit_page_state
+    run_axe(page, axe_source, label)
+  File "/workspace/Task-Tracer-usability/tools/accessibility_i18n_audit.py", line 77, in run_axe
+    raise AssertionError(f"axe violations during {label}:\n{json.dumps(compact, ensure_ascii=False, indent=2)}")
+AssertionError: axe violations during english task list:
+[
+  {
+    "id": "label-content-name-mismatch",
+    "impact": "serious",
+    "help": "Elements must have their visible text as part of their accessible name",
+    "nodes": [
+      {
+        "target": [
+          "#toolsDrawerToggleBtn"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      }
+    ]
+  }
+]

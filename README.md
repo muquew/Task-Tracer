@@ -24,7 +24,7 @@ Task Tracer is a personal task manager that runs in the browser and keeps task d
 
 The continuing development goal, acceptance criteria and current work queue are recorded in [GOAL.md](./GOAL.md).
 
-The latest published release is **[4.10.1](./docs/releases/4.10.1.md)**. Permanent view navigation and a dedicated Settings and data workspace are live, including backup status that follows language changes on the same screen. [Acceptance records](./docs/acceptance/2026-10-25/publication-4.10.1.json) retain the exact local and real-domain scope.
+**[4.11.0](./docs/releases/4.11.0.md)** reorganizes capture, task editing, mobile views, settings and data tools after a hands-on whole-site review. See the [before-and-after review](./docs/acceptance/2026-10-25/usability-4.11.0/README.md).
 
 The [4.10.0 baseline](./docs/releases/4.10.0.md) preserves its full engineering results, the single test-navigation recheck and the production language issue repaired by 4.10.1. Earlier [4.9.0](./docs/releases/4.9.0.md) results keep their original identity.
 
@@ -43,23 +43,23 @@ PWA means Progressive Web App: when the browser supports it, Task Tracer can be 
 | Review progress | Completion rate, active overdue rate, archive count, today completions, completion streak, and recent completion trend. |
 | Protect local data | Export/backup, backup health, import preview, merge/replace conflict handling, checksum checks, pre-replace snapshots, and emergency backup when storage is blocked. |
 
-## Workspace controls in 4.10.1
+## Workspace controls
 
 The workspace keeps projects and saved views in the sidebar, with a focused task area and a separate deadline overview. **List**, **Calendar**, **Timeline**, and **Statistics** have permanent, labeled navigation in the desktop sidebar and the narrow-screen bottom bar. Collapsing search and filters keeps those four entries available. On narrow screens, **Open navigation** reveals project navigation, and **Show schedule** opens the compact calendar. The date index and small calendar open the existing calendar/date-detail view; they do not change task deadlines.
 
-- Use **Language** in the header to choose Chinese or English. Task names, project names, tags and other user content keep their original text.
-- Use **Appearance** in the header to choose **Light**, **Dark** or **System**. System follows the operating system's appearance; a manual choice stays selected when the system changes.
-- Open **Settings and data** from the header or sidebar, or press `Ctrl/Cmd + M`. This is a separate workspace for appearance/language, backup/recovery, reminders/installation, task cleanup, and help/app information. **Back to tasks** returns to your current view, search, filters, and Quick add text; the four view entries also return directly to tasks.
+- Choose **Add task** in the top bar to open Quick capture, then review the parsed deadline, project and tags before adding. **More options** carries the entered text into the full form for a description and subtasks; expand **More settings** for tags, reminders and recurrence.
+- Open **Settings & data** from the header or sidebar, or press `Ctrl/Cmd + M`. Choose one of five category panels: **Appearance & language**, **Backups & transfer**, **Reminders & installation**, **Task maintenance**, or **Help & about**. The selected category is retained while the page stays open; **Back to tasks** returns to your current view, search, filters and Quick capture text.
+- Language and appearance controls are in **Settings & data → Appearance & language**. Choose Chinese or English and **Light**, **Dark** or **System**. System follows the operating system's appearance; a manual choice stays selected when the system changes. Task names, projects, tags and other user content keep their original text.
 - Mark a task complete with its leading completion control. Open its **Task actions** menu for editing and the other actions available for that task, such as adding it to today's plan, snoozing, skipping a repeat occurrence, archiving or deleting.
 - **Today's plan** is a manually chosen working set. **Due today** and the deadline overview reflect saved task dates; a task due today is not automatically added to the plan.
 
-The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.10.1 release record](./docs/releases/4.10.1.md) documents the implementation and completed acceptance.
+The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.11.0 release record](./docs/releases/4.11.0.md) describes the whole-site usability changes.
 
 ## Getting Started
 
-A new workspace starts empty. Add your first task with **Add task (+)** or quick add, or choose **Add 3 example tasks** in the empty state. Examples are clearly labeled, have reminders off, and can be edited, deleted or undone. Refreshing an empty workspace does not add examples automatically. You can backfill a past deadline and edit an overdue task without first moving its date forward. Editing only its name or description keeps the exact stored due instant and timezone, including repeated clock times when daylight saving time ends.
+A new workspace starts empty. Choose **Add task (+)** in the top bar to capture your first task, or choose **Try example tasks** in the empty state to add three examples. Examples are clearly labeled, have reminders off, and can be edited, deleted or undone. Refreshing an empty workspace does not add examples automatically. You can backfill a past deadline and edit an overdue task without first moving its date forward. Editing only its name or description keeps the exact stored due instant and timezone, including repeated clock times when daylight saving time ends.
 
-Open **Help and support** from **Settings and data** or the footer for quick-add and search examples, keyboard shortcuts, reminder/offline limits, and a button to open the command palette. Settings and help remain available when local storage is blocked; actions that need task storage keep their storage checks. For troubleshooting and feedback, see [SUPPORT.md](./SUPPORT.md).
+Open **Settings & data → Help & about → Help and support** for command-palette, diagnostics and support actions, followed by keyboard shortcuts. Expand the capture, search, dates, backup, offline or privacy sections as needed. Diagnostics are also available directly in **Help & about**. Settings and help remain available when local storage is blocked; actions that need task storage keep their storage checks. For troubleshooting and feedback, see [SUPPORT.md](./SUPPORT.md).
 
 ## Screenshots
 
@@ -69,7 +69,7 @@ Open **Help and support** from **Settings and data** or the footer for quick-add
 
 ## Fast Input
 
-Quick add turns compact text into structured task fields:
+Open **Add task** in the top bar to use Quick capture. It turns compact text into structured task fields:
 
 ```text
 tomorrow 20:00 Review English #study /Personal
@@ -126,7 +126,7 @@ Saved views store the current search, project filter, status filter, sort mode, 
 
 The saved view's delete control opens a confirmation naming the view, with Cancel focused. Only explicit deletion removes that view; tasks stay unchanged. View deletion cannot be undone, so export a views file first if you need a copy.
 
-Use **Settings and data → Transfer saved views** to export or import a separate views JSON file when moving browsers or devices. Task JSON backups do not contain these views. New exports use views JSON 1.1; imports also accept the older 1.0 format. Files support up to 12 views and 1 MiB; review the import preview before adding them. Project names such as `all` and `__none__` remain exact project selections, separate from All projects and tasks without a project. A saved view for a project that is currently absent stays empty instead of expanding to all projects.
+Use **Settings & data → Backups & transfer → Transfer saved views**, under **Other data tools**, to export or import a separate views JSON file when moving browsers or devices. Task JSON backups do not contain these views. New exports use views JSON 1.1; imports also accept the older 1.0 format. Files support up to 12 views and 1 MiB; review the import preview before adding them. Project names such as `all` and `__none__` remain exact project selections, separate from All projects and tasks without a project. A saved view for a project that is currently absent stays empty instead of expanding to all projects.
 
 Before changing saved views in 4.7 or newer, close or refresh every older app tab and installed-app window. Versions before 4.7 can interpret typed project scopes as All projects and write that interpretation back. Before downgrading, keep a views 1.1 export outside the browser; older apps cannot read it, so return to 4.7 or newer to restore those views.
 
@@ -147,7 +147,7 @@ Today's plan is a lightweight execution layer. Adding a task to it does not chan
 
 Batch Actions mode initially renders 100 matching tasks with selection controls and Show more. **Select all matching** selects the entire current search/project/status result, including unloaded pages; selected tasks can be added to today's plan, completed, archived or deleted together. Changing that range drops selections outside it. Pagination also applies to batch timeline/calendar sections and any batch sort; non-batch manual ordering retains full rendering.
 
-**Archive completed** and **Delete completed** in **Settings and data** apply to completed, unarchived tasks across the entire workspace, regardless of the current project, search or filter. Review the confirmation before proceeding. Use batch actions when you need to choose a particular matching set.
+**Archive completed** and **Delete completed** in **Settings & data → Task maintenance** apply to completed, unarchived tasks across the entire workspace, regardless of the current project, search or filter. Review the confirmation before proceeding. Use batch actions when you need to choose a particular matching set.
 
 Undo reverts the most recent task change while its task state is still current. A newer concurrent task change can withhold or invalidate that Undo, preserving the newer data; review the current tasks and start a fresh action. Use the header button, command palette, or `Ctrl/Cmd + Z` when focus is not inside a text field.
 
@@ -175,7 +175,7 @@ Browser reminders are not guaranteed system alarms. Delivery can depend on brows
 
 `Export/Backup` starts a task JSON download with an export ID, checksum and version notes, and records the export operation. Starting a download does not prove that the file was saved or retained; check the downloaded file and keep a copy outside the browser. It restores supported task fields, including subtasks, projects, tags, due dates, repeat/reminder rules and today's plan. It does not include saved views, app settings or recovery checkpoints.
 
-The backup indicator compares the recorded export snapshot with current tasks. Task changes require another export; older date-only export history has unknown coverage rather than establishing that current tasks were exported. A fresh export also does not prove that you kept its file. Task JSON and CSV exports read their task data from a single read-only snapshot without refreshing the current task view. The browser-local backup coverage record refers to the exported task revision and date; it is not an extra field in the task JSON. CSV does not count as a restorable task backup. The optional startup backup reminder skips an open dialog or existing notification; Settings and data still shows backup status.
+The backup indicator compares the recorded export snapshot with current tasks. Task changes require another export; older date-only export history has unknown coverage rather than establishing that current tasks were exported. A fresh export also does not prove that you kept its file. Task JSON and CSV exports read their task data from a single read-only snapshot without refreshing the current task view. The browser-local backup coverage record refers to the exported task revision and date; it is not an extra field in the task JSON. CSV does not count as a restorable task backup. The optional startup backup reminder skips an open dialog or existing notification; **Settings & data → Backups & transfer** still shows backup status.
 
 `Import` first shows a cancellable file-reading dialog, then previews the task JSON before writing it. Cancelling a read or choosing a newer file prevents an earlier read from replacing your current form or preview. The preview shows restore checks, task counts, differences, repeated IDs, duplicate names, current-data impact, checksum status, and same-name conflict choices.
 
@@ -187,11 +187,11 @@ If browser storage is blocked or becomes unavailable, Task Tracer enters a stora
 
 ### Spreadsheet reporting
 
-Choose **Export CSV** in **Settings and data** to download all stored tasks, including completed and archived tasks, regardless of the current search or filter. The UTF-8 file includes task details, dates, recurrence fields, tags and subtasks (JSON cells). Spreadsheet formula-like cells receive a leading apostrophe for safer opening. CSV is a reporting format, not an importable backup; keep using JSON backup for task restoration. CSV export does not reset the backup reminder.
+Choose **Export all tasks as CSV** under **Settings & data → Backups & transfer → Other data tools** to download all stored tasks, including completed and archived tasks, regardless of the current search or filter. The UTF-8 file includes task details, dates, recurrence fields, tags and subtasks (JSON cells). Spreadsheet formula-like cells receive a leading apostrophe for safer opening. CSV is a reporting format, not an importable backup; keep using JSON backup for task restoration. CSV export does not reset the backup reminder.
 
 ## Recovery History and Multiple Tabs
 
-Open **Settings and data → Recovery history**, choose a checkpoint by date and task count, and review its task names and statuses. The preview uses its own scroll area, starts with 100 rows and offers Show more; it keeps full task/completed/archived counts. Changing the checkpoint resets the preview and replacement confirmation. To restore, tick the confirmation and confirm; this replaces the current task list.
+Open **Settings & data → Backups & transfer → Recovery history**, choose a checkpoint by date and task count, and review its task names and statuses. The preview uses its own scroll area, starts with 100 rows and offers Show more; it keeps full task/completed/archived counts. Changing the checkpoint resets the preview and replacement confirmation. To restore, tick the confirmation and confirm; this replaces the current task list.
 
 **Export this recovery point** downloads that checkpoint as an importable task JSON 2.4 file, including empty checkpoints, without changing current-task backup coverage. Inspect and retain the actual file. **Clear recovery history** asks for a separate confirmation and removes only stored local checkpoints. If history changed in another window, review the refreshed list and confirm again. Current tasks, views, settings, downloaded files and Undo stay unchanged; a later task write creates new checkpoints.
 
@@ -201,11 +201,11 @@ When another tab changes tasks, a stale write is rejected and the latest task li
 
 ## Data safety and large workspaces
 
-Use **Settings and data → Data safety** to inspect site storage and explicitly request browser persistence. A denied or unsupported request does not block your tasks or exports; persistence cannot replace an external backup. Ordinary lists and timelines initially show 100 matching tasks with **Show more**; search still covers the entire workspace. Timeline groups follow chronological date order, put undated work last and show the full matching count for each displayed date. Calendar undated tasks and a selected day’s details also start at 100 items, with independent Show more controls and full matching counts. Non-batch manual ordering retains full rendering. Batch rendering is paged while selection and actions cover all selected matching tasks. See the [measured performance results](./docs/performance.md).
+Use **Settings & data → Backups & transfer → Data safety**, under **Other data tools**, to inspect site storage and explicitly request browser persistence. A denied or unsupported request does not block your tasks or exports; persistence cannot replace an external backup. Ordinary lists and timelines initially show 100 matching tasks with **Show more**; search still covers the entire workspace. Timeline groups follow chronological date order, put undated work last and show the full matching count for each displayed date. Calendar undated tasks and a selected day’s details also start at 100 items, with independent Show more controls and full matching counts. Non-batch manual ordering retains full rendering. Batch rendering is paged while selection and actions cover all selected matching tasks. See the [measured performance results](./docs/performance.md).
 
 ## Install, Offline, and Updates
 
-Use **Settings and data → Install app** to install Task Tracer. If the browser does not expose an automatic install prompt, the same entry shows manual steps for desktop Chrome/Edge, Android Chrome, and iOS Safari.
+Use **Settings & data → Reminders & installation → Install app** to install Task Tracer. If the browser does not expose an automatic install prompt, the same entry shows manual steps for desktop Chrome/Edge, Android Chrome, and iOS Safari.
 
 After the app shell is cached, Task Tracer can load offline. When a newer cached version is ready, the app shows an update prompt with a refresh action. The HTML includes matching language data for startup if a separate translation request fails. Initial offline use still requires a completed online cache; clearing site data removes that copy. Older open windows keep their installed worker policy, so save drafts and close or refresh those windows after upgrading.
 
@@ -219,7 +219,7 @@ Task data is stored in the current browser's IndexedDB. Task Tracer does not req
 
 Before changing browsers, clearing site data, reinstalling the app, or moving devices, use `Export/Backup` for task JSON and **Transfer saved views** for a separate views JSON file, and keep copies outside the browser. Local storage and export checksums do not encrypt task contents.
 
-**Help and support → Review diagnostic information** shows a full JSON preview before you choose to download it. It contains application/browser versions and capabilities, permission status and storage estimates; it excludes task content, saved views, app settings, URLs and raw error messages. Nothing is uploaded automatically, and a diagnostic file is not a task backup.
+**Settings & data → Help & about → Review diagnostic information** shows a full JSON preview before you choose to download it. The same action is available in **Help and support**. It contains application/browser versions and capabilities, permission status and storage estimates; it excludes task content, saved views, app settings, URLs and raw error messages. Nothing is uploaded automatically, and a diagnostic file is not a task backup.
 
 Capture/share URLs can contain task text in query parameters. Hosting logs and browser history may record those URLs before the app clears them. See [the security and data boundaries](./SECURITY.md) for deployment guidance.
 

@@ -2,6 +2,8 @@
 """Exercise stale-tab saved-view mutations and an aborted configuration write."""
 from __future__ import annotations
 
+from smoke_playwright import open_task_editor
+
 from smoke_playwright import return_to_task_workspace
 
 from playwright.sync_api import expect, sync_playwright
@@ -174,7 +176,7 @@ def assert_late_confirmation_preserves_draft(page, task_records):
     page.locator('#submitBtn').click()
     page.wait_for_function('typeof window.finishHeldSavedViewCompletion === "function"')
     page.locator('#cancelBtn').click()
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('Unsubmitted task after canceled view save')
     page.locator('#taskDesc').fill('A newer task draft must survive the older completion')
     page.evaluate('window.finishHeldSavedViewCompletion()')

@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+from smoke_playwright import open_help, open_task_editor, ensure_capture
+
 from smoke_playwright import open_settings, return_to_task_workspace
 
+import argparse
 import json
 import os
 import time
@@ -31,6 +34,7 @@ from smoke_playwright import (
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+AXE_FAILURES: list[str] | None = None
 
 
 def find_axe_source() -> Path:
@@ -71,7 +75,11 @@ def run_axe(page: Page, axe_source: str, label: str) -> None:
             }
             for item in serious
         ]
-        raise AssertionError(f"axe violations during {label}:\n{json.dumps(compact, ensure_ascii=False, indent=2)}")
+        message = f"axe violations during {label}:\n{json.dumps(compact, ensure_ascii=False, indent=2)}"
+        if AXE_FAILURES is None:
+            raise AssertionError(message)
+        AXE_FAILURES.append(message)
+        print(message, flush=True)
 
 
 def assert_focus_visible(page: Page, selector: str, label: str) -> None:
@@ -107,7 +115,7 @@ def assert_focus_baseline(page: Page, label: str) -> None:
         '#viewSwitcher .view-tab[aria-current="page"]',
     ]
     if page.locator('#settingsWorkspace').is_visible():
-        selectors = ['#settingsBackBtn', '#settingsThemeSelect', '#settingsLanguageSelect',
+        selectors = ['#settingsBackBtn', '#themeToggleBtn', '#languageSelect',
                      '#backupBtn', '#importBtn', '#recoveryBtn', '#storageHealthBtn',
                      '#notificationToggleBtn', '#archiveCompletedBtn', '#clearCompletedBtn', '#helpMenuBtn']
     for selector in selectors:
@@ -132,6 +140,16 @@ def assert_layout(page: Page, label: str) -> None:
                 })
                 .map((el) => {
                     const rect = el.getBoundingClientRect();
+                    let scrollsWithinViewport = false;
+                    for (let parent = el.parentElement; parent && parent !== document.body; parent = parent.parentElement) {
+                        const style = getComputedStyle(parent);
+                        const box = parent.getBoundingClientRect();
+                        if (['auto', 'scroll'].includes(style.overflowX) && parent.scrollWidth > parent.clientWidth + 1
+                            && box.left >= -1 && box.right <= viewportWidth + 1) {
+                            scrollsWithinViewport = true;
+                            break;
+                        }
+                    }
                     return {
                         tag: el.tagName.toLowerCase(),
                         id: el.id,
@@ -139,14 +157,15 @@ def assert_layout(page: Page, label: str) -> None:
                         width: rect.width,
                         height: rect.height,
                         left: rect.left,
-                        right: rect.right
+                        right: rect.right,
+                        scrollsWithinViewport
                     };
                 });
             return {
                 viewportWidth,
                 scrollWidth: doc.scrollWidth,
                 smallControls: visibleControls.filter((item) => item.width < 24 || item.height < 24),
-                overflowingControls: visibleControls.filter((item) => item.left < -1 || item.right > viewportWidth + 1)
+                overflowingControls: visibleControls.filter((item) => (item.left < -1 || item.right > viewportWidth + 1) && !item.scrollsWithinViewport)
             };
         }"""
     )
@@ -360,7 +379,7 @@ def audit_task_reading(page: Page, axe_source: str) -> None:
 
 def audit_task_draft_guard(page: Page, axe_source: str, label: str) -> None:
     return_to_task_workspace(page)
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('Accessibility draft kept in this browser only')
     page.locator('#cancelBtn').click()
     expect(page.locator('#draftDiscardPrompt')).to_be_visible()
@@ -375,7 +394,7 @@ def audit_task_draft_guard(page: Page, axe_source: str, label: str) -> None:
 
 def audit_task_draft_recovery(page: Page, axe_source: str, label: str) -> None:
     return_to_task_workspace(page)
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('Accessibility unsaved quota draft')
     page.locator('#taskDesc').fill('Synthetic draft retained only in the current page memory')
     page.evaluate("""() => {
@@ -479,8 +498,10 @@ def audit_scaled_surfaces(browser, url: str, axe_source: str, viewport: dict) ->
             page.locator('#cancelBtn').click()
             return_to_task_workspace(page)
             raw_quick_text = 'Accessibility quick-add draft 中文 #review /Audit'
+            ensure_capture(page)
             page.locator('#quickAddInput').fill(raw_quick_text)
             inject_quota_failure(page)
+            ensure_capture(page)
             page.locator('#quickAddInput').press('Enter')
             expect(page.locator('#quickAddRetainedMessage')).to_be_visible()
             expect(page.locator('#quickAddInput')).to_be_enabled()
@@ -492,12 +513,13 @@ def audit_scaled_surfaces(browser, url: str, axe_source: str, viewport: dict) ->
             expect(page.locator('#quickAddInput')).to_have_value(raw_quick_text)
             expect(page.locator('#quickAddInput')).not_to_have_attribute('readonly', '')
             audit_page_state(page, axe_source, f'{label} same-page recovered quick-add text')
+            ensure_capture(page)
             page.locator('#quickAddInput').fill('')
     finally:
         context.close()
 
 
-def audit_context(url: str, axe_source: str, reduced_motion: bool = False) -> None:
+def audit_context(url: str, axe_source: str, reduced_motion: bool = False, *, include_scaled: bool = True) -> None:
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(**browser_launch_options())
         context = browser.new_context(
@@ -512,7 +534,9 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False) -> No
         audit_subtask_checkbox_visibility(page, '390px' if reduced_motion else '1280px')
         audit_page_state(page, axe_source, "task list")
 
-        page.locator("#openModalBtn").click()
+        ensure_capture(page)
+        audit_page_state(page, axe_source, 'global capture')
+        open_task_editor(page)
         expect(page.locator("#taskModal")).to_be_visible()
         audit_page_state(page, axe_source, "task modal")
         page.locator("#cancelBtn").click()
@@ -525,8 +549,9 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False) -> No
         switch_to_english(page)
         select_view(page, "list")
         audit_page_state(page, axe_source, "english task list")
-        open_settings(page)
-        audit_page_state(page, axe_source, 'english settings page')
+        for section in ('appearance', 'data', 'experience', 'cleanup', 'help'):
+            open_settings(page, section)
+            audit_page_state(page, axe_source, f'english settings {section}')
         return_to_task_workspace(page)
         audit_views_transfer(page, axe_source, 'light')
         audit_view_delete(page, axe_source, 'light')
@@ -534,7 +559,7 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False) -> No
         audit_task_draft_guard(page, axe_source, 'light')
         audit_task_draft_recovery(page, axe_source, 'light')
 
-        page.locator('#helpBtn').click()
+        open_help(page)
         expect(page.locator('#helpDiagnosticsBtn')).to_be_visible()
         audit_page_state(page, axe_source, 'help dialog')
         page.locator('#helpDiagnosticsBtn').click()
@@ -561,7 +586,7 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False) -> No
         audit_view_delete(page, axe_source, 'dark')
         audit_task_draft_guard(page, axe_source, 'dark')
         audit_task_draft_recovery(page, axe_source, 'dark')
-        page.locator('#helpBtn').click()
+        open_help(page)
         audit_page_state(page, axe_source, 'dark help dialog')
         page.locator('#helpDiagnosticsBtn').click()
         expect(page.locator('#diagnosticPreview')).to_be_visible()
@@ -575,23 +600,35 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False) -> No
                 document.getElementById('notification').className = `notification ${kind} show`;
             }""", kind)
             audit_page_state(page, axe_source, f'dark {kind} notification')
-        audit_scaled_surfaces(browser, url, axe_source, {'width': 390, 'height': 844} if reduced_motion else {'width': 1280, 'height': 720})
+        if include_scaled:
+            audit_scaled_surfaces(browser, url, axe_source, {'width': 390, 'height': 844} if reduced_motion else {'width': 1280, 'height': 720})
 
         context.close()
         browser.close()
+        print(f'Accessibility workflow completed: {"390px reduced motion" if reduced_motion else "1280px"}', flush=True)
 
 
 def main() -> int:
+    global AXE_FAILURES
+    parser = argparse.ArgumentParser(description='Audit task and settings surfaces with axe and real keyboard focus.')
+    parser.add_argument('--skip-scaled', action='store_true', help='Audit normal task/settings workflows without the separate pagination workload')
+    parser.add_argument('--collect-axe', action='store_true', help='Report all normal-workflow axe violations, then fail the run if any occurred')
+    parser.add_argument('--viewport', choices=('both', 'desktop', 'mobile'), default='both', help='Resume only the affected viewport after a focused fix')
+    args = parser.parse_args()
+    AXE_FAILURES = [] if args.collect_axe else None
     ensure_conda_library_path()
     axe_source = find_axe_source().read_text(encoding="utf-8")
+    modes = (False, True) if args.viewport == 'both' else (args.viewport == 'mobile',)
     url = os.environ.get("TASK_TRACER_URL")
     if url:
-        audit_context(url, axe_source)
-        audit_context(url, axe_source, reduced_motion=True)
+        for reduced in modes:
+            audit_context(url, axe_source, reduced_motion=reduced, include_scaled=not args.skip_scaled)
     else:
         with local_server() as local_url:
-            audit_context(local_url, axe_source)
-            audit_context(local_url, axe_source, reduced_motion=True)
+            for reduced in modes:
+                audit_context(local_url, axe_source, reduced_motion=reduced, include_scaled=not args.skip_scaled)
+    if AXE_FAILURES:
+        raise AssertionError(f'{len(AXE_FAILURES)} audited states had axe violations; every violation is printed above')
     print("Accessibility/i18n audit passed")
     return 0
 

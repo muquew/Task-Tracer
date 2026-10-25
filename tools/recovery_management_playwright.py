@@ -2,6 +2,8 @@
 """Review/export historical tasks and explicitly clear only reviewed recovery points."""
 from __future__ import annotations
 
+from smoke_playwright import open_task_editor
+
 from smoke_playwright import open_settings, return_to_task_workspace
 
 import argparse
@@ -277,7 +279,7 @@ def old_clear_preserves_draft(page, url, _browser):
     expect(page.locator('#taskModal')).to_be_hidden()
     expect(page.locator('#settingsWorkspace')).to_be_visible()
     return_to_task_workspace(page)
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('Later task draft after cleanup')
     page.locator('#taskDesc').fill('Keep this raw unsaved text')
     page.evaluate('window.finishRecoveryCleanup()')

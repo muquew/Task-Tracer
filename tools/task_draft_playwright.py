@@ -2,6 +2,8 @@
 """Check task draft close, unload, failure, and delayed-save session safety."""
 from __future__ import annotations
 
+from smoke_playwright import ensure_capture, open_task_editor, reveal_task_field
+
 import argparse
 import json
 from pathlib import Path
@@ -41,7 +43,7 @@ def discard(page: Page, retained: bool = False) -> None:
 def check_close_paths(page: Page) -> None:
     assert not unload_is_guarded(page)
     for close in ('cancel', 'x', 'escape', 'background'):
-        page.locator('#openModalBtn').click()
+        open_task_editor(page)
         assert not unload_is_guarded(page)
         if close == 'cancel':
             page.locator('#cancelBtn').click()
@@ -55,15 +57,16 @@ def check_close_paths(page: Page) -> None:
         expect(page.locator('#draftDiscardPrompt')).to_have_count(0)
 
     for close in ('cancel', 'x', 'escape', 'background'):
-        page.locator('#openModalBtn').click()
+        open_task_editor(page)
         name = f'Unsaved {close} draft'
         page.locator('#taskName').fill(name)
         page.locator('#taskDesc').fill('A private draft description, retained only in this form.')
+        page.locator('#noDeadline').uncheck()
         page.locator('#dueDate').fill('2031-04-09')
         page.locator('#dueTime').fill('14:25')
-        page.locator('#repeatType').select_option('weekly-days')
-        page.locator('#repeatWeekday2').check()
-        page.locator('#repeatPaused').check()
+        reveal_task_field(page, '#repeatType').select_option('weekly-days')
+        reveal_task_field(page, '#repeatWeekday2').check()
+        reveal_task_field(page, '#repeatPaused').check()
         page.locator('#subtaskInput').fill('First draft subtask')
         page.locator('#addSubtaskBtn').click()
         page.locator('#subtaskInput').fill('Unsubmitted subtask text')
@@ -107,9 +110,10 @@ def check_close_paths(page: Page) -> None:
         expect(page.locator('#subtaskInput')).to_have_value('Unsubmitted subtask text')
         expect(page.locator('#submitBtn')).to_be_enabled()
         discard(page)
-        expect(page.locator('#openModalBtn')).to_be_focused()
+        origin = '#quickAddInput' if page.locator('#captureShelf').count() else '#openModalBtn'
+        expect(page.locator(origin)).to_be_focused()
         assert get_task_records(page) == []
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     expect(page.locator('#taskName')).to_have_value('')
     expect(page.locator('#taskDesc')).to_have_value('')
     expect(page.locator('#subtaskListPreview .subtask-preview-item')).to_have_count(0)
@@ -131,22 +135,73 @@ def check_single_field_changes(page: Page) -> None:
         ('#subtaskInput', 'Only unsubmitted subtask'),
     )
     for selector, value in changes:
-        page.locator('#openModalBtn').click()
-        page.locator(selector).fill(value)
+        open_task_editor(page, independent=True)
+        reveal_task_field(page, selector).fill(value)
         assert unload_is_guarded(page), selector
         discard(page)
     for selector, value in (('#reminderOffset', '60'), ('#repeatType', 'custom')):
-        page.locator('#openModalBtn').click()
-        page.locator(selector).select_option(value)
+        open_task_editor(page, independent=True)
+        reveal_task_field(page, selector).select_option(value)
         if selector == '#repeatType':
-            page.locator('#repeatInterval').fill('7')
+            reveal_task_field(page, '#repeatInterval').fill('7')
         assert unload_is_guarded(page), selector
         discard(page)
-    page.locator('#openModalBtn').click()
+    open_task_editor(page, independent=True)
     page.locator('#noDeadline').check()
     assert unload_is_guarded(page)
     discard(page)
     print('Description, project, tags, deadline, reminder, repeat, and unsubmitted subtask changes independently trigger protection')
+
+
+def check_capture_handoff(page: Page) -> None:
+    if not page.locator('#captureShelf').count():
+        return  # Archived versions have no capture-to-editor handoff.
+    before = get_task_records(page)
+    ensure_capture(page).fill('')
+    open_task_editor(page)
+    expect(page.locator('#taskName')).to_have_value('')
+    expect(page.locator('#taskProject')).to_have_value('Inbox')
+    expect(page.locator('#noDeadline')).to_be_checked()
+    expect(page.locator('#dueDate')).to_be_disabled()
+    page.locator('#cancelBtn').click()
+    expect(page.locator('#taskModal')).to_be_hidden()
+    assert get_task_records(page) == before, 'Inspecting empty capture defaults wrote task data'
+    raw = '2032-04-09 14:25 Handoff captured task #handoff /Capture'
+    ensure_capture(page).fill(raw)
+    open_task_editor(page)
+    expect(page.locator('#taskName')).to_have_value('Handoff captured task')
+    expect(page.locator('#taskProject')).to_have_value('Capture')
+    expect(page.locator('#taskTags')).to_have_value('handoff')
+    expect(page.locator('#dueDate')).to_have_value('2032-04-09')
+    expect(page.locator('#dueTime')).to_have_value('14:25')
+    page.locator('#cancelBtn').click()
+    expect(page.locator('#taskModal')).to_be_hidden()
+    expect(page.locator('#quickAddInput')).to_be_focused()
+    expect(page.locator('#quickAddInput')).to_have_value(raw)
+    assert get_task_records(page) == before, 'Inspecting parsed capture text wrote task data'
+
+    open_task_editor(page)
+    page.locator('#taskDesc').fill('Discard only this expanded-form edit')
+    discard(page, retained=True)
+    expect(page.locator('#quickAddInput')).to_have_value(raw)
+    assert get_task_records(page) == before, 'Discarding expanded capture edited committed tasks'
+
+    open_task_editor(page)
+    page.locator('#taskDesc').fill('Saved through the complete editor')
+    page.locator('#submitBtn').click()
+    expect(page.locator('#taskModal')).to_be_hidden()
+    expect(page.locator('#quickAddInput')).to_have_value('')
+    after = get_task_records(page)
+    original = {task['id']: task for task in before}
+    assert {task['id']: task for task in after if task['id'] in original} == original
+    added = [task for task in after if task['id'] not in original]
+    assert len(added) == 1 and len(after) == len(before) + 1, 'Capture handoff saved zero or duplicate tasks'
+    saved = added[0]
+    assert saved['name'] == 'Handoff captured task' and saved['description'] == 'Saved through the complete editor'
+    assert saved['project'] == 'Capture' and saved['tags'] == ['handoff']
+    assert saved['dueLocalDate'] == '2032-04-09' and saved['dueLocalTime'] == '14:25'
+    assert not unload_is_guarded(page), 'Saved capture text still blocks departure'
+    print('Capture handoff: parsed fields, cancel/discard retain raw text without writes, and one save clears the associated capture')
 
 
 def check_edit_and_stale(page: Page, url: str) -> None:
@@ -198,7 +253,7 @@ def check_edit_and_stale(page: Page, url: str) -> None:
 
 
 def check_failed_save(page: Page) -> None:
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('Retry after failed write')
     page.locator('#taskDesc').fill('Keep after transaction failure')
     before = get_task_records(page)
@@ -260,7 +315,7 @@ def hold_next_task_completion(page: Page) -> None:
 
 
 def check_delayed_save(page: Page) -> None:
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('Committed while saving indicator waits')
     page.locator('#taskDesc').fill('Immutable submitted snapshot')
     hold_next_task_completion(page)
@@ -286,17 +341,29 @@ def check_delayed_save(page: Page) -> None:
     expect(page.locator('#taskModal')).to_be_hidden()
     assert not unload_is_guarded(page)
 
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('Older save that finishes later')
     hold_next_task_completion(page)
     page.locator('#submitBtn').click()
     page.wait_for_function('() => window.taskWriteCommitted')
+    # Deliberately dispatch at the inert global entry to check a reentrant event.
+    # The current capture entry rejects it while a dialog is saving; archived
+    # versions opened another form, whose draft must survive the old callback.
     page.locator('#openModalBtn').dispatch_event('click')
+    capture_entry = bool(page.locator('#captureShelf').count())
+    if capture_entry:
+        expect(page.locator('#captureShelf')).to_be_hidden()
+        expect(page.locator('#taskName')).to_have_value('Older save that finishes later')
+        expect(page.locator('#submitBtn')).to_be_disabled()
+        page.evaluate('() => window.finishTaskWrite()')
+        expect(page.locator('#taskModal')).to_be_hidden()
+        open_task_editor(page)
     expect(page.locator('#taskName')).to_have_value('')
     expect(page.locator('#submitBtn')).to_be_enabled()
     page.locator('#taskName').fill('Newer unsaved form must survive')
     page.locator('#taskDesc').fill('Later form remains editable')
-    page.evaluate('() => window.finishTaskWrite()')
+    if not capture_entry:
+        page.evaluate('() => window.finishTaskWrite()')
     expect(task_locator(page, 'Older save that finishes later')).to_have_count(1)
     page.evaluate('() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))')
     expect(page.locator('#taskModal')).to_be_visible()
@@ -307,7 +374,7 @@ def check_delayed_save(page: Page) -> None:
     discard(page)
     assert all(task['name'] != 'Newer unsaved form must survive' for task in get_task_records(page))
 
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('Save completing behind a later import gate')
     hold_next_task_completion(page)
     page.locator('#submitBtn').click()
@@ -345,11 +412,11 @@ def check_native_beforeunload(page: Page) -> None:
 
     page.on('dialog', cancel_unload)
     try:
-        page.locator('#openModalBtn').click()
+        open_task_editor(page)
         page.reload(wait_until='domcontentloaded')
         wait_for_app_ready(page)
         assert dialogs == [], 'An unchanged form unexpectedly blocked navigation'
-        page.locator('#openModalBtn').click()
+        open_task_editor(page)
         page.locator('#taskName').fill('Native unload cancellation draft')
         try:
             page.reload(timeout=10_000, wait_until='domcontentloaded')
@@ -401,15 +468,16 @@ def retry_memory_storage(page: Page) -> None:
 def check_quota_recovery(page: Page, url: str) -> None:
     before = get_task_records(page)
     page.evaluate('() => { window.taskDraftOriginalDocument = true; }')
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('Quota interrupted unsaved draft')
     page.locator('#taskDesc').fill('This draft is not in any committed task backup')
     page.locator('#taskProject').fill('Unsaved private project')
-    page.locator('#taskTags').fill('draft, retain')
+    reveal_task_field(page, '#taskTags').fill('draft, retain')
+    page.locator('#noDeadline').uncheck()
     page.locator('#dueDate').fill('2032-05-06')
     page.locator('#dueTime').fill('16:35')
-    page.locator('#repeatType').select_option('custom')
-    page.locator('#repeatInterval').fill('9')
+    reveal_task_field(page, '#repeatType').select_option('custom')
+    reveal_task_field(page, '#repeatInterval').fill('9')
     page.locator('#subtaskInput').fill('Retain this subtask')
     page.locator('#addSubtaskBtn').click()
     page.locator('#subtaskInput').fill('Also retain unsubmitted subtask text')
@@ -452,7 +520,7 @@ def check_quota_recovery(page: Page, url: str) -> None:
     assert downloaded_drafts(page)[0]['id'] == recovered['id']
     retry_memory_storage(page)
     assert unload_is_guarded(page)
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('A later current form must not be overwritten')
     expect(page.locator('#taskDraftRecoveryRestoreBtn')).to_be_disabled()
     expect(page.locator('#taskDraftRecoveryDiscardBtn')).to_be_disabled()
@@ -515,7 +583,7 @@ def check_quota_recovery(page: Page, url: str) -> None:
 
     saved_before_queue = get_task_records(page)
     for name in ('First queued unsaved task', 'Second queued unsaved task'):
-        page.locator('#openModalBtn').click()
+        open_task_editor(page)
         page.locator('#taskName').fill(name)
         inject_quota_failure(page)
         page.locator('#submitBtn').click()
@@ -566,9 +634,10 @@ def check_quota_recovery(page: Page, url: str) -> None:
 def check_weekday_recovery(page: Page) -> None:
     before = get_task_records(page)
     page.evaluate('() => { window.taskDraftOriginalDocument = true; }')
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('Quota weekday raw selection draft')
-    page.locator('#repeatType').select_option('weekly-days')
+    page.locator('#noDeadline').uncheck()
+    reveal_task_field(page, '#repeatType').select_option('weekly-days')
     for value in ('0', '1', '2', '3', '4', '5', '6'):
         page.locator(f'#repeatWeekday{value}').uncheck()
     assert page.locator('.repeat-weekday-input:checked').count() == 0
@@ -608,6 +677,9 @@ def run(browser_name: str, case: str) -> None:
             if case == 'weekdays':
                 check_weekday_recovery(page)
                 return
+            if case == 'capture':
+                check_capture_handoff(page)
+                return
             check_close_paths(page)
             check_single_field_changes(page)
             check_edit_and_stale(page, url)
@@ -615,6 +687,7 @@ def run(browser_name: str, case: str) -> None:
             check_delayed_save(page)
             check_quota_recovery(page, url)
             check_weekday_recovery(page)
+            check_capture_handoff(page)
             check_native_beforeunload(page)
             assert not errors, errors
         finally:
@@ -625,6 +698,6 @@ def run(browser_name: str, case: str) -> None:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--browser', choices=('chromium', 'firefox', 'webkit'), default='chromium')
-    parser.add_argument('--case', choices=('all', 'quota', 'weekdays'), default='all')
+    parser.add_argument('--case', choices=('all', 'quota', 'weekdays', 'capture'), default='all')
     arguments = parser.parse_args()
     run(arguments.browser, arguments.case)

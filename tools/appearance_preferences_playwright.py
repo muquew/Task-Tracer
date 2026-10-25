@@ -9,6 +9,8 @@ directory (or under --artifacts-dir). No application functions are invoked.
 
 from __future__ import annotations
 
+from smoke_playwright import open_task_editor, reveal_task_field
+
 import argparse
 import contextlib
 from datetime import datetime, timezone
@@ -218,12 +220,12 @@ def task_node_observation(page: Page) -> Iterator[JSHandle]:
 
 
 def open_unsaved_draft(page: Page) -> None:
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     expect(page.locator('#taskModal')).to_be_visible()
     page.locator('#taskName').fill('Unsaved appearance draft 中文 e\u0301')
     page.locator('#taskDesc').fill('Unsaved description line one.\nSecond line stays selected.')
     page.locator('#taskProject').fill('Unsaved project')
-    page.locator('#taskTags').fill('draft, appearance')
+    reveal_task_field(page, '#taskTags').fill('draft, appearance')
     page.locator('#noDeadline').check()
     for text in ('Draft child to edit', 'Second unsaved child'):
         page.locator('#subtaskInput').fill(text)

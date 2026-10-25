@@ -1,0 +1,35 @@
+Settings/navigation chromium: 154.0.8037.57; deployment CSP enforced
+1440px zh-CN: permanent labelled views, collapsed-tools access, settings/back/current-view, scoped state and draft/selection preservation, real backup, dialog focus, appearance and language passed
+1440px en: permanent labelled views, collapsed-tools access, settings/back/current-view, scoped state and draft/selection preservation, real backup, dialog focus, appearance and language passed
+1440px empty backup status: both language directions update the exact backup status through real appearance/data categories without task changes
+390px zh-CN: permanent labelled views, collapsed-tools access, settings/back/current-view, scoped state and draft/selection preservation, real backup, dialog focus, appearance and language passed
+390px en: permanent labelled views, collapsed-tools access, settings/back/current-view, scoped state and draft/selection preservation, real backup, dialog focus, appearance and language passed
+390px empty backup status: both language directions update the exact backup status through real appearance/data categories without task changes
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer-usability/tools/settings_navigation_playwright.py", line 366, in <module>
+    run(parser.parse_args().browser)
+  File "/workspace/Task-Tracer-usability/tools/settings_navigation_playwright.py", line 357, in run
+    exercise_unavailable_storage(browser, url)
+  File "/workspace/Task-Tracer-usability/tools/settings_navigation_playwright.py", line 287, in exercise_unavailable_storage
+    expect(page.locator('#openModalBtn')).to_be_disabled()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 23046, in to_be_disabled
+    self._sync(self._impl_obj.to_be_disabled(timeout=to_milliseconds(timeout)))
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 738, in to_be_disabled
+    await self._expect_impl(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 128, in _expect_impl
+    _record_soft_or_raise(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 60, in _record_soft_or_raise
+    raise error
+AssertionError: Locator expected to be disabled
+Actual value: enabled 
+Call log:
+  - Expect "to_be_disabled" with timeout 5000ms
+  - waiting for locator("#openModalBtn")
+    14 × locator resolved to <button type="button" title="Add task" id="openModalBtn" aria-expanded="false" aria-label="Add task" aria-controls="captureShelf" data-i18n-aria-label="modal.addTitle" data-i18n-title="usability.captureTitle" class="btn btn-primary workspace-add-task">…</button>
+       - unexpected value "enabled"
+
+Aria snapshot:
+- button "Add task"

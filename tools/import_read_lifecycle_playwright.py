@@ -2,6 +2,8 @@
 """Keep cancelled or superseded task-file reads from replacing a newer workflow."""
 from __future__ import annotations
 
+from smoke_playwright import open_task_editor
+
 from smoke_playwright import open_settings, return_to_task_workspace
 
 import json
@@ -67,7 +69,7 @@ def cancelled_read_preserves_draft(browser, url):
         old = choose_file(page, 'CANCELLED_OLD_IMPORT')
         cancel_pending_ui(page)
         return_to_task_workspace(page)
-        page.locator('#openModalBtn').click()
+        open_task_editor(page)
         page.locator('#taskName').fill('New task draft must survive')
         page.locator('#taskDesc').fill('Unsaved synthetic description')
         finish_read(page, old)

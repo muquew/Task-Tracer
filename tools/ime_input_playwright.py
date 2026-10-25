@@ -5,6 +5,8 @@ These are browser DOM composition/event regressions, not a native OS IME test.
 """
 from __future__ import annotations
 
+from smoke_playwright import ensure_capture, open_task_editor
+
 import argparse
 
 from playwright.sync_api import expect, sync_playwright
@@ -58,7 +60,7 @@ def palette(page, mode):
 
 
 def subtasks(page, mode):
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('Composition task 中文')
     page.locator('#noDeadline').check()
     field = page.locator('#subtaskInput')
@@ -94,7 +96,7 @@ def subtasks(page, mode):
 
 
 def escape(page, mode):
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     field = page.locator('#taskName')
     field.fill('继续输入中文')
     if mode == 'tracked':
@@ -132,14 +134,14 @@ def search(page, mode):
 def forms(page, mode):
     for task_form in (False, True):
         if task_form:
-            page.locator('#openModalBtn').click()
+            open_task_editor(page)
             field = page.locator('#taskName')
             field.fill('完整表单中文')
             page.locator('#noDeadline').check()
             field.focus()
             form = page.locator('#taskForm')
         else:
-            field = page.locator('#quickAddInput')
+            field = ensure_capture(page)
             field.fill('快速添加中文')
             form = page.locator('#quickAddForm')
         before = get_task_records(page)

@@ -2,6 +2,8 @@
 """Keep delayed local dialogs and confirmations bound to their own UI session."""
 from __future__ import annotations
 
+from smoke_playwright import open_task_editor
+
 from smoke_playwright import open_settings, return_to_task_workspace
 
 import argparse
@@ -26,7 +28,7 @@ def open_menu_item(page, selector):
 
 def begin_draft(page):
     return_to_task_workspace(page)
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('Later synthetic task draft')
     page.locator('#taskDesc').fill('A delayed earlier dialog must preserve this text')
 

@@ -2,6 +2,8 @@
 """Confirm saved-view deletion while preserving tasks, concurrent views and later drafts."""
 from __future__ import annotations
 
+from smoke_playwright import open_task_editor
+
 from smoke_playwright import return_to_task_workspace
 
 import argparse
@@ -253,7 +255,7 @@ def late_completion(page, url):
     page.locator('#submitBtn').click()
     page.wait_for_function('typeof window.finishViewDeletion === "function"')
     page.locator('#cancelBtn').click()
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('A later unsaved task draft')
     page.locator('#taskDesc').fill('Keep this exact newer form text')
     page.evaluate('window.finishViewDeletion()')

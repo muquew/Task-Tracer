@@ -612,7 +612,7 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             "Startup must verify IndexedDB is writable before normal app mode": ("if (!(await initializeStorageOrFallback())) return;", "function initPersistentStorage()", "await verifyPersistentStorage();", "function verifyPersistentStorage()", "await dbActions.deleteConfig(CONFIG.STORAGE.PROBE);"),
             "Storage fallback must be scoped to the storage initialization stage": ("function initializeStorageOrFallback()", "await initPersistentStorage();", "if (!shouldUseStorageUnavailableMode(error)) throw error;", "handleStorageUnavailable(error);"),
             "Storage-unavailable mode must pause task-writing actions": ("function handleStorageUnavailable(error)", "function syncStorageAvailabilityUI()", "function ensureStorageAvailable(options = {})", "storage.unavailable.actionsDisabled"),
-            "Interactive entrypoints must route through a central action guard": ("const STORAGE_GATED_ACTIONS = new Set([", "function canRunAppAction(action", "function runAppAction(action", "DOM.openModalBtn.addEventListener('click', () => runAppAction('task.new'))", "DOM.menu.backupBtn.addEventListener('click', () => runAppAction('data.backup'))", "if (meta && key === 'm') { e.preventDefault(); runAppAction('menu.toggle'); return; }"),
+            "Interactive entrypoints must route through a central action guard": ("DOM.openModalBtn.addEventListener('click', () => runAppAction('capture.toggle'))", "const STORAGE_GATED_ACTIONS = new Set([", "function canRunAppAction(action", "function runAppAction(action", "DOM.menu.backupBtn.addEventListener('click', () => runAppAction('data.backup'))", "if (meta && key === 'm') { e.preventDefault(); runAppAction('menu.toggle'); return; }"),
             "Web Storage access must be guarded for privacy modes": ("function safeGetStorageItem(kind, key)", "function safeSetStorageItem(kind, key, value)", "function safeRemoveStorageItem(kind, key)"),
             "Runtime storage failures must route through storage-unavailable fallback": ("function handleStorageOperationError(error", "if (shouldUseStorageUnavailableMode(error))", "handleStorageUnavailable(error);", "return true;"),
             "Background backup health reads must route storage failures through fallback": ("scheduleBackupReminder().catch(handleBackgroundStorageFailure)", "function handleBackgroundStorageFailure(error)", "handleStorageOperationError(error);", "updateBackupHealthStatus().catch(handleBackgroundStorageFailure)"),
@@ -631,13 +631,18 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
 
 def validate_native_language_control(index_html: str, errors: list[str]) -> None:
     try:
-        select = first_match(r'<select\b[^>]*\sid="languageSelect"[^>]*>', index_html,
-                             'native language select').group()
-        if not re.search(r'\sdata-native-select(?:\s|=|>)', select):
-            errors.append('Language select must retain its native-control marker')
-        if ('data-i18n-aria-label="workspace.language"' not in select
-                or not re.search(r'\saria-label="[^"]+"', select)):
-            errors.append('Native language select must expose a localized accessible name')
+        for identifier in ('languageSelect', 'themeToggleBtn'):
+            controls = re.findall(r'<select\b[^>]*\sid="' + identifier + r'"[^>]*>', index_html)
+            if len(controls) != 1:
+                errors.append(f'Preference {identifier} must have one canonical native control')
+                continue
+            select = controls[0]
+            if not re.search(r'\sdata-native-select(?:\s|=|>)', select):
+                errors.append(f'{identifier} must retain its native-control marker')
+            if not re.search(r'<label\b[^>]*\bfor="' + identifier + r'"', index_html):
+                errors.append(f'{identifier} must expose its visible settings label')
+        if re.search(r'id="settings(?:Theme|Language)Select"', index_html):
+            errors.append('Appearance preferences must not have duplicate mirror controls')
 
         runtime = main_script(index_html).group('content')
         functions = {
@@ -648,7 +653,6 @@ def validate_native_language_control(index_html: str, errors: list[str]) -> None
                          'bindEssentialEvents', 'enhanceSelectControls')
         }
         option_fragments = (
-            "for (const select of [DOM.languageSelect, document.getElementById('settingsLanguageSelect')]) {",
             "select.textContent = '';",
             'CONFIG.LANGUAGES.forEach(language => {',
             "const option = document.createElement('option');",
@@ -658,26 +662,9 @@ def validate_native_language_control(index_html: str, errors: list[str]) -> None
         )
         if not contains_in_order(functions['createLangButtons'], option_fragments):
             errors.append('Native language options must use every configured language code and name')
-        if ("[DOM.languageSelect, document.getElementById('settingsLanguageSelect')]" not in functions['syncLanguageSelect']
-                or 'select.value = state.currentLanguage;' not in functions['syncLanguageSelect']
+        if ('value = state.currentLanguage;' not in functions['syncLanguageSelect']
                 or 'syncLanguageSelect();' not in functions['initLanguage']):
             errors.append('Language initialization and rollback must synchronize the native select value')
-
-        settings_select = first_match(r'<select\b[^>]*\sid="settingsLanguageSelect"[^>]*>', index_html,
-                                      'settings native language select').group()
-        if not re.search(r'\sdata-native-select(?:\s|=|>)', settings_select):
-            errors.append('Settings language control must remain a native select')
-        if not re.search(r'<label\b[^>]*\bfor="settingsLanguageSelect"[^>]*>[^<]+</label>', index_html):
-            errors.append('Settings language select must have its own visible label')
-        settings_handler = first_match(
-            r"document\.getElementById\('settingsLanguageSelect'\)\.addEventListener\('change', event => \{(?P<body>[^\n]*)\}\);",
-            runtime, 'settings language change handler').group('body')
-        if not contains_in_order(settings_handler, (
-            "runAppAction('language.switch', { code: event.target.value });",
-            'syncLanguageSelect();',
-        )):
-            errors.append('Settings language changes must use the action guard and synchronize rollback')
-
         handler = first_match(
             r"DOM\.languageSelect\.addEventListener\('change', \(\) => \{(?P<body>.*?)\n\s*\}\);",
             functions['bindEssentialEvents'], 'native language change handler').group('body')
@@ -733,7 +720,7 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Task view content must not be a broad live region")
     if "function announceTaskViewSummary()" not in index_html or "messages.view.summary" not in index_html:
         errors.append("Task view changes must announce a concise summary through the screen-reader status region")
-    for identifier in ('settingsWorkspace', 'tasksWorkspace', 'settingsBackBtn', 'settingsThemeSelect', 'settingsLanguageSelect'):
+    for identifier in ('settingsWorkspace', 'tasksWorkspace', 'settingsBackBtn', 'themeToggleBtn', 'languageSelect'):
         if f'id="{identifier}"' not in index_html:
             errors.append(f"Independent settings workspace is missing {identifier}")
     if re.search(r'<[^>]+id="menu"[^>]+role="menu"', index_html):

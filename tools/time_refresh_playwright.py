@@ -2,6 +2,8 @@
 """Refresh time-sensitive views after real timer/visibility events without task writes."""
 from __future__ import annotations
 
+from smoke_playwright import open_task_editor
+
 import argparse
 from datetime import datetime, timezone
 import json
@@ -109,7 +111,7 @@ def prepare_relative_search(page, url):
 
 def verify_draft_protection(page, url):
     prepare_relative_search(page, url)
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('  Do not disturb this draft  ')
     page.locator('#taskDesc').fill('Uncommitted text across midnight\n第二行')
     before = read_workspace(page)

@@ -1,6 +1,6 @@
 {
   "name": "task-tracer-quality-tools",
-  "version": "4.10.1",
+  "version": "4.11.0",
   "private": true,
   "description": "Development-only accessibility checks; the application remains build-free.",
   "scripts": {

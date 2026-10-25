@@ -32,7 +32,7 @@ def open_delete(page, ids, mode):
             row(page, identity).locator('.task-select-checkbox').check()
         page.locator('#batchDeleteBtn').click()
     else:
-        open_settings(page)
+        open_settings(page, 'cleanup')
         page.locator('#clearCompletedBtn').click()
     expect(page.locator('#taskModal')).to_be_visible()
 

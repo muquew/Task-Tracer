@@ -2,6 +2,8 @@
 """Verify saved-view files migrate only views through reviewed atomic merges."""
 from __future__ import annotations
 
+from smoke_playwright import open_task_editor
+
 from smoke_playwright import open_settings, return_to_task_workspace
 
 import argparse
@@ -193,7 +195,7 @@ def assert_pending_view_reads(page):
         page.keyboard.press('Escape')
         expect(page.locator('#taskModal')).to_be_hidden()
         return_to_task_workspace(page)
-        page.locator('#openModalBtn').click()
+        open_task_editor(page)
         page.locator('#taskName').fill('Unsaved task draft while file read completes')
         page.evaluate("window.pendingViewFileReads[0].finish()")
         page.evaluate('() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))')

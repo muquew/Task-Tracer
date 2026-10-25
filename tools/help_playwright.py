@@ -2,7 +2,7 @@
 """Verify bilingual help, explicit diagnostics export and storage-failure access."""
 from __future__ import annotations
 
-from smoke_playwright import open_settings, return_to_task_workspace
+from smoke_playwright import help_entry, open_help, open_settings, return_to_task_workspace
 
 import argparse
 import json
@@ -118,7 +118,7 @@ def run(engine='chromium'):
                 expect(page.locator('html')).to_have_attribute('lang', language)
                 page.keyboard.press('Escape')
                 translations = json.loads((ROOT / 'resources' / f'{language}.json').read_text())['help']
-                open_settings(page)
+                open_settings(page, 'help')
                 expect(page.locator('#helpMenuBtn')).to_be_visible()
                 page.locator('#helpMenuBtn').click()
                 expect(page.get_by_role('dialog', name=translations['menu'], exact=True)).to_be_visible()
@@ -131,12 +131,12 @@ def run(engine='chromium'):
                 expect(page.locator('#taskModal')).to_be_hidden()
                 expect(page.locator('#helpMenuBtn')).to_be_focused()
                 return_to_task_workspace(page)
-                page.locator('#helpBtn').click()
-                assert page.locator('#helpBtn').is_enabled()
+                open_help(page)
+                assert help_entry(page).is_enabled()
                 report = exercise_diagnostics(page, downloads)
                 assert report['appVersion'] == version
-                expect(page.locator('#helpBtn')).to_be_focused()
-                page.locator('#helpBtn').click()
+                expect(help_entry(page)).to_be_focused()
+                open_help(page)
                 page.locator('#helpCommandsBtn').click()
                 expect(page.locator('#commandPalette')).to_be_visible()
                 expect(page.locator('#commandPaletteInput')).to_be_focused()
@@ -155,12 +155,12 @@ def run(engine='chromium'):
                     })
                 }});
             }""")
-            page.locator('#helpBtn').click()
+            open_help(page)
             page.locator('#helpDiagnosticsBtn').click()
             page.wait_for_function('typeof window.finishDelayedDiagnosticEstimate === "function"')
             page.keyboard.press('Escape')
             expect(page.locator('#taskModal')).to_be_hidden()
-            expect(page.locator('#helpBtn')).to_be_focused()
+            expect(help_entry(page)).to_be_focused()
             page.evaluate("""async () => {
                 window.finishDelayedDiagnosticEstimate({usage: 1024, quota: 1048576});
                 await new Promise(requestAnimationFrame);
@@ -190,35 +190,35 @@ def run(engine='chromium'):
             page.reload()
             expect(page.locator('body')).to_have_class(re.compile(r'\bstorage-unavailable\b'))
             expect(page.locator('#openModalBtn')).to_be_disabled()
-            expect(page.locator('#helpBtn')).to_be_enabled()
-            page.locator('#helpBtn').click()
+            expect(help_entry(page)).to_be_enabled()
+            open_help(page)
             expect(page.locator('#taskModal')).to_be_visible()
             expect(page.locator('#helpCommandsBtn')).to_be_disabled()
             assert_focus_trap(page)
             page.keyboard.press('Escape')
             expect(page.locator('#taskModal')).to_be_hidden()
-            expect(page.locator('#helpBtn')).to_be_focused()
-            page.locator('#helpBtn').click()
+            expect(help_entry(page)).to_be_focused()
+            open_help(page)
             exercise_diagnostics(page, downloads, 'StorageError')
-            expect(page.locator('#helpBtn')).to_be_focused()
+            expect(help_entry(page)).to_be_focused()
             assert snapshot(page) == before_failure, 'Storage-error help changed existing data'
-            page.locator('#helpBtn').click()
+            open_help(page)
             expect(page.locator('#cancelBtn')).to_be_hidden()
             page.locator('#submitBtn').click()
             expect(page.locator('#taskModal')).to_be_hidden()
-            expect(page.locator('#helpBtn')).to_be_focused()
+            expect(help_entry(page)).to_be_focused()
             page.evaluate("sessionStorage.setItem('__helpStorageRecovered', 'yes')")
             with page.expect_navigation():
                 page.locator('#retryStorageBtn').click()
             wait_for_app_ready(page)
             expect(page.locator('#openModalBtn')).to_be_enabled()
-            page.locator('#helpBtn').click()
+            open_help(page)
             expect(page.locator('#taskModal')).to_be_visible()
             expect(page.locator('#helpCommandsBtn')).to_be_enabled()
             exercise_diagnostics(page, downloads)
-            expect(page.locator('#helpBtn')).to_be_focused()
+            expect(help_entry(page)).to_be_focused()
             assert not errors, errors
-            print('Help passed: storage failure retains footer/keyboard/redacted diagnostics; retry restores normal Help and one-download behavior', flush=True)
+            print('Help passed: storage failure retains settings Help, keyboard access and redacted diagnostics; retry restores normal Help and one-download behavior', flush=True)
         finally:
             context.close()
             browser.close()

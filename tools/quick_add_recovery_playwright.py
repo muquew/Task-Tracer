@@ -2,6 +2,8 @@
 """Preserve raw quick-add text and capture metadata through storage failures."""
 from __future__ import annotations
 
+from smoke_playwright import open_task_editor, ensure_capture
+
 import argparse
 from pathlib import Path
 from urllib.parse import urlencode
@@ -33,8 +35,10 @@ def prepare(page, url):
 
 
 def fail_quick_add(page, raw=RAW_TEXT):
+    ensure_capture(page)
     page.locator('#quickAddInput').fill(raw)
     inject_quota_failure(page)
+    ensure_capture(page)
     page.locator('#quickAddInput').press('Enter')
     expect(page.locator('#storageUnavailableBanner')).to_be_visible()
     expect(page.locator('#quickAddInput')).to_have_value(raw)
@@ -71,6 +75,7 @@ def retry(page, before, raw=RAW_TEXT):
 
 
 def submit_and_check(page, before, name=RAW_NAME, description='', project='个人', tags=None):
+    ensure_capture(page)
     page.locator('#quickAddInput').press('Enter')
     expect(page.locator('#quickAddInput')).to_have_value('')
     expect(page.locator('#quickAddForm button[type="submit"]')).to_be_enabled()
@@ -106,6 +111,7 @@ def quick_add_only(page, url):
     assert task['dueLocalDate'] == tomorrow and task['dueLocalTime'] == '20:00'
     # A normal later submission must still have exactly one effective listener.
     next_before = stored(page)
+    ensure_capture(page)
     page.locator('#quickAddInput').fill('Another recovered quick-add task')
     submit_and_check(page,next_before,name='Another recovered quick-add task',project='Inbox',tags=[])
     print('Quick-add recovery passed: exact raw text, selectable read-only fallback, same-document Retry and one task per normal submission',flush=True)
@@ -113,8 +119,14 @@ def quick_add_only(page, url):
 
 def coexist_with_form(page, url):
     before = prepare(page,url)
+    ensure_capture(page)
     page.locator('#quickAddInput').fill(RAW_TEXT)
-    page.locator('#openModalBtn').click()
+    if page.locator('#captureShelf').count():
+        # Ctrl+I starts an independent form; More options continues this capture.
+        page.keyboard.press('Control+i')
+        expect(page.locator('#taskModal')).to_be_visible()
+    else:
+        open_task_editor(page)
     page.locator('#taskName').fill('Coexisting full form 保留')
     page.locator('#taskDesc').fill('  Keep this separate raw form text  ')
     page.locator('#noDeadline').check()
@@ -188,12 +200,15 @@ def native_beforeunload(page, url):
         smoke.wait_for_app_ready(page)
         assert dialogs == [], 'An empty quick-add input blocked departure'
         mark_document(page)
+        ensure_capture(page)
         page.locator('#quickAddInput').click()
+        ensure_capture(page)
         page.locator('#quickAddInput').fill(RAW_TEXT)
         assert unload_is_guarded(page)
         for unavailable in (False,True):
             if unavailable:
                 inject_quota_failure(page)
+                ensure_capture(page)
                 page.locator('#quickAddInput').press('Enter')
                 expect(page.locator('#storageUnavailableBanner')).to_be_visible()
                 assert_retained_readonly(page)
@@ -243,8 +258,10 @@ def capture_metadata(page, url):
 
 def empty_input(page, url):
     before = prepare(page,url)
+    ensure_capture(page)
     page.locator('#quickAddInput').fill('   ')
     assert not unload_is_guarded(page), 'Whitespace without a task unexpectedly blocked departure'
+    ensure_capture(page)
     page.locator('#quickAddInput').fill('')
     page.add_init_script("""(() => {
         if (sessionStorage.getItem('__quick_empty_quota_seen') === 'yes') return;

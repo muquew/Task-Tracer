@@ -2,6 +2,8 @@
 """Verify 10,000-task / 60,000-subtask quick-add recovery and record the actual source."""
 from __future__ import annotations
 
+from smoke_playwright import ensure_capture
+
 import argparse
 import ast
 import hashlib
@@ -16,7 +18,7 @@ sys.path.insert(0, str(REPOSITORY / 'tools'))
 
 from playwright.sync_api import expect, sync_playwright
 from quick_add_recovery_playwright import RAW_NAME, RAW_TEXT, assert_retained_readonly, assert_same_document, mark_document
-from smoke_playwright import add_task, browser_launch_options, clear_app_data, exercise_export_backup, local_server, task_locator, wait_for_app_ready
+from smoke_playwright import add_task, browser_launch_options, clear_app_data, exercise_export_backup, get_task_records, local_server, select_view, task_locator, wait_for_app_ready
 from task_draft_playwright import inject_quota_failure, unload_is_guarded
 from validate_static import app_version, resource_version
 from workspace_roundtrip_playwright import fingerprint
@@ -91,6 +93,90 @@ def assert_identical(before, after, phase):
     assert after['added'] == [], f'{phase} unexpectedly created task records'
 
 
+def run_capture_navigation():
+    """Protect calendar capture context without the separate large workload."""
+    def choose_calendar_day(page):
+        select_view(page, 'calendar')
+        day = page.locator('.calendar-day:not(.outside-month) .calendar-date-number').first
+        detail_day = day.get_attribute('data-calendar-detail-date')
+        selected = day.get_attribute('data-calendar-add-date') or detail_day
+        day.click()
+        if detail_day:
+            page.locator(f'.calendar-agenda-add[data-calendar-add-date="{selected}"]').click()
+        expect(page.locator('#captureShelf')).to_be_visible()
+        return selected
+
+    with local_server() as url, sync_playwright() as playwright:
+        browser = playwright.chromium.launch(**browser_launch_options())
+        try:
+            for width in (1280, 390):
+                context = browser.new_context(viewport={'width': width, 'height': 900}, timezone_id='UTC', reduced_motion='reduce')
+                try:
+                    page = context.new_page()
+                    errors = []
+                    page.on('pageerror', lambda error: errors.append(str(error)))
+                    clear_app_data(page, url)
+                    if not page.locator('#captureShelf').count():
+                        print('Calendar capture context: archived application has no capture shelf', flush=True)
+                        continue
+                    select_view(page, 'calendar')
+                    expect(page.locator('.calendar-day')).to_have_count(42)
+                    if width == 390:
+                        page.locator('.calendar-day:not(.outside-month) .calendar-date-number').first.click()
+                        expect(page.locator('.calendar-agenda-add')).to_be_visible()
+                    assert get_task_records(page) == [], 'Browsing an empty calendar wrote task data'
+                    add_task(page, 'Existing protected calendar baseline', no_deadline=True)
+                    baseline = get_task_records(page)
+                    choose_calendar_day(page)
+                    page.locator('#captureCloseBtn').click()
+                    select_view(page, 'list')
+                    ensure_capture(page).fill('Ordinary add after closing calendar capture')
+                    page.locator('#quickAddInput').press('Enter')
+                    ordinary = get_task_records(page)
+                    assert len(ordinary) == 2 and baseline[0] in ordinary
+                    ordinary_added = next(task for task in ordinary if task['id'] != baseline[0]['id'])
+                    assert ordinary_added['dueAt'] is None, 'A cancelled calendar date leaked into an ordinary global capture'
+
+                    selected = choose_calendar_day(page)
+                    page.locator('#captureDetailsBtn').click()
+                    expect(page.locator('#taskName')).to_have_value('')
+                    expect(page.locator('#dueDate')).to_have_value(selected)
+                    page.locator('#cancelBtn').click()
+                    expect(page.locator('#captureShelf')).to_be_visible()
+                    page.locator('#captureCloseBtn').click()
+                    assert get_task_records(page) == ordinary, 'Opening/cancelling an empty dated editor wrote task data'
+
+                    selected = choose_calendar_day(page)
+                    page.locator('#quickAddInput').fill('Retained calendar capture draft')
+                    page.locator('#captureCloseBtn').click()
+                    select_view(page, 'list')
+                    ensure_capture(page)
+                    page.locator('#captureDetailsBtn').click()
+                    expect(page.locator('#taskName')).to_have_value('Retained calendar capture draft')
+                    expect(page.locator('#dueDate')).to_have_value(selected)
+                    page.locator('#submitBtn').click()
+                    expect(page.locator('#taskModal')).to_be_hidden()
+                    after = get_task_records(page)
+                    assert len(after) == 3 and all(task in after for task in ordinary)
+                    originals = {task['id'] for task in ordinary}
+                    dated = next(task for task in after if task['id'] not in originals)
+                    assert dated['name'] == 'Retained calendar capture draft' and dated['dueLocalDate'] == selected
+
+                    if width == 390:
+                        select_view(page, 'calendar')
+                        page.locator('[data-calendar-action="next"]').click()
+                        agenda_day = page.locator('.calendar-agenda-add').get_attribute('data-calendar-add-date')
+                        month_days = page.locator('.calendar-day:not(.outside-month) .calendar-date-number').evaluate_all(
+                            'buttons => buttons.map(button => button.dataset.calendarDetailDate)')
+                        assert agenda_day in month_days, 'After changing month, the phone agenda still points outside the displayed month'
+                    assert not errors, errors
+                    print(f'Calendar capture {width}px passed: empty close clears date, empty More options keeps date, retained draft keeps date, ordinary capture remains undated', flush=True)
+                finally:
+                    context.close()
+        finally:
+            browser.close()
+
+
 def run(output: Path, expected_app: str | None = None, expected_resource: str | None = None):
     started = time.perf_counter()
     index = (REPOSITORY / 'index.html').read_text()
@@ -158,8 +244,10 @@ def run(output: Path, expected_app: str | None = None, expected_resource: str | 
                     return tx;
                 };
             }""")
+            ensure_capture(page)
             page.locator('#quickAddInput').fill(RAW_TEXT)
             inject_quota_failure(page)
+            ensure_capture(page)
             page.locator('#quickAddInput').press('Enter')
             expect(page.locator('#storageUnavailableBanner')).to_be_visible()
             assert_retained_readonly(page)
@@ -237,8 +325,12 @@ def run(output: Path, expected_app: str | None = None, expected_resource: str | 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--case', choices=('scale', 'capture-navigation'), default='scale', help='Use capture-navigation for the small calendar/capture data-protection flow')
     parser.add_argument('--output', type=Path, default=Path('/tmp/task-tracer-quick-add-10000.json'))
     parser.add_argument('--expect-app-version', help='Refuse a workload against a different application version')
     parser.add_argument('--expect-resource-version', help='Refuse a workload against a different translation version')
     args = parser.parse_args()
-    run(args.output, args.expect_app_version, args.expect_resource_version)
+    if args.case == 'capture-navigation':
+        run_capture_navigation()
+    else:
+        run(args.output, args.expect_app_version, args.expect_resource_version)

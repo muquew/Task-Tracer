@@ -2,6 +2,8 @@
 """Preserve imported reminder durations through editing and draft recovery."""
 from __future__ import annotations
 
+from smoke_playwright import open_task_editor
+
 import argparse
 import json
 
@@ -111,7 +113,7 @@ def labels_and_reset(page, url, template):
         page.locator('#cancelBtn').click()
         expect(page.locator('#taskModal')).to_be_hidden()
         assert get_task_records(page) == baseline, 'Cancelled inspection modified tasks'
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     expect(page.locator('#reminderOffset')).to_have_value('15')
     expect(page.locator('#reminderRepeat')).to_have_value('-1')
     expect(page.locator('option[data-reminder-custom]')).to_have_count(0)

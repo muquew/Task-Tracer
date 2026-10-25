@@ -263,3 +263,14 @@ components:
 - **Don't** 将任务菜单的首次测量和定位加入 transition。
 - **Don't** 用暗色主按钮文字色绘制完成勾号，或仅靠降低整行透明度表达完成。
 - **Don't** 将原型尺寸、在线字体或未实现的色阶当作当前应用的设计事实。
+
+
+## Whole-site usability direction — 4.11.0
+
+- One global capture entry, available from a stable header. Content pages do not each repeat a permanent task-entry form. Quick capture and full editing share context without losing a draft.
+- A page shows tools for its purpose. Statistics is for reading progress, calendar is for dates and an agenda, task lists are for execution. Page titles and selected navigation agree.
+- Preferences have one home in Settings. Settings categories select panels rather than jumping down a long document; returning to tasks preserves context.
+- Common task fields come first. Advanced fields and detailed clock guidance remain available through progressive disclosure, and existing nondefault values remain visible when editing.
+- A mobile calendar presents a compact month and readable selected-day agenda; statistics prioritizes scanability instead of stacking desktop-sized cards.
+- Empty states direct the next real action. Batch actions follow selection. Saved-view names outrank condition summaries. Feedback remains visible where the action happened.
+- Evaluate by performing complete user tasks and inspecting actual renders. Protective regression tests follow the experience review; counts are not a proxy for usability.

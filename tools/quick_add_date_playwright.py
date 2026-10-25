@@ -2,6 +2,8 @@
 """Keep quick-add civil dates aligned with the complete task form and saved UI."""
 from __future__ import annotations
 
+from smoke_playwright import ensure_capture
+
 import argparse
 from datetime import datetime, timezone
 import json
@@ -46,7 +48,9 @@ def assert_task_ui(page, record):
 
 def quick(page,raw,name,expected_date,expected_time,expected_zone='UTC',project='Inbox',tags=None):
     before=read_workspace(page)
+    ensure_capture(page)
     page.locator('#quickAddInput').fill(raw)
+    ensure_capture(page)
     page.locator('#quickAddInput').press('Enter')
     expect(page.locator('#quickAddInput')).to_have_value('')
     after=read_workspace(page)
@@ -128,9 +132,11 @@ def relative(page,url,now,before_tomorrow,after_today,after_tomorrow):
     clear_app_data(page,url)
     page.clock.set_system_time(datetime.fromisoformat(now))
     quick(page,'tomorrow 10:00 Before midnight parser case','Before midnight parser case',before_tomorrow,'10:00')
+    ensure_capture(page)
     page.locator('#quickAddInput').fill('今天 10:00 Submitted after midnight parser case')
     page.clock.fast_forward(30000)
     before=read_workspace(page)
+    ensure_capture(page)
     page.locator('#quickAddInput').press('Enter')
     expect(page.locator('#quickAddInput')).to_have_value('')
     after=read_workspace(page)
@@ -144,9 +150,34 @@ def relative(page,url,now,before_tomorrow,after_today,after_tomorrow):
     print('Quick-add dates passed: relative words resolve on submission across leap/year midnight; saved cards and edit fields show the actual date',flush=True)
 
 
+def weekdays(page, url):
+    clear_app_data(page, url)
+    page.clock.set_system_time(datetime(2026, 10, 25, 12, tzinfo=timezone.utc))
+    for index, (token, date, clock) in enumerate((
+        ('周三', '2026-10-28', '14:00'),
+        ('星期三', '2026-10-28', '14:00'),
+        ('礼拜三', '2026-10-28', '14:00'),
+        ('本周三', '2026-10-21', '14:00'),
+        ('这周三', '2026-10-21', '14:00'),
+        ('下周日', '2026-11-01', '09:00'),
+        ('周日', '2026-10-25', '09:00'),
+    )):
+        name = f'Weekday civil capture {index}'
+        record = quick(page, f'{token} {clock} {name}', name, date, clock)
+        compare_form(page, record, date, clock, f'weekday {index}')
+    for now, token, date in (
+        ('2026-11-30T12:00:00+00:00', '周五', '2026-12-04'),
+        ('2026-12-31T12:00:00+00:00', '下周一', '2027-01-04'),
+    ):
+        page.clock.set_system_time(datetime.fromisoformat(now))
+        name = 'Weekday boundary ' + date
+        quick(page, f'{token} 14:00 {name}', name, date, '14:00')
+    print('Quick-add weekdays passed: nearest day including today, explicit current/next Monday-based week, and month/year rollover match complete forms', flush=True)
+
+
 def run(engine,selected):
     expect.set_options(timeout=10000)
-    cases=[('yearless','UTC',yearless),('explicit','UTC',explicit),
+    cases=[('weekday','UTC',weekdays),('yearless','UTC',yearless),('explicit','UTC',explicit),
            ('apia','Pacific/Apia',explicit),('gap','America/New_York',explicit),('invalid','UTC',invalid),
            ('midnight','UTC',lambda page,url:relative(page,url,'2024-02-28T23:59:40+00:00','2024-02-29','2024-02-29','2024-03-01')),
            ('yearend','UTC',lambda page,url:relative(page,url,'2026-12-31T23:59:40+00:00','2027-01-01','2027-01-01','2027-01-02'))]
@@ -173,6 +204,6 @@ def run(engine,selected):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--browser',choices=('chromium','firefox','webkit'),default='chromium')
-    parser.add_argument('--case',choices=('all','yearless','explicit','apia','gap','invalid','midnight','yearend'),default='all')
+    parser.add_argument('--case',choices=('all','weekday','yearless','explicit','apia','gap','invalid','midnight','yearend'),default='all')
     args=parser.parse_args()
     run(args.browser,args.case)

@@ -16,7 +16,7 @@ from urllib.parse import urlparse
 import zipfile
 
 from playwright.sync_api import expect, sync_playwright
-from smoke_playwright import click_task_action, reveal_workspace_control
+from smoke_playwright import click_task_action, reveal_filters, reveal_workspace_control
 from smoke_playwright import (StaticHandler, ThreadingHTTPServer, add_task,
                               browser_launch_options, clear_app_data, delete_task,
                               task_locator, wait_for_app_ready)
@@ -185,6 +185,7 @@ def save_view(page, name, typed, query='Created'):
     matching_name = 'Created before upgrade' if query == 'Created' else 'Created after upgrade'
     expect(task_locator(page, matching_name)).to_have_count(1)
     if typed:
+        reveal_filters(page)
         page.locator('#projectFilterBtn').click()
         encoded = json.dumps({'kind':'project', 'name':'all'}, separators=(',', ':'))
         page.locator(f'#projectDropdown .dropdown-option[data-project={json.dumps(encoded)}]').click()

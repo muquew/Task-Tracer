@@ -2,6 +2,8 @@
 """Keep optional backup reminders from interrupting active work or replacing errors."""
 from __future__ import annotations
 
+from smoke_playwright import open_task_editor
+
 import argparse
 import json
 from pathlib import Path
@@ -114,7 +116,7 @@ def run(engine):
 
             reload_with_reminder(page)
             before = snapshot(page)
-            page.locator('#openModalBtn').click()
+            open_task_editor(page)
             page.evaluate('window.deliverNextBackupReminder()')
             expect(page.locator('#taskModal')).to_be_visible()
             expect(page.locator('#notification')).not_to_have_class(re.compile(r'\bshow\b'))
@@ -140,7 +142,7 @@ def run(engine):
                 page.evaluate('window.deliverNextBackupReminder(true)')
                 page.wait_for_function('typeof window.finishHeldBackupStatusRead === "function"')
                 if operation == 'task-form':
-                    page.locator('#openModalBtn').click()
+                    open_task_editor(page)
                     page.locator('#taskName').fill('New task draft started during backup status read')
                 else:
                     error_text = reject_view_file(page)

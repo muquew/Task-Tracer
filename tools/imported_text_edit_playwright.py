@@ -2,6 +2,8 @@
 """Keep accepted imported text intact when editing another task field."""
 from __future__ import annotations
 
+from smoke_playwright import open_task_editor, reveal_task_field
+
 from smoke_playwright import open_settings, return_to_task_workspace
 
 import argparse
@@ -102,25 +104,25 @@ def quoted_tags(page, url, template):
     })
     open_edit(page)
     presented = page.locator('#taskTags').input_value()
-    page.locator('#taskTags').fill(presented.replace('Review', 'Approved'))
+    reveal_task_field(page, '#taskTags').fill(presented.replace('Review', 'Approved'))
     expected = [{**baseline[0], 'tags': [*baseline[0]['tags'][:-1], 'Approved']}]
     save_and_assert(page, expected)
     open_edit(page)
     presented = page.locator('#taskTags').input_value()
-    page.locator('#taskTags').fill(presented + ', "new,tag", "new ""quote"""')
+    reveal_task_field(page, '#taskTags').fill(presented + ', "new,tag", "new ""quote"""')
     expected = [{**expected[0], 'tags': [*expected[0]['tags'], 'new,tag', 'new "quote"']}]
     save_and_assert(page, expected)
     open_edit(page)
     presented = page.locator('#taskTags').input_value()
     assert 'team ""private"", dev' in presented
-    page.locator('#taskTags').fill(presented.replace('team ""private"", dev', 'team ""revised"", dev'))
+    reveal_task_field(page, '#taskTags').fill(presented.replace('team ""private"", dev', 'team ""revised"", dev'))
     expected = [{**expected[0], 'tags': [tag.replace('team "private", dev', 'team "revised", dev')
                                        for tag in expected[0]['tags']]}]
     save_and_assert(page, expected)
     return_to_task_workspace(page)
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     page.locator('#taskName').fill('New quoted tags')
-    page.locator('#taskTags').fill('literal"quote, "comma,tag", "escaped ""quote""", "unfinished')
+    reveal_task_field(page, '#taskTags').fill('literal"quote, "comma,tag", "escaped ""quote""", "unfinished')
     page.locator('#noDeadline').check()
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
@@ -156,13 +158,13 @@ def normalization(page, url, template):
               'project': 'Edited Project', 'tags': ['new', 'alpha', 'beta', 'last']}
     open_edit(page)
     for selector, value in inputs.items():
-        page.locator(selector).fill(value)
+        reveal_task_field(page, selector).fill(value)
     expected = [{**baseline[0], **fields}]
     save_and_assert(page, expected)
     return_to_task_workspace(page)
-    page.locator('#openModalBtn').click()
+    open_task_editor(page)
     for selector, value in inputs.items():
-        page.locator(selector).fill(value.replace('Explicit name', 'New name'))
+        reveal_task_field(page, selector).fill(value.replace('Explicit name', 'New name'))
     page.locator('#noDeadline').check()
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
