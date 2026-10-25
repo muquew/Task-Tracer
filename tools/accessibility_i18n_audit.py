@@ -50,6 +50,45 @@ def find_axe_source() -> Path:
     return source
 
 
+def settle_animations(page: Page, label: str) -> None:
+    """Wait for live finite animations, with two stable frames and a deadline."""
+    result = page.evaluate('''async () => {
+        const describe = animations => animations.map(animation => {
+            const effect = animation.effect, target = effect?.target;
+            const style = target ? getComputedStyle(target) : null;
+            return {type:animation.constructor.name, name:animation.animationName || animation.transitionProperty || '',
+                playState:animation.playState, pending:animation.pending, currentTime:animation.currentTime, startTime:animation.startTime,
+                timing:effect?.getTiming(), computedTiming:effect?.getComputedTiming(),
+                target:{tag:target?.tagName,id:target?.id,className:typeof target?.className==='string'?target.className:target?.className?.baseVal,
+                    connected:target?.isConnected,visibility:style?.visibility,display:style?.display,animationPlayState:style?.animationPlayState},
+                documentVisibility:document.visibilityState};
+        });
+        const active = () => document.getAnimations().filter(animation => animation.effect?.getTiming().iterations !== Infinity
+            && (animation.pending || !['idle', 'finished'].includes(animation.playState)));
+        const before = describe(document.getAnimations()), started = performance.now();
+        let timer, done = false, stableFrames = 0, lastActiveCount = active().length;
+        const settle = new Promise(resolve => {
+            const sample = () => {
+                if (done) return;
+                lastActiveCount = active().length;
+                stableFrames = lastActiveCount === 0 ? stableFrames + 1 : 0;
+                if (stableFrames >= 2) resolve(true);
+                else requestAnimationFrame(sample);
+            };
+            requestAnimationFrame(sample);
+        });
+        let completed;
+        try {
+            completed = await Promise.race([settle, new Promise(resolve => {timer = setTimeout(() => resolve(false), 10000);})]);
+        } finally {done = true; clearTimeout(timer);}
+        const result = {completed, waitedMs:performance.now()-started, stableFrames, lastActiveCount,
+            before, after:describe(document.getAnimations()), visibility:document.visibilityState};
+        return JSON.parse(JSON.stringify(result, (_key,value) => typeof value==='number'&&!Number.isFinite(value)?String(value):value));
+    }''')
+    if not result['completed']:
+        raise AssertionError(f'{label}: finite animations did not settle within 10 seconds:\n{json.dumps(result, ensure_ascii=False, indent=2)}')
+
+
 def inject_axe(page: Page, axe_source: str) -> None:
     if urlparse(page.url).hostname in {'127.0.0.1', 'localhost'}:
         assert find_axe_source().read_text() == axe_source, 'Local axe source changed during the audit'
@@ -258,10 +297,7 @@ def audit_subtask_checkbox_visibility(page: Page, label: str,
         close_workspace_navigation(page)
         page.locator('#searchInput').focus()
         page.mouse.move(0, 0)
-        page.evaluate("""async () => {
-            await Promise.all(document.getAnimations().filter(animation => animation.effect?.getTiming().iterations !== Infinity)
-                .map(animation => animation.finished.catch(() => {})));
-        }""")
+        settle_animations(page, f'{label} {theme} unchecked subtask')
         unchecked = subtask_checkbox_paint(checkbox)
         checkbox.focus()
         checkbox.press('Space')
@@ -279,10 +315,7 @@ def audit_subtask_checkbox_visibility(page: Page, label: str,
                 checkbox.press('Tab')
                 page.keyboard.press('Shift+Tab')
                 expect(checkbox).to_be_focused()
-            page.evaluate("""async () => {
-                await Promise.all(document.getAnimations().filter(animation => animation.effect?.getTiming().iterations !== Infinity)
-                    .map(animation => animation.finished.catch(() => {})));
-            }""")
+            settle_animations(page, f'{label} {theme} {interaction} subtask')
             paint = subtask_checkbox_paint(checkbox)
             observation = {'label': label, 'theme': theme, 'interaction': interaction,
                            'unchecked': unchecked, 'checked': paint,
@@ -319,11 +352,8 @@ def switch_to_english(page: Page) -> None:
 
 
 def audit_page_state(page: Page, axe_source: str, label: str) -> None:
-    page.evaluate("""async () => {
-        await Promise.all(document.getAnimations()
-            .filter(animation => animation.effect?.getTiming().iterations !== Infinity)
-            .map(animation => animation.finished.catch(() => {})));
-    }""")
+    print(f'Accessibility state: {label}', flush=True)
+    settle_animations(page, label)
     assert_accessibility_baseline(page, label)
     run_axe(page, axe_source, label)
     assert_focus_baseline(page, label)

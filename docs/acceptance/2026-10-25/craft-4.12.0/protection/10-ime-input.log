@@ -1,0 +1,7 @@
+External harness: expression waits compiled as function predicates; deployment CSP and service worker unchanged
+Composition chromium: 154.0.8037.57
+Composition passed: palette; composition keys stay in text and ordinary keys still work
+Composition passed: subtasks; composition keys stay in text and ordinary keys still work
+Composition passed: escape; composition keys stay in text and ordinary keys still work
+Composition passed: search; composition keys stay in text and ordinary keys still work
+Composition passed: forms; composition keys stay in text and ordinary keys still work

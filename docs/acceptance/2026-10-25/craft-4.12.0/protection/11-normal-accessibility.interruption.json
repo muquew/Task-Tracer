@@ -1,0 +1,8 @@
+{
+  "result": "11-normal-accessibility.result.json",
+  "status": "interrupted, incomplete",
+  "process_exit": -15,
+  "wrapper_exit": 241,
+  "reason": "Root requested stopping an unbounded animation/axe wait for external bounded diagnostics",
+  "repo_changed": false
+}

@@ -1386,6 +1386,7 @@
         .batch-move-count { margin: 0 0 14px; font-size: 13px; font-weight: 550; color: var(--text-main); }
         .modal-header, .command-palette-header, .workspace-schedule-header { flex-shrink: 0; }
         body.modal-open .dialog-feedback > .notification { position: static; inset: auto; width: auto; max-width: none; margin: 0; transform: none; }
+        @media (max-width: 779px) { .workspace-mobile-dock .view-tab:not([aria-current="page"]) { color: var(--text-main); } }
     </style>
     <script>
         (function() {

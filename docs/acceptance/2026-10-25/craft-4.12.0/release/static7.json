@@ -1,10 +1,10 @@
 {
   "schema_version": 2,
-  "run_id": "c6e66261-dc15-46de-b653-55a39ea4053d",
+  "run_id": "77fffbc1-2adf-44fb-9d27-ebfbed31d7b4",
   "status": "passed",
-  "started_at": "2026-10-25T13:46:31.339+00:00",
-  "updated_at": "2026-10-25T13:46:49.200+00:00",
-  "finished_at": "2026-10-25T13:46:49.200+00:00",
+  "started_at": "2026-10-25T14:03:18.562+00:00",
+  "updated_at": "2026-10-25T14:03:34.971+00:00",
+  "finished_at": "2026-10-25T14:03:34.971+00:00",
   "planned_checks": [
     "validate_static.py",
     "date_semantics_test.py",
@@ -28,7 +28,7 @@
       "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
       "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
       "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
-      "index.html": "1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561",
+      "index.html": "4e251ecbd557fede104a8707fe68ddfdf510df4474c65f19c52f010a6ac6c929",
       "manifest.json": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718",
       "resources/en.json": "e1598a0d90c60d66252dac2551d74e4bad103977c59846df83805fbd17ba9ec2",
       "resources/zh-CN.json": "54bacb4e62073f461130d384738f6e83c21ff1f1ba8e55eb7084a9724caa25cb",
@@ -41,7 +41,7 @@
       "sw.js": "06135af93b7c3090fcd9db97afbbee4639f0713eff2896d28c329689b0609aff",
       "vercel.json": "9fe0ee2e00a88c3f19dd2553327cb16d2f8f0de4dc69e70a7698d92319b816d6"
     },
-    "sha256": "7a7beb21c9ef2f5f5a90ef70cadb73744c3797e060b9f61a86c45667851f36b3"
+    "sha256": "41eb8fbec5f3a8af305ce1d780f9d3c26d29c2e0c6db210373f5a61552791d40"
   },
   "verification": {
     "files": {
@@ -49,7 +49,7 @@
       "package-lock.json": "842b62f85140e91dd0d2da354ec4d88b42f9209349f6c939fc786172a5fd977f",
       "package.json": "edb42fceda4cc1bc1f6cbd79e777def5e57912debc793126c8fd2762b9a691f4",
       "requirements-dev.txt": "882c62a419989bc6ff175ae700ab509aa70eefacc22070fde17f84031fadb89c",
-      "tools/accessibility_i18n_audit.py": "716ecd050d27048a6174dad4eec5495c04c9b87ccb2f56ac4c294608ede701ec",
+      "tools/accessibility_i18n_audit.py": "8a84fbedc55d9fadba39ea7edc1901f7f7035d51a39d42830086a73239ceb2ed",
       "tools/appearance_preferences_playwright.py": "ff68f9b4765129ff91f1185d4f061e79e8f80a91411b4a958f5894e70a8e9381",
       "tools/backup_freshness_playwright.py": "b300cd08c3bcae31303c90c89f90d8ff92b613f1310770db71c26cecb1622d12",
       "tools/backup_reminder_priority_playwright.py": "554ab81a496c54e1baa26d4a9478200201dbd449811ec9d964940d607bb72b32",
@@ -59,7 +59,7 @@
       "tools/calendar_navigation_playwright.py": "de945d5117db19d4b547e4996f8f89c8fdfc5cc49b05be148da16f0e32e36009",
       "tools/calendar_performance_playwright.py": "53ee54f992807621799b832314de4fef92d2538f52dbe83fe3a2c366defec408",
       "tools/calendar_timezone_playwright.py": "aea7d57bfd4a6c9ed7f651dd332537cbb2b054c8bec9234fb50d143803eb9230",
-      "tools/check.py": "2ece9a2b3d6c1f1af73a33a1594ecdf80bc9b6b0e13a19cb3d744de7a785cabc",
+      "tools/check.py": "08dd9750bd56c9c9e04e8833347377cc1ebba02895a96273822c09c9486b672d",
       "tools/check_runner_test.py": "79947bd2b5dc3e1fe4cd09745cbb403f1dcc4c89ac6dfa321f2e5517a852b54d",
       "tools/compatibility_playwright.py": "36537279d5bc5f6488b87e26f8ddd64b56eed5e49b884db1d1967680120b5935",
       "tools/craft_accent_playwright.py": "116dc74b77b8a4219cbb44f683ad977f6d133c56d9c3de62fe448b5b4fecd452",
@@ -121,7 +121,7 @@
       "tools/workspace_performance_playwright.py": "5062eac9e6045929f385aed1951e534e69cea599a7cbeaf4577bef2d0d40af18",
       "tools/workspace_roundtrip_playwright.py": "d4fb29b24a4945026eacfec065a38cccd95af900a0c822154be635ab68eb6646"
     },
-    "sha256": "72f0f34a8faf0ad92d9879e3b72deac6344066a3164b1aaf6f90f32a93725ef9"
+    "sha256": "3bad488c2c63e70a7e6fb0b8c54aa965d33beb580c5347e0e1bda1c51633ddc2"
   },
   "source_final": {
     "files": {
@@ -136,7 +136,7 @@
       "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
       "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
       "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
-      "index.html": "1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561",
+      "index.html": "4e251ecbd557fede104a8707fe68ddfdf510df4474c65f19c52f010a6ac6c929",
       "manifest.json": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718",
       "resources/en.json": "e1598a0d90c60d66252dac2551d74e4bad103977c59846df83805fbd17ba9ec2",
       "resources/zh-CN.json": "54bacb4e62073f461130d384738f6e83c21ff1f1ba8e55eb7084a9724caa25cb",
@@ -149,7 +149,7 @@
       "sw.js": "06135af93b7c3090fcd9db97afbbee4639f0713eff2896d28c329689b0609aff",
       "vercel.json": "9fe0ee2e00a88c3f19dd2553327cb16d2f8f0de4dc69e70a7698d92319b816d6"
     },
-    "sha256": "7a7beb21c9ef2f5f5a90ef70cadb73744c3797e060b9f61a86c45667851f36b3"
+    "sha256": "41eb8fbec5f3a8af305ce1d780f9d3c26d29c2e0c6db210373f5a61552791d40"
   },
   "verification_final": {
     "files": {
@@ -157,7 +157,7 @@
       "package-lock.json": "842b62f85140e91dd0d2da354ec4d88b42f9209349f6c939fc786172a5fd977f",
       "package.json": "edb42fceda4cc1bc1f6cbd79e777def5e57912debc793126c8fd2762b9a691f4",
       "requirements-dev.txt": "882c62a419989bc6ff175ae700ab509aa70eefacc22070fde17f84031fadb89c",
-      "tools/accessibility_i18n_audit.py": "716ecd050d27048a6174dad4eec5495c04c9b87ccb2f56ac4c294608ede701ec",
+      "tools/accessibility_i18n_audit.py": "8a84fbedc55d9fadba39ea7edc1901f7f7035d51a39d42830086a73239ceb2ed",
       "tools/appearance_preferences_playwright.py": "ff68f9b4765129ff91f1185d4f061e79e8f80a91411b4a958f5894e70a8e9381",
       "tools/backup_freshness_playwright.py": "b300cd08c3bcae31303c90c89f90d8ff92b613f1310770db71c26cecb1622d12",
       "tools/backup_reminder_priority_playwright.py": "554ab81a496c54e1baa26d4a9478200201dbd449811ec9d964940d607bb72b32",
@@ -167,7 +167,7 @@
       "tools/calendar_navigation_playwright.py": "de945d5117db19d4b547e4996f8f89c8fdfc5cc49b05be148da16f0e32e36009",
       "tools/calendar_performance_playwright.py": "53ee54f992807621799b832314de4fef92d2538f52dbe83fe3a2c366defec408",
       "tools/calendar_timezone_playwright.py": "aea7d57bfd4a6c9ed7f651dd332537cbb2b054c8bec9234fb50d143803eb9230",
-      "tools/check.py": "2ece9a2b3d6c1f1af73a33a1594ecdf80bc9b6b0e13a19cb3d744de7a785cabc",
+      "tools/check.py": "08dd9750bd56c9c9e04e8833347377cc1ebba02895a96273822c09c9486b672d",
       "tools/check_runner_test.py": "79947bd2b5dc3e1fe4cd09745cbb403f1dcc4c89ac6dfa321f2e5517a852b54d",
       "tools/compatibility_playwright.py": "36537279d5bc5f6488b87e26f8ddd64b56eed5e49b884db1d1967680120b5935",
       "tools/craft_accent_playwright.py": "116dc74b77b8a4219cbb44f683ad977f6d133c56d9c3de62fe448b5b4fecd452",
@@ -229,7 +229,7 @@
       "tools/workspace_performance_playwright.py": "5062eac9e6045929f385aed1951e534e69cea599a7cbeaf4577bef2d0d40af18",
       "tools/workspace_roundtrip_playwright.py": "d4fb29b24a4945026eacfec065a38cccd95af900a0c822154be635ab68eb6646"
     },
-    "sha256": "72f0f34a8faf0ad92d9879e3b72deac6344066a3164b1aaf6f90f32a93725ef9"
+    "sha256": "3bad488c2c63e70a7e6fb0b8c54aa965d33beb580c5347e0e1bda1c51633ddc2"
   },
   "source_unchanged": true,
   "verification_unchanged": true,
@@ -241,37 +241,37 @@
     {
       "program": "validate_static.py",
       "exit_code": 0,
-      "duration_seconds": 0.316
+      "duration_seconds": 0.342
     },
     {
       "program": "date_semantics_test.py",
       "exit_code": 0,
-      "duration_seconds": 0.036
+      "duration_seconds": 0.033
     },
     {
       "program": "security_policy.py",
       "exit_code": 0,
-      "duration_seconds": 0.043
+      "duration_seconds": 0.039
     },
     {
       "program": "release_payload_test.py",
       "exit_code": 0,
-      "duration_seconds": 1.405
+      "duration_seconds": 1.51
     },
     {
       "program": "release_versions_test.py",
       "exit_code": 0,
-      "duration_seconds": 9.844
+      "duration_seconds": 9.952
     },
     {
       "program": "check_runner_test.py",
       "exit_code": 0,
-      "duration_seconds": 5.914
+      "duration_seconds": 4.301
     },
     {
       "program": "static_syntax_test.py",
       "exit_code": 0,
-      "duration_seconds": 0.204
+      "duration_seconds": 0.142
     }
   ]
 }

@@ -1,0 +1,28 @@
+Batch/Undo regression: chromium 154.0.8037.57
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer-craft/tools/batch_selection_playwright.py", line 359, in <module>
+    main(args.browser, args.case)
+  File "/workspace/Task-Tracer-craft/tools/batch_selection_playwright.py", line 345, in main
+    check_undo_after_remote_commit(browser, url, 'batch')
+  File "/workspace/Task-Tracer-craft/tools/batch_selection_playwright.py", line 119, in check_undo_after_remote_commit
+    first.wait_for_function('window.taskWriteCommitted === true')
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 12761, in wait_for_function
+    self._sync(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_page.py", line 1151, in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 940, in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.wait_for_function: EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self' 'sha256-gC96B6DNSCirxrxjigvSDtabpBsUTiEwHtCv3BNjTIo=' 'sha256-WGrDUo9DPU7QnCgrkwMtbbXR6OeAk8yyZQrbBKZP+ig=' 'sha256-awwJPV2HuK73JUsQ7v51rL/+QT4fNoLvaXOGeVBXwMQ=' 'sha256-mqvQoQ3jj3RNgsis4TfLvS4qL2jmrYFVo8qpX47aiPg='".
+
+    at eval (<anonymous>)
+    at predicate (eval at evaluate (:311:30), <anonymous>:4:60)
+    at next (eval at evaluate (:311:30), <anonymous>:29:33)

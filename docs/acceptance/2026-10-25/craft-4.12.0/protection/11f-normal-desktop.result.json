@@ -1,0 +1,70 @@
+{
+  "name": "11f-normal-desktop",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-u",
+    "/tmp/task-tracer-4.12.0-protection/a11y_live_settle_bootstrap.py",
+    "/workspace/Task-Tracer-craft/tools/accessibility_i18n_audit.py",
+    "--viewport",
+    "desktop",
+    "--skip-scaled",
+    "--collect-axe"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 65.275,
+  "started_at_utc": "2026-10-25T13:58:51.169875+00:00",
+  "finished_at_utc": "2026-10-25T13:59:56.453805+00:00",
+  "scope": [
+    "normal-workflow axe/focus/layout, all settings and new batch/import surfaces; scaled workload excluded"
+  ],
+  "case": "all",
+  "viewport": "desktop",
+  "log": "/tmp/task-tracer-4.12.0-protection/11f-normal-desktop.log",
+  "external_wait_adapter_sha256": "aa2abfcde86277dbe890e7659371b9ae993bbe5cd62fb05c5e807ca2d91743e0",
+  "app_version_at_finish": "4.12.0",
+  "resource_version_at_finish": "4.40",
+  "production_headers": true,
+  "live_animation_settle": true,
+  "bounded_animation_diagnostic": false,
+  "axe_injection": "pinned real same-origin local file; no CSP relaxation or service-worker blocking",
+  "inputs_before": {
+    "program_sha256": "716ecd050d27048a6174dad4eec5495c04c9b87ccb2f56ac4c294608ede701ec",
+    "index_sha256": "1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561",
+    "payload23": {
+      "sha256": "68a5b0b28b7f9992ee7b85b8d82e185088316597fe1779221a9f2f5f2d26c41b",
+      "count": 23,
+      "manifest": "/tmp/task-tracer-4.12.0-protection/fingerprints/payload23-68a5b0b28b7f9992ee7b85b8d82e185088316597fe1779221a9f2f5f2d26c41b.json"
+    },
+    "runtime_payload": {
+      "sha256": "2af452478c315cd7cc82ca8debe665800566f90cf32429796181a1205001b53c",
+      "count": 17,
+      "manifest": "/tmp/task-tracer-4.12.0-protection/fingerprints/runtime-2af452478c315cd7cc82ca8debe665800566f90cf32429796181a1205001b53c.json"
+    },
+    "tools": {
+      "sha256": "5983ea6227737e68897f7c5bd429ee2994df21b0de7a58dd28e02968f98000bf",
+      "count": 71,
+      "manifest": "/tmp/task-tracer-4.12.0-protection/fingerprints/tools-5983ea6227737e68897f7c5bd429ee2994df21b0de7a58dd28e02968f98000bf.json"
+    }
+  },
+  "inputs_after": {
+    "program_sha256": "716ecd050d27048a6174dad4eec5495c04c9b87ccb2f56ac4c294608ede701ec",
+    "index_sha256": "1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561",
+    "payload23": {
+      "sha256": "68a5b0b28b7f9992ee7b85b8d82e185088316597fe1779221a9f2f5f2d26c41b",
+      "count": 23,
+      "manifest": "/tmp/task-tracer-4.12.0-protection/fingerprints/payload23-68a5b0b28b7f9992ee7b85b8d82e185088316597fe1779221a9f2f5f2d26c41b.json"
+    },
+    "runtime_payload": {
+      "sha256": "2af452478c315cd7cc82ca8debe665800566f90cf32429796181a1205001b53c",
+      "count": 17,
+      "manifest": "/tmp/task-tracer-4.12.0-protection/fingerprints/runtime-2af452478c315cd7cc82ca8debe665800566f90cf32429796181a1205001b53c.json"
+    },
+    "tools": {
+      "sha256": "5983ea6227737e68897f7c5bd429ee2994df21b0de7a58dd28e02968f98000bf",
+      "count": 71,
+      "manifest": "/tmp/task-tracer-4.12.0-protection/fingerprints/tools-5983ea6227737e68897f7c5bd429ee2994df21b0de7a58dd28e02968f98000bf.json"
+    }
+  },
+  "changed_payload_files": [],
+  "changed_tool_files": []
+}

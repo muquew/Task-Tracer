@@ -9,15 +9,15 @@ Running release_payload_test.py
 Bundled translation fallback matches resource files and version
 Static validation passed
 Deployment CSP hashes match application scripts
-Built and verified /tmp/task-tracer-release-payload-m_bc3gyv/normal/task-tracer-4.12.0.zip (24 files, SHA-256 0ce7b94c145c9c552ce619a69f1910135fc217cc0842497e7c2796fd36cac92f)
+Built and verified /tmp/task-tracer-release-payload-ce8h_m1s/normal/task-tracer-4.12.0.zip (24 files, SHA-256 375ebeeefe47c1a624605c18809dff52f24121a5899d25d53b352dc4a30a88ce)
 Bundled translation fallback matches resource files and version
 Static validation passed
 Deployment CSP hashes match application scripts
-Built and verified /tmp/task-tracer-release-payload-m_bc3gyv/with-unrelated-files/task-tracer-4.12.0.zip (24 files, SHA-256 0ce7b94c145c9c552ce619a69f1910135fc217cc0842497e7c2796fd36cac92f)
+Built and verified /tmp/task-tracer-release-payload-ce8h_m1s/with-unrelated-files/task-tracer-4.12.0.zip (24 files, SHA-256 375ebeeefe47c1a624605c18809dff52f24121a5899d25d53b352dc4a30a88ce)
 Bundled translation fallback matches resource files and version
 Static validation passed
 Deployment CSP hashes match application scripts
-Built and verified /tmp/task-tracer-release-payload-m_bc3gyv/repeat/task-tracer-4.12.0.zip (24 files, SHA-256 0ce7b94c145c9c552ce619a69f1910135fc217cc0842497e7c2796fd36cac92f)
+Built and verified /tmp/task-tracer-release-payload-ce8h_m1s/repeat/task-tracer-4.12.0.zip (24 files, SHA-256 375ebeeefe47c1a624605c18809dff52f24121a5899d25d53b352dc4a30a88ce)
 Release payload passed: three unrelated synthetic files are excluded; exact manifest and repeated bytes match
 Release payload rejection passed: missing required asset
 Release payload rejection passed: source symbolic link index.html

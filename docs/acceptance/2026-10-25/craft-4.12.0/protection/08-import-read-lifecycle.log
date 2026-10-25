@@ -1,0 +1,52 @@
+Task import read passed: cancelled file completion preserves a later task draft
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer-craft/tools/import_read_lifecycle_playwright.py", line 123, in <module>
+    run()
+  File "/workspace/Task-Tracer-craft/tools/import_read_lifecycle_playwright.py", line 117, in run
+    superseded_read_preserves_new_preview(browser, url)
+  File "/workspace/Task-Tracer-craft/tools/import_read_lifecycle_playwright.py", line 100, in superseded_read_preserves_new_preview
+    expect(page.locator('#confirm-message-text')).to_contain_text('LATEST_SELECTED_IMPORT')
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 22016, in to_contain_text
+    self._sync(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 303, in to_contain_text
+    await self._expect_impl(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 128, in _expect_impl
+    _record_soft_or_raise(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 60, in _record_soft_or_raise
+    raise error
+AssertionError: Locator expected to contain text 'LATEST_SELECTED_IMPORT'
+Actual value: 选择导入方式合并到当前任务新名称会追加；同名任务可选择保留两份、跳过导入或替换本地，请确认后再导入。替换模式会用文件中的任务替换当前全部任务。变更预览当前 0 项任务将替换为文件中的 1 项，完成后共 1 项。替换导入保护当前没有本地任务，替换不会覆盖现有数据。恢复检查清单!文件来源传统任务数组或未版本化 JSON；导入前会按当前格式规范化。!备份模板版本将按兼容规则读取 legacy-array 文件，并按当前模板 2.4 导入。!文件完整性传统任务数组没有完整性校验；导入前会重新规范化。已通过 5 项检查✓任务内容文件中包含 1 个可导入任务。✓任务 ID未发现重复任务 ID。✓本地同名项未发现与当前任务同名的导入项。✓当前数据影响当前没有本地任务，替换不会覆盖已有数据。✓替换前快照当前没有本地任务，不需要额外恢复快照。文件检查与变更详情导入任务1文件内重复0重复任务 ID0匹配当前任务0 
+Call log:
+  - Expect "to_contain_text" with timeout 5000ms
+  - waiting for locator("#confirm-message-text")
+    14 × locator resolved to <div class="confirm-message" id="confirm-message-text">…</div>
+       - unexpected value "选择导入方式合并到当前任务新名称会追加；同名任务可选择保留两份、跳过导入或替换本地，请确认后再导入。替换模式会用文件中的任务替换当前全部任务。变更预览当前 0 项任务将替换为文件中的 1 项，完成后共 1 项。替换导入保护当前没有本地任务，替换不会覆盖现有数据。恢复检查清单!文件来源传统任务数组或未版本化 JSON；导入前会按当前格式规范化。!备份模板版本将按兼容规则读取 legacy-array 文件，并按当前模板 2.4 导入。!文件完整性传统任务数组没有完整性校验；导入前会重新规范化。已通过 5 项检查✓任务内容文件中包含 1 个可导入任务。✓任务 ID未发现重复任务 ID。✓本地同名项未发现与当前任务同名的导入项。✓当前数据影响当前没有本地任务，替换不会覆盖已有数据。✓替换前快照当前没有本地任务，不需要额外恢复快照。文件检查与变更详情导入任务1文件内重复0重复任务 ID0匹配当前任务0"
+
+Aria snapshot:
+- heading "选择导入方式" [level=3]
+- checkbox "合并到当前任务 新名称会追加；同名任务可选择保留两份、跳过导入或替换本地，请确认后再导入。"
+- text: 合并到当前任务 新名称会追加；同名任务可选择保留两份、跳过导入或替换本地，请确认后再导入。
+- paragraph: 替换模式会用文件中的任务替换当前全部任务。
+- region "变更预览":
+  - heading "变更预览" [level=3]
+  - status: 当前 0 项任务将替换为文件中的 1 项，完成后共 1 项。
+- region "恢复检查清单":
+  - heading "恢复检查清单" [level=3]
+  - list:
+    - listitem:
+      - img "注意": "!"
+      - strong: 文件来源
+      - text: 传统任务数组或未版本化 JSON；导入前会按当前格式规范化。
+    - listitem:
+      - img "注意": "!"
+      - strong: 备份模板版本
+      - text: 将按兼容规则读取 legacy-array 文件，并按当前模板 2.4 导入。
+    - listitem:
+      - img "注意": "!"
+      - strong: 文件完整性
+      - text: 传统任务数组没有完整性校验；导入前会重新规范化。
+  - group: 已通过 5 项检查
+- group: 文件检查与变更详情

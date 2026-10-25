@@ -1,0 +1,417 @@
+{
+  "schema_version": 1,
+  "app_version": "4.12.0",
+  "resource_version": "4.40",
+  "created_at_utc": "2026-10-25T14:04:44.598900+00:00",
+  "stage": "Scoped composite acceptance with impact-based reruns; not one all-program run at one source hash.",
+  "latest_runtime_index_sha256": "4e251ecbd557fede104a8707fe68ddfdf510df4474c65f19c52f010a6ac6c929",
+  "selected_successes": {
+    "planned_recurrence_stats_and_return": {
+      "result": "01-craft-stats-focus.result.json",
+      "log": "01-craft-stats-focus.log",
+      "exit": 0,
+      "seconds": 21.412,
+      "index_sha256": "a272b4d632ebb69eb72982b87ce1e7aa11307f8167ae290abba3ed560fe453dd",
+      "program_sha256": "6a8bee05c491360c29cff114bfe00ca21c7e3f10bb0e55ebe912d86f3a1bf13c",
+      "scope": [
+        "planned recurrence and exact Undo",
+        "archived completion history, inventory and scoped task sets",
+        "drilldown origin return, updated counts, scope invalidation and preserved sort"
+      ]
+    },
+    "batch_project_atomic_stale_archive": {
+      "result": "02-craft-batch-project.result.json",
+      "log": "02-craft-batch-project.log",
+      "exit": 0,
+      "seconds": 20.038,
+      "index_sha256": "a272b4d632ebb69eb72982b87ce1e7aa11307f8167ae290abba3ed560fe453dd",
+      "program_sha256": "98ba789d75cb2e664567efc008edddb37dfa4ecf9ef36ae3e1896bed63a3be36",
+      "scope": [
+        "project normalization and one-transaction selected-field move",
+        "queued second-put atomic rollback and retry",
+        "real cross-tab stale refusal",
+        "single/batch archive parity and exact Undo"
+      ]
+    },
+    "accent_preferences_and_core_contrast": {
+      "result": "03b-craft-accent-served-axe.result.json",
+      "log": "03b-craft-accent-served-axe.log",
+      "exit": 0,
+      "seconds": 28.593,
+      "index_sha256": "a272b4d632ebb69eb72982b87ce1e7aa11307f8167ae290abba3ed560fe453dd",
+      "program_sha256": "116dc74b77b8a4219cbb44f683ad977f6d133c56d9c3de62fe448b5b4fecd452",
+      "scope": [
+        "four native settings accents, refresh and independent themes",
+        "eight light/dark task-surface axe checks",
+        "trusted cross-tab/removal/clear with unchanged draft and IndexedDB",
+        "invalid and browser-blocked storage fallback"
+      ]
+    },
+    "import_summary_snapshot_and_undo": {
+      "result": "04b-import-summary-restored-diff.result.json",
+      "log": "04b-import-summary-restored-diff.log",
+      "exit": 0,
+      "seconds": 13.519,
+      "index_sha256": "1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561",
+      "program_sha256": "9e660512d5e31b6d7d7863dc71fa69d49a58e9fd2bd876e630a31ece572d941b",
+      "scope": [
+        "live merge/replace/keep/skip summaries and actual tasks",
+        "all-skip no-write action",
+        "genuine pre-replacement snapshot, second confirmation and exact Undo"
+      ]
+    },
+    "original_stats_scope": {
+      "result": "05-stats-scope.result.json",
+      "log": "05-stats-scope.log",
+      "exit": 0,
+      "seconds": 9.254,
+      "index_sha256": "a272b4d632ebb69eb72982b87ce1e7aa11307f8167ae290abba3ed560fe453dd",
+      "program_sha256": "08993c5756ee2f71c82c41f668263216ce3d8f9406da3653342afb21bdf252e4",
+      "scope": [
+        "original overdue/future/undated/archived/empty scopes",
+        "project/search/status intersections",
+        "inventory denominator, retained archive history and full IndexedDB read-only protection"
+      ]
+    },
+    "original_batch_undo_guards": {
+      "result": "06b-batch-undo-csp-functions.result.json",
+      "log": "06b-batch-undo-csp-functions.log",
+      "exit": 0,
+      "seconds": 26.049,
+      "index_sha256": "1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561",
+      "program_sha256": "7f18906b7115d1c495e3c8c964200b0c2ec95d8740406b591f45317727e80784",
+      "scope": [
+        "three original stale/concurrent Undo protections; no paging dataset"
+      ]
+    },
+    "original_import_preview_concurrency": {
+      "result": "07b-import-preview-restored-diff.result.json",
+      "log": "07b-import-preview-restored-diff.log",
+      "exit": 0,
+      "seconds": 36.729,
+      "index_sha256": "1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561",
+      "program_sha256": "62727ebffd27e142233e9a431a30c6c0039fd7c78dad9497170174a87e068e7a",
+      "scope": [
+        "stale merge/replace approvals and original reminder refresh guards",
+        "stale clear/archive/recovery confirmations"
+      ]
+    },
+    "original_import_read_lifecycle": {
+      "result": "08b-import-read-restored-diff.result.json",
+      "log": "08b-import-read-restored-diff.log",
+      "exit": 0,
+      "seconds": 6.532,
+      "index_sha256": "1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561",
+      "program_sha256": "6eb34a0d23be7e66f59ec7c2001d4116281d92288cbb5481222316224fc023c2",
+      "scope": [
+        "cancelled read preserves later draft",
+        "old file cannot replace latest selected preview"
+      ]
+    },
+    "original_task_draft": {
+      "result": "09-task-draft.result.json",
+      "log": "09-task-draft.log",
+      "exit": 0,
+      "seconds": 56.146,
+      "index_sha256": "1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561",
+      "program_sha256": "3350f554d75ee6b2bfcb34a327caa65a3f49e486b6d0ba652fd9c7c42796bf62",
+      "scope": [
+        "original close/prompt/unload/stale/failed-write/delayed-write/quota protections",
+        "raw weekday selection recovery",
+        "capture handoff and empty-capture defaults"
+      ]
+    },
+    "composition_event_guards": {
+      "result": "10-ime-input.result.json",
+      "log": "10-ime-input.log",
+      "exit": 0,
+      "seconds": 17.646,
+      "index_sha256": "1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561",
+      "program_sha256": "babf4d79e554263c3e6f54d18f4448000266c09e19136da5fc0583240260702a",
+      "scope": [
+        "composition-event palette/subtask/escape/search/form guards; not native OS IME"
+      ]
+    }
+  },
+  "normal_accessibility": {
+    "counts_as_one_of_the_11_programs": true,
+    "desktop": {
+      "viewport": "1280x720",
+      "reduced_motion": false,
+      "result": "11f-normal-desktop.result.json",
+      "log": "11f-normal-desktop.log",
+      "exit": 0,
+      "seconds": 65.275,
+      "index_sha256": "1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561",
+      "program_sha256": "716ecd050d27048a6174dad4eec5495c04c9b87ccb2f56ac4c294608ede701ec",
+      "scope": [
+        "normal-workflow axe/focus/layout, all settings and new batch/import surfaces; scaled workload excluded"
+      ]
+    },
+    "mobile": {
+      "viewport": "390x844",
+      "reduced_motion": true,
+      "result": "11h-mobile-native-final.result.json",
+      "log": "11h-mobile-native-final.log",
+      "exit": 0,
+      "seconds": 43.938,
+      "index_sha256": "4e251ecbd557fede104a8707fe68ddfdf510df4474c65f19c52f010a6ac6c929",
+      "program_sha256": "8a84fbedc55d9fadba39ea7edc1901f7f7035d51a39d42830086a73239ceb2ed",
+      "scope": [
+        "normal-workflow axe/focus/layout, all settings and new batch/import surfaces; scaled workload excluded"
+      ]
+    },
+    "original_axe_rules_and_focus_layout_assertions_unchanged": true,
+    "note": "Desktop full audit passed on 1212 before the mobile-only text-colour change. Final mobile uses 4e and the native bounded settler, without external animation override."
+  },
+  "native_settler_regression": {
+    "result": "12-native-settle-prefix.result.json",
+    "log": "12-native-settle-prefix.log",
+    "exit": 0,
+    "seconds": 13.137,
+    "index_sha256": "4e251ecbd557fede104a8707fe68ddfdf510df4474c65f19c52f010a6ac6c929",
+    "program_sha256": "7017c3990755afda758168beeb57e73f1d156497f4e029c28bdc9b59a62309f6",
+    "scope": [
+      "committed native helper at all three original wait callers",
+      "both-theme subtask paint/visibility",
+      "original stalled batch More/move dialog with original axe/focus/layout and no writes"
+    ]
+  },
+  "runtime_stages": [
+    {
+      "index_sha256": "a272b4d632ebb69eb72982b87ce1e7aa11307f8167ae290abba3ed560fe453dd",
+      "label": "initial frozen candidate",
+      "retained_unaffected_successes": [
+        "01-craft-stats-focus",
+        "02-craft-batch-project",
+        "03b-craft-accent-served-axe",
+        "05-stats-scope"
+      ]
+    },
+    {
+      "index_sha256": "1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561",
+      "label": "original import difference preview restored inside Details",
+      "selected_runs": [
+        "04b-import-summary-restored-diff",
+        "06b-batch-undo-csp-functions",
+        "07b-import-preview-restored-diff",
+        "08b-import-read-restored-diff",
+        "09-task-draft",
+        "10-ime-input",
+        "11f-normal-desktop"
+      ]
+    },
+    {
+      "index_sha256": "4e251ecbd557fede104a8707fe68ddfdf510df4474c65f19c52f010a6ac6c929",
+      "label": "mobile unselected dock text raised to text-main; application logic unchanged",
+      "selected_runs": [
+        "11h-mobile-native-final",
+        "12-native-settle-prefix"
+      ]
+    }
+  ],
+  "resolved_failures": [
+    {
+      "run": "03-craft-accent",
+      "classification": "harness integration",
+      "cause": "Service-worker fetch bypassed a virtual page.route audit script. Fixed by loading the pinned real same-origin local axe file; CSP and SW retained.",
+      "verified_by": [
+        "03b-craft-accent-served-axe"
+      ]
+    },
+    {
+      "run": "06-batch-undo",
+      "classification": "harness CSP compatibility",
+      "cause": "Playwright expression-style wait used eval under real CSP. External bootstrap compiles the same pure predicate as a function; business assertions unchanged.",
+      "verified_by": [
+        "06b-batch-undo-csp-functions"
+      ]
+    },
+    {
+      "run": "08-import-read-lifecycle",
+      "classification": "actual UI functionality omission",
+      "cause": "New import layout omitted existing task-name difference preview. Root restored the original component inside Details; latest/old-file assertions were retained.",
+      "verified_by": [
+        "04b-import-summary-restored-diff",
+        "07b-import-preview-restored-diff",
+        "08b-import-read-restored-diff"
+      ]
+    },
+    {
+      "run": "11d-normal-animation-diagnostic",
+      "classification": "harness finite-animation wait",
+      "cause": "At the move dialog, already-idle cancelled CSS transitions produced unresolved new finished promises; after 10s no document animations remained. Native helper now polls current active/pending/paused finite animations, two stable frames, hard 10s failure; no animation finish/cancel.",
+      "verified_by": [
+        "11f-normal-desktop",
+        "11h-mobile-native-final",
+        "12-native-settle-prefix"
+      ]
+    },
+    {
+      "run": "11g-normal-mobile",
+      "classification": "actual mobile text contrast",
+      "cause": "One inactive Stats dock label measured 4.46:1 on its glass background. Mobile-only text-main colour fixed the UI; axe threshold unchanged.",
+      "verified_by": [
+        "11h-mobile-native-final"
+      ]
+    }
+  ],
+  "interrupted_incomplete_runs": [
+    {
+      "run": "11-normal-accessibility",
+      "child_exit": -15,
+      "wrapper_exit": 241,
+      "seconds": 297.105,
+      "reason": "Stopped the verified synthetic process tree at root request for bounded stage diagnostics; never reported passed."
+    },
+    {
+      "run": "11e-normal-live-settle",
+      "child_exit": -15,
+      "wrapper_exit": 241,
+      "seconds": 51.072,
+      "reason": "Unfinished combined prefix stopped when switching to independent viewport terminal results; never reported passed."
+    }
+  ],
+  "tool_cleanup": {
+    "files": {
+      "tools/accessibility_i18n_audit.py": "8a84fbedc55d9fadba39ea7edc1901f7f7035d51a39d42830086a73239ceb2ed",
+      "tools/check.py": "08dd9750bd56c9c9e04e8833347377cc1ebba02895a96273822c09c9486b672d"
+    },
+    "changes": [
+      "native bounded live-animation helper replaces all three old finished waits",
+      "four craft programs registered in full checks; static-only seven unchanged"
+    ],
+    "verification": "Native desktop failure prefix and final full mobile normal audit run without external animation override. Root owns the separate latest static/release/canonical checks."
+  },
+  "fingerprint_definition": {
+    "payload23": "DISTRIBUTION_SOURCES mapped to archive member names and actual published bytes, including README licence-link rewrite; SHA256 of sorted compact JSON member-to-SHA256 map; generated integrity.json excluded.",
+    "runtime_payload": "Same published map excluding two README files and four public screenshots.",
+    "tools": "SHA256 of sorted compact JSON mapping all tools/*.py paths to source SHA256.",
+    "per_run": "Every result records argv, real child exit, elapsed time, entry SHA, start/end payload/tool manifests, exact index hash, changed input paths and external adapter SHA where applicable."
+  },
+  "all_selected_run_inputs_stable": true,
+  "run_index": [
+    {
+      "result": "01-craft-stats-focus.result.json",
+      "exit": 0,
+      "seconds": 21.412
+    },
+    {
+      "result": "02-craft-batch-project.result.json",
+      "exit": 0,
+      "seconds": 20.038
+    },
+    {
+      "result": "03-craft-accent.result.json",
+      "exit": 1,
+      "seconds": 4.606
+    },
+    {
+      "result": "03b-craft-accent-served-axe.result.json",
+      "exit": 0,
+      "seconds": 28.593
+    },
+    {
+      "result": "04-craft-import-summary.result.json",
+      "exit": 0,
+      "seconds": 10.656
+    },
+    {
+      "result": "04b-import-summary-restored-diff.result.json",
+      "exit": 0,
+      "seconds": 13.519
+    },
+    {
+      "result": "05-stats-scope.result.json",
+      "exit": 0,
+      "seconds": 9.254
+    },
+    {
+      "result": "06-batch-undo.result.json",
+      "exit": 1,
+      "seconds": 4.224
+    },
+    {
+      "result": "06b-batch-undo-csp-functions.result.json",
+      "exit": 0,
+      "seconds": 26.049
+    },
+    {
+      "result": "07-import-preview-concurrency.result.json",
+      "exit": 0,
+      "seconds": 37.498
+    },
+    {
+      "result": "07b-import-preview-restored-diff.result.json",
+      "exit": 0,
+      "seconds": 36.729
+    },
+    {
+      "result": "08-import-read-lifecycle.result.json",
+      "exit": 1,
+      "seconds": 10.386
+    },
+    {
+      "result": "08b-import-read-restored-diff.result.json",
+      "exit": 0,
+      "seconds": 6.532
+    },
+    {
+      "result": "09-task-draft.result.json",
+      "exit": 0,
+      "seconds": 56.146
+    },
+    {
+      "result": "10-ime-input.result.json",
+      "exit": 0,
+      "seconds": 17.646
+    },
+    {
+      "result": "11-normal-accessibility.result.json",
+      "exit": -15,
+      "seconds": 297.105
+    },
+    {
+      "result": "11d-normal-animation-diagnostic.result.json",
+      "exit": 1,
+      "seconds": 19.145
+    },
+    {
+      "result": "11e-normal-live-settle.result.json",
+      "exit": -15,
+      "seconds": 51.072
+    },
+    {
+      "result": "11f-normal-desktop.result.json",
+      "exit": 0,
+      "seconds": 65.275
+    },
+    {
+      "result": "11g-normal-mobile.result.json",
+      "exit": 1,
+      "seconds": 47.005
+    },
+    {
+      "result": "11h-mobile-native-final.result.json",
+      "exit": 0,
+      "seconds": 43.938
+    },
+    {
+      "result": "12-native-settle-prefix.result.json",
+      "exit": 0,
+      "seconds": 13.137
+    }
+  ],
+  "not_run": [
+    "full60/33 program matrices",
+    "240-task selection paging scope",
+    "10k/performance/scale or separate pagination audit",
+    "Firefox/WebKit",
+    "physical mobile/touch/soft keyboard",
+    "native OS IME",
+    "browser zoom",
+    "production deployment verification in this subtask"
+  ],
+  "no_runtime_edits_by_this_agent": true,
+  "no_running_browser_or_server": true
+}

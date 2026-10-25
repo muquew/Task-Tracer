@@ -1,0 +1,301 @@
+External settle harness: live finite running/pending/paused animations, two stable frames, 10s deadline; original assertions/CSP/SW retained
+AUDIT_PHASE_START audit_page_state empty task list
+SETTLE_START empty task list
+SETTLE_DONE {"label": "empty task list", "completed": true, "waited_ms": 138.30000000074506, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe empty task list
+AUDIT_PHASE_DONE run_axe empty task list 0.616s
+AUDIT_PHASE_DONE audit_page_state empty task list 0.877s
+SETTLE_START empty task list
+SETTLE_DONE {"label": "empty task list", "completed": true, "waited_ms": 274.69999999925494, "stableFrames": 2, "lastActiveCount": 0}
+SETTLE_START empty task list
+SETTLE_DONE {"label": "empty task list", "completed": true, "waited_ms": 164.10000000149012, "stableFrames": 2, "lastActiveCount": 0}
+Subtask checkbox visibility: {"label": "1280px", "theme": "light", "interaction": "resting", "unchecked": {"checked": false, "background": [255, 255, 255, 255], "marker": null, "image": "none", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [0, 0, 0, 255]}, "checked": {"checked": true, "background": [40, 125, 100, 255], "marker": [255, 255, 255, 255], "image": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E\")", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [0, 0, 0, 255]}, "marker_contrast": 4.990862576698121, "state_contrast": 4.990862576698121}
+SETTLE_START empty task list
+SETTLE_DONE {"label": "empty task list", "completed": true, "waited_ms": 28.5, "stableFrames": 2, "lastActiveCount": 0}
+Subtask checkbox visibility: {"label": "1280px", "theme": "light", "interaction": "hover", "unchecked": {"checked": false, "background": [255, 255, 255, 255], "marker": null, "image": "none", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [0, 0, 0, 255]}, "checked": {"checked": true, "background": [40, 125, 100, 255], "marker": [255, 255, 255, 255], "image": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E\")", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [0, 0, 0, 255]}, "marker_contrast": 4.990862576698121, "state_contrast": 4.990862576698121}
+SETTLE_START empty task list
+SETTLE_DONE {"label": "empty task list", "completed": true, "waited_ms": 32.19999999925494, "stableFrames": 2, "lastActiveCount": 0}
+Subtask checkbox visibility: {"label": "1280px", "theme": "light", "interaction": "keyboard-focus", "unchecked": {"checked": false, "background": [255, 255, 255, 255], "marker": null, "image": "none", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [0, 0, 0, 255]}, "checked": {"checked": true, "background": [40, 125, 100, 255], "marker": [255, 255, 255, 255], "image": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E\")", "focusVisible": true, "outlineWidth": 2, "outlineStyle": "solid", "outline": [90, 87, 200, 255]}, "marker_contrast": 4.990862576698121, "state_contrast": 4.990862576698121}
+SETTLE_START empty task list
+SETTLE_DONE {"label": "empty task list", "completed": true, "waited_ms": 288.6000000014901, "stableFrames": 2, "lastActiveCount": 0}
+SETTLE_START empty task list
+SETTLE_DONE {"label": "empty task list", "completed": true, "waited_ms": 278.3999999985099, "stableFrames": 2, "lastActiveCount": 0}
+Subtask checkbox visibility: {"label": "1280px", "theme": "dark", "interaction": "resting", "unchecked": {"checked": false, "background": [35, 43, 60, 255], "marker": null, "image": "none", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [255, 255, 255, 255]}, "checked": {"checked": true, "background": [46, 141, 111, 255], "marker": [255, 255, 255, 255], "image": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E\")", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [255, 255, 255, 255]}, "marker_contrast": 4.073194570797023, "state_contrast": 3.478230806220795}
+SETTLE_START empty task list
+SETTLE_DONE {"label": "empty task list", "completed": true, "waited_ms": 28.600000001490116, "stableFrames": 2, "lastActiveCount": 0}
+Subtask checkbox visibility: {"label": "1280px", "theme": "dark", "interaction": "hover", "unchecked": {"checked": false, "background": [35, 43, 60, 255], "marker": null, "image": "none", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [255, 255, 255, 255]}, "checked": {"checked": true, "background": [46, 141, 111, 255], "marker": [255, 255, 255, 255], "image": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E\")", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [255, 255, 255, 255]}, "marker_contrast": 4.073194570797023, "state_contrast": 3.478230806220795}
+SETTLE_START empty task list
+SETTLE_DONE {"label": "empty task list", "completed": true, "waited_ms": 32.600000001490116, "stableFrames": 2, "lastActiveCount": 0}
+Subtask checkbox visibility: {"label": "1280px", "theme": "dark", "interaction": "keyboard-focus", "unchecked": {"checked": false, "background": [35, 43, 60, 255], "marker": null, "image": "none", "focusVisible": false, "outlineWidth": 3, "outlineStyle": "none", "outline": [255, 255, 255, 255]}, "checked": {"checked": true, "background": [46, 141, 111, 255], "marker": [255, 255, 255, 255], "image": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E\")", "focusVisible": true, "outlineWidth": 2, "outlineStyle": "solid", "outline": [184, 181, 255, 255]}, "marker_contrast": 4.073194570797023, "state_contrast": 3.478230806220795}
+AUDIT_PHASE_START audit_page_state task list
+SETTLE_START task list
+SETTLE_DONE {"label": "task list", "completed": true, "waited_ms": 333.30000000074506, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe task list
+AUDIT_PHASE_DONE run_axe task list 0.777s
+AUDIT_PHASE_DONE audit_page_state task list 1.285s
+AUDIT_PHASE_START audit_page_state batch selection
+SETTLE_START batch selection
+SETTLE_DONE {"label": "batch selection", "completed": true, "waited_ms": 202.19999999925494, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe batch selection
+AUDIT_PHASE_DONE run_axe batch selection 0.735s
+AUDIT_PHASE_DONE audit_page_state batch selection 1.15s
+AUDIT_PHASE_START audit_page_state batch More actions
+SETTLE_START batch More actions
+SETTLE_DONE {"label": "batch More actions", "completed": true, "waited_ms": 307.8999999985099, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe batch More actions
+AUDIT_PHASE_DONE run_axe batch More actions 0.771s
+AUDIT_PHASE_DONE audit_page_state batch More actions 1.252s
+AUDIT_PHASE_START audit_page_state batch move project dialog
+SETTLE_START batch move project dialog
+SETTLE_DONE {"label": "batch move project dialog", "completed": true, "waited_ms": 296.6000000014901, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe batch move project dialog
+AUDIT_PHASE_DONE run_axe batch move project dialog 0.723s
+AUDIT_PHASE_DONE audit_page_state batch move project dialog 1.185s
+AUDIT_PHASE_START audit_page_state global capture
+SETTLE_START global capture
+SETTLE_DONE {"label": "global capture", "completed": true, "waited_ms": 170.60000000149012, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe global capture
+AUDIT_PHASE_DONE run_axe global capture 0.715s
+AUDIT_PHASE_DONE audit_page_state global capture 1.136s
+AUDIT_PHASE_START audit_page_state task modal
+SETTLE_START task modal
+SETTLE_DONE {"label": "task modal", "completed": true, "waited_ms": 267.0999999977648, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe task modal
+AUDIT_PHASE_DONE run_axe task modal 0.735s
+AUDIT_PHASE_DONE audit_page_state task modal 1.175s
+AUDIT_PHASE_START audit_page_state calendar view
+SETTLE_START calendar view
+SETTLE_DONE {"label": "calendar view", "completed": true, "waited_ms": 228.89999999850988, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe calendar view
+AUDIT_PHASE_DONE run_axe calendar view 0.877s
+AUDIT_PHASE_DONE audit_page_state calendar view 1.276s
+AUDIT_PHASE_START audit_page_state stats view
+SETTLE_START stats view
+SETTLE_DONE {"label": "stats view", "completed": true, "waited_ms": 198.69999999925494, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe stats view
+AUDIT_PHASE_DONE run_axe stats view 0.5s
+AUDIT_PHASE_DONE audit_page_state stats view 0.882s
+AUDIT_PHASE_START audit_page_state english task list
+SETTLE_START english task list
+SETTLE_DONE {"label": "english task list", "completed": true, "waited_ms": 196.39999999850988, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe english task list
+AUDIT_PHASE_DONE run_axe english task list 0.906s
+AUDIT_PHASE_DONE audit_page_state english task list 1.398s
+AUDIT_PHASE_START audit_page_state english settings appearance
+SETTLE_START english settings appearance
+SETTLE_DONE {"label": "english settings appearance", "completed": true, "waited_ms": 127.5, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe english settings appearance
+AUDIT_PHASE_DONE run_axe english settings appearance 0.544s
+AUDIT_PHASE_DONE audit_page_state english settings appearance 0.849s
+AUDIT_PHASE_START audit_page_state english settings data
+SETTLE_START english settings data
+SETTLE_DONE {"label": "english settings data", "completed": true, "waited_ms": 9.799999997019768, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe english settings data
+AUDIT_PHASE_DONE run_axe english settings data 0.558s
+AUDIT_PHASE_DONE audit_page_state english settings data 0.76s
+AUDIT_PHASE_START audit_page_state english settings experience
+SETTLE_START english settings experience
+SETTLE_DONE {"label": "english settings experience", "completed": true, "waited_ms": 305.9000000022352, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe english settings experience
+AUDIT_PHASE_DONE run_axe english settings experience 0.531s
+AUDIT_PHASE_DONE audit_page_state english settings experience 0.971s
+AUDIT_PHASE_START audit_page_state english settings cleanup
+SETTLE_START english settings cleanup
+SETTLE_DONE {"label": "english settings cleanup", "completed": true, "waited_ms": 27, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe english settings cleanup
+AUDIT_PHASE_DONE run_axe english settings cleanup 0.458s
+AUDIT_PHASE_DONE audit_page_state english settings cleanup 0.577s
+AUDIT_PHASE_START audit_page_state english settings help
+SETTLE_START english settings help
+SETTLE_DONE {"label": "english settings help", "completed": true, "waited_ms": 11.800000000745058, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe english settings help
+AUDIT_PHASE_DONE run_axe english settings help 0.521s
+AUDIT_PHASE_DONE audit_page_state english settings help 0.639s
+AUDIT_PHASE_START audit_page_state light view transfer
+SETTLE_START light view transfer
+SETTLE_DONE {"label": "light view transfer", "completed": true, "waited_ms": 339.4000000022352, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe light view transfer
+AUDIT_PHASE_DONE run_axe light view transfer 0.641s
+AUDIT_PHASE_DONE audit_page_state light view transfer 1.214s
+AUDIT_PHASE_START audit_page_state light view import preview
+SETTLE_START light view import preview
+SETTLE_DONE {"label": "light view import preview", "completed": true, "waited_ms": 135.40000000223517, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe light view import preview
+AUDIT_PHASE_DONE run_axe light view import preview 0.601s
+AUDIT_PHASE_DONE audit_page_state light view import preview 0.986s
+AUDIT_PHASE_START audit_page_state light zh-CN saved-view deletion confirmation
+SETTLE_START light zh-CN saved-view deletion confirmation
+SETTLE_DONE {"label": "light zh-CN saved-view deletion confirmation", "completed": true, "waited_ms": 303.69999999925494, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe light zh-CN saved-view deletion confirmation
+AUDIT_PHASE_DONE run_axe light zh-CN saved-view deletion confirmation 0.717s
+AUDIT_PHASE_DONE audit_page_state light zh-CN saved-view deletion confirmation 1.095s
+AUDIT_PHASE_START audit_page_state light en saved-view deletion confirmation
+SETTLE_START light en saved-view deletion confirmation
+SETTLE_DONE {"label": "light en saved-view deletion confirmation", "completed": true, "waited_ms": 275.0999999977648, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe light en saved-view deletion confirmation
+AUDIT_PHASE_DONE run_axe light en saved-view deletion confirmation 0.669s
+AUDIT_PHASE_DONE audit_page_state light en saved-view deletion confirmation 1.025s
+AUDIT_PHASE_START audit_page_state cancellable task file reading
+SETTLE_START cancellable task file reading
+SETTLE_DONE {"label": "cancellable task file reading", "completed": true, "waited_ms": 315.69999999925494, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe cancellable task file reading
+AUDIT_PHASE_DONE run_axe cancellable task file reading 0.629s
+AUDIT_PHASE_DONE audit_page_state cancellable task file reading 1.117s
+AUDIT_PHASE_START audit_page_state task import replacement decision
+SETTLE_START task import replacement decision
+SETTLE_DONE {"label": "task import replacement decision", "completed": true, "waited_ms": 236.5, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe task import replacement decision
+AUDIT_PHASE_DONE run_axe task import replacement decision 0.477s
+AUDIT_PHASE_DONE audit_page_state task import replacement decision 0.883s
+AUDIT_PHASE_START audit_page_state task import merge decision
+SETTLE_START task import merge decision
+SETTLE_DONE {"label": "task import merge decision", "completed": true, "waited_ms": 318.5, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe task import merge decision
+AUDIT_PHASE_DONE run_axe task import merge decision 0.695s
+AUDIT_PHASE_DONE audit_page_state task import merge decision 1.203s
+AUDIT_PHASE_START audit_page_state light unsaved task prompt
+SETTLE_START light unsaved task prompt
+SETTLE_DONE {"label": "light unsaved task prompt", "completed": true, "waited_ms": 224.89999999850988, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe light unsaved task prompt
+AUDIT_PHASE_DONE run_axe light unsaved task prompt 0.732s
+AUDIT_PHASE_DONE audit_page_state light unsaved task prompt 1.005s
+AUDIT_PHASE_START audit_page_state light retained draft with unavailable storage
+SETTLE_START light retained draft with unavailable storage
+SETTLE_DONE {"label": "light retained draft with unavailable storage", "completed": true, "waited_ms": 337.5999999977648, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe light retained draft with unavailable storage
+AUDIT_PHASE_DONE run_axe light retained draft with unavailable storage 0.663s
+AUDIT_PHASE_DONE audit_page_state light retained draft with unavailable storage 1.067s
+AUDIT_PHASE_START audit_page_state light retained draft after storage recovery
+SETTLE_START light retained draft after storage recovery
+SETTLE_DONE {"label": "light retained draft after storage recovery", "completed": true, "waited_ms": 197.10000000149012, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe light retained draft after storage recovery
+AUDIT_PHASE_DONE run_axe light retained draft after storage recovery 0.806s
+AUDIT_PHASE_DONE audit_page_state light retained draft after storage recovery 1.18s
+AUDIT_PHASE_START audit_page_state light discard retained draft confirmation
+SETTLE_START light discard retained draft confirmation
+SETTLE_DONE {"label": "light discard retained draft confirmation", "completed": true, "waited_ms": 309.69999999925494, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe light discard retained draft confirmation
+AUDIT_PHASE_DONE run_axe light discard retained draft confirmation 0.758s
+AUDIT_PHASE_DONE audit_page_state light discard retained draft confirmation 1.153s
+AUDIT_PHASE_START audit_page_state help dialog
+SETTLE_START help dialog
+SETTLE_DONE {"label": "help dialog", "completed": true, "waited_ms": 298.80000000074506, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe help dialog
+AUDIT_PHASE_DONE run_axe help dialog 0.633s
+AUDIT_PHASE_DONE audit_page_state help dialog 1.056s
+AUDIT_PHASE_START audit_page_state diagnostic preview
+SETTLE_START diagnostic preview
+SETTLE_DONE {"label": "diagnostic preview", "completed": true, "waited_ms": 47.69999999925494, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe diagnostic preview
+AUDIT_PHASE_DONE run_axe diagnostic preview 0.408s
+AUDIT_PHASE_DONE audit_page_state diagnostic preview 0.548s
+AUDIT_PHASE_START audit_page_state recovery dialog
+SETTLE_START recovery dialog
+SETTLE_DONE {"label": "recovery dialog", "completed": true, "waited_ms": 304.0999999977648, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe recovery dialog
+AUDIT_PHASE_DONE run_axe recovery dialog 0.626s
+AUDIT_PHASE_DONE audit_page_state recovery dialog 1.093s
+AUDIT_PHASE_START audit_page_state data safety dialog
+SETTLE_START data safety dialog
+SETTLE_DONE {"label": "data safety dialog", "completed": true, "waited_ms": 313.1000000014901, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe data safety dialog
+AUDIT_PHASE_DONE run_axe data safety dialog 0.48s
+AUDIT_PHASE_DONE audit_page_state data safety dialog 0.965s
+AUDIT_PHASE_START audit_page_state dark settings page
+SETTLE_START dark settings page
+SETTLE_DONE {"label": "dark settings page", "completed": true, "waited_ms": 357.9000000022352, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark settings page
+AUDIT_PHASE_DONE run_axe dark settings page 0.431s
+AUDIT_PHASE_DONE audit_page_state dark settings page 0.954s
+AUDIT_PHASE_START audit_page_state dark task list
+SETTLE_START dark task list
+SETTLE_DONE {"label": "dark task list", "completed": true, "waited_ms": 180.5, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark task list
+AUDIT_PHASE_DONE run_axe dark task list 0.623s
+AUDIT_PHASE_DONE audit_page_state dark task list 0.973s
+AUDIT_PHASE_START audit_page_state dark view transfer
+SETTLE_START dark view transfer
+SETTLE_DONE {"label": "dark view transfer", "completed": true, "waited_ms": 358.1000000014901, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark view transfer
+AUDIT_PHASE_DONE run_axe dark view transfer 0.519s
+AUDIT_PHASE_DONE audit_page_state dark view transfer 1.11s
+AUDIT_PHASE_START audit_page_state dark view import preview
+SETTLE_START dark view import preview
+SETTLE_DONE {"label": "dark view import preview", "completed": true, "waited_ms": 91, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark view import preview
+AUDIT_PHASE_DONE run_axe dark view import preview 0.554s
+AUDIT_PHASE_DONE audit_page_state dark view import preview 0.822s
+AUDIT_PHASE_START audit_page_state dark zh-CN saved-view deletion confirmation
+SETTLE_START dark zh-CN saved-view deletion confirmation
+SETTLE_DONE {"label": "dark zh-CN saved-view deletion confirmation", "completed": true, "waited_ms": 280.8999999985099, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark zh-CN saved-view deletion confirmation
+AUDIT_PHASE_DONE run_axe dark zh-CN saved-view deletion confirmation 0.572s
+AUDIT_PHASE_DONE audit_page_state dark zh-CN saved-view deletion confirmation 0.921s
+AUDIT_PHASE_START audit_page_state dark en saved-view deletion confirmation
+SETTLE_START dark en saved-view deletion confirmation
+SETTLE_DONE {"label": "dark en saved-view deletion confirmation", "completed": true, "waited_ms": 320.9000000022352, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark en saved-view deletion confirmation
+AUDIT_PHASE_DONE run_axe dark en saved-view deletion confirmation 0.624s
+AUDIT_PHASE_DONE audit_page_state dark en saved-view deletion confirmation 1.009s
+AUDIT_PHASE_START audit_page_state dark unsaved task prompt
+SETTLE_START dark unsaved task prompt
+SETTLE_DONE {"label": "dark unsaved task prompt", "completed": true, "waited_ms": 257.80000000074506, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark unsaved task prompt
+AUDIT_PHASE_DONE run_axe dark unsaved task prompt 0.62s
+AUDIT_PHASE_DONE audit_page_state dark unsaved task prompt 0.92s
+AUDIT_PHASE_START audit_page_state dark retained draft with unavailable storage
+SETTLE_START dark retained draft with unavailable storage
+SETTLE_DONE {"label": "dark retained draft with unavailable storage", "completed": true, "waited_ms": 289, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark retained draft with unavailable storage
+AUDIT_PHASE_DONE run_axe dark retained draft with unavailable storage 0.562s
+AUDIT_PHASE_DONE audit_page_state dark retained draft with unavailable storage 0.911s
+AUDIT_PHASE_START audit_page_state dark retained draft after storage recovery
+SETTLE_START dark retained draft after storage recovery
+SETTLE_DONE {"label": "dark retained draft after storage recovery", "completed": true, "waited_ms": 199.59999999776483, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark retained draft after storage recovery
+AUDIT_PHASE_DONE run_axe dark retained draft after storage recovery 0.663s
+AUDIT_PHASE_DONE audit_page_state dark retained draft after storage recovery 0.999s
+AUDIT_PHASE_START audit_page_state dark discard retained draft confirmation
+SETTLE_START dark discard retained draft confirmation
+SETTLE_DONE {"label": "dark discard retained draft confirmation", "completed": true, "waited_ms": 314.69999999925494, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark discard retained draft confirmation
+AUDIT_PHASE_DONE run_axe dark discard retained draft confirmation 0.644s
+AUDIT_PHASE_DONE audit_page_state dark discard retained draft confirmation 1.018s
+AUDIT_PHASE_START audit_page_state dark help dialog
+SETTLE_START dark help dialog
+SETTLE_DONE {"label": "dark help dialog", "completed": true, "waited_ms": 292.80000000074506, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark help dialog
+AUDIT_PHASE_DONE run_axe dark help dialog 0.54s
+AUDIT_PHASE_DONE audit_page_state dark help dialog 0.931s
+AUDIT_PHASE_START audit_page_state dark diagnostic preview
+SETTLE_START dark diagnostic preview
+SETTLE_DONE {"label": "dark diagnostic preview", "completed": true, "waited_ms": 49.80000000074506, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark diagnostic preview
+AUDIT_PHASE_DONE run_axe dark diagnostic preview 0.368s
+AUDIT_PHASE_DONE audit_page_state dark diagnostic preview 0.486s
+AUDIT_PHASE_START audit_page_state dark calendar
+SETTLE_START dark calendar
+SETTLE_DONE {"label": "dark calendar", "completed": true, "waited_ms": 189.60000000149012, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark calendar
+AUDIT_PHASE_DONE run_axe dark calendar 0.877s
+AUDIT_PHASE_DONE audit_page_state dark calendar 1.2s
+AUDIT_PHASE_START audit_page_state dark success notification
+SETTLE_START dark success notification
+SETTLE_DONE {"label": "dark success notification", "completed": true, "waited_ms": 287, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark success notification
+AUDIT_PHASE_DONE run_axe dark success notification 0.738s
+AUDIT_PHASE_DONE audit_page_state dark success notification 1.172s
+AUDIT_PHASE_START audit_page_state dark warning notification
+SETTLE_START dark warning notification
+SETTLE_DONE {"label": "dark warning notification", "completed": true, "waited_ms": 31.800000000745058, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark warning notification
+AUDIT_PHASE_DONE run_axe dark warning notification 0.705s
+AUDIT_PHASE_DONE audit_page_state dark warning notification 0.881s
+AUDIT_PHASE_START audit_page_state dark error notification
+SETTLE_START dark error notification
+SETTLE_DONE {"label": "dark error notification", "completed": true, "waited_ms": 16, "stableFrames": 2, "lastActiveCount": 0}
+AUDIT_PHASE_START run_axe dark error notification
+AUDIT_PHASE_DONE run_axe dark error notification 0.813s
+AUDIT_PHASE_DONE audit_page_state dark error notification 1.024s
+Accessibility workflow completed: 1280px
+Accessibility/i18n audit passed

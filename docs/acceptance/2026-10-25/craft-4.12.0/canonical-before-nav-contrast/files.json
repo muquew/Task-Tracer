@@ -1,0 +1,18 @@
+{
+  "comparison.json": {
+    "bytes": 30675,
+    "sha256": "2f93e5d691977fe995b043a18b1532b04c7b9bd30ce4008b11c736b880f3151a"
+  },
+  "build.stderr.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "build.stdout.log": {
+    "bytes": 298,
+    "sha256": "3ecbcffdf685958bf9ed5af8767e1a751ef16a12555e4f4fa0d50c898c341268"
+  },
+  "runner.py": {
+    "bytes": 5354,
+    "sha256": "1ee6cb74c1bac37fcb57501917617271983d42b1a223d25277b79e331e8bd1be"
+  }
+}

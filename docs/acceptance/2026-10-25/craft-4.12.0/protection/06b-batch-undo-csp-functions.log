@@ -1,0 +1,5 @@
+External harness: expression waits compiled as function predicates; deployment CSP and service worker unchanged
+Batch/Undo regression: chromium 154.0.8037.57
+Undo batch passed: refuses post-commit remote changes without writes; a fresh action still undoes only itself
+Undo single passed: refuses post-commit remote changes without writes; a fresh action still undoes only itself
+Undo delayed snapshot passed: native read completion remains pending; a later remote write is preserved by a refused transaction

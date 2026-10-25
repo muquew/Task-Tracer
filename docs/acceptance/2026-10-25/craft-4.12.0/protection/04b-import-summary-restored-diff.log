@@ -1,0 +1,4 @@
+External harness: expression waits compiled as function predicates; deployment CSP and service worker unchanged
+Import decision summary passed: keep/skip/replace and mode changes match final task counts, untouched records and Undo
+Import zero-change passed: live all-skip result, disabled write action and unchanged full task/revision/history state
+Import replacement passed: live impact, genuine exact snapshot download, second confirmation and exact task Undo

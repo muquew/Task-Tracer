@@ -1,0 +1,65 @@
+{
+  "name": "08b-import-read-restored-diff",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-u",
+    "/tmp/task-tracer-4.12.0-protection/csp_wait_bootstrap.py",
+    "/workspace/Task-Tracer-craft/tools/import_read_lifecycle_playwright.py"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 6.532,
+  "started_at_utc": "2026-10-25T13:46:45.805352+00:00",
+  "finished_at_utc": "2026-10-25T13:46:52.347342+00:00",
+  "scope": [
+    "cancelled read preserves later draft",
+    "old file cannot replace latest selected preview"
+  ],
+  "case": "all",
+  "viewport": null,
+  "log": "/tmp/task-tracer-4.12.0-protection/08b-import-read-restored-diff.log",
+  "external_wait_adapter_sha256": "e504a8d3dba0de60741452c31d670be8c56cbbca908fbfc80d9989d8268d2884",
+  "app_version_at_finish": "4.12.0",
+  "resource_version_at_finish": "4.40",
+  "production_headers": true,
+  "axe_injection": "pinned real same-origin local file; no CSP relaxation or service-worker blocking",
+  "inputs_before": {
+    "program_sha256": "6eb34a0d23be7e66f59ec7c2001d4116281d92288cbb5481222316224fc023c2",
+    "index_sha256": "1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561",
+    "payload23": {
+      "sha256": "68a5b0b28b7f9992ee7b85b8d82e185088316597fe1779221a9f2f5f2d26c41b",
+      "count": 23,
+      "manifest": "/tmp/task-tracer-4.12.0-protection/fingerprints/payload23-68a5b0b28b7f9992ee7b85b8d82e185088316597fe1779221a9f2f5f2d26c41b.json"
+    },
+    "runtime_payload": {
+      "sha256": "2af452478c315cd7cc82ca8debe665800566f90cf32429796181a1205001b53c",
+      "count": 17,
+      "manifest": "/tmp/task-tracer-4.12.0-protection/fingerprints/runtime-2af452478c315cd7cc82ca8debe665800566f90cf32429796181a1205001b53c.json"
+    },
+    "tools": {
+      "sha256": "5983ea6227737e68897f7c5bd429ee2994df21b0de7a58dd28e02968f98000bf",
+      "count": 71,
+      "manifest": "/tmp/task-tracer-4.12.0-protection/fingerprints/tools-5983ea6227737e68897f7c5bd429ee2994df21b0de7a58dd28e02968f98000bf.json"
+    }
+  },
+  "inputs_after": {
+    "program_sha256": "6eb34a0d23be7e66f59ec7c2001d4116281d92288cbb5481222316224fc023c2",
+    "index_sha256": "1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561",
+    "payload23": {
+      "sha256": "68a5b0b28b7f9992ee7b85b8d82e185088316597fe1779221a9f2f5f2d26c41b",
+      "count": 23,
+      "manifest": "/tmp/task-tracer-4.12.0-protection/fingerprints/payload23-68a5b0b28b7f9992ee7b85b8d82e185088316597fe1779221a9f2f5f2d26c41b.json"
+    },
+    "runtime_payload": {
+      "sha256": "2af452478c315cd7cc82ca8debe665800566f90cf32429796181a1205001b53c",
+      "count": 17,
+      "manifest": "/tmp/task-tracer-4.12.0-protection/fingerprints/runtime-2af452478c315cd7cc82ca8debe665800566f90cf32429796181a1205001b53c.json"
+    },
+    "tools": {
+      "sha256": "5983ea6227737e68897f7c5bd429ee2994df21b0de7a58dd28e02968f98000bf",
+      "count": 71,
+      "manifest": "/tmp/task-tracer-4.12.0-protection/fingerprints/tools-5983ea6227737e68897f7c5bd429ee2994df21b0de7a58dd28e02968f98000bf.json"
+    }
+  },
+  "changed_payload_files": [],
+  "changed_tool_files": []
+}
