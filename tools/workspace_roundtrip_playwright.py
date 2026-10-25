@@ -305,6 +305,7 @@ def exercise_batch_roundtrip(page, baseline, metrics):
     assert restored['revision'] == deleted['revision'] + 1
     assert any(point['signature'] == fingerprint(survivors) for point in restored['history']), 'Recovery lost the replaced state'
     assert_records(page, baseline, 'Batch/Undo/checkpoint sequence did not restore the complete workspace')
+    return_to_task_workspace(page)
     page.locator('#exitBatchModeBtn').click()
     select_project(page, 'all')
     expect(page.locator('.task-item')).to_have_count(min(len(baseline), 100))
