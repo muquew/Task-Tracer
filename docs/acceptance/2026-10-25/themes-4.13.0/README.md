@@ -28,4 +28,14 @@
 
 首次组件复看中，审查脚本误以为空工作区导入也会要求下载替换前快照；实际当前0任务直接导入是原有保护规则，已导入的6项真实导出任务完整，后续错误点击没有作为产品缺陷。正常非空导入预览另作实际查看和取消。
 
-截图与输入阶段、定向保护及发行结果会按实际终态追加。真实设备、系统通知、完整跨引擎矩阵和规模表现没有因此自动视为完成。
+## 完成记录
+
+[本地人工审读摘要](manual-summary.json)与[截图阶段绑定](screenshots.json)记录38帧组件复看、43帧最终复看及21张实际审读代表图；没有把全部生成帧都计为人工审读。另保留[公开截图来源](public-screenshots.json)、[独立初审](independent-review/REPORT.md)与[最终限定ship意见](independent-review/FINAL-VERDICT.md)。
+
+[主题保护](protection/summary.json)、[最终theme-color增补](chrome-protection/summary.json)、[最终发行/旧包升级](release/report.json)与[干净工件比较](canonical/comparison.json)分别保留实际源码阶段，完整解释见[发布记录](../../../releases/4.13.0.md)。
+
+GitHub main上的应用提交为e1da65a。[域名静态复验](production/summary.json)于北京时间23:02:13通过21条响应与安全头匹配。[线上真实浏览器摘要](production-browser/summary.json)记录新建4任务、完成/编辑/子任务、主题/语言切换、菜单/统计/日历/设置、390px及320px浮层和实际JSON下载；31份观测无pageerror，8张代表图逐张审读，真实备份为4任务、1完成、0归档、1子任务。浏览器已关闭。
+
+可直接查看本轮线上[任务菜单](production-browser/06-live-menu-components.png)、[统计](production-browser/12-live-statistics-components.png)、[整套主题预览](production-browser/15-live-full-theme-gallery.png)、[深色任务列表](production-browser/21-live-mobile-task-components.png)及[深色编辑器](production-browser/23-live-mobile-editor.png)。
+
+真实设备、系统通知、完整跨引擎矩阵和规模表现没有因此自动视为完成。

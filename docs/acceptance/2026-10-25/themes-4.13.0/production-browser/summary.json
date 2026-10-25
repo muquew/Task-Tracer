@@ -1,0 +1,88 @@
+{
+  "status": "passed_scoped_live_browser_review",
+  "url": "https://todo.muquew.com/",
+  "app_commit": "e1da65ad7aee26728dd1b26270772e6245a06138",
+  "app_version": "4.13.0",
+  "index_sha256": "27a6fab4c64b48aea1cf1eda595d5086a8fa58f7b40a8bfb001378843bb15c16",
+  "profile": "fresh, no personal data; UI-created synthetic tasks",
+  "browser": "Linux /usr/bin/chromium via Playwright; normal motion, CSP and service worker enabled; no TLS ignore",
+  "locale_initial": "zh-CN",
+  "timezone": "Asia/Shanghai",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 320,
+      "height": 844
+    }
+  ],
+  "captured_observations": 31,
+  "page_errors": 0,
+  "theme_color_matches_header_in_all_observations": true,
+  "steps": [
+    "Create four tasks through real quick capture with projects, tags and due dates",
+    "Complete one task; open task menu; save description and one subtask through editor",
+    "Visit statistics and calendar with actual data",
+    "Inspect full workspace theme gallery; select Ocean; select Dark and English",
+    "Use 390px calendar, list, menu, editor, settings and backup pages",
+    "Download and parse real JSON backup",
+    "Read Help at 390px and 320px, close with visible close control"
+  ],
+  "backup": {
+    "file": "task-tracer_backup_2026-10-25_15-05-13-264.json",
+    "sha256": "7fc0c79c51da102a1d4a41935325981251b9158f6cea31bbd82de57ab5a71fbb",
+    "version": "2.4",
+    "tasks": 4,
+    "completed": 1,
+    "archived": 0,
+    "subtasks": 1,
+    "descriptions": 1
+  },
+  "manually_reviewed_images": [
+    {
+      "file": "06-live-menu-components.png",
+      "sha256": "a5c27abf2f85274a38e7ae2c2128f40543898c18ccbcf829d4317a8701dde1f2"
+    },
+    {
+      "file": "12-live-statistics-components.png",
+      "sha256": "e8cc04c9d04c2553f895a4fcb91ea58d9b0676a7a3063342c273ff0eeb725a9d"
+    },
+    {
+      "file": "13-live-calendar-components.png",
+      "sha256": "78c9c9b9643241978f9a7de89181e623a07493f27fa688bab06f475b041f6999"
+    },
+    {
+      "file": "15-live-full-theme-gallery.png",
+      "sha256": "0d9b004effbc4e65fae4a7a047bc873807671c36c1b157ba056019d39c0b730b"
+    },
+    {
+      "file": "21-live-mobile-task-components.png",
+      "sha256": "44af10007b327fed1b49b81cf122ccebc510f0bec9e61f8ca53aee5ff40b2343"
+    },
+    {
+      "file": "23-live-mobile-editor.png",
+      "sha256": "15928199e3c5ee21d798afb9606d85106438e1cdce2162e37168c9277a96ec79"
+    },
+    {
+      "file": "29-live-help-components.png",
+      "sha256": "e1f8e494c5420b4ec9bf019193b69be150d29604a8b78aa2ef10cf069a73e5b4"
+    },
+    {
+      "file": "30-live-320-help.png",
+      "sha256": "8efaa676a23ca7d3b9fa62fa31613497519bc1ca2fd550b55f228ac3560d9907"
+    }
+  ],
+  "review_completed_at_beijing": "2026-10-25T23:09:09+08:00",
+  "limits": [
+    "31 observations are retained; only the eight listed screenshots were manually viewed and accepted",
+    "Online review supplements local protection and real old-package upgrade checks; it is not a full matrix rerun",
+    "Browser-emulated viewports do not establish native phone system chrome, real devices or OS notifications",
+    "No Vercel backend deployment metadata or remote CI queried"
+  ]
+}

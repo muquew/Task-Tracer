@@ -1,0 +1,10 @@
+{"started_at": "2026-10-25T15:02:09.129910+00:00", "output": "/tmp/task-tracer-4.13.0-production", "commit": "e1da65ad7aee26728dd1b26270772e6245a06138", "source_sha": "ec90af64e257a5e808addbb658fb887c789730773d94452cdbaa8b4bd446ddce", "verification_sha": "734eed40f024ed41acf58ceed70f81db2d0977a8f62a97f2a6ab592bea6d5e7a"}
+{"attempt": 1, "started_at": "2026-10-25T15:02:09.130592+00:00", "finished_at": "2026-10-25T15:02:13.239954+00:00", "duration_seconds": 4.109, "exit_code": 0, "stdout": "attempts/01.stdout.log", "stderr": "attempts/01.stderr.log", "state": "matched", "diagnostic": "", "result": {"site": "https://todo.muquew.com/", "version": "4.13.0", "checked": ["/", "THIRD_PARTY_NOTICES.md", "fav/android-chrome-192x192.png", "fav/android-chrome-512x512.png", "fav/apple-touch-icon.png", "fav/favicon-16x16.png", "fav/favicon-32x32.png", "fav/favicon.ico", "index.html", "manifest.json", "resources/en.json?v=4.41", "resources/zh-CN.json?v=4.41", "resources/en.json", "resources/zh-CN.json", "sw.js"], "passed": true}}
+FIRST_NATIVE_CLI_FULL_PASS
+{"extra_path": "screenshots/add-task-en.png", "status": 200, "bytes_equal": true, "passed": true, "error": null}
+{"extra_path": "screenshots/add-task.png", "status": 200, "bytes_equal": true, "passed": true, "error": null}
+{"extra_path": "screenshots/task-list-en.png", "status": 200, "bytes_equal": true, "passed": true, "error": null}
+{"extra_path": "screenshots/task-list.png", "status": 200, "bytes_equal": true, "passed": true, "error": null}
+{"extra_path": "docs/distribution.md", "status": 200, "bytes_equal": true, "passed": true, "error": null}
+{"extra_path": "docs/distribution_zh_cn.md", "status": 200, "bytes_equal": true, "passed": true, "error": null}
+{"status": "passed", "passed": true, "core_passed": true, "extra_assets_passed": true, "attempts": 1, "core_responses": 15, "extra_responses": 6, "error": null}
