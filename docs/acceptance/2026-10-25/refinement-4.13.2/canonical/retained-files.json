@@ -1,0 +1,30 @@
+{
+  "artifact.integrity.json": {
+    "bytes": 2318,
+    "sha256": "572a5c3fde26856fc73e2d40ba76c3d58e00f5e3ba7bdfac06d1b0d7f5c3276d"
+  },
+  "artifact.zip.sha256": {
+    "bytes": 89,
+    "sha256": "0b2ab6621bf2d5c022b147aec337111cfae0b3625acbcdbdebe075ce31f3168b"
+  },
+  "build.stderr.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "build.stdout.log": {
+    "bytes": 292,
+    "sha256": "d10e4aad3e45fb0437ce4271aa94cd86be2edbd34109a2bc5daab9038fd9f307"
+  },
+  "comparison.json": {
+    "bytes": 32261,
+    "sha256": "25b7154d0d580520049ecad6dab6fe91ea2ad1fd8ae11f934daac45f26d3906b"
+  },
+  "files.json": {
+    "bytes": 508,
+    "sha256": "24785886391f54fd95f2c89f823e89c777688e3c13939ae37476be0a5db46b24"
+  },
+  "runner.py": {
+    "bytes": 5768,
+    "sha256": "6717d4a705c0b26166aa25e7a805af668cd4e0d299f5456b84346b8b1e6c9a2a"
+  }
+}

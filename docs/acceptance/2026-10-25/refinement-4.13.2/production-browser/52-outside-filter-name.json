@@ -1,0 +1,296 @@
+{
+  "viewport": {
+    "w": 390,
+    "h": 844
+  },
+  "scrollY": 0,
+  "docHeight": 844,
+  "docWidth": 390,
+  "active": {
+    "id": "taskName",
+    "className": ""
+  },
+  "title": "Task Tracer",
+  "themeColor": "#292536",
+  "skin": {
+    "accent": "iris",
+    "theme": "dark",
+    "chromeSolid": "#292536"
+  },
+  "headings": [
+    "All tasks",
+    "No matching tasks",
+    "Add task"
+  ],
+  "surfaces": [
+    {
+      "selector": "#openModalBtn",
+      "visible": true,
+      "text": "Add task",
+      "x": 192,
+      "y": 10,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "selector": "#quickAddForm",
+      "visible": 0,
+      "text": "\n                    \n                        \n                        Quick cap",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#quickAddInput",
+      "visible": 0,
+      "text": "",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#toolsDrawer",
+      "visible": true,
+      "text": "Search tasks…\nSupports scoped search: project:name, tag:name, status:value, and ",
+      "x": 14,
+      "y": 192,
+      "w": 362,
+      "h": 103
+    },
+    {
+      "selector": "#workspaceOverview",
+      "visible": 0,
+      "text": "\n            October 2026MonTueWedThuFriSatSun2829301234567891011121314151617181",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceWeekIndex",
+      "visible": 0,
+      "text": "OctNext 7 daysMon26Tue27Wed28Thu29Fri30Sat31Sun1",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#taskList",
+      "visible": true,
+      "text": "No matching tasks\n\nNo tasks match the current search or filters. Clear them to s",
+      "x": 26,
+      "y": 295,
+      "w": 338,
+      "h": 215
+    },
+    {
+      "selector": "#workspaceTitle",
+      "visible": true,
+      "text": "All tasks",
+      "x": 14,
+      "y": 76,
+      "w": 344,
+      "h": 30
+    },
+    {
+      "selector": "#settingsWorkspace",
+      "visible": 0,
+      "text": "\n            Settings & data\n            \n                \n                    A",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    }
+  ],
+  "buttons": [
+    {
+      "id": "workspaceNavToggle",
+      "text": "Open navigation",
+      "x": 14,
+      "y": 10,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "undoBtn",
+      "text": "Undo",
+      "x": 121,
+      "y": 10,
+      "w": 67,
+      "h": 40
+    },
+    {
+      "id": "openModalBtn",
+      "text": "Add task",
+      "x": 192,
+      "y": 10,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "id": "quickCaptureBtn",
+      "text": "Quick capture",
+      "x": 295,
+      "y": 10,
+      "w": 36,
+      "h": 40
+    },
+    {
+      "id": "openMenuBtn",
+      "text": "Settings & data",
+      "x": 336,
+      "y": 10,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "workspaceScheduleToggle",
+      "text": "Show schedule",
+      "x": 262,
+      "y": 131,
+      "w": 100,
+      "h": 36
+    },
+    {
+      "id": "clearSearchBtn",
+      "text": "Clear search",
+      "x": 328,
+      "y": 208,
+      "w": 26,
+      "h": 26
+    },
+    {
+      "id": "saveSmartViewBtn",
+      "text": "Save view",
+      "x": 269,
+      "y": 247,
+      "w": 95,
+      "h": 36
+    },
+    {
+      "id": "toolsDrawerToggleBtn",
+      "text": "Filters\nActive",
+      "x": 26,
+      "y": 247,
+      "w": 129,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "Clear search & filters",
+      "x": 114,
+      "y": 436,
+      "w": 162,
+      "h": 40
+    },
+    {
+      "id": "closeModalBtn",
+      "text": "×",
+      "x": 322,
+      "y": 110,
+      "w": 36,
+      "h": 36
+    },
+    {
+      "id": "addSubtaskBtn",
+      "text": "Add subtask",
+      "x": 310,
+      "y": 542,
+      "w": 34,
+      "h": 42
+    },
+    {
+      "id": "cancelBtn",
+      "text": "Cancel",
+      "x": 46,
+      "y": 681,
+      "w": 144,
+      "h": 40
+    },
+    {
+      "id": "submitBtn",
+      "text": "Add task",
+      "x": 200,
+      "y": 681,
+      "w": 144,
+      "h": 40
+    }
+  ],
+  "fields": [
+    {
+      "id": "searchInput",
+      "type": "text",
+      "value": "不存在的过滤",
+      "placeholder": "Search tasks…",
+      "x": 26,
+      "y": 203,
+      "w": 338,
+      "h": 36
+    },
+    {
+      "id": "taskName",
+      "type": "text",
+      "value": "筛选外新增",
+      "placeholder": "Enter task name",
+      "x": 46,
+      "y": 217,
+      "w": 298,
+      "h": 42
+    },
+    {
+      "id": "taskDesc",
+      "type": "textarea",
+      "value": "",
+      "placeholder": "Enter task description",
+      "x": 46,
+      "y": 297,
+      "w": 298,
+      "h": 61
+    },
+    {
+      "id": "taskProject",
+      "type": "text",
+      "value": "Inbox",
+      "placeholder": "e.g. Work / Personal",
+      "x": 46,
+      "y": 396,
+      "w": 298,
+      "h": 42
+    },
+    {
+      "id": "noDeadline",
+      "type": "checkbox",
+      "value": "on",
+      "placeholder": "",
+      "x": 242,
+      "y": 450,
+      "w": 24,
+      "h": 24
+    },
+    {
+      "id": "subtaskInput",
+      "type": "text",
+      "value": "",
+      "placeholder": "Add a subtask…",
+      "x": 46,
+      "y": 542,
+      "w": 256,
+      "h": 42
+    },
+    {
+      "id": "taskTags",
+      "type": "text",
+      "value": "",
+      "placeholder": "Separate tags with commas",
+      "x": 46,
+      "y": 679,
+      "w": 298,
+      "h": 42
+    }
+  ],
+  "pageErrors": [],
+  "source_index_sha256": "79693a476cd75b46df78b71890f9a3a89aef2eb08aa8a2af701c07c4b801c1ad"
+}

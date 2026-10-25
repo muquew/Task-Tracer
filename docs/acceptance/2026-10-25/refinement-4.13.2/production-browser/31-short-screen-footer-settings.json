@@ -1,0 +1,321 @@
+{
+  "viewport": {
+    "w": 1280,
+    "h": 500
+  },
+  "scrollY": 0,
+  "docHeight": 761,
+  "docWidth": 1280,
+  "active": {
+    "id": "settingsTitle",
+    "className": ""
+  },
+  "title": "Task Tracer",
+  "themeColor": "#292536",
+  "skin": {
+    "accent": "iris",
+    "theme": "dark",
+    "chromeSolid": "#292536"
+  },
+  "headings": [
+    "Projects",
+    "Settings & data",
+    "Help & about"
+  ],
+  "surfaces": [
+    {
+      "selector": "#openModalBtn",
+      "visible": true,
+      "text": "Add task",
+      "x": 1107,
+      "y": 11,
+      "w": 112,
+      "h": 40
+    },
+    {
+      "selector": "#quickAddForm",
+      "visible": 0,
+      "text": "\n                    \n                        \n                        Quick cap",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#quickAddInput",
+      "visible": 0,
+      "text": "",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#toolsDrawer",
+      "visible": 0,
+      "text": "\n            \n                    \n                        \n                    ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceOverview",
+      "visible": 0,
+      "text": "\n            October 2026MonTueWedThuFriSatSun2829301234567891011121314151617181",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceWeekIndex",
+      "visible": 0,
+      "text": "OctNext 7 daysMon26Tue27Wed28Thu29Fri30Sat31Sun1",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#taskList",
+      "visible": 0,
+      "text": "日程 · 1 task\n        \n        \n            线上复查：日程编辑\n            Due: Oct 26, 202",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceTitle",
+      "visible": 0,
+      "text": "All tasks",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#settingsWorkspace",
+      "visible": true,
+      "text": "Settings & data\nAppearance & language\nBackups & transfer\nReminders & installatio",
+      "x": 252,
+      "y": 82,
+      "w": 1004,
+      "h": 655
+    }
+  ],
+  "buttons": [
+    {
+      "id": "viewTab-list",
+      "text": "List",
+      "x": 16,
+      "y": 79,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "viewTab-calendar",
+      "text": "Calendar",
+      "x": 16,
+      "y": 127,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "viewTab-timeline",
+      "text": "Timeline",
+      "x": 16,
+      "y": 175,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "viewTab-stats",
+      "text": "Stats",
+      "x": 16,
+      "y": 223,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "workspaceAllTasks",
+      "text": "All tasks\n6",
+      "x": 16,
+      "y": -81,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "focusModeToggleBtn",
+      "text": "Today’s plan",
+      "x": 16,
+      "y": -34,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "",
+      "text": "工作\n1",
+      "x": 16,
+      "y": 68,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "",
+      "text": "日程\n1",
+      "x": 16,
+      "y": 115,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "",
+      "text": "项目三\n1",
+      "x": 16,
+      "y": 162,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "",
+      "text": "项目五\n1",
+      "x": 16,
+      "y": 209,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "",
+      "text": "项目六\n1",
+      "x": 16,
+      "y": 256,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "",
+      "text": "项目四\n1",
+      "x": 16,
+      "y": 303,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "workspaceAllProjects",
+      "text": "All projects",
+      "x": 16,
+      "y": 345,
+      "w": 196,
+      "h": 40
+    },
+    {
+      "id": "workspaceSettingsBtn",
+      "text": "Settings & data",
+      "x": 16,
+      "y": 410,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "settingsBackBtn",
+      "text": "Back to tasks",
+      "x": 887,
+      "y": 11,
+      "w": 140,
+      "h": 40
+    },
+    {
+      "id": "undoBtn",
+      "text": "Undo",
+      "x": 1033,
+      "y": 11,
+      "w": 67,
+      "h": 40
+    },
+    {
+      "id": "openModalBtn",
+      "text": "Add task",
+      "x": 1107,
+      "y": 11,
+      "w": 112,
+      "h": 40
+    },
+    {
+      "id": "quickCaptureBtn",
+      "text": "Quick capture",
+      "x": 1220,
+      "y": 11,
+      "w": 36,
+      "h": 40
+    },
+    {
+      "id": "tab-settingsAppearance",
+      "text": "Appearance & language",
+      "x": 259,
+      "y": 211,
+      "w": 152,
+      "h": 57
+    },
+    {
+      "id": "tab-settingsData",
+      "text": "Backups & transfer",
+      "x": 259,
+      "y": 273,
+      "w": 152,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsExperience",
+      "text": "Reminders & installation",
+      "x": 259,
+      "y": 320,
+      "w": 152,
+      "h": 57
+    },
+    {
+      "id": "tab-settingsCleanup",
+      "text": "Task maintenance",
+      "x": 259,
+      "y": 382,
+      "w": 152,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsHelp",
+      "text": "Help & about",
+      "x": 259,
+      "y": 429,
+      "w": 152,
+      "h": 42
+    },
+    {
+      "id": "checkUpdateBtn",
+      "text": "Check for updates",
+      "x": 1091,
+      "y": 271,
+      "w": 145,
+      "h": 42
+    },
+    {
+      "id": "helpMenuBtn",
+      "text": "Help and support",
+      "x": 1072,
+      "y": 366,
+      "w": 164,
+      "h": 42
+    },
+    {
+      "id": "settingsDiagnosticsBtn",
+      "text": "Review diagnostic information",
+      "x": 1015,
+      "y": 448,
+      "w": 221,
+      "h": 42
+    }
+  ],
+  "fields": [],
+  "pageErrors": [],
+  "source_index_sha256": "79693a476cd75b46df78b71890f9a3a89aef2eb08aa8a2af701c07c4b801c1ad"
+}

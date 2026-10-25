@@ -1,0 +1,823 @@
+{
+  "passed": true,
+  "kind": "derived-from-native-observations-and-actual-download",
+  "observations": [
+    {
+      "file": "01-empty-desktop.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "",
+        "className": ""
+      }
+    },
+    {
+      "file": "02-direct-task-form.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "taskName",
+        "className": ""
+      }
+    },
+    {
+      "file": "03-task-name.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "taskName",
+        "className": ""
+      }
+    },
+    {
+      "file": "04-task-project.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "taskProject",
+        "className": ""
+      }
+    },
+    {
+      "file": "05-action-error.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "taskProject",
+        "className": ""
+      }
+    },
+    {
+      "file": "06-action-error.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "taskProject",
+        "className": ""
+      }
+    },
+    {
+      "file": "07-pending-subtask.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "subtaskInput",
+        "className": ""
+      }
+    },
+    {
+      "file": "08-saved-pending-child.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "openModalBtn",
+        "className": "btn btn-primary workspace-add-task"
+      }
+    },
+    {
+      "file": "09-immediate-footer-settings.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "settingsTitle",
+        "className": ""
+      }
+    },
+    {
+      "file": "10-english-appearance.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "settingsTitle",
+        "className": ""
+      }
+    },
+    {
+      "file": "11-dark-appearance.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "settingsTitle",
+        "className": ""
+      }
+    },
+    {
+      "file": "12-appearance-320.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "settingsTitle",
+        "className": ""
+      }
+    },
+    {
+      "file": "13-lean-help-320.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "tab-settingsHelp",
+        "className": ""
+      }
+    },
+    {
+      "file": "14-manual-update-current.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "",
+        "className": ""
+      }
+    },
+    {
+      "file": "15-full-diagnostic-disclosure.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 332,
+      "active": {
+        "id": "submitBtn",
+        "className": "btn btn-primary"
+      }
+    },
+    {
+      "file": "16-close-diagnostic.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 332,
+      "active": {
+        "id": "settingsDiagnosticsBtn",
+        "className": "btn btn-secondary settings-action"
+      }
+    },
+    {
+      "file": "17-back-to-tasks.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "openModalBtn",
+        "className": "btn btn-primary workspace-add-task"
+      }
+    },
+    {
+      "file": "18-dated-task-form.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "taskName",
+        "className": ""
+      }
+    },
+    {
+      "file": "19-dated-task-name.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "taskName",
+        "className": ""
+      }
+    },
+    {
+      "file": "20-dated-task-project.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "taskProject",
+        "className": ""
+      }
+    },
+    {
+      "file": "21-enable-deadline.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "noDeadline",
+        "className": ""
+      }
+    },
+    {
+      "file": "22-valid-task-date.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "dueDate",
+        "className": "date-input"
+      }
+    },
+    {
+      "file": "23-valid-task-time.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "dueTime",
+        "className": "time-input"
+      }
+    },
+    {
+      "file": "24-saved-dated-task.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "openModalBtn",
+        "className": "btn btn-primary workspace-add-task"
+      }
+    },
+    {
+      "file": "25-quick-capture.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "quickAddInput",
+        "className": "quick-add-input"
+      }
+    },
+    {
+      "file": "26-six-project-workspace.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "",
+        "className": ""
+      }
+    },
+    {
+      "file": "27-close-capture.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "quickCaptureBtn",
+        "className": "btn btn-primary workspace-quick-capture"
+      }
+    },
+    {
+      "file": "28-short-desktop-sidebar.json",
+      "viewport": {
+        "w": 1280,
+        "h": 500
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "quickCaptureBtn",
+        "className": "btn btn-primary workspace-quick-capture"
+      }
+    },
+    {
+      "file": "29-all-tasks-scroll-origin.json",
+      "viewport": {
+        "w": 1280,
+        "h": 500
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "workspaceAllTasks",
+        "className": "workspace-nav-button active"
+      }
+    },
+    {
+      "file": "30-independent-sidebar-scroll.json",
+      "viewport": {
+        "w": 1280,
+        "h": 500
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "workspaceAllTasks",
+        "className": "workspace-nav-button active"
+      }
+    },
+    {
+      "file": "31-short-screen-footer-settings.json",
+      "viewport": {
+        "w": 1280,
+        "h": 500
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "settingsTitle",
+        "className": ""
+      }
+    },
+    {
+      "file": "32-short-screen-back.json",
+      "viewport": {
+        "w": 1280,
+        "h": 500
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "workspaceSettingsBtn",
+        "className": "workspace-nav-button workspace-settings-entry"
+      }
+    },
+    {
+      "file": "33-mobile-tasks.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "workspaceNavToggle",
+        "className": "icon-btn workspace-mobile-only"
+      }
+    },
+    {
+      "file": "34-mobile-pinned-settings.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "workspaceAllTasks",
+        "className": "workspace-nav-button active"
+      }
+    },
+    {
+      "file": "35-last-project-selected.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "workspaceNavToggle",
+        "className": "icon-btn workspace-mobile-only"
+      }
+    },
+    {
+      "file": "36-reopen-selected-project.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "",
+        "className": "workspace-nav-button active"
+      }
+    },
+    {
+      "file": "37-mobile-footer-settings.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "settingsTitle",
+        "className": ""
+      }
+    },
+    {
+      "file": "38-return-selected-project.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "openModalBtn",
+        "className": "btn btn-primary workspace-add-task"
+      }
+    },
+    {
+      "file": "39-navigation-for-all.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "",
+        "className": "workspace-nav-button active"
+      }
+    },
+    {
+      "file": "40-restore-all-projects.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "workspaceNavToggle",
+        "className": "icon-btn workspace-mobile-only"
+      }
+    },
+    {
+      "file": "41-complete-one-real-task.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 369,
+      "active": {
+        "id": "",
+        "className": ""
+      }
+    },
+    {
+      "file": "42-compact-timeline-320.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "viewTab-timeline",
+        "className": "view-tab selected"
+      }
+    },
+    {
+      "file": "43-statistics-320.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "viewTab-stats",
+        "className": "view-tab selected"
+      }
+    },
+    {
+      "file": "44-statistics-method-on-demand.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 507,
+      "active": {
+        "id": "",
+        "className": ""
+      }
+    },
+    {
+      "file": "45-back-to-list.json",
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "viewTab-list",
+        "className": "view-tab selected"
+      }
+    },
+    {
+      "file": "46-tablet-700.json",
+      "viewport": {
+        "w": 700,
+        "h": 844
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "viewTab-list",
+        "className": "view-tab selected"
+      }
+    },
+    {
+      "file": "47-expanded-toolbar-700.json",
+      "viewport": {
+        "w": 700,
+        "h": 844
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "toolsDrawerToggleBtn",
+        "className": "btn btn-secondary filter-toggle"
+      }
+    },
+    {
+      "file": "48-collapsed-toolbar-700.json",
+      "viewport": {
+        "w": 700,
+        "h": 844
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "toolsDrawerToggleBtn",
+        "className": "btn btn-secondary filter-toggle"
+      }
+    },
+    {
+      "file": "49-mobile-390.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "toolsDrawerToggleBtn",
+        "className": "btn btn-secondary filter-toggle"
+      }
+    },
+    {
+      "file": "50-preserved-search.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "searchInput",
+        "className": "search-input"
+      }
+    },
+    {
+      "file": "51-outside-filter-form.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "taskName",
+        "className": ""
+      }
+    },
+    {
+      "file": "52-outside-filter-name.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "taskName",
+        "className": ""
+      }
+    },
+    {
+      "file": "53-saved-outside-filter.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "openModalBtn",
+        "className": "btn btn-primary workspace-add-task"
+      }
+    },
+    {
+      "file": "54-open-exact-saved-task.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "taskName",
+        "className": ""
+      }
+    },
+    {
+      "file": "55-return-to-preserved-filter.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "openModalBtn",
+        "className": "btn btn-primary workspace-add-task"
+      }
+    },
+    {
+      "file": "56-clear-search.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "searchInput",
+        "className": "search-input"
+      }
+    },
+    {
+      "file": "57-calendar-current-month.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "viewTab-calendar",
+        "className": "view-tab selected"
+      }
+    },
+    {
+      "file": "58-today-agenda.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "",
+        "className": ""
+      }
+    },
+    {
+      "file": "59-edit-current-agenda-task.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "scrollY": 55,
+      "active": {
+        "id": "taskName",
+        "className": ""
+      }
+    },
+    {
+      "file": "60-agenda-description.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "scrollY": 55,
+      "active": {
+        "id": "taskDesc",
+        "className": ""
+      }
+    },
+    {
+      "file": "61-saved-agenda-position.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "scrollY": 55,
+      "active": {
+        "id": "",
+        "className": "calendar-detail-task"
+      }
+    },
+    {
+      "file": "62-statistics-after-completion.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "viewTab-stats",
+        "className": "view-tab selected"
+      }
+    },
+    {
+      "file": "63-statistics-history-review.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "scrollY": 520,
+      "active": {
+        "id": "viewTab-stats",
+        "className": "view-tab selected"
+      }
+    },
+    {
+      "file": "64-desktop-statistics.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "scrollY": 7,
+      "active": {
+        "id": "viewTab-stats",
+        "className": "view-tab selected"
+      }
+    },
+    {
+      "file": "65-desktop-footer-return.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "settingsTitle",
+        "className": ""
+      }
+    },
+    {
+      "file": "66-backup-safety-controls.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "tab-settingsData",
+        "className": ""
+      }
+    },
+    {
+      "file": "67-actual-backup-seven-tasks.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "scrollY": 0,
+      "active": {
+        "id": "backupBtn",
+        "className": "btn btn-primary settings-action"
+      }
+    }
+  ],
+  "backup": "task-tracer_backup_2026-10-25_17-01-32-851.json",
+  "task_count": 7,
+  "completed_count": 1,
+  "subtask_count": 1,
+  "page_errors": [],
+  "horizontal_overflow_observations": 0,
+  "operator_errors": 2,
+  "operator_error_explanation": "Two early attempts filled date/time while No deadline kept these controls disabled and hidden. They did not change saved data. Steps21–24 use the visible No deadline control to enable and save the correct 2026-10-26 09:30 deadline. Original action errors are retained in session-report.json.",
+  "limitations": [
+    "Observations are not 67 independent tests.",
+    "Only selected PNGs were visually reviewed.",
+    "Desktop browser viewport simulation; no native mobile/IME/OS installation claims."
+  ]
+}

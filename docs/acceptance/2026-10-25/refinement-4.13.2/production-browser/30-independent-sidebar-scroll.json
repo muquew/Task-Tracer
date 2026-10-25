@@ -1,0 +1,645 @@
+{
+  "viewport": {
+    "w": 1280,
+    "h": 500
+  },
+  "scrollY": 0,
+  "docHeight": 1068,
+  "docWidth": 1280,
+  "active": {
+    "id": "workspaceAllTasks",
+    "className": "workspace-nav-button active"
+  },
+  "title": "Task Tracer",
+  "themeColor": "#292536",
+  "skin": {
+    "accent": "iris",
+    "theme": "dark",
+    "chromeSolid": "#292536"
+  },
+  "headings": [
+    "Projects",
+    "All tasks",
+    "October 2026",
+    "Upcoming"
+  ],
+  "surfaces": [
+    {
+      "selector": "#openModalBtn",
+      "visible": true,
+      "text": "Add task",
+      "x": 1060,
+      "y": 11,
+      "w": 112,
+      "h": 40
+    },
+    {
+      "selector": "#quickAddForm",
+      "visible": 0,
+      "text": "\n                    \n                        \n                        Quick cap",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#quickAddInput",
+      "visible": 0,
+      "text": "",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#toolsDrawer",
+      "visible": true,
+      "text": "Search tasks…\nSupports scoped search: project:name, tag:name, status:value, and ",
+      "x": 252,
+      "y": 208,
+      "w": 706,
+      "h": 67
+    },
+    {
+      "selector": "#workspaceOverview",
+      "visible": true,
+      "text": "October 2026\nMon\nTue\nWed\nThu\nFri\nSat\nSun\n28\n29\n30\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n",
+      "x": 978,
+      "y": 208,
+      "w": 278,
+      "h": 511
+    },
+    {
+      "selector": "#workspaceWeekIndex",
+      "visible": true,
+      "text": "Oct\nNext 7 days\nMon\n26\nTue\n27\nWed\n28\nThu\n29\nFri\n30\nSat\n31\nSun\n1",
+      "x": 878,
+      "y": 102,
+      "w": 356,
+      "h": 68
+    },
+    {
+      "selector": "#taskList",
+      "visible": true,
+      "text": "日程 · 1 task\n线上复查：日程编辑\nDue: Oct 26, 2026, 09:30 AM\n(8 hours 31 minutes)\n工作 · 1 ta",
+      "x": 268,
+      "y": 275,
+      "w": 674,
+      "h": 727
+    },
+    {
+      "selector": "#workspaceTitle",
+      "visible": true,
+      "text": "All tasks",
+      "x": 274,
+      "y": 107,
+      "w": 586,
+      "h": 34
+    },
+    {
+      "selector": "#settingsWorkspace",
+      "visible": 0,
+      "text": "\n            Settings & data\n            \n                \n                    A",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    }
+  ],
+  "buttons": [
+    {
+      "id": "viewTab-list",
+      "text": "List",
+      "x": 16,
+      "y": 79,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "viewTab-calendar",
+      "text": "Calendar",
+      "x": 16,
+      "y": 127,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "viewTab-timeline",
+      "text": "Timeline",
+      "x": 16,
+      "y": 175,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "viewTab-stats",
+      "text": "Stats",
+      "x": 16,
+      "y": 223,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "workspaceAllTasks",
+      "text": "All tasks\n6",
+      "x": 16,
+      "y": -81,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "focusModeToggleBtn",
+      "text": "Today’s plan",
+      "x": 16,
+      "y": -34,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "",
+      "text": "工作\n1",
+      "x": 16,
+      "y": 68,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "",
+      "text": "日程\n1",
+      "x": 16,
+      "y": 115,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "",
+      "text": "项目三\n1",
+      "x": 16,
+      "y": 162,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "",
+      "text": "项目五\n1",
+      "x": 16,
+      "y": 209,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "",
+      "text": "项目六\n1",
+      "x": 16,
+      "y": 256,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "",
+      "text": "项目四\n1",
+      "x": 16,
+      "y": 303,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "workspaceAllProjects",
+      "text": "All projects",
+      "x": 16,
+      "y": 345,
+      "w": 196,
+      "h": 40
+    },
+    {
+      "id": "workspaceSettingsBtn",
+      "text": "Settings & data",
+      "x": 16,
+      "y": 410,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "undoBtn",
+      "text": "Undo",
+      "x": 986,
+      "y": 11,
+      "w": 67,
+      "h": 40
+    },
+    {
+      "id": "openModalBtn",
+      "text": "Add task",
+      "x": 1060,
+      "y": 11,
+      "w": 112,
+      "h": 40
+    },
+    {
+      "id": "quickCaptureBtn",
+      "text": "Quick capture",
+      "x": 1173,
+      "y": 11,
+      "w": 36,
+      "h": 40
+    },
+    {
+      "id": "openMenuBtn",
+      "text": "Settings & data",
+      "x": 1216,
+      "y": 11,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "",
+      "text": "Mon\n26",
+      "x": 942,
+      "y": 107,
+      "w": 40,
+      "h": 58
+    },
+    {
+      "id": "",
+      "text": "Tue\n27",
+      "x": 984,
+      "y": 107,
+      "w": 40,
+      "h": 58
+    },
+    {
+      "id": "",
+      "text": "Wed\n28",
+      "x": 1026,
+      "y": 107,
+      "w": 40,
+      "h": 58
+    },
+    {
+      "id": "",
+      "text": "Thu\n29",
+      "x": 1068,
+      "y": 107,
+      "w": 40,
+      "h": 58
+    },
+    {
+      "id": "",
+      "text": "Fri\n30",
+      "x": 1110,
+      "y": 107,
+      "w": 40,
+      "h": 58
+    },
+    {
+      "id": "",
+      "text": "Sat\n31",
+      "x": 1152,
+      "y": 107,
+      "w": 40,
+      "h": 58
+    },
+    {
+      "id": "",
+      "text": "Sun\n1",
+      "x": 1194,
+      "y": 107,
+      "w": 40,
+      "h": 58
+    },
+    {
+      "id": "saveSmartViewBtn",
+      "text": "Save view",
+      "x": 673,
+      "y": 220,
+      "w": 112,
+      "h": 42
+    },
+    {
+      "id": "toolsDrawerToggleBtn",
+      "text": "Filters\nActive",
+      "x": 795,
+      "y": 221,
+      "w": 147,
+      "h": 40
+    },
+    {
+      "id": "",
+      "text": "Mark as complete",
+      "x": 268,
+      "y": 320,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Task actions: 线上复查：日程编辑",
+      "x": 902,
+      "y": 320,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Mark as complete",
+      "x": 268,
+      "y": 435,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "0/1 Subtasks",
+      "x": 316,
+      "y": 495,
+      "w": 578,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "Task actions: 线上复查：保存子任务",
+      "x": 902,
+      "y": 435,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Mark as complete",
+      "x": 268,
+      "y": 588,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Task actions: 核对需求",
+      "x": 902,
+      "y": 588,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Mark as complete",
+      "x": 268,
+      "y": 703,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Task actions: 整理素材",
+      "x": 902,
+      "y": 703,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Mark as complete",
+      "x": 268,
+      "y": 818,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Task actions: 准备回顾",
+      "x": 902,
+      "y": 818,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Mark as complete",
+      "x": 268,
+      "y": 933,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Task actions: 联系伙伴",
+      "x": 902,
+      "y": 933,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "workspacePreviousMonth",
+      "text": "Previous month",
+      "x": 1176,
+      "y": 224,
+      "w": 32,
+      "h": 36
+    },
+    {
+      "id": "workspaceNextMonth",
+      "text": "Next month",
+      "x": 1208,
+      "y": 224,
+      "w": 32,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "28",
+      "x": 994,
+      "y": 299,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "29",
+      "x": 1029,
+      "y": 299,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "30",
+      "x": 1065,
+      "y": 299,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "1",
+      "x": 1100,
+      "y": 299,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "2",
+      "x": 1136,
+      "y": 299,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "3",
+      "x": 1171,
+      "y": 299,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "4",
+      "x": 1207,
+      "y": 299,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "5",
+      "x": 994,
+      "y": 337,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "6",
+      "x": 1029,
+      "y": 337,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "7",
+      "x": 1065,
+      "y": 337,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "8",
+      "x": 1100,
+      "y": 337,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "9",
+      "x": 1136,
+      "y": 337,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "10",
+      "x": 1171,
+      "y": 337,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "11",
+      "x": 1207,
+      "y": 337,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "12",
+      "x": 994,
+      "y": 375,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "13",
+      "x": 1029,
+      "y": 375,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "14",
+      "x": 1065,
+      "y": 375,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "15",
+      "x": 1100,
+      "y": 375,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "16",
+      "x": 1136,
+      "y": 375,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "17",
+      "x": 1171,
+      "y": 375,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "18",
+      "x": 1207,
+      "y": 375,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "19",
+      "x": 994,
+      "y": 413,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "20",
+      "x": 1029,
+      "y": 413,
+      "w": 33,
+      "h": 36
+    }
+  ],
+  "fields": [
+    {
+      "id": "searchInput",
+      "type": "text",
+      "value": "",
+      "placeholder": "Search tasks…",
+      "x": 268,
+      "y": 221,
+      "w": 395,
+      "h": 41
+    }
+  ],
+  "pageErrors": [],
+  "source_index_sha256": "79693a476cd75b46df78b71890f9a3a89aef2eb08aa8a2af701c07c4b801c1ad"
+}
