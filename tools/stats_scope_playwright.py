@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, timedelta, timezone
+import json
+from pathlib import Path
 
 from playwright.sync_api import expect, sync_playwright
 
@@ -35,12 +37,29 @@ def seed(page, records):
 
 
 def assert_stats(page, before, percent, overdue, denominator, completion=None):
-    card=page.locator('.stat-card').nth(1)
+    language=page.locator('html').get_attribute('lang')
+    resources=json.loads((Path(__file__).resolve().parents[1]/'resources'/f'{language}.json').read_text())
+    inventory=page.locator('details.stats-inventory')
+    if inventory.get_attribute('open') is None:
+        inventory.locator(':scope > summary').click()
+    card=inventory.locator('.stat-card').filter(has=page.locator('.stat-label').filter(has_text=resources['stats']['overdueRate']))
     expect(card.locator('.stat-value')).to_have_text(percent)
-    expect(card.locator('.stat-detail')).to_contain_text(f'{overdue}/{denominator}')
+    if denominator:
+        expect(card.locator('.stat-detail')).to_contain_text(f'{overdue}/{denominator}')
+    else:
+        expect(card.locator('.stat-detail')).to_have_text(resources['statsInsights']['noScheduled'])
+        expect(card.locator('[role="meter"]')).to_have_count(0)
     if completion is not None:
-        expect(page.locator('.stat-card').nth(0).locator('.stat-value')).to_have_text(completion)
+        completed=inventory.locator('.stat-card').filter(has=page.locator('.stat-label').filter(has_text=resources['stats']['completionRate']))
+        expect(completed.locator('.stat-value')).to_have_text(completion)
     assert stored(page)==before,'Statistics or scope navigation changed persisted task/configuration data'
+
+
+def assert_completed_today(page, count):
+    language=page.locator('html').get_attribute('lang')
+    resources=json.loads((Path(__file__).resolve().parents[1]/'resources'/f'{language}.json').read_text())['statsInsights']
+    key='todayReviewOne' if count==1 else 'todayReview'
+    expect(page.locator('.stats-review-meta')).to_contain_text(resources[key].format(count=count))
 
 
 def run(browser_name):
@@ -52,10 +71,11 @@ def run(browser_name):
         errors=[]
         page.on('pageerror',lambda error:errors.append(str(error)))
         try:
+            now=datetime(2026,10,25,12,tzinfo=timezone.utc)
+            page.clock.install(time=now)
             clear_app_data(page,url)
             add_task(page,'Statistics fixture seed',no_deadline=True)
             template=get_task_records(page)[0]
-            now=datetime.now(timezone.utc)
 
             def task(identity,name,day_offset=None,completed=False,archived=False,project='Work',tag='focus'):
                 date=(now+timedelta(days=day_offset or 0)).replace(hour=12,minute=0,second=0,microsecond=0)
@@ -92,23 +112,41 @@ def run(browser_name):
             page.locator('#searchInput').fill('tag:focus')
             assert_stats(page,before,'50%',1,2)
             page.locator('#searchInput').fill('status:completed')
-            assert_stats(page,before,'0%',0,0,completion='100%')
+            assert_stats(page,before,'—',0,0,completion='100%')
             page.locator('#searchInput').fill('project:Personal')
-            assert_stats(page,before,'0%',0,0,completion='0%')
+            assert_stats(page,before,'—',0,0,completion='—')
             select_project(page,'all')
             assert_stats(page,before,'100%',1,1,completion='0%')
             page.locator('#searchInput').fill('status:no-deadline')
-            assert_stats(page,before,'0%',0,0,completion='0%')
+            assert_stats(page,before,'—',0,0,completion='0%')
 
             page.locator('#searchInput').fill('')
             before=seed(page,[*completed,archived,undated])
-            assert_stats(page,before,'0%',0,0,completion='90%')
+            assert_stats(page,before,'—',0,0,completion='90%')
+            assert_completed_today(page,9)
+            archived_completed=task(300,'Archived completed today',-2,completed=True,archived=True)
+            before=seed(page,[*completed,archived,undated,archived_completed])
+            assert_stats(page,before,'—',0,0,completion='90%')
+            assert_completed_today(page,10)
+            expect(page.locator('.stats-mini[data-stats-filter="archived"] strong')).to_have_text('2')
+            page.locator('#searchInput').fill('status:completed')
+            assert_stats(page,before,'—',0,0,completion='100%')
+            assert_completed_today(page,9)
+            page.locator('#searchInput').fill('status:archived')
+            assert_stats(page,before,'—',0,0,completion='—')
+            assert_completed_today(page,1)
+            page.locator('#searchInput').fill('')
             before=seed(page,[])
-            expect(page.locator('#taskList .empty-state')).to_be_visible()
-            expect(page.locator('.stat-card')).to_have_count(0)
+            expect(page.locator('.stats-view')).to_be_visible()
+            assert_stats(page,before,'—',0,0,completion='—')
+            for action in ('overdue','today','undated'):
+                card=page.locator(f'[data-stats-action="{action}"]')
+                expect(card.locator('.stats-action-value')).to_have_text('0')
+                expect(card).to_be_disabled()
+            assert_completed_today(page,0)
             assert stored(page)==before,'Empty statistics view changed persisted data'
             assert not errors,errors
-            print('Ongoing denominator, future/archived/undated/empty cases, project and search intersections, unchanged completion metrics and full IndexedDB read-only checks passed',flush=True)
+            print('Original ongoing/future/archived/undated/empty scopes and project/search intersections passed; retained archive history and no-denominator states are explicit, with full IndexedDB read-only checks',flush=True)
         finally:
             context.close()
             browser.close()

@@ -566,8 +566,8 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             errors.append("Task creation forms must guard against duplicate submissions")
         if "const activeScopeTasks = tasks.filter(task => !task.archived)" not in index_html:
             errors.append("Stats total must exclude archived tasks")
-        if "const completionHistoryTasks = activeScopeTasks.filter(task => task.completed)" not in index_html:
-            errors.append("Stats completion history must exclude archived tasks")
+        if "const completionHistoryTasks = tasks.filter(task => task.completed && getCompletionDateKey(task))" not in index_html:
+            errors.append("Stats completion history must include retained archived completions with a recorded completion date")
         if not contains_in_order(index_html, ("function shiftCalendarMonth(delta)", "date.setUTCDate(1);", "date.setUTCMonth(date.getUTCMonth() + delta);", "state.calendarDetailDateKey = '';")):
             errors.append("Calendar month navigation must clamp its civil date to day one and clear stale day details")
         state_consistency_checks = {
@@ -608,7 +608,7 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             "Imported duplicate IDs must not produce ambiguous repeat links": ("const duplicateIds = new Set(getDuplicateImportIds(rawTasks));", "sanitizeAmbiguousImportedReferences", "if (duplicateIds.has(normalizeTaskReferenceId(sanitizedTask[key]))) sanitizedTask[key] = null;"),
             "Imported repeat links must only point to final imported tasks": ("function sanitizeDanglingTaskReferences(tasks)", "const ids = new Set(tasks.map(task => Number(task.id)).filter(Number.isFinite));", "sanitizedTask[key] = value !== null && ids.has(value) ? value : null;"),
             "Merged imports must clear repeat links to skipped conflicts": ("function prepareImportedTasksForMerge(importedTasks, conflictActions = new Map(), conflictDefault = 'keep')", "const tasksToImport = importedTasks.filter", "const tasks = sanitizeDanglingTaskReferences(remapped.map(task => {"),
-            "Import preview must include template restore checks": ("downloadPreImportSnapshot(beforeTasks)", "sourceInfo: getImportSourceInfo(sourceData, compatibilitySteps)", "function getImportSourceInfo(sourceData, compatibilitySteps = [])", "checksumStatus", "function createImportRestoreChecklist(preview, t)", "messages.import.restoreCheckTitle", "function createImportDiffPreview(preview, t)", "return false;"),
+            "Import preview must include template restore checks": ("downloadPreImportSnapshot(beforeTasks)", "sourceInfo: getImportSourceInfo(sourceData, compatibilitySteps)", "function getImportSourceInfo(sourceData, compatibilitySteps = [])", "checksumStatus", "function createImportRestoreChecklist(", "messages.import.restoreCheckTitle", "function createImportDiffPreview(preview, t)", "return false;"),
             "Startup must verify IndexedDB is writable before normal app mode": ("if (!(await initializeStorageOrFallback())) return;", "function initPersistentStorage()", "await verifyPersistentStorage();", "function verifyPersistentStorage()", "await dbActions.deleteConfig(CONFIG.STORAGE.PROBE);"),
             "Storage fallback must be scoped to the storage initialization stage": ("function initializeStorageOrFallback()", "await initPersistentStorage();", "if (!shouldUseStorageUnavailableMode(error)) throw error;", "handleStorageUnavailable(error);"),
             "Storage-unavailable mode must pause task-writing actions": ("function handleStorageUnavailable(error)", "function syncStorageAvailabilityUI()", "function ensureStorageAvailable(options = {})", "storage.unavailable.actionsDisabled"),

@@ -2,6 +2,8 @@
 """Exercise permanent view navigation and the independent settings workspace."""
 from __future__ import annotations
 
+from smoke_playwright import enter_batch_mode
+
 from smoke_playwright import ensure_capture
 
 import argparse
@@ -114,7 +116,7 @@ def exercise_workspace(browser, url, width, language):
         select_project(page, 'Design')
         page.locator('#searchInput').fill('Settings retained')
         expect(page.locator('.task-item')).to_have_count(2)
-        page.locator('#batchModeBtn').click()
+        enter_batch_mode(page)
         task_locator(page, 'Settings retained task A').locator('.task-select-checkbox').check()
         ensure_capture(page)
         page.locator('#quickAddInput').fill('Keep this unsaved quick draft #design')

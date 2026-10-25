@@ -2,6 +2,10 @@
 """Check full-workspace rollback and explicit recovery after injected write failures."""
 from __future__ import annotations
 
+from smoke_playwright import enter_batch_mode
+
+from smoke_playwright import click_batch_action
+
 from smoke_playwright import open_task_editor, reveal_task_field, ensure_capture
 
 import argparse
@@ -173,7 +177,7 @@ def edit_abort(page, before, history=False):
 def select_batch(page, size):
     page.locator('#searchInput').fill('Failure workspace 0000')
     expect(page.locator('.task-item')).to_have_count(min(size, 10))
-    page.locator('#batchModeBtn').click()
+    enter_batch_mode(page)
     for index in range(3):
         task_locator(page, f'Failure workspace {index:05d} 中文').locator('.task-select-checkbox').check()
 
@@ -181,7 +185,7 @@ def select_batch(page, size):
 def batch_abort(page, before, delete=False):
     select_batch(page, len(before['tasks']))
     if delete:
-        page.locator('#batchDeleteBtn').click()
+        click_batch_action(page, 'delete')
         expect(page.locator('#taskModal')).to_be_visible()
         inject(page, 'put', 'config', 'taskRevision')
         page.locator('#submitBtn').click()

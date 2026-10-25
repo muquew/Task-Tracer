@@ -11,7 +11,7 @@ from reminder_concurrency_playwright import seed
 from smoke_playwright import click_task_action
 from smoke_playwright import (add_task, browser_launch_options, clear_app_data,
                               complete_task, get_task_records, local_server, select_filter, task_locator,
-                              wait_for_app_ready)
+                              wait_for_app_ready, select_visible_option)
 
 
 def open_import(page, tasks):
@@ -92,7 +92,7 @@ def run_case(browser, url, mode):
             expect(first.locator('#taskModal')).to_be_visible()
         else:
             first.locator('#mergeImportMode').check()
-            first.locator('#import-conflict-0').select_option('replace')
+            select_visible_option(first, '#import-conflict-0', 'replace')
 
         second = context.new_page()
         second.goto(url)
@@ -131,7 +131,7 @@ def run_case(browser, url, mode):
             assert get_task_records(first) == expected, 'Snapshot download prematurely applied the import'
         else:
             first.locator('#mergeImportMode').check()
-            first.locator('#import-conflict-0').select_option('replace')
+            select_visible_option(first, '#import-conflict-0', 'replace')
         first.locator('#submitBtn').click()
         expect(first.locator('#taskModal')).to_be_hidden()
         imported_records = get_task_records(first)

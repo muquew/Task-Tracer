@@ -11,12 +11,14 @@ import os
 import time
 from pathlib import Path
 from typing import Any
+from urllib.parse import urljoin, urlparse
 
 from playwright.sync_api import Page, expect, sync_playwright
 
 from views_portability_playwright import payload as views_payload, view as saved_view, choose_file as choose_views_file
 from task_draft_playwright import inject_quota_failure
 from views_delete_playwright import save_named as save_delete_audit_view
+from recovery_management_playwright import stored
 
 from smoke_playwright import close_workspace_navigation, reveal_workspace_control, select_language, select_theme_preference
 from smoke_playwright import (
@@ -24,11 +26,15 @@ from smoke_playwright import (
     assert_accessibility_baseline,
     browser_launch_options,
     clear_app_data,
+    click_batch_action,
+    enter_batch_mode,
     ensure_conda_library_path,
     exercise_workspace_navigation,
     future_date,
+    get_task_records,
     local_server,
     select_view,
+    reveal_batch_action,
     wait_for_app_ready,
 )
 
@@ -45,7 +51,18 @@ def find_axe_source() -> Path:
 
 
 def inject_axe(page: Page, axe_source: str) -> None:
-    page.add_script_tag(content=axe_source)
+    if urlparse(page.url).hostname in {'127.0.0.1', 'localhost'}:
+        assert find_axe_source().read_text() == axe_source, 'Local axe source changed during the audit'
+        page.add_script_tag(url=urljoin(page.url, './node_modules/axe-core/axe.min.js'))
+        return
+    url = urljoin(page.url, './__task_tracer_audit__/axe.min.js')
+    def serve_audit(route):
+        route.fulfill(status=200, content_type='application/javascript', body=axe_source)
+    page.route(url, serve_audit)
+    try:
+        page.add_script_tag(url=url)
+    finally:
+        page.unroute(url, serve_audit)
 
 
 def run_axe(page: Page, axe_source: str, label: str) -> None:
@@ -392,6 +409,39 @@ def audit_task_draft_guard(page: Page, axe_source: str, label: str) -> None:
     expect(page.locator('#taskModal')).to_be_hidden()
 
 
+def audit_batch_project(page: Page, axe_source: str) -> None:
+    before = stored(page)
+    enter_batch_mode(page)
+    page.locator('#batchSelectVisibleBtn').click()
+    audit_page_state(page, axe_source, 'batch selection')
+    reveal_batch_action(page, 'move-project')
+    audit_page_state(page, axe_source, 'batch More actions')
+    click_batch_action(page, 'move-project')
+    expect(page.locator('#batchMoveProjectInput')).to_be_visible()
+    audit_page_state(page, axe_source, 'batch move project dialog')
+    page.locator('#cancelBtn').click()
+    expect(page.locator('#taskModal')).to_be_hidden()
+    page.locator('#exitBatchModeBtn').click()
+    assert stored(page) == before, 'Auditing and cancelling batch movement changed stored data'
+
+
+def audit_import_decision(page: Page, axe_source: str) -> None:
+    before = stored(page)
+    record = get_task_records(page)[0]
+    open_settings(page, 'data')
+    with page.expect_file_chooser() as chooser:
+        page.locator('#importBtn').click()
+    chooser.value.set_files({'name': 'small-a11y-import.json', 'mimeType': 'application/json',
+                            'buffer': json.dumps([{**record, 'description': 'Incoming synthetic a11y preview'}]).encode()})
+    expect(page.locator('#importOutcomeSummary')).to_be_visible()
+    audit_page_state(page, axe_source, 'task import replacement decision')
+    page.locator('#mergeImportMode').check()
+    audit_page_state(page, axe_source, 'task import merge decision')
+    page.locator('#cancelBtn').click()
+    expect(page.locator('#taskModal')).to_be_hidden()
+    assert stored(page) == before, 'Auditing import decisions wrote tasks, revision, history or settings'
+
+
 def audit_task_draft_recovery(page: Page, axe_source: str, label: str) -> None:
     return_to_task_workspace(page)
     open_task_editor(page)
@@ -533,6 +583,7 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False, *, in
         seed_tasks(page)
         audit_subtask_checkbox_visibility(page, '390px' if reduced_motion else '1280px')
         audit_page_state(page, axe_source, "task list")
+        audit_batch_project(page, axe_source)
 
         ensure_capture(page)
         audit_page_state(page, axe_source, 'global capture')
@@ -556,6 +607,7 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False, *, in
         audit_views_transfer(page, axe_source, 'light')
         audit_view_delete(page, axe_source, 'light')
         audit_task_reading(page, axe_source)
+        audit_import_decision(page, axe_source)
         audit_task_draft_guard(page, axe_source, 'light')
         audit_task_draft_recovery(page, axe_source, 'light')
 

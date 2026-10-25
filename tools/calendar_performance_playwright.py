@@ -2,6 +2,8 @@
 """Keep large calendar sections bounded without losing full-workspace tasks."""
 from __future__ import annotations
 
+from smoke_playwright import enter_batch_mode
+
 import argparse
 import json
 from pathlib import Path
@@ -72,7 +74,7 @@ def open_day(page):
 
 def exercise_batch_calendar(page, per_section, metrics, sort_mode):
     select_sort(page, sort_mode)
-    page.locator('#batchModeBtn').click()
+    enter_batch_mode(page)
     select_view(page, 'calendar')
     expect(page.locator('.date-view-undated .task-item')).to_have_count(100)
     if not page.locator('.calendar-day-detail').count():

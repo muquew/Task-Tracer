@@ -68,7 +68,11 @@ def reserve_port() -> int:
 @contextlib.contextmanager
 def local_server() -> Iterator[str]:
     port = reserve_port()
-    server = ThreadingHTTPServer((DEFAULT_HOST, port), StaticHandler)
+    handler = StaticHandler
+    if os.environ.get('TASK_TRACER_PRODUCTION_HEADERS') == '1':
+        from security_playwright import ProductionHeaderHandler
+        handler = ProductionHeaderHandler
+    server = ThreadingHTTPServer((DEFAULT_HOST, port), handler)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
 
@@ -273,6 +277,25 @@ def reveal_task_field(page: Page, selector: str) -> Locator:
     return field
 
 
+def select_visible_option(page: Page, selector: str, value: str) -> None:
+    """Use a native select or its real enhanced button and visible option."""
+    field = page.locator(selector)
+    expect(field).to_have_count(1)
+    identifier = field.get_attribute('id')
+    button = page.locator(f'#{identifier}-custom-button') if identifier else None
+    if button is not None and button.count():
+        expect(button).to_be_visible()
+        button.click()
+        option = page.locator(f'#{identifier}-custom-button-list .custom-select-option[data-value={json.dumps(value)}]:visible')
+        expect(option).to_be_visible()
+        option.click()
+        expect(button).to_have_attribute('aria-expanded', 'false')
+    else:
+        expect(field).to_be_visible()
+        field.select_option(value)
+    expect(field).to_have_value(value)
+
+
 def _preference_origin(page: Page) -> tuple[bool, str | None]:
     workspace = page.locator('#settingsWorkspace')
     was_settings = bool(workspace.count() and workspace.is_visible())
@@ -365,6 +388,49 @@ def select_theme_preference(page: Page, preference: str) -> str:
     expect(select).to_be_enabled()
     _return_from_preference(page, origin)
     return resolved
+
+
+def select_accent_preference(page: Page, preference: str) -> None:
+    """Change the one native accent control through Appearance settings."""
+    assert preference in {'iris', 'ocean', 'pine', 'berry'}, preference
+    origin = _preference_origin(page)
+    open_settings(page, 'appearance')
+    select = page.locator('#accentSelect')
+    expect(select).to_be_visible()
+    select.select_option(preference)
+    expect(select).to_have_value(preference)
+    expect(page.locator('html')).to_have_attribute('data-accent', preference)
+    _return_from_preference(page, origin)
+
+
+def enter_batch_mode(page: Page) -> None:
+    """Enter selection mode after exposing the actual filter toolbar."""
+    return_to_task_workspace(page)
+    reveal_filters(page)
+    button = page.locator('#batchModeBtn')
+    if button.get_attribute('aria-pressed') != 'true':
+        button.click()
+    expect(page.locator('#batchToolbar')).to_be_visible()
+
+
+def reveal_batch_action(page: Page, action: str) -> Locator:
+    """Reach a batch action through the actual progressive More menu."""
+    selector = {
+        'focus': '#batchFocusBtn', 'complete': '#batchCompleteBtn',
+        'archive': '#batchArchiveBtn', 'delete': '#batchDeleteBtn',
+        'move-project': '#batchMoveProjectBtn',
+    }[action]
+    return_to_task_workspace(page)
+    control = page.locator(selector)
+    more = control.locator('xpath=ancestor::details')
+    if more.count() and more.get_attribute('open') is None:
+        more.locator(':scope > summary').click()
+    expect(control).to_be_visible()
+    return control
+
+
+def click_batch_action(page: Page, action: str) -> None:
+    reveal_batch_action(page, action).click()
 
 
 def reveal_task_action(task: Locator, action: str) -> Locator:
@@ -1186,12 +1252,12 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
     expect(task_locator(page, alpha_name)).to_have_count(0)
 
     clear_search(page)
-    page.locator("#batchModeBtn").click()
+    enter_batch_mode(page)
     expect(page.locator("#batchToolbar")).to_be_visible()
     expect(page.locator("#batchModeBtn")).to_have_attribute("aria-pressed", "true")
     page.locator("#batchSelectVisibleBtn").click()
     expect(page.locator("#batchSelectionSummary")).to_contain_text(re.compile(r"3|三个|three", re.I))
-    page.locator("#batchFocusBtn").click()
+    click_batch_action(page, 'focus')
     wait_for_notification(page, re.compile("今日|today", re.I))
     for name in (alpha_name, beta_name, overdue_name):
         record = get_task_record_by_name(page, name)
@@ -1971,7 +2037,7 @@ def exercise_batch_repeat_completion_order(page: Page, prefix: str) -> None:
     select_project(page, project)
     select_filter(page, "active")
     clear_search(page)
-    page.locator("#batchModeBtn").click()
+    enter_batch_mode(page)
     page.locator("#batchSelectVisibleBtn").click()
     expect(page.locator("#batchSelectionSummary")).to_contain_text(re.compile(r"2|two|两个", re.I))
     page.locator("#batchCompleteBtn").click()

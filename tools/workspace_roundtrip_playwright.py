@@ -2,6 +2,10 @@
 """Exercise a realistic synthetic workspace through backup, import and recovery."""
 from __future__ import annotations
 
+from smoke_playwright import enter_batch_mode
+
+from smoke_playwright import click_batch_action
+
 from smoke_playwright import open_settings, return_to_task_workspace
 
 import argparse
@@ -203,7 +207,7 @@ def undo_exact(page, expected, previous_revision):
 def probe_unfiltered_batch(page, size, metrics):
     before = database_summary(page)
     def enter():
-        page.locator('#batchModeBtn').click()
+        enter_batch_mode(page)
         expect(page.locator('.task-item')).to_have_count(min(size, 100))
         expect(page.locator('#batchSelectVisibleBtn')).to_be_enabled()
     measure('batch_unfiltered_entry', enter, metrics)
@@ -237,14 +241,14 @@ def exercise_batch_roundtrip(page, baseline, metrics):
     project = baseline[-1]['project']
     selected_ids = {task['id'] for task in baseline if task['project'] == project}
     select_project(page, project)
-    page.locator('#batchModeBtn').click()
+    enter_batch_mode(page)
     expect(page.locator('.task-item')).to_have_count(min(len(selected_ids), 100))
     page.locator('#batchSelectVisibleBtn').click()
     assert_selection(page, len(selected_ids), min(len(selected_ids), 100))
     before = database_summary(page)
 
     def focus():
-        page.locator('#batchFocusBtn').click()
+        click_batch_action(page, 'focus')
         expect(page.locator('.task-select-checkbox:checked')).to_have_count(0)
         expect(page.locator('#undoBtn')).to_be_enabled()
     measure('batch_focus', focus, metrics)
@@ -278,7 +282,7 @@ def exercise_batch_roundtrip(page, baseline, metrics):
         before_delete = database_summary(page)
         page.locator('#batchSelectVisibleBtn').click()
         assert_selection(page, len(deleted_ids), min(len(deleted_ids), 100))
-        page.locator('#batchDeleteBtn').click()
+        click_batch_action(page, 'delete')
         expect(page.locator('#taskModal')).to_be_visible()
         page.locator('#submitBtn').click()
         expect(page.locator('#taskModal')).to_be_hidden()

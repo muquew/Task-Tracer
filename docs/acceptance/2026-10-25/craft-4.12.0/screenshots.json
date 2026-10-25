@@ -1,0 +1,87 @@
+[
+  {
+    "path": "before-stats-archive.png",
+    "source": "/workspace/design-research/task-tracer-craft-2026-10-25/stats-audit/05-after-archive.png",
+    "sha256": "531a26286d9d827828374bcd9c1305677a9b22f4b42119f2d56d5a4683f6222f",
+    "stage": "4.11.1 baseline"
+  },
+  {
+    "path": "before-editor.png",
+    "source": "/workspace/design-research/task-tracer-craft-2026-10-25/material-audit/06-desktop-editor.png",
+    "sha256": "b4c55a80059d79b4edc569f4815e326213e4ab9331dd063135a24e6eb4d3d699",
+    "stage": "4.11.1 baseline"
+  },
+  {
+    "path": "candidate-stats-archive.png",
+    "source": "/workspace/design-research/task-tracer-craft-2026-10-25/candidate-review/14-statistics-all-records-after-archive.png",
+    "sha256": "3befdceba765a24bf8e3c5db8cbc680d9cbc75f0488a1df7035778efb578e25c",
+    "stage": "first integrated candidate, before final six fixes"
+  },
+  {
+    "path": "candidate-dark-ocean.png",
+    "source": "/workspace/design-research/task-tracer-craft-2026-10-25/candidate-review/18-dark-ocean.png",
+    "sha256": "21da5c1908486ef092f7924e4cb9dcae33ee6fc254eae156db3cb466b7802787",
+    "stage": "first integrated candidate, before final six fixes"
+  },
+  {
+    "path": "candidate-import-mode.png",
+    "source": "/workspace/design-research/task-tracer-craft-2026-10-25/candidate-review/49-mobile-import-replace.png",
+    "sha256": "9aa10846667ab7ac9b4a83b54752e7de890efd5a3e04a4e85e0bfad318ee47cf",
+    "stage": "first integrated candidate, before final six fixes"
+  },
+  {
+    "path": "candidate-view-duplicate.png",
+    "source": "/workspace/design-research/task-tracer-craft-2026-10-25/candidate-review/71-view-import-duplicate-preview.png",
+    "sha256": "70cb1f613ff64aa8ce28289cfa91df0925929138fb8816d2247bb7a184b06c8b",
+    "stage": "first integrated candidate, before final six fixes"
+  },
+  {
+    "path": "final-return-stats.png",
+    "source": "/workspace/design-research/task-tracer-craft-2026-10-25/final-review/10-return-entry-clear.png",
+    "sha256": "a3178bce42e0d5b4d20d8bd8df6bc5a2cedfd3f150e0cdeea752606bd7d7d394",
+    "stage": "final frozen 4.12.0 candidate; fresh profile",
+    "indexSha256": "a272b4d632ebb69eb72982b87ce1e7aa11307f8167ae290abba3ed560fe453dd"
+  },
+  {
+    "path": "final-mobile-trend.png",
+    "source": "/workspace/design-research/task-tracer-craft-2026-10-25/final-review/12-final-trend-and-projects.png",
+    "sha256": "4eec52c27cc1b0666d47e6d41c8c04b94158f24846efc25e607aa0ca8ea275d1",
+    "stage": "final frozen 4.12.0 candidate; fresh profile",
+    "indexSha256": "a272b4d632ebb69eb72982b87ce1e7aa11307f8167ae290abba3ed560fe453dd"
+  },
+  {
+    "path": "final-archived-review.png",
+    "source": "/workspace/design-research/task-tracer-craft-2026-10-25/final-review/19-archive-history-return.png",
+    "sha256": "ed1d766380b64adc560074f7b94ada501b0d234ae1630e4458e028515e490203",
+    "stage": "final frozen 4.12.0 candidate; fresh profile",
+    "indexSha256": "a272b4d632ebb69eb72982b87ce1e7aa11307f8167ae290abba3ed560fe453dd"
+  },
+  {
+    "path": "final-mobile-feedback.png",
+    "source": "/workspace/design-research/task-tracer-craft-2026-10-25/final-review/25-final-snapshot-feedback.png",
+    "sha256": "98bbdb28097367a00d50f0e04e56a4dac5e451b17ea78e884858c209109a68a1",
+    "stage": "final frozen 4.12.0 candidate; fresh profile",
+    "indexSha256": "a272b4d632ebb69eb72982b87ce1e7aa11307f8167ae290abba3ed560fe453dd"
+  },
+  {
+    "path": "final-move-warning.png",
+    "source": "/workspace/design-research/task-tracer-craft-2026-10-25/final-review/34-warning-icon-final.png",
+    "sha256": "67d06e1f5b54d564d440a597d5604d6c0fa76c5aba86fccf4c208f557b58670c",
+    "stage": "final frozen 4.12.0 candidate; fresh profile",
+    "indexSha256": "a272b4d632ebb69eb72982b87ce1e7aa11307f8167ae290abba3ed560fe453dd"
+  },
+  {
+    "path": "final-narrow-dark-editor.png",
+    "source": "/workspace/design-research/task-tracer-craft-2026-10-25/final-review/45-narrow-full-editor.png",
+    "sha256": "eea878119a5eac2b0834df890d3e5bc1e54fc25736f086627162a304cd1525c8",
+    "stage": "final frozen 4.12.0 candidate; fresh profile",
+    "indexSha256": "a272b4d632ebb69eb72982b87ce1e7aa11307f8167ae290abba3ed560fe453dd"
+  },
+  {
+    "path": "final-import-differences.png",
+    "source": "/workspace/design-research/task-tracer-craft-2026-10-25/final-import-review/10-read-import-task-names.png",
+    "sha256": "246febfffb2a961bab5dd2dfa980be8855e1aa369edd4a5d8d579722b6d4396b",
+    "stage": "final import-difference fix; fresh profile",
+    "indexSha256": "1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561"
+  }
+]

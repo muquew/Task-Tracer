@@ -2,6 +2,8 @@
 """Measure a synthetic large workspace and verify that search never loses tasks."""
 from __future__ import annotations
 
+from smoke_playwright import enter_batch_mode
+
 import argparse
 import json
 import re
@@ -119,7 +121,7 @@ def exercise_timeline(page, size, metrics):
         expect(page.locator('#taskPagination')).to_be_hidden()
         select_sort(page, 'smart')
         expect(page.locator('.timeline-view .task-item')).to_have_count(min(100, size), timeout=20000)
-    page.locator('#batchModeBtn').click()
+    enter_batch_mode(page)
     select_view(page, 'timeline')
     expect(page.locator('.timeline-view .task-item')).to_have_count(min(100, size), timeout=20000)
     metrics['batch_timeline_initial_nodes'] = page.locator('.timeline-view .task-item').count()

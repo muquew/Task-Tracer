@@ -2,6 +2,10 @@
 """Measure repeatable full-workspace UI operations with explicit CPU conditions."""
 from __future__ import annotations
 
+from smoke_playwright import enter_batch_mode
+
+from smoke_playwright import click_batch_action
+
 from smoke_playwright import open_settings, return_to_task_workspace
 
 import argparse
@@ -327,7 +331,7 @@ def run_once(browser, url, args, report, publish, number):
         reset()
         expected_focus_signature = summary(page, focus_value='2039-01-01')['normalized_focus_signature']
         def enter_batch():
-            page.locator('#batchModeBtn').click()
+            enter_batch_mode(page)
             expect(page.locator('#batchModeBtn')).to_have_attribute('aria-pressed', 'true')
             expect(page.locator('.task-item')).to_have_count(min(100, args.size))
         measure('batch_enter_bounded_workspace', enter_batch)
@@ -344,7 +348,7 @@ def run_once(browser, url, args, report, publish, number):
                 expect(page.locator('#batchSelectionSummary')).to_contain_text(str(args.size))
             measure('batch_load_more_selected', batch_more)
         def focus_batch():
-            page.locator('#batchFocusBtn').click()
+            click_batch_action(page, 'focus')
             expect(page.locator('#undoBtn')).to_be_enabled()
             expect(page.locator('.task-select-checkbox:checked')).to_have_count(0)
         measure('batch_focus_full_workspace', focus_batch)

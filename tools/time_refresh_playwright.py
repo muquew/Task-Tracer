@@ -2,6 +2,8 @@
 """Refresh time-sensitive views after real timer/visibility events without task writes."""
 from __future__ import annotations
 
+from smoke_playwright import enter_batch_mode
+
 from smoke_playwright import open_task_editor
 
 import argparse
@@ -169,7 +171,7 @@ def verify_selection_protection(page, url):
 
 def verify_batch_protection(page, url):
     prepare_today_plan(page, url)
-    page.locator('#batchModeBtn').click()
+    enter_batch_mode(page)
     selected = task_locator(page, 'Yesterday planned task').locator('.task-select-checkbox')
     selected.check()
     expect(page.locator('#batchSelectionSummary')).to_contain_text('1')

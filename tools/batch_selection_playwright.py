@@ -2,6 +2,10 @@
 """Check batch scope and never let Undo include another window's later writes."""
 from __future__ import annotations
 
+from smoke_playwright import enter_batch_mode
+
+from smoke_playwright import click_batch_action
+
 import argparse
 import json
 from pathlib import Path
@@ -105,11 +109,11 @@ def check_undo_after_remote_commit(browser, url, action):
         baseline = by_name(first)
         install_completion_hold(first)
         if action == 'batch':
-            first.locator('#batchModeBtn').click()
+            enter_batch_mode(first)
             task_locator(first, 'Batch task A').locator('.task-select-checkbox').check()
         first.evaluate('window.holdNextTaskWrite = true')
         if action == 'batch':
-            first.locator('#batchFocusBtn').click()
+            click_batch_action(first, 'focus')
         else:
             task_locator(first, 'Batch task A').locator('[data-action="toggle"]').click()
         first.wait_for_function('window.taskWriteCommitted === true')
@@ -234,7 +238,7 @@ def check_batch_scope(browser, url):
         select_filter(page, 'all')
         baseline = by_name(page)
         expect(page.locator('.task-item')).to_have_count(100)
-        page.locator('#batchModeBtn').click()
+        enter_batch_mode(page)
         expect(page.locator('.task-item')).to_have_count(100)
         assert_selected(page, 0)
         page.locator('#batchSelectVisibleBtn').click()
@@ -252,7 +256,7 @@ def check_batch_scope(browser, url):
         expect(page.locator('.task-select-checkbox:checked')).to_have_count(100)
         assert_selected(page, 240)
         assert task_locator(page, 'Scope task 238').count() == 0
-        page.locator('#batchFocusBtn').click()
+        click_batch_action(page, 'focus')
         expect(page.locator('#undoBtn')).to_be_enabled()
         focused_all = by_name(page)
         focus_date = focused_all['Scope task 238']['focusDate']
@@ -284,7 +288,7 @@ def check_batch_scope(browser, url):
         expect(page.locator('.task-select-checkbox:checked')).to_have_count(0)
         assert_selected(page, 1)
         assert task_locator(page, 'Scope task 238').count() == 0
-        page.locator('#batchFocusBtn').click()
+        click_batch_action(page, 'focus')
         expect(page.locator('#undoBtn')).to_be_enabled()
         focused = by_name(page)
         changed = [name for name in baseline if baseline[name] != focused[name]]
@@ -331,16 +335,18 @@ def check_batch_scope(browser, url):
         context.close()
 
 
-def main(browser_name):
+def main(browser_name, case='all'):
     with local_server() as url, sync_playwright() as p:
         options = browser_launch_options() if browser_name == 'chromium' else {'headless':True}
         browser = getattr(p, browser_name).launch(**options)
         try:
             print(f'Batch/Undo regression: {browser_name} {browser.version}', flush=True)
-            check_undo_after_remote_commit(browser, url, 'batch')
-            check_undo_after_remote_commit(browser, url, 'single')
-            check_delayed_after_snapshot(browser, url)
-            check_batch_scope(browser, url)
+            if case in ('all', 'undo'):
+                check_undo_after_remote_commit(browser, url, 'batch')
+                check_undo_after_remote_commit(browser, url, 'single')
+                check_delayed_after_snapshot(browser, url)
+            if case in ('all', 'scope'):
+                check_batch_scope(browser, url)
         finally:
             browser.close()
 
@@ -348,4 +354,6 @@ def main(browser_name):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--browser', choices=('chromium', 'firefox', 'webkit'), default='chromium')
-    main(parser.parse_args().browser)
+    parser.add_argument('--case', choices=('all', 'undo', 'scope'), default='all')
+    args = parser.parse_args()
+    main(args.browser, args.case)

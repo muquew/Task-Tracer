@@ -2,6 +2,10 @@
 """Atomically reconnect proven repeat links when deleting occurrences."""
 from __future__ import annotations
 
+from smoke_playwright import enter_batch_mode
+
+from smoke_playwright import click_batch_action
+
 from smoke_playwright import open_settings, return_to_task_workspace
 
 import argparse
@@ -27,10 +31,10 @@ def open_delete(page, ids, mode):
         click_task_action(row(page, ids[0]), 'delete')
     elif mode == 'batch':
         if page.locator('#batchModeBtn').get_attribute('aria-pressed') != 'true':
-            page.locator('#batchModeBtn').click()
+            enter_batch_mode(page)
         for identity in ids:
             row(page, identity).locator('.task-select-checkbox').check()
-        page.locator('#batchDeleteBtn').click()
+        click_batch_action(page, 'delete')
     else:
         open_settings(page, 'cleanup')
         page.locator('#clearCompletedBtn').click()

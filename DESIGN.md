@@ -2,8 +2,8 @@
 name: Task Tracer
 description: 层次清晰、便于连续操作的个人任务工作区
 colors:
-  primary: "#5961c6"
-  primary-hover: "#4d55b5"
+  primary: "#5a57c8"
+  primary-hover: "#4b47b3"
   on-primary: "#fff"
   accent: "#2b7367"
   success: "#287d64"
@@ -15,26 +15,26 @@ colors:
   success-surface: "#eaf5f0"
   warning-surface: "#fff0e6"
   danger-surface: "#fceef0"
-  page: "#f3f5fa"
+  page: "#f4f5f9"
   sidebar: "#f0f2f8"
   surface: "#fff"
   surface-alt: "#f7f8fc"
   surface-raised: "#fff"
   hover: "#f0f2fa"
-  active: "#e9ecff"
-  overlay: "rgba(31,38,64,.42)"
-  focus-ring: "rgba(89,97,198,.20)"
+  active: "#eeedff"
+  overlay: "rgba(25,33,58,.32)"
+  focus-ring: "rgba(90,87,200,.22)"
   text: "#263047"
   text-secondary: "#606c84"
   text-tertiary: "#657189"
-  border: "#7a869d"
-  border-light: "#e7eaf2"
+  border: "#7d8aa2"
+  border-light: "#e3e7f0"
   project-purple: "#6d58b3"
   project-ochre: "#805e2b"
   project-ochre-surface: "#faf1df"
-  dark-primary: "#a7afff"
-  dark-primary-hover: "#bbc1ff"
-  dark-on-primary: "#1c2343"
+  dark-primary: "#b8b5ff"
+  dark-primary-hover: "#cbc7ff"
+  dark-on-primary: "#1c2141"
   dark-accent: "#97d4c2"
   dark-success: "#2e8d6f"
   dark-success-text: "#97d4c2"
@@ -45,20 +45,20 @@ colors:
   dark-success-surface: "#2a423e"
   dark-warning-surface: "#44372f"
   dark-danger-surface: "#48303b"
-  dark-page: "#181c29"
+  dark-page: "#151925"
   dark-sidebar: "#1d2232"
-  dark-surface: "#252b3d"
-  dark-surface-alt: "#202637"
-  dark-surface-raised: "#2c344a"
+  dark-surface: "#232b3c"
+  dark-surface-alt: "#1c2332"
+  dark-surface-raised: "#2d374c"
   dark-hover: "#2c344a"
-  dark-active: "#333d66"
-  dark-overlay: "rgba(9,13,24,.68)"
-  dark-focus-ring: "rgba(167,175,255,.22)"
+  dark-active: "#34395f"
+  dark-overlay: "rgba(4,9,19,.59)"
+  dark-focus-ring: "rgba(184,181,255,.25)"
   dark-text: "#edf0fb"
   dark-text-secondary: "#b0bad0"
   dark-text-tertiary: "#a3aec5"
-  dark-border: "#a0adc6"
-  dark-border-light: "#363f55"
+  dark-border: "#7886a1"
+  dark-border-light: "#35415a"
   dark-project-purple: "#c0b0ef"
   dark-project-ochre: "#e7ca95"
   dark-project-ochre-surface: "#443d30"
@@ -139,7 +139,7 @@ components:
     textColor: "{colors.text}"
     rounded: "{rounded.panel}"
   task-menu:
-    backgroundColor: "{colors.surface}"
+    backgroundColor: "{colors.surface-raised}"
     textColor: "{colors.text}"
     padding: "5px"
 ---
@@ -161,11 +161,11 @@ components:
 - 主色用于主要操作与选中状态，功能色帮助理解期限、完成与项目。
 - 浮层有明确层级，键盘焦点与窄屏操作属于同一套组件行为。
 
-本文件的颜色、字体和基础组件数值沿用4.9.0实际应用提取的设计系统，该基线源码SHA-256为 `c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7`。4.10.0在此基础上调整主导航和独立设置工作区，最终源码与验证身份另见[本版记录](docs/releases/4.10.0.md)。数值以本文件frontmatter对应的源码角色为依据；dark-前缀表示暗色主题覆盖值，组件引用默认亮色角色，运行时由源码CSS变量切换。此记录不代表Impeccable引擎或detector已运行。
+布局与组件语言沿用4.9.0设计基线，该历史提取源码SHA-256为 `c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7`；4.10.0导航与设置改造保留在[原版记录](docs/releases/4.10.0.md)。frontmatter现记录4.12.0候选默认Iris强调色的基础角色，dark-前缀表示暗色覆盖；四套强调色与材质规则见下文，运行时以源码CSS变量为准。[4.12.0记录](docs/releases/4.12.0.md)单独跟踪本轮实现与验证。本设计文件不代表Impeccable引擎或detector已运行。
 
 ## Colors
 
-主色为克制的鸢尾紫，灰蓝中性色提供工作区层次，绿、赭与红只承担明确的功能或项目含义。
+默认主色为鸢尾紫；Iris、Ocean、Pine、Berry四套强调色独立于浅色／深色／跟随系统模式，用于主要按钮、选中项和键盘焦点。功能状态与项目色保持自己的含义。frontmatter中的 `accent` 是既有绿色功能角色，用户的强调色偏好由 `data-accent` 覆盖 primary 等角色。
 
 - **Primary：** primary 用于新增任务、选中导航、日期与焦点；primary-hover 为主要按钮悬停色；on-primary 保证主题下的按钮文字关系。
 - **Secondary：** accent、success 与 success-text 支持完成、重复任务等状态；warning 与 danger 系列区分临近期限、逾期和危险操作。状态同时具有文字或图标表达。
@@ -174,6 +174,15 @@ components:
 - **暗色主题：** 使用 dark- 对应角色；完成勾选仍使用实色绿色底与白色勾号，不能把深色主题主按钮的深色文字复用于勾选图标。
 
 **The Semantic Color Rule.** 保留颜色与既有含义的对应关系；日期、状态和项目仍要能通过文字或图标辨认。
+
+| 强调色偏好 | 浅色 primary / hover / on-primary / active | 深色 primary / hover / on-primary / active |
+| --- | --- | --- |
+| Iris／鸢尾紫 | `#5A57C8` / `#4B47B3` / `#FFFFFF` / `#EEEDFF` | `#B8B5FF` / `#CBC7FF` / `#1C2141` / `#34395F` |
+| Ocean／海湾蓝 | `#2563A9` / `#1E518C` / `#FFFFFF` / `#E9F1FB` | `#9CCAFF` / `#BEDCFF` / `#152B43` / `#233E59` |
+| Pine／松柏绿 | `#24715C` / `#1C5E4B` / `#FFFFFF` / `#E6F3EC` | `#8ED9BA` / `#AFF0D1` / `#15352A` / `#23463C` |
+| Berry／莓果红 | `#A94565` / `#913955` / `#FFFFFF` / `#FAECF0` | `#F2AAC2` / `#FFD0DE` / `#402332` / `#543345` |
+
+强调色与亮暗模式均为本地偏好；切换时只应用样式，保留输入、当前任务上下文及离线能力。成功、警告、逾期和危险操作继续使用固定语义色。
 
 ## Typography
 
@@ -191,30 +200,30 @@ components:
 
 工作区标题旁的未来七天索引是日期入口；1000px 及以下改用日期摘要条和日程入口。1179px 及以下主内容回到单列。779px 及以下侧栏改为按钮打开的抽屉，主内容左右边距为 16px；背景主区在抽屉打开时 inert，关闭后回到触发按钮。日程通过原生 dialog 显示，不能把隐藏侧栏或日程继续留在键盘顺序中。
 
-任务表面把工具栏、任务行和快速添加组合为一个连续区域。桌面任务行明确使用 40px / minmax(0, 1fr) / 40px 三列；窄屏使用 36px / minmax(0, 1fr) / 32px。批量模式隐藏完成按钮，主体与菜单改为两列。不要让显式 grid-column 与单列定义产生隐式轨道。
+顶部统一“添加任务”展开快速记录，再通过“更多选项”进入完整表单；内容页保留工具栏与任务行。桌面任务行明确使用 40px / minmax(0, 1fr) / 40px 三列；窄屏使用 36px / minmax(0, 1fr) / 32px。批量模式隐藏完成按钮，主体与菜单改为两列。不要让显式 grid-column 与单列定义产生隐式轨道。
 
 列表、日历、时间线、统计从可折叠工具栏提升为一级导航：桌面位于侧栏，779px及以下位于常驻底栏，图标与文字同时保留。主导航不随搜索／筛选工具折叠，也不在进入设置后失去返回任务的能力。移动内容、回到顶部与更新提示为底栏和安全区留出空间；底栏处于导航抽屉和模态遮罩之下。
 
 窄屏任务工具栏保留可收缩搜索框与保存视图入口，项目、状态、排序、批量与工具栏操作保持紧凑排列，长筛选文字可省略，但选项内容仍完整。600px及以下表单字段、日期时间、统计及导入对比改为单列，批量操作保持两列按钮。640px的局部规则调整清除按钮和筛选菜单对齐；旧快速添加区间规则不构成新的页面布局断点。
 
-“设置与数据”是与任务区并列的独立工作区，使用已有表面、文字、边界和功能色。以清楚的分组标题、说明与操作行组织外观与语言、备份与恢复、提醒与安装、任务清理、帮助与应用信息，不把所有操作平铺成相同的大卡片。返回任务保留原任务区DOM及草稿、搜索、筛选和选择状态。通知与存储故障反馈对两个工作区均可见。
+“设置与数据”是与任务区并列的独立工作区，使用已有表面、文字、边界和功能色。外观与语言、备份与迁移、提醒与安装、任务维护、帮助与关于五个分类选择实际面板，本页内保留当前分类；手机分类导航为可横向滚动的单行。备份、恢复优先，CSV、视图迁移与数据安全归入其他数据工具。返回任务保留原任务区DOM及草稿、搜索、筛选和选择状态。
 
 间距 tokens 记录源码反复使用的实际值，不要求每个组件机械套入等比尺度。
 
 ## Elevation & Depth
 
-深度以表面色差和分隔线为主，阴影只给主要任务表面及浮起的菜单、对话框、通知。单个任务行保持平面，悬停不整体位移或抬升。
+深度以表面色差和分隔线为主，任务内容与表单保持稳定可读的实色底。玻璃仅用于顶栏、快速记录层与手机底栏等需要交代遮挡关系的界面层；单个任务行保持平面，悬停不整体位移或抬升。
 
 - **任务表面：** 使用 workspace-shadow 的双层轻阴影；亮暗主题采用各自的阴影颜色。
-- **菜单：** 任务操作菜单沿用0 12px 32px的浮层阴影；全局设置使用独立工作区表面，不再以顶部总菜单承载完整设置路径。
-- **对话框：** 使用 0 24px 90px 的较深阴影；遮罩由实际 modal 状态统一承载。
-- **焦点：** 通用键盘焦点为主色 2px 轮廓、偏移 2px；常用操作控件另有 4px focus-ring。文本字段聚焦时改变边框、表面并加 3px 信息色环。
+- **菜单：** 任务操作、下拉、自定义选择与命令面板使用 surface-raised，与母表面形成明确层次；亮色菜单阴影为 0 12px 32px 加较轻的第二层，暗色使用独立阴影。全局设置使用独立工作区。
+- **对话框：** 使用 surface-raised 与 0 24px 70px 阴影。模态、抽屉与原生日程dialog使用统一语义的scrim，背景模糊5px；日程dialog不再叠一层页面遮罩。玻璃层模糊12px，不支持模糊或偏好降低透明度时使用实色回退。
+- **焦点：** 每个控件只保留一个清晰的主色2px轮廓、偏移2px，不叠加光环与第二道强调色描边。快速记录只在输入包裹层显示焦点轮廓，内部input不重复描边；菜单定位不因焦点变化跳动。
 
 实际阴影、遮罩、焦点色与动效值保存在 sidecar 的组件 CSS 或 extensions 中，不增加 frontmatter 未支持的 token 组。
 
 ## Shapes
 
-控件以 control 圆角为基础；导航略柔和，主要任务表面与桌面对话框使用 panel 圆角。窄屏任务表面为 surface 圆角，对话框为 14px。标签小圆角，完成框更紧凑，日程点为圆形。圆角表达容器层次，不给每一任务行单独增加外框。
+控件以 control 圆角为基础；导航略柔和，主要任务表面与桌面对话框使用 panel 圆角。窄屏任务表面为 surface 圆角，对话框为14px。圆形用于任务完成、关闭等独立动作，方形用于批量选择；标签保持小圆角，日程点为圆形。形状表达操作与容器角色，不给每一任务行单独增加外框。
 
 图标采用当前应用的 Tabler 线性 SVG：标准图标 18px，圆端、圆连接、2px 描边；紧凑工具按实际尺寸缩至 14px。图标跟随文字色，纯图标按钮必须保留可访问名称。
 
@@ -224,7 +233,7 @@ components:
 
 主按钮使用主色与 on-primary，基础最小高度 40px；次按钮使用次表面，图标按钮使用透明底。悬停改变表面或颜色，不平移。禁用态降低不透明度至 0.56 并保留真实 disabled。侧栏导航最小高度 42px，当前范围以 active 底色、主色文字和选中语义共同表达。
 
-顶栏保留语言、外观、常驻撤销与设置入口，侧栏也提供明确的设置入口。语言为“简体中文 / English”原生select；界面文字、可访问名称、日期格式和单复数跟随当前语言，用户内容保持原文。外观为“浅色 / 深色 / 跟随系统”，缺省为系统；系统模式响应系统变化与其他窗口的偏好变化，显式选择保持不变。设置页与顶栏的偏好控件使用同一份真实状态，主题切换只应用样式，不重建当前表单。
+顶栏保留统一添加、可用时显示的撤销与设置入口，侧栏也提供设置入口。语言、浅色／深色／跟随系统及四种强调色控件只在“外观与语言”；界面文字、可访问名称、日期格式和单复数跟随语言，用户内容保持原文。系统模式响应系统变化与其他窗口偏好，显式选择保持不变；偏好切换只应用样式，不重建当前表单。
 
 四视图是原生导航按钮，当前任务视图以可见选中样式及 `aria-current="page"` 共同表达；任务内容使用有名称的region。进入设置时不保留一个指向隐藏任务内容的选中tab。设置不占用四视图的持久化字段，不改变保存视图格式。
 
@@ -236,7 +245,7 @@ components:
 
 ### Task rows and chips
 
-完成按钮的点击区域为桌面 40px，内部完成框为 20px；选中后绿底白勾。子任务使用 18px 完成框并保留可见勾号。任务标题、元信息、描述与子任务在中间列自然展开；日期保持文字形态，项目与重复用浅底标签，普通标签使用次表面。完成与归档行不通过整体透明度削弱文字。
+任务完成按钮的点击区域为桌面40px，内部20px圆形控件选中后绿底白勾；批量选择保持方形，子任务18px控件保留独立完成状态与可见勾号。任务标题、元信息、描述与子任务在中间列自然展开；日期保持文字形态，项目与重复用浅底标签，普通标签使用次表面。完成与归档行不通过整体透明度削弱文字。
 
 任务更多菜单包含真实操作；首开先同步测量和定位，在视口边缘向上或向内调整。菜单明确使用 transition: none，不能给 top、left、max-height 或所有属性增加 transition，以免首次定位滑过画面或产生错误几何测量。方向键与 Home/End 移动项目，Escape 关闭并返回触发按钮。
 
@@ -244,9 +253,9 @@ components:
 
 小日历与七天索引共用项目色：今日描边、选中日主色底、任务日期有点标记。小日历支持日期方向键；窄屏日程 dialog 关闭后还原日历位置并恢复焦点。主要任务编辑器、确认框和命令面板保持独立滚动与焦点管理。
 
-通知使用内容表面与功能色图标。桌面通知位于左下方，窄屏在内容流中，打开对话框时移到上方固定位置。常驻撤销只有顶栏入口；一次操作后的短时通知可提供上下文撤销，footer 不增加常驻副本。
+反馈使用内容表面与对应语义图标，成功／信息为status，警告／错误为alert。弹窗内发生的反馈进入当前弹窗的流内区域，标题与关闭控件保持可见；打开新弹窗先结束旧反馈上下文。任务操作反馈可在应用反馈层提供短时撤销；常驻撤销仍由顶栏按可用状态显示。
 
-动效服务于操作反馈：常用颜色与表面变化使用 motion-fast（150ms ease），主题颜色变化使用 180ms ease；菜单和对话框沿用短暂出现动画。prefers-reduced-motion 下动画与 transition 压至 0.01ms，程序滚动使用 auto。任务菜单定位始终不做几何动画。
+动效服务于操作反馈：常用按钮颜色与表面变化使用180ms，按下时可轻移1px；任务行悬停保持原位，菜单定位不做几何动画。对话框使用短暂淡入与8px进入位移。prefers-reduced-motion下关闭按下位移并压低动画与transition时长，程序滚动使用auto。
 
 ## Do's and Don'ts
 
@@ -274,3 +283,10 @@ components:
 - A mobile calendar presents a compact month and readable selected-day agenda; statistics prioritizes scanability instead of stacking desktop-sized cards.
 - Empty states direct the next real action. Batch actions follow selection. Saved-view names outrank condition summaries. Feedback remains visible where the action happened.
 - Evaluate by performing complete user tasks and inspecting actual renders. Protective regression tests follow the experience review; counts are not a proxy for usability.
+
+## Functional completeness — 4.12.0
+
+- 统计优先回答逾期、今天截止、无日期待办三个实际工作问题，零数量入口禁用；保留项目与搜索交集。下钻提供返回来源，用户改范围后清理旧返回上下文。七日回顾使用保留任务的真实完成时间，含已归档完成记录；当前任务详情按需展开。
+- 批量先选择对象，再提供完成与有文字的更多操作。移到项目展示数量、允许已有或新项目并支持撤销；单条与批量归档规则一致。重复后继不继承上一期手动今日计划，稍后提醒持续呈现时间和通知状态。
+- 相同条件的保存视图明确使用更新标题、已有名称与更新动作。导入方式、实际新增／跳过／替换／保留及结果数量随选择同步；替换前下载快照，恢复显示当前→目标对照。任务维护先展示整个工作区符合条件的数量，零数量禁用。
+- 成功反馈不能代替持久状态，数字不能代替范围说明。危险操作具名，确认动作描述实际影响；普通成功、警告与错误使用各自图标和可访问语义。

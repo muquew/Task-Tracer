@@ -24,6 +24,8 @@ Task Tracer is a personal task manager that runs in the browser and keeps task d
 
 The continuing development goal, acceptance criteria and current work queue are recorded in [GOAL.md](./GOAL.md).
 
+The current candidate is **[4.12.0](./docs/releases/4.12.0.md)**, refining actionable statistics, task organization and interface materials. The [product review](./docs/product-review-4.12.0.md) explains these choices; validation and publication status are recorded separately in the release record.
+
 **[4.11.1](./docs/releases/4.11.1.md)** reorganizes capture, task editing, mobile views, settings and data tools after a hands-on whole-site review. See the [before-and-after review](./docs/acceptance/2026-10-25/usability-4.11.0/README.md).
 
 The [4.10.0 baseline](./docs/releases/4.10.0.md) preserves its full engineering results, the single test-navigation recheck and the production language issue repaired by 4.10.1. Earlier [4.9.0](./docs/releases/4.9.0.md) results keep their original identity.
@@ -40,7 +42,7 @@ PWA means Progressive Web App: when the browser supports it, Task Tracer can be 
 | Work through today | Today's plan, task actions, snooze, skip repeat occurrence, complete/archive/delete, and undo. |
 | Manage routines | Daily, weekly, selected weekdays, monthly, last-day-of-month, and custom-day recurrence; repeat rules can be paused. |
 | Notice what matters | Reminder offsets, repeat reminders, snooze, missed-reminder notices, and browser limitation guidance. |
-| Review progress | Completion rate, active overdue rate, archive count, today completions, completion streak, and recent completion trend. |
+| Review progress | Overdue/due-today/undated task entries, seven-day completion bars including retained archived completions, project to-dos, and expandable current-task metrics. |
 | Protect local data | Export/backup, backup health, import preview, merge/replace conflict handling, checksum checks, pre-replace snapshots, and emergency backup when storage is blocked. |
 
 ## Workspace controls
@@ -49,11 +51,11 @@ The workspace keeps projects and saved views in the sidebar, with a focused task
 
 - Choose **Add task** in the top bar to open Quick capture, then review the parsed deadline, project and tags before adding. **More options** carries the entered text into the full form for a description and subtasks; expand **More settings** for tags, reminders and recurrence.
 - Open **Settings & data** from the header or sidebar, or press `Ctrl/Cmd + M`. Choose one of five category panels: **Appearance & language**, **Backups & transfer**, **Reminders & installation**, **Task maintenance**, or **Help & about**. The selected category is retained while the page stays open; **Back to tasks** returns to your current view, search, filters and Quick capture text.
-- Language and appearance controls are in **Settings & data → Appearance & language**. Choose Chinese or English and **Light**, **Dark** or **System**. System follows the operating system's appearance; a manual choice stays selected when the system changes. Task names, projects, tags and other user content keep their original text.
+- Language and appearance controls are in **Settings & data → Appearance & language**. Choose Chinese or English, **Light**, **Dark** or **System**, and an independent **Accent colour**: **Iris**, **Ocean**, **Pine** or **Berry**. System follows the operating system’s appearance; a manual choice stays selected when the system changes. These local preferences preserve current input and task data; user content keeps its original text.
 - Mark a task complete with its leading completion control. Open its **Task actions** menu for editing and the other actions available for that task, such as adding it to today's plan, snoozing, skipping a repeat occurrence, archiving or deleting.
 - **Today's plan** is a manually chosen working set. **Due today** and the deadline overview reflect saved task dates; a task due today is not automatically added to the plan.
 
-The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.11.0 release record](./docs/releases/4.11.0.md) describes the whole-site usability changes.
+The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.12.0 record](./docs/releases/4.12.0.md) tracks this candidate’s changes and release status.
 
 ## Getting Started
 
@@ -122,7 +124,7 @@ Search matches task names, descriptions, projects, tags, and subtask text. Scope
 | `due:no-deadline` | Tasks without a due date. |
 | `project:Work tag:report` | Tasks matching both scopes. |
 
-Saved views store the current search, project filter, status filter, sort mode, and view. They are useful for repeatable contexts such as overdue work, weekly study, or a project-specific calendar. Up to 12 distinct views can be saved. At that limit, adding another is refused without removing an existing view, and the name draft stays available. Saving an already matching search/filter/layout updates that view in place; remove a view first if you need a new distinct one.
+Saved views store the current search, project filter, status filter, sort mode, and view. They are useful for repeatable contexts such as overdue work, weekly study, or a project-specific calendar. Up to 12 distinct views can be saved. At that limit, adding another is refused without removing an existing view, and the name draft stays available. Matching conditions open **Update saved view** with the existing name pre-filled; **Update view** keeps the same shortcut. Remove a view first if you need a new distinct one at capacity.
 
 The saved view's delete control opens a confirmation naming the view, with Cancel focused. Only explicit deletion removes that view; tasks stay unchanged. View deletion cannot be undone, so export a views file first if you need a copy.
 
@@ -139,15 +141,19 @@ View import adds distinct search/filter/layout combinations, keeps existing view
 | List | Daily execution with task actions, subtasks, deadlines, reminders, archive controls, batch actions, and manual ordering. |
 | Calendar | Month planning with a real calendar grid, month/year navigation, today jump, date details, and no-date grouping. |
 | Timeline | Chronological scanning across upcoming work and completed history. |
-| Statistics | Personal feedback on completion, active overdue tasks, archived history, today completions, streak, and recent trend. |
+| Statistics | Open overdue, due-today or undated to-dos; review seven-day completions and project workload, with current-task metrics available on demand. |
+
+Statistics follows the current project and search, including explicit search qualifiers, independently of the task-status dropdown. The three workload entries open matching tasks and are disabled at zero; project rows open that project’s to-dos. **Back to statistics** restores the source view after drilling down. Manually changing task scope clears that return context.
+
+The dated seven-day bars, completed-today count and streak use retained tasks with saved completion dates, including archived completions. Archiving completed work therefore keeps it in the review. **Current task summary** is expandable: its task count and completion rate exclude archived tasks, and it lists archives separately. These metrics describe saved tasks rather than productivity over a historical period.
 
 ## Today's plan, batch actions, and Undo
 
-Today's plan is a lightweight execution layer. Adding a task to it does not change its project, tags, due date, archive state, or recurrence rule; it only marks the task as part of today's working set.
+Today's plan is a lightweight execution layer. Adding a task to it does not change its project, tags, due date, archive state, or recurrence rule; it only marks the task as part of today's working set. A newly generated repeat occurrence does not inherit the prior occurrence’s manual plan selection.
 
-Batch Actions mode initially renders 100 matching tasks with selection controls and Show more. **Select all matching** selects the entire current search/project/status result, including unloaded pages; selected tasks can be added to today's plan, completed, archived or deleted together. Changing that range drops selections outside it. Pagination also applies to batch timeline/calendar sections and any batch sort; non-batch manual ordering retains full rendering.
+Batch Actions mode initially renders 100 matching tasks with selection controls and Show more. **Select all matching** selects the entire current search/project/status result, including unloaded pages; selected tasks can be added to today’s plan, completed, archived or deleted together. **More actions → Move to project** shows the selection count and accepts an existing or new project name; the move supports Undo. Single-task and batch archiving both accept unfinished, unarchived tasks and preserve completion state. Changing the range drops selections outside it. Pagination also applies to batch timeline/calendar sections and any batch sort; non-batch manual ordering retains full rendering.
 
-**Archive completed** and **Delete completed** in **Settings & data → Task maintenance** apply to completed, unarchived tasks across the entire workspace, regardless of the current project, search or filter. Review the confirmation before proceeding. Use batch actions when you need to choose a particular matching set.
+**Archive completed** and **Delete completed** in **Settings & data → Task maintenance** apply to completed, unarchived tasks across the entire workspace, regardless of the current project, search or filter. The eligible count is shown before acting, and both controls are disabled at zero. Review the confirmation before proceeding. Use batch actions when you need to choose a particular matching set.
 
 Undo reverts the most recent task change while its task state is still current. A newer concurrent task change can withhold or invalidate that Undo, preserving the newer data; review the current tasks and start a fresh action. Use the header button, command palette, or `Ctrl/Cmd + Z` when focus is not inside a text field.
 
@@ -169,6 +175,8 @@ Relative-date search, today's plan, overdue membership and statistics are recons
 
 Browser notifications are available when the browser supports them and permission is granted. Task Tracer can check reminders while the app is open, repeat reminders at the chosen interval, snooze a reminder, and show missed reminders when the app runs again.
 
+Snoozing persists the next reminder time, which remains visible on the task. **Notifications are off** is shown when permission or the application setting prevents notification delivery. Scheduling a reminder does not enable notifications or guarantee delivery after the app closes.
+
 Browser reminders are not guaranteed system alarms. Delivery can depend on browser policy, operating system behavior, battery settings, tab lifecycle, and whether the app is opened or woken by the browser.
 
 ## Import, Export, and Backup
@@ -177,9 +185,11 @@ Browser reminders are not guaranteed system alarms. Delivery can depend on brows
 
 The backup indicator compares the recorded export snapshot with current tasks. Task changes require another export; older date-only export history has unknown coverage rather than establishing that current tasks were exported. A fresh export also does not prove that you kept its file. Task JSON and CSV exports read their task data from a single read-only snapshot without refreshing the current task view. The browser-local backup coverage record refers to the exported task revision and date; it is not an extra field in the task JSON. CSV does not count as a restorable task backup. The optional startup backup reminder skips an open dialog or existing notification; **Settings & data → Backups & transfer** still shows backup status.
 
-`Import` first shows a cancellable file-reading dialog, then previews the task JSON before writing it. Cancelling a read or choosing a newer file prevents an earlier read from replacing your current form or preview. The preview shows restore checks, task counts, differences, repeated IDs, duplicate names, current-data impact, checksum status, and same-name conflict choices.
+`Import` first shows a cancellable file-reading dialog, then previews the task JSON before writing it. Cancelling a read or choosing a newer file prevents an earlier read from replacing your current form or preview. Choose **Merge** or **Replace** and review the actual outcome: additions, local replacements, skipped entries, retained tasks and resulting total for merge; current-to-file task counts for replacement. Counts and the action label update with the mode and conflict choices. Passed file checks and change details can be expanded.
 
 Same-name conflict controls appear when merge mode is enabled, initially showing 100 rows with **Show more**. The bulk action applies **Keep both**, **Skip import**, or **Replace local** to all matching names, including rows not shown yet. Changing that action resets individual choices; you can then adjust specific rows. Switching merge mode off and on preserves those choices until you change the bulk action.
+
+Merging changes first preserves the current tasks as a local recovery point. Recovery points share browser storage with tasks; keep a downloaded JSON backup outside the browser.
 
 Replace import downloads a pre-import snapshot before overwriting existing tasks. If the checksum fails, replace import requires an explicit risk confirmation; merge mode remains available for safer recovery. A background task refresh makes an open preview stale: the app rebuilds it and resets earlier safety approvals. Review it again and, for replacement, download a fresh snapshot before confirming. If a database conflict closes the preview instead, reopen the file to start a new review.
 
@@ -191,7 +201,7 @@ Choose **Export all tasks as CSV** under **Settings & data → Backups & transfe
 
 ## Recovery History and Multiple Tabs
 
-Open **Settings & data → Backups & transfer → Recovery history**, choose a checkpoint by date and task count, and review its task names and statuses. The preview uses its own scroll area, starts with 100 rows and offers Show more; it keeps full task/completed/archived counts. Changing the checkpoint resets the preview and replacement confirmation. To restore, tick the confirmation and confirm; this replaces the current task list.
+Open **Settings & data → Backups & transfer → Recovery history**, choose a checkpoint and compare the current and target task counts before reviewing task names and statuses. The preview uses its own scroll area, starts with 100 rows and offers Show more; it keeps full task/completed/archived counts. Changing the checkpoint resets the preview and replacement confirmation. The restore action names its target count; ticking and confirming replaces the current task list.
 
 **Export this recovery point** downloads that checkpoint as an importable task JSON 2.4 file, including empty checkpoints, without changing current-task backup coverage. Inspect and retain the actual file. **Clear recovery history** asks for a separate confirmation and removes only stored local checkpoints. If history changed in another window, review the refreshed list and confirm again. Current tasks, views, settings, downloaded files and Undo stay unchanged; a later task write creates new checkpoints.
 
@@ -253,7 +263,7 @@ The application needs no build step. For pinned browser-test dependencies, valid
 python3 tools/check.py --static-only
 ```
 
-The current [4.10.0 candidate](./docs/releases/4.10.0.md) has its own acceptance queue. Its results are pending; the following completed records belong to their named historical releases.
+Current-candidate validation is tracked in the [4.12.0 record](./docs/releases/4.12.0.md). The following completed records belong to their named historical releases.
 
 The [4.9.0 release](./docs/releases/4.9.0.md) delivers the redesigned workspace, direct language selection, Light/Dark/System preferences and revised bilingual copy. Clean application commit `e7d58e2` freezes 23 source and 70 verification inputs. The full 59-program checker passed, with program durations totaling 1645.602 seconds; Chromium 154.0.8037.57, Firefox 153.0 and WebKit 26.5 each passed all 32 registered matrix programs. Two independent builds produced the same 797,361-byte, 24-file ZIP, SHA-256 `197bc587145d65f986320ce4b69bd0a2937ce8d48ca3ceb3183a49dfc8849b7b`, with `working_tree_dirty=false`. Actual 4.8.6-archive upgrade/rollback/re-upgrade and an additional 10,000-task/six-subtask full-workspace correctness exercise passed. The [input and artifact record](./docs/releases/inputs-4.9.0.json) binds these results to the frozen candidate; program viewport scopes and live-CDP exclusions remain explicit.
 
