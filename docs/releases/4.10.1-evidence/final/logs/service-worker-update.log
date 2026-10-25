@@ -1,0 +1,7 @@
+PASS: synthetic legacy HTML fixture + verbatim 4.6 networkFirst worker; new HTML + language/SW 503 stays usable after physical offline reload
+PASS: unavailable worker/languages cannot replace an installed complete bundle; physical offline reload works
+PASS: failed candidate precache is discarded while the previous full bundle remains usable offline
+PASS: HTTP-200 old HTML mixed with new worker/resources cannot install an inconsistent bundle
+PASS: TCP connection loss during a required install asset preserves the full previous bundle offline
+PASS: healthy update retains exact old-language URLs and protects known/unknown old clients from background shell fetches
+PASS: active cleanup protects an installing bundle, cleans unused old bundles, and preserves unrelated caches/data offline

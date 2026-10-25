@@ -6,6 +6,10 @@ The continuing objective is a dependable commercial product: a complete everyday
 
 This is an implementation roadmap, not a statement that the product is ready for paid distribution. The current [LICENSE](../LICENSE) permits personal non-commercial use; muquew has confirmed ownership and can grant separate commercial rights while retaining that public license. Pricing, actual issued commercial terms, purchase delivery and support terms still need to be defined before selling. See [the commercial offering plan](commercial-plan.md). The [4.8.5 engineering-candidate launch/delivery draft](commercial-launch-draft.md) separates current GOAL acceptance work from historical completed runs and keeps pricing, license and support choices explicit.
 
+## Released 4.10.1 navigation and settings
+
+[4.10.1](releases/4.10.1.md) completes persistent labeled List/Calendar/Timeline/Statistics navigation, a dedicated Settings and data workspace, and cross-feature copy/component checks. Forms, batch selection, backup/import/recovery, reminders, help, keyboard behavior and data formats remain available. Production review found one dynamic backup-status translation omission after 4.10.0; 4.10.1 fixes same-screen language changes and rollback, with exact empty/current-backup regressions. The [acceptance record](acceptance/2026-10-25/publication-4.10.1.json) keeps the full 4.10.0 baseline and bounded 28-program patch validation separate, including the original test-navigation failure and actual-domain language regression.
+
 ## Released 4.9.0 workspace redesign
 
 The [4.9.0 release](releases/4.9.0.md) completes the language, appearance and workspace redesign on top of the published [4.8.6 baseline](releases/4.8.6.md). Layered surfaces, consistent controls and functional color support project/saved-view navigation, date context and responsive controls. Language and Light/Dark/System preferences have stable top-bar entries; secondary task operations use an accessible menu. The [design rules](../DESIGN.md) record the principles for future changes.

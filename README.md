@@ -24,9 +24,9 @@ Task Tracer is a personal task manager that runs in the browser and keeps task d
 
 The continuing development goal, acceptance criteria and current work queue are recorded in [GOAL.md](./GOAL.md).
 
-The latest published release is **[4.9.0](./docs/releases/4.9.0.md)**. Its workspace redesign, local validation, GitHub publication and real-domain acceptance are complete. The [publication record](./docs/acceptance/2026-10-25/publication-4.9.0.json) states the tested scope and limitations; earlier release results retain their own version identities.
+The latest published release is **[4.10.1](./docs/releases/4.10.1.md)**. Permanent view navigation and a dedicated Settings and data workspace are live, including backup status that follows language changes on the same screen. [Acceptance records](./docs/acceptance/2026-10-25/publication-4.10.1.json) retain the exact local and real-domain scope.
 
-The current **[4.10.0 candidate](./docs/releases/4.10.0.md)** makes all four views permanently visible and gives Settings and data its own workspace. Its validation and publication results will be recorded separately from 4.9.0.
+The [4.10.0 baseline](./docs/releases/4.10.0.md) preserves its full engineering results, the single test-navigation recheck and the production language issue repaired by 4.10.1. Earlier [4.9.0](./docs/releases/4.9.0.md) results keep their original identity.
 
 PWA means Progressive Web App: when the browser supports it, Task Tracer can be installed, opened from the operating system like an app, and loaded offline after the app shell has been cached.
 
@@ -43,7 +43,7 @@ PWA means Progressive Web App: when the browser supports it, Task Tracer can be 
 | Review progress | Completion rate, active overdue rate, archive count, today completions, completion streak, and recent completion trend. |
 | Protect local data | Export/backup, backup health, import preview, merge/replace conflict handling, checksum checks, pre-replace snapshots, and emergency backup when storage is blocked. |
 
-## Workspace controls in 4.10.0
+## Workspace controls in 4.10.1
 
 The workspace keeps projects and saved views in the sidebar, with a focused task area and a separate deadline overview. **List**, **Calendar**, **Timeline**, and **Statistics** have permanent, labeled navigation in the desktop sidebar and the narrow-screen bottom bar. Collapsing search and filters keeps those four entries available. On narrow screens, **Open navigation** reveals project navigation, and **Show schedule** opens the compact calendar. The date index and small calendar open the existing calendar/date-detail view; they do not change task deadlines.
 
@@ -53,7 +53,7 @@ The workspace keeps projects and saved views in the sidebar, with a focused task
 - Mark a task complete with its leading completion control. Open its **Task actions** menu for editing and the other actions available for that task, such as adding it to today's plan, snoozing, skipping a repeat occurrence, archiving or deleting.
 - **Today's plan** is a manually chosen working set. **Due today** and the deadline overview reflect saved task dates; a task due today is not automatically added to the plan.
 
-The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.10.0 candidate record](./docs/releases/4.10.0.md) tracks the current implementation and its pending acceptance.
+The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.10.1 release record](./docs/releases/4.10.1.md) documents the implementation and completed acceptance.
 
 ## Getting Started
 

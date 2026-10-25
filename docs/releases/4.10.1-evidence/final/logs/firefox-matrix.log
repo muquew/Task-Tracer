@@ -1,0 +1,13 @@
+firefox 153.0: starting 6 registered programs
+Running firefox: compatibility_playwright.py
+firefox: compatibility_playwright.py exited 0 in 28.021s (/tmp/task-tracer-4.10.1-final-q0tz9zjj/reports/firefox-matrix-logs/e7c6be79-690c-4641-bcd3-9f69a9fb4ac7/firefox-compatibility_playwright.log)
+Running firefox: appearance_preferences_playwright.py
+firefox: appearance_preferences_playwright.py exited 0 in 71.636s (/tmp/task-tracer-4.10.1-final-q0tz9zjj/reports/firefox-matrix-logs/e7c6be79-690c-4641-bcd3-9f69a9fb4ac7/firefox-appearance_preferences_playwright.log)
+Running firefox: settings_navigation_playwright.py
+firefox: settings_navigation_playwright.py exited 0 in 48.680s (/tmp/task-tracer-4.10.1-final-q0tz9zjj/reports/firefox-matrix-logs/e7c6be79-690c-4641-bcd3-9f69a9fb4ac7/firefox-settings_navigation_playwright.log)
+Running firefox: backup_freshness_playwright.py
+firefox: backup_freshness_playwright.py exited 0 in 14.164s (/tmp/task-tracer-4.10.1-final-q0tz9zjj/reports/firefox-matrix-logs/e7c6be79-690c-4641-bcd3-9f69a9fb4ac7/firefox-backup_freshness_playwright.log)
+Running firefox: backup_reminder_priority_playwright.py
+firefox: backup_reminder_priority_playwright.py exited 0 in 8.645s (/tmp/task-tracer-4.10.1-final-q0tz9zjj/reports/firefox-matrix-logs/e7c6be79-690c-4641-bcd3-9f69a9fb4ac7/firefox-backup_reminder_priority_playwright.log)
+Running firefox: task_draft_playwright.py
+firefox: task_draft_playwright.py exited 0 in 37.946s (/tmp/task-tracer-4.10.1-final-q0tz9zjj/reports/firefox-matrix-logs/e7c6be79-690c-4641-bcd3-9f69a9fb4ac7/firefox-task_draft_playwright.log)

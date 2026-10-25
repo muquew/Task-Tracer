@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "version": "4.10.1",
+  "recorded_at": "2026-10-25T11:41:44.510265+00:00",
+  "application_commit": "39c3411685fe8ac037c8206ce7b561e3003bd4c1",
+  "published_application_head": "39c3411685fe8ac037c8206ce7b561e3003bd4c1",
+  "site": "https://todo.muquew.com/",
+  "source": "83d9239bf593fcb97da0047a924ffd43b418284e03881a59fc9a0d55c71743e3",
+  "verification": "9095dd17aed33c6359e4b709212e0dfcd466159b1dc854d182a83dc6bfcdfac8",
+  "scope": {
+    "patch_static_programs": 7,
+    "patch_browser_programs_per_engine": 6,
+    "patch_browser_engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "patch_browser_programs_total": 18,
+    "patch_standalone_programs": 2,
+    "actual_previous_zip_upgrade_programs": 1,
+    "total_patch_program_executions": 28,
+    "baseline": "4.10.0: 59 unchanged native passes plus one complete workspace test-navigation recheck; Firefox/WebKit33 each and Chromium33 included in native run. No claim of a new full60/33 run on4.10.1."
+  },
+  "artifact": {
+    "filename": "task-tracer-4.10.1.zip",
+    "bytes": 802026,
+    "sha256": "170077129b8c6882b530f101480895ab5e99c0e760fdf31df61363c41046d358",
+    "file_count": 24,
+    "manifest_commit": "39c3411685fe8ac037c8206ce7b561e3003bd4c1",
+    "working_tree_dirty": false,
+    "double_build_identical": true
+  },
+  "engineering": {
+    "file": "docs/releases/4.10.1-evidence/final/final-evidence.json",
+    "sha256": "9acea6e9d253682b58a02278f5bbf0669ec273409d91af0d0e005647ffaf5e0a"
+  },
+  "production_static": {
+    "file": "docs/releases/4.10.1-evidence/final/production-static-19.json",
+    "sha256": "3ec3130fa307a4c7502194f8b3cf97e9c4a53b80c3d84520c76d8cab07a3e733"
+  },
+  "production_browser": {
+    "file": "docs/releases/4.10.1-evidence/final/production-browser/report.json",
+    "sha256": "45323c69db0d155b6b35f2ba580ecbdf215b765068f7be1f1989df971627e6b3"
+  },
+  "production_visual_review": {
+    "file": "docs/releases/4.10.1-evidence/final/production-browser/visual-review.json",
+    "sha256": "d74ab95504151892473e09dbbfc0ca70f0d9e7819fd138674bce79ea2f752315"
+  },
+  "runtime": {
+    "checks": 6,
+    "screenshots": 3,
+    "downloads": 1,
+    "page_errors": [],
+    "console_errors": [],
+    "request_failures": [],
+    "http_errors": [],
+    "cleanup": {
+      "context_closed": true,
+      "browser_closed": true
+    }
+  },
+  "limitations": [
+    "Linux browser engines and synthetic viewports; not physical devices or Safari/iOS.",
+    "Remote CI and Vercel control-plane metadata not queried; actual domain bytes/headers and browser flows were verified.",
+    "4.10.0 production language regression retained unchanged and repaired by this patch."
+  ]
+}

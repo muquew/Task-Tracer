@@ -1,5 +1,11 @@
 # Browser compatibility evidence
 
+## Current 4.10.1 scope
+
+[4.10.1](releases/4.10.1.md) passed seven static programs, six affected registered programs in each of Chromium 154.0.8037.57, Firefox 153.0 and WebKit 26.5, plus service-worker update, extracted distribution/offline and actual 4.10.0 ZIP upgrade/rollback/re-upgrade: 28 new program executions. [The patch evidence](releases/4.10.1-evidence/final/final-evidence.json) explicitly retains the selected 6/33 scope. It inherits the [4.10.0 engineering baseline](releases/4.10.0.md): 59 unchanged native passes plus one complete workspace-navigation recheck, with Firefox/WebKit 33 each and Chromium 33 included in the native checker. Those are separate version identities. Real-domain byte/header and Chromium workflow results are recorded in [publication acceptance](acceptance/2026-10-25/publication-4.10.1.json). Linux engines and synthetic viewports do not establish physical-device or Safari/iOS acceptance.
+
+## Historical evidence
+
 The integrated 4.8.5 matrix passed all 31 registered programs in Chromium, Firefox and WebKit, for 93 program executions against the same frozen candidate. The results below support queue 3 in [GOAL.md](../GOAL.md). Only the core compatibility program repeats its scenarios at both required viewports; four Firefox/WebKit engine/program live-CDP coverage groups remain explicitly `not_run`. The completed [4.8.4 record](releases/4.8.4.md) retains its separate historical scope.
 
 `tools/browser_matrix.py` runs an explicit registry of browser-parameterized programs used by the CI compatibility job. The selected report records the actual registry count and program list; newly integrated workflow regressions join that registry. The driver does not install browsers or fetch dependencies. Follow [CONTRIBUTING.md](../CONTRIBUTING.md) and, for the prepared cloud machine, [the runtime notes](cloud-browser-runtime.md).

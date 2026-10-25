@@ -1,0 +1,9 @@
+Appearance preferences passed: fresh-light; browser=chromium
+Appearance preferences passed: fresh-dark; browser=chromium
+Appearance preferences passed: legacy-light; browser=chromium
+Appearance preferences passed: legacy-dark; browser=chromium
+Appearance preferences passed: preferences-desktop; browser=chromium
+Appearance preferences passed: preferences-mobile; browser=chromium
+Appearance preferences passed: draft-os-change; browser=chromium
+Appearance preferences passed: draft-storage-sync; browser=chromium
+{"browser_engine": "chromium", "passed": true, "cases": 8, "report": "/tmp/task-tracer-appearance-chromium-3fbxj8o3/report.json"}

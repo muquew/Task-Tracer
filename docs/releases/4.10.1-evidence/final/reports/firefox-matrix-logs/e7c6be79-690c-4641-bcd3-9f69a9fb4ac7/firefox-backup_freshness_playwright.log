@@ -1,0 +1,8 @@
+Backup freshness firefox: 153.0
+Backup coverage passed: edit, deletion to empty and Undo stay due until a new task backup
+Backup coverage passed: CSV and saved-view exports do not reset task-backup coverage
+Backup coverage passed: legacy timestamps and mismatched date/revision records cannot claim current coverage
+Backup coverage passed: stale-window menu reads current storage, and its export includes the latest task snapshot
+Backup coverage passed: a real download paused across another window write records only its captured revision
+Backup coverage passed: abort metadata failure rolls back both coverage fields after a real download
+Backup coverage passed: quota metadata failure rolls back both coverage fields after a real download

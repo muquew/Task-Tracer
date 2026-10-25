@@ -1,0 +1,49 @@
+{
+  "reviewed_at": "2026-10-25T11:37:34.299894+00:00",
+  "app_version": "4.10.1",
+  "resource_version": "4.38",
+  "run_id": "b1b8ed94-d353-4e8b-8dfe-037087206c91",
+  "application_commit": "39c3411685fe8ac037c8206ce7b561e3003bd4c1",
+  "browser": {
+    "status": "passed",
+    "version": "26.5",
+    "version_source": "Actual probe using the same Playwright launcher and options as the registered programs",
+    "exit_code": 0,
+    "started_at": "2026-10-25T11:33:50.990+00:00",
+    "finished_at": "2026-10-25T11:33:51.799+00:00",
+    "duration_seconds": 0.809,
+    "log": {
+      "path": "/tmp/task-tracer-4.10.1-final-q0tz9zjj/reports/webkit-matrix-logs/b1b8ed94-d353-4e8b-8dfe-037087206c91/webkit-probe.log",
+      "relative_path": "webkit-matrix-logs/b1b8ed94-d353-4e8b-8dfe-037087206c91/webkit-probe.log",
+      "bytes": 159,
+      "sha256": "5dfd915ed3be4dc76a2600b3879e0b42a7365781a67d6e0db7ac4236330bcf75"
+    }
+  },
+  "matrix_report": "/tmp/task-tracer-4.10.1-final-q0tz9zjj/reports/webkit-matrix.json",
+  "matrix_report_sha256": "c6c7e83ee70bd1225952e32f51253ed10b51a1cdbd986161ec63889f66972987",
+  "freeze_sha256": "756c647d8201f6ef6d76274a5bfa887e7087c969374fe1de766b6263d9859de1",
+  "programs_passed": 6,
+  "selected_programs": [
+    "compatibility_playwright.py",
+    "appearance_preferences_playwright.py",
+    "settings_navigation_playwright.py",
+    "backup_freshness_playwright.py",
+    "backup_reminder_priority_playwright.py",
+    "task_draft_playwright.py"
+  ],
+  "registry_program_count": 33,
+  "all_registered_programs": false,
+  "unexecuted_selected_checks": 0,
+  "all_7_log_digests_verified": true,
+  "source_sha256": "83d9239bf593fcb97da0047a924ffd43b418284e03881a59fc9a0d55c71743e3",
+  "verification_sha256": "9095dd17aed33c6359e4b709212e0dfcd466159b1dc854d182a83dc6bfcdfac8",
+  "source_and_verification_match_frozen_start_and_end": true,
+  "repository_clean": true,
+  "remaining_webkit_runner_or_browser_processes": [],
+  "coverage_exceptions": [],
+  "device_scope": "Linux desktop browser engines and synthetic viewports; not real mobile devices or Safari/iOS.",
+  "runtime_note": "WebKit 26.5 executed with the prepared user-space runtime libraries. PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS skips the system ldconfig-cache heuristic only; CSP, TLS and application assertions were not bypassed.",
+  "scope_note": "Six affected 4.10.1 patch workflows passed, not the entire 33-program registry. Both compatibility core viewport flows (1280x800 and 390x844) passed. Live device-timezone CDP workflows were not selected. Linux synthetic viewports do not establish real Safari/iOS or mobile-device acceptance.",
+  "started_at": "2026-10-25T11:33:50.978+00:00",
+  "finished_at": "2026-10-25T11:37:21.354+00:00"
+}
