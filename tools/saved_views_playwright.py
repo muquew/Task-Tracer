@@ -2,6 +2,8 @@
 """Exercise stale-tab saved-view mutations and an aborted configuration write."""
 from __future__ import annotations
 
+from smoke_playwright import return_to_task_workspace
+
 from playwright.sync_api import expect, sync_playwright
 from smoke_playwright import reveal_workspace_control
 from smoke_playwright import (
@@ -29,6 +31,7 @@ def names(page):
 
 
 def start_save(page, name, query):
+    return_to_task_workspace(page)
     page.locator('#searchInput').fill(query)
     page.locator('#saveSmartViewBtn').click()
     expect(page.locator('#taskModal')).to_be_visible()

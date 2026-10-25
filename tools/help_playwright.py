@@ -2,6 +2,8 @@
 """Verify bilingual help, explicit diagnostics export and storage-failure access."""
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 import argparse
 import json
 from pathlib import Path
@@ -116,8 +118,8 @@ def run(engine='chromium'):
                 expect(page.locator('html')).to_have_attribute('lang', language)
                 page.keyboard.press('Escape')
                 translations = json.loads((ROOT / 'resources' / f'{language}.json').read_text())['help']
-                page.locator('#openMenuBtn').click()
-                expect(page.get_by_role('menuitem', name=translations['menu'], exact=True)).to_be_visible()
+                open_settings(page)
+                expect(page.locator('#helpMenuBtn')).to_be_visible()
                 page.locator('#helpMenuBtn').click()
                 expect(page.get_by_role('dialog', name=translations['menu'], exact=True)).to_be_visible()
                 for section in ('capture', 'find', 'backup', 'offline', 'privacy'):
@@ -127,8 +129,9 @@ def run(engine='chromium'):
                 assert_focus_trap(page)
                 page.keyboard.press('Escape')
                 expect(page.locator('#taskModal')).to_be_hidden()
-                expect(page.locator('#openMenuBtn')).to_be_focused()
-                page.get_by_role('button', name=translations['menu'], exact=True).click()
+                expect(page.locator('#helpMenuBtn')).to_be_focused()
+                return_to_task_workspace(page)
+                page.locator('#helpBtn').click()
                 assert page.locator('#helpBtn').is_enabled()
                 report = exercise_diagnostics(page, downloads)
                 assert report['appVersion'] == version
@@ -200,7 +203,8 @@ def run(engine='chromium'):
             expect(page.locator('#helpBtn')).to_be_focused()
             assert snapshot(page) == before_failure, 'Storage-error help changed existing data'
             page.locator('#helpBtn').click()
-            page.locator('#cancelBtn').click()
+            expect(page.locator('#cancelBtn')).to_be_hidden()
+            page.locator('#submitBtn').click()
             expect(page.locator('#taskModal')).to_be_hidden()
             expect(page.locator('#helpBtn')).to_be_focused()
             page.evaluate("sessionStorage.setItem('__helpStorageRecovered', 'yes')")

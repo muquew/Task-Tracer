@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Verify persistence is user-requested, with safe denied/unsupported fallbacks."""
 from __future__ import annotations
+
+from smoke_playwright import open_settings, return_to_task_workspace
 import json
 
 from playwright.sync_api import expect, sync_playwright
@@ -30,7 +32,7 @@ def main() -> None:
             page = context.new_page()
             clear_app_data(page, url)
             add_task(page, 'Protected local task', no_deadline=True)
-            page.locator('#openMenuBtn').click()
+            open_settings(page)
             page.locator('#storageHealthBtn').click()
             expect(page.locator('#storageUsage')).to_contain_text('100')
             assert page.evaluate('window.persistenceRequests') == 0, 'Persistence permission was requested without a user click'
@@ -41,7 +43,7 @@ def main() -> None:
                 assert page.evaluate('window.persistenceRequests') == 1
                 if mode == 'granted':
                     expect(page.locator('#taskModal')).to_be_hidden()
-                    page.locator('#openMenuBtn').click()
+                    open_settings(page)
                     page.locator('#storageHealthBtn').click()
                     expect(page.locator('#submitBtn')).to_be_disabled()
                 else:

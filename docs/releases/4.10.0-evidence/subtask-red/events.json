@@ -1,0 +1,632 @@
+[
+  {
+    "at": 497.30000000074506,
+    "type": "selectionchange",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 13,
+    "end": 13
+  },
+  {
+    "at": 497.80000000074506,
+    "type": "focusin",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 13,
+    "end": 13
+  },
+  {
+    "at": 498.5999999977648,
+    "type": "selectionchange",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 13
+  },
+  {
+    "at": 502.5999999977648,
+    "type": "beforeinput",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 13
+  },
+  {
+    "at": 503.8999999985099,
+    "type": "input",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 503.8999999985099,
+    "type": "selectionchange",
+    "key": null,
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 505.5,
+    "type": "keydown",
+    "key": "Enter",
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 505.5999999977648,
+    "type": "focusout",
+    "key": null,
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 1042,
+    "type": "focusin",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 0
+  },
+  {
+    "at": 1044,
+    "type": "beforeinput",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 13
+  },
+  {
+    "at": 1045.0999999977648,
+    "type": "input",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 1048.699999999255,
+    "type": "keydown",
+    "key": "Enter",
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 1048.800000000745,
+    "type": "focusout",
+    "key": null,
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 1560.300000000745,
+    "type": "focusin",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 0
+  },
+  {
+    "at": 1563.300000000745,
+    "type": "beforeinput",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 13
+  },
+  {
+    "at": 1564.300000000745,
+    "type": "input",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 1566.199999999255,
+    "type": "keydown",
+    "key": "Enter",
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 1566.199999999255,
+    "type": "focusout",
+    "key": null,
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 2040.699999999255,
+    "type": "focusin",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 0
+  },
+  {
+    "at": 2043.5,
+    "type": "beforeinput",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 13
+  },
+  {
+    "at": 2044.3999999985099,
+    "type": "input",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 2047.5,
+    "type": "keydown",
+    "key": "Enter",
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 2047.5,
+    "type": "focusout",
+    "key": null,
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 2527,
+    "type": "focusin",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 0
+  },
+  {
+    "at": 2531,
+    "type": "selectionchange",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 13
+  },
+  {
+    "at": 2531.099999997765,
+    "type": "beforeinput",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 13
+  },
+  {
+    "at": 2532,
+    "type": "input",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 2532.199999999255,
+    "type": "selectionchange",
+    "key": null,
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 2533.39999999851,
+    "type": "keydown",
+    "key": "Enter",
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 2533.39999999851,
+    "type": "focusout",
+    "key": null,
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 3027.5,
+    "type": "focusin",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 0
+  },
+  {
+    "at": 3029,
+    "type": "beforeinput",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 13
+  },
+  {
+    "at": 3029.89999999851,
+    "type": "input",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 3032.800000000745,
+    "type": "keydown",
+    "key": "Enter",
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 3032.800000000745,
+    "type": "focusout",
+    "key": null,
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 3529.199999999255,
+    "type": "focusin",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 0
+  },
+  {
+    "at": 3532.300000000745,
+    "type": "beforeinput",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 13
+  },
+  {
+    "at": 3533.099999997765,
+    "type": "input",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 3533.199999999255,
+    "type": "selectionchange",
+    "key": null,
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 3535.89999999851,
+    "type": "keydown",
+    "key": "Enter",
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 3536,
+    "type": "focusout",
+    "key": null,
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 4008.599999997765,
+    "type": "focusin",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 0
+  },
+  {
+    "at": 4011.199999999255,
+    "type": "beforeinput",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 13
+  },
+  {
+    "at": 4012,
+    "type": "input",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 4014.5,
+    "type": "keydown",
+    "key": "Enter",
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 4014.599999997765,
+    "type": "focusout",
+    "key": null,
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 4493.39999999851,
+    "type": "focusin",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 0
+  },
+  {
+    "at": 4496.5,
+    "type": "beforeinput",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 13
+  },
+  {
+    "at": 4497.300000000745,
+    "type": "input",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 4499.300000000745,
+    "type": "keydown",
+    "key": "Enter",
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 4499.39999999851,
+    "type": "focusout",
+    "key": null,
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 4976.699999999255,
+    "type": "focusin",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 0
+  },
+  {
+    "at": 4977.699999999255,
+    "type": "beforeinput",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 13
+  },
+  {
+    "at": 4978.5,
+    "type": "input",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 4981,
+    "type": "selectionchange",
+    "key": null,
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 4981.099999997765,
+    "type": "keydown",
+    "key": "Enter",
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 4981.099999997765,
+    "type": "focusout",
+    "key": null,
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 5457.099999997765,
+    "type": "focusin",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 0
+  },
+  {
+    "at": 5460.099999997765,
+    "type": "beforeinput",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 13
+  },
+  {
+    "at": 5460.800000000745,
+    "type": "input",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 5463.599999997765,
+    "type": "keydown",
+    "key": "Enter",
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 5463.699999999255,
+    "type": "focusout",
+    "key": null,
+    "inputType": null,
+    "value": "Edited draft subtask",
+    "start": 20,
+    "end": 20
+  },
+  {
+    "at": 5960.89999999851,
+    "type": "focusin",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 0
+  },
+  {
+    "at": 5963.800000000745,
+    "type": "selectionchange",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 0,
+    "end": 13
+  },
+  {
+    "at": 5963.800000000745,
+    "type": "selectionchange",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtask",
+    "start": 13,
+    "end": 13
+  },
+  {
+    "at": 5964,
+    "type": "beforeinput",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Draft subtask",
+    "start": 13,
+    "end": 13
+  },
+  {
+    "at": 5964.5,
+    "type": "input",
+    "key": null,
+    "inputType": "insertText",
+    "value": "Draft subtaskEdited draft subtask",
+    "start": 33,
+    "end": 33
+  },
+  {
+    "at": 5964.800000000745,
+    "type": "selectionchange",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtaskEdited draft subtask",
+    "start": 33,
+    "end": 33
+  },
+  {
+    "at": 5967,
+    "type": "keydown",
+    "key": "Enter",
+    "inputType": null,
+    "value": "Draft subtaskEdited draft subtask",
+    "start": 33,
+    "end": 33
+  },
+  {
+    "at": 5967.099999997765,
+    "type": "focusout",
+    "key": null,
+    "inputType": null,
+    "value": "Draft subtaskEdited draft subtask",
+    "start": 33,
+    "end": 33
+  }
+]

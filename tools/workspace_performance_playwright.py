@@ -2,6 +2,8 @@
 """Measure repeatable full-workspace UI operations with explicit CPU conditions."""
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 import argparse
 from datetime import datetime, timezone
 import hashlib
@@ -160,17 +162,18 @@ def observation(page, session):
 
 
 def export_download(page):
-    page.locator('#openMenuBtn').click()
+    open_settings(page)
     with page.expect_download() as pending:
         page.locator('#backupBtn').click()
     download = pending.value
     path = download.path()
     assert path, 'No completed backup download'
+    return_to_task_workspace(page)
     return Path(path)
 
 
 def replace_from_file(page, path):
-    page.locator('#openMenuBtn').click()
+    open_settings(page)
     with page.expect_file_chooser() as pending:
         page.locator('#importBtn').click()
     pending.value.set_files(path)
@@ -182,6 +185,7 @@ def replace_from_file(page, path):
     assert snapshot, 'Replacement did not produce a completed safety snapshot'
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
+    return_to_task_workspace(page)
     return Path(snapshot)
 
 

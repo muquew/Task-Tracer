@@ -2,6 +2,8 @@
 """Review/export historical tasks and explicitly clear only reviewed recovery points."""
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 import argparse
 import json
 from pathlib import Path
@@ -155,7 +157,7 @@ def preview_and_export(page, url, browser):
     try:
         target = target_context.new_page()
         clear_app_data(target, url)
-        target.locator('#openMenuBtn').click()
+        open_settings(target)
         with target.expect_file_chooser() as chooser:
             target.locator('#importBtn').click()
         chooser.value.set_files({'name':download.suggested_filename,'mimeType':'application/json',
@@ -272,6 +274,9 @@ def old_clear_preserves_draft(page, url, _browser):
     page.locator('#submitBtn').click()
     page.wait_for_function('typeof window.finishRecoveryCleanup === "function"')
     page.locator('#cancelBtn').click()
+    expect(page.locator('#taskModal')).to_be_hidden()
+    expect(page.locator('#settingsWorkspace')).to_be_visible()
+    return_to_task_workspace(page)
     page.locator('#openModalBtn').click()
     page.locator('#taskName').fill('Later task draft after cleanup')
     page.locator('#taskDesc').fill('Keep this raw unsaved text')

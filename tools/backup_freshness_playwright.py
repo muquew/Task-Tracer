@@ -2,6 +2,8 @@
 """Verify task-backup coverage follows the downloaded snapshot rather than age alone."""
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 import argparse
 import contextlib
 import http.server
@@ -92,8 +94,7 @@ def set_backup_metadata(page, date, record):
 
 
 def open_menu(page):
-    if not page.locator('#menu').is_visible():
-        page.locator('#openMenuBtn').click()
+    open_settings(page)
     expect(page.locator('#backupHealthText')).to_be_visible()
 
 
@@ -118,7 +119,8 @@ def backup(page):
     with page.expect_download() as info:
         page.locator('#backupBtn').click()
     data = json.loads(info.value.path().read_text())
-    expect(page.locator('#menu')).not_to_have_class(re.compile(r'\bshow\b'))
+    if page.locator('#settingsWorkspace').count():
+        expect(page.locator('#settingsWorkspace')).to_be_visible()
     assert stored_state(page)['lastBackupAt'] == data['date'], 'Backup timestamp did not match the downloaded file'
     return data
 
@@ -165,7 +167,12 @@ def assert_nonbackup_exports(page):
     with page.expect_download() as views_info:
         page.locator('#savedViewsExportBtn').click()
     assert json.loads(views_info.value.path().read_text())['type'] == 'saved-views'
-    page.locator('#cancelBtn').click()
+    if page.locator('#settingsWorkspace').count():
+        expect(page.locator('#cancelBtn')).to_be_hidden()
+        page.locator('#submitBtn').click()
+    else:
+        page.locator('#cancelBtn').click()
+    expect(page.locator('#taskModal')).to_be_hidden()
     assert stored_state(page) == before, 'View export was recorded as a task backup'
     assert_health(page, due=True, message_key='changed')
     print('Backup coverage passed: CSV and saved-view exports do not reset task-backup coverage', flush=True)
@@ -235,7 +242,8 @@ def assert_download_race(page, other):
             held.accept()
             held = None
         data = json.loads(info.value.path().read_text())
-        expect(page.locator('#menu')).not_to_have_class(re.compile(r'\bshow\b'))
+        if page.locator('#settingsWorkspace').count():
+            expect(page.locator('#settingsWorkspace')).to_be_visible()
         assert data['tasks'] == before['tasks'], 'Race fixture did not preserve the earlier downloaded task snapshot'
         actual = stored_state(page)
         assert actual['tasks'] == after_change['tasks'], 'Backup overwrote a concurrent task mutation'
@@ -276,7 +284,11 @@ def assert_metadata_failure(page, mode):
     assert data['tasks'] == before['tasks'], 'Metadata failure prevented the already-triggered backup from containing current tasks'
     assert stored_state(page) == before, 'Failed metadata transaction left a timestamp, revision or partial task change'
     if page.locator('#storageUnavailableBanner').is_visible():
-        expect(page.locator('#openMenuBtn')).to_be_disabled()
+        if page.locator('#settingsWorkspace').count():
+            expect(page.locator('#openMenuBtn')).to_be_enabled()
+            expect(page.locator('#backupBtn')).to_be_disabled()
+        else:
+            expect(page.locator('#openMenuBtn')).to_be_disabled()
     else:
         assert_health(page, due=True, message_key='changed')
     print(f'Backup coverage passed: {mode} metadata failure rolls back both coverage fields after a real download', flush=True)

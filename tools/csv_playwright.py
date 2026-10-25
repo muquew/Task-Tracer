@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Verify Unicode JSON transfer and spreadsheet downloads with isolated profiles."""
 from __future__ import annotations
+
+from smoke_playwright import open_settings, return_to_task_workspace
 import argparse
 import csv
 import io
@@ -30,7 +32,7 @@ def backup_stamp(page):
 
 
 def download_csv(page):
-    page.locator('#openMenuBtn').click()
+    open_settings(page)
     with page.expect_download() as info:
         page.locator('#exportCsvBtn').click()
     download = info.value
@@ -43,7 +45,7 @@ def download_csv(page):
 def assert_unicode_json_roundtrip(page, url, launcher, options, errors):
     """Restore the actual downloaded bytes, including every stored task field."""
     before = get_task_records(page)
-    page.locator('#openMenuBtn').click()
+    open_settings(page)
     with page.expect_download() as info:
         page.locator('#backupBtn').click()
     download = info.value
@@ -67,7 +69,7 @@ def assert_unicode_json_roundtrip(page, url, launcher, options, errors):
             target.on('pageerror', lambda error: errors.append(str(error)))
             clear_app_data(target, url)
             assert get_task_records(target) == [], 'Import target is not a clean profile'
-            target.locator('#openMenuBtn').click()
+            open_settings(target)
             with target.expect_file_chooser() as chooser:
                 target.locator('#importBtn').click()
             chooser.value.set_files({'name': download.suggested_filename,

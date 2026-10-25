@@ -189,9 +189,38 @@ def task_locator(page: Page, task_name: str):
     return page.locator(".task-item").filter(has=exact_name)
 
 
+def open_settings(page: Page) -> None:
+    """Open the actual settings page; retain old-archive test compatibility."""
+    workspace = page.locator('#settingsWorkspace')
+    if workspace.count():
+        if not workspace.is_visible():
+            page.locator('#openMenuBtn').click()
+        expect(workspace).to_be_visible()
+        expect(page.locator('#tasksWorkspace')).to_be_hidden()
+        expect(page.locator('#tasksWorkspace')).to_have_js_property('inert', True)
+    else:
+        if not page.locator('#menu').is_visible():
+            page.locator('#openMenuBtn').click()
+        expect(page.locator('#menu')).to_be_visible()
+
+
+def return_to_task_workspace(page: Page) -> None:
+    """Use the real back navigation without changing the active task view or filters."""
+    workspace = page.locator('#settingsWorkspace')
+    if workspace.count() and workspace.is_visible():
+        page.locator('#settingsBackBtn').click()
+        expect(workspace).to_be_hidden()
+        expect(page.locator('#tasksWorkspace')).to_be_visible()
+        expect(page.locator('#tasksWorkspace')).to_have_js_property('inert', False)
+    elif not workspace.count() and page.locator('#menu').is_visible():
+        page.keyboard.press('Escape')
+
+
 def reveal_workspace_control(page: Page, selector: str | Locator) -> Locator:
     """Reach a global control through the actual mobile navigation when needed."""
     control = page.locator(selector) if isinstance(selector, str) else selector
+    if control.count() and control.evaluate("node => Boolean(node.closest('#tasksWorkspace'))"):
+        return_to_task_workspace(page)
     if control.count() and control.evaluate("node => Boolean(node.closest('#workspaceSidebar'))"):
         hidden = not control.is_visible() or control.evaluate(
             "node => Boolean(node.closest('[inert], [hidden], [aria-hidden=\"true\"]'))"
@@ -246,6 +275,7 @@ def select_theme_preference(page: Page, preference: str) -> str:
 
 def reveal_task_action(task: Locator, action: str) -> Locator:
     """Expose a secondary action through its row menu, including negative checks."""
+    return_to_task_workspace(task.page)
     expect(task).to_be_visible()
     control = task.locator(f'[data-action={json.dumps(action)}]')
     if control.is_visible():
@@ -587,23 +617,30 @@ def exercise_shortcuts_and_modal_closing(page: Page) -> None:
     expect(page.locator("#taskModal")).to_be_hidden()
 
     press_control_shortcut(page, "m")
-    wait_for_class(page, "#menu", "show")
+    expect(page.locator('#settingsWorkspace')).to_be_visible()
     page.keyboard.press("Escape")
-    wait_for_class(page, "#menu", "show", present=False)
+    expect(page.locator('#settingsWorkspace')).to_be_hidden()
+    expect(page.locator('#tasksWorkspace')).to_be_visible()
 
 
 def exercise_keyboard_navigation_patterns(page: Page) -> None:
+    # Primary pages are native buttons: every destination is reachable by Tab,
+    # and Enter/Space activates it without a partially retained tablist model.
     page.locator("#viewTab-list").focus()
-    page.keyboard.press("ArrowRight")
+    page.keyboard.press("Tab")
     expect(page.locator("#viewTab-calendar")).to_be_focused()
-    expect(page.locator("#viewTab-calendar")).to_have_attribute("aria-selected", "true")
+    page.keyboard.press("Enter")
+    expect(page.locator("#viewTab-calendar")).to_have_attribute("aria-current", "page")
     expect(page.locator("#taskList")).to_have_attribute("aria-labelledby", "viewTab-calendar")
-    page.keyboard.press("End")
+    page.keyboard.press("Tab")
+    expect(page.locator("#viewTab-timeline")).to_be_focused()
+    page.keyboard.press("Space")
+    expect(page.locator("#viewTab-timeline")).to_have_attribute("aria-current", "page")
+    page.keyboard.press("Tab")
     expect(page.locator("#viewTab-stats")).to_be_focused()
-    expect(page.locator("#viewTab-stats")).to_have_attribute("aria-selected", "true")
-    page.keyboard.press("Home")
-    expect(page.locator("#viewTab-list")).to_be_focused()
-    expect(page.locator("#viewTab-list")).to_have_attribute("aria-selected", "true")
+    page.keyboard.press("Enter")
+    expect(page.locator("#viewTab-stats")).to_have_attribute("aria-current", "page")
+    select_view(page, 'list')
 
     page.locator("#sortBtn").focus()
     page.keyboard.press("ArrowDown")
@@ -625,18 +662,16 @@ def exercise_keyboard_navigation_patterns(page: Page) -> None:
 
     page.locator("#openMenuBtn").focus()
     page.keyboard.press("Enter")
-    wait_for_class(page, "#menu", "show")
-    menu_items = page.locator('#menu [role="menuitem"]:visible')
-    assert menu_items.count() >= 3
-    expect(menu_items.first).to_be_focused()
-    page.keyboard.press("ArrowDown")
-    expect(menu_items.nth(1)).to_be_focused()
-    page.keyboard.press("End")
-    expect(menu_items.last).to_be_focused()
-    page.keyboard.press("Home")
-    expect(menu_items.first).to_be_focused()
+    expect(page.locator('#settingsWorkspace')).to_be_visible()
+    expect(page.locator('#settingsBackBtn')).to_be_visible()
+    expect(page.locator('#settingsWorkspace')).not_to_have_role('dialog')
+    expect(page.locator('#menu [role="menuitem"]')).to_have_count(0)
+    page.locator('#settingsThemeSelect').focus()
+    page.keyboard.press('Tab')
+    expect(page.locator('#settingsLanguageSelect')).to_be_focused()
+    page.locator('#settingsBackBtn').focus()
     page.keyboard.press("Escape")
-    wait_for_class(page, "#menu", "show", present=False)
+    expect(page.locator('#settingsWorkspace')).to_be_hidden()
     expect(page.locator("#openMenuBtn")).to_be_focused()
     language_select = reveal_workspace_control(page, '#languageSelect')
     language_select.focus()
@@ -700,7 +735,7 @@ def exercise_task_name_validation(page: Page) -> None:
 
 
 def exercise_empty_state_actions(page: Page) -> None:
-    page.locator("#openMenuBtn").click()
+    open_settings(page)
     page.locator("#clearCompletedBtn").click()
     wait_for_notification(page, re.compile("没有已完成的任务可清除|no completed tasks", re.I))
     page.keyboard.press("Escape")
@@ -715,6 +750,7 @@ def exercise_search_empty_state(page: Page, query: str) -> None:
 
 
 def exercise_subtask_draft_editor(page: Page) -> None:
+    before = get_task_records(page)
     page.locator("#openModalBtn").click()
     expect(page.locator("#taskModal")).to_be_visible()
     page.locator("#subtaskInput").fill("Draft subtask")
@@ -724,17 +760,21 @@ def exercise_subtask_draft_editor(page: Page) -> None:
     expect(page.locator("#subtaskListPreview .subtask-preview-item")).to_have_count(2)
     assert_accessibility_baseline(page, "subtask draft editor")
 
-    page.locator("#subtaskListPreview .subtask-preview-text").first.focus()
-    page.keyboard.press("Enter")
-    page.locator("#subtaskListPreview .subtask-edit-input").fill("Edited draft subtask")
-    page.keyboard.press("Enter")
-    expect(page.locator("#subtaskListPreview .subtask-preview-text").first).to_have_text("Edited draft subtask")
+    for index in range(10):
+        expected_text = f"Edited draft subtask {index + 1}"
+        page.locator("#subtaskListPreview .subtask-preview-text").first.focus()
+        page.keyboard.press("Enter")
+        page.locator("#subtaskListPreview .subtask-edit-input").fill(expected_text)
+        page.keyboard.press("Enter")
+        expect(page.locator("#subtaskListPreview .subtask-preview-text").first).to_have_text(expected_text)
 
     page.locator("#subtaskListPreview .subtask-delete-btn").last.click()
     expect(page.locator("#subtaskListPreview .subtask-preview-item")).to_have_count(1)
     page.locator("#cancelBtn").click()
     discard_task_draft(page)
     expect(page.locator("#taskModal")).to_be_hidden()
+
+    assert get_task_records(page) == before, 'Editing and discarding inline subtask drafts changed saved task records'
 
 
 def add_task(
@@ -753,6 +793,7 @@ def add_task(
     tags: list[str] | None = None,
     subtasks: list[str] | None = None,
 ) -> None:
+    return_to_task_workspace(page)
     page.locator("#openModalBtn").click()
     expect(page.locator("#taskModal")).to_be_visible()
     page.locator("#taskName").fill(task_name)
@@ -971,7 +1012,7 @@ def exercise_command_palette(page: Page, alpha_name: str, beta_name: str) -> Non
     page.locator("#commandPaletteInput").fill("calendar")
     page.keyboard.press("Enter")
     expect(page.locator("#commandPalette")).to_be_hidden()
-    expect(page.locator('#viewTab-calendar')).to_have_attribute("aria-selected", "true")
+    expect(page.locator('#viewTab-calendar')).to_have_attribute("aria-current", "page")
 
     page.keyboard.press("Control+P")
     page.locator("#commandPaletteInput").fill("Smoke Work")
@@ -1002,7 +1043,9 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
     select_project(page, "all")
     select_filter(page, "active")
     clear_search(page)
-    expect(page.locator("#savedViewsBar")).to_be_hidden()
+    expect(page.locator("#savedViewsBar")).to_be_visible()
+    expect(page.locator('#savedViewsList .saved-view-chip')).to_have_count(0)
+    expect(page.locator('#savedViewsEmptyHint')).to_be_visible()
 
     page.locator("#saveSmartViewBtn").click()
     expect(page.locator("#taskModal")).to_be_visible()
@@ -1014,7 +1057,9 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
     expect(page.locator("#savedViewDeleteConfirm")).to_be_visible()
     page.locator("#submitBtn").click()
     wait_for_notification(page, re.compile("删除|deleted", re.I))
-    expect(page.locator("#savedViewsBar")).to_be_hidden()
+    expect(page.locator("#savedViewsBar")).to_be_visible()
+    expect(page.locator('#savedViewsList .saved-view-chip')).to_have_count(0)
+    expect(page.locator('#savedViewsEmptyHint')).to_be_visible()
 
     page.locator("#searchInput").fill("tag:deadline")
     expect(task_locator(page, beta_name)).to_have_count(1)
@@ -1105,11 +1150,13 @@ def snooze_task_reminder(page: Page, task_name: str) -> None:
 
 
 def search_task(page: Page, task_name: str) -> None:
+    return_to_task_workspace(page)
     page.locator("#searchInput").fill(task_name)
     expect(task_locator(page, task_name)).to_have_count(1)
 
 
 def clear_search(page: Page) -> None:
+    return_to_task_workspace(page)
     if page.locator("#clearSearchBtn").is_visible():
         page.locator("#clearSearchBtn").click()
     else:
@@ -1199,6 +1246,7 @@ def cancel_delete_task(page: Page, task_name: str) -> None:
 
 
 def select_filter(page: Page, value: str) -> None:
+    return_to_task_workspace(page)
     filter_btn = page.locator("#filterBtn")
     selected_option = page.locator(f'#filterDropdown .dropdown-option[data-filter="{value}"]')
     expect(filter_btn).to_have_attribute("aria-controls", "filterMenu")
@@ -1213,6 +1261,7 @@ def select_filter(page: Page, value: str) -> None:
 
 
 def select_project(page: Page, value: str) -> None:
+    return_to_task_workspace(page)
     project_btn = page.locator("#projectFilterBtn")
     scope = {'kind': 'all'} if value == 'all' else {'kind': 'unassigned'} if value == '__none__' else {'kind': 'project', 'name': value}
     encoded = json.dumps(scope, ensure_ascii=False, separators=(',', ':'))
@@ -1231,6 +1280,7 @@ def select_project(page: Page, value: str) -> None:
 
 
 def select_sort(page: Page, value: str) -> None:
+    return_to_task_workspace(page)
     sort_btn = page.locator("#sortBtn")
     selected_option = page.locator(f'#sortDropdown .dropdown-option[data-sort="{value}"]')
     expect(sort_btn).to_have_attribute("aria-controls", "sortMenu")
@@ -1247,7 +1297,10 @@ def select_sort(page: Page, value: str) -> None:
 def select_view(page: Page, value: str) -> None:
     tab = page.locator(f'#viewSwitcher .view-tab[data-view="{value}"]')
     tab.click()
-    expect(tab).to_have_attribute("aria-selected", "true")
+    if page.locator('#settingsWorkspace').count():
+        expect(tab).to_have_attribute("aria-current", "page")
+    else:
+        expect(tab).to_have_attribute("aria-selected", "true")
     expect(tab).to_have_class(re.compile(r"(^|\s)selected(\s|$)"))
 
 
@@ -1521,7 +1574,7 @@ def exercise_workspace_date_focus(page: Page, *, zero_matches: bool = False) -> 
                     page.locator('#workspaceScheduleToggle').click()
                     expect(page.locator('#workspaceScheduleDialog')).to_be_visible()
             target.click()
-            expect(page.locator('#viewTab-calendar')).to_have_attribute('aria-selected', 'true')
+            expect(page.locator('#viewTab-calendar')).to_have_attribute("aria-current", "page")
             expect(page.locator('#taskList')).to_be_visible()
             expect(page.locator('#workspaceScheduleDialog')).to_be_hidden()
             page.wait_for_function("""() => {
@@ -1688,6 +1741,7 @@ def exercise_stats_view(page: Page, completed_name: str) -> None:
 
 
 def complete_task(page: Page, task_name: str) -> None:
+    return_to_task_workspace(page)
     active_task = task_locator(page, task_name).first
     expect(active_task.locator('[data-action="toggle"]')).to_have_attribute('aria-pressed', 'false')
     expect(active_task.locator('[data-action="toggle"]')).to_have_attribute(
@@ -1989,10 +2043,12 @@ def delete_task_records_by_name(page: Page, task_name: str) -> None:
 
 
 def clear_completed_tasks(page: Page, completed_name: str) -> None:
-    page.locator("#openMenuBtn").click()
+    open_settings(page)
     page.locator("#clearCompletedBtn").click()
     expect(page.locator("#taskModal")).to_be_visible()
     page.locator("#submitBtn").click()
+    expect(page.locator('#taskModal')).to_be_hidden()
+    return_to_task_workspace(page)
     expect(task_locator(page, completed_name)).to_have_count(0)
 
 
@@ -2106,14 +2162,15 @@ def exercise_back_to_top(page: Page) -> None:
 
 
 def exercise_notifications(page: Page) -> None:
-    page.locator('#openMenuBtn').click()
-    expect(page.locator('#openMenuBtn')).to_have_attribute('aria-expanded', 'true')
+    open_settings(page)
+    expect(page.locator('#settingsWorkspace')).to_be_visible()
     page.locator("#notificationToggleBtn").click()
     expect(page.locator("#notificationToggleBtn")).to_have_attribute("aria-label", "关闭通知")
     expect(page.locator("#notificationToggleBtn")).to_have_class(re.compile(r"(^|\s)notifications-enabled(\s|$)"))
     page.locator("#notificationToggleBtn").click()
     expect(page.locator("#notificationToggleBtn")).to_have_attribute("aria-label", "开启通知")
     expect(page.locator("#notificationToggleBtn")).not_to_have_class(re.compile(r"(^|\s)notifications-enabled(\s|$)"))
+    return_to_task_workspace(page)
 
 
 def exercise_one_time_reminder_persists_across_reload(page: Page) -> None:
@@ -2244,7 +2301,7 @@ def exercise_import_error(page: Page) -> None:
         temp_path = temp_file.name
 
     try:
-        page.locator("#openMenuBtn").click()
+        open_settings(page)
         with page.expect_file_chooser() as chooser_info:
             page.locator("#importBtn").click()
         chooser_info.value.set_files(temp_path)
@@ -2255,7 +2312,7 @@ def exercise_import_error(page: Page) -> None:
 
 
 def exercise_export_backup(page: Page) -> dict[str, Any]:
-    page.locator("#openMenuBtn").click()
+    open_settings(page)
     with page.expect_download() as download_info:
         page.locator("#backupBtn").click()
     download = download_info.value
@@ -2290,7 +2347,7 @@ def exercise_export_backup(page: Page) -> dict[str, Any]:
     )
     if not last_backup:
         raise AssertionError("Backup did not record the last backup timestamp")
-    page.locator("#openMenuBtn").click()
+    open_settings(page)
     expect(page.locator("#backupHealthText")).to_contain_text(re.compile("今天|today", re.I))
     page.keyboard.press("Escape")
     return backup
@@ -2363,7 +2420,7 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         temp_path = temp_file.name
 
     try:
-        page.locator("#openMenuBtn").click()
+        open_settings(page)
         with page.expect_file_chooser() as chooser_info:
             page.locator("#importBtn").click()
         chooser_info.value.set_files(temp_path)
@@ -2448,7 +2505,7 @@ def assert_import_preview_text(page: Page, payload: Any, patterns: list[str]) ->
         temp_path = temp_file.name
 
     try:
-        page.locator("#openMenuBtn").click()
+        open_settings(page)
         with page.expect_file_chooser() as chooser_info:
             page.locator("#importBtn").click()
         chooser_info.value.set_files(temp_path)
@@ -2505,7 +2562,7 @@ def exercise_import_merge(page: Page, merged_name: str, existing_name: str) -> N
         temp_path = temp_file.name
 
     try:
-        page.locator("#openMenuBtn").click()
+        open_settings(page)
         with page.expect_file_chooser() as chooser_info:
             page.locator("#importBtn").click()
         chooser_info.value.set_files(temp_path)
@@ -2569,7 +2626,7 @@ def exercise_import(page: Page, imported_name: str) -> None:
         temp_path = temp_file.name
 
     try:
-        page.locator("#openMenuBtn").click()
+        open_settings(page)
         with page.expect_file_chooser() as chooser_info:
             page.locator("#importBtn").click()
         chooser_info.value.set_files(temp_path)
@@ -2620,7 +2677,7 @@ def import_payload_replace(page: Page, payload: list[dict[str, Any]]) -> None:
         temp_path = temp_file.name
 
     try:
-        page.locator("#openMenuBtn").click()
+        open_settings(page)
         with page.expect_file_chooser() as chooser_info:
             page.locator("#importBtn").click()
         chooser_info.value.set_files(temp_path)
@@ -2772,7 +2829,7 @@ def exercise_import_merge_skip_reference_cleanup(page: Page, prefix: str) -> Non
         temp_path = temp_file.name
 
     try:
-        page.locator("#openMenuBtn").click()
+        open_settings(page)
         with page.expect_file_chooser() as chooser_info:
             page.locator("#importBtn").click()
         chooser_info.value.set_files(temp_path)
@@ -2938,9 +2995,14 @@ def assert_storage_unavailable_mode(browser: Browser, base_url: str) -> None:
         expect(page.locator("#openModalBtn")).to_be_disabled()
         expect(page.locator("#quickAddInput")).to_be_disabled()
         expect(page.locator("#notificationToggleBtn")).to_be_disabled()
-        expect(page.locator("#openMenuBtn")).to_be_disabled()
+        expect(page.locator("#openMenuBtn")).to_be_enabled()
         expect(page.locator("#viewTab-list")).to_be_disabled()
         expect(page.locator("#retryStorageBtn")).to_be_enabled()
+        open_settings(page)
+        expect(page.locator('#helpMenuBtn')).to_be_enabled()
+        expect(page.locator('#backupBtn')).to_be_disabled()
+        assert_accessibility_baseline(page, "storage unavailable settings")
+        return_to_task_workspace(page)
         assert_accessibility_baseline(page, "storage unavailable mode")
         page.locator("#retryStorageBtn").click()
         wait_for_notification(page, re.compile("本地存储仍不可用|still unavailable", re.I))
@@ -2966,16 +3028,20 @@ def assert_runtime_storage_fallback_preserves_snapshot(browser: Browser, base_ur
                 };
             }"""
         )
-        page.locator("#openMenuBtn").click()
+        open_settings(page)
+        expect(page.locator('#settingsWorkspace')).to_be_visible()
+        return_to_task_workspace(page)
         expect(page.locator("#storageUnavailableBanner")).to_be_visible()
         expect(page.locator("#taskList .storage-empty-state")).to_contain_text(re.compile("1"))
         expect(page.locator("#emergencyBackupBtn")).to_be_visible()
-        expect(page.locator("#openMenuBtn")).to_be_disabled()
+        expect(page.locator("#openMenuBtn")).to_be_enabled()
         for shortcut in ["p", "i", "k", "m", "z"]:
             press_control_shortcut(page, shortcut)
             expect(page.locator("#commandPalette")).to_be_hidden()
             expect(page.locator("#taskModal")).to_be_hidden()
-            wait_for_class(page, "#menu", "show", present=False)
+            if shortcut == 'm':
+                expect(page.locator('#settingsWorkspace')).to_be_visible()
+                return_to_task_workspace(page)
         assert_accessibility_baseline(page, "runtime storage fallback")
         with page.expect_download() as download_info:
             page.locator("#emergencyBackupBtn").click()
@@ -3014,14 +3080,16 @@ def assert_notification_does_not_cover_header(browser: Browser, base_url: str) -
                 raise AssertionError("Main menu has no clickable bounds")
             # Coordinate clicks expose overlap instead of waiting for a covering toast to disappear.
             page.mouse.click(menu_box["x"] + menu_box["width"] / 2, menu_box["y"] + menu_box["height"] / 2)
-            expect(page.locator("#menu")).to_have_class(re.compile(r"\bshow\b"))
+            expect(page.locator('#settingsWorkspace')).to_be_visible()
             expect(page.locator("#notificationUndoBtn")).to_be_visible()
             assert get_task_records(page) == before, "Opening the menu changed the added task"
             page.locator("#notificationUndoBtn").click()
+            expect(page.locator('#settingsWorkspace')).to_be_visible()
+            return_to_task_workspace(page)
             expect(task_locator(page, task_name)).to_have_count(0)
             assert get_task_records(page) == [], "Toast Undo did not remove the added task"
             assert_no_page_errors(page_errors)
-            print(f"Notification pointer access passed: {width}px header menu and toast Undo remain usable", flush=True)
+            print(f"Notification pointer access passed: {width}px settings entry and toast Undo remain usable", flush=True)
         finally:
             context.close()
 
@@ -3078,6 +3146,17 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
             if viewport['width'] == 390:
                 exercise_workspace_date_focus(visual_page, zero_matches=True)
                 expect(visual_page.locator('.task-item')).to_have_count(3)
+            # Main navigation has its own sidebar/dock container, independent of
+            # the auxiliary toolbar. Check usable labels/targets at every width.
+            for view in ('list', 'calendar', 'timeline', 'stats'):
+                destination = visual_page.locator(f'#viewTab-{view}')
+                expect(destination).to_be_visible()
+                expect(destination.locator('span')).to_be_visible()
+                destination.click(trial=True)
+                expect(destination).to_be_in_viewport()
+                destination_box = destination.bounding_box()
+                if not destination_box or destination_box['width'] < 44 or destination_box['height'] < 44:
+                    raise AssertionError(f'{label} main navigation target is undersized: {view}: {destination_box}')
             visual_page.locator(".task-item").first.scroll_into_view_if_needed()
 
             metrics = visual_page.evaluate(
@@ -3085,7 +3164,7 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                     const viewportWidth = window.innerWidth;
                     const doc = document.documentElement;
                     const selectors = ['header', '.controls-bar', '.task-item', '.task-actions'];
-                    const controlSelectors = ['.view-switcher', '.search-box', '#projectDropdown', '#filterDropdown', '#sortDropdown', '#saveSmartViewBtn'];
+                    const controlSelectors = ['.search-box', '#projectDropdown', '#filterDropdown', '#sortDropdown', '#saveSmartViewBtn'];
                     const controlBar = document.querySelector('.controls-bar');
                     const controlRect = controlBar.getBoundingClientRect();
                     const boxes = selectors.map((selector) => {

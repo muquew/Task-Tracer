@@ -108,7 +108,8 @@ def run(engine):
             expect(page.locator('#notificationText')).to_have_text(error_text)
             expect(page.locator('#savedViewsTransferContent')).to_be_visible()
             assert snapshot(page) == before, 'Rejected view file or reminder changed workspace data'
-            page.locator('#cancelBtn').click()
+            expect(page.locator('#cancelBtn')).to_be_hidden()
+            page.locator('#submitBtn').click()
             print('Backup reminder passed: invalid-file error and active transfer dialog stay intact without writes', flush=True)
 
             reload_with_reminder(page)
@@ -124,7 +125,8 @@ def run(engine):
             reload_with_reminder(page)
             before = snapshot(page)
             error_text = reject_view_file(page)
-            page.locator('#cancelBtn').click()
+            expect(page.locator('#cancelBtn')).to_be_hidden()
+            page.locator('#submitBtn').click()
             expect(page.locator('#taskModal')).to_be_hidden()
             page.evaluate('window.deliverNextBackupReminder()')
             expect(page.locator('#notification')).to_have_class('notification error show')
@@ -142,7 +144,8 @@ def run(engine):
                     page.locator('#taskName').fill('New task draft started during backup status read')
                 else:
                     error_text = reject_view_file(page)
-                    page.locator('#cancelBtn').click()
+                    expect(page.locator('#cancelBtn')).to_be_hidden()
+                    page.locator('#submitBtn').click()
                     expect(page.locator('#taskModal')).to_be_hidden()
                 page.evaluate("""() => {
                     window.finishHeldBackupStatusRead();

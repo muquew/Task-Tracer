@@ -2,6 +2,8 @@
 """Keep cancelled or superseded task-file reads from replacing a newer workflow."""
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 import json
 
 from playwright.sync_api import expect, sync_playwright
@@ -29,7 +31,7 @@ def defer_native_reads(page):
 
 def choose_file(page, name):
     count = page.evaluate('window.pendingImportReads.length')
-    page.locator('#openMenuBtn').click()
+    open_settings(page)
     with page.expect_file_chooser() as chooser:
         page.locator('#importBtn').click()
     chooser.value.set_files({
@@ -64,6 +66,7 @@ def cancelled_read_preserves_draft(browser, url):
         defer_native_reads(page)
         old = choose_file(page, 'CANCELLED_OLD_IMPORT')
         cancel_pending_ui(page)
+        return_to_task_workspace(page)
         page.locator('#openModalBtn').click()
         page.locator('#taskName').fill('New task draft must survive')
         page.locator('#taskDesc').fill('Unsaved synthetic description')

@@ -2,6 +2,8 @@
 """Confirm saved-view deletion while preserving tasks, concurrent views and later drafts."""
 from __future__ import annotations
 
+from smoke_playwright import return_to_task_workspace
+
 import argparse
 import json
 from pathlib import Path
@@ -15,6 +17,7 @@ from smoke_playwright import add_task, browser_launch_options, clear_app_data, l
 
 
 def save_named(page, name, query):
+    return_to_task_workspace(page)
     page.locator('#searchInput').fill(query)
     page.locator('#saveSmartViewBtn').click()
     page.locator('#savedViewNameInput').fill(name)

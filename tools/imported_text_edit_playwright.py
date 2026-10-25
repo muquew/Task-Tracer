@@ -2,6 +2,8 @@
 """Keep accepted imported text intact when editing another task field."""
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 import argparse
 from copy import deepcopy
 import json
@@ -17,7 +19,7 @@ from task_draft_playwright import downloaded_drafts, inject_quota_failure
 
 
 def download_tasks(page):
-    page.locator('#openMenuBtn').click()
+    open_settings(page)
     with page.expect_download() as info:
         page.locator('#backupBtn').click()
     payload = json.loads(info.value.path().read_bytes())
@@ -31,7 +33,7 @@ def import_fixture(page, url, template, overrides):
     payload['tasks'][0].update(overrides)
     payload.pop('checksum')
     payload['checksum'] = f'fnv1a32:{stable_fnv1a32(stable_json(payload))}'
-    page.locator('#openMenuBtn').click()
+    open_settings(page)
     with page.expect_file_chooser() as chooser:
         page.locator('#importBtn').click()
     chooser.value.set_files({'name': 'valid-imported-text.json', 'mimeType': 'application/json',
@@ -39,6 +41,7 @@ def import_fixture(page, url, template, overrides):
     expect(page.locator('[data-import-preview]')).to_have_attribute('data-checksum-status', 'valid')
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
+    return_to_task_workspace(page)
     baseline = get_task_records(page)
     assert baseline == payload['tasks'], 'Valid import changed the text fixture before editing'
     return baseline
@@ -114,6 +117,7 @@ def quoted_tags(page, url, template):
     expected = [{**expected[0], 'tags': [tag.replace('team "private", dev', 'team "revised", dev')
                                        for tag in expected[0]['tags']]}]
     save_and_assert(page, expected)
+    return_to_task_workspace(page)
     page.locator('#openModalBtn').click()
     page.locator('#taskName').fill('New quoted tags')
     page.locator('#taskTags').fill('literal"quote, "comma,tag", "escaped ""quote""", "unfinished')
@@ -155,6 +159,7 @@ def normalization(page, url, template):
         page.locator(selector).fill(value)
     expected = [{**baseline[0], **fields}]
     save_and_assert(page, expected)
+    return_to_task_workspace(page)
     page.locator('#openModalBtn').click()
     for selector, value in inputs.items():
         page.locator(selector).fill(value.replace('Explicit name', 'New name'))

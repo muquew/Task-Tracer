@@ -2,6 +2,8 @@
 """Atomically reconnect proven repeat links when deleting occurrences."""
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 import argparse
 from copy import deepcopy
 import json
@@ -30,7 +32,7 @@ def open_delete(page, ids, mode):
             row(page, identity).locator('.task-select-checkbox').check()
         page.locator('#batchDeleteBtn').click()
     else:
-        page.locator('#openMenuBtn').click()
+        open_settings(page)
         page.locator('#clearCompletedBtn').click()
     expect(page.locator('#taskModal')).to_be_visible()
 

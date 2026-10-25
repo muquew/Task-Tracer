@@ -2,6 +2,8 @@
 """Keep delayed local dialogs and confirmations bound to their own UI session."""
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 import argparse
 import contextlib
 from pathlib import Path
@@ -18,11 +20,12 @@ def settle(page):
 
 
 def open_menu_item(page, selector):
-    page.locator('#openMenuBtn').click()
+    open_settings(page)
     page.locator(selector).click()
 
 
 def begin_draft(page):
+    return_to_task_workspace(page)
     page.locator('#openModalBtn').click()
     page.locator('#taskName').fill('Later synthetic task draft')
     page.locator('#taskDesc').fill('A delayed earlier dialog must preserve this text')
@@ -150,7 +153,7 @@ def old_confirmation_preserves_gate(page, url):
     page.evaluate("""() => {
         FileReader.prototype.readAsText = function() { window.taskReadHeld = true; };
     }""")
-    page.locator('#openMenuBtn').click()
+    open_settings(page)
     with page.expect_file_chooser() as chooser:
         page.locator('#importBtn').click()
     chooser.value.set_files({'name': 'held-tasks.json', 'mimeType': 'application/json', 'buffer': b'[]'})

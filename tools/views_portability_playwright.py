@@ -2,6 +2,8 @@
 """Verify saved-view files migrate only views through reviewed atomic merges."""
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 import argparse
 import json
 from pathlib import Path
@@ -91,8 +93,9 @@ def seed_views(page, views):
 
 def open_manager(page):
     if page.locator('#taskModal').is_visible():
-        page.locator('#cancelBtn').click()
-    page.locator('#openMenuBtn').click()
+        page.keyboard.press('Escape')
+        expect(page.locator('#taskModal')).to_be_hidden()
+    open_settings(page)
     page.locator('#savedViewsTransferBtn').click()
     expect(page.locator('#savedViewsTransferContent')).to_be_visible()
 
@@ -189,6 +192,7 @@ def assert_pending_view_reads(page):
         page.wait_for_function('window.pendingViewFileReads.length === 1')
         page.keyboard.press('Escape')
         expect(page.locator('#taskModal')).to_be_hidden()
+        return_to_task_workspace(page)
         page.locator('#openModalBtn').click()
         page.locator('#taskName').fill('Unsaved task draft while file read completes')
         page.evaluate("window.pendingViewFileReads[0].finish()")

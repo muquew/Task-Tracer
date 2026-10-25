@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 import os
 import json
 import re
@@ -47,7 +49,7 @@ def read_storage(page: Page) -> dict[str, Any]:
 
 
 def open_recovery(page: Page) -> None:
-    page.locator("#openMenuBtn").click()
+    open_settings(page)
     page.locator("#recoveryBtn").click()
     expect(page.locator("#taskModal")).to_be_visible()
     expect(page.locator("#recoverySelect")).to_have_count(1)

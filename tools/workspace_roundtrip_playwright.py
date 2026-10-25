@@ -2,6 +2,8 @@
 """Exercise a realistic synthetic workspace through backup, import and recovery."""
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 import argparse
 from collections import Counter
 from datetime import datetime, timezone
@@ -115,7 +117,7 @@ def replace_from_backup(page, payload, expected_signature):
     with tempfile.TemporaryDirectory(prefix='task-tracer-workspace-') as folder:
         source = Path(folder) / 'workspace-backup.json'
         source.write_text(json.dumps(payload, ensure_ascii=False))
-        page.locator('#openMenuBtn').click()
+        open_settings(page)
         with page.expect_file_chooser() as chooser:
             page.locator('#importBtn').click()
         chooser.value.set_files(source)

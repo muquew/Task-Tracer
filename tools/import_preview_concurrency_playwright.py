@@ -2,6 +2,8 @@
 """Protect reviewed import approvals from a background refresh after remote edits."""
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 import json
 from datetime import datetime
 from playwright.sync_api import expect, sync_playwright
@@ -13,7 +15,7 @@ from smoke_playwright import (add_task, browser_launch_options, clear_app_data,
 
 
 def open_import(page, tasks):
-    page.locator('#openMenuBtn').click()
+    open_settings(page)
     with page.expect_file_chooser() as chooser:
         page.locator('#importBtn').click()
     chooser.value.set_files({'name': 'synthetic-import.json', 'mimeType': 'application/json',
@@ -165,7 +167,7 @@ def run_confirmation_case(browser, url, action):
                 };
                 open.onerror = () => reject(open.error);
             })""")
-        first.locator('#openMenuBtn').click()
+        open_settings(first)
         first.locator({'clear': '#clearCompletedBtn', 'archive': '#archiveCompletedBtn',
                        'recovery': '#recoveryBtn'}[action]).click()
         expect(first.locator('#taskModal')).to_be_visible()

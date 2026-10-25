@@ -648,18 +648,35 @@ def validate_native_language_control(index_html: str, errors: list[str]) -> None
                          'bindEssentialEvents', 'enhanceSelectControls')
         }
         option_fragments = (
-            "DOM.languageSelect.textContent = '';",
+            "for (const select of [DOM.languageSelect, document.getElementById('settingsLanguageSelect')]) {",
+            "select.textContent = '';",
             'CONFIG.LANGUAGES.forEach(language => {',
             "const option = document.createElement('option');",
             'option.value = language.code;',
             'option.textContent = language.name;',
-            'DOM.languageSelect.appendChild(option);',
+            'select.appendChild(option);',
         )
         if not contains_in_order(functions['createLangButtons'], option_fragments):
             errors.append('Native language options must use every configured language code and name')
-        if ('DOM.languageSelect.value = state.currentLanguage;' not in functions['syncLanguageSelect']
+        if ("[DOM.languageSelect, document.getElementById('settingsLanguageSelect')]" not in functions['syncLanguageSelect']
+                or 'select.value = state.currentLanguage;' not in functions['syncLanguageSelect']
                 or 'syncLanguageSelect();' not in functions['initLanguage']):
             errors.append('Language initialization and rollback must synchronize the native select value')
+
+        settings_select = first_match(r'<select\b[^>]*\sid="settingsLanguageSelect"[^>]*>', index_html,
+                                      'settings native language select').group()
+        if not re.search(r'\sdata-native-select(?:\s|=|>)', settings_select):
+            errors.append('Settings language control must remain a native select')
+        if not re.search(r'<label\b[^>]*\bfor="settingsLanguageSelect"[^>]*>[^<]+</label>', index_html):
+            errors.append('Settings language select must have its own visible label')
+        settings_handler = first_match(
+            r"document\.getElementById\('settingsLanguageSelect'\)\.addEventListener\('change', event => \{(?P<body>[^\n]*)\}\);",
+            runtime, 'settings language change handler').group('body')
+        if not contains_in_order(settings_handler, (
+            "runAppAction('language.switch', { code: event.target.value });",
+            'syncLanguageSelect();',
+        )):
+            errors.append('Settings language changes must use the action guard and synchronize rollback')
 
         handler = first_match(
             r"DOM\.languageSelect\.addEventListener\('change', \(\) => \{(?P<body>.*?)\n\s*\}\);",
@@ -706,16 +723,21 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Custom select Escape handling must stop propagation before closing the menu")
     if not contains_in_order(index_html, ("if (isTaskDialogOpen())", "else if (e.key === 'Escape') {", "if (!closeOpenCustomSelect(DOM.modal)) requestCloseTaskDialog();", "function closeOpenCustomSelect(root = document)")):
         errors.append("Dialog Escape handling must close an open custom select before closing the dialog")
-    if "handleViewSwitcherKeydown" not in index_html or 'role="tab" aria-selected="true" aria-controls="taskList" tabindex="0"' not in index_html:
-        errors.append("View tabs must use a roving keyboard tablist model")
-    if 'id="taskList" role="tabpanel"' not in index_html:
-        errors.append("Task view content must be exposed as the selected tab panel")
+    if 'id="viewSwitcher"' not in index_html or 'aria-current="page"' not in index_html or "removeAttribute('aria-current')" not in index_html:
+        errors.append("Primary view navigation must expose and synchronize aria-current")
+    if re.search(r'<[^>]+id="viewSwitcher"[^>]+role="tablist"', index_html) or re.search(r'<[^>]+id="viewTab-[^>]+role="tab"', index_html):
+        errors.append("Global page navigation must not retain tablist semantics")
+    if 'id="taskList" role="region"' not in index_html:
+        errors.append("Task view content must expose a region labelled by the current destination")
     if re.search(r'id="taskList"[^>]*aria-live=', index_html):
         errors.append("Task view content must not be a broad live region")
     if "function announceTaskViewSummary()" not in index_html or "messages.view.summary" not in index_html:
         errors.append("Task view changes must announce a concise summary through the screen-reader status region")
-    if 'id="menu" role="menu"' not in index_html or "handleMenuKeydown" not in index_html:
-        errors.append("Main app menu must expose menu semantics and keyboard navigation")
+    for identifier in ('settingsWorkspace', 'tasksWorkspace', 'settingsBackBtn', 'settingsThemeSelect', 'settingsLanguageSelect'):
+        if f'id="{identifier}"' not in index_html:
+            errors.append(f"Independent settings workspace is missing {identifier}")
+    if re.search(r'<[^>]+id="menu"[^>]+role="menu"', index_html):
+        errors.append("Settings page actions must use native controls, not application menu semantics")
     if 'id="focusModeBtn"' in index_html:
         errors.append("Today Plan must not be hidden inside the overflow menu")
     if "inFocus ? '#icon-check' : '#icon-target'" in index_html:

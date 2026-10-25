@@ -2,6 +2,8 @@
 """Verify lazy conflict review and explicit bulk actions across unrendered rows."""
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 import json
 
 from playwright.sync_api import expect, sync_playwright
@@ -27,7 +29,7 @@ def run():
             incoming = [{'id': 1000 + index, 'name': f'Conflict task {index:03d}',
                          'description': f'Incoming description {index}'} for index in range(250)]
             incoming.append({'id': 2000, 'name': 'Distinct incoming task', 'description': 'Must be added'})
-            page.locator('#openMenuBtn').click()
+            open_settings(page)
             with page.expect_file_chooser() as chooser:
                 page.locator('#importBtn').click()
             chooser.value.set_files({'name': 'synthetic-conflicts.json', 'mimeType': 'application/json',
@@ -38,7 +40,7 @@ def run():
             page.locator('#mergeImportMode').check()
             expect(page.locator('.import-conflict-select')).to_have_count(100)
             page.locator('#cancelBtn').click()
-            page.locator('#openMenuBtn').click()
+            open_settings(page)
             with page.expect_file_chooser() as chooser:
                 page.locator('#importBtn').click()
             chooser.value.set_files({'name': 'synthetic-conflicts.json', 'mimeType': 'application/json',

@@ -2,6 +2,8 @@
 """Reconnect surviving recurrence links when reviewed merge conflicts are replaced."""
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 import argparse
 from copy import deepcopy
 import json
@@ -61,7 +63,7 @@ def payload_for(page, tasks):
 
 
 def open_merge(page, payload, action='replace'):
-    page.locator('#openMenuBtn').click()
+    open_settings(page)
     with page.expect_file_chooser() as chooser:
         page.locator('#importBtn').click()
     chooser.value.set_files({'name': 'valid-repeat-merge.json', 'mimeType': 'application/json',

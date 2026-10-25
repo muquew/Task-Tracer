@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 import json
 import os
 import time
@@ -102,8 +104,12 @@ def assert_focus_baseline(page: Page, label: str) -> None:
         '#languageSelect',
         '#themeToggleBtn',
         '#workspaceNavToggle',
-        '#viewSwitcher .view-tab[aria-selected="true"]',
+        '#viewSwitcher .view-tab[aria-current="page"]',
     ]
+    if page.locator('#settingsWorkspace').is_visible():
+        selectors = ['#settingsBackBtn', '#settingsThemeSelect', '#settingsLanguageSelect',
+                     '#backupBtn', '#importBtn', '#recoveryBtn', '#storageHealthBtn',
+                     '#notificationToggleBtn', '#archiveCompletedBtn', '#clearCompletedBtn', '#helpMenuBtn']
     for selector in selectors:
         locator = page.locator(selector).first
         if locator.count() and locator.is_visible() and locator.is_enabled():
@@ -305,7 +311,7 @@ def seed_tasks(page: Page) -> None:
 
 
 def audit_views_transfer(page: Page, axe_source: str, label: str) -> None:
-    page.locator('#openMenuBtn').click()
+    open_settings(page)
     page.locator('#savedViewsTransferBtn').click()
     expect(page.locator('#savedViewsTransferContent')).to_be_visible()
     audit_page_state(page, axe_source, f'{label} view transfer')
@@ -341,7 +347,7 @@ def audit_task_reading(page: Page, axe_source: str) -> None:
         FileReader.prototype.readAsText = function() {};
     }""")
     try:
-        page.locator('#openMenuBtn').click()
+        open_settings(page)
         with page.expect_file_chooser() as result:
             page.locator('#importBtn').click()
         result.value.set_files({'name': 'accessibility-tasks.json', 'mimeType': 'application/json', 'buffer': b'[]'})
@@ -353,6 +359,7 @@ def audit_task_reading(page: Page, axe_source: str) -> None:
 
 
 def audit_task_draft_guard(page: Page, axe_source: str, label: str) -> None:
+    return_to_task_workspace(page)
     page.locator('#openModalBtn').click()
     page.locator('#taskName').fill('Accessibility draft kept in this browser only')
     page.locator('#cancelBtn').click()
@@ -367,6 +374,7 @@ def audit_task_draft_guard(page: Page, axe_source: str, label: str) -> None:
 
 
 def audit_task_draft_recovery(page: Page, axe_source: str, label: str) -> None:
+    return_to_task_workspace(page)
     page.locator('#openModalBtn').click()
     page.locator('#taskName').fill('Accessibility unsaved quota draft')
     page.locator('#taskDesc').fill('Synthetic draft retained only in the current page memory')
@@ -453,7 +461,7 @@ def audit_scaled_surfaces(browser, url: str, axe_source: str, viewport: dict) ->
             expect(page.locator('#calendarDayTasks .calendar-detail-task')).to_have_count(100)
             audit_page_state(page, axe_source, f'{label} calendar day pagination')
             assert_focus_visible(page, '[data-calendar-action="detail-more"]', label)
-            page.locator('#openMenuBtn').click()
+            open_settings(page)
             page.locator('#recoveryBtn').click()
             expect(page.locator('#recoveryTaskPreview > li')).to_have_count(100)
             assert page.locator('#recoveryTaskPreview').bounding_box()['height'] < viewport['height'] / 2, 'Recovery preview pushes actions below a full page of task rows'
@@ -469,6 +477,7 @@ def audit_scaled_surfaces(browser, url: str, axe_source: str, viewport: dict) ->
             expect(page.locator('#cancelBtn')).to_be_focused()
             audit_page_state(page, axe_source, f'{label} clear recovery confirmation')
             page.locator('#cancelBtn').click()
+            return_to_task_workspace(page)
             raw_quick_text = 'Accessibility quick-add draft 中文 #review /Audit'
             page.locator('#quickAddInput').fill(raw_quick_text)
             inject_quota_failure(page)
@@ -516,6 +525,9 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False) -> No
         switch_to_english(page)
         select_view(page, "list")
         audit_page_state(page, axe_source, "english task list")
+        open_settings(page)
+        audit_page_state(page, axe_source, 'english settings page')
+        return_to_task_workspace(page)
         audit_views_transfer(page, axe_source, 'light')
         audit_view_delete(page, axe_source, 'light')
         audit_task_reading(page, axe_source)
@@ -529,12 +541,12 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False) -> No
         expect(page.locator('#diagnosticPreview')).to_be_visible()
         audit_page_state(page, axe_source, 'diagnostic preview')
         page.locator('#cancelBtn').click()
-        page.locator('#openMenuBtn').click()
+        open_settings(page)
         page.locator('#recoveryBtn').click()
         expect(page.locator('#recoverySelect')).to_have_count(1)
         audit_page_state(page, axe_source, 'recovery dialog')
         page.locator('#cancelBtn').click()
-        page.locator('#openMenuBtn').click()
+        open_settings(page)
         page.locator('#storageHealthBtn').click()
         expect(page.locator('#storageUsage')).to_be_visible()
         audit_page_state(page, axe_source, 'data safety dialog')
@@ -542,6 +554,8 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False) -> No
         select_theme_preference(page, 'dark')
         expect(page.locator('html')).to_have_attribute('data-theme', 'dark')
         close_workspace_navigation(page)
+        audit_page_state(page, axe_source, 'dark settings page')
+        return_to_task_workspace(page)
         audit_page_state(page, axe_source, 'dark task list')
         audit_views_transfer(page, axe_source, 'dark')
         audit_view_delete(page, axe_source, 'dark')

@@ -1,0 +1,51 @@
+[
+  {
+    "run": 0,
+    "passed": true
+  },
+  {
+    "run": 1,
+    "passed": true
+  },
+  {
+    "run": 2,
+    "passed": true
+  },
+  {
+    "run": 3,
+    "passed": true
+  },
+  {
+    "run": 4,
+    "passed": true
+  },
+  {
+    "run": 5,
+    "passed": true
+  },
+  {
+    "run": 6,
+    "passed": true
+  },
+  {
+    "run": 7,
+    "passed": true
+  },
+  {
+    "run": 8,
+    "passed": true
+  },
+  {
+    "run": 9,
+    "passed": true
+  },
+  {
+    "run": 10,
+    "passed": true
+  },
+  {
+    "run": 11,
+    "passed": false,
+    "error": "Locator expected to have text 'Edited draft subtask'\nActual value: Draft subtaskEdited draft subtask \nCall log:\n  - Expect \"to_have_text\" with timeout 5000ms\n  - waiting for locator(\"#subtaskListPreview .subtask-preview-text\").first\n    14 \u00d7 locator resolved to <span tabindex=\"0\" role=\"button\" data-index=\"0\" class=\"subtask-preview-text\" aria-label=\"\u7f16\u8f91\u5b50\u4efb\u52a1\uff1aDraft subtaskEdited draft subtask\">Draft subtaskEdited draft subtask</span>\n       - unexpected value \"Draft subtaskEdited draft subtask\"\n\nAria snapshot:\n- button \"\u7f16\u8f91\u5b50\u4efb\u52a1\uff1aDraft subtaskEdited draft subtask\": Draft subtaskEdited draft subtask"
+  }
+]

@@ -2,6 +2,8 @@
 """Delay notification delivery while another window edits/deletes/snoozes a task."""
 from __future__ import annotations
 
+from smoke_playwright import open_settings, return_to_task_workspace
+
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError, expect, sync_playwright
 from smoke_playwright import click_task_action
 from smoke_playwright import (browser_launch_options, clear_app_data, delete_task,
@@ -99,7 +101,7 @@ def run():
                 elif action == 'delete': delete_task(other, name)
                 else: snooze_task_reminder(other, name)
             expected = snapshot(page)
-            page.locator('#openMenuBtn').click()
+            open_settings(page)
             with page.expect_download(): page.locator('#exportCsvBtn').click()
             if action in ('abort', 'quota'):
                 page.evaluate("""mode => {
