@@ -54,7 +54,7 @@
             "image": "https://todo.muquew.com/screenshots/task-list-en.png",
             "description": "Task Tracer is a local-first PWA for tasks, routines, reminders, calendar planning, statistics, import/export backups, and offline use.",
             "inLanguage": ["en", "zh-CN"],
-            "softwareVersion": "4.8.5",
+            "softwareVersion": "4.8.6",
             "author": {
                 "@type": "Person",
                 "name": "muquew"
@@ -710,7 +710,7 @@
         .subtask-display-item.completed .subtask-text { text-decoration: line-through; color: var(--text-tertiary); }
         .subtask-checkbox { flex: 0 0 32px; padding: 0; appearance: none; -webkit-appearance: none; width: 32px; height: 32px; border: 1px solid var(--border-base); border-radius: 4px; cursor: pointer; position: relative; transition: all 0.2s ease; margin-right: 8px; background-color: var(--bg-surface); }
         .subtask-checkbox:hover { border-color: var(--color-success); background-color: var(--bg-hover); }
-        .subtask-checkbox:checked { border-color: var(--color-success); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E"); background-size: 80%; background-position: center; background-repeat: no-repeat; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .subtask-checkbox:checked { border-color: var(--color-success); background-color: color-mix(in srgb, var(--color-success) 70%, #000); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E"); background-size: 80%; background-position: center; background-repeat: no-repeat; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .modal { display: none; position: fixed; inset: 0; width: 100%; min-height: 100dvh; background-color: var(--bg-overlay); z-index: 1010; justify-content: center; align-items: center; padding: clamp(12px, 3vw, 28px); overflow-y: auto; overscroll-behavior: contain; }
         .modal-content { background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-surface); width: min(800px, calc(100vw - 32px)); max-height: min(860px, calc(100dvh - 32px)); box-shadow: 0 24px 60px var(--shadow-heavy); animation: modalAppear 0.24s var(--motion-theme-ease); overflow: hidden; display: flex; flex-direction: column; }
         @keyframes modalAppear { from { opacity: 0; transform: translateY(12px) scale(0.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -1645,7 +1645,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '4.8.5'
+                VERSION: '4.8.6'
             },
             DB: {
                 NAME: 'TaskTrackerDB',

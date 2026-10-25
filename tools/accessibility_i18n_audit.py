@@ -145,6 +145,122 @@ def assert_layout(page: Page, label: str) -> None:
         raise AssertionError(f"{label} has controls outside viewport: {metrics['overflowingControls'][:8]}")
 
 
+def color_contrast(first: list[int], second: list[int]) -> float:
+    def luminance(color: list[int]) -> float:
+        channels = [value / 255 for value in color[:3]]
+        linear = [value / 12.92 if value <= 0.04045 else ((value + 0.055) / 1.055) ** 2.4
+                  for value in channels]
+        return sum(value * weight for value, weight in zip(linear, (0.2126, 0.7152, 0.0722)))
+    light, dark = sorted((luminance(first), luminance(second)), reverse=True)
+    return (light + 0.05) / (dark + 0.05)
+
+
+def subtask_checkbox_paint(checkbox) -> dict:
+    return checkbox.evaluate("""element => {
+        const pixel = color => {
+            const canvas = document.createElement('canvas');
+            canvas.width = canvas.height = 1;
+            const context = canvas.getContext('2d');
+            context.fillStyle = color;
+            context.fillRect(0, 0, 1, 1);
+            return [...context.getImageData(0, 0, 1, 1).data];
+        };
+        const style = getComputedStyle(element);
+        const result = {
+            checked: element.checked,
+            background: pixel(style.backgroundColor),
+            marker: null,
+            image: style.backgroundImage,
+            focusVisible: element.matches(':focus-visible'),
+            outlineWidth: Number.parseFloat(style.outlineWidth),
+            outlineStyle: style.outlineStyle,
+            outline: pixel(style.outlineColor)
+        };
+        if (element.checked) {
+            if (!style.backgroundImage.startsWith('url(') || !style.backgroundImage.endsWith(')')) throw new Error('Checked subtask has no renderable SVG marker');
+            let image = style.backgroundImage.slice(4, -1).trim();
+            if (image[0] === '"' || image[0] === "'") image = image.slice(1, -1);
+            if (!image.startsWith('data:image/svg+xml')) throw new Error('Checked subtask marker is not an SVG image');
+            const separator = image.indexOf(',');
+            const metadata = image.slice(0, separator);
+            const data = image.slice(separator + 1);
+            const source = metadata.endsWith(';base64') ? atob(data) : decodeURIComponent(data);
+            const svg = new DOMParser().parseFromString(source, 'image/svg+xml');
+            const stroke = svg.querySelector('[stroke]:not([stroke="none"])');
+            if (!svg.querySelector('path[d]') || !stroke) throw new Error('Checked subtask SVG has no visible check stroke');
+            result.marker = pixel(stroke.getAttribute('stroke'));
+        }
+        return result;
+    }""")
+
+
+def audit_subtask_checkbox_visibility(page: Page, label: str,
+                                      observations: list | None = None,
+                                      evidence_directory: Path | None = None) -> None:
+    task = page.locator('.task-item').filter(has=page.locator('.subtasks-wrapper')).first
+    task.locator('.subtask-summary-bar').click()
+    checkbox = task.locator('.subtask-checkbox').first
+    expect(checkbox).to_be_visible()
+    expect(checkbox).to_have_role('checkbox')
+    expect(checkbox).not_to_be_checked()
+    for theme in ('light', 'dark'):
+        if page.locator('html').get_attribute('data-theme') != theme:
+            page.locator('#themeToggleBtn').click()
+        page.locator('#searchInput').focus()
+        page.mouse.move(0, 0)
+        page.evaluate("""async () => {
+            await Promise.all(document.getAnimations().filter(animation => animation.effect?.getTiming().iterations !== Infinity)
+                .map(animation => animation.finished.catch(() => {})));
+        }""")
+        unchecked = subtask_checkbox_paint(checkbox)
+        checkbox.focus()
+        checkbox.press('Space')
+        expect(checkbox).to_be_checked()
+        expect(task.locator('.subtask-display-item.completed')).to_have_count(1)
+        for interaction in ('resting', 'hover', 'keyboard-focus'):
+            if interaction == 'resting':
+                page.locator('#searchInput').focus()
+                page.mouse.move(0, 0)
+            elif interaction == 'hover':
+                checkbox.hover()
+            else:
+                page.mouse.move(0, 0)
+                checkbox.focus()
+                checkbox.press('Tab')
+                page.keyboard.press('Shift+Tab')
+                expect(checkbox).to_be_focused()
+            page.evaluate("""async () => {
+                await Promise.all(document.getAnimations().filter(animation => animation.effect?.getTiming().iterations !== Infinity)
+                    .map(animation => animation.finished.catch(() => {})));
+            }""")
+            paint = subtask_checkbox_paint(checkbox)
+            observation = {'label': label, 'theme': theme, 'interaction': interaction,
+                           'unchecked': unchecked, 'checked': paint,
+                           'marker_contrast': color_contrast(paint['marker'], paint['background']),
+                           'state_contrast': color_contrast(paint['background'], unchecked['background'])}
+            if evidence_directory is not None:
+                evidence_directory.mkdir(parents=True, exist_ok=True)
+                image = evidence_directory / f'{theme}-{interaction}.png'
+                assert not image.exists(), image
+                page.screenshot(path=image, full_page=True, animations='disabled')
+                observation['screenshot'] = str(image)
+            if observations is not None:
+                observations.append(observation)
+            print('Subtask checkbox visibility: ' + json.dumps(observation, ensure_ascii=False), flush=True)
+            assert paint['checked'] and paint['marker'][3] == paint['background'][3] == 255, observation
+            assert observation['marker_contrast'] >= 3, f'Checked subtask mark is not distinguishable: {observation}'
+            assert observation['state_contrast'] >= 3, f'Checked and unchecked subtask states are not distinguishable: {observation}'
+            if interaction == 'keyboard-focus':
+                assert paint['focusVisible'] and paint['outlineWidth'] > 0 and paint['outlineStyle'] != 'none', observation
+        checkbox.focus()
+        checkbox.press('Space')
+        expect(checkbox).not_to_be_checked()
+        expect(task.locator('.subtask-display-item.completed')).to_have_count(0)
+    task.locator('.subtask-summary-bar').click()
+    if page.locator('html').get_attribute('data-theme') != 'light':
+        page.locator('#themeToggleBtn').click()
+
+
 def switch_to_english(page: Page) -> None:
     page.locator("#openMenuBtn").click()
     page.locator("#langMenuToggle").click()
@@ -375,6 +491,7 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False) -> No
         clear_app_data(page, url)
         audit_page_state(page, axe_source, "empty task list")
         seed_tasks(page)
+        audit_subtask_checkbox_visibility(page, '390px' if reduced_motion else '1280px')
         audit_page_state(page, axe_source, "task list")
 
         page.locator("#openModalBtn").click()

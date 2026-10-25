@@ -1,12 +1,22 @@
-# 已完成工程目标：交付可复核的本地优先商用工程候选
+# 当前发布目标：验收并发布 4.8.6 视觉修正版
 
-目标设定日期：2026-10-24（北京时间）。
+2026-10-25（北京时间）：4.8.5 已完成工程验收并实际发布，随后在域名浏览器截图中确认已选中子任务的浅色主题勾号对比缺陷。当前继续完成 [4.8.6 修正版](docs/releases/4.8.6.md)，不以旧版通过记录替代新版验收。 修复、专项回归和同一新 91 输入候选的完整工程集成已完成；发布后的域名与浏览器验收继续进行。
+
+- [x] 完成勾选状态可见性修复及受影响的三引擎回归：6 个引擎/视口组合、36 个自动化状态通过，12 张代表图逐张检查；静态 7 项通过，[专项与冻结输入记录](docs/releases/4.8.6.md)保留实际颜色、状态、原 RED 和新 GREEN。
+- [x] 同一新 91 输入候选完整验收通过：[58/58 原报告](docs/releases/check-results-4.8.6.json)程序耗时合计 1427.981 秒、三引擎各 31 项、实际 4.8.5 档案升级/回退/再升级、两次独立构建字节一致及解压持久/离线均过；[来源记录](docs/releases/inputs-4.8.6.json)绑定 166 份原始证据及 23 文件/812,059 字节本地候选，清单如实保留 d9 dirty 工作树。
+- [ ] 将通过验收的 4.8.6 提交并推送 GitHub，等待域名资产及安全头精确匹配，再完成真实域名受影响浏览器流程和修复后勾选状态截图核对。
+
+本补丁未修改持久化或分页，4.8.5 的万级完整性/九例故障与 87 条受控测量保留为历史基线，不作为 4.8.6 新测；不因已发布一次而跳过本次修正后的集成验证。
+
+## 已完成工程基线：4.8.5
+
+原工程目标设定日期：2026-10-24（北京时间）。
 
 把 Task Tracer 完善为适合买断或专业版发行的个人任务产品：用户无需账号即可完成捕获、规划、执行、回顾和备份恢复；大工作区、离线、存储失败与多窗口使用有可复核的正确性证据；维护者能重复构建、验证、升级和回退同一份发行候选。沿用现有版本序列，根据实际改动更新版本。
 
 版权方是 muquew。工程工作持续推进；价格、收款渠道、私密售后及实际商业授权条款已由版权方标记为待定，不反复询问，也不阻塞代码改进。
 
-本轮五项验收队列已全部完成，已发现的严重数据安全与核心流程问题均已修复并回归通过；本工程目标于2026-10-24（北京时间）完成。证据绑定同一份4.8.5候选，原始失败与中断均保留。真实设备、生产部署和正式销售条件单独记录实际状态，不冒充这些外部事项已完成。
+本轮五项验收队列已全部完成，已发现的严重数据安全与核心流程问题均已修复并回归通过；本工程目标于2026-10-24（北京时间）完成。证据绑定同一份4.8.5候选，原始失败与中断均保留。真实设备、生产部署和正式销售条件按各自证据单列；2026-10-25 生产静态部署匹配已实测通过，真实设备与销售条件不因此计为完成。
 
 ## 工程验收目标
 
@@ -25,11 +35,11 @@
 4. 记录失败、修复、已通过和未执行的检查。只有真正依赖外部条件的事项才保留为外部待办，不以价格待定代替工程完成。
 5. 当前会话可继续执行代码与验证；本文件不是后台运行器，不声称回复结束后仍有自动执行任务。
 
-## 已完成验收队列
+## 4.8.5 已完成验收队列
 
-以下五项均以当前候选实际证据闭合，不将历史版本的结果计作新验证。完整58项、三引擎93程序、大规模完整性/九例故障、87条受控测量、双构建与实际旧档升降级均绑定同一份91输入；原始证据见下表。
+以下五项均以当时 4.8.5 候选实际证据闭合，不将历史版本的结果计作新验证。完整58项、三引擎93程序、大规模完整性/九例故障、87条受控测量、双构建与实际旧档升降级均绑定同一份91输入；原始证据见下表。
 
-- [x] **1. 大工作区完整性。** 用 10,000 个合成任务、每项 6 个子任务，在当前代码运行完整视图及实际 JSON 下载、替换导入、删除与恢复点恢复；逐字段比较任务、截止时间、子任务和重复关系，保留原始输出、数据规模、环境和源码身份。覆盖列表、时间线、日历和批量操作；不能仅验证可见卡片或任务总数。
+- [x] **1. 大工作区完整性。** 用 10,000 个合成任务、每项 6 个子任务，在 4.8.5 冻结代码运行完整视图及实际 JSON 下载、替换导入、删除与恢复点恢复；逐字段比较任务、截止时间、子任务和重复关系，保留原始输出、数据规模、环境和源码身份。覆盖列表、时间线、日历和批量操作；不能仅验证可见卡片或任务总数。
 - [x] **2. 大工作区故障恢复。** 在上述规模验证写事务中断、配额失败、保存草稿原页重试及多窗口冲突；失败时任务、配置、修订号和恢复历史保持原子性，恢复后不产生部分提交、误覆盖或重复提交。故障注入、实际配额限制与真实浏览器驱逐分别记录；用户已清除或浏览器已驱逐的数据不能靠同站点恢复历史保证找回。
 - [x] **3. 当前版本三引擎矩阵。** 在 Chromium、Firefox、WebKit 的桌面 1280px 与窄屏 390px 实跑核心新增/编辑/完成、视图、JSON 导出恢复、离线重载及受影响专项。发布逐项状态、实际引擎版本和限制；不支持或未执行的项目明确标记，不计为通过。WebKit 和窄屏模拟的结果不代填真实 Safari/iPhone 验收。
 - [x] **4. 受控性能验证。** 固定数据、视口、CPU 降速条件和测量方法，记录上述规模下列表、时间线、日历、批量写入及导入/恢复的耗时、渲染节点和可测的内存占用。执行已有性能预算；缺少预算的项目先保留基线、说明预算依据，再据此修复实际瓶颈和复测。保留测量次数与原始结果，不以一次云端读数声称真实手机性能。
@@ -37,17 +47,23 @@
 
 ### 2026-10-24 执行状态（北京时间）
 
-本轮完成记录见 [4.8.5](docs/releases/4.8.5.md)，当前app/cache/package为4.8.5、资源4.36。[第四次91输入冻结](docs/releases/frozen-inputs-4.8.5-integrated.json)绑定source588b…5a0，完整[58/58报告](docs/releases/check-results-4.8.5.json)通过，程序耗时合计1301.444秒；[输入与来源记录](docs/releases/inputs-4.8.5.json)绑定全部五项验收、314份原始证据及同一份23文件/812,056字节发行包。旧成功、真实失败、partial与首次Firefox未知原因超时保留原身份；后续完整重验不改写原失败。原始UTC时间不改。
+本轮完成记录见 [4.8.5](docs/releases/4.8.5.md)，该基线app/cache/package为4.8.5、资源4.36。[第四次91输入冻结](docs/releases/frozen-inputs-4.8.5-integrated.json)绑定source588b…5a0，完整[58/58报告](docs/releases/check-results-4.8.5.json)通过，程序耗时合计1301.444秒；[输入与来源记录](docs/releases/inputs-4.8.5.json)绑定全部五项验收、314份原始证据及同一份23文件/812,056字节发行包。旧成功、真实失败、partial与首次Firefox未知原因超时保留原身份；后续完整重验不改写原失败。原始UTC时间不改。
 
 | 队列 | 完成状态 | 实际证据与边界 |
 | --- | --- | --- |
-| 1 | 当前冻结源码一万任务×6完整九项通过 | [integrated报告](docs/releases/workspace-4.8.5-10000-integrated.json)/[日志](docs/releases/workspace-4.8.5-10000-integrated.log)含17,383,726字节实际JSON、root0四期九链接、100→200渲染但全10,000匹配项可选；1,000过滤项focus/delete/精确Undo与checkpoint恢复、list/timeline尾项109999、calendar dated109999/undated109996及无日期/日期详情分页均过。逐字段签名、source/tool起末均未变，无page/integrity error；elapsed是并行正确性跑而非受控性能。旧a52c[成功报告](docs/releases/workspace-4.8.5-10000.json)另留 |
-| 2 | 当前冻结源码一万任务×6九例全部通过 | [integrated原报告](docs/releases/storage-4.8.5-10000-integrated.json)/[日志](docs/releases/storage-4.8.5-10000-integrated.log)九例全过，source/tool起末未变、error=null且integrity为空；覆盖task/history/batch/revision/restore事务abort、表单/quick-add配额注入、原页明确重提、真实两窗口stale及native ConstraintError。完整tasks/config/revision/history原子性和原断言保留；首轮就绪race[失败报告](docs/releases/storage-4.8.5-10000-initial.json)另留。quota注入、原生请求错误与真实配额耗尽/驱逐分别记录，不扩成后两者已验证 |
-| 3 | 当前冻结源码三引擎各31程序通过 | [Chromium154.0.8037.57](docs/releases/browser-matrix-4.8.5-chromium.json)、[Firefox153.0完整新跑](docs/releases/browser-matrix-4.8.5-firefox.json)、[WebKit26.5](docs/releases/browser-matrix-4.8.5-webkit.json)各31/31全过，91输入起末/current均等于freeze4，原始96个probe/program日志一同保留。[逐项表](docs/browser-compatibility.md)明确仅core双视口1280×800/390×844、其他专项各自范围，4个FF/WK live-CDP覆盖组not_run不算通过。首次FF30pass/1timeout[原报告](docs/releases/browser-matrix-4.8.5-firefox-integrated-first.json)保留；诊断未复现且原因未定，没有改runtime/timeout/断言，不称已修复 |
-| 4 | 当前冻结源码87条完整测量通过 | [1280×900](docs/releases/performance-4.8.5-desktop-integrated.json)42条＋[全新390×900三轮](docs/releases/performance-4.8.5-mobile-resumed.json)42条＋[history10](docs/releases/performance-4.8.5-history10-integrated.json)3条全过，source/tools起末未变、fixture一致。reload/search中位数桌面2624.9/808.5ms、窄屏3173.4/792.7ms，原15s/5s预算均过，其余12项/history保留baseline_only；[14项表及方法](docs/performance.md)保留DOM/heap及限制。首次390px原生running/false[中断报告](docs/releases/performance-4.8.5-mobile-integrated-interrupted.json)不并样、不计通过；a52c旧87条保留原身份 |
+| 1 | 4.8.5 冻结源码一万任务×6完整九项通过 | [integrated报告](docs/releases/workspace-4.8.5-10000-integrated.json)/[日志](docs/releases/workspace-4.8.5-10000-integrated.log)含17,383,726字节实际JSON、root0四期九链接、100→200渲染但全10,000匹配项可选；1,000过滤项focus/delete/精确Undo与checkpoint恢复、list/timeline尾项109999、calendar dated109999/undated109996及无日期/日期详情分页均过。逐字段签名、source/tool起末均未变，无page/integrity error；elapsed是并行正确性跑而非受控性能。旧a52c[成功报告](docs/releases/workspace-4.8.5-10000.json)另留 |
+| 2 | 4.8.5 冻结源码一万任务×6九例全部通过 | [integrated原报告](docs/releases/storage-4.8.5-10000-integrated.json)/[日志](docs/releases/storage-4.8.5-10000-integrated.log)九例全过，source/tool起末未变、error=null且integrity为空；覆盖task/history/batch/revision/restore事务abort、表单/quick-add配额注入、原页明确重提、真实两窗口stale及native ConstraintError。完整tasks/config/revision/history原子性和原断言保留；首轮就绪race[失败报告](docs/releases/storage-4.8.5-10000-initial.json)另留。quota注入、原生请求错误与真实配额耗尽/驱逐分别记录，不扩成后两者已验证 |
+| 3 | 4.8.5 冻结源码三引擎各31程序通过 | [Chromium154.0.8037.57](docs/releases/browser-matrix-4.8.5-chromium.json)、[Firefox153.0完整新跑](docs/releases/browser-matrix-4.8.5-firefox.json)、[WebKit26.5](docs/releases/browser-matrix-4.8.5-webkit.json)各31/31全过，91输入起末/current均等于freeze4，原始96个probe/program日志一同保留。[逐项表](docs/browser-compatibility.md)明确仅core双视口1280×800/390×844、其他专项各自范围，4个FF/WK live-CDP覆盖组not_run不算通过。首次FF30pass/1timeout[原报告](docs/releases/browser-matrix-4.8.5-firefox-integrated-first.json)保留；诊断未复现且原因未定，没有改runtime/timeout/断言，不称已修复 |
+| 4 | 4.8.5 冻结源码87条完整测量通过 | [1280×900](docs/releases/performance-4.8.5-desktop-integrated.json)42条＋[全新390×900三轮](docs/releases/performance-4.8.5-mobile-resumed.json)42条＋[history10](docs/releases/performance-4.8.5-history10-integrated.json)3条全过，source/tools起末未变、fixture一致。reload/search中位数桌面2624.9/808.5ms、窄屏3173.4/792.7ms，原15s/5s预算均过，其余12项/history保留baseline_only；[14项表及方法](docs/performance.md)保留DOM/heap及限制。首次390px原生running/false[中断报告](docs/releases/performance-4.8.5-mobile-integrated-interrupted.json)不并样、不计通过；a52c旧87条保留原身份 |
 | 5 | 同一候选完整交付闭合 | [完整58/58报告](docs/releases/check-results-4.8.5.json)/[原始输出](docs/releases/check-output-4.8.5.log)全过、合计1301.444秒，起末91输入与freeze4相同；两次独立构建23文件/812,056字节/SHA08bf…5a0d一致，解压持久/离线及[实际4.8.4包升/降/再升](docs/releases/upgrade-4.8.4-to-4.8.5.log)均过。[来源记录](docs/releases/inputs-4.8.5.json)逐文件绑定314份原始证据、环境、输入与包；完整身份见[发行记录](docs/releases/4.8.5.md)，manifest如实保留dirty工作树 |
 
 五项工程验收已完成。原始失败与中断继续保留，不降低数据正确性断言，不把未执行记为通过。后续若修改影响这些结果，需重新验证受影响范围；本文件不声明回复结束后仍有后台任务。
+
+## 2026-10-25 发布后整改：4.8.6 进行中
+
+4.8.5 的 GitHub 推送、生产静态匹配及 Chromium 域名九步操作已记录在[本日阶段报告](docs/acceptance/2026-10-25/README.md)。后续真实域名 Firefox 两个视口的核心流程通过；WebKit 1280px 在线阶段通过，但上下文禁网重载出现 API internal error，完整组合失败，390px 未执行，不能合并称四组合通过。
+
+截图审读另确认浅色主题中已选中子任务的白色勾号缺少清晰背景对比，已在 4.8.6 修复，并完成专项及完整工程验收；新版本发布与域名浏览器核对仍待完成。上方五项工程验收是 4.8.5 已完成基线；旧 58 项、31×3 和 ZIP 身份保持原样，不将其作为新版本已通过的证明。4.8.6 的受影响回归、集成验证与发布结果需另记真实结果。
 
 ## 已完成基线：4.8.4
 
@@ -67,7 +83,7 @@
 ## 独立记录的外部事项
 
 - [真实设备验收](docs/manual-device-checklist.md)：实际系统输入法、安装、系统提醒及辅助技术结果仍需真实设备；云端模拟不冒充实机。
-- GitHub/Vercel 发布后，可用 `https://todo.muquew.com/` 补充验证。当前本地工程验证不依赖它；未经实际执行不声称已部署或远程 CI 通过。
+- 2026-10-25（北京时间）：4.8.5 已以提交 `d9b2a58d8359aa27c087f3da809d7de27ee398f0` 推送至 GitHub `main`，13:23:39 实际确认 `https://todo.muquew.com/` 的 14 条静态响应及安全头与候选一致。真实域名 Chromium 桌面/窄屏九步操作已通过，本地三引擎核心六组合及 Firefox 20 次重载补验另留；完整范围、截图与仍未执行事项见[发布后验收](docs/acceptance/2026-10-25/README.md)。本地工程验证不依赖域名，未声称远程 CI 通过。
 - 商业价格、收款、私密售后与正式授权条款见[商业交付草稿](docs/commercial-launch-draft.md)，继续保留待定状态，不启用收款。
 
 详细历史、设计边界和发布验收见[路线图](docs/product-roadmap.md)。

@@ -1,0 +1,7 @@
+{
+  "recorded_at": "2026-10-25T05:24:30.745432+00:00",
+  "native_report_sha256": "b7f10ca39e339a263aa2caa2bb8cbe59169fba86a3451c890da5fb3df2aa6d32",
+  "native_report_left_unchanged": true,
+  "accepted_as_completed": false,
+  "note": "Initial console received stdin EOF before browser context creation; not an app test or pass."
+}

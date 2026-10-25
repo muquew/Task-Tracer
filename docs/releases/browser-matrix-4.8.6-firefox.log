@@ -1,0 +1,63 @@
+firefox 153.0: starting 31 registered programs
+Running firefox: compatibility_playwright.py
+firefox: compatibility_playwright.py exited 0 in 26.552s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-compatibility_playwright.log)
+Running firefox: csv_playwright.py
+firefox: csv_playwright.py exited 0 in 17.972s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-csv_playwright.log)
+Running firefox: backup_freshness_playwright.py
+firefox: backup_freshness_playwright.py exited 0 in 14.965s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-backup_freshness_playwright.log)
+Running firefox: backup_reminder_priority_playwright.py
+firefox: backup_reminder_priority_playwright.py exited 0 in 9.674s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-backup_reminder_priority_playwright.log)
+Running firefox: project_scope_playwright.py
+firefox: project_scope_playwright.py exited 0 in 30.336s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-project_scope_playwright.log)
+Running firefox: task_draft_playwright.py
+firefox: task_draft_playwright.py exited 0 in 46.344s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-task_draft_playwright.log)
+Running firefox: quick_add_recovery_playwright.py
+firefox: quick_add_recovery_playwright.py exited 0 in 41.630s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-quick_add_recovery_playwright.log)
+Running firefox: quick_add_date_playwright.py
+firefox: quick_add_date_playwright.py exited 0 in 38.847s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-quick_add_date_playwright.log)
+Running firefox: imported_text_edit_playwright.py
+firefox: imported_text_edit_playwright.py exited 0 in 35.933s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-imported_text_edit_playwright.log)
+Running firefox: imported_reminder_edit_playwright.py
+firefox: imported_reminder_edit_playwright.py exited 0 in 30.333s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-imported_reminder_edit_playwright.log)
+Running firefox: repeat_lineage_playwright.py
+firefox: repeat_lineage_playwright.py exited 0 in 56.874s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-repeat_lineage_playwright.log)
+Running firefox: repeat_delete_playwright.py
+firefox: repeat_delete_playwright.py exited 0 in 95.592s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-repeat_delete_playwright.log)
+Running firefox: repeat_merge_playwright.py
+firefox: repeat_merge_playwright.py exited 0 in 113.789s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-repeat_merge_playwright.log)
+Running firefox: dialog_lifecycle_playwright.py
+firefox: dialog_lifecycle_playwright.py exited 0 in 16.817s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-dialog_lifecycle_playwright.log)
+Running firefox: onboarding_playwright.py
+firefox: onboarding_playwright.py exited 0 in 11.720s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-onboarding_playwright.log)
+Running firefox: help_playwright.py
+firefox: help_playwright.py exited 0 in 11.094s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-help_playwright.log)
+Running firefox: ime_input_playwright.py
+firefox: ime_input_playwright.py exited 0 in 27.708s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-ime_input_playwright.log)
+Running firefox: batch_selection_playwright.py
+firefox: batch_selection_playwright.py exited 0 in 29.860s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-batch_selection_playwright.log)
+Running firefox: workspace_failure_playwright.py
+firefox: workspace_failure_playwright.py exited 0 in 54.600s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-workspace_failure_playwright.log)
+Running firefox: calendar_performance_playwright.py
+firefox: calendar_performance_playwright.py exited 0 in 26.140s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-calendar_performance_playwright.log)
+Running firefox: calendar_navigation_playwright.py
+firefox: calendar_navigation_playwright.py exited 0 in 11.652s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-calendar_navigation_playwright.log)
+Running firefox: calendar_timezone_playwright.py
+firefox: calendar_timezone_playwright.py exited 0 in 6.456s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-calendar_timezone_playwright.log)
+Running firefox: recovery_management_playwright.py
+firefox: recovery_management_playwright.py exited 0 in 17.076s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-recovery_management_playwright.log)
+Running firefox: views_portability_playwright.py
+firefox: views_portability_playwright.py exited 0 in 14.060s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-views_portability_playwright.log)
+Running firefox: views_delete_playwright.py
+firefox: views_delete_playwright.py exited 0 in 21.265s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-views_delete_playwright.log)
+Running firefox: timezone_playwright.py
+firefox: timezone_playwright.py exited 0 in 8.606s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-timezone_playwright.log)
+Running firefox: dst_wall_time_playwright.py
+firefox: dst_wall_time_playwright.py exited 0 in 30.659s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-dst_wall_time_playwright.log)
+Running firefox: foreign_wall_time_playwright.py
+firefox: foreign_wall_time_playwright.py exited 0 in 34.304s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-foreign_wall_time_playwright.log)
+Running firefox: recurrence_timezone_playwright.py
+firefox: recurrence_timezone_playwright.py exited 0 in 47.639s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-recurrence_timezone_playwright.log)
+Running firefox: time_refresh_playwright.py
+firefox: time_refresh_playwright.py exited 0 in 44.902s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-time_refresh_playwright.log)
+Running firefox: stats_scope_playwright.py
+firefox: stats_scope_playwright.py exited 0 in 8.664s (/tmp/task-tracer-4.8.6-matrix-firefox-logs/d7dcaabd-dfba-4eb5-be33-847bfc271173/firefox-stats_scope_playwright.log)

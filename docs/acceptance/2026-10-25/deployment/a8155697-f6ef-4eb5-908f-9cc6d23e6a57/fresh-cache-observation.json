@@ -1,0 +1,89 @@
+{
+  "kind": "supplementary-cache-observation",
+  "run_id": "a8155697-f6ef-4eb5-908f-9cc6d23e6a57",
+  "captured_at": "2026-10-25T05:18:51.575924+00:00",
+  "captured_at_beijing": "2026-10-25T13:18:51.576280+08:00",
+  "source": "additional read-only no-cache, nonce-query fetches; original verification report unchanged",
+  "requests": [
+    {
+      "url": "https://todo.muquew.com/?acceptance=20261025-a8155697",
+      "request_headers": {
+        "Cache-Control": "no-cache"
+      },
+      "started_at": "2026-10-25T05:18:51.235625+00:00",
+      "status": 200,
+      "final_url": "https://todo.muquew.com/?acceptance=20261025-a8155697",
+      "bytes": 502078,
+      "sha256": "99664a947bb604e7aeb0cad00fcacce5d531ddc99159f05dec88d93915edc812",
+      "body_file": "assets/fresh-caaabc9be395.bin",
+      "headers": {
+        "date": "Sun, 25 Oct 2026 05:18:51 GMT",
+        "age": "535057",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "x-vercel-cache": "HIT",
+        "x-vercel-id": "cle1::tj4j7-1792905531344-f0f397892022",
+        "etag": "\"f718978ec695b1790ba39cf6d594a876\"",
+        "last-modified": "Mon, 19 Oct 2026 00:41:13 GMT",
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'"
+      },
+      "app_version": "4.1",
+      "resource_versions": [
+        "4.25"
+      ],
+      "finished_at": "2026-10-25T05:18:51.575411+00:00"
+    },
+    {
+      "url": "https://todo.muquew.com/index.html?acceptance=20261025-a8155697",
+      "request_headers": {
+        "Cache-Control": "no-cache"
+      },
+      "started_at": "2026-10-25T05:18:51.236843+00:00",
+      "status": 200,
+      "final_url": "https://todo.muquew.com/index.html?acceptance=20261025-a8155697",
+      "bytes": 502078,
+      "sha256": "99664a947bb604e7aeb0cad00fcacce5d531ddc99159f05dec88d93915edc812",
+      "body_file": "assets/fresh-9cbf078bb8fe.bin",
+      "headers": {
+        "date": "Sun, 25 Oct 2026 05:18:51 GMT",
+        "age": "37",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "x-vercel-cache": "HIT",
+        "x-vercel-id": "cle1::btxsg-1792905531398-d2112dee14cf",
+        "etag": "\"f718978ec695b1790ba39cf6d594a876\"",
+        "last-modified": "Sun, 25 Oct 2026 05:18:13 GMT",
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'"
+      },
+      "app_version": "4.1",
+      "resource_versions": [
+        "4.25"
+      ],
+      "finished_at": "2026-10-25T05:18:51.537957+00:00"
+    },
+    {
+      "url": "https://todo.muquew.com/sw.js?acceptance=20261025-a8155697",
+      "request_headers": {
+        "Cache-Control": "no-cache"
+      },
+      "started_at": "2026-10-25T05:18:51.237739+00:00",
+      "status": 200,
+      "final_url": "https://todo.muquew.com/sw.js?acceptance=20261025-a8155697",
+      "bytes": 4109,
+      "sha256": "8fd1b641687a3716050c2af293f111557f57902a30c117cea950241b17cc2b2f",
+      "body_file": "assets/fresh-b54338e77745.bin",
+      "headers": {
+        "date": "Sun, 25 Oct 2026 05:18:51 GMT",
+        "age": "36",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "x-vercel-cache": "HIT",
+        "x-vercel-id": "cle1::j7xds-1792905531352-3185e52254ab",
+        "etag": "\"572297e7ae20ed326a28bfb287eda42f\"",
+        "last-modified": "Sun, 25 Oct 2026 05:18:14 GMT",
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'"
+      },
+      "cache_names": [
+        "task-tracer-v4.1"
+      ],
+      "finished_at": "2026-10-25T05:18:51.374547+00:00"
+    }
+  ]
+}

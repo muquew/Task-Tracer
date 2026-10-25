@@ -13,6 +13,66 @@ python3 tools/browser_matrix.py --browser all --keep-going --report dist/browser
 
 Repeat `--browser`, `--group` or `--program` to select a union. Without a selection, all three engines and all registered programs are planned. Groups are `core`, `capture`, `data`, `calendar`, `dates` and `all`. `--list` works with Python's standard library and does not launch a browser or write a validation report.
 
+## Integrated 4.8.6 matrix — publication acceptance pending
+
+All three new native reports passed their exact 31-program registry, for 93 program executions. Each has `completed: true`, `passed: true`, no failed/unexecuted programs or integrity errors, and source/verification start and end maps equal to the [new 91-input freeze](releases/frozen-inputs-4.8.6.json). The separate full 58-program Chromium checker also passed, with 1427.981 summed program seconds, along with independent byte-identical builds and extracted persistence/offline. The [91-input provenance](releases/inputs-4.8.6.json) binds the completed engineering candidate and 166 original evidence files; 4.8.6 production publication is not yet counted.
+
+| Engine | Actual probed version | Programs | Native report | Original console |
+| --- | --- | --- | --- | --- |
+| Chromium | 154.0.8037.57 | 31 passed | [JSON](releases/browser-matrix-4.8.6-chromium.json) | [Log](releases/browser-matrix-4.8.6-chromium.log) |
+| Firefox | 153.0 | 31 passed | [JSON](releases/browser-matrix-4.8.6-firefox.json) | [Log](releases/browser-matrix-4.8.6-firefox.log) |
+| WebKit | 26.5 | 31 passed | [JSON](releases/browser-matrix-4.8.6-webkit.json) | [Log](releases/browser-matrix-4.8.6-webkit.log) |
+
+The [strict collection record](releases/browser-matrix-4.8.6-integrated-validation.json) verifies exact registry order, actual versions, current/source/end identities and the portable relative UUID log trees. All 96 referenced probe/program logs and the six original report/console files were copied byte for byte, 102 native files total. Last completion times were 14:01:35 Chromium, 14:01:52 Firefox and 14:04:43 WebKit (Beijing); native UTC timestamps and run UUIDs remain in the reports.
+
+| Registered program | Chromium | Firefox | WebKit |
+| --- | --- | --- | --- |
+| [compatibility_playwright.py](../tools/compatibility_playwright.py) | Passed | Passed | Passed |
+| [csv_playwright.py](../tools/csv_playwright.py) | Passed | Passed | Passed |
+| [backup_freshness_playwright.py](../tools/backup_freshness_playwright.py) | Passed | Passed | Passed |
+| [backup_reminder_priority_playwright.py](../tools/backup_reminder_priority_playwright.py) | Passed | Passed | Passed |
+| [project_scope_playwright.py](../tools/project_scope_playwright.py) | Passed | Passed | Passed |
+| [task_draft_playwright.py](../tools/task_draft_playwright.py) | Passed | Passed | Passed |
+| [quick_add_recovery_playwright.py](../tools/quick_add_recovery_playwright.py) | Passed | Passed | Passed |
+| [quick_add_date_playwright.py](../tools/quick_add_date_playwright.py) | Passed | Passed | Passed |
+| [imported_text_edit_playwright.py](../tools/imported_text_edit_playwright.py) | Passed | Passed | Passed |
+| [imported_reminder_edit_playwright.py](../tools/imported_reminder_edit_playwright.py) | Passed | Passed | Passed |
+| [repeat_lineage_playwright.py](../tools/repeat_lineage_playwright.py) | Passed | Passed | Passed |
+| [repeat_delete_playwright.py](../tools/repeat_delete_playwright.py) | Passed | Passed | Passed |
+| [repeat_merge_playwright.py](../tools/repeat_merge_playwright.py) | Passed | Passed | Passed |
+| [dialog_lifecycle_playwright.py](../tools/dialog_lifecycle_playwright.py) | Passed | Passed | Passed |
+| [onboarding_playwright.py](../tools/onboarding_playwright.py) | Passed | Passed | Passed |
+| [help_playwright.py](../tools/help_playwright.py) | Passed | Passed | Passed |
+| [ime_input_playwright.py](../tools/ime_input_playwright.py) | Passed | Passed | Passed |
+| [batch_selection_playwright.py](../tools/batch_selection_playwright.py) | Passed | Passed | Passed |
+| [workspace_failure_playwright.py](../tools/workspace_failure_playwright.py) | Passed | Passed | Passed |
+| [calendar_performance_playwright.py](../tools/calendar_performance_playwright.py) | Passed | Passed | Passed |
+| [calendar_navigation_playwright.py](../tools/calendar_navigation_playwright.py) | Passed | Passed | Passed |
+| [calendar_timezone_playwright.py](../tools/calendar_timezone_playwright.py) | Passed | Passed; live CDP `not_run` | Passed; live CDP `not_run` |
+| [recovery_management_playwright.py](../tools/recovery_management_playwright.py) | Passed | Passed | Passed |
+| [views_portability_playwright.py](../tools/views_portability_playwright.py) | Passed | Passed | Passed |
+| [views_delete_playwright.py](../tools/views_delete_playwright.py) | Passed | Passed | Passed |
+| [timezone_playwright.py](../tools/timezone_playwright.py) | Passed | Passed; live CDP `not_run` | Passed; live CDP `not_run` |
+| [dst_wall_time_playwright.py](../tools/dst_wall_time_playwright.py) | Passed | Passed | Passed |
+| [foreign_wall_time_playwright.py](../tools/foreign_wall_time_playwright.py) | Passed | Passed | Passed |
+| [recurrence_timezone_playwright.py](../tools/recurrence_timezone_playwright.py) | Passed | Passed | Passed |
+| [time_refresh_playwright.py](../tools/time_refresh_playwright.py) | Passed | Passed | Passed |
+| [stats_scope_playwright.py](../tools/stats_scope_playwright.py) | Passed | Passed | Passed |
+
+Only `compatibility_playwright.py` repeats core CRUD, persistence, layouts, JSON export/restoration and offline reload at 1280×800 and 390×844. Other programs keep their declared viewports and fixtures. Firefox/WebKit retain four engine/program live-CDP coverage groups as `not_run`, not four individual assertions; fixed-zone cases ran, while the excluded live calendar group contains several scenarios. Those unavailable live overrides are outside successful coverage.
+
+The [checked-subtask targeted summary](releases/checkbox-visibility-4.8.6-summary.json) separately records six actual engine/viewport combinations and 36 automated light/dark resting/hover/keyboard-focus observations, with twelve representative saved images inspected. That narrow visual proof and this matrix do not establish every checker program in all engines, native quota/eviction, physical Safari/iPhone, real IME/soft keyboard, assistive technology, system notifications or remote CI. The [4.8.6 candidate record](releases/4.8.6.md) records completed engineering delivery and the remaining publication checks. The 4.8.5 results below retain their own source identities.
+
+## 2026-10-25 browser and published-site acceptance
+
+The [new dated report](acceptance/2026-10-25/README.md) keeps post-publication evidence separate from the integrated matrix below. The unchanged original core program passed in Chromium 154.0.8037.57, Firefox 153.0 and WebKit 26.5 at both 1280×800 and 390×844, for six local engine/viewport combinations. Five original Firefox onboarding runs also passed all twenty reloads; no original assertion or 30-second reload timeout changed. The historical first timeout remains unexplained.
+
+After commit `d9b2a58d8359aa27c087f3da809d7de27ee398f0` was pushed to `main`, production HTML, Service Worker, language resources, remaining static assets and security headers matched 4.8.5 / resources 4.36 at `https://todo.muquew.com/`. The dated report includes a separate nine-step real-domain Chromium flow with inspected screenshots, actual backup/replacement/full-field checks, offline reload and narrow-screen editing/statistics. The [real-domain supplement](acceptance/2026-10-25/production-compatibility/e33926be-d2b4-467b-8d47-cb3f31510a11/verification-summary.json) completed with two Firefox combinations passed, WebKit 1280px failed at its context-offline reload after its online checks, and WebKit 390px unexecuted. Source 22 + verification 69 maps stayed equal to the existing freeze until that 4.8.5 phase was sealed, before intentional 4.8.6 changes.
+
+Screenshot inspection also found the light-theme checked-subtask glyph white on a pale/white background in Firefox and WebKit. That confirmed visual/accessibility defect is being corrected in 4.8.6; the earlier automated results do not establish corrected-version acceptance. The WebKit offline-API diagnosis is separate and its cause is not asserted here.
+
+This dated core repeat is not a repeat of all 31 specialized programs or all 58 checker programs, and neither narrow viewports nor WebKit on Linux establish physical Safari/iPhone, real IME, OS installation, screen-reader or system-notification acceptance. English singular-count wording seen in the screenshots is a non-blocking polish item. Remote-CI status is not inferred from a push or deployment.
+
 ## Scope and interpretation
 
 | Coverage | Actual scope |

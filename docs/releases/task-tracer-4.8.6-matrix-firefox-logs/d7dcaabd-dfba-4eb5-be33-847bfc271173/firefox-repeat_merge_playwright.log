@@ -1,0 +1,13 @@
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+Repeat merge firefox: replace-roundtrip passed
+Repeat merge firefox: consecutive passed
+Repeat merge firefox: keep passed
+Repeat merge firefox: skip passed
+Repeat merge firefox: distinct passed
+Repeat merge firefox: abort-repair passed
+Repeat merge firefox: abort-incoming passed
+Repeat merge firefox: abort-checkpoint passed
+Repeat merge firefox: stale passed
+Repeat merge firefox: ambiguity passed
+Repeat merge firefox: cycle passed
+{"browser": "firefox", "browser_version": "153.0", "cases": 11, "status": "passed", "passed": true}

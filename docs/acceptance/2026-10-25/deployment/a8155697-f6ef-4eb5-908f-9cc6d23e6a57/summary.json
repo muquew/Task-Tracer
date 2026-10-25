@@ -1,0 +1,64 @@
+{
+  "captured_at": "2026-10-25T05:19:24.793106+00:00",
+  "captured_at_beijing": "2026-10-25T13:19:24.793227+08:00",
+  "acceptance_status": "failed_candidate_not_deployed",
+  "online_app_version": "4.1",
+  "online_resource_version": [
+    "4.25"
+  ],
+  "online_cache_name": [
+    "task-tracer-v4.1"
+  ],
+  "candidate_app_version": "4.8.5",
+  "candidate_resource_version": [
+    "4.36"
+  ],
+  "original_cli_exit": 1,
+  "successful_http_requests": 18,
+  "candidate_asset_paths": 14,
+  "matching_asset_paths": 7,
+  "different_asset_paths": 7,
+  "security_headers": [
+    {
+      "header": "Content-Security-Policy",
+      "matches_candidate": false,
+      "actual": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'",
+      "candidate": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'sha256-kf7A9Wt+NMuXlNU5+Yfmp++9fT61kBEd9RAUGe27kxQ=' 'sha256-QKkK5CxgeXqMVQscSSpN4kmAymcXTW0RJCfZyPTLZPg=' 'sha256-JXhuJajybPD8LGGiUC+F47Umdv7tahCTBMIGRrcJ24E=' 'sha256-b9FOOYsqfmhZB3XZAvNtVXH2g/L3fTjk93/oEsZK1Sg='; script-src-attr 'none'"
+    },
+    {
+      "header": "Referrer-Policy",
+      "matches_candidate": true,
+      "actual": "strict-origin-when-cross-origin",
+      "candidate": "strict-origin-when-cross-origin"
+    },
+    {
+      "header": "X-Content-Type-Options",
+      "matches_candidate": true,
+      "actual": "nosniff",
+      "candidate": "nosniff"
+    },
+    {
+      "header": "X-Frame-Options",
+      "matches_candidate": true,
+      "actual": "DENY",
+      "candidate": "DENY"
+    },
+    {
+      "header": "Permissions-Policy",
+      "matches_candidate": true,
+      "actual": "camera=(), microphone=(), geolocation=()",
+      "candidate": "camera=(), microphone=(), geolocation=()"
+    }
+  ],
+  "source_unchanged": true,
+  "verification_unchanged": true,
+  "original_evidence_unchanged": true,
+  "cache_observation": "No-cache request header plus distinct nonce query returned the same online 4.1 HTML and worker; no browser profile or Service Worker participated in these HTTPS GETs. Backend deployment history and root cause were not queried.",
+  "prior_sandbox_run": "../ea21469f-83cb-4edf-808c-974ab09001a7/report.json",
+  "limitations": [
+    "No deployment or push performed",
+    "No production task database or browser profile modified",
+    "Online 4.1 is not candidate 4.8.5 acceptance",
+    "First default sandbox denied socket access locally; recorded separately and not treated as an HTTP failure"
+  ]
+}

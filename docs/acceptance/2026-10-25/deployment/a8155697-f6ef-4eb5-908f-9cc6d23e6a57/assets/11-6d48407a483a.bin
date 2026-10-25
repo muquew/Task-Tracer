@@ -1,0 +1,574 @@
+{
+  "app": {
+    "language": "English",
+    "title": "Task Tracer",
+    "toolbar": "Task toolbar"
+  },
+  "actions": {
+    "exportBackup": "Export/Backup",
+    "exportBackupTitle": "Export complete task data and update backup status",
+    "import": "Import",
+    "importTitle": "Import and replace current task data",
+    "addTask": "Add Task",
+    "openMenu": "Open menu",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "updateTask": "Update Task",
+    "archiveCompletedTitle": "Archive all completed tasks",
+    "archiveCompleted": "Archive Completed",
+    "clearCompletedTitle": "Clear All Completed Tasks",
+    "clearCompleted": "Clear Completed"
+  },
+  "search": {
+    "placeholder": "Search tasks...",
+    "clear": "Clear search",
+    "syntaxTitle": "Supports project:work, tag:study, status:completed, due:today, and #tag",
+    "syntaxHint": "Supports scoped search: project:name, tag:name, status:value, and due:value."
+  },
+  "quickAdd": {
+    "label": "Quick add task",
+    "placeholder": "tomorrow 20:00 Review English #study /Personal",
+    "submit": "Add",
+    "hint": "Enter a natural date, time, #tag, and /project. Without /project, the task goes to Inbox.",
+    "captureReady": "Quick capture is ready. Review the text, then press Enter to add it."
+  },
+  "tools": {
+    "label": "Quick add and filter tools",
+    "collapse": "Collapse quick add and filter tools",
+    "expand": "Expand quick add and filter tools",
+    "pin": "Pin quick add and filter tools",
+    "unpin": "Unpin quick add and filter tools"
+  },
+  "savedViews": {
+    "label": "Smart Views",
+    "saveCurrent": "Save View",
+    "saveCurrentTitle": "Save the current search, filters, and view",
+    "saveTitle": "Save Smart View",
+    "nameLabel": "View name",
+    "namePlaceholder": "For example: Study this week",
+    "defaultName": "Smart View {index}",
+    "nameFromSearch": "Search: {query}",
+    "saved": "Smart view saved",
+    "deleted": "Smart view deleted: {name}",
+    "applied": "Smart view opened: {name}",
+    "applyLabel": "Open smart view: {name}",
+    "deleteLabel": "Delete smart view: {name}"
+  },
+  "focus": {
+    "openTitle": "Open Today Plan",
+    "activeTitle": "Exit Today Plan",
+    "openShort": "Today",
+    "activeShort": "Focused",
+    "title": "Today Plan",
+    "summary": "{completed}/{total} tasks completed",
+    "exit": "Exit Focus",
+    "added": "Added to today plan",
+    "removed": "Removed from today plan",
+    "emptyTitle": "Today plan is empty",
+    "emptyDescription": "Add tasks to today plan from task cards or batch actions."
+  },
+  "batch": {
+    "menu": "Batch Actions",
+    "menuTitle": "Enter batch action mode",
+    "activeTitle": "Exit batch action mode",
+    "selected": "{count} task(s) selected",
+    "selectVisible": "Select Visible",
+    "clearSelection": "Clear Selection",
+    "addToFocus": "Add Today",
+    "complete": "Complete",
+    "archive": "Archive",
+    "delete": "Delete",
+    "exit": "Exit",
+    "selectTask": "Select task: {taskName}",
+    "noneSelected": "Select tasks first",
+    "nothingToComplete": "The selected tasks have nothing to complete",
+    "confirmDelete": "Permanently delete {count} selected task(s)?",
+    "error": "Batch action failed. Please try again",
+    "success": {
+      "focus": "{count} task(s) added to today plan",
+      "complete": "{count} task(s) marked complete",
+      "archive": "{count} task(s) archived",
+      "delete": "{count} task(s) deleted"
+    },
+    "undo": {
+      "focus": "batch add to today plan",
+      "complete": "batch complete",
+      "archive": "batch archive",
+      "delete": "batch delete"
+    }
+  },
+  "undo": {
+    "menu": "Undo Last Action",
+    "menuTitle": "Undo the most recent task action",
+    "availableTitle": "Undo: {action}",
+    "unavailableTitle": "No action to undo",
+    "action": "Undo",
+    "restored": "Undone: {action}",
+    "error": "Undo failed. Please try again",
+    "labels": {
+      "add": "add task",
+      "edit": "edit task",
+      "delete": "delete task",
+      "complete": "update completion",
+      "skipRepeat": "skip repeat",
+      "clearCompleted": "clear completed",
+      "archiveCompleted": "archive completed",
+      "archive": "update archive state",
+      "focus": "update today plan",
+      "snooze": "snooze reminder",
+      "import": "import tasks"
+    }
+  },
+  "commandPalette": {
+    "title": "Command Palette",
+    "close": "Close command palette",
+    "searchLabel": "Search commands",
+    "placeholder": "Search commands, views, or projects",
+    "hint": "Use the arrow keys to choose a command, then press Enter.",
+    "listLabel": "Available commands",
+    "empty": "No matching commands",
+    "groups": {
+      "tasks": "Tasks",
+      "views": "Views",
+      "data": "Data",
+      "projects": "Projects",
+      "savedViews": "Smart Views"
+    },
+    "commands": {
+      "newTask": "New task",
+      "quickAdd": "Focus quick add",
+      "search": "Search tasks",
+      "focusMode": "Open today plan",
+      "batchMode": "Enter batch actions",
+      "undo": "Undo last action",
+      "exportBackup": "Export/Backup",
+      "project": "Switch project: {project}",
+      "savedView": "Open smart view: {name}",
+      "view": {
+        "list": "Switch to list view",
+        "calendar": "Switch to calendar view",
+        "timeline": "Switch to timeline view",
+        "stats": "Switch to stats view"
+      }
+    }
+  },
+  "pwa": {
+    "install": {
+      "menu": "Install App",
+      "menuTitle": "Install the app or view install steps",
+      "title": "Install Task Tracer",
+      "installed": "App installed",
+      "accepted": "App installation started",
+      "manualIntro": "If the browser does not show an install window automatically, use the matching browser path:",
+      "desktop": "Chrome or Edge on desktop: use the install icon in the address bar, or choose Install app from the browser menu.",
+      "android": "Chrome on Android: open the browser menu, then choose Install app or Add to Home screen.",
+      "ios": "Safari on iPhone or iPad: tap Share, then choose Add to Home Screen."
+    },
+    "update": {
+      "label": "App update",
+      "message": "A new version is ready. Refresh to use the latest app.",
+      "reload": "Refresh",
+      "dismiss": "Not now"
+    }
+  },
+  "projects": {
+    "filterLabel": "Project view",
+    "all": "All Projects",
+    "none": "Unassigned",
+    "groupTitle": "{project} · {count} tasks"
+  },
+  "views": {
+    "label": "View switcher",
+    "list": "List",
+    "calendar": "Calendar",
+    "timeline": "Timeline",
+    "stats": "Stats"
+  },
+  "calendar": {
+    "previousYear": "Previous year",
+    "previous": "Previous month",
+    "next": "Next month",
+    "nextYear": "Next year",
+    "today": "Today",
+    "addTaskOnDate": "Add task on {date}",
+    "showDayTasks": "View all {count} tasks on {date}",
+    "closeDayTasks": "Close day tasks",
+    "more": "+{count} more",
+    "taskCount": "{count} tasks",
+    "noDeadline": "No deadline"
+  },
+  "stats": {
+    "title": "Task stats",
+    "completionRate": "Completion rate",
+    "overdueRate": "Overdue rate",
+    "streakDays": "Completion streak",
+    "daysValue": "{count} days",
+    "completedDetail": "{completed}/{total} tasks completed",
+    "overdueDetail": "{overdue}/{total} deadline tasks overdue",
+    "streakDetail": "{count} consecutive recent days with completions",
+    "totalTasks": "Total tasks",
+    "completedTasks": "Completed",
+    "overdueTasks": "Active overdue",
+    "archivedTasks": "Archived",
+    "todayCompleted": "Completed today",
+    "openFilter": "View {label}: {count}",
+    "completionTrend": "Last 7 days completed",
+    "trendCount": "{date}: {count} completed"
+  },
+  "filters": {
+    "all": "All",
+    "active": "Active",
+    "completed": "Completed",
+    "archived": "Archived",
+    "overdue": "Overdue",
+    "noDeadline": "No Deadline"
+  },
+  "modal": {
+    "addTitle": "Add New Task",
+    "editTitle": "Edit Task"
+  },
+  "tooltips": {
+    "addTask": "Add New Task (Ctrl+I)",
+    "menu": "Menu (Ctrl+M)",
+    "theme": "Change Theme",
+    "backToTop": "Back to top (Alt + T)",
+    "searchShortcut": "Search shortcut: Ctrl/Cmd + K"
+  },
+  "form": {
+    "taskName": {
+      "label": "Task Name *",
+      "placeholder": "Enter task name"
+    },
+    "description": {
+      "label": "Task Description (optional)",
+      "placeholder": "Enter task description"
+    },
+    "project": {
+      "label": "Project (optional)",
+      "placeholder": "e.g. Work / Personal"
+    },
+    "tags": {
+      "label": "Tags (optional)",
+      "placeholder": "Separate tags with commas",
+      "hint": "Tags are included in search."
+    },
+    "dueDate": {
+      "label": "Due Date"
+    },
+    "noDeadline": "No Deadline",
+    "reminder": {
+      "label": "Reminder",
+      "options": {
+        "none": "None",
+        "atTime": "At time of due date",
+        "min15": "15 minutes before",
+        "hour1": "1 hour before",
+        "day1": "1 day before"
+      }
+    },
+    "reminderRepeat": {
+      "label": "Repeat Reminder",
+      "backgroundLimit": "The browser checks reminders while the app is open or wakes up; system-level background delivery is not guaranteed.",
+      "options": {
+        "none": "Do not repeat",
+        "min15": "Every 15 minutes",
+        "hour1": "Every hour",
+        "day1": "Daily"
+      }
+    },
+    "repeat": {
+      "label": "Repeating Task",
+      "hint": "Creates the next occurrence after completion.",
+      "customDays": "Interval days",
+      "options": {
+        "none": "Do not repeat",
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "weeklyDays": "Specific weekdays",
+        "monthly": "Monthly",
+        "monthlyLast": "Last day of each month",
+        "custom": "Custom interval"
+      },
+      "weekdaysLabel": "Repeat weekdays",
+      "weekdays": {
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "sun": "Sun"
+      },
+      "pause": "Pause repeating task"
+    },
+    "subtasks": {
+      "label": "Subtasks (optional)",
+      "placeholder": "Enter subtasks...",
+      "add": "Add subtask",
+      "edit": "Edit subtask: {text}",
+      "editInput": "Edit subtask text",
+      "delete": "Delete subtask: {text}"
+    },
+    "dueTime": {
+      "label": "Due time"
+    }
+  },
+  "task": {
+    "subtasks": "Subtasks",
+    "deadline": "Due",
+    "noDeadline": "No Deadline",
+    "actions": {
+      "markComplete": "Mark as complete",
+      "markIncomplete": "Mark as incomplete",
+      "snooze": "Remind again in 10 minutes",
+      "skipRepeat": "Skip this occurrence",
+      "addFocus": "Add to today plan",
+      "removeFocus": "Remove from today plan",
+      "archive": "Archive task",
+      "restoreArchive": "Restore from archive",
+      "edit": "Edit task",
+      "delete": "Delete task",
+      "reorder": "Move task: {taskName}. Use the up and down arrow keys to reorder"
+    },
+    "importedFallback": "Imported task {index}",
+    "repeat": {
+      "daily": "Repeats daily",
+      "weekly": "Repeats weekly",
+      "weeklyDays": "Repeats on {days}",
+      "monthly": "Repeats monthly",
+      "monthly-last": "Repeats on the last day of each month",
+      "custom": "Repeats every {days} days",
+      "paused": "paused",
+      "weekdaySeparator": ", "
+    }
+  },
+  "empty": {
+    "noTasks": {
+      "title": "No Tasks",
+      "description": "Click \"Add Task\" to start tracking your tasks"
+    },
+    "noMatches": {
+      "title": "No matching tasks found",
+      "description": "Try adjusting your search or filters"
+    }
+  },
+  "storage": {
+    "unavailable": {
+      "title": "Local storage is unavailable",
+      "message": "This browser is blocking the local database, so tasks cannot be read or saved. Adjust privacy settings and retry; after storage is available again, restore data from an existing export or backup file.",
+      "emptyDescription": "Task Tracer is in protected mode. All task-writing actions are paused to avoid changes that cannot be saved.",
+      "snapshotDescription": "Task Tracer is in protected mode and task writes are paused. This page still holds an in-memory snapshot of {count} task(s), so download an emergency backup first.",
+      "retry": "Retry",
+      "retrying": "Retrying...",
+      "retryFailed": "Local storage is still unavailable",
+      "short": "Local storage is unavailable; task actions are paused",
+      "actionsDisabled": "Local storage is unavailable, so task actions are paused",
+      "emergencyBackup": "Emergency Backup",
+      "emergencyBackupTitle": "Download the current in-memory snapshot",
+      "emergencyBackupSuccess": "Emergency backup downloaded with {count} task(s)",
+      "noSnapshot": "No task snapshot is available to download"
+    }
+  },
+  "status": {
+    "completed": "Completed",
+    "archived": "Archived",
+    "safe": "Safe",
+    "warning": "Warning",
+    "danger": "Urgent",
+    "overdue": "Overdue",
+    "noDeadline": "No Deadline"
+  },
+  "messages": {
+    "task": {
+      "confirmDelete": "Are you sure you want to delete this task?",
+      "added": "Task added successfully",
+      "updated": "Task updated successfully",
+      "deleted": "Task deleted successfully",
+      "markedComplete": "Task marked as completed",
+      "markedIncomplete": "Task marked as incomplete",
+      "repeatCreated": "Task completed and next occurrence created",
+      "repeatSkipped": "This occurrence was skipped and moved to the next one",
+      "nameRequired": "Please enter a task name",
+      "snoozed": "Reminder snoozed for {minutes} minutes",
+      "saveError": "Failed to save task, please try again",
+      "deleteError": "Failed to delete task, please try again",
+      "updateError": "Failed to update task status, please try again"
+    },
+    "backup": {
+      "success": "Export/backup file downloaded",
+      "error": "Export/backup failed. Please try again",
+      "reminder": "Download a recent backup to avoid losing tasks if browser data is cleared."
+    },
+    "import": {
+      "success": "Successfully imported {count} tasks!",
+      "successMerged": "Successfully merged {count} tasks!",
+      "confirm": "About to import {count} tasks. Replace current data?",
+      "previewTitle": "Import Preview",
+      "previewTasks": "Tasks to import",
+      "previewReplace": "Replacement impact",
+      "previewReplaceValue": "{current} current tasks will be replaced, including {completed} completed and {archived} archived",
+      "previewDuplicates": "Duplicate names",
+      "previewFileDuplicates": "Repeated inside file",
+      "previewDuplicateIds": "Repeated task IDs",
+      "previewExistingMatches": "Matches current tasks",
+      "restoreCheckTitle": "Restore Checklist",
+      "restoreCheckSummary": "{warnings}/{total} item(s) need attention",
+      "restoreStatusPass": "Pass",
+      "restoreStatusWarn": "Attention",
+      "restoreStatusRisk": "High impact",
+      "restoreUnknownVersion": "unknown version",
+      "restoreSourceLabel": "File source",
+      "restoreSourceTemplate": "Task Tracer {type}, version {version}",
+      "restoreSourceLegacy": "Legacy task array or unversioned JSON; tasks will be normalized before import.",
+      "restoreSchemaLabel": "Backup template version",
+      "restoreSchemaOk": "Matches the current restore template {version}.",
+      "restoreSchemaWarn": "File version is {version}; current template is {current}. Task Tracer will try a compatible import.",
+      "restoreSchemaCompatible": "Task Tracer will read the {from} file with compatibility rules and import it into the current template {to}.",
+      "restoreIntegrityLabel": "File integrity",
+      "restoreIntegrityOk": "Integrity check passed; the file content matches its checksum.",
+      "restoreIntegrityMissing": "The file has no checksum; Task Tracer can still import compatible task content.",
+      "restoreIntegrityInvalid": "Integrity check failed; the file may be truncated or manually changed. Import with care.",
+      "restoreIntegrityLegacy": "Legacy task arrays do not include an integrity check; tasks will be normalized before import.",
+      "restoreTasksLabel": "Task payload",
+      "restoreTasksOk": "The file contains {count} importable task(s).",
+      "restoreTasksEmpty": "The file has no importable tasks; replace mode will clear the current list.",
+      "restoreIdsLabel": "Task IDs",
+      "restoreIdsOk": "No repeated task IDs were found.",
+      "restoreIdsWarn": "{count} repeated task ID(s) found; import will regenerate IDs and clear ambiguous links.",
+      "restoreNamesLabel": "Local name matches",
+      "restoreNamesOk": "No imported tasks match current task names.",
+      "restoreNamesWarn": "{count} imported task(s) match current names; merge mode can handle them one by one.",
+      "restoreImpactLabel": "Current data impact",
+      "restoreImpactOk": "There are no local tasks, so replace mode will not overwrite existing data.",
+      "restoreImpactWarn": "Replace mode will overwrite {count} current task(s); choose merge mode to keep them.",
+      "restoreSnapshotLabel": "Pre-replace snapshot",
+      "restoreSnapshotAuto": "Before replacing, Task Tracer will download a restore snapshot with {count} current task(s) and require another confirmation.",
+      "restoreSnapshotEmpty": "There are no local tasks, so no extra restore snapshot is needed.",
+      "importSafetyTitle": "Replace import protection",
+      "importSafetyReplace": "The first confirmation downloads a pre-import snapshot with {count} current task(s); the next confirmation replaces data.",
+      "importSafetySnapshotReady": "The pre-import snapshot download was triggered. Confirm the file is saved, then confirm again to replace data.",
+      "importSafetyChecksumRisk": "Integrity check failed. Switch to merge mode, or confirm the risk again before replacing data.",
+      "importSafetyChecksumSnapshot": "Integrity risk confirmed. The next confirmation downloads a pre-import snapshot with {count} current task(s); replacement still requires the final confirmation.",
+      "importSafetyChecksumConfirmed": "Integrity risk confirmed. Confirm again to replace current data.",
+      "importSafetyClean": "There are no local tasks, so replace mode will not overwrite existing data.",
+      "snapshotDownloaded": "Pre-import snapshot download was triggered. Confirm the file is saved, then confirm replacement again.",
+      "integrityReplaceConfirm": "Integrity check failed. Switch to merge mode, or confirm the risk again to continue replacing.",
+      "confirmChecksumRisk": "Confirm Integrity Risk",
+      "downloadSnapshot": "Download Pre-import Snapshot",
+      "continueReplace": "Continue Replace Import",
+      "diffTitle": "Import Difference",
+      "diffNew": "New tasks",
+      "diffConflicts": "Name conflicts",
+      "diffReplace": "Default replace scope",
+      "diffNone": "None",
+      "diffMore": "{names}, plus {count} more",
+      "diffSeparator": ", ",
+      "sourceType": {
+        "backup": "backup file",
+        "emergency-backup": "emergency backup",
+        "pre-import-backup": "pre-import snapshot",
+        "legacy-array": "legacy task array",
+        "unknown": "{type}"
+      },
+      "mergeMode": "Merge into current tasks without replacing existing data",
+      "mergeModeHint": "Imported tasks are appended to the current list; duplicate names are kept and imported tasks receive new sort positions.",
+      "conflictTitle": "Same-name conflict handling",
+      "conflictHint": "These choices are used only when merge import is selected.",
+      "conflictExistingCount": "{count} current task(s) use this name",
+      "conflictActionLabel": "Choose how to import {name}",
+      "conflictKeep": "Keep both",
+      "conflictSkip": "Skip import",
+      "conflictReplace": "Replace local",
+      "formatError": "Import failed: Invalid file format",
+      "readError": "Import failed: File read error"
+    },
+    "clearCompleted": {
+      "none": "There are no completed tasks to clear",
+      "confirm": "Are you sure you want to permanently delete {count} completed tasks?",
+      "success": "{count} completed tasks have been cleared",
+      "error": "Error while clearing tasks"
+    },
+    "archive": {
+      "none": "There are no completed tasks to archive",
+      "confirm": "Archive {count} completed tasks?",
+      "success": "{count} completed tasks archived",
+      "taskArchived": "Task archived",
+      "taskRestored": "Task restored from archive",
+      "error": "Failed to update archive status"
+    },
+    "sampleTasks": {
+      "added": "Sample tasks added"
+    },
+    "reorder": {
+      "moved": "{taskName} moved to position {position} of {total}",
+      "first": "{taskName} is already first",
+      "last": "{taskName} is already last"
+    },
+    "view": {
+      "summary": "{view} updated, {count} task(s) in the current scope"
+    },
+    "initDBError": "Failed to init Database, Please refresh the page and try again."
+  },
+  "time": {
+    "minutesAgo": "{minutes} minutes ago",
+    "hoursAgo": "{hours} hours ago",
+    "daysAgo": "{days} days ago",
+    "minutesLeft": "{minutes} minutes",
+    "hoursLeft": "{hours} hours",
+    "daysLeft": "{days} days"
+  },
+  "samples": {
+    "task1": {
+      "name": "Complete project report",
+      "description": "Write and submit quarterly project summary report",
+      "project": "Work",
+      "tag": "report"
+    },
+    "task2": {
+      "name": "Team meeting preparation",
+      "description": "Prepare presentation materials for next week's team meeting",
+      "project": "Work",
+      "tag": "meeting"
+    },
+    "task3": {
+      "name": "Learning plan development",
+      "description": "Develop personal learning plan for next month",
+      "project": "Personal",
+      "tag": "learning"
+    }
+  },
+  "sort": {
+    "smart": "Smart Sort",
+    "created": "Newest Created",
+    "due": "Due Date",
+    "alpha": "Name (A-Z)",
+    "manual": "Custom"
+  },
+  "notifications": {
+    "enable": "Enable Notifications",
+    "disable": "Disable Notifications",
+    "permissionDenied": "Notification permission denied. Please enable in browser settings.",
+    "notSupported": "This browser does not support desktop notifications",
+    "error": "Error requesting notification permission",
+    "taskDue": "Task Due Soon: {taskName}",
+    "missedReminder": "Missed reminder: {taskName}",
+    "backgroundLimit": "Notifications are enabled. The browser checks reminders while the app is open or wakes up, so background delivery is not fully guaranteed.",
+    "reminderSet": "Reminder set"
+  },
+  "backup": {
+    "health": {
+      "empty": "No task data to back up",
+      "never": "No backup yet. Export/back up now",
+      "ok": "Backup healthy · {age}",
+      "due": "Backup recommended · {age}",
+      "today": "backed up today",
+      "yesterday": "backed up yesterday",
+      "daysAgo": "backed up {days} days ago"
+    },
+    "versionNotes": {
+      "schema": "Backup 2.4 includes an integrity checksum, export ID, local due dates, exact reminder instants, tasks, subtasks, projects, tags, advanced repeat rules, completion dates, archive state, and today plan.",
+      "compatibility": "The importer reads the tasks array; older export files remain importable through compatibility rules.",
+      "emergency": "This file was created from an in-memory snapshot in protected storage-unavailable mode. Restore browser storage and import it as soon as practical."
+    }
+  }
+}

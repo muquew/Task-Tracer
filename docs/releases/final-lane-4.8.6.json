@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "completed": true,
+  "passed": true,
+  "started_at": "2026-10-25T05:45:13.877479+00:00",
+  "finished_at": "2026-10-25T06:09:24.780454+00:00",
+  "current": null,
+  "steps": [
+    {
+      "name": "actual-4.8.5-upgrade",
+      "arguments": [
+        "tools/upgrade_playwright.py",
+        "--baseline-archive",
+        "dist/task-tracer-4.8.5.zip"
+      ],
+      "log": "/tmp/task-tracer-upgrade-4.8.5-to-4.8.6.log",
+      "started_at": "2026-10-25T05:45:13.894940+00:00",
+      "finished_at": "2026-10-25T05:45:35.578924+00:00",
+      "exit_code": 0
+    },
+    {
+      "name": "complete-58",
+      "arguments": [
+        "tools/check.py",
+        "--keep-going",
+        "--report",
+        "dist/check-results-4.8.6.json"
+      ],
+      "log": "/tmp/task-tracer-4.8.6-check.log",
+      "started_at": "2026-10-25T05:45:35.602370+00:00",
+      "finished_at": "2026-10-25T06:09:24.779491+00:00",
+      "exit_code": 0
+    }
+  ],
+  "freeze": "/tmp/task-tracer-4.8.6-freeze.json",
+  "error": null
+}

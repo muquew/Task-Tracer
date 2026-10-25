@@ -1,0 +1,10 @@
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+firefox: saved-view deletion on 153.0
+View deletion passed: bilingual exact safe target name, five cancellation paths, default Cancel and return focus preserve every stored field
+View deletion passed: explicit confirmation removes exactly one view, preserves tasks/metadata and focuses the next view or Save view
+View deletion passed: a real deferred-search rebuild during confirmation returns Cancel focus to the new matching delete control
+View deletion passed: identical labels still delete only the selected stable ID
+View deletion passed: atomic deletion preserves newer unrelated views and stale repeat confirmation is idempotent
+View deletion passed: aborted configuration write preserves the view and confirmation retry/cancel controls
+View deletion passed: a committed old deletion callback cannot close, refocus or alter a newer task draft
+firefox: saved-view deletion checks passed

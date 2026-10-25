@@ -1,0 +1,4 @@
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+Calendar timezone passed: skipped civil day appears once, leap/search/month navigation and add-form date keys remain exact without writes
+Calendar timezone passed: Apia skipped-day add uses the existing forward-gap policy (30→31), preserving existing records
+{"browser_engine": "firefox", "browser": "153.0", "case": "all", "live_zone_coverage": "not run; static-zone coverage only", "passed": true}

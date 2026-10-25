@@ -1,0 +1,38 @@
+{
+  "scope": "Pure local socketpairs only, no network listeners, proxy environment mutation, external traffic or application source reads. The simulated peer receives a half-closed request before returning a 1 MiB response.",
+  "started_at": "2026-10-25T05:44:44.198491+00:00",
+  "red_original": {
+    "module_sha256": "7db3ecfa06aef1d7b0ca059b0661107821c82dfb67a758d79f84b8e77d94370a",
+    "expected_response_bytes": 1048576,
+    "expected_response_sha256": "fbbab289f7f94b25736c58be46a994c441fd02552cc6022352e3d86d2fab7c83",
+    "errors": [
+      {
+        "where": "controlled_client",
+        "error": "PermissionError(1, 'Operation not permitted')"
+      },
+      {
+        "where": "controlled_upstream",
+        "error": "OSError(9, 'Bad file descriptor')"
+      }
+    ],
+    "full_response_received": false,
+    "all_fixture_threads_stopped": true
+  },
+  "green_repaired": {
+    "module_sha256": "068c4fc3a6335c7abf779bb4794d38126eb9435792dc48730b4a2e61464b1dbf",
+    "expected_response_bytes": 1048576,
+    "expected_response_sha256": "fbbab289f7f94b25736c58be46a994c441fd02552cc6022352e3d86d2fab7c83",
+    "errors": [
+      {
+        "where": "controlled_client",
+        "error": "PermissionError(1, 'Operation not permitted')"
+      },
+      {
+        "where": "controlled_upstream",
+        "error": "OSError(9, 'Bad file descriptor')"
+      }
+    ],
+    "full_response_received": false,
+    "all_fixture_threads_stopped": true
+  }
+}

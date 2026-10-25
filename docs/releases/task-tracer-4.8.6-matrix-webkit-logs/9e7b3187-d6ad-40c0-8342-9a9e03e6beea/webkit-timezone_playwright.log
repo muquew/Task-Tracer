@@ -1,0 +1,6 @@
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+Timezone webkit: 26.5
+Timezone passed: DST gaps/folds, half-hour/quarter-hour offsets, date crossing, invalid/undated zones and JSON round-trip
+Timezone passed: unrelated edits preserve repeated-hour instants and overdue deadlines
+Timezone passed: the full task form accepts a real historical deadline
+Timezone note: live device-zone override is Chromium-only; other engines use explicit UTC context

@@ -1,0 +1,7 @@
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+Recovery management passed: bounded safe preview, reset/focus, read-only historical/empty exports and actual import round trip
+Recovery management passed: explicit/cancellable cleanup removes only history and later writes retain fresh recovery protection
+Recovery management passed: changed history requires a fresh review before cleanup
+Recovery management passed: aborted history cleanup rolls back without data loss
+Recovery management passed: completed old cleanup cannot close or alter a later task draft
+firefox: recovery management checks passed

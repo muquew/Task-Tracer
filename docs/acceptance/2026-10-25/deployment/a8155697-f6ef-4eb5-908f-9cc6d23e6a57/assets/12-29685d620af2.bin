@@ -1,0 +1,574 @@
+{
+  "app": {
+    "language": "简体中文",
+    "title": "任务跟踪器",
+    "toolbar": "任务工具栏"
+  },
+  "actions": {
+    "exportBackup": "导出/备份",
+    "exportBackupTitle": "导出完整任务数据并记录备份时间",
+    "import": "导入",
+    "importTitle": "导入并替换当前任务数据",
+    "addTask": "添加任务",
+    "openMenu": "打开菜单",
+    "confirm": "确认",
+    "cancel": "取消",
+    "updateTask": "更新任务",
+    "archiveCompletedTitle": "归档所有已完成任务",
+    "archiveCompleted": "归档已完成",
+    "clearCompletedTitle": "清除所有已完成的任务",
+    "clearCompleted": "清除已完成"
+  },
+  "search": {
+    "placeholder": "搜索任务...",
+    "clear": "清空搜索",
+    "syntaxTitle": "支持 project:工作、tag:学习、status:completed、due:today 和 #标签",
+    "syntaxHint": "支持限定搜索：project:项目、tag:标签、status:状态、due:日期。"
+  },
+  "quickAdd": {
+    "label": "快速添加任务",
+    "placeholder": "明天 20:00 复习英语 #学习 /个人",
+    "submit": "添加",
+    "hint": "可输入自然日期、时间、#标签 和 /项目。没有 /项目 时，任务会进入 Inbox。",
+    "captureReady": "快速捕获已就绪。检查文本后，按 Enter 添加。"
+  },
+  "tools": {
+    "label": "快速添加和筛选工具",
+    "collapse": "收起添加和筛选工具",
+    "expand": "展开添加和筛选工具",
+    "pin": "钉住添加和筛选工具",
+    "unpin": "取消钉住添加和筛选工具"
+  },
+  "savedViews": {
+    "label": "智能视图",
+    "saveCurrent": "保存视图",
+    "saveCurrentTitle": "保存当前搜索、筛选和视图",
+    "saveTitle": "保存智能视图",
+    "nameLabel": "视图名称",
+    "namePlaceholder": "例如：本周学习任务",
+    "defaultName": "智能视图 {index}",
+    "nameFromSearch": "搜索：{query}",
+    "saved": "智能视图已保存",
+    "deleted": "已删除智能视图：{name}",
+    "applied": "已打开智能视图：{name}",
+    "applyLabel": "打开智能视图：{name}",
+    "deleteLabel": "删除智能视图：{name}"
+  },
+  "focus": {
+    "openTitle": "打开今日计划",
+    "activeTitle": "退出今日计划",
+    "openShort": "今日计划",
+    "activeShort": "专注中",
+    "title": "今日计划",
+    "summary": "{completed}/{total} 个任务已完成",
+    "exit": "退出专注",
+    "added": "已加入今日计划",
+    "removed": "已移出今日计划",
+    "emptyTitle": "今日计划为空",
+    "emptyDescription": "从任务卡片或批量操作中把任务加入今日计划。"
+  },
+  "batch": {
+    "menu": "批量操作",
+    "menuTitle": "进入批量操作",
+    "activeTitle": "退出批量操作",
+    "selected": "已选择 {count} 个任务",
+    "selectVisible": "选择当前",
+    "clearSelection": "清空选择",
+    "addToFocus": "加入今日",
+    "complete": "标记完成",
+    "archive": "归档",
+    "delete": "删除",
+    "exit": "退出",
+    "selectTask": "选择任务：{taskName}",
+    "noneSelected": "请先选择任务",
+    "nothingToComplete": "所选任务没有可标记完成的项目",
+    "confirmDelete": "确定永久删除 {count} 个选中任务吗？",
+    "error": "批量操作失败，请重试",
+    "success": {
+      "focus": "{count} 个任务已加入今日计划",
+      "complete": "{count} 个任务已标记完成",
+      "archive": "{count} 个任务已归档",
+      "delete": "{count} 个任务已删除"
+    },
+    "undo": {
+      "focus": "批量加入今日计划",
+      "complete": "批量完成",
+      "archive": "批量归档",
+      "delete": "批量删除"
+    }
+  },
+  "undo": {
+    "menu": "撤销上一步",
+    "menuTitle": "撤销最近一次任务操作",
+    "availableTitle": "撤销：{action}",
+    "unavailableTitle": "没有可撤销操作",
+    "action": "撤销",
+    "restored": "已撤销：{action}",
+    "error": "撤销失败，请重试",
+    "labels": {
+      "add": "新增任务",
+      "edit": "编辑任务",
+      "delete": "删除任务",
+      "complete": "更新完成状态",
+      "skipRepeat": "跳过重复任务",
+      "clearCompleted": "清除已完成",
+      "archiveCompleted": "归档已完成",
+      "archive": "更新归档状态",
+      "focus": "更新今日计划",
+      "snooze": "稍后提醒",
+      "import": "导入任务"
+    }
+  },
+  "commandPalette": {
+    "title": "命令面板",
+    "close": "关闭命令面板",
+    "searchLabel": "搜索命令",
+    "placeholder": "搜索命令、视图或项目",
+    "hint": "使用上下方向键选择命令，按回车执行。",
+    "listLabel": "可用命令",
+    "empty": "没有匹配的命令",
+    "groups": {
+      "tasks": "任务",
+      "views": "视图",
+      "data": "数据",
+      "projects": "项目",
+      "savedViews": "智能视图"
+    },
+    "commands": {
+      "newTask": "新建任务",
+      "quickAdd": "聚焦快速添加",
+      "search": "搜索任务",
+      "focusMode": "打开今日计划",
+      "batchMode": "进入批量操作",
+      "undo": "撤销上一步",
+      "exportBackup": "导出/备份",
+      "project": "切换项目：{project}",
+      "savedView": "打开智能视图：{name}",
+      "view": {
+        "list": "切换到列表视图",
+        "calendar": "切换到日历视图",
+        "timeline": "切换到时间线视图",
+        "stats": "切换到统计视图"
+      }
+    }
+  },
+  "pwa": {
+    "install": {
+      "menu": "安装应用",
+      "menuTitle": "安装应用或查看安装方式",
+      "title": "安装 Task Tracer",
+      "installed": "应用已安装",
+      "accepted": "已开始安装应用",
+      "manualIntro": "如果浏览器没有自动弹出安装窗口，可以按下面方式安装：",
+      "desktop": "Chrome 或 Edge 桌面端：点击地址栏右侧的安装图标，或在浏览器菜单中选择安装应用。",
+      "android": "Android Chrome：打开浏览器菜单，选择“安装应用”或“添加到主屏幕”。",
+      "ios": "iPhone 或 iPad Safari：点击分享按钮，然后选择“添加到主屏幕”。"
+    },
+    "update": {
+      "label": "应用更新",
+      "message": "新版本已准备好，刷新后即可使用最新功能。",
+      "reload": "刷新更新",
+      "dismiss": "暂不更新"
+    }
+  },
+  "projects": {
+    "filterLabel": "项目视图",
+    "all": "全部项目",
+    "none": "未分组",
+    "groupTitle": "{project} · {count} 个任务"
+  },
+  "views": {
+    "label": "视图切换",
+    "list": "列表",
+    "calendar": "日历",
+    "timeline": "时间线",
+    "stats": "统计"
+  },
+  "calendar": {
+    "previousYear": "上一年",
+    "previous": "上个月",
+    "next": "下个月",
+    "nextYear": "下一年",
+    "today": "今天",
+    "addTaskOnDate": "在 {date} 添加任务",
+    "showDayTasks": "查看 {date} 的全部 {count} 个任务",
+    "closeDayTasks": "关闭当天任务",
+    "more": "+{count} 个更多",
+    "taskCount": "{count} 个任务",
+    "noDeadline": "无截止日期"
+  },
+  "stats": {
+    "title": "任务统计",
+    "completionRate": "完成率",
+    "overdueRate": "逾期率",
+    "streakDays": "连续完成",
+    "daysValue": "{count} 天",
+    "completedDetail": "{completed}/{total} 个任务已完成",
+    "overdueDetail": "{overdue}/{total} 个有截止日期任务逾期",
+    "streakDetail": "最近连续 {count} 天有完成记录",
+    "totalTasks": "任务总数",
+    "completedTasks": "已完成",
+    "overdueTasks": "逾期进行中",
+    "archivedTasks": "已归档",
+    "todayCompleted": "今日完成",
+    "openFilter": "查看 {label}：{count} 个",
+    "completionTrend": "最近 7 日完成趋势",
+    "trendCount": "{date} 完成 {count} 个"
+  },
+  "filters": {
+    "all": "全部",
+    "active": "进行中",
+    "completed": "已完成",
+    "archived": "已归档",
+    "overdue": "已过期",
+    "noDeadline": "无截止日期"
+  },
+  "modal": {
+    "addTitle": "添加新任务",
+    "editTitle": "编辑任务"
+  },
+  "tooltips": {
+    "addTask": "添加新任务 (Ctrl+I)",
+    "menu": "菜单 (Ctrl+M)",
+    "theme": "切换主题",
+    "backToTop": "回到顶部 (Alt + T)",
+    "searchShortcut": "搜索快捷键：Ctrl/Cmd + K"
+  },
+  "form": {
+    "taskName": {
+      "label": "任务名称 *",
+      "placeholder": "输入任务名称"
+    },
+    "description": {
+      "label": "任务描述 (可选)",
+      "placeholder": "输入任务描述"
+    },
+    "project": {
+      "label": "项目 (可选)",
+      "placeholder": "例如：工作 / 个人"
+    },
+    "tags": {
+      "label": "标签 (可选)",
+      "placeholder": "用逗号分隔标签",
+      "hint": "标签会参与搜索。"
+    },
+    "dueDate": {
+      "label": "截止日期"
+    },
+    "noDeadline": "无截止日期",
+    "reminder": {
+      "label": "提醒设置",
+      "options": {
+        "none": "不提醒",
+        "atTime": "截止时",
+        "min15": "提前 15 分钟",
+        "hour1": "提前 1 小时",
+        "day1": "提前 1 天"
+      }
+    },
+    "reminderRepeat": {
+      "label": "重复提醒",
+      "backgroundLimit": "浏览器只会在应用打开或被唤醒时检查提醒；系统级后台提醒不能保证。",
+      "options": {
+        "none": "不重复",
+        "min15": "每 15 分钟",
+        "hour1": "每 1 小时",
+        "day1": "每天"
+      }
+    },
+    "repeat": {
+      "label": "重复任务",
+      "hint": "完成后自动创建下一期。",
+      "customDays": "间隔天数",
+      "options": {
+        "none": "不重复",
+        "daily": "每天",
+        "weekly": "每周",
+        "weeklyDays": "每周指定星期",
+        "monthly": "每月",
+        "monthlyLast": "每月最后一天",
+        "custom": "自定义周期"
+      },
+      "weekdaysLabel": "重复星期",
+      "weekdays": {
+        "mon": "一",
+        "tue": "二",
+        "wed": "三",
+        "thu": "四",
+        "fri": "五",
+        "sat": "六",
+        "sun": "日"
+      },
+      "pause": "暂停重复任务"
+    },
+    "subtasks": {
+      "label": "子任务 (可选)",
+      "placeholder": "输入子任务...",
+      "add": "添加子任务",
+      "edit": "编辑子任务：{text}",
+      "editInput": "编辑子任务文本",
+      "delete": "删除子任务：{text}"
+    },
+    "dueTime": {
+      "label": "截止时间"
+    }
+  },
+  "task": {
+    "subtasks": "子任务",
+    "deadline": "截止",
+    "noDeadline": "无截止日期",
+    "actions": {
+      "markComplete": "标记为已完成",
+      "markIncomplete": "标记为未完成",
+      "snooze": "10 分钟后再提醒",
+      "skipRepeat": "跳过本次重复",
+      "addFocus": "加入今日计划",
+      "removeFocus": "移出今日计划",
+      "archive": "归档任务",
+      "restoreArchive": "从归档恢复",
+      "edit": "编辑任务",
+      "delete": "删除任务",
+      "reorder": "移动任务：{taskName}。使用上下方向键调整顺序"
+    },
+    "importedFallback": "导入任务 {index}",
+    "repeat": {
+      "daily": "每天重复",
+      "weekly": "每周重复",
+      "weeklyDays": "每周 {days} 重复",
+      "monthly": "每月重复",
+      "monthly-last": "每月最后一天重复",
+      "custom": "每 {days} 天重复",
+      "paused": "已暂停",
+      "weekdaySeparator": "、"
+    }
+  },
+  "empty": {
+    "noTasks": {
+      "title": "暂无任务",
+      "description": "点击\"添加任务\"按钮开始跟踪您的任务"
+    },
+    "noMatches": {
+      "title": "没有找到匹配的任务",
+      "description": "尝试调整搜索条件或筛选器"
+    }
+  },
+  "storage": {
+    "unavailable": {
+      "title": "本地存储不可用",
+      "message": "当前浏览器阻止了本地数据库，任务无法读取或保存。请调整隐私设置后重试；存储恢复后可使用已有导出/备份文件恢复数据。",
+      "emptyDescription": "应用已进入保护模式，所有会写入任务数据的操作都已暂停，避免产生无法保存的更改。",
+      "snapshotDescription": "应用已进入保护模式，任务写入已暂停。当前页面仍保留 {count} 个任务的内存快照，请先下载紧急备份。",
+      "retry": "重试",
+      "retrying": "正在重试...",
+      "retryFailed": "本地存储仍不可用",
+      "short": "本地存储不可用，已暂停任务操作",
+      "actionsDisabled": "本地存储不可用，任务操作已暂停",
+      "emergencyBackup": "紧急备份",
+      "emergencyBackupTitle": "下载当前内存快照",
+      "emergencyBackupSuccess": "已下载 {count} 个任务的紧急备份",
+      "noSnapshot": "没有可下载的任务快照"
+    }
+  },
+  "status": {
+    "completed": "已完成",
+    "archived": "已归档",
+    "safe": "安全",
+    "warning": "警告",
+    "danger": "紧急",
+    "overdue": "已过期",
+    "noDeadline": "无截止日期"
+  },
+  "messages": {
+    "task": {
+      "confirmDelete": "确定要删除这个任务吗？",
+      "added": "任务添加成功",
+      "updated": "任务更新成功",
+      "deleted": "任务删除成功",
+      "markedComplete": "任务标记为已完成",
+      "markedIncomplete": "任务标记为未完成",
+      "repeatCreated": "任务已完成，下一期已创建",
+      "repeatSkipped": "已跳过本次，任务已移到下一期",
+      "nameRequired": "请输入任务名称",
+      "snoozed": "已设为 {minutes} 分钟后提醒",
+      "saveError": "保存任务失败，请重试",
+      "deleteError": "删除任务失败，请重试",
+      "updateError": "更新任务状态失败，请重试"
+    },
+    "backup": {
+      "success": "导出/备份文件已下载",
+      "error": "导出/备份失败，请重试",
+      "reminder": "建议下载一份最近备份，避免浏览器数据被清理后丢失任务。"
+    },
+    "import": {
+      "success": "成功导入 {count} 个任务！",
+      "successMerged": "成功合并 {count} 个任务！",
+      "confirm": "即将导入 {count} 个任务。是否替换当前数据？",
+      "previewTitle": "导入预览",
+      "previewTasks": "导入任务",
+      "previewReplace": "替换影响",
+      "previewReplaceValue": "当前 {current} 个任务会被替换，含 {completed} 个已完成、{archived} 个已归档",
+      "previewDuplicates": "同名重复项",
+      "previewFileDuplicates": "文件内重复",
+      "previewDuplicateIds": "重复任务 ID",
+      "previewExistingMatches": "匹配当前任务",
+      "restoreCheckTitle": "恢复检查清单",
+      "restoreCheckSummary": "{warnings}/{total} 项需要注意",
+      "restoreStatusPass": "通过",
+      "restoreStatusWarn": "注意",
+      "restoreStatusRisk": "高影响",
+      "restoreUnknownVersion": "未知版本",
+      "restoreSourceLabel": "文件来源",
+      "restoreSourceTemplate": "Task Tracer {type}，版本 {version}",
+      "restoreSourceLegacy": "传统任务数组或未版本化 JSON；导入前会按当前格式规范化。",
+      "restoreSchemaLabel": "备份模板版本",
+      "restoreSchemaOk": "与当前恢复模板 {version} 匹配。",
+      "restoreSchemaWarn": "文件版本为 {version}，当前模板为 {current}；将尝试兼容导入。",
+      "restoreSchemaCompatible": "将按兼容规则读取 {from} 文件，并按当前模板 {to} 导入。",
+      "restoreIntegrityLabel": "文件完整性",
+      "restoreIntegrityOk": "完整性校验通过，文件内容与校验值匹配。",
+      "restoreIntegrityMissing": "文件没有校验值；仍可按任务内容兼容导入。",
+      "restoreIntegrityInvalid": "完整性校验失败；文件可能被截断或手动修改，请谨慎导入。",
+      "restoreIntegrityLegacy": "传统任务数组没有完整性校验；导入前会重新规范化。",
+      "restoreTasksLabel": "任务内容",
+      "restoreTasksOk": "文件中包含 {count} 个可导入任务。",
+      "restoreTasksEmpty": "文件中没有可导入任务；替换模式会清空当前列表。",
+      "restoreIdsLabel": "任务 ID",
+      "restoreIdsOk": "未发现重复任务 ID。",
+      "restoreIdsWarn": "发现 {count} 个重复任务 ID；导入时会重新生成并清理模糊引用。",
+      "restoreNamesLabel": "本地同名项",
+      "restoreNamesOk": "未发现与当前任务同名的导入项。",
+      "restoreNamesWarn": "发现 {count} 个与当前任务同名的导入项；合并模式可逐项处理。",
+      "restoreImpactLabel": "当前数据影响",
+      "restoreImpactOk": "当前没有本地任务，替换不会覆盖已有数据。",
+      "restoreImpactWarn": "默认替换会覆盖当前 {count} 个任务；如需保留，请勾选合并模式。",
+      "restoreSnapshotLabel": "替换前快照",
+      "restoreSnapshotAuto": "替换前会先下载当前 {count} 个任务的恢复快照，并要求再次确认。",
+      "restoreSnapshotEmpty": "当前没有本地任务，不需要额外恢复快照。",
+      "importSafetyTitle": "替换导入保护",
+      "importSafetyReplace": "首次确认会先下载当前 {count} 个任务的导入前快照；再次确认才会替换。",
+      "importSafetySnapshotReady": "导入前快照已触发下载。确认文件已保存后，再次确认才会替换。",
+      "importSafetyChecksumRisk": "完整性校验失败。建议切换到合并模式；如果仍要替换，需要再次确认风险。",
+      "importSafetyChecksumSnapshot": "完整性风险已确认。下一次确认会先下载当前 {count} 个任务的导入前快照；保存快照后才会继续替换。",
+      "importSafetyChecksumConfirmed": "完整性风险已确认。再次确认才会替换当前数据。",
+      "importSafetyClean": "当前没有本地任务，替换不会覆盖现有数据。",
+      "snapshotDownloaded": "导入前快照已触发下载，请确认文件已保存后再次确认替换。",
+      "integrityReplaceConfirm": "完整性校验失败；请切换到合并模式，或再次确认风险后继续替换。",
+      "confirmChecksumRisk": "确认完整性风险",
+      "downloadSnapshot": "下载导入前快照",
+      "continueReplace": "继续替换导入",
+      "diffTitle": "导入差异",
+      "diffNew": "新增任务",
+      "diffConflicts": "同名冲突",
+      "diffReplace": "默认替换范围",
+      "diffNone": "无",
+      "diffMore": "{names}，另有 {count} 项",
+      "diffSeparator": "、",
+      "sourceType": {
+        "backup": "备份文件",
+        "emergency-backup": "紧急备份",
+        "pre-import-backup": "导入前快照",
+        "legacy-array": "传统任务数组",
+        "unknown": "{type}"
+      },
+      "mergeMode": "合并到当前任务，不替换现有数据",
+      "mergeModeHint": "导入任务会追加到当前列表；重复名称会保留，导入任务会分配新的排序位置。",
+      "conflictTitle": "同名冲突处理",
+      "conflictHint": "以下选项仅在选择合并导入时生效。",
+      "conflictExistingCount": "当前已有 {count} 个同名任务",
+      "conflictActionLabel": "选择“{name}”的导入处理方式",
+      "conflictKeep": "保留两份",
+      "conflictSkip": "跳过导入",
+      "conflictReplace": "替换本地",
+      "formatError": "导入失败：文件格式不正确",
+      "readError": "导入失败：文件读取错误"
+    },
+    "clearCompleted": {
+      "none": "没有已完成的任务可清除",
+      "confirm": "确定永久删除 {count} 个已完成的任务吗？",
+      "success": "{count} 个已完成的任务已被清除",
+      "error": "清除任务时出错"
+    },
+    "archive": {
+      "none": "没有可归档的已完成任务",
+      "confirm": "归档 {count} 个已完成任务吗？",
+      "success": "{count} 个已完成任务已归档",
+      "taskArchived": "任务已归档",
+      "taskRestored": "任务已从归档恢复",
+      "error": "更新归档状态失败"
+    },
+    "sampleTasks": {
+      "added": "示例任务已添加"
+    },
+    "reorder": {
+      "moved": "{taskName} 已移动到第 {position} 位，共 {total} 位",
+      "first": "{taskName} 已经在第一位",
+      "last": "{taskName} 已经在最后一位"
+    },
+    "view": {
+      "summary": "{view}已更新，当前范围 {count} 个任务"
+    },
+    "initDBError": "数据库初始化失败，请刷新页面重试"
+  },
+  "time": {
+    "minutesAgo": "{minutes}分钟前",
+    "hoursAgo": "{hours}小时前",
+    "daysAgo": "{days}天前",
+    "minutesLeft": "{minutes}分钟",
+    "hoursLeft": "{hours}小时",
+    "daysLeft": "{days}天"
+  },
+  "samples": {
+    "task1": {
+      "name": "完成项目报告",
+      "description": "编写并提交季度项目总结报告",
+      "project": "工作",
+      "tag": "报告"
+    },
+    "task2": {
+      "name": "团队会议准备",
+      "description": "准备下周团队会议的演示材料",
+      "project": "工作",
+      "tag": "会议"
+    },
+    "task3": {
+      "name": "学习计划制定",
+      "description": "制定下个月的个人学习计划",
+      "project": "个人",
+      "tag": "学习"
+    }
+  },
+  "sort": {
+    "smart": "智能排序",
+    "created": "新创建",
+    "due": "截止日期",
+    "alpha": "名称 (A-Z)",
+    "manual": "自定义排序"
+  },
+  "notifications": {
+    "enable": "开启通知",
+    "disable": "关闭通知",
+    "permissionDenied": "通知权限被拒绝，请在浏览器设置中开启",
+    "notSupported": "此浏览器不支持桌面通知",
+    "error": "申请通知权限出错",
+    "taskDue": "任务即将到期：{taskName}",
+    "missedReminder": "错过的提醒：{taskName}",
+    "backgroundLimit": "已开启通知。浏览器只会在应用打开或被唤醒时检查提醒，后台提醒不能完全保证。",
+    "reminderSet": "提醒已设置"
+  },
+  "backup": {
+    "health": {
+      "empty": "暂无任务数据需要备份",
+      "never": "尚未备份，建议导出/备份",
+      "ok": "备份正常 · {age}",
+      "due": "建议备份 · {age}",
+      "today": "今天已备份",
+      "yesterday": "昨天备份",
+      "daysAgo": "{days} 天前备份"
+    },
+    "versionNotes": {
+      "schema": "2.4 备份包含完整性校验、导出 ID、本地截止日期、真实提醒时间、任务、子任务、项目、标签、高级重复规则、完成时间、归档状态和今日计划。",
+      "compatibility": "导入器会读取 tasks 数组；旧版导出文件仍可通过兼容规则导入。",
+      "emergency": "此文件来自存储不可用保护模式下的内存快照，请尽快修复浏览器存储后导入恢复。"
+    }
+  }
+}

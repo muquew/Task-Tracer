@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/tmp/task_tracer_checkbox_visibility_486.py", line 54, in <module>
+    audit_subtask_checkbox_visibility(page,label,observations,directory)
+  File "/workspace/Task-Tracer/tools/accessibility_i18n_audit.py", line 251, in audit_subtask_checkbox_visibility
+    assert observation['marker_contrast'] >= 3, f'Checked subtask mark is not distinguishable: {observation}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Checked subtask mark is not distinguishable: {'label': 'chromium-1280', 'theme': 'light', 'interaction': 'resting', 'unchecked': {'checked': False, 'background': [255, 255, 255, 255], 'marker': None, 'image': 'none', 'focusVisible': False, 'outlineWidth': 3, 'outlineStyle': 'none', 'outline': [0, 0, 0, 255]}, 'checked': {'checked': True, 'background': [255, 255, 255, 255], 'marker': [255, 255, 255, 255], 'image': 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'3\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'M5 13l4 4L19 7\'/%3E%3C/svg%3E")', 'focusVisible': False, 'outlineWidth': 3, 'outlineStyle': 'none', 'outline': [0, 0, 0, 255]}, 'marker_contrast': 1.0, 'state_contrast': 1.0, 'screenshot': '/workspace/Task-Tracer/docs/releases/checkbox-visibility-4.8.6-red/2d333d40-bba7-4c24-9660-1522f0a88020/chromium-1280/light-resting.png'}

@@ -1,0 +1,86 @@
+{
+  "status": "passed",
+  "run_id": "afcca1a6-e6e1-4ec6-883f-f94d4285e034",
+  "started_at": "2026-10-25T05:18:27.284+00:00",
+  "finished_at": "2026-10-25T05:19:07.353+00:00",
+  "started_at_beijing": "2026-10-25T13:18:27.284+08:00",
+  "runs": [
+    {
+      "number": 1,
+      "run_id": "e7c32e31-471e-4e95-ab92-94106617e8f1",
+      "version": "153.0",
+      "duration_seconds": 8.82,
+      "reload_seconds": [
+        0.326615,
+        0.114203,
+        0.098385,
+        0.100202
+      ],
+      "pageerrors": []
+    },
+    {
+      "number": 2,
+      "run_id": "eb772043-ab6a-48db-872c-47e9708c1d2c",
+      "version": "153.0",
+      "duration_seconds": 7.532,
+      "reload_seconds": [
+        0.282629,
+        0.087364,
+        0.089091,
+        0.117699
+      ],
+      "pageerrors": []
+    },
+    {
+      "number": 3,
+      "run_id": "4ce0901b-d29f-47c3-ae9b-45835ac962f2",
+      "version": "153.0",
+      "duration_seconds": 8.112,
+      "reload_seconds": [
+        0.282765,
+        0.085288,
+        0.112637,
+        0.105014
+      ],
+      "pageerrors": []
+    },
+    {
+      "number": 4,
+      "run_id": "2af0959b-1345-4894-b48a-9bd6a1656c88",
+      "version": "153.0",
+      "duration_seconds": 7.695,
+      "reload_seconds": [
+        0.309727,
+        0.100759,
+        0.081741,
+        0.098692
+      ],
+      "pageerrors": []
+    },
+    {
+      "number": 5,
+      "run_id": "ef86f1ac-a76e-4445-a069-aba6b4648cbf",
+      "version": "153.0",
+      "duration_seconds": 7.884,
+      "reload_seconds": [
+        0.289351,
+        0.100698,
+        0.100205,
+        0.109501
+      ],
+      "pageerrors": []
+    }
+  ],
+  "reload_count": 20,
+  "reload_min_seconds": 0.081741,
+  "reload_max_seconds": 0.326615,
+  "trace_count": 20,
+  "retained_files": 32,
+  "retained_bytes": 22346692,
+  "source22_and_verification69_current_match": true,
+  "limitations": [
+    "Five successful repeats do not explain or disprove the historical 30-second timeout.",
+    "Local Linux Firefox with synthetic data; no real-device/Safari/IME/OS-notification acceptance.",
+    "Observational tracing introduces instrumentation overhead; original tool source, assertions, reload parameters and default 30-second timeout were unchanged."
+  ]
+}

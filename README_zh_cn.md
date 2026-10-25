@@ -235,9 +235,11 @@ http://127.0.0.1:8080/
 python3 tools/check.py --static-only
 ```
 
-已本地验证的[4.8.5候选](./docs/releases/4.8.5.md)完成 [GOAL五项工程验收](./GOAL.md)：Chromium完整58/58项通过，程序耗时合计1301.444秒，一万任务×6完整视图九项、同规模九例故障恢复、[三引擎各31程序](./docs/browser-compatibility.md)及87条[受控性能测量](./docs/performance.md)全部通过。两次独立构建字节一致，解压持久/离线及实际4.8.4发行包升级/回退/再升级均过。[91输入来源记录](./docs/releases/inputs-4.8.5.json)绑定23文件/812,056字节包与314份原始证据。app/cache/package为4.8.5、资源4.36；原失败与中断保留，真实设备、远程CI、生产部署与商业条款另记实际状态。
+[4.8.6 视觉修正版](./docs/releases/4.8.6.md)修复真实域名截图中发现的浅色主题已选中子任务勾号对比不足。专项回归的六个引擎/视口组合、36 个自动化状态通过，12 张代表图已逐张检查；静态 7 项、新三引擎各 31 项矩阵及实际 4.8.5 旧包升级/回退/再升级也通过。新冻结候选的完整 58 项也已通过，程序耗时合计 1427.981 秒；独立双构建字节一致、解压持久/离线验证通过，[新 91 输入来源记录](./docs/releases/inputs-4.8.6.json)绑定工件与 166 份原始证据。工程验收已闭合，发布后验收仍待执行，不预填新版本部署通过。app/cache/package 为 4.8.6，资源保持 4.36。[本日 4.8.5 发布与浏览器记录](./docs/acceptance/2026-10-25/README.md)保留已发布事实和新发现的缺陷。
 
-按贡献指南安装开发依赖和 Chromium 后，运行 `python tools/check.py` 执行当前登记检查。前版已本地验证的 [4.8.4 候选版](./docs/releases/4.8.4.md)通过 Chromium 56/56 项，包括可复现构建、解压持久/离线及 1,000 任务×6 子任务的 JSON 替换/恢复往返；[schema-2 机器报告](./docs/releases/check-results-4.8.4.json)与 [87 项输入来源记录](./docs/releases/inputs-4.8.4.json)绑定完整运行及未变化的源码/验证指纹。五个新增浏览器程序的专项也在 Firefox/WebKit 通过，不代表全部 56 项在每个引擎执行。真实设备、远程 CI 和实际部署验证仍未执行。
+已完成的[4.8.5工程基线](./docs/releases/4.8.5.md)完成 [4.8.5 五项工程基线验收](./GOAL.md)：Chromium完整58/58项通过，程序耗时合计1301.444秒，一万任务×6完整视图九项、同规模九例故障恢复、[三引擎各31程序](./docs/browser-compatibility.md)及87条[受控性能测量](./docs/performance.md)全部通过。两次独立构建字节一致，解压持久/离线及实际4.8.4发行包升级/回退/再升级均过。[91输入来源记录](./docs/releases/inputs-4.8.5.json)绑定23文件/812,056字节包与314份原始证据。该基线app/cache/package为4.8.5、资源4.36；原失败与中断保留，真实设备、远程CI、生产部署与商业条款另记实际状态。
+
+按贡献指南安装开发依赖和 Chromium 后，运行 `python tools/check.py` 执行当前登记检查。前版已本地验证的 [4.8.4 候选版](./docs/releases/4.8.4.md)通过 Chromium 56/56 项，包括可复现构建、解压持久/离线及 1,000 任务×6 子任务的 JSON 替换/恢复往返；[schema-2 机器报告](./docs/releases/check-results-4.8.4.json)与 [87 项输入来源记录](./docs/releases/inputs-4.8.4.json)绑定完整运行及未变化的源码/验证指纹。五个新增浏览器程序的专项也在 Firefox/WebKit 通过，不代表全部 56 项在每个引擎执行。该 4.8.4 历史记录未包含真实设备、远程 CI 或实际部署验收；4.8.5 的独立生产结果见上文，实机与远程 CI 仍按各自未验收状态记录。
 
 历史 [4.8.2 记录](./docs/releases/4.8.2.md)分别保留其最终成功与首轮失败。[4.8.1](./docs/releases/4.8.1.md)、[4.8](./docs/releases/4.8.md)、[4.7](./docs/releases/4.7.md)和 [4.6](./docs/releases/4.6.md)保留各自历史结果。[产品路线图](./docs/product-roadmap.md)记录本地优先专业版的方向，规划内容不代表已经实现。漏洞报告方式见 [SECURITY.md](./SECURITY.md)。
 

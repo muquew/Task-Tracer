@@ -1,0 +1,15 @@
+{
+  "reviewed_at": "2026-10-25T05:47:07.200643+00:00",
+  "images": [
+    {
+      "filename": "01-online-public-manifest.png",
+      "tool": "view_image",
+      "observation": "Actual public manifest JSON is visible; no application flow is claimed."
+    },
+    {
+      "filename": "02-failed-new-request-old-document.png",
+      "tool": "view_image",
+      "observation": "Previous JSON remains visible after navigation failure; rejected as successful new-request evidence."
+    }
+  ]
+}

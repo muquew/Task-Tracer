@@ -1,0 +1,16 @@
+{
+  "earlier_attempts": [
+    {
+      "directory": "halfclose-787dacd2-c611-4705-8f69-a9ca067f924a",
+      "status": "incomplete_failed_fixture",
+      "observation": "The green assertion failed before observed results were saved; source snapshots remain. No successful RED/GREEN outcome is claimed."
+    },
+    {
+      "directory": "halfclose-e5de260f-89f9-43dd-a3f0-9f4f0575ea22",
+      "status": "sandbox_precondition_failed",
+      "observation": "Observed results show PermissionError EPERM for local socket operations in both versions. These are not valid RED/GREEN module results."
+    }
+  ],
+  "accepted_fixture": "halfclose-c982215a-301b-4ac9-ba79-75297b4ff937",
+  "execution": "Reviewed local execution allowed the socketpair operations; it produced old=0 bytes and repaired=1048576 bytes with matching response SHA."
+}

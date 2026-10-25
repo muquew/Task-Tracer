@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "run_id": "c69a45d3-0139-43c5-8a01-d81eb884ba40",
+  "started_at": "2026-10-25T05:20:52.238+00:00",
+  "finished_at": "2026-10-25T05:21:37.788+00:00",
+  "started_at_beijing": "2026-10-25T13:20:52.238+08:00",
+  "actual_versions": {
+    "chromium": "154.0.8037.57",
+    "firefox": "153.0",
+    "webkit": "26.5"
+  },
+  "programs_passed": 3,
+  "engine_viewport_combinations_passed": 6,
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "program_seconds": {
+    "chromium": 11.103,
+    "firefox": 17.329,
+    "webkit": 14.743
+  },
+  "source22_and_verification69_current_match": true,
+  "original_program_sha256": "36537279d5bc5f6488b87e26f8ddd64b56eed5e49b884db1d1967680120b5935",
+  "original_programs_and_assertions_unchanged": true,
+  "retained_raw_files": 8,
+  "retained_raw_bytes": 32862,
+  "scope": "Three unmodified original CLI executions, one per actual engine; each program runs both declared viewports with fresh persistent synthetic profiles. Runtime probe processes finish before the core program starts.",
+  "limitations": [
+    "Cloud Linux engines and narrow viewports are not real Safari/iPhone, OS installation, device restart, real IME, assistive technology or system-notification acceptance.",
+    "This core acceptance is not a rerun of all 31 specialized matrix programs or the complete 58-check suite."
+  ]
+}

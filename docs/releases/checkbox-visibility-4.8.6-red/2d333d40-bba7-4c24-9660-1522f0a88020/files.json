@@ -1,0 +1,18 @@
+{
+  "accessibility_i18n_audit.py": {
+    "bytes": 28709,
+    "sha256": "a53a21171249ded47c0998390a27ee13521025f05fd1f3e2ff4d2d7f3e8a466a"
+  },
+  "report.json": {
+    "bytes": 26152,
+    "sha256": "9590a5c55a629732cefaff518bf931377a3cb71bea78e29712597703d8247bec"
+  },
+  "runner.py": {
+    "bytes": 5451,
+    "sha256": "6b543458f97e69ca4b261366888797595227300d40c3c263f0482efafb345cbc"
+  },
+  "chromium-1280/light-resting.png": {
+    "bytes": 236870,
+    "sha256": "303413456818d659b85152f9f1ec473ade7e67eb31b8326a720615b90acdce34"
+  }
+}

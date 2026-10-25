@@ -1,0 +1,7 @@
+{
+  "recorded_at": "2026-10-25T05:24:30.745705+00:00",
+  "native_report_sha256": "7eda54c0da3e902226883f04849ed9b4b75d5336fb07fbdc34eb63811e5bd9ed",
+  "native_report_left_unchanged": true,
+  "accepted_as_completed": false,
+  "note": "Three local screenshots were captured and inspected. Operator used nonexistent #menuBtn instead of existing #openMenuBtn, leading to an action timeout. Native report kept unchanged/incomplete; not a product failure or completed acceptance. Replaced by a new independent production-flow run."
+}

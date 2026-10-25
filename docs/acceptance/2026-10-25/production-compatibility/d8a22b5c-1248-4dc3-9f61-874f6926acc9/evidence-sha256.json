@@ -1,0 +1,26 @@
+{
+  "firefox-1280/failure-trace.zip": {
+    "bytes": 13609,
+    "sha256": "e1f8699a67c779831e85c19ba351e888a291006fde93c66f8f2a1736a86c353d"
+  },
+  "firefox-1280/failure.png": {
+    "bytes": 5782,
+    "sha256": "7b803ea8fe0a280932767694ae0f7123b3d348f72346e916379284f28638cf45"
+  },
+  "firefox-1280/original-helper-output.log": {
+    "bytes": 1183,
+    "sha256": "aeba7a80bcde4fdfdba0babea07d967d65a2e58c78e982daad81eba9d7cab4fa"
+  },
+  "firefox-1280/result.json": {
+    "bytes": 22013,
+    "sha256": "0b8156c54d75c71bc2a9df59d21946a5f31fe25d049eeccf7f4d450a8d40ece6"
+  },
+  "report.json": {
+    "bytes": 21548,
+    "sha256": "aacca34d849bc30c0daf268fa2d034b532825aca7edfacb630e6c0b4749a7b45"
+  },
+  "runner.py": {
+    "bytes": 15019,
+    "sha256": "9d5cb08c5e2af814775fc0974fea1c231920ac7c76a8946b2c18616c44c9b053"
+  }
+}
