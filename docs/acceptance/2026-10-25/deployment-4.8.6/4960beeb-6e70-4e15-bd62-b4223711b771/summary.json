@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "first_native_pass_at": "2026-10-25T06:14:33.272528+00:00",
+  "first_native_pass_at_beijing": "2026-10-25T14:14:33.272528+08:00",
+  "app_version": "4.8.6",
+  "resource_version": "4.36",
+  "cache_name": "task-tracer-v4.8.6",
+  "pushed_commit": "f13d7e11111a1ee321363dec875c8899146dffa6",
+  "native_cli_attempts": 1,
+  "native_cli_exit": 0,
+  "observed_https_responses": 14,
+  "all_status_200": true,
+  "all_response_bytes_match_candidate": true,
+  "source_inputs": 22,
+  "verification_inputs": 69,
+  "source_sha256": "fe5c092570424d57b6bd68a2cee2303bd7972d013c7b075f1cc01248feefb665",
+  "verification_sha256": "4bfb7094e01db67b4f0e69c172cfe3e24fdd64a55fc003698c94be9f4169f9dc",
+  "report_sha256": "c6319ba610face151373c4498cdf36b879509db141ea56d83f6728346136cfe5",
+  "scope": "Original CLI passed, then the same verify function passed with observational response archival. Static payload correspondence is proven; Vercel backend Git metadata, remote CI and browser flows are separate."
+}

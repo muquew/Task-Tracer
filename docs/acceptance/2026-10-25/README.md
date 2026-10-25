@@ -1,8 +1,34 @@
-# 2026-10-25 发布后浏览器验收：4.8.5 阶段
+# 2026-10-25 发布后浏览器验收
 
-日期和下述执行时间均按北京时间；原始 JSON 保留 UTC 时间。以下记录已发布的 **4.8.5** / 资源 **4.36** 阶段。本轮将已完成五项工程验收的候选推送到 GitHub，并实际确认域名更新；此阶段结束时 22 个发行源码与 69 个验证输入仍与原冻结一致。后续截图检查确认了已选中子任务的浅色主题对比缺陷，**[4.8.6 完整工程验收](../../releases/4.8.6.md)已通过，发布后验证仍待完成**，不以本页旧版结果替代新版验收。
+## 4.8.6：工程与实际发布后浏览器验收完成
 
-## 发布与验证结论
+[4.8.6 完整工程验收](../../releases/4.8.6.md)已通过：新冻结 91 输入、58/58 完整检查（程序耗时合计 1427.981 秒）、三引擎各 31 项、6 组合/36 个自动可见性状态及 12 张人工代表图、实际旧包三阶段和独立双构建/解压离线。旧 4.8.5 的万级/87 测量保持原历史身份。
+
+[应用推送记录](publication-4.8.6-push.json)确认 `f13d7e11111a1ee321363dec875c8899146dffa6` 已到 GitHub `main`，91 个已提交源码/验证输入与新冻结一致。原部署 CLI 于北京时间 **14:14:33** 第一次完整退出 0；[独立部署报告](deployment-4.8.6/4960beeb-6e70-4e15-bd62-b4223711b771/summary.md)记录 14/14 实际 HTTPS 200 响应与候选逐字节相同，CSP 与登记安全头全部相符，实际应用/缓存为 4.8.6、资源 4.36。该事实不代表读取了 Vercel 后台 Git 元数据或远程 CI 结果。
+
+[最终发布机器摘要](publication-4.8.6.json)记录已完成的应用推送、静态部署与以下独立浏览器结果。它的 SHA-256 是 `0e4261a1d36fb11e302977d097ccd0a99666a6eef3ef121fa5deeb33ed24398c`；后续文档/证据同步提交与资料上站核对将在执行后另记，不预填未来提交或时间。
+
+| 4.8.6 实际域名范围 | 结果 | 原始证据 |
+| --- | --- | --- |
+| Firefox 153.0 / WebKit 26.5，各 1280×800 与 390×844 | 四个完整核心组合通过，8 张截图全部查看，8 个实际 JSON 下载保存并核对 | [原生汇总](production-compatibility/59393473-b285-4544-ba78-3b7d8ad8e3da/verification-summary.json)、[截图审读](production-compatibility/59393473-b285-4544-ba78-3b7d8ad8e3da/visual-review.json) |
+| Chromium 154.0.8037.57，两个视口的勾选状态可见性 | 2 个独立上下文、12 个自动状态通过；4 张代表图实际查看，另 8 张仅自动断言 | [原生报告](production-visibility-4.8.6/c071d6ed-aa90-4e37-b019-8592ef1f8221/report.json)、[4 张人工检查记录](production-visibility-4.8.6/c071d6ed-aa90-4e37-b019-8592ef1f8221/inspection.json) |
+
+Firefox/WebKit 四组合保留原业务 helper 的 CRUD、四视图、任务备份与导入前快照实际下载、替换导入/删除，以及网络不可用后的缓存导航；四次重载均为 HTTP 200 且 `from_service_worker=true`，页面/控制台/请求异常为空。四份初始 HTTPS HTML 均与冻结 index 字节相同。全部组合结束于 14:15:46.689，北京时间。
+
+Firefox 使用平台公开 CA 的临时 NSS 信任和正常 TLS 验证、正常 offline API，`navigator.onLine=false`。WebKit 通过仅连接继承代理的已验证 CONNECT 字节 relay，切断并关闭全部监听器/socket/worker后重载；新连接被拒绝，缓存重载前后上游计数不变。它的 `navigator.onLine` 仍为 true，证明的是实际传输不可达时的缓存重载，不是旧驱动 offline API 已恢复，也不冒充真实手机关闭无线网络。
+
+Chromium 的另一次专项验证只检查两视口下亮/暗、静止/悬停/键盘焦点及空格反向切换；不算第五、第六个相同完整核心程序。实测白勾/填充对比度亮色 6.7264566:1、暗色 3.8020867:1，焦点可见，页面/控制台/请求异常为空。以下原图均来自当前已发布 4.8.6，而后面的九步图库明确属于早先 4.8.5 阶段。
+
+| Firefox 窄屏恢复后的勾选状态 | WebKit 桌面恢复后的勾选状态 | Chromium 窄屏暗色键盘焦点 |
+| --- | --- | --- |
+| ![4.8.6 Firefox 窄屏勾选状态](production-compatibility/59393473-b285-4544-ba78-3b7d8ad8e3da/firefox-390/01-online-restored.png) | ![4.8.6 WebKit 桌面勾选状态](production-compatibility/59393473-b285-4544-ba78-3b7d8ad8e3da/webkit-1280/01-online-restored.png) | ![4.8.6 Chromium 窄屏暗色勾选焦点](production-visibility-4.8.6/c071d6ed-aa90-4e37-b019-8592ef1f8221/chromium-390/dark-keyboard-focus.png) |
+
+
+## 4.8.5：已发布阶段与发现记录
+
+日期和下述执行时间均按北京时间；原始 JSON 保留 UTC 时间。以下记录已发布的 **4.8.5** / 资源 **4.36** 阶段。本轮将已完成五项工程验收的候选推送到 GitHub，并实际确认域名更新；此阶段结束时 22 个发行源码与 69 个验证输入仍与原冻结一致。后续截图检查确认了已选中子任务的浅色主题对比缺陷，**[4.8.6 完整工程与实际发布后浏览器验收](../../releases/4.8.6.md)均已按独立新证据完成**，不以本页旧版结果替代新版验收。
+
+## 4.8.5 发布与验证结论
 
 应用提交 [`d9b2a58d8359aa27c087f3da809d7de27ee398f0`](https://github.com/muquew/Task-Tracer/commit/d9b2a58d8359aa27c087f3da809d7de27ee398f0) 已推送至 `main`。[部署原始报告](deployment-after-push/c0be17a7-96ee-4b85-a329-b59dbee06825/report.json)记录 13:23:39 首次原 CLI 完整通过，14/14 实际 HTTPS 响应均为 200，HTML、Service Worker、语言资源、图标和 manifest 与候选字节一致，CSP 与登记安全头原断言通过。这证明生产静态内容与候选一致；未读取 Vercel 后台 Git 元数据，也未把远程 CI 计为通过。
 
@@ -19,7 +45,7 @@
 
 本日的 3 个原核心程序执行不等于重新运行全部 31 项专项或完整 58 项检查。此前完整工程验收及 314 份来源证据保持[原记录](../../releases/4.8.5.md)身份；本轮补验与其分开。
 
-## 真实域名九步操作与截图
+## 4.8.5 真实域名九步操作与截图
 
 目标是用隔离配置中的合成任务完成首次使用、录入、规划、备份恢复、离线及窄屏编辑。浏览器实际为 Linux Chromium 154.0.8037.57，时区 Asia/Shanghai；13:24:35–13:28:31 执行，9 张保存的原始截图均经查看后接受。交互 JSON 记录操作及相关 DOM、焦点、视口、请求状态、下载信息和输入身份；原始下载文件一同保留。
 
@@ -89,13 +115,13 @@
 
 ![步骤 9：完成任务与统计结果](browser-flow/c05ce2d1-1459-4e93-81c6-f79a1f1aaec8/09-production-narrow-completed-stats.png)
 
-## 数据与可访问性证据边界
+## 4.8.5 数据与可访问性证据边界
 
 桌面流程实际保存了 [1,962 字节任务备份](browser-flow/c05ce2d1-1459-4e93-81c6-f79a1f1aaec8/production-backup.json)和 [1,984 字节导入前快照](browser-flow/c05ce2d1-1459-4e93-81c6-f79a1f1aaec8/production-pre-import-snapshot.json)，不是只观察下载提示。替换导入后和禁网重载后两次读取全部任务字段，均与下载备份精确相等，包括中文缩进/换行、逗号标签、子任务及 Asia/Shanghai 截止时间。窄屏重载后的记录保留编辑后的名称、描述、项目、标签与原截止时间，完成后 `completed=true`、统计 100% 和 1/1 一致。
 
 截图和 DOM 显示中文/英文标签、可访问名称、文本与图标并存的覆盖风险提示、固定底部保存按钮及无横向溢出。它们不构成完整 WCAG 合规、真实读屏播报或真实触控/软键盘验收；本轮没有实际 OS 安装、设备重启、锁屏/后台通知、真实输入法候选操作和浏览器驱逐。离线事实来自上下文禁网后真实重载和字段比较，不能只从画面推断，也不替代真实手机离线启动。
 
-## Firefox / WebKit 真实域名补验与视觉缺陷
+## 4.8.5 Firefox / WebKit 真实域名补验与视觉缺陷
 
 [原生报告](production-compatibility/e33926be-d2b4-467b-8d47-cb3f31510a11/report.json)为 `failed` / `completed: true` / `passed: false`，原始文件已[封存哈希](production-compatibility/e33926be-d2b4-467b-8d47-cb3f31510a11/sealed-evidence-sha256.json)。Firefox 153.0 的 1280×800 和 390×844 两组合通过 CRUD、四视图、实际导出/替换导入、删除及上下文禁网后的 Service Worker 重载。WebKit 26.5 的 1280×800 在线阶段通过并取得与候选相同的 HTML；之后 `context.set_offline(True)` 下的重载出现浏览器 API internal error，完整组合失败；390×844 未执行。旧页面仍显示的[失败截图](production-compatibility/e33926be-d2b4-467b-8d47-cb3f31510a11/webkit-1280/failure.png)不作为成功重载证明。最小 fixture 诊断另行保留，当前不把该 API 错误直接归因于应用或预写根因结论。
 

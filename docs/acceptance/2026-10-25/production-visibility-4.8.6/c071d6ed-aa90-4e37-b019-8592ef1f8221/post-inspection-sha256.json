@@ -1,0 +1,90 @@
+{
+  "chromium-1280/dark-hover.png": {
+    "bytes": 204731,
+    "sha256": "786608041208d7e6b2c0f7526beea8899bf1249d4be94e3cfca93bb0d147c8a5"
+  },
+  "chromium-1280/dark-keyboard-focus.png": {
+    "bytes": 204771,
+    "sha256": "52d81e33ee75083e812aab857dedb4d0808e4f66eccf47d0009257622f911511"
+  },
+  "chromium-1280/dark-resting.png": {
+    "bytes": 203669,
+    "sha256": "5c0f916450932dccb1bab03d0817ea9e13a2e767e3d8e7e149af0b574bbbd3c7"
+  },
+  "chromium-1280/light-hover.png": {
+    "bytes": 204266,
+    "sha256": "d91ce0692657bd7540e087a4bbb4c56c9186583fd874ffe71393aa88520ad15f"
+  },
+  "chromium-1280/light-keyboard-focus.png": {
+    "bytes": 204272,
+    "sha256": "e36c028373cffecb6932806d2d941fb6bdede74ee783c77c05366ea20d953c05"
+  },
+  "chromium-1280/light-resting.png": {
+    "bytes": 202593,
+    "sha256": "56a50548c33a5ec22d79fc88184c576d5f41d2d2344efe6f21aeb0a12e1e34c3"
+  },
+  "chromium-1280/online-index.html": {
+    "bytes": 684071,
+    "sha256": "35e4fa15384cf4e8a47dc00c04651a1a03e3e4ae92f8c1a0866fd8fa24a4bbce"
+  },
+  "chromium-1280/result.json": {
+    "bytes": 31824,
+    "sha256": "78edd623f9400f86969bb96aa7598f2e7480767ef192f7faeda8a2af6cd22b9e"
+  },
+  "chromium-390/dark-hover.png": {
+    "bytes": 126573,
+    "sha256": "58a20b5a19b8a2c7f668562068d661dfc0b06c0dcdf8321a58a2483af905831a"
+  },
+  "chromium-390/dark-keyboard-focus.png": {
+    "bytes": 127296,
+    "sha256": "11edf4b51a32ae7cdb00a0d2b151691a40783154adeb206922b4cac7d8424252"
+  },
+  "chromium-390/dark-resting.png": {
+    "bytes": 126177,
+    "sha256": "1623a6a032bddea2c7b62730196261033115bbe886ba743af408e2beccdd566d"
+  },
+  "chromium-390/light-hover.png": {
+    "bytes": 128375,
+    "sha256": "6e1aadc6874da28b0695f336cfeaef62f1058dbf61860e8a827e96ace1cff477"
+  },
+  "chromium-390/light-keyboard-focus.png": {
+    "bytes": 128912,
+    "sha256": "d6090b1eb73b67f445939e0b8b5fa79310ee6dc678b7ee01eb74cc321b313b69"
+  },
+  "chromium-390/light-resting.png": {
+    "bytes": 127647,
+    "sha256": "a071e324fceef7a8d65a0ad7c1a833b5be9110840f0d741117852f34be39308e"
+  },
+  "chromium-390/online-index.html": {
+    "bytes": 684071,
+    "sha256": "35e4fa15384cf4e8a47dc00c04651a1a03e3e4ae92f8c1a0866fd8fa24a4bbce"
+  },
+  "chromium-390/result.json": {
+    "bytes": 31809,
+    "sha256": "9d0f94d2d4bd4d96f078ad44a379c16910e2d66758de3de805b9227cddcf6875"
+  },
+  "evidence-sha256.json": {
+    "bytes": 2835,
+    "sha256": "115d20b55b961ec6724d28c91524b718de0a41aa8acef5cbf2a4c5ed19fdecb7"
+  },
+  "freeze.json": {
+    "bytes": 10421,
+    "sha256": "3af4b5556f5e16ed6b44f58e9efee1930a15d115d0d800366c86f1da04e3b3a4"
+  },
+  "inspection.json": {
+    "bytes": 2661,
+    "sha256": "c2dca310d6ae6159e17ab6175b28ae66c43e6a00a64a0c4964f0b6e856a2251e"
+  },
+  "report.json": {
+    "bytes": 90438,
+    "sha256": "74de91bbaaef2f8a60d466673543579585ae7adf555bc1c1ad9be46b438a61c5"
+  },
+  "runner-output.log": {
+    "bytes": 12249,
+    "sha256": "a1e61e243ca34fe07303199810099a4cdb73b6153c2f1de5e8d1a015825290ee"
+  },
+  "runner.py": {
+    "bytes": 15208,
+    "sha256": "0e9f4b1b2a579424ee91c0c25f0cbf6bb20c70df9f5b550c51a88653bc4508be"
+  }
+}

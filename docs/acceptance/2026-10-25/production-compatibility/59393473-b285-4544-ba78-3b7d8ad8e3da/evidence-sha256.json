@@ -1,0 +1,126 @@
+{
+  "firefox-1280/01-online-restored.png": {
+    "bytes": 145884,
+    "sha256": "db59573ee66cbc7c0c15be3068b4a420edaec28544de0f344b026bbe4315defc"
+  },
+  "firefox-1280/02-offline-after-delete.png": {
+    "bytes": 147533,
+    "sha256": "b36d48f1a207cf1f8ebff33617e6855135dff2fbecab022b91c88f3bf146a76b"
+  },
+  "firefox-1280/download-1.json": {
+    "bytes": 1774,
+    "sha256": "6ab99b792118208a7f9b2e9f229b9276fe7b765697573d5b2949d9d172fe012c"
+  },
+  "firefox-1280/download-2.json": {
+    "bytes": 1796,
+    "sha256": "52049506aededf236e0180a258d1a48f63b0ee06140fac60a659bc748d085a0d"
+  },
+  "firefox-1280/online-index.html": {
+    "bytes": 684071,
+    "sha256": "35e4fa15384cf4e8a47dc00c04651a1a03e3e4ae92f8c1a0866fd8fa24a4bbce"
+  },
+  "firefox-1280/original-helper-output.log": {
+    "bytes": 105,
+    "sha256": "5c8d262dca3beeb96d15390eb0650e140296fbeffeffebca9e22514d39053f07"
+  },
+  "firefox-1280/result.json": {
+    "bytes": 25425,
+    "sha256": "4e6503f05e5dec66e92ca6db727135668f17551872567d2d35c62cae04c3211a"
+  },
+  "firefox-390/01-online-restored.png": {
+    "bytes": 89265,
+    "sha256": "0923c6ce4106fdb40ce1e14059670011cef3fb546a3441923b30160a5dbf306e"
+  },
+  "firefox-390/02-offline-after-delete.png": {
+    "bytes": 89991,
+    "sha256": "3d2d8ff7b3ed3382da2892df73ff69cb97d3f0b72628b7d762db3ce49c016570"
+  },
+  "firefox-390/download-1.json": {
+    "bytes": 1773,
+    "sha256": "1699f5787e652ffe6d17175b61b32314b59429cf82741f9b36168db0339c8981"
+  },
+  "firefox-390/download-2.json": {
+    "bytes": 1795,
+    "sha256": "411607e421e7e9ad04341c30a845484f2cccc95099c00f37145398a6b814bfa5"
+  },
+  "firefox-390/online-index.html": {
+    "bytes": 684071,
+    "sha256": "35e4fa15384cf4e8a47dc00c04651a1a03e3e4ae92f8c1a0866fd8fa24a4bbce"
+  },
+  "firefox-390/original-helper-output.log": {
+    "bytes": 104,
+    "sha256": "26ef37a4684128f521647dc218dc27462ff93d3e0bdccc7499772bcc907b5e15"
+  },
+  "firefox-390/result.json": {
+    "bytes": 25421,
+    "sha256": "daa345331f004a7c049f26a6ed406b163985fafc6db5665cb8d84267489010a4"
+  },
+  "proxy_forwarder.py": {
+    "bytes": 7319,
+    "sha256": "068c4fc3a6335c7abf779bb4794d38126eb9435792dc48730b4a2e61464b1dbf"
+  },
+  "report.json": {
+    "bytes": 23186,
+    "sha256": "ccfa910d15da4c5224ffecdbb9b7ba4552fffc6f67325934168abc1411e6d87b"
+  },
+  "runner.py": {
+    "bytes": 21599,
+    "sha256": "0a94f5a607039ad55f3356d04dbefcfff05629d14e5b5f6ca40cd0a828e37e8e"
+  },
+  "webkit-1280/01-online-restored.png": {
+    "bytes": 130085,
+    "sha256": "ef46ed88f72ca60dc6c9598f870b872540613e83878fa8dbfa67ef569e57a155"
+  },
+  "webkit-1280/02-offline-after-delete.png": {
+    "bytes": 121227,
+    "sha256": "a7f93dedc57faf080a556dbbc29a33241c3719f4c8c9f83876651b47286a5648"
+  },
+  "webkit-1280/download-1.json": {
+    "bytes": 1772,
+    "sha256": "669c11885ee1fa5e7bc24e25ce2cfa4d8fe8f855cb3a6d830de6cf3c11001c14"
+  },
+  "webkit-1280/download-2.json": {
+    "bytes": 1794,
+    "sha256": "1a42b8f17166aaf1e27d36d0762489cd71b3510b9fcd2414f84a66c94a22d948"
+  },
+  "webkit-1280/online-index.html": {
+    "bytes": 684071,
+    "sha256": "35e4fa15384cf4e8a47dc00c04651a1a03e3e4ae92f8c1a0866fd8fa24a4bbce"
+  },
+  "webkit-1280/original-helper-output.log": {
+    "bytes": 221,
+    "sha256": "b126d934176663b0df1df87bdc1dc5a5aee4ec826b33847c7743b1be0041ee11"
+  },
+  "webkit-1280/result.json": {
+    "bytes": 26787,
+    "sha256": "5751956dc7162873051c18ec08b24983c2e83d3e0a9cda777b6ad695cdff8c81"
+  },
+  "webkit-390/01-online-restored.png": {
+    "bytes": 87589,
+    "sha256": "72bf33eb9ce702cc854a255e2b3121acc072cb8e1d88a0d0d52edfa7286ba5d8"
+  },
+  "webkit-390/02-offline-after-delete.png": {
+    "bytes": 84233,
+    "sha256": "415fb2afe05087b4041aa237269e87b3245c297252b00db71b7e6c220957ca3b"
+  },
+  "webkit-390/download-1.json": {
+    "bytes": 1771,
+    "sha256": "dd4404683a46c973b08a8d47c9b2540924cb10e4a5b75dc927b417a3469401d5"
+  },
+  "webkit-390/download-2.json": {
+    "bytes": 1793,
+    "sha256": "261df18b9d4e0e46e766b26790fcb1fbd501b6c8522c45427f5cc193e43e2565"
+  },
+  "webkit-390/online-index.html": {
+    "bytes": 684071,
+    "sha256": "35e4fa15384cf4e8a47dc00c04651a1a03e3e4ae92f8c1a0866fd8fa24a4bbce"
+  },
+  "webkit-390/original-helper-output.log": {
+    "bytes": 220,
+    "sha256": "3a26a17e148ff85bb2a86689b0c6bd5ab888bb876736e96cd1e26aeae29b0a77"
+  },
+  "webkit-390/result.json": {
+    "bytes": 26783,
+    "sha256": "e9971c387f9ae9fefa0944cbe2b81b66e0ccb4a2e66e7e4366ccfb2c1d43f03b"
+  }
+}
