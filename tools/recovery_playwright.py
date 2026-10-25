@@ -11,6 +11,7 @@ from typing import Any
 
 from playwright.sync_api import Page, expect, sync_playwright
 
+from smoke_playwright import click_task_action
 from smoke_playwright import (
     add_task,
     assert_empty_task_list,
@@ -122,7 +123,7 @@ def exercise_aborted_deletion(page: Page, url: str) -> None:
             };
         }"""
     )
-    task_locator(page, name).locator('[data-action="delete"]').click()
+    click_task_action(task_locator(page, name), 'delete')
     page.locator("#submitBtn").click()
     expect(page.locator("#notification")).to_have_class(re.compile(r"\berror\b"))
     if not page.evaluate("window.recoveryAbortInjected"):
@@ -169,7 +170,7 @@ def exercise_checkpoint_quota(page: Page, url: str) -> None:
             return original.call(this, value, ...args);
         };
     }""")
-    task_locator(page, name).locator('[data-action="delete"]').click()
+    click_task_action(task_locator(page, name), 'delete')
     page.locator('#submitBtn').click()
     expect(page.locator('#storageUnavailableBanner')).to_be_visible()
     expect(page.locator('#emergencyBackupBtn')).to_be_visible()

@@ -21,6 +21,7 @@ DISTRIBUTION_SOURCES = {
     'sitemap.xml': 'sitemap.xml',
     'vercel.json': 'vercel.json',
     'LICENSE': 'LICENSE',
+    'THIRD_PARTY_NOTICES.md': 'THIRD_PARTY_NOTICES.md',
     'README.md': 'docs/distribution.md',
     'README_zh_cn.md': 'docs/distribution_zh_cn.md',
     'fav/android-chrome-192x192.png': 'fav/android-chrome-192x192.png',

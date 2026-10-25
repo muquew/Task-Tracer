@@ -10,6 +10,7 @@ import re
 from playwright.sync_api import expect, sync_playwright
 
 from recovery_management_playwright import config, stored
+from smoke_playwright import reveal_workspace_control, select_language
 from smoke_playwright import add_task, browser_launch_options, clear_app_data, local_server, wait_for_app_ready
 
 
@@ -36,7 +37,7 @@ def apply_button(page, view):
 
 
 def open_delete(page, view):
-    delete_button(page,view).click()
+    reveal_workspace_control(page, delete_button(page,view)).click()
     expect(page.locator('#savedViewDeleteConfirm')).to_be_visible()
     expect(page.locator('#savedViewDeleteName')).to_have_text(view['name'])
     language = page.locator('html').get_attribute('lang')
@@ -74,9 +75,7 @@ def cancellation(page, url):
     prepare(page,url)
     view = save_named(page,'<img src=x onerror=window.viewDeleteXss=1>','project:cancel-deletion')
     for language in ('en','zh-CN'):
-        page.locator('#openMenuBtn').click()
-        page.locator('#langMenuToggle').click()
-        page.locator(f'#lang-container .lang-btn[data-lang="{language}"]').click()
+        select_language(page, language)
         expect(page.locator('html')).to_have_attribute('lang',language)
         page.keyboard.press('Escape')
         before = stored(page)

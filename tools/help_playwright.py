@@ -8,6 +8,7 @@ from pathlib import Path
 import re
 
 from playwright.sync_api import expect, sync_playwright
+from smoke_playwright import select_language
 from smoke_playwright import add_task, browser_launch_options, clear_app_data, local_server, wait_for_app_ready
 from validate_static import app_version
 
@@ -111,9 +112,7 @@ def run(engine='chromium'):
             page.goto(url + '?support_private_url=' + PRIVATE_VALUES[4])
             wait_for_app_ready(page)
             for language in ('en', 'zh-CN'):
-                page.locator('#openMenuBtn').click()
-                page.locator('#langMenuToggle').click()
-                page.locator(f'#lang-container .lang-btn[data-lang="{language}"]').click()
+                select_language(page, language)
                 expect(page.locator('html')).to_have_attribute('lang', language)
                 page.keyboard.press('Escape')
                 translations = json.loads((ROOT / 'resources' / f'{language}.json').read_text())['help']

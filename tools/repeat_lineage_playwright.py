@@ -9,6 +9,7 @@ from pathlib import Path
 from playwright.sync_api import expect, sync_playwright
 from import_reference_playwright import finish_occurrence
 from recovery_management_playwright import stored
+from smoke_playwright import click_task_action, reveal_task_action
 from smoke_playwright import (
     add_task, browser_launch_options, clear_app_data, exercise_export_backup,
     get_task_records, import_payload_replace, local_server, select_filter, wait_for_app_ready,
@@ -39,7 +40,7 @@ def reopen(page, identity):
 
 
 def delete(page, identity):
-    row(page, identity).locator('[data-action="delete"]').click()
+    click_task_action(row(page, identity), 'delete')
     expect(page.locator('#taskModal')).to_be_visible()
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
@@ -90,7 +91,7 @@ def prepare(page, url, length=3, root_zero=False):
 
 
 def edit_future(page, identity, extra_subtask='Future-only checklist'):
-    row(page, identity).locator('[data-action="edit"]').click()
+    click_task_action(row(page, identity), 'edit')
     page.locator('#taskName').fill('Manually planned future')
     page.locator('#taskDesc').fill('Preserve future-only description and checklist')
     page.locator('#dueDate').fill('2026-12-15')
@@ -114,7 +115,7 @@ def assert_no_new_records(before, after, changed_id):
 def assert_skip_blocked(page, identity):
     before = stored(page)
     undo_title = page.locator('#undoBtn').get_attribute('title')
-    action = row(page, identity).locator('[data-action="skip-repeat"]')
+    action = reveal_task_action(row(page, identity), 'skip-repeat')
     expect(action).to_be_visible()
     action.click()
     language = page.locator('html').get_attribute('lang')
@@ -233,7 +234,7 @@ def tail_and_other_family(page, url):
     add_task(page, 'Different recurrence family', due_date='2027-01-01', due_time='08:30',
              repeat_type='daily', reminder_offset='-1', subtasks=['Other family checklist'])
     other = next(task for task in get_task_records(page) if task['id'] not in (root, tail))
-    row(page, other['id']).locator('[data-action="edit"]').click()
+    click_task_action(row(page, other['id']), 'edit')
     page.locator('#taskName').fill('Lineage root')
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
@@ -246,7 +247,7 @@ def tail_and_other_family(page, url):
     assert added[0]['repeatSourceId'] == root and added[0]['dueLocalDate'] == '2027-01-03'
     assert record(page, root) == ancestor and record(page, other['id']) == other
     before_skip = get_task_records(page)
-    action = row(page, added[0]['id']).locator('[data-action="skip-repeat"]')
+    action = reveal_task_action(row(page, added[0]['id']), 'skip-repeat')
     action.click()
     after_skip = get_task_records(page)
     assert_no_new_records(before_skip, after_skip, added[0]['id'])
@@ -274,7 +275,7 @@ def self_link(page, url):
         'repeatCreatedFrom': 0, 'nextRepeatTaskId': 0,
     }])
     select_filter(page, 'all')
-    row(page, 0).locator('[data-action="skip-repeat"]').click()
+    click_task_action(row(page, 0), 'skip-repeat')
     assert record(page, 0)['dueLocalDate'] == '2027-01-02'
     finish_occurrence(page, 0)
     after = get_task_records(page)

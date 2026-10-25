@@ -6,6 +6,14 @@ The continuing objective is a dependable commercial product: a complete everyday
 
 This is an implementation roadmap, not a statement that the product is ready for paid distribution. The current [LICENSE](../LICENSE) permits personal non-commercial use; muquew has confirmed ownership and can grant separate commercial rights while retaining that public license. Pricing, actual issued commercial terms, purchase delivery and support terms still need to be defined before selling. See [the commercial offering plan](commercial-plan.md). The [4.8.5 engineering-candidate launch/delivery draft](commercial-launch-draft.md) separates current GOAL acceptance work from historical completed runs and keeps pricing, license and support choices explicit.
 
+## Current work: the 4.9.0 workspace redesign
+
+The [4.9.0 candidate](releases/4.9.0.md) reorganizes language, appearance and the task workspace on top of the published [4.8.6 baseline](releases/4.8.6.md). Its direction combines clear surface layers, consistent components and functional color with project/saved-view navigation, date context and responsive controls. Language and Light/Dark/System preferences have stable top-bar entries; secondary task operations use an accessible task menu.
+
+The date index, month calendar and narrow-screen schedule entry reuse existing calendar routing. They do not reschedule tasks or merge the manual daily plan with tasks due today. Database2, task backup JSON2.4 and saved-view1.1/1.0-import compatibility remain unchanged, along with the existing recovery, recurrence, batching, paging and offline capabilities.
+
+Implementation and validation are still in progress. Final source and verification inputs, full checks, three-engine outcomes, reproducible artifacts and hosted evidence must be recorded for this candidate before it is described as released. The 4.8.6 and earlier results below remain historical evidence for their own versions.
+
 ## First stage: reliability and release foundation
 
 Implemented in the 4.2 working-tree candidate:

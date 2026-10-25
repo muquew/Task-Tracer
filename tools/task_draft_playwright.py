@@ -8,6 +8,7 @@ from pathlib import Path
 
 from playwright.sync_api import Error, Page, expect, sync_playwright
 
+from smoke_playwright import click_task_action
 from smoke_playwright import (
     add_task,
     browser_launch_options,
@@ -152,11 +153,11 @@ def check_edit_and_stale(page: Page, url: str) -> None:
     add_task(page, 'Existing task', description='Original description', no_deadline=True, subtasks=['Original subtask'])
     expect(page.locator('#taskModal')).to_be_hidden()
     original = get_task_records(page)
-    task_locator(page, 'Existing task').locator('[data-action="edit"]').click()
+    click_task_action(task_locator(page, 'Existing task'), 'edit')
     assert not unload_is_guarded(page)
     page.keyboard.press('Escape')
     expect(page.locator('#taskModal')).to_be_hidden()
-    task_locator(page, 'Existing task').locator('[data-action="edit"]').click()
+    click_task_action(task_locator(page, 'Existing task'), 'edit')
     page.locator('#subtaskListPreview .subtask-preview-text').click()
     page.locator('#subtaskListPreview .subtask-edit-input').fill('Changed subtask draft')
     assert unload_is_guarded(page)
@@ -172,7 +173,7 @@ def check_edit_and_stale(page: Page, url: str) -> None:
     try:
         other.goto(url)
         wait_for_app_ready(other)
-        task_locator(page, 'Existing task').locator('[data-action="edit"]').click()
+        click_task_action(task_locator(page, 'Existing task'), 'edit')
         page.locator('#taskName').fill('Stale local draft')
         page.locator('#taskDesc').fill('Never overwrite the newer saved record')
         edit_task(other, 'Existing task', 'Newer remote task')
@@ -485,7 +486,7 @@ def check_quota_recovery(page: Page, url: str) -> None:
     assert saved[0]['repeatType'] == 'custom' and saved[0]['repeatInterval'] == 9
 
     add_task(page, 'Quota edit original', description='Original saved record', no_deadline=True, subtasks=['Original child'])
-    task_locator(page, 'Quota edit original').locator('[data-action="edit"]').click()
+    click_task_action(task_locator(page, 'Quota edit original'), 'edit')
     page.locator('#taskName').fill('Quota local edit draft')
     page.locator('#taskDesc').fill('Do not overwrite a newer task after recovery')
     inject_quota_failure(page, 'put')
@@ -532,7 +533,7 @@ def check_quota_recovery(page: Page, url: str) -> None:
     expect(page.locator('#taskName')).to_have_value('Second queued unsaved task')
     discard(page)
 
-    task_locator(page, 'Quota newer remote record').locator('[data-action="edit"]').click()
+    click_task_action(task_locator(page, 'Quota newer remote record'), 'edit')
     page.locator('#subtaskListPreview .subtask-preview-text').click()
     page.locator('#subtaskListPreview .subtask-edit-input').fill('  In-progress inline subtask text  ')
     page.evaluate("""() => {
@@ -545,8 +546,12 @@ def check_quota_recovery(page: Page, url: str) -> None:
             return original.call(this, record, ...rest);
         };
     }""")
-    page.locator('#lang-container .lang-btn[data-lang="en"]').dispatch_event('click')
+    page.locator('#languageSelect').evaluate("""select => {
+        select.value = 'en';
+        select.dispatchEvent(new Event('change', {bubbles: true}));
+    }""")
     expect(page.locator('#storageUnavailableBanner')).to_be_visible()
+    expect(page.locator('#languageSelect')).to_have_value(page.locator('html').get_attribute('lang'))
     inline = downloaded_drafts(page)[0]
     assert inline['editingSubtaskIndex'] == 0
     assert inline['form']['subtasks'][0]['text'] == '  In-progress inline subtask text  '

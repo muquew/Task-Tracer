@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 
 from playwright.sync_api import expect, sync_playwright
+from smoke_playwright import click_task_action
 from smoke_playwright import (
     add_task, browser_launch_options, clear_app_data, exercise_export_backup, get_task_records,
     import_payload_replace, local_server, task_locator, wait_for_app_ready,
@@ -84,7 +85,7 @@ def run(engine):
 
             for case_name in ('NY fall second', 'NY spring after'):
                 original = by_name[case_name]
-                task_locator(page, original['name']).locator('[data-action="edit"]').click()
+                click_task_action(task_locator(page, original['name']), 'edit')
                 expect(page.locator('#taskModal')).to_be_visible()
                 expect(page.locator('#dueDate')).to_have_value(original['dueLocalDate'])
                 expect(page.locator('#dueTime')).to_have_value(original['dueLocalTime'])

@@ -16,6 +16,7 @@ from import_reference_playwright import finish_occurrence
 from recovery_management_playwright import stored
 from repeat_delete_playwright import assert_checkpoint, expected_deletion
 from repeat_lineage_playwright import edit_future, prepare, record, reopen, row
+from smoke_playwright import click_task_action
 from smoke_playwright import (
     assert_backup_payload_integrity, browser_launch_options, exercise_export_backup,
     get_task_records, import_payload_replace, local_server, select_filter,
@@ -27,7 +28,7 @@ REFERENCES = ('repeatSourceId', 'repeatCreatedFrom', 'nextRepeatTaskId')
 
 
 def rename(page, identity, name):
-    row(page, identity).locator('[data-action="edit"]').click()
+    click_task_action(row(page, identity), 'edit')
     page.locator('#taskName').fill(name)
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
@@ -243,7 +244,7 @@ def stale_merge(page, url):
         other.goto(url)
         wait_for_app_ready(other)
         select_filter(other, 'all')
-        row(other, future).locator('[data-action="edit"]').click()
+        click_task_action(row(other, future), 'edit')
         other.locator('#taskDesc').fill('Newer future edit in another real window')
         other.locator('#submitBtn').click()
         expect(other.locator('#taskModal')).to_be_hidden()

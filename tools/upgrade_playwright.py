@@ -16,6 +16,7 @@ from urllib.parse import urlparse
 import zipfile
 
 from playwright.sync_api import expect, sync_playwright
+from smoke_playwright import click_task_action, reveal_workspace_control
 from smoke_playwright import (StaticHandler, ThreadingHTTPServer, add_task,
                               browser_launch_options, clear_app_data, delete_task,
                               task_locator, wait_for_app_ready)
@@ -160,7 +161,7 @@ def assert_workspace(context, page, expected, release):
     assert_controller(context, page, release)
     assert workspace(page) == expected, f'Task fields or saved-view metadata changed while loading {release.version}'
     baseline_view = next(view for view in expected['views'] if view['name'] == 'Baseline migration view')
-    page.locator(f'[data-saved-view-id={json.dumps(baseline_view["id"])}]').click()
+    reveal_workspace_control(page, page.locator(f'[data-saved-view-id={json.dumps(baseline_view["id"])}]')).click()
     expect(task_locator(page, 'Created before upgrade')).to_have_count(1)
     typed = isinstance(baseline_view['projectFilter'], dict)
     expect(task_locator(page, 'Created outside saved project')).to_have_count(0 if typed else 1)
@@ -203,7 +204,7 @@ def exercise_crud(page, phase):
     name = f'Temporary CRUD {phase}'
     add_task(page, name, no_deadline=True, project='all', tags=['crud', 'migration'], subtasks=['Preserve subtask'])
     created = next(task for task in workspace(page)['tasks'] if task['name'] == name)
-    task_locator(page, name).locator('[data-action="edit"]').click()
+    click_task_action(task_locator(page, name), 'edit')
     description = f'Edited during actual {phase}'
     page.locator('#taskDesc').fill(description)
     page.locator('#submitBtn').click()

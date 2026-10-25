@@ -465,8 +465,8 @@ def validate_seo(index_html: str, errors: list[str]) -> None:
         '<meta property="og:site_name" content="Task Tracer">',
         f'<meta property="og:url" content="{SEO_URL}">',
         '<meta property="og:image" content="https://todo.muquew.com/screenshots/task-list-en.png">',
-        '<meta property="og:image:width" content="1365">',
-        '<meta property="og:image:height" content="1227">',
+        '<meta property="og:image:width" content="1440">',
+        '<meta property="og:image:height" content="1024">',
         '<meta property="og:locale" content="en_US">',
         '<meta property="og:locale:alternate" content="zh_CN">',
         '<meta name="twitter:card" content="summary_large_image">',
@@ -629,6 +629,56 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
         errors.append(str(error))
 
 
+def validate_native_language_control(index_html: str, errors: list[str]) -> None:
+    try:
+        select = first_match(r'<select\b[^>]*\sid="languageSelect"[^>]*>', index_html,
+                             'native language select').group()
+        if not re.search(r'\sdata-native-select(?:\s|=|>)', select):
+            errors.append('Language select must retain its native-control marker')
+        if ('data-i18n-aria-label="workspace.language"' not in select
+                or not re.search(r'\saria-label="[^"]+"', select)):
+            errors.append('Native language select must expose a localized accessible name')
+
+        runtime = main_script(index_html).group('content')
+        functions = {
+            name: first_match(
+                rf'(?m)^([ \t]*)function\s+{name}\s*\([^)]*\)\s*\{{(?P<body>.*?)^\1\}}',
+                runtime, name).group('body')
+            for name in ('createLangButtons', 'syncLanguageSelect', 'initLanguage',
+                         'bindEssentialEvents', 'enhanceSelectControls')
+        }
+        option_fragments = (
+            "DOM.languageSelect.textContent = '';",
+            'CONFIG.LANGUAGES.forEach(language => {',
+            "const option = document.createElement('option');",
+            'option.value = language.code;',
+            'option.textContent = language.name;',
+            'DOM.languageSelect.appendChild(option);',
+        )
+        if not contains_in_order(functions['createLangButtons'], option_fragments):
+            errors.append('Native language options must use every configured language code and name')
+        if ('DOM.languageSelect.value = state.currentLanguage;' not in functions['syncLanguageSelect']
+                or 'syncLanguageSelect();' not in functions['initLanguage']):
+            errors.append('Language initialization and rollback must synchronize the native select value')
+
+        handler = first_match(
+            r"DOM\.languageSelect\.addEventListener\('change', \(\) => \{(?P<body>.*?)\n\s*\}\);",
+            functions['bindEssentialEvents'], 'native language change handler').group('body')
+        if not contains_in_order(handler, (
+            "runAppAction('language.switch', { code: DOM.languageSelect.value });",
+            'syncLanguageSelect();',
+        )):
+            errors.append('Native language changes must use the action guard and restore the displayed value')
+        gated_actions = first_match(r'const STORAGE_GATED_ACTIONS = new Set\(\[(.*?)\]\);',
+                                    runtime, 'STORAGE_GATED_ACTIONS').group(1)
+        if "'language.switch'" not in gated_actions:
+            errors.append('Language changes must remain gated when storage is unavailable')
+        if "select:not([data-custom-select-ready]):not([data-native-select])" not in functions['enhanceSelectControls']:
+            errors.append('Native preference selects must be excluded from custom-select enhancement')
+    except AssertionError as error:
+        errors.append(str(error))
+
+
 def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
     if ":focus-visible" not in index_html or "--focus-ring" not in index_html:
         errors.append("Interactive controls must expose a visible keyboard focus style")
@@ -678,8 +728,7 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Toolbar accessible label must be localized")
     if '<title data-i18n="app.title">' not in index_html:
         errors.append("Document title must be localized")
-    if 'aria-controls="langSubmenu"' not in index_html or "setAttribute('role', 'menuitemradio')" not in index_html:
-        errors.append("Language menu must expose submenu controls and checked language state")
+    validate_native_language_control(index_html, errors)
     if "DOM.modal.setAttribute('aria-describedby', 'confirm-message-text')" not in index_html:
         errors.append("Confirmation dialogs must expose aria-describedby")
     if 'id="srStatus" class="sr-only" aria-live="polite" aria-atomic="true"' not in index_html:

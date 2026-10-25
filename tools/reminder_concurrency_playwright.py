@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError, expect, sync_playwright
+from smoke_playwright import click_task_action
 from smoke_playwright import (browser_launch_options, clear_app_data, delete_task,
                               due_fields_from_now, edit_task, get_task_records,
                               iso_minutes_from_now, local_server, snooze_task_reminder,
@@ -137,7 +138,7 @@ def run():
                 assert actual['revision'] == expected['revision'] + 1, 'Reminder write did not advance the latest database revision exactly once'
                 expect(task_locator(page, changed_name)).to_have_count(1)
                 expect(task_locator(page, name)).to_have_count(0)
-                task_locator(page, changed_name).locator('[data-action="edit"]').click()
+                click_task_action(task_locator(page, changed_name), 'edit')
                 expect(page.locator('#taskModal')).to_be_visible()
                 expect(page.locator('#taskDesc')).to_have_value(expected['tasks'][0]['description'])
                 followup_name = changed_name + ' saved here'
@@ -158,7 +159,7 @@ def run():
                 assert actual == expected, f'Delayed reminder changed a remotely {action}d task or advanced the revision'
                 if action == 'delete': expect(task_locator(page, name)).to_have_count(0)
                 else:
-                    task_locator(page, name).locator('[data-action="edit"]').click()
+                    click_task_action(task_locator(page, name), 'edit')
                     expect(page.locator('#taskDesc')).to_have_value(expected['tasks'][0]['description'])
                     page.locator('#cancelBtn').click()
             context.close()

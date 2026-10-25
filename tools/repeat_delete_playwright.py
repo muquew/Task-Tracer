@@ -13,6 +13,7 @@ from playwright.sync_api import expect, sync_playwright
 from import_reference_playwright import finish_occurrence
 from recovery_management_playwright import config, stored
 from repeat_lineage_playwright import edit_future, prepare, reopen, row
+from smoke_playwright import click_task_action
 from smoke_playwright import (
     browser_launch_options, exercise_export_backup, get_task_records, import_payload_replace,
     local_server, select_filter, wait_for_app_ready,
@@ -21,7 +22,7 @@ from smoke_playwright import (
 
 def open_delete(page, ids, mode):
     if mode == 'single':
-        row(page, ids[0]).locator('[data-action="delete"]').click()
+        click_task_action(row(page, ids[0]), 'delete')
     elif mode == 'batch':
         if page.locator('#batchModeBtn').get_attribute('aria-pressed') != 'true':
             page.locator('#batchModeBtn').click()

@@ -34,7 +34,7 @@ def assert_archive(path: Path, version: str) -> None:
     with zipfile.ZipFile(path) as archive:
         names = archive.namelist()
         expected = expected_distribution_files()
-        assert len(names) == 23 and len(names) == len(expected) and set(names) == expected
+        assert len(names) == 24 and len(names) == len(expected) and set(names) == expected
         metadata = json.loads(archive.read('integrity.json'))
         assert metadata['version'] == version
         assert set(metadata['files']) == expected - {'integrity.json'}
@@ -94,7 +94,7 @@ def run() -> None:
         actual_version = app_version(original['index.html'].decode())
         actual_resources = resource_version(original['index.html'].decode())
         build(root, base / 'normal', actual_version)
-        print(f'Release versions passed: current {actual_version} metadata builds exactly 23 files')
+        print(f'Release versions passed: current {actual_version} metadata builds exactly 24 files')
 
         drift = '9.9.9' if actual_version != '9.9.9' else '8.8.8'
         stale = '4.7.0' if json.loads(original['package.json'])['version'] != '4.7.0' else '4.6.0'

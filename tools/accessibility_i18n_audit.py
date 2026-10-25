@@ -13,12 +13,14 @@ from views_portability_playwright import payload as views_payload, view as saved
 from task_draft_playwright import inject_quota_failure
 from views_delete_playwright import save_named as save_delete_audit_view
 
+from smoke_playwright import close_workspace_navigation, reveal_workspace_control, select_language, select_theme_preference
 from smoke_playwright import (
     add_task,
     assert_accessibility_baseline,
     browser_launch_options,
     clear_app_data,
     ensure_conda_library_path,
+    exercise_workspace_navigation,
     future_date,
     local_server,
     select_view,
@@ -97,11 +99,16 @@ def assert_focus_baseline(page: Page, label: str) -> None:
         "#projectFilterBtn",
         "#filterBtn",
         "#sortBtn",
+        '#languageSelect',
+        '#themeToggleBtn',
+        '#workspaceNavToggle',
         '#viewSwitcher .view-tab[aria-selected="true"]',
     ]
     for selector in selectors:
         locator = page.locator(selector).first
         if locator.count() and locator.is_visible() and locator.is_enabled():
+            if locator.evaluate('node => Boolean(node.closest("[inert], [hidden], [aria-hidden=true]"))'):
+                continue
             assert_focus_visible(page, selector, label)
 
 
@@ -112,7 +119,7 @@ def assert_layout(page: Page, label: str) -> None:
             const viewportWidth = window.innerWidth;
             const visibleControls = [...document.querySelectorAll('button:not([hidden]), input:not([type="hidden"]), select, textarea, a[href]')]
                 .filter((el) => {
-                    if (el.getAttribute('aria-hidden') === 'true' || el.classList.contains('native-select-hidden')) return false;
+                    if (el.closest('[inert], [hidden], [aria-hidden="true"]') || el.classList.contains('native-select-hidden')) return false;
                     const rect = el.getBoundingClientRect();
                     const style = getComputedStyle(el);
                     return rect.width > 0 && rect.height > 0 && style.visibility !== 'hidden' && style.display !== 'none';
@@ -205,7 +212,8 @@ def audit_subtask_checkbox_visibility(page: Page, label: str,
     expect(checkbox).not_to_be_checked()
     for theme in ('light', 'dark'):
         if page.locator('html').get_attribute('data-theme') != theme:
-            page.locator('#themeToggleBtn').click()
+            select_theme_preference(page, theme)
+        close_workspace_navigation(page)
         page.locator('#searchInput').focus()
         page.mouse.move(0, 0)
         page.evaluate("""async () => {
@@ -258,13 +266,12 @@ def audit_subtask_checkbox_visibility(page: Page, label: str,
         expect(task.locator('.subtask-display-item.completed')).to_have_count(0)
     task.locator('.subtask-summary-bar').click()
     if page.locator('html').get_attribute('data-theme') != 'light':
-        page.locator('#themeToggleBtn').click()
+        select_theme_preference(page, 'light')
+    close_workspace_navigation(page)
 
 
 def switch_to_english(page: Page) -> None:
-    page.locator("#openMenuBtn").click()
-    page.locator("#langMenuToggle").click()
-    page.locator('#lang-container .lang-btn[data-lang="en"]').click()
+    select_language(page, 'en')
     expect(page.locator("html")).to_have_attribute("lang", "en")
     page.keyboard.press("Escape")
 
@@ -312,19 +319,19 @@ def audit_view_delete(page: Page, axe_source: str, label: str) -> None:
     view = save_delete_audit_view(page, 'UnbrokenAccessibilityViewName' * 3, 'tag:accessibility-delete-view')
     remove = page.locator(f'[data-saved-view-delete-id="{view["id"]}"]')
     for language in ('zh-CN', 'en'):
+        close_workspace_navigation(page)
         if page.locator('html').get_attribute('lang') != language:
-            page.locator('#openMenuBtn').click()
-            page.locator('#langMenuToggle').click()
-            page.locator(f'#lang-container .lang-btn[data-lang="{language}"]').click()
+            select_language(page, language)
             expect(page.locator('html')).to_have_attribute('lang', language)
             page.keyboard.press('Escape')
-        remove.click()
+        reveal_workspace_control(page, remove).click()
         expect(page.locator('#savedViewDeleteName')).to_have_text(view['name'])
         expect(page.locator('#cancelBtn')).to_be_focused()
         assert page.locator('#savedViewDeleteConfirm').evaluate('node => node.scrollWidth <= node.clientWidth + 1 && node.getBoundingClientRect().right <= document.querySelector(".modal-content").getBoundingClientRect().right + 1'), 'Long view name is clipped in the deletion confirmation'
         audit_page_state(page, axe_source, f'{label} {language} saved-view deletion confirmation')
         page.locator('#cancelBtn').click()
         expect(remove).to_be_focused()
+    close_workspace_navigation(page)
     page.locator('#clearSearchBtn').click()
 
 
@@ -434,7 +441,8 @@ def audit_scaled_surfaces(browser, url: str, axe_source: str, viewport: dict) ->
         wait_for_app_ready(page)
         for theme in ('light', 'dark'):
             if page.locator('html').get_attribute('data-theme') != theme:
-                page.locator('#themeToggleBtn').click()
+                select_theme_preference(page, theme)
+            close_workspace_navigation(page)
             label = f'{viewport["width"]}px {theme}'
             select_view(page, 'calendar')
             expect(page.locator('#calendarUndatedTasks .task-item')).to_have_count(100)
@@ -489,6 +497,7 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False) -> No
         )
         page = context.new_page()
         clear_app_data(page, url)
+        exercise_workspace_navigation(page)
         audit_page_state(page, axe_source, "empty task list")
         seed_tasks(page)
         audit_subtask_checkbox_visibility(page, '390px' if reduced_motion else '1280px')
@@ -530,8 +539,9 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False) -> No
         expect(page.locator('#storageUsage')).to_be_visible()
         audit_page_state(page, axe_source, 'data safety dialog')
         page.locator('#cancelBtn').click()
-        page.locator('#themeToggleBtn').click()
+        select_theme_preference(page, 'dark')
         expect(page.locator('html')).to_have_attribute('data-theme', 'dark')
+        close_workspace_navigation(page)
         audit_page_state(page, axe_source, 'dark task list')
         audit_views_transfer(page, axe_source, 'dark')
         audit_view_delete(page, axe_source, 'dark')

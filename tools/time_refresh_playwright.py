@@ -10,6 +10,7 @@ import re
 from playwright.sync_api import expect, sync_playwright
 
 from performance_playwright import read_workspace
+from smoke_playwright import reveal_workspace_control
 from smoke_playwright import (
     add_task, browser_launch_options, clear_app_data, local_server,
     select_filter, select_view, task_locator, wait_for_app_ready, discard_task_draft,
@@ -67,7 +68,7 @@ def prepare_today_plan(page, url):
     })""", {'day':DAY,'tomorrow':TOMORROW})
     page.reload()
     wait_for_app_ready(page)
-    page.locator('#focusModeToggleBtn').click()
+    reveal_workspace_control(page, '#focusModeToggleBtn').click()
     expect(page.locator('.task-item .task-name')).to_have_text(['Yesterday planned task'])
 
 

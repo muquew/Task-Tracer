@@ -18,7 +18,9 @@ def assert_archive(path: Path) -> bytes:
     with zipfile.ZipFile(path) as archive:
         names = archive.namelist()
         expected = release.expected_distribution_files()
-        assert len(names) == 23 and len(names) == len(expected) and set(names) == expected
+        assert len(names) == 24 and len(names) == len(expected) and set(names) == expected
+        assert 'THIRD_PARTY_NOTICES.md' in names
+        assert archive.read('THIRD_PARTY_NOTICES.md') == (release.ROOT / 'THIRD_PARTY_NOTICES.md').read_bytes()
         manifest = json.loads(archive.read('integrity.json'))
         assert set(manifest['files']) == expected - {'integrity.json'}
         for name, digest in manifest['files'].items():

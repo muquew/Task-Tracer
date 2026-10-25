@@ -12,6 +12,7 @@ from zoneinfo import ZoneInfo
 
 from playwright.sync_api import expect, sync_playwright
 
+from smoke_playwright import click_task_action, reveal_task_action
 from smoke_playwright import (
     browser_launch_options, clear_app_data, get_task_records,
     import_payload_replace, local_server, task_locator, wait_for_app_ready,
@@ -129,7 +130,7 @@ def run_host(browser, url, host):
             skip_id = 1000 + index * 2
             complete_id = skip_id + 1
             before = get_task_records(page)
-            task_locator(page, f'Skip {case.name}').locator('[data-action="skip-repeat"]').click()
+            click_task_action(task_locator(page, f'Skip {case.name}'), 'skip-repeat')
             expect(page.locator('#notificationText')).to_contain_text(re.compile('下一期|next occurrence', re.I))
             skipped = get_task_records(page)
             assert len(skipped) == len(before)
@@ -153,7 +154,7 @@ def run_host(browser, url, host):
                              'dueLocalTime': child['dueLocalTime'], 'dueTimeZone': child['dueTimeZone']})
         for name, identity in (('No recurrence control', 3000), ('Paused recurrence control', 3001)):
             target = task_locator(page, name)
-            expect(target.locator('[data-action="skip-repeat"]')).to_be_hidden()
+            expect(reveal_task_action(target, 'skip-repeat')).to_be_hidden()
             before = get_task_records(page)
             target.locator('[data-action="toggle"]').click()
             after = get_task_records(page)

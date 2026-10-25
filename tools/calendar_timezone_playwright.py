@@ -9,6 +9,7 @@ import json
 from playwright.sync_api import expect, sync_playwright
 
 from performance_playwright import read_workspace
+from smoke_playwright import reveal_workspace_control
 from smoke_playwright import (
     add_task, browser_launch_options, calendar_month_title, clear_app_data,
     get_task_records, local_server, select_view, task_locator, wait_for_app_ready,
@@ -154,7 +155,7 @@ def verify_live_today_plan(page,url,client):
         a.onsuccess=()=>a.result.forEach(t=>s.put({...t,focusDate:t.name.startsWith('UTC')?dates.utc:dates.target}));
         tx.oncomplete=()=>{db.close();resolve();};tx.onabort=()=>reject(tx.error);};q.onerror=()=>reject(q.error);})""",dates)
     page.reload();wait_for_app_ready(page)
-    page.locator('#focusModeToggleBtn').click()
+    reveal_workspace_control(page, '#focusModeToggleBtn').click()
     expect(page.locator('.task-item .task-name')).to_have_text(['UTC day planned task'])
     before=read_workspace(page)
     apply_zone(client,page,target)

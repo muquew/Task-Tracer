@@ -3,10 +3,13 @@
 from __future__ import annotations
 
 import argparse
+import json
+from pathlib import Path
 import re
 
 from playwright.sync_api import expect, sync_playwright
 from saved_views_playwright import save_view, stored_views
+from smoke_playwright import click_task_action, reveal_workspace_control, select_filter, select_language, task_locator
 from smoke_playwright import (
     add_task, browser_launch_options, clear_app_data, get_task_records, local_server,
     visible_task_names, wait_for_app_ready,
@@ -17,7 +20,14 @@ from views_portability_playwright import (
 
 
 LITERAL_JSON_PROJECT = '{"kind":"all"}'
-PROJECTS = ['all', '__none__', LITERAL_JSON_PROJECT, 'project:all', 'Ordinary', 'Unassigned']
+UNASSIGNED_LABELS = {
+    language: json.loads((Path(__file__).resolve().parents[1] / 'resources' / f'{language}.json').read_text())['projects']['none']
+    for language in ('en', 'zh-CN')
+}
+PROJECTS = list(dict.fromkeys([
+    'all', '__none__', LITERAL_JSON_PROJECT, 'project:all', 'Ordinary', 'Unassigned',
+    *UNASSIGNED_LABELS.values(),
+]))
 
 
 def assert_visible(page, expected):
@@ -28,7 +38,13 @@ def assert_visible(page, expected):
 
 def select_literal_project(page, name):
     page.locator('#projectFilterBtn').click()
-    page.locator('#projectFilterMenu .dropdown-option').filter(
+    menu = page.locator('#projectFilterMenu')
+    expect(menu).to_be_visible()
+    geometry = menu.evaluate('node => { const r = node.getBoundingClientRect(); return {left:r.left, top:r.top, right:r.right, bottom:r.bottom, width:innerWidth, height:innerHeight}; }')
+    assert (geometry['left'] >= -1 and geometry['top'] >= -1
+            and geometry['right'] <= geometry['width'] + 1
+            and geometry['bottom'] <= geometry['height'] + 1), f'Project menu extends outside the viewport: {geometry}'
+    menu.locator('.dropdown-option').filter(
         has=page.locator('span').filter(has_text=re.compile('^' + re.escape(name) + '$'))
     ).last.click()
     expect(page.locator('#projectFilterBtn')).to_have_attribute('aria-expanded', 'false')
@@ -40,22 +56,21 @@ def select_sentinel(page, index):
 
 
 def apply_view(page, name, expected):
-    page.locator('#savedViewsList .saved-view-chip').filter(
+    control = page.locator('#savedViewsList .saved-view-chip').filter(
         has=page.locator('.saved-view-name', has_text=name)
-    ).locator('.saved-view-apply').click()
+    ).locator('.saved-view-apply')
+    reveal_workspace_control(page, control).click()
     assert_visible(page, expected)
 
 
 def assert_language_grouping(page):
-    add_task(page, 'Named English unassigned', project='Unassigned', no_deadline=True)
-    add_task(page, 'Named Chinese unassigned', project='未分配', no_deadline=True)
+    add_task(page, 'Named English unassigned', project=UNASSIGNED_LABELS['en'], no_deadline=True)
+    add_task(page, 'Named Chinese unassigned', project=UNASSIGNED_LABELS['zh-CN'], no_deadline=True)
     add_task(page, 'Actually unassigned', no_deadline=True)
     before = get_task_records(page)
     for language in ('en', 'zh-CN'):
         if language != 'en':
-            page.locator('#openMenuBtn').click()
-            page.locator('#langMenuToggle').click()
-            page.locator(f'#lang-container .lang-btn[data-lang="{language}"]').click()
+            select_language(page, language)
             page.keyboard.press('Escape')
         expect(page.locator('#taskList .task-group-header')).to_have_count(3)
         groups = page.locator('#taskList').evaluate("""list => {
@@ -69,7 +84,58 @@ def assert_language_grouping(page):
         assert {tuple(group) for group in groups} == {('Named English unassigned',),
             ('Named Chinese unassigned',), ('Actually unassigned',)}, groups
     assert get_task_records(page) == before
-    print('Project scope passed: translated Unassigned/未分配 labels never merge real projects with unassigned tasks', flush=True)
+    print('Project scope passed: localized missing-project labels never merge exact-name projects with the unassigned scope: '
+          + json.dumps(UNASSIGNED_LABELS, ensure_ascii=False), flush=True)
+
+
+def assert_sidebar_project_exits_today_plan(page, url):
+    original_viewport = page.viewport_size
+    page.set_viewport_size({'width': 390, 'height': 844})
+    clear_app_data(page, url)
+    project = 'Sidebar full project'
+    add_task(page, 'Sidebar planned task', project=project, no_deadline=True)
+    add_task(page, 'Sidebar unplanned task', project=project, no_deadline=True)
+    add_task(page, 'Sidebar other planned task', project='Other sidebar project', no_deadline=True)
+    add_task(page, 'Sidebar archived task', project=project, no_deadline=True)
+    select_filter(page, 'all')
+    task_locator(page, 'Sidebar archived task').locator('[data-action="toggle"]').click()
+    expect(task_locator(page, 'Sidebar archived task').locator('[data-action="toggle"]')).to_have_attribute('aria-pressed', 'true')
+    click_task_action(task_locator(page, 'Sidebar archived task'), 'archive')
+    expect(task_locator(page, 'Sidebar archived task')).to_have_count(0)
+    for name in ('Sidebar planned task', 'Sidebar other planned task'):
+        click_task_action(task_locator(page, name), 'focus')
+    reveal_workspace_control(page, '#focusModeToggleBtn').click()
+    expect(page.locator('#focusModeToggleBtn')).to_have_attribute('aria-pressed', 'true')
+    assert_visible(page, {'Sidebar planned task', 'Sidebar other planned task'})
+    before = get_task_records(page)
+    translations = json.loads((Path(__file__).resolve().parents[1] / 'resources'
+                               / f'{page.locator("html").get_attribute("lang")}.json').read_text())
+    unarchived = [task for task in before if not task.get('archived')]
+    global_summary = translations['focus']['summary'].replace('{completed}', str(sum(task['completed'] for task in unarchived))).replace('{total}', str(len(unarchived)))
+
+    def assert_global_summary():
+        expect(page.locator('.workspace-list-footer')).to_contain_text(translations['workspace']['progressScope'])
+        expect(page.locator('#workspaceCompletionSummary')).to_contain_text(global_summary)
+
+    assert len(unarchived) == 3 and len(before) == 4
+    assert_global_summary()
+
+    select_literal_project(page, project)
+    assert_visible(page, {'Sidebar planned task'})
+    expect(page.locator('#focusModeToggleBtn')).to_have_attribute('aria-pressed', 'true')
+    assert_global_summary()
+
+    encoded = json.dumps({'kind': 'project', 'name': project}, ensure_ascii=False, separators=(',', ':'))
+    button = page.locator(f'#workspaceProjects [data-workspace-project={json.dumps(encoded, ensure_ascii=False)}]')
+    reveal_workspace_control(page, button).click()
+    expect(page.locator('#focusModeToggleBtn')).to_have_attribute('aria-pressed', 'false')
+    expect(button).to_have_attribute('aria-current', 'page')
+    assert_visible(page, {'Sidebar planned task', 'Sidebar unplanned task'})
+    assert_global_summary()
+    assert get_task_records(page) == before, 'Sidebar or combined project navigation rewrote task/focus data'
+    print('Project scope passed: 390px sidebar project exits the daily plan; the project filter keeps the explicit combination', flush=True)
+    if original_viewport:
+        page.set_viewport_size(original_viewport)
 
 
 def run(engine, grouping_only=False):
@@ -85,9 +151,7 @@ def run(engine, grouping_only=False):
             page.on('pageerror', lambda error: errors.append(str(error)))
             page.on('console', lambda message: console_errors.append(message.text) if message.type == 'error' else None)
             clear_app_data(page, url)
-            page.locator('#openMenuBtn').click()
-            page.locator('#langMenuToggle').click()
-            page.locator('#lang-container .lang-btn[data-lang="en"]').click()
+            select_language(page, 'en')
             page.keyboard.press('Escape')
             if grouping_only:
                 assert_language_grouping(page)
@@ -202,6 +266,8 @@ def run(engine, grouping_only=False):
             assert get_task_records(page) == task_records, 'Project filtering or saved-view transfer changed tasks'
             assert not errors, errors
             print('Project scope passed: malformed 1.1 scope objects rejected without changing saved views or tasks', flush=True)
+            assert_sidebar_project_exits_today_plan(page, url)
+            assert not errors, errors
         except Exception:
             print(f'Project scope failure diagnostics: page errors={errors}; console errors={console_errors}', flush=True)
             raise

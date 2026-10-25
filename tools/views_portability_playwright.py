@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import argparse
 import json
+from pathlib import Path
 
 from playwright.sync_api import expect, sync_playwright
 from saved_views_playwright import inject_aborted_save, save_view, stored_views
+from smoke_playwright import select_language
 from smoke_playwright import (
     add_task, browser_launch_options, clear_app_data, get_task_records, local_server,
     wait_for_app_ready,
@@ -34,6 +36,14 @@ def payload(views):
               'date': '2026-10-23T00:00:00.000Z', 'savedViews': views}
     result['checksum'] = checksum(result)
     return result
+
+
+def assert_import_summary(page, incoming, add, duplicate, capacity):
+    language = page.locator('html').get_attribute('lang')
+    translations = json.loads((Path(__file__).resolve().parents[1] / 'resources' / f'{language}.json').read_text())
+    expected = translations['viewsTransfer']['previewSummary'].format(
+        incoming=incoming, add=add, duplicate=duplicate, capacity=capacity)
+    expect(page.locator('#savedViewsImportSummary')).to_have_text(expected)
 
 
 def snapshot(page):
@@ -206,9 +216,7 @@ def run(engine):
             errors = []
             page.on('pageerror', lambda error: errors.append(str(error)))
             clear_app_data(page, url)
-            page.locator('#openMenuBtn').click()
-            page.locator('#langMenuToggle').click()
-            page.locator('#lang-container .lang-btn[data-lang="en"]').click()
+            select_language(page, 'en')
             expect(page.locator('html')).to_have_attribute('lang', 'en')
             page.keyboard.press('Escape')
             add_task(page, 'PRIVATE task not in a view file', no_deadline=True)
@@ -237,7 +245,7 @@ def run(engine):
             assert 'PRIVATE task' not in json.dumps(exported)
             assert snapshot(page) == before, 'View export modified workspace state'
             preview(page, exported)
-            expect(page.locator('#savedViewsImportSummary')).to_contain_text('add 0, skip 2')
+            assert_import_summary(page, incoming=2, add=0, duplicate=2, capacity=0)
             page.locator('#submitBtn').click()
             expect(page.locator('#taskModal')).to_be_hidden()
             assert snapshot(page) == before, 'Duplicate-only import wrote configuration'
@@ -251,9 +259,9 @@ def run(engine):
                 {'filter': 'no-deadline', 'sort': 'alpha-asc'},
             ])
             preview(page, incoming)
-            expect(page.locator('#savedViewsImportSummary')).to_contain_text('add 2, skip 1')
-            expect(page.locator('#savedViewsImportPreview')).to_contain_text('No Deadline')
-            expect(page.locator('#savedViewsImportPreview')).to_contain_text('Name (A-Z)')
+            assert_import_summary(page, incoming=3, add=2, duplicate=1, capacity=0)
+            expect(page.locator('#savedViewsImportPreview')).to_contain_text('No deadline')
+            expect(page.locator('#savedViewsImportPreview')).to_contain_text('Name (A–Z)')
             assert stored_views(page) == existing, 'Preview wrote view configuration'
             page.locator('#cancelBtn').click()
             assert stored_views(page) == existing, 'Cancelling import changed views'
@@ -275,7 +283,7 @@ def run(engine):
                                view('Duplicate first', 'project:first'), view('Too many A', 'project:extra-a'),
                                view('Too many B', 'project:extra-b')])
             preview(page, limited)
-            expect(page.locator('#savedViewsImportSummary')).to_contain_text('add 1, skip 2 matching views and 2 beyond')
+            assert_import_summary(page, incoming=5, add=1, duplicate=2, capacity=2)
             page.locator('#submitBtn').click()
             expect(page.locator('#taskModal')).to_be_hidden()
             actual = stored_views(page)

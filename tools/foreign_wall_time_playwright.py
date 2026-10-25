@@ -7,6 +7,7 @@ import json
 
 from playwright.sync_api import expect, sync_playwright
 
+from smoke_playwright import click_task_action
 from smoke_playwright import (
     browser_launch_options, clear_app_data, exercise_export_backup, get_task_records,
     import_payload_replace, local_server, select_view, task_locator, wait_for_app_ready,
@@ -59,7 +60,7 @@ def run(engine):
                     expect(title.locator('.timeline-date-title > span').first).to_have_text(expected_title)
                     assert get_task_records(page) == baseline, 'Timeline rendering wrote task records'
 
-                    task_locator(page, name).locator('[data-action="edit"]').click()
+                    click_task_action(task_locator(page, name), 'edit')
                     expect(page.locator('#dueDate')).to_have_value(day)
                     expect(page.locator('#dueTime')).to_have_value(time)
                     description = f'Only the description changed: {host}'

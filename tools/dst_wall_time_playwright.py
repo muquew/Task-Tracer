@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 
 from playwright.sync_api import expect, sync_playwright
+from smoke_playwright import click_task_action
 from smoke_playwright import (
     add_task, browser_launch_options, clear_app_data, exercise_export_backup,
     get_task_records, local_server, task_locator, wait_for_app_ready,
@@ -56,7 +57,7 @@ def run(engine: str) -> None:
                     records = get_task_records(page)
                     assert len(records) == 1
                     assert_due(records[0], zone, instant, actual_date, actual_time)
-                    task_locator(page, name).locator('[data-action="edit"]').click()
+                    click_task_action(task_locator(page, name), 'edit')
                     expect(page.locator('#dueDate')).to_have_value(actual_date)
                     expect(page.locator('#dueTime')).to_have_value(actual_time)
                     page.locator('#taskDesc').fill('Synthetic description; deadline unchanged')

@@ -8,6 +8,7 @@ import json
 from playwright.sync_api import expect, sync_playwright
 
 from imported_text_edit_playwright import import_fixture, open_edit, save_and_assert
+from smoke_playwright import select_language
 from smoke_playwright import (
     add_task, browser_launch_options, clear_app_data, exercise_export_backup,
     get_task_records, local_server,
@@ -98,9 +99,7 @@ def labels_and_reset(page, url, template):
     baseline = import_fixture(page, url, template, fixture_overrides(-2.5, 33.25))
     page.set_viewport_size({'width': 390, 'height': 844})
     for language in ('en', 'zh-CN'):
-        page.locator('#openMenuBtn').click()
-        page.locator('#langMenuToggle').click()
-        page.locator(f'#lang-container .lang-btn[data-lang="{language}"]').click()
+        select_language(page, language)
         page.keyboard.press('Escape')
         open_edit(page)
         assert_controls(page, -2.5, 33.25)

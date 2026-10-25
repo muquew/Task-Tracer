@@ -17,6 +17,7 @@ from playwright.sync_api import expect, sync_playwright
 
 from check import atomic_report, identity, source_identity
 from recovery_playwright import open_recovery
+from smoke_playwright import click_task_action
 from smoke_playwright import (
     add_task, assert_backup_payload_integrity, browser_launch_options, clear_app_data,
     delete_task, local_server, select_filter, select_view, task_locator,
@@ -263,7 +264,7 @@ def run_once(browser, url, args, report, publish, number):
             'id': 100000 + args.size - 1, 'description': edited_description})['edited_signature']
         page.locator('#searchInput').fill(target)
         expect(task_locator(page, target)).to_have_count(1)
-        task_locator(page, target).locator('[data-action="edit"]').click()
+        click_task_action(task_locator(page, target), 'edit')
         page.locator('#taskDesc').fill(edited_description)
         def save_single_edit():
             page.locator('#submitBtn').click()

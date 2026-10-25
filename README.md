@@ -24,6 +24,8 @@ Task Tracer is a personal task manager that runs in the browser and keeps task d
 
 The continuing development goal, acceptance criteria and current work queue are recorded in [GOAL.md](./GOAL.md).
 
+The latest published release is **4.8.6**. The [4.9.0 workspace redesign](./docs/releases/4.9.0.md) is being integrated and verified; its new controls are described below. Earlier release results remain evidence for their own versions, not acceptance of this candidate.
+
 PWA means Progressive Web App: when the browser supports it, Task Tracer can be installed, opened from the operating system like an app, and loaded offline after the app shell has been cached.
 
 ## What It Helps With
@@ -31,17 +33,28 @@ PWA means Progressive Web App: when the browser supports it, Task Tracer can be 
 | Need | Built-in support |
 | --- | --- |
 | Capture tasks quickly | Full task dialog, quick add parsing, URL capture, install shortcut capture, share target capture, Inbox default, descriptions, subtasks, projects, tags, due date/time, and no-date tasks. |
-| Keep work organized | Project grouping, multi-tag labels, saved smart views, manual ordering, archives, and batch actions. |
+| Keep work organized | Project grouping, multi-tag labels, saved views, manual ordering, archives, and batch actions. |
 | Plan from different angles | List, calendar, timeline, and statistics views. |
-| Work through today | Today Plan, task actions, snooze, skip repeat occurrence, complete/archive/delete, and undo. |
+| Work through today | Today's plan, task actions, snooze, skip repeat occurrence, complete/archive/delete, and undo. |
 | Manage routines | Daily, weekly, selected weekdays, monthly, last-day-of-month, and custom-day recurrence; repeat rules can be paused. |
 | Notice what matters | Reminder offsets, repeat reminders, snooze, missed-reminder notices, and browser limitation guidance. |
 | Review progress | Completion rate, active overdue rate, archive count, today completions, completion streak, and recent completion trend. |
 | Protect local data | Export/backup, backup health, import preview, merge/replace conflict handling, checksum checks, pre-replace snapshots, and emergency backup when storage is blocked. |
 
+## Workspace controls in 4.9.0
+
+The redesign brings projects and saved views into the sidebar, with a focused task area and a separate deadline overview. On narrow screens, **Open navigation** reveals the sidebar, and **Show schedule** opens the compact calendar. The date index and small calendar open the existing calendar/date-detail view; they do not change task deadlines.
+
+- Use **Language** in the header to choose Chinese or English. Task names, project names, tags and other user content keep their original text.
+- Use **Appearance** in the header to choose **Light**, **Dark** or **System**. System follows the operating system's appearance; a manual choice stays selected when the system changes.
+- Mark a task complete with its leading completion control. Open its **Task actions** menu for editing and the other actions available for that task, such as adding it to today's plan, snoozing, skipping a repeat occurrence, archiving or deleting.
+- **Today's plan** is a manually chosen working set. **Due today** and the deadline overview reflect saved task dates; a task due today is not automatically added to the plan.
+
+These instructions describe the candidate interface. Full validation and publication are tracked in its release record.
+
 ## Getting Started
 
-A new workspace starts empty. Add your first task with the **+** button or quick add, or choose **Add 3 example tasks** in the empty state. Examples are clearly labeled, have reminders off, and can be edited, deleted or undone. Refreshing an empty workspace does not add examples automatically. You can backfill a past deadline and edit an overdue task without first moving its date forward. Editing only its name or description keeps the exact stored due instant and timezone, including repeated clock times when daylight saving time ends.
+A new workspace starts empty. Add your first task with **Add task (+)** or quick add, or choose **Add 3 example tasks** in the empty state. Examples are clearly labeled, have reminders off, and can be edited, deleted or undone. Refreshing an empty workspace does not add examples automatically. You can backfill a past deadline and edit an overdue task without first moving its date forward. Editing only its name or description keeps the exact stored due instant and timezone, including repeated clock times when daylight saving time ends.
 
 Open **Help and support** from the menu or footer for quick-add and search examples, keyboard shortcuts, reminder/offline limits, and a button to open the command palette. Help remains available when local storage is blocked. For troubleshooting and feedback, see [SUPPORT.md](./SUPPORT.md).
 
@@ -67,7 +80,7 @@ If storage fails while Quick add has text, the input stays read-only and selecta
 
 During input-method composition, Enter, Escape and arrow keys stay with text entry rather than triggering application submission or selection. Finish choosing the text before using the app shortcut.
 
-The command palette opens with `Ctrl/Cmd + P`. It can start a new task, focus quick add, switch views, open saved views, enter Today Plan, enter batch actions, undo the latest task change, export/back up data, search, and jump to projects.
+The command palette opens with `Ctrl/Cmd + P`. It can start a new task, focus quick add, switch views, open saved views, enter today's plan, enter batch actions, undo the latest task change, export/back up data, search, and jump to projects.
 
 Task Tracer also supports direct capture links:
 
@@ -106,9 +119,9 @@ Search matches task names, descriptions, projects, tags, and subtask text. Scope
 | `due:no-deadline` | Tasks without a due date. |
 | `project:Work tag:report` | Tasks matching both scopes. |
 
-Saved smart views store the current search, project filter, status filter, sort mode, and view. They are useful for repeatable contexts such as overdue work, weekly study, or a project-specific calendar. Up to 12 distinct views can be saved. At that limit, adding another is refused without removing an existing view, and the name draft stays available. Saving an already matching search/filter/layout updates that view in place; remove a view first if you need a new distinct one.
+Saved views store the current search, project filter, status filter, sort mode, and view. They are useful for repeatable contexts such as overdue work, weekly study, or a project-specific calendar. Up to 12 distinct views can be saved. At that limit, adding another is refused without removing an existing view, and the name draft stays available. Saving an already matching search/filter/layout updates that view in place; remove a view first if you need a new distinct one.
 
-The saved-view × opens a confirmation naming the view, with Cancel focused. Only explicit deletion removes that view; tasks stay unchanged. View deletion cannot be undone, so export a views file first if you need a copy.
+The saved view's delete control opens a confirmation naming the view, with Cancel focused. Only explicit deletion removes that view; tasks stay unchanged. View deletion cannot be undone, so export a views file first if you need a copy.
 
 Use **Menu → Transfer saved views** to export or import a separate views JSON file when moving browsers or devices. Task JSON backups do not contain these views. New exports use views JSON 1.1; imports also accept the older 1.0 format. Files support up to 12 views and 1 MiB; review the import preview before adding them. Project names such as `all` and `__none__` remain exact project selections, separate from All projects and tasks without a project. A saved view for a project that is currently absent stays empty instead of expanding to all projects.
 
@@ -120,18 +133,18 @@ View import adds distinct search/filter/layout combinations, keeps existing view
 
 | View | Best for |
 | --- | --- |
-| List | Daily execution with task actions, subtasks, reminders, status chips, progress bars, archive controls, batch actions, and manual ordering. |
+| List | Daily execution with task actions, subtasks, deadlines, reminders, archive controls, batch actions, and manual ordering. |
 | Calendar | Month planning with a real calendar grid, month/year navigation, today jump, date details, and no-date grouping. |
 | Timeline | Chronological scanning across upcoming work and completed history. |
 | Statistics | Personal feedback on completion, active overdue tasks, archived history, today completions, streak, and recent trend. |
 
-## Today Plan, Batch Actions, and Undo
+## Today's plan, batch actions, and Undo
 
-Today Plan is a lightweight execution layer. Adding a task to Today Plan does not change its project, tags, due date, archive state, or recurrence rule; it only marks the task as part of today's working set.
+Today's plan is a lightweight execution layer. Adding a task to it does not change its project, tags, due date, archive state, or recurrence rule; it only marks the task as part of today's working set.
 
-Batch Actions mode initially renders 100 matching tasks with selection controls and Show more. **Select all matching** selects the entire current search/project/status result, including unloaded pages; selected tasks can be added to Today Plan, completed, archived or deleted together. Changing that range drops selections outside it. Pagination also applies to batch timeline/calendar sections and any batch sort; non-batch manual ordering retains full rendering.
+Batch Actions mode initially renders 100 matching tasks with selection controls and Show more. **Select all matching** selects the entire current search/project/status result, including unloaded pages; selected tasks can be added to today's plan, completed, archived or deleted together. Changing that range drops selections outside it. Pagination also applies to batch timeline/calendar sections and any batch sort; non-batch manual ordering retains full rendering.
 
-Undo reverts the most recent task change while its task state is still current. A newer concurrent task change can withhold or invalidate that Undo, preserving the newer data; review the current tasks and start a fresh action. Undo is available from the header button, toast action, command palette, and `Ctrl/Cmd + Z` when focus is not inside a text field.
+Undo reverts the most recent task change while its task state is still current. A newer concurrent task change can withhold or invalidate that Undo, preserving the newer data; review the current tasks and start a fresh action. Use the header button, command palette, or `Ctrl/Cmd + Z` when focus is not inside a text field.
 
 ## Unsaved Task Forms
 
@@ -147,7 +160,7 @@ Recurring tasks can repeat daily, weekly, on selected weekdays, monthly, on the 
 
 Recurrence advances in the task’s saved timezone, independently of the device timezone. Newly set or changed deadlines move forward across a skipped clock time and use the first occurrence of a repeated time. An unchanged date/time edit retains its stored instant; this does not bulk-correct old deadlines. See [date and recovery support](./SUPPORT.md) for the saved-time boundary.
 
-Relative-date search, Today Plan, overdue membership and statistics are reconsidered on minute/visibility checks. Active dialogs, inline editing, task-text selection, dragging or selected batch work can defer a rebuild; background timers may be suspended. The overdue rate divides overdue ongoing tasks by ongoing tasks with deadlines, excluding completed, archived and undated tasks from the denominator.
+Relative-date search, today's plan, overdue membership and statistics are reconsidered on minute/visibility checks. Active dialogs, inline editing, task-text selection, dragging or selected batch work can defer a rebuild; background timers may be suspended. The overdue rate divides overdue ongoing tasks by ongoing tasks with deadlines, excluding completed, archived and undated tasks from the denominator.
 
 Browser notifications are available when the browser supports them and permission is granted. Task Tracer can check reminders while the app is open, repeat reminders at the chosen interval, snooze a reminder, and show missed reminders when the app runs again.
 
@@ -155,7 +168,7 @@ Browser reminders are not guaranteed system alarms. Delivery can depend on brows
 
 ## Import, Export, and Backup
 
-`Export/Backup` starts a task JSON download with an export ID, checksum and version notes, and records the export operation. Starting a download does not prove that the file was saved or retained; check the downloaded file and keep a copy outside the browser. It restores supported task fields, including subtasks, projects, tags, due dates, repeat/reminder rules and Today Plan. It does not include saved Smart Views, app settings or recovery checkpoints.
+`Export/Backup` starts a task JSON download with an export ID, checksum and version notes, and records the export operation. Starting a download does not prove that the file was saved or retained; check the downloaded file and keep a copy outside the browser. It restores supported task fields, including subtasks, projects, tags, due dates, repeat/reminder rules and today's plan. It does not include saved views, app settings or recovery checkpoints.
 
 The backup indicator compares the recorded export snapshot with current tasks. Task changes require another export; older date-only export history has unknown coverage rather than establishing that current tasks were exported. A fresh export also does not prove that you kept its file. Task JSON and CSV exports read their task data from a single read-only snapshot without refreshing the current task view. The browser-local backup coverage record refers to the exported task revision and date; it is not an extra field in the task JSON. CSV does not count as a restorable task backup. The optional startup backup reminder skips an open dialog or existing notification; the menu still shows backup status.
 
@@ -201,7 +214,7 @@ Task data is stored in the current browser's IndexedDB. Task Tracer does not req
 
 Before changing browsers, clearing site data, reinstalling the app, or moving devices, use `Export/Backup` for task JSON and **Transfer saved views** for a separate views JSON file, and keep copies outside the browser. Local storage and export checksums do not encrypt task contents.
 
-**Help and support → Review diagnostic information** shows a full JSON preview before you choose to download it. It contains application/browser versions and capabilities, permission status and storage estimates; it excludes task content, Smart Views, app settings, URLs and raw error messages. Nothing is uploaded automatically, and a diagnostic file is not a task backup.
+**Help and support → Review diagnostic information** shows a full JSON preview before you choose to download it. It contains application/browser versions and capabilities, permission status and storage estimates; it excludes task content, saved views, app settings, URLs and raw error messages. Nothing is uploaded automatically, and a diagnostic file is not a task backup.
 
 Capture/share URLs can contain task text in query parameters. Hosting logs and browser history may record those URLs before the app clears them. See [the security and data boundaries](./SECURITY.md) for deployment guidance.
 
@@ -235,7 +248,9 @@ The application needs no build step. For pinned browser-test dependencies, valid
 python3 tools/check.py --static-only
 ```
 
-The [published 4.8.6 corrective release](./docs/releases/4.8.6.md) repairs poor light-theme checked-subtask contrast found during real-domain inspection. Targeted checks passed all six engine/viewport combinations and 36 automated states, with twelve representative images inspected; seven static programs, the new three-engine 31-program matrix and actual 4.8.5-archive upgrade/rollback/re-upgrade also passed. The new frozen full 58-program checker also passed in a summed 1427.981 seconds; independent ZIP builds matched and extracted persistence/offline passed. The [new 91-input provenance](./docs/releases/inputs-4.8.6.json) binds the artifact and 166 original evidence files. Application commit `f13d7e1` was pushed to GitHub `main`, and [production static matching](./docs/acceptance/2026-10-25/deployment-4.8.6/4960beeb-6e70-4e15-bd62-b4223711b771/summary.md) passed at 14:14:33 Beijing with all 14 responses and security headers matching. [Real-domain browser acceptance](./docs/acceptance/2026-10-25/publication-4.8.6.json) also passed: four Firefox/WebKit core combinations, plus separate Chromium visibility checks at two viewports covering twelve automated states and four inspected representatives. App/cache/package are 4.8.6; resources remain 4.36. Engineering, static-deployment matching and the declared real-domain browser acceptance are complete. The two Chromium visibility contexts are not counted as another identical full-core program; real-device and remote-CI results remain separate. The [dated 4.8.5 publication/browser report](./docs/acceptance/2026-10-25/README.md) retains the already-published state and the discovered defect.
+The [4.9.0 candidate](./docs/releases/4.9.0.md) integrates the new workspace layout, direct language selection, three appearance preferences and revised bilingual copy. Its final browser, integrated-check, artifact and production results are still pending; the completed 4.8.6 record below remains the latest published baseline.
+
+The [published 4.8.6 corrective release](./docs/releases/4.8.6.md) repairs poor light-theme checked-subtask contrast found during real-domain inspection. Targeted checks passed all six engine/viewport combinations and 36 automated states, with twelve representative images inspected; seven static programs, the new three-engine 31-program matrix and actual 4.8.5-archive upgrade/rollback/re-upgrade also passed. The new frozen full 58-program checker also passed in a summed 1427.981 seconds; independent ZIP builds matched and extracted persistence/offline passed. The [new 91-input provenance](./docs/releases/inputs-4.8.6.json) binds the artifact and 166 original evidence files. Application commit `f13d7e1` was pushed to GitHub `main`, and [production static matching](./docs/acceptance/2026-10-25/deployment-4.8.6/4960beeb-6e70-4e15-bd62-b4223711b771/summary.md) passed at 14:14:33 Beijing with all 14 responses and security headers matching. [Real-domain browser acceptance](./docs/acceptance/2026-10-25/publication-4.8.6.json) also passed: four Firefox/WebKit core combinations, plus separate Chromium visibility checks at two viewports covering twelve automated states and four inspected representatives. That published version uses app/cache/package 4.8.6 and resources 4.36. Engineering, static-deployment matching and the declared real-domain browser acceptance are complete. The two Chromium visibility contexts are not counted as another identical full-core program; real-device and remote-CI results remain separate. The [dated 4.8.5 publication/browser report](./docs/acceptance/2026-10-25/README.md) retains the already-published state and the discovered defect.
 
 The completed [4.8.5 engineering baseline](./docs/releases/4.8.5.md) completed the five [4.8.5 GOAL engineering baseline queues](./GOAL.md). It passed 58/58 Chromium programs in a summed 1301.444 seconds, the 10,000-task/six-subtask complete-view round trip, all nine same-scale failure cases, [31 programs in each of three engines](./docs/browser-compatibility.md) and all 87 [controlled performance observations](./docs/performance.md). Two independent builds match byte for byte; extracted persistence/offline and actual 4.8.4 archive upgrade/rollback/re-upgrade passed. The [91-input provenance record](./docs/releases/inputs-4.8.5.json) binds the 23-file/812,056-byte artifact and 314 original evidence files. That baseline used app/cache/package 4.8.5 and resources 4.36. Original failures and interruptions stay retained; real-device, remote CI, production deployment and commercial terms remain separate records.
 

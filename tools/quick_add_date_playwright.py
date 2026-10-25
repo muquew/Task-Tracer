@@ -9,6 +9,7 @@ import json
 from playwright.sync_api import expect, sync_playwright
 
 from performance_playwright import read_workspace
+from smoke_playwright import click_task_action
 from smoke_playwright import (
     add_task, browser_launch_options, clear_app_data, local_server, task_locator,
 )
@@ -32,7 +33,7 @@ def assert_task_ui(page, record):
     else:
         expect(task.locator('.task-date')).to_be_hidden()
     before=read_workspace(page)
-    task.locator('[data-action="edit"]').click()
+    click_task_action(task, 'edit')
     if record['dueAt']:
         expect(page.locator('#dueDate')).to_have_value(record['dueLocalDate'])
         expect(page.locator('#dueTime')).to_have_value(record['dueLocalTime'])

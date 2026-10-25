@@ -8,6 +8,7 @@ import json
 
 from playwright.sync_api import expect, sync_playwright
 
+from smoke_playwright import click_task_action
 from smoke_playwright import (
     add_task, assert_backup_payload_integrity, browser_launch_options, clear_app_data,
     get_task_records, local_server, stable_fnv1a32, stable_json, wait_for_app_ready,
@@ -44,7 +45,7 @@ def import_fixture(page, url, template, overrides):
 
 
 def open_edit(page):
-    page.locator('.task-item [data-action="edit"]').click()
+    click_task_action(page.locator('.task-item'), 'edit')
     expect(page.locator('#taskModal')).to_be_visible()
 
 

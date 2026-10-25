@@ -28,7 +28,7 @@ from pathlib import Path
 from typing import Any, Iterator
 from urllib.parse import urlencode, urljoin, urlparse
 
-from playwright.sync_api import Browser, BrowserContext, Page, Playwright, Request, TimeoutError, expect, sync_playwright
+from playwright.sync_api import Browser, BrowserContext, Locator, Page, Playwright, Request, TimeoutError, expect, sync_playwright
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -187,6 +187,116 @@ def task_locator(page: Page, task_name: str):
         has_text=re.compile(f"^{re.escape(task_name)}$")
     )
     return page.locator(".task-item").filter(has=exact_name)
+
+
+def reveal_workspace_control(page: Page, selector: str | Locator) -> Locator:
+    """Reach a global control through the actual mobile navigation when needed."""
+    control = page.locator(selector) if isinstance(selector, str) else selector
+    if control.count() and control.evaluate("node => Boolean(node.closest('#workspaceSidebar'))"):
+        hidden = not control.is_visible() or control.evaluate(
+            "node => Boolean(node.closest('[inert], [hidden], [aria-hidden=\"true\"]'))"
+        )
+        if hidden:
+            toggle = page.locator('#workspaceNavToggle')
+            expect(toggle).to_be_visible()
+            if toggle.get_attribute('aria-expanded') != 'true':
+                toggle.click()
+    expect(control).to_be_visible()
+    expect(control).to_be_enabled()
+    assert not control.evaluate(
+        "node => Boolean(node.closest('[inert], [hidden], [aria-hidden=\"true\"]'))"
+    ), f'{selector} remains inside hidden or inert navigation'
+    control.scroll_into_view_if_needed()
+    expect(control).to_be_in_viewport()
+    return control
+
+
+def select_language(page: Page, language: str) -> None:
+    select = reveal_workspace_control(page, '#languageSelect')
+    select.select_option(language)
+    expect(select).to_have_value(language)
+    expect(select.locator('option:checked')).to_have_attribute('value', language)
+    expect(page.locator('html')).to_have_attribute('lang', language)
+    expect(page.locator('html')).to_have_attribute('dir', 'ltr')
+
+
+def close_workspace_navigation(page: Page) -> None:
+    """Return to the main workspace through the mobile navigation's real key path."""
+    toggle = page.locator('#workspaceNavToggle')
+    if toggle.get_attribute('aria-expanded') == 'true':
+        page.keyboard.press('Escape')
+        expect(toggle).to_have_attribute('aria-expanded', 'false')
+        expect(toggle).to_be_focused()
+        expect(page.locator('#workspaceSidebar')).to_have_attribute('aria-hidden', 'true')
+    assert not page.locator('.workspace-stage').evaluate('node => node.inert'), 'Main workspace remains inert after navigation closes'
+
+
+def select_theme_preference(page: Page, preference: str) -> str:
+    assert preference in {'light', 'dark', 'system'}, preference
+    select = reveal_workspace_control(page, '#themeToggleBtn')
+    select.select_option(preference)
+    resolved = preference if preference != 'system' else page.evaluate(
+        "matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'"
+    )
+    expect(select).to_have_value(preference)
+    expect(page.locator('html')).to_have_attribute('data-theme', resolved)
+    expect(select).to_be_enabled()
+    return resolved
+
+
+def reveal_task_action(task: Locator, action: str) -> Locator:
+    """Expose a secondary action through its row menu, including negative checks."""
+    control = task.locator(f'[data-action={json.dumps(action)}]')
+    if control.is_visible():
+        return control
+    toggle = task.locator('.task-more-toggle')
+    if toggle.count() and toggle.is_visible() and toggle.get_attribute('aria-expanded') != 'true':
+        toggle.click()
+        expect(toggle).to_have_attribute('aria-expanded', 'true')
+    return control
+
+
+def click_task_action(task: Locator, action: str) -> None:
+    reveal_task_action(task, action).click()
+
+
+def assert_task_action_focus_visible(page: Page) -> None:
+    target = page.locator('.task-item:focus, .task-item :focus, #openModalBtn:focus')
+    expect(target).to_have_count(1)
+    expect(target).to_be_visible()
+    expect(target).to_be_in_viewport()
+    assert not target.evaluate(
+        "node => Boolean(node.closest('.task-action-menu, [inert], [hidden], [aria-hidden=\"true\"]'))"
+    ), 'A non-modal task action left focus in a menu or hidden region'
+
+
+def exercise_workspace_navigation(page: Page) -> None:
+    toggle = page.locator('#workspaceNavToggle')
+    if not toggle.is_visible():
+        return
+    sidebar = page.locator('#workspaceSidebar')
+    if toggle.get_attribute('aria-expanded') == 'true':
+        page.keyboard.press('Escape')
+    expect(toggle).to_have_attribute('aria-expanded', 'false')
+    expect(sidebar).to_have_attribute('aria-hidden', 'true')
+    expect(sidebar).to_have_js_property('inert', True)
+    toggle.focus()
+    sidebar.locator('button').first.focus()
+    expect(toggle).to_be_focused()
+    for _ in range(8):
+        page.keyboard.press('Tab')
+        assert not sidebar.evaluate('node => node.contains(document.activeElement)'), 'Closed navigation received Tab focus'
+    toggle.focus()
+    toggle.press('Enter')
+    expect(toggle).to_have_attribute('aria-expanded', 'true')
+    expect(sidebar).to_have_attribute('aria-hidden', 'false')
+    expect(sidebar).to_have_js_property('inert', False)
+    expect(sidebar.locator('button').first).to_be_focused()
+    assert_accessibility_baseline(page, 'open workspace navigation')
+    page.keyboard.press('Escape')
+    expect(toggle).to_have_attribute('aria-expanded', 'false')
+    expect(sidebar).to_have_js_property('inert', True)
+    expect(toggle).to_be_focused()
 
 
 def wait_for_app_ready(page: Page) -> None:
@@ -515,20 +625,22 @@ def exercise_keyboard_navigation_patterns(page: Page) -> None:
     page.locator("#openMenuBtn").focus()
     page.keyboard.press("Enter")
     wait_for_class(page, "#menu", "show")
-    expect(page.locator("#backupBtn")).to_be_focused()
+    menu_items = page.locator('#menu [role="menuitem"]:visible')
+    assert menu_items.count() >= 3
+    expect(menu_items.first).to_be_focused()
     page.keyboard.press("ArrowDown")
-    expect(page.locator("#exportCsvBtn")).to_be_focused()
-    page.keyboard.press("ArrowDown")
-    expect(page.locator("#importBtn")).to_be_focused()
+    expect(menu_items.nth(1)).to_be_focused()
     page.keyboard.press("End")
-    expect(page.locator("#langMenuToggle")).to_be_focused()
-    page.keyboard.press("ArrowRight")
-    expect(page.locator('#lang-container .lang-btn[data-lang="zh-CN"]')).to_be_focused()
-    page.keyboard.press("ArrowLeft")
-    expect(page.locator("#langMenuToggle")).to_be_focused()
+    expect(menu_items.last).to_be_focused()
+    page.keyboard.press("Home")
+    expect(menu_items.first).to_be_focused()
     page.keyboard.press("Escape")
     wait_for_class(page, "#menu", "show", present=False)
     expect(page.locator("#openMenuBtn")).to_be_focused()
+    language_select = reveal_workspace_control(page, '#languageSelect')
+    language_select.focus()
+    expect(language_select).to_be_focused()
+    expect(language_select).to_have_role('combobox')
     select_sort(page, "smart")
 
 
@@ -884,6 +996,8 @@ def exercise_command_palette(page: Page, alpha_name: str, beta_name: str) -> Non
 
 
 def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name: str, overdue_name: str) -> None:
+    language = page.locator('html').get_attribute('lang')
+    saved_message = json.loads((REPO_ROOT / 'resources' / f'{language}.json').read_text())['savedViews']['saved']
     select_project(page, "all")
     select_filter(page, "active")
     clear_search(page)
@@ -892,10 +1006,10 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
     page.locator("#saveSmartViewBtn").click()
     expect(page.locator("#taskModal")).to_be_visible()
     page.locator("#submitBtn").click()
-    wait_for_notification(page, re.compile("智能视图|Smart view", re.I))
+    wait_for_notification(page, saved_message)
     expect(page.locator("#savedViewsList .saved-view-chip")).to_have_count(1)
     expect(page.locator("#savedViewsList .saved-view-meta")).to_have_count(0)
-    page.locator("#savedViewsList .saved-view-delete").first.click()
+    reveal_workspace_control(page, page.locator("#savedViewsList .saved-view-delete").first).click()
     expect(page.locator("#savedViewDeleteConfirm")).to_be_visible()
     page.locator("#submitBtn").click()
     wait_for_notification(page, re.compile("删除|deleted", re.I))
@@ -908,7 +1022,7 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
     expect(page.locator("#taskModal")).to_be_visible()
     page.locator("#savedViewNameInput").fill("Smoke Deadline View")
     page.locator("#submitBtn").click()
-    wait_for_notification(page, re.compile("智能视图|Smart view", re.I))
+    wait_for_notification(page, saved_message)
     expect(page.locator("#savedViewsList .saved-view-chip")).to_have_count(1)
     expect(page.locator("#savedViewsList .saved-view-meta")).to_have_count(1)
     chip_box = page.locator("#savedViewsList .saved-view-chip").first.bounding_box()
@@ -916,7 +1030,7 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
         raise AssertionError(f"Saved smart view chip should stay compact: {chip_box}")
     clear_search(page)
     expect(task_locator(page, alpha_name)).to_have_count(1)
-    page.locator("#savedViewsList .saved-view-apply").first.click()
+    reveal_workspace_control(page, page.locator("#savedViewsList .saved-view-apply").first).click()
     expect(page.locator("#searchInput")).to_have_value("tag:deadline")
     expect(task_locator(page, beta_name)).to_have_count(1)
     expect(task_locator(page, alpha_name)).to_have_count(0)
@@ -946,9 +1060,10 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
     page.locator("#exitBatchModeBtn").click()
     expect(page.locator("#batchToolbar")).to_be_hidden()
     expect(page.locator("#batchModeBtn")).to_have_attribute("aria-pressed", "false")
-    task_locator(page, beta_name).locator('[data-action="focus"]').click()
+    click_task_action(task_locator(page, beta_name), 'focus')
     wait_for_notification(page, re.compile("今日|today", re.I))
-    page.locator("#focusModeToggleBtn").click()
+    assert_task_action_focus_visible(page)
+    reveal_workspace_control(page, '#focusModeToggleBtn').click()
     expect(page.locator("#focusModeBar")).to_be_visible()
     expect(page.locator("#focusModeToggleBtn")).to_have_attribute("aria-pressed", "true")
     expect(task_locator(page, beta_name)).to_have_count(1)
@@ -960,9 +1075,10 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
 
 def snooze_task_reminder(page: Page, task_name: str) -> None:
     task = task_locator(page, task_name)
-    expect(task.locator('[data-action="snooze"]')).to_be_visible()
-    task.locator('[data-action="snooze"]').click()
+    expect(reveal_task_action(task, 'snooze')).to_be_visible()
+    click_task_action(task, 'snooze')
     wait_for_notification(page, re.compile("提醒|snoozed", re.I))
+    assert_task_action_focus_visible(page)
     snoozed_until = page.evaluate(
         """async (taskName) => {
             const request = indexedDB.open('TaskTrackerDB', 2);
@@ -1066,7 +1182,7 @@ def add_overdue_task_record(page: Page, task_name: str, order: int) -> None:
 
 def delete_task(page: Page, task_name: str) -> None:
     task = task_locator(page, task_name)
-    task.first.locator('[data-action="delete"]').click()
+    click_task_action(task.first, 'delete')
     expect(page.locator("#taskModal")).to_be_visible()
     assert_accessibility_baseline(page, "delete confirmation")
     page.locator("#submitBtn").click()
@@ -1075,7 +1191,7 @@ def delete_task(page: Page, task_name: str) -> None:
 
 def cancel_delete_task(page: Page, task_name: str) -> None:
     task = task_locator(page, task_name)
-    task.first.locator('[data-action="delete"]').click()
+    click_task_action(task.first, 'delete')
     expect(page.locator("#taskModal")).to_be_visible()
     page.locator("#cancelBtn").click()
     expect(task_locator(page, task_name)).to_have_count(1)
@@ -1156,7 +1272,7 @@ def assert_task_order(page: Page, expected_names: list[str]) -> None:
 
 def edit_task(page: Page, task_name: str, updated_name: str) -> None:
     task = task_locator(page, task_name)
-    task.first.locator('[data-action="edit"]').click()
+    click_task_action(task.first, 'edit')
     expect(page.locator("#taskModal")).to_be_visible()
     page.locator("#taskName").fill(updated_name)
     page.locator("#taskDesc").fill("Updated by Playwright smoke test.")
@@ -1165,16 +1281,99 @@ def edit_task(page: Page, task_name: str, updated_name: str) -> None:
     expect(task_locator(page, task_name)).to_have_count(0)
 
 
+def exercise_task_action_menu_keyboard(page: Page, task: Locator) -> None:
+    trigger = task.locator('.task-more-toggle')
+    expect(trigger).to_have_count(1)
+    expect(trigger).to_have_attribute('aria-haspopup', 'menu')
+    trigger.focus()
+    trigger.press('Enter')
+    expect(trigger).to_have_attribute('aria-expanded', 'true')
+    menu = task.locator('.task-action-menu')
+    expect(menu).to_be_visible()
+    expect(menu).to_have_role('menu')
+    expect(trigger).to_have_attribute('aria-controls', menu.get_attribute('id'))
+    items = menu.locator('[role="menuitem"]:visible')
+    assert items.count() >= 2
+    expect(items.first).to_be_focused()
+    page.keyboard.press('ArrowDown')
+    expect(items.nth(1)).to_be_focused()
+    page.keyboard.press('End')
+    expect(items.last).to_be_focused()
+    page.keyboard.press('Home')
+    expect(items.first).to_be_focused()
+    assert_accessibility_baseline(page, 'task action menu')
+    page.keyboard.press('Escape')
+    expect(menu).to_be_hidden()
+    expect(trigger).to_have_attribute('aria-expanded', 'false')
+    expect(trigger).to_be_focused()
+
+
+def exercise_task_action_menu_viewport(page: Page) -> None:
+    """Keep the tail menu and its Delete pointer target visible without scrolling."""
+    assert get_task_records(page) == [], 'Task-menu geometry fixture requires the existing empty workspace'
+    select_view(page, 'list')
+    select_filter(page, 'all')
+    for index in range(18):
+        add_task(page, f'Task menu viewport {index + 1:02}', no_deadline=True)
+    expect(page.locator('#taskList .task-item')).to_have_count(18)
+    before = get_task_records(page)
+    original_viewport = page.viewport_size
+    language = page.locator('html').get_attribute('lang')
+    translations = json.loads((REPO_ROOT / 'resources' / f'{language}.json').read_text())
+    for viewport in ({'width': 1280, 'height': 720}, {'width': 390, 'height': 844}):
+        page.set_viewport_size(viewport)
+        task = page.locator('#taskList .task-item').last
+        trigger = task.locator('.task-more-toggle')
+        trigger.scroll_into_view_if_needed()
+        trigger.evaluate('node => window.scrollBy(0, node.getBoundingClientRect().bottom - innerHeight + 80)')
+        page.evaluate('() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))')
+        bottom = trigger.evaluate('node => node.getBoundingClientRect().bottom')
+        assert abs(bottom - (viewport['height'] - 80)) <= 2, f'Tail task did not reach the intended viewport edge: {bottom}, {viewport}'
+        trigger.click()
+        menu = task.locator('.task-action-menu')
+        expect(menu).to_be_visible()
+        expect(menu.locator('[role="menuitem"]:visible').first).to_be_focused()
+        geometry = menu.evaluate('node => { const r=node.getBoundingClientRect(); return {left:r.left, top:r.top, right:r.right, bottom:r.bottom, width:innerWidth, height:innerHeight}; }')
+        assert (geometry['left'] >= -1 and geometry['top'] >= -1
+                and geometry['right'] <= geometry['width'] + 1
+                and geometry['bottom'] <= geometry['height'] + 1), f'Tail task menu extends outside the viewport: {geometry}'
+        target = menu.locator('[data-action="delete"]').evaluate('''node => {
+            const r=node.getBoundingClientRect(); const x=r.left+r.width/2, y=r.top+r.height/2;
+            const hit=document.elementFromPoint(x,y);
+            return {x,y,hit:Boolean(hit && (node === hit || node.contains(hit)))};
+        }''')
+        assert target['hit'], f'Tail task Delete is not directly reachable by the pointer: {target}, {geometry}'
+        page.mouse.click(target['x'], target['y'])
+        expect(page.locator('#taskModal')).to_be_visible()
+        expect(page.locator('#modalTitle')).to_have_text(translations['task']['actions']['delete'])
+        page.locator('#cancelBtn').click()
+        expect(page.locator('#taskModal')).to_be_hidden()
+        expect(menu).to_be_hidden()
+        expect(trigger).to_have_attribute('aria-expanded', 'false')
+        expect(trigger).to_be_focused()
+        assert get_task_records(page) == before, 'Opening or cancelling tail task Delete changed stored task records'
+        print(f'Task menu viewport passed: {viewport["width"]}px tail menu and Delete are directly visible; cancel preserves all 18 tasks', flush=True)
+    if original_viewport:
+        page.set_viewport_size(original_viewport)
+
+
 def exercise_edit_focus_restore(page: Page, task_name: str) -> None:
     task = task_locator(page, task_name)
-    edit_button = task.first.locator('[data-action="edit"]')
+    exercise_task_action_menu_keyboard(page, task.first)
+    more_button = task.first.locator('.task-more-toggle')
+    uses_action_menu = more_button.count() > 0
+    edit_button = reveal_task_action(task.first, 'edit')
     edit_button.focus()
     expect(edit_button).to_be_focused()
     edit_button.click()
     expect(page.locator("#taskModal")).to_be_visible()
     page.locator("#cancelBtn").click()
     expect(page.locator("#taskModal")).to_be_hidden()
-    expect(edit_button).to_be_focused()
+    if uses_action_menu:
+        expect(more_button).to_be_focused()
+        expect(more_button).to_have_attribute('aria-expanded', 'false')
+    else:
+        expect(edit_button).to_be_focused()
 
 
 def exercise_subtasks(page: Page, task_name: str) -> None:
@@ -1190,127 +1389,80 @@ def exercise_subtasks(page: Page, task_name: str) -> None:
     clear_search(page)
 
 
+def assert_theme_chrome(page: Page) -> None:
+    page.evaluate("""async () => {
+        getComputedStyle(document.body).backgroundColor;
+        await Promise.all(document.getAnimations()
+            .filter(animation => animation.effect?.getTiming().iterations !== Infinity)
+            .map(animation => animation.finished.catch(() => {})));
+    }""")
+    chrome = page.evaluate("""() => {
+        const meta = document.querySelector('meta[name="theme-color"]')?.content || '';
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = 1;
+        const context = canvas.getContext('2d');
+        const pixel = value => {
+            context.clearRect(0, 0, 1, 1);
+            context.fillStyle = value;
+            context.fillRect(0, 0, 1, 1);
+            return Array.from(context.getImageData(0, 0, 1, 1).data);
+        };
+        let background = getComputedStyle(document.body).backgroundColor;
+        if (pixel(background)[3] === 0) background = getComputedStyle(document.documentElement).backgroundColor;
+        return {meta, metaColor: pixel(meta), background, canvasColor: pixel(background),
+            manifestPath: new URL(document.querySelector('#manifestLink').href).pathname};
+    }""")
+    assert chrome['meta'] and chrome['metaColor'][3] == 255, chrome
+    assert chrome['canvasColor'][3] == 255 and chrome['metaColor'] == chrome['canvasColor'], chrome
+    assert chrome['manifestPath'].endswith('/manifest.json'), chrome
+
+
 def exercise_theme(page: Page) -> None:
-    before = page.evaluate("document.documentElement.getAttribute('data-theme')")
-    theme_button = page.locator("#themeToggleBtn")
-    theme_button.click()
-    expect(theme_button).to_be_disabled()
-    page.wait_for_function(
-        "before => document.documentElement.getAttribute('data-theme') !== before",
-        arg=before,
-    )
-    page.wait_for_function(
-        "() => !document.documentElement.classList.contains('theme-transitioning')"
-    )
-    expect(theme_button).to_be_enabled()
-    after = page.evaluate("document.documentElement.getAttribute('data-theme')")
-    stored = page.evaluate("localStorage.getItem('theme')")
-    theme_color = page.locator('meta[name="theme-color"]').get_attribute("content")
-    expected_theme_color = "#0f1117" if after == "dark" else "#2563eb"
-    manifest_path = page.evaluate(
-        """async () => {
-            const href = document.querySelector('#manifestLink').href;
-            return new URL(href).pathname;
-        }"""
-    )
-    if (
-        before == after
-        or after not in {"light", "dark"}
-        or stored != after
-        or theme_color != expected_theme_color
-        or not manifest_path.endswith("/manifest.json")
-    ):
-        raise AssertionError(
-            "Theme toggle failed: "
-            f"before={before}, after={after}, stored={stored}, "
-            f"theme_color={theme_color}, manifest_path={manifest_path}"
-        )
+    before = page.locator('html').get_attribute('data-theme')
+    target = 'light' if before == 'dark' else 'dark'
+    select_theme_preference(page, target)
+    assert page.evaluate("localStorage.getItem('theme')") == target
+    assert_theme_chrome(page)
 
 
 def exercise_theme_fallback_transition(page: Page) -> None:
-    result = page.evaluate(
-        """async () => {
-            const html = document.documentElement;
-            const originalStartViewTransition = document.startViewTransition;
+    page.evaluate("""() => {
+        window.themeTestOriginalViewTransition = document.startViewTransition;
+        Object.defineProperty(document, 'startViewTransition', {configurable: true, value: undefined});
+    }""")
+    try:
+        before = page.locator('html').get_attribute('data-theme')
+        target = 'light' if before == 'dark' else 'dark'
+        select = reveal_workspace_control(page, '#themeToggleBtn')
+        select.focus()
+        select_theme_preference(page, target)
+        expect(select).to_be_focused()
+        assert_theme_chrome(page)
+        assert page.evaluate("localStorage.getItem('theme')") == target
+    finally:
+        page.evaluate("""() => {
             Object.defineProperty(document, 'startViewTransition', {
-                configurable: true,
-                value: undefined
+                configurable: true, value: window.themeTestOriginalViewTransition
             });
-
-            const body = document.body;
-            const controls = document.querySelector('.controls-bar');
-            const task = document.querySelector('.task-item');
-            const button = document.querySelector('#themeToggleBtn');
-            const beforeTheme = html.getAttribute('data-theme');
-
-            const readState = () => ({
-                theme: html.getAttribute('data-theme'),
-                isTransitioning: html.classList.contains('theme-transitioning'),
-                buttonDisabled: button.disabled,
-                bodyTransition: getComputedStyle(body).transitionProperty,
-                bodyBackgroundImage: getComputedStyle(body).backgroundImage,
-                controlsTransition: getComputedStyle(controls).transitionProperty,
-                taskTransition: getComputedStyle(task).transitionProperty
-            });
-
-            button.click();
-            await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-            const during = readState();
-            await new Promise(resolve => setTimeout(resolve, 330));
-            const after = readState();
-
-            Object.defineProperty(document, 'startViewTransition', {
-                configurable: true,
-                value: originalStartViewTransition
-            });
-
-            return { beforeTheme, during, after };
-        }"""
-    )
-
-    if result["during"]["theme"] == result["beforeTheme"]:
-        raise AssertionError(f"Fallback theme did not switch during transition: {result}")
-    if not result["during"]["isTransitioning"] or not result["during"]["buttonDisabled"]:
-        raise AssertionError(f"Fallback theme transition did not expose in-flight state: {result}")
-    if result["after"]["isTransitioning"] or result["after"]["buttonDisabled"]:
-        raise AssertionError(f"Fallback theme transition did not clean up: {result}")
-
-    for label, property_name in (
-        ("body", "bodyTransition"),
-        ("controls", "controlsTransition"),
-        ("task", "taskTransition"),
-    ):
-        if "background-color" not in result["during"][property_name]:
-            raise AssertionError(f"{label} is missing a background-color transition: {result}")
-
-    if "linear-gradient(135deg" in result["during"]["bodyBackgroundImage"]:
-        raise AssertionError(f"Body fallback still depends on non-interpolable theme gradient: {result}")
+            delete window.themeTestOriginalViewTransition;
+        }""")
 
 
 def exercise_language(page: Page) -> None:
-    page.locator("#openMenuBtn").click()
-    page.locator("#langMenuToggle").click()
-    page.locator('#lang-container .lang-btn[data-lang="en"]').click()
-    expect(page.locator("h1")).to_have_text("Task Tracer")
-    expect(page.locator("#currentFilterLabel")).to_have_text("Active")
-    if page.title() != "Task Tracer":
-        raise AssertionError(f"Expected English document title, got {page.title()!r}")
-    expect(page.locator("html")).to_have_attribute("lang", "en")
-    expect(page.locator("html")).to_have_attribute("dir", "ltr")
-    expect(page.locator(".controls-bar")).to_have_attribute("aria-label", "Task toolbar")
-    expect(page.locator('#lang-container .lang-btn[data-lang="en"]')).to_have_attribute("aria-checked", "true")
-
-    page.locator('#lang-container .lang-btn[data-lang="zh-CN"]').click()
-    expect(page.locator("h1")).to_have_text("任务跟踪器")
-    expect(page.locator("#currentFilterLabel")).to_have_text("进行中")
-    if page.title() != "任务跟踪器":
-        raise AssertionError(f"Expected Chinese document title, got {page.title()!r}")
-    expect(page.locator("html")).to_have_attribute("lang", "zh-CN")
-    expect(page.locator("html")).to_have_attribute("dir", "ltr")
-    expect(page.locator(".controls-bar")).to_have_attribute("aria-label", "任务工具栏")
-    expect(page.locator('#lang-container .lang-btn[data-lang="zh-CN"]')).to_have_attribute("aria-checked", "true")
-    assert_accessibility_baseline(page, "language menu")
-    page.keyboard.press("Escape")
+    before = get_task_records(page)
+    for language in ('en', 'zh-CN'):
+        translations = json.loads((REPO_ROOT / 'resources' / f'{language}.json').read_text())
+        select_language(page, language)
+        expect(page.locator('h1:visible')).to_have_count(1)
+        expect(page.locator('#workspaceTitle')).to_have_text(translations['workspace']['allTasks'])
+        expect(page.locator('#currentFilterLabel')).to_have_text(translations['filters']['active'])
+        assert page.title() == translations['app']['title'], page.title()
+        expect(page.locator('.controls-bar')).to_have_attribute('aria-label', translations['app']['toolbar'])
+        expect(page.locator('#languageSelect')).to_have_role('combobox')
+        expect(page.locator('#languageSelect')).to_have_accessible_name(translations['workspace']['language'])
+        assert get_task_records(page) == before, 'Changing the UI language changed stored tasks'
+    assert_accessibility_baseline(page, 'language preference')
+    page.keyboard.press('Escape')
 
 
 def exercise_filters_and_sort(page: Page, alpha_name: str, beta_name: str, overdue_name: str) -> None:
@@ -1340,6 +1492,52 @@ def exercise_filters_and_sort(page: Page, alpha_name: str, beta_name: str, overd
     expect(page.locator(".task-item")).to_have_count(3)
 
     select_filter(page, "all")
+
+
+def exercise_workspace_date_focus(page: Page, *, zero_matches: bool = False) -> None:
+    select_view(page, 'list')
+    original_search = page.locator('#searchInput').input_value()
+    before = get_task_records(page)
+    if zero_matches:
+        assert before, 'The zero-matches calendar case requires stored tasks'
+        page.locator('#searchInput').fill('_no_matching_workspace_date_probe_')
+    else:
+        assert before == [], 'The empty-workspace calendar case requires no stored tasks'
+    expect(page.locator('.task-item')).to_have_count(0)
+    try:
+        wide_week = page.evaluate("matchMedia('(min-width: 1001px)').matches")
+        if wide_week:
+            expect(page.locator('#workspaceWeekIndex')).to_be_visible()
+        else:
+            expect(page.locator('#workspaceWeekIndex')).to_be_hidden()
+        for entry in (('week', 'mini') if wide_week else ('mini',)):
+            select_view(page, 'list')
+            if entry == 'week':
+                target = page.locator('#workspaceWeekIndex [data-workspace-week-date]').first
+            else:
+                target = page.locator('#workspaceCalendarGrid [data-workspace-date][aria-current="date"]')
+                if not target.is_visible():
+                    page.locator('#workspaceScheduleToggle').click()
+                    expect(page.locator('#workspaceScheduleDialog')).to_be_visible()
+            target.click()
+            expect(page.locator('#viewTab-calendar')).to_have_attribute('aria-selected', 'true')
+            expect(page.locator('#taskList')).to_be_visible()
+            expect(page.locator('#workspaceScheduleDialog')).to_be_hidden()
+            page.wait_for_function("""() => {
+                const element = document.activeElement;
+                if (!element || element === document.body || element === document.documentElement
+                    || element.closest('[inert], [hidden], [aria-hidden="true"]')) return false;
+                if (element.id !== 'viewTab-calendar' && !document.getElementById('taskList').contains(element)) return false;
+                const box = element.getBoundingClientRect();
+                const style = getComputedStyle(element);
+                return box.width > 0 && box.height > 0 && style.visibility !== 'hidden'
+                    && box.left >= -1 && box.right <= innerWidth + 1
+                    && box.top >= -1 && box.bottom <= innerHeight + 1;
+            }""", polling=50, timeout=5000)
+            assert get_task_records(page) == before, f'{entry} date navigation modified stored tasks'
+    finally:
+        page.locator('#searchInput').fill(original_search)
+        select_view(page, 'list')
 
 
 def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_name: str) -> None:
@@ -1490,6 +1688,7 @@ def exercise_stats_view(page: Page, completed_name: str) -> None:
 
 def complete_task(page: Page, task_name: str) -> None:
     active_task = task_locator(page, task_name).first
+    expect(active_task.locator('[data-action="toggle"]')).to_have_attribute('aria-pressed', 'false')
     expect(active_task.locator('[data-action="toggle"]')).to_have_attribute(
         "aria-label", re.compile("标记为已完成|Mark as complete", re.I)
     )
@@ -1502,7 +1701,8 @@ def complete_task(page: Page, task_name: str) -> None:
     expect(task.locator('[data-action="toggle"]')).to_have_attribute(
         "aria-label", re.compile("标记为未完成|Mark as incomplete", re.I)
     )
-    expect(task.locator('[data-action="toggle"] use')).to_have_attribute("href", "#icon-undo")
+    expect(task.locator('[data-action="toggle"]')).to_have_attribute('aria-pressed', 'true')
+    expect(task.locator('[data-action="toggle"] use')).to_have_attribute("href", "#icon-check")
     decoration = task.locator(".task-name").evaluate(
         "element => getComputedStyle(element).textDecorationLine"
     )
@@ -1635,8 +1835,8 @@ def exercise_advanced_repeat_task(page: Page, weekly_name: str, paused_name: str
     )
     weekly_task = task_locator(page, weekly_name)
     expect(weekly_task.locator(".repeat-chip")).to_contain_text(re.compile("一|Mon"))
-    expect(weekly_task.locator('[data-action="skip-repeat"]')).to_be_visible()
-    weekly_task.locator('[data-action="skip-repeat"]').click()
+    expect(reveal_task_action(weekly_task, 'skip-repeat')).to_be_visible()
+    click_task_action(weekly_task, 'skip-repeat')
     wait_for_notification(page, re.compile("跳过|skipped", re.I))
     record = page.evaluate(
         """async (taskName) => {
@@ -1677,7 +1877,7 @@ def exercise_advanced_repeat_task(page: Page, weekly_name: str, paused_name: str
     )
     paused_task = task_locator(page, paused_name)
     expect(paused_task.locator(".repeat-chip")).to_contain_text(re.compile("暂停|paused", re.I))
-    expect(paused_task.locator('[data-action="skip-repeat"]')).to_be_hidden()
+    expect(reveal_task_action(paused_task, 'skip-repeat')).to_be_hidden()
     paused_task.locator('[data-action="toggle"]').click()
     wait_for_notification(page, re.compile("完成|completed", re.I))
     records = page.evaluate(
@@ -1740,8 +1940,8 @@ def exercise_time_zone_stable_repeat(page: Page, task_name: str) -> None:
     select_filter(page, "all")
     task = task_locator(page, task_name)
     expect(task).to_have_count(1)
-    expect(task.locator('[data-action="skip-repeat"]')).to_be_visible()
-    task.locator('[data-action="skip-repeat"]').click()
+    expect(reveal_task_action(task, 'skip-repeat')).to_be_visible()
+    click_task_action(task, 'skip-repeat')
     wait_for_notification(page, re.compile("跳过|skipped", re.I))
     record = next((item for item in get_task_records(page) if item["name"] == task_name), None)
     expected = {
@@ -1798,9 +1998,10 @@ def clear_completed_tasks(page: Page, completed_name: str) -> None:
 def archive_and_restore_task(page: Page, completed_name: str) -> None:
     select_filter(page, "completed")
     task = task_locator(page, completed_name)
-    expect(task.locator('[data-action="archive"]')).to_be_visible()
-    task.locator('[data-action="archive"]').click()
+    expect(reveal_task_action(task, 'archive')).to_be_visible()
+    click_task_action(task, 'archive')
     wait_for_notification(page, re.compile("已归档|archived", re.I))
+    assert_task_action_focus_visible(page)
     select_view(page, "stats")
     archived_shortcut = page.locator('.stats-mini[data-stats-filter="archived"]')
     expect(archived_shortcut.locator("strong")).to_have_text("1")
@@ -1831,8 +2032,9 @@ def archive_and_restore_task(page: Page, completed_name: str) -> None:
     clear_search(page)
     select_filter(page, "archived")
     archived = task_locator(page, completed_name)
-    archived.locator('[data-action="archive"]').click()
+    click_task_action(archived, 'archive')
     wait_for_notification(page, re.compile("恢复|restored", re.I))
+    assert_task_action_focus_visible(page)
     select_filter(page, "completed")
     expect(task_locator(page, completed_name)).to_have_count(1)
 
@@ -1903,6 +2105,8 @@ def exercise_back_to_top(page: Page) -> None:
 
 
 def exercise_notifications(page: Page) -> None:
+    page.locator('#openMenuBtn').click()
+    expect(page.locator('#openMenuBtn')).to_have_attribute('aria-expanded', 'true')
     page.locator("#notificationToggleBtn").click()
     expect(page.locator("#notificationToggleBtn")).to_have_attribute("aria-label", "关闭通知")
     expect(page.locator("#notificationToggleBtn")).to_have_class(re.compile(r"(^|\s)notifications-enabled(\s|$)"))
@@ -2869,6 +3073,10 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
             wait_for_app_ready(visual_page)
             select_filter(visual_page, "all")
             expect(visual_page.locator(".task-item")).to_have_count(3)
+            exercise_workspace_navigation(visual_page)
+            if viewport['width'] == 390:
+                exercise_workspace_date_focus(visual_page, zero_matches=True)
+                expect(visual_page.locator('.task-item')).to_have_count(3)
             visual_page.locator(".task-item").first.scroll_into_view_if_needed()
 
             metrics = visual_page.evaluate(
@@ -2943,9 +3151,12 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                         controlOverlaps,
                         controlOutside,
                         hasTaskName: Boolean(document.querySelector('.task-name')?.textContent.trim()),
-                        hasVisibleActions: [...document.querySelectorAll('.task-actions .action-btn')]
+                        hasVisibleActions: [...document.querySelectorAll('.task-actions button, .task-header [data-action="toggle"]')]
                             .filter((button) => !button.hidden && button.offsetParent !== null)
-                            .every((button) => button.getBoundingClientRect().width >= 30)
+                            .some((button) => button.getBoundingClientRect().width >= 30)
+                            && [...document.querySelectorAll('.task-actions button, .task-header [data-action="toggle"]')]
+                                .filter((button) => !button.hidden && button.offsetParent !== null)
+                                .every((button) => button.getBoundingClientRect().width >= 30)
                     };
                 }""",
                 label,
@@ -3045,6 +3256,7 @@ def smoke(url: str) -> None:
         assert_accessibility_baseline(page, "empty task list")
         exercise_legacy_boolean_normalization(page)
         assert_empty_task_list(page)
+        exercise_workspace_date_focus(page)
 
         exercise_shortcuts_and_modal_closing(page)
         exercise_keyboard_navigation_patterns(page)
@@ -3086,6 +3298,7 @@ def smoke(url: str) -> None:
 
         exercise_filters_and_sort(page, alpha_edited, beta_name, overdue_name)
         exercise_date_views(page, alpha_edited, beta_name, overdue_name)
+        exercise_workspace_date_focus(page, zero_matches=True)
         exercise_manual_reorder(page, alpha_edited, beta_name, overdue_name)
         exercise_back_to_top(page)
         complete_task(page, alpha_edited)
@@ -3118,6 +3331,7 @@ def smoke(url: str) -> None:
         exercise_import_merge_skip_reference_cleanup(page, f"{task_name} Repeat Import")
         exercise_imported_zero_id_edit(page, f"{task_name} Zero Id")
         assert_empty_task_list(page)
+        exercise_task_action_menu_viewport(page)
 
         context.close()
         browser.close()

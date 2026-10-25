@@ -8,6 +8,7 @@ from pathlib import Path
 
 from playwright.sync_api import expect, sync_playwright
 
+from smoke_playwright import click_task_action
 from smoke_playwright import (
     add_task,
     browser_launch_options,
@@ -113,7 +114,7 @@ def check_stale_form(url: str) -> None:
             other = context.new_page()
             other.goto(url)
             wait_for_app_ready(other)
-            task_locator(page, original_name).locator('[data-action="edit"]').click()
+            click_task_action(task_locator(page, original_name), 'edit')
             expect(page.locator('#taskModal')).to_be_visible()
             page.locator('#taskName').fill(draft_name)
             page.locator('#taskDesc').fill('Keep this unsaved local description')

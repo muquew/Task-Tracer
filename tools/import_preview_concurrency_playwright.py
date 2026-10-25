@@ -6,6 +6,7 @@ import json
 from datetime import datetime
 from playwright.sync_api import expect, sync_playwright
 from reminder_concurrency_playwright import seed
+from smoke_playwright import click_task_action
 from smoke_playwright import (add_task, browser_launch_options, clear_app_data,
                               complete_task, get_task_records, local_server, select_filter, task_locator,
                               wait_for_app_ready)
@@ -99,7 +100,7 @@ def run_case(browser, url, mode):
             add_task(second, remote, no_deadline=True)
         else:
             remote = 'Description changed after import approval'
-            task_locator(second, name).locator('[data-action="edit"]').click()
+            click_task_action(task_locator(second, name), 'edit')
             second.locator('#taskDesc').fill(remote)
             second.locator('#submitBtn').click()
             expect(second.locator('#taskModal')).to_be_hidden()

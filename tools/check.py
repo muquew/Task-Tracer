@@ -132,6 +132,7 @@ def main() -> int:
         checks.extend([
             "verify_deployment_test.py",
             "smoke_playwright.py",
+            "appearance_preferences_playwright.py",
             "recovery_playwright.py",
             "recovery_management_playwright.py",
             "undo_concurrency_playwright.py",

@@ -8,6 +8,7 @@ from pathlib import Path
 
 from playwright.sync_api import expect, sync_playwright
 
+from smoke_playwright import click_task_action
 from smoke_playwright import (add_task, browser_launch_options, clear_app_data,
                               get_task_records, local_server, select_filter,
                               select_project, select_sort, task_locator,
@@ -85,7 +86,7 @@ def edit_remote_task(context, url):
     second = context.new_page()
     second.goto(url)
     wait_for_app_ready(second)
-    task_locator(second, 'Unrelated task B').locator('[data-action="edit"]').click()
+    click_task_action(task_locator(second, 'Unrelated task B'), 'edit')
     second.locator('#taskDesc').fill('A remote edit committed after the original transaction')
     second.locator('#submitBtn').click()
     expect(second.locator('#taskModal')).to_be_hidden()

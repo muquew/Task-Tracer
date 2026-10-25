@@ -16,6 +16,7 @@ from playwright.sync_api import expect, sync_playwright
 from check import atomic_report, source_identity
 from recovery_management_playwright import config, stored
 from recovery_playwright import open_recovery
+from smoke_playwright import click_task_action
 from smoke_playwright import (
     add_task, browser_launch_options, clear_app_data, local_server,
     task_locator, wait_for_app_ready,
@@ -153,7 +154,7 @@ def verify_rollback(page, before, reopen=True):
 
 def edit_abort(page, before, history=False):
     page.locator('#searchInput').fill(FIRST)
-    task_locator(page, FIRST).locator('[data-action="edit"]').click()
+    click_task_action(task_locator(page, FIRST), 'edit')
     page.locator('#taskDesc').fill('A changed field that must remain unsaved after abort')
     inject(page, 'put', 'config' if history else 'tasks', 'recoveryHistory' if history else None)
     page.locator('#submitBtn').click()
@@ -300,7 +301,7 @@ def quota_quick(page, before):
 
 def stale_edit(page, before, url):
     page.locator('#searchInput').fill(FIRST)
-    task_locator(page, FIRST).locator('[data-action="edit"]').click()
+    click_task_action(task_locator(page, FIRST), 'edit')
     page.locator('#taskDesc').fill('Unsaved stale first-window draft')
     other = page.context.new_page()
     try:
@@ -308,7 +309,7 @@ def stale_edit(page, before, url):
         wait_for_app_ready(other)
         expect(other.locator('.task-item')).to_have_count(min(len(before['tasks']), 100))
         other.locator('#searchInput').fill(FIRST)
-        task_locator(other, FIRST).locator('[data-action="edit"]').click()
+        click_task_action(task_locator(other, FIRST), 'edit')
         other.locator('#taskDesc').fill('A newer second-window committed edit')
         other.locator('#submitBtn').click()
         expect(other.locator('#taskModal')).to_be_hidden()

@@ -5,6 +5,7 @@ from __future__ import annotations
 from playwright.sync_api import expect, sync_playwright
 from import_preview_concurrency_playwright import assert_reminder_metadata_only
 from reminder_concurrency_playwright import seed
+from smoke_playwright import click_task_action
 from smoke_playwright import (browser_launch_options, clear_app_data, get_task_records,
                               local_server, task_locator, wait_for_app_ready)
 
@@ -64,7 +65,7 @@ def run():
             second.goto(url)
             wait_for_app_ready(second)
             remote_description = 'Description committed in the second window'
-            task_locator(second, name).locator('[data-action="edit"]').click()
+            click_task_action(task_locator(second, name), 'edit')
             second.locator('#taskDesc').fill(remote_description)
             second.locator('#submitBtn').click()
             expect(second.locator('#taskModal')).to_be_hidden()

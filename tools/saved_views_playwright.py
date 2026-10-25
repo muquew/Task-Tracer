@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from playwright.sync_api import expect, sync_playwright
+from smoke_playwright import reveal_workspace_control
 from smoke_playwright import (
     add_task, browser_launch_options, clear_app_data, get_task_records, local_server,
     wait_for_app_ready,
@@ -44,7 +45,7 @@ def save_view(page, name, query):
 def delete_view(page, name):
     chip = page.locator('#savedViewsList .saved-view-chip').filter(
         has=page.locator('.saved-view-name', has_text=name))
-    chip.locator('.saved-view-delete').click()
+    reveal_workspace_control(page, chip.locator('.saved-view-delete')).click()
     expect(page.locator('#savedViewDeleteName')).to_have_text(name)
     page.locator('#submitBtn').click()
     expect(chip).to_have_count(0)
