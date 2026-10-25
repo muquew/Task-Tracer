@@ -1,0 +1,30 @@
+{
+  "artifact.integrity.json": {
+    "bytes": 2318,
+    "sha256": "3b576a5083cc07d7f2717cca0b122e193987a68fc4898d25b57b90997ae0fa66"
+  },
+  "artifact.zip.sha256": {
+    "bytes": 89,
+    "sha256": "223e1a0052528bccdde7b5d9dc7578e1aef4eb9d7bdfb68ecf3118f0fb75b4e6"
+  },
+  "build.stderr.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "build.stdout.log": {
+    "bytes": 292,
+    "sha256": "ba6c58e36c7a8fcd4926ee3f4bbf8fc1ff2581c47474ba846dc72ba8c729a876"
+  },
+  "comparison.json": {
+    "bytes": 32705,
+    "sha256": "05a4f21939357eb5893c60334bdbfce4dadcf078e9eda1ad417852f57d16bcc7"
+  },
+  "files.json": {
+    "bytes": 508,
+    "sha256": "62b2a79792589a26d6e9df78674bca2137a666f09abe7c7e31ad25302d9a7d40"
+  },
+  "runner.py": {
+    "bytes": 5746,
+    "sha256": "70f132a2aa1afc9732a543f83c8d51333a7bf57c479159f0e1ae5b5c44755e78"
+  }
+}

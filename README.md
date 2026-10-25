@@ -24,9 +24,9 @@ Task Tracer is a personal task manager that runs in the browser and keeps task d
 
 The continuing development goal, acceptance criteria and current work queue are recorded in [GOAL.md](./GOAL.md).
 
-The **[4.14.0 development candidate](./docs/releases/4.14.0.md)** reorganizes task editing, exposes selection actions, and clarifies settings, imports and recovery. Candidate implementation and targeted local checks are available; final regression, release/upgrade validation, publication and live-site verification are still pending. The [proactive review brief](./PROACTIVE_BRIEF.md) records this round’s scope.
+The current published release, **[4.14.0](./docs/releases/4.14.0.md)**, reorganizes task editing, preserves unfinished scheduling and subtask edits, exposes selection actions, and clarifies settings, imports and recovery. Hands-on review, affected regression, packaging, real 4.13.2 archive upgrade and live-site verification are complete. The [proactive review brief](./PROACTIVE_BRIEF.md) records this round’s scope.
 
-The current published release is **[4.13.2](./docs/releases/4.13.2.md)**, refining subtask saving, calendar return, task feedback and sidebar navigation while reducing repeated interface copy. Local review, affected checks, release/upgrade validation and live-site verification are complete.
+The published **[4.13.2 baseline](./docs/releases/4.13.2.md)** refines subtask saving, calendar return, task feedback and sidebar navigation while reducing repeated interface copy. Its local review, affected checks, release/upgrade validation and live-site verification retain their original scope.
 
 The published **[4.13.1 baseline](./docs/releases/4.13.1.md)** provides one-click full task entry, an explicit in-app update check and workflow fixes. Its targeted checks, real 4.13.0 archive upgrade, publication and live-site review are complete; those results retain their original scope.
 
@@ -65,7 +65,7 @@ The desktop sidebar keeps the brand and **List**, **Calendar**, **Timeline** and
 
 Workspace themes are saved in this browser profile and keep the existing four preference choices when upgrading. They remain independent of task data and task backups; database 2, task JSON 2.4 and saved-view 1.1/1.0 import compatibility are unchanged. The themes are part of the local application and retain the offline-use boundaries described below.
 
-The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.14.0 candidate record](./docs/releases/4.14.0.md) tracks this round’s changes and pending final acceptance; earlier release records retain their own results.
+The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.14.0 release record](./docs/releases/4.14.0.md) documents this round’s changes, acceptance and publication; earlier release records retain their own results.
 
 ## Getting Started
 
@@ -287,7 +287,7 @@ The application needs no build step. For pinned browser-test dependencies, valid
 python3 tools/check.py --static-only
 ```
 
-Current-candidate acceptance and publication status are tracked in the [4.14.0 record](./docs/releases/4.14.0.md). The following completed records belong to their named historical releases.
+Acceptance and publication for the current release are documented in the [4.14.0 record](./docs/releases/4.14.0.md). The following completed records belong to their named historical releases.
 
 The [4.9.0 release](./docs/releases/4.9.0.md) delivers the redesigned workspace, direct language selection, Light/Dark/System preferences and revised bilingual copy. Clean application commit `e7d58e2` freezes 23 source and 70 verification inputs. The full 59-program checker passed, with program durations totaling 1645.602 seconds; Chromium 154.0.8037.57, Firefox 153.0 and WebKit 26.5 each passed all 32 registered matrix programs. Two independent builds produced the same 797,361-byte, 24-file ZIP, SHA-256 `197bc587145d65f986320ce4b69bd0a2937ce8d48ca3ceb3183a49dfc8849b7b`, with `working_tree_dirty=false`. Actual 4.8.6-archive upgrade/rollback/re-upgrade and an additional 10,000-task/six-subtask full-workspace correctness exercise passed. The [input and artifact record](./docs/releases/inputs-4.9.0.json) binds these results to the frozen candidate; program viewport scopes and live-CDP exclusions remain explicit.
 

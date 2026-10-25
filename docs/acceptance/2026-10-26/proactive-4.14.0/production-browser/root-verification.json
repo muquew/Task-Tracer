@@ -1,0 +1,37 @@
+{
+  "derived": true,
+  "source_index_sha256": "e5741f889cb3c8e74d7f5885f36d5030922afa948b397579b759839ffd827f48",
+  "observations": 48,
+  "horizontal_overflow_observations": 0,
+  "page_errors": [],
+  "action_errors": [],
+  "browser_closed": true,
+  "backup_file": "task-tracer_backup_2026-10-25_18-09-07-190.json",
+  "backup_sha256": "ab4fcc6f476809d409e9fb34ac15c185f95060e043af889159c8d63df20bd2f3",
+  "backup_checksum_valid": true,
+  "tasks": 2,
+  "surviving_first_task_subtasks": [
+    "确认安排",
+    "检查附件：修订已保留"
+  ],
+  "first_task_date_time": {
+    "date": "2026-10-27",
+    "time": "09:30",
+    "timezone": "Asia/Shanghai"
+  },
+  "second_task_repeat_weekdays": [
+    4
+  ],
+  "manually_viewed_production_screenshots": [
+    "02-live-editor-desktop.png",
+    "16-remove-first-preserve-edit.png",
+    "21-mobile-preferences-first.png",
+    "23-live-editor-320.png",
+    "36-empty-weekdays-blocked.png",
+    "39-live-compact-statistics.png",
+    "40-today-drilldown.png",
+    "43-selection-without-expanding-filters.png",
+    "48-download-verifiable-backup.png"
+  ],
+  "manual_review_scope": "These 9 screenshots were actually viewed by root; remaining observations are action/geometry records, not a claim of individual screenshot review."
+}

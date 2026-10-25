@@ -1,0 +1,502 @@
+{
+  "schema": "task-tracer-production-browser-selected-originals-v1",
+  "scope": "One closed current production session. Native JSON and driver are byte copies; root-verification.json remains the root operator derived verification, not a native test suite.",
+  "files": [
+    {
+      "path": "01-empty-desktop.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/01-empty-desktop.json",
+      "bytes": 15668,
+      "sha256": "9eeb59842b7acf3739f82a5c8fcd5c806036352170146b20f1d35503f4a9a7db",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "02-live-editor-desktop.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/02-live-editor-desktop.json",
+      "bytes": 16929,
+      "sha256": "ceee163f342632d0a6af144b9de54db2255b3a261f5d92bad4de06770cc3f1e9",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "03-task-title.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/03-task-title.json",
+      "bytes": 16983,
+      "sha256": "528fe3cea636fd0b5e9915116d35b3b8982a58f88890607e0c75d420770738d5",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "04-task-notes.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/04-task-notes.json",
+      "bytes": 17125,
+      "sha256": "a2671afc536ebc1c7705124c85567daa6ce72f172496ba0411d7252aa280d2de",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "05-project.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/05-project.json",
+      "bytes": 17130,
+      "sha256": "9a199f7759c7973ad0bde017831ed2e9db273306946cc47ac3f538468c442629",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "06-tomorrow-direct.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/06-tomorrow-direct.json",
+      "bytes": 17600,
+      "sha256": "cdf1e2fb07898e29b59260e19d03cf2dde9fb5c89c15743a1c1af19ccf47f1d8",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "07-wall-clock-time.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/07-wall-clock-time.json",
+      "bytes": 17617,
+      "sha256": "c375a85570ed39710cc26278b233e55de251d2fd9c117e520392862aeb7034d2",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "08-child-a-input.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/08-child-a-input.json",
+      "bytes": 17636,
+      "sha256": "fd316cde06a9b4f6de64a69d4ef593b5f16df9f499221db4a5474ac4cf6e2abe",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "09-child-a.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/09-child-a.json",
+      "bytes": 17519,
+      "sha256": "cfef1cca4de69f44e4ace0896f640a7e33c789ea9d7b2d48754666d8c85c2a20",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "10-child-b-input.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/10-child-b-input.json",
+      "bytes": 17543,
+      "sha256": "1f7667726af05ae5d9307417dcc9992a32c0ffd6946abab5ee84a9a2c81cfa47",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "11-child-b.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/11-child-b.json",
+      "bytes": 17525,
+      "sha256": "6bfcc2374020717f132f63a48155ce3d95fafaf45e7cf8fcf1bc279274ea15fe",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "12-child-c-input.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/12-child-c-input.json",
+      "bytes": 17549,
+      "sha256": "22dbd29ee4807809f177a15dffab2a09321e2422eca20396473bbd2eaaf2d17c",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "13-child-c.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/13-child-c.json",
+      "bytes": 17518,
+      "sha256": "e85bb5870e12e7354e2703b3a8e6a9098f29deb9c11baec6af030332253d3a93",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "14-edit-last-child.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/14-edit-last-child.json",
+      "bytes": 17944,
+      "sha256": "0c5cb77fc4e32bf320e1609ddfa77014299ed7c47f7d898fbf93ebf7c1eefefd",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "15-new-child-text.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/15-new-child-text.json",
+      "bytes": 17980,
+      "sha256": "e6740cdfb8dd16072e8f147172f135f851906636fb62d9458a866f6a77749ebd",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "16-remove-first-preserve-edit.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/16-remove-first-preserve-edit.json",
+      "bytes": 17980,
+      "sha256": "0021d70d03bdef329a67cb0c629a1f6879557974392db50d3c15140fc6cc89dc",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "17-saved-two-surviving-children.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/17-saved-two-surviving-children.json",
+      "bytes": 15804,
+      "sha256": "7e94ee982236725a85c6b0b9ead225c72a700c904b85338da1face3952e11420",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "18-appearance-settings.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/18-appearance-settings.json",
+      "bytes": 10556,
+      "sha256": "dbae4de39c466d03443302eaa99c28c2328398cc8c03a4374a7df7deb57c7594",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "19-english.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/19-english.json",
+      "bytes": 10356,
+      "sha256": "c344eae690800a8a6e90fd624ce4e3ee68f36c2a62984499ebca899d38220799",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "20-dark.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/20-dark.json",
+      "bytes": 10353,
+      "sha256": "1c41c825f545a01f35c5d0fce064dd902f26c5aa6bfbc5fea263bdb5bd1f1023",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "21-mobile-preferences-first.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/21-mobile-preferences-first.json",
+      "bytes": 9797,
+      "sha256": "2ce3dc376c7aacd67656259d60c9db690000776dec2066bbd3e2fbe0f331d947",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "22-back-to-tasks.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/22-back-to-tasks.json",
+      "bytes": 9810,
+      "sha256": "0f85656a4b374cbcc9b9e70a5bfa2728cdd98c8f9515076a0a3191a578754576",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "23-live-editor-320.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/23-live-editor-320.json",
+      "bytes": 11342,
+      "sha256": "4721a3908e13030ed2a5d073b48422a82d6b157072f7b41ccdb04d45d1252302",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "24-weekly-task-title.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/24-weekly-task-title.json",
+      "bytes": 11366,
+      "sha256": "17f52212e51acd28d3fe5332a8631c85249053d92e50fc5927e735e8383b9e35",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "25-today-direct.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/25-today-direct.json",
+      "bytes": 11764,
+      "sha256": "7c5ca31f1bab6e86a6daf3d11be34e0abfb483b34e64ad0ffc2aa2d1beb95a3d",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "26-live-schedule-options.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/26-live-schedule-options.json",
+      "bytes": 12212,
+      "sha256": "862c084737177c9debad696d3c19556f796395bff4a0d3ae6aa5c25b7d410e45",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "27-live-repeat-menu.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/27-live-repeat-menu.json",
+      "bytes": 13401,
+      "sha256": "354e914c4885adf3e5095c2bf46c9bbdcc843405fe5a90d9782134aa359681c2",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "28-explicit-repeat-days.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/28-explicit-repeat-days.json",
+      "bytes": 12549,
+      "sha256": "d480e6527bcf2bf5707a00a4b2b4a0b3e0a7d2bc4ec5d0d4b79408aed913fe01",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "29-sunday-off.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/29-sunday-off.json",
+      "bytes": 12549,
+      "sha256": "d480e6527bcf2bf5707a00a4b2b4a0b3e0a7d2bc4ec5d0d4b79408aed913fe01",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "30-monday-off.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/30-monday-off.json",
+      "bytes": 12550,
+      "sha256": "ef866bcbbf4a557519c34879bf4c2e7a2828300f782d1e5d75efe86401a77e97",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "31-tuesday-off.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/31-tuesday-off.json",
+      "bytes": 12550,
+      "sha256": "ef866bcbbf4a557519c34879bf4c2e7a2828300f782d1e5d75efe86401a77e97",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "32-wednesday-off.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/32-wednesday-off.json",
+      "bytes": 12551,
+      "sha256": "56ee6349d6d1b4c71399c1eb8d44404e869ca185056aeac0fd32c214067a7635",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "33-thursday-off.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/33-thursday-off.json",
+      "bytes": 12551,
+      "sha256": "56ee6349d6d1b4c71399c1eb8d44404e869ca185056aeac0fd32c214067a7635",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "34-friday-off.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/34-friday-off.json",
+      "bytes": 12552,
+      "sha256": "1babcf0ff40fe41479cc7b305cc1acb50d1f696a3a6e0f89fe1a061686b454c9",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "35-saturday-off.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/35-saturday-off.json",
+      "bytes": 12552,
+      "sha256": "1babcf0ff40fe41479cc7b305cc1acb50d1f696a3a6e0f89fe1a061686b454c9",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "36-empty-weekdays-blocked.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/36-empty-weekdays-blocked.json",
+      "bytes": 12546,
+      "sha256": "26671631a330cc5fb76ff8daeded445b5481b40fc35d646c19668501dd4d8786",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "37-correct-thursday.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/37-correct-thursday.json",
+      "bytes": 12551,
+      "sha256": "c43aa5a05cf1a8a988eb7b598aa2baeabe32a50d48ea8d32b22b9583c0785873",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "38-saved-explicit-thursday.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/38-saved-explicit-thursday.json",
+      "bytes": 10331,
+      "sha256": "e077edd362a3babf179760bd67f108701591382f13c127841ab49e4e5dcbcc75",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "39-live-compact-statistics.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/39-live-compact-statistics.json",
+      "bytes": 9786,
+      "sha256": "a6019f74477033f53c1fdd444f922a4a170f4aaa9f19e9411a3a90eec814a3a6",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "40-today-drilldown.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/40-today-drilldown.json",
+      "bytes": 9933,
+      "sha256": "f5b64f9b7f1866172c1f4dc02cba0d876fd255693281b61ec24da612863e5238",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "41-return-to-statistics.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/41-return-to-statistics.json",
+      "bytes": 9770,
+      "sha256": "8ebb7f266e2046baba8af3e1264b7b068c3af0f2358702b1ab043fb732ac456c",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "42-return-to-list.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/42-return-to-list.json",
+      "bytes": 10044,
+      "sha256": "4986b88aea412940a11ffea2844128a4543748956aa261b9cf643abd2a46320a",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "43-selection-without-expanding-filters.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/43-selection-without-expanding-filters.json",
+      "bytes": 10417,
+      "sha256": "83ed279690e9363e596ec111e109ba014441c251d893fea7937d5c75b6894823",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "44-exit-selection.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/44-exit-selection.json",
+      "bytes": 10015,
+      "sha256": "2d326cc9ef9327e07612890c14d005ac09be4c5d3e4b37bb4fbf9471f2c13c62",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "45-desktop-preserved-tasks.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/45-desktop-preserved-tasks.json",
+      "bytes": 15515,
+      "sha256": "af30319d06b0e3cec8400a41b735417096454414af4febc72cc4be8ea06cdf3e",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "46-desktop-settings.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/46-desktop-settings.json",
+      "bytes": 10448,
+      "sha256": "572a36b168ce2260514afe3aad9278114aa4381d10cfd9015cefd6766888d3cb",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "47-backup-and-recovery.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/47-backup-and-recovery.json",
+      "bytes": 10931,
+      "sha256": "edde913846b060c2a1cf28684acce66bb19a788e112294eb86c590549d7b02d8",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "48-download-verifiable-backup.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/48-download-verifiable-backup.json",
+      "bytes": 11094,
+      "sha256": "41e6f5d6e31e02293e039d415d00766f4b121c0c8305cdc15321ff6af8366fed",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "root-verification.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/root-verification.json",
+      "bytes": 1272,
+      "sha256": "47e9e968e633f01e99618a149a700515020a49656f7789f86d4ae8c6636e7a13",
+      "kind": "original-byte-copy",
+      "source_nature": "root-derived-verification"
+    },
+    {
+      "path": "session.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/session.json",
+      "bytes": 172,
+      "sha256": "a612978402c9339d0e3d6d742bdd27f6c207176f975d4db51250322b2764cf22",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "source.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/source.json",
+      "bytes": 1686,
+      "sha256": "a99379a4ddfc2e33bcd2e8c46e1a27f564e27651c71054eef2fcd4f8d4efccc4",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "task-tracer_backup_2026-10-25_18-09-07-190.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/task-tracer_backup_2026-10-25_18-09-07-190.json",
+      "bytes": 2969,
+      "sha256": "ab4fcc6f476809d409e9fb34ac15c185f95060e043af889159c8d63df20bd2f3",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "production-browser.py",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser.py",
+      "bytes": 7058,
+      "sha256": "32c25d476eb1b360311faf59cd9226708bfc5c24142b5f71e43419dad806c518",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "02-live-editor-desktop.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/02-live-editor-desktop.png",
+      "bytes": 144061,
+      "sha256": "c4a975f0fc2bb01e071ff9739fd813c1aa23ce46e75ff7cb5228949149c45706",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "16-remove-first-preserve-edit.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/16-remove-first-preserve-edit.png",
+      "bytes": 154770,
+      "sha256": "1c21bd1415077efc3914b9e4202e13d2734c079dc6958270d0204ad33a6b9801",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "21-mobile-preferences-first.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/21-mobile-preferences-first.png",
+      "bytes": 33444,
+      "sha256": "c9262b41c838869a2e00db4d09e5a44a5be6641f4f113e812ae7f70bfa09b43d",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "23-live-editor-320.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/23-live-editor-320.png",
+      "bytes": 31746,
+      "sha256": "f3529582db4591c1e486dee3ee58d57ea2b3dccf9bd10fc0822f36d8ac9653fa",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "36-empty-weekdays-blocked.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/36-empty-weekdays-blocked.png",
+      "bytes": 40866,
+      "sha256": "d60aca412cf37a203923fa12dc2572677000baaf2aa34a3cebc84dc28315294a",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "39-live-compact-statistics.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/39-live-compact-statistics.png",
+      "bytes": 30266,
+      "sha256": "d2937caccc861d0c32e2ad664613de9095e4efa3b89247bba9b965b00208c960",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "40-today-drilldown.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/40-today-drilldown.png",
+      "bytes": 39129,
+      "sha256": "62725e79278e5532c8f5d1745f95ece6fcea22d7fef50a48bf8e4897e9ce593c",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "43-selection-without-expanding-filters.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/43-selection-without-expanding-filters.png",
+      "bytes": 37670,
+      "sha256": "a8c611a5d0263c0034d3c524d2df8710fd64ed60f98a28180cfc57a764258328",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    },
+    {
+      "path": "48-download-verifiable-backup.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/production-browser/48-download-verifiable-backup.png",
+      "bytes": 139608,
+      "sha256": "0927dec4107149c83540a17b66af163b199cd1eb7d303cef0a02c38ed18ed7fd",
+      "kind": "original-byte-copy",
+      "source_nature": "native-capture-or-driver"
+    }
+  ]
+}
