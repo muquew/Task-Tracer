@@ -24,7 +24,9 @@ Task Tracer is a personal task manager that runs in the browser and keeps task d
 
 The continuing development goal, acceptance criteria and current work queue are recorded in [GOAL.md](./GOAL.md).
 
-The current published release, **[4.14.0](./docs/releases/4.14.0.md)**, reorganizes task editing, preserves unfinished scheduling and subtask edits, exposes selection actions, and clarifies settings, imports and recovery. Hands-on review, affected regression, packaging, real 4.13.2 archive upgrade and live-site verification are complete. The [proactive review brief](./PROACTIVE_BRIEF.md) records this round’s scope.
+The **[4.15.0 candidate](./docs/releases/4.15.0.md)** refines content surfaces, fields, button feedback, navigation and overlay depth across the four workspace themes. Hands-on review and affected validation are in progress; the [material brief](./MATERIAL_BRIEF.md) records its scope.
+
+The current published release, **[4.14.0](./docs/releases/4.14.0.md)**, reorganizes task editing, preserves unfinished scheduling and subtask edits, exposes selection actions, and clarifies settings, imports and recovery. Its review, validation and publication retain their original scope.
 
 The published **[4.13.2 baseline](./docs/releases/4.13.2.md)** refines subtask saving, calendar return, task feedback and sidebar navigation while reducing repeated interface copy. Its local review, affected checks, release/upgrade validation and live-site verification retain their original scope.
 

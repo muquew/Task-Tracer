@@ -1,0 +1,69 @@
+{
+  "files": {
+    "01-reduced-transparency-statistics.png": {
+      "bytes": 49738,
+      "sha256": "6f4c2454af29b216c101f77f420c001694cc396ef3b3592175d8c18129d3fead"
+    },
+    "actions.json": {
+      "bytes": 346149,
+      "sha256": "4c285e36f917bf3b414c13ef6ce92cbf84325e58779dbf5dfb11329ca4c67e3a"
+    },
+    "report.json": {
+      "bytes": 2134,
+      "sha256": "4c7b5278241d8c5b2030e6b6bc8d6b3d97e558fa2b1613a4120fb0c18067b4d9"
+    },
+    "README.md": {
+      "bytes": 1048,
+      "sha256": "ab1be9e2f6f972d2e674112c873f5316093e9f83d3485c06536f850d46a1b7c6"
+    },
+    "session.json": {
+      "bytes": 420,
+      "sha256": "c25b90c03cf9fcef762832b37df855d300a20838a2ee2c326e9ef0b499d0089d"
+    },
+    "source.json": {
+      "bytes": 1325,
+      "sha256": "817aeeffd3d9cb9230aaa031cd58c448e96cecc733ad7075fdc8cfb886a842fa"
+    },
+    "native-selects-normal.json": {
+      "bytes": 10341,
+      "sha256": "acff82e1009d46013823e1cecc4b5ad46bad80a17b3ffcc7af5619fc064ede54"
+    },
+    "03-forced-colors-editor.json": {
+      "bytes": 11532,
+      "sha256": "616cfc4138cb37ec9ae64369dc3bfdc598077294c1195c18a34f10344988f7af"
+    },
+    "04-forced-colors-native-selects.png": {
+      "bytes": 32076,
+      "sha256": "230a0d606f6b0ca2d7bf87858c582d068aa7f388591f8997f975e6dd6bc68dce"
+    },
+    "02-reduced-motion-editor.png": {
+      "bytes": 41387,
+      "sha256": "c33035245259881b860aeca43e7dd50d5a18282695a8c4ad11c4b0330dc9ce3e"
+    },
+    "04-forced-colors-native-selects.json": {
+      "bytes": 9960,
+      "sha256": "ad9d01dfc5978cabe18eb4c4b8fdd0d9bb682c6737f13eb4fd06618db3e87916"
+    },
+    "03-forced-colors-editor.png": {
+      "bytes": 32717,
+      "sha256": "33f943e13810b17443c7bed1f8cbfd8bb07e8dde0a579b44b87e1295201a23d8"
+    },
+    "01-reduced-transparency-statistics.json": {
+      "bytes": 10460,
+      "sha256": "437d7111373797cb239ce23a5a06e8d55d64e6960e2ac13dc11b7c3148668508"
+    },
+    "02-reduced-motion-editor.json": {
+      "bytes": 12120,
+      "sha256": "30e99a44eb200084fb8cdecf42ab3c0a7b3bcc960880f81f21f11640d14b8c7e"
+    },
+    "check.py": {
+      "bytes": 7871,
+      "sha256": "e77b4f35da2a282b87e912858c3f2cadd1b3ddf96bc96e38fec463ba46141375"
+    },
+    "records.json": {
+      "bytes": 1681,
+      "sha256": "a6ec06583f121ec4885824eb46d9d56cb7a271798c133bbc5eb1a00afada43ca"
+    }
+  },
+  "self_excluded": true
+}

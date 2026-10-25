@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "completed": true,
+  "scope": "Original craft_accent_playwright.py --case all; all six original cases in one fresh native execution",
+  "source_index_sha256": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5",
+  "appearance_helper_sha256": "1b2fefa04bef90a9fc3323eaf1e2c99a12c99c4641cb110cb9e8bc50dcbf9555",
+  "actual_engine": "chromium",
+  "actual_version": "154.0.8037.57",
+  "exit_code": 0,
+  "duration_seconds": 82.113,
+  "original_case_pass_markers": {
+    "Workspace themes passed:": true,
+    "Workspace theme keyboard passed:": true,
+    "Workspace controls passed:": true,
+    "Accent cross-tab passed:": true,
+    "Accent fallback passed:": true,
+    "Theme chrome passed:": true
+  },
+  "skin_axe_surfaces": 40,
+  "batch_and_task_control_paint_observations": 48,
+  "subtask_checkbox_observations": 24,
+  "theme_chrome_observations": 18,
+  "document_responses": 36,
+  "actual_document_csp_exact": true,
+  "observer_errors": [],
+  "contexts_created": 6,
+  "contexts_closed": 6,
+  "all_regular_browsers_closed": true,
+  "runtime_5_and_actual_tools_before_after_identical": true,
+  "current_runtime_equals_end": true,
+  "prior_failure_preserved": "../5ae66dd1-57d8-475b-90fa-2cdfbc6856e3/ remains failed with original 3aa source/old helper; not overwritten",
+  "prior_smoke_scope": "Original complete smoke pass under old 3aa source is historical; not rerun or relabelled under bfb",
+  "limits": [
+    "Chromium on Linux, not Firefox/Safari/mobile hardware",
+    "Scoped original axe states do not assert full WCAG conformance"
+  ]
+}

@@ -1,0 +1,241 @@
+{
+  "kind": "independent final material fallback check",
+  "status": "passed_scoped_fallback_and_arrow_review",
+  "source_index_sha256": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5",
+  "normal_deployment_CSP": true,
+  "localHTTP_not_domainTLS": true,
+  "browser": "154.0.8037.57",
+  "normal_initial_motion": true,
+  "emulated_media_method": "Chromium CDP Emulation.setEmulatedMedia features",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "steps": [
+    {
+      "number": 1,
+      "screenshot": "01-reduced-transparency-and-motion-statistics.png",
+      "media": {
+        "reducedTransparency": true,
+        "reducedMotion": true,
+        "forcedColors": false
+      },
+      "health": "accepted; opaque topbar/dock, no backdrop blur, reduced motion and disabled zero-overdue intact"
+    },
+    {
+      "number": 2,
+      "screenshot": "02-forced-colors-editor.png",
+      "media": {
+        "reducedTransparency": true,
+        "reducedMotion": true,
+        "forcedColors": true
+      },
+      "health": "accepted; system outlines and focus intact, no decorative gradients or shadows"
+    },
+    {
+      "number": 3,
+      "screenshot": "03-forced-colors-system-select-arrow.png",
+      "media": {
+        "reducedTransparency": true,
+        "reducedMotion": true,
+        "forcedColors": true
+      },
+      "health": "accepted; native system arrows visibly black on forced white select surfaces, appearance auto and no SVG image"
+    },
+    {
+      "number": 4,
+      "screenshot": "04-normal-theme-select-arrow-restored.png",
+      "media": {
+        "reducedTransparency": false,
+        "reducedMotion": false,
+        "forcedColors": false
+      },
+      "health": "accepted; normal theme SVG arrow returns exactly, focus and blur restored"
+    }
+  ],
+  "actually_opened_and_reviewed_all_4": true,
+  "page_errors": [],
+  "original_error": null,
+  "actions": 14,
+  "all_action_observations_no_horizontal_overflow": true,
+  "chrome_reduce_computed": {
+    "header.workspace-topbar": {
+      "selector": "header.workspace-topbar",
+      "visible": true,
+      "background": "rgb(64, 43, 57)",
+      "backgroundImage": "none",
+      "color": "rgb(249, 237, 243)",
+      "appearance": "none",
+      "paddingRight": "14px",
+      "backgroundRepeat": "repeat",
+      "backgroundPosition": "0% 0%",
+      "shadow": "none",
+      "backdrop": "none",
+      "outline": "rgb(249, 237, 243) none 3px",
+      "animationDuration": "1e-05s",
+      "transitionDuration": "1e-05s",
+      "disabled": null,
+      "checked": null,
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 60
+    },
+    "#workspaceMobileDock": {
+      "selector": "#workspaceMobileDock",
+      "visible": true,
+      "background": "rgb(64, 43, 57)",
+      "backgroundImage": "none",
+      "color": "rgb(249, 237, 243)",
+      "appearance": "none",
+      "paddingRight": "10px",
+      "backgroundRepeat": "repeat",
+      "backgroundPosition": "0% 0%",
+      "shadow": "rgba(0, 0, 0, 0.14) 0px -4px 18px 0px",
+      "backdrop": "none",
+      "outline": "rgb(249, 237, 243) none 3px",
+      "animationDuration": "1e-05s",
+      "transitionDuration": "1e-05s",
+      "disabled": null,
+      "checked": null,
+      "x": 0,
+      "y": 779,
+      "w": 390,
+      "h": 65
+    }
+  },
+  "reduced_motion_visible_view_tab": {
+    "selector": "#viewTab-stats",
+    "visible": true,
+    "background": "rgb(106, 67, 88)",
+    "backgroundImage": "none",
+    "color": "rgb(231, 177, 202)",
+    "appearance": "auto",
+    "paddingRight": "2px",
+    "backgroundRepeat": "repeat",
+    "backgroundPosition": "0% 0%",
+    "shadow": "none",
+    "backdrop": "none",
+    "outline": "rgb(231, 177, 202) none 3px",
+    "animationDuration": "1e-05s",
+    "transitionDuration": "1e-05s",
+    "disabled": false,
+    "checked": null,
+    "x": 290.5,
+    "y": 785,
+    "w": 89.5,
+    "h": 54
+  },
+  "native_select_checks": {
+    "#themeToggleBtn": {
+      "forced": {
+        "selector": "#themeToggleBtn",
+        "visible": true,
+        "background": "rgb(255, 255, 255)",
+        "backgroundImage": "none",
+        "color": "rgb(0, 0, 0)",
+        "appearance": "auto",
+        "paddingRight": "42px",
+        "backgroundRepeat": "no-repeat",
+        "backgroundPosition": "calc(100% - 12px) 50%",
+        "shadow": "none",
+        "backdrop": "none",
+        "outline": "rgb(0, 0, 0) none 3px",
+        "animationDuration": "1e-05s",
+        "transitionDuration": "1e-05s",
+        "disabled": false,
+        "checked": null,
+        "x": 30,
+        "y": 290.390625,
+        "w": 330,
+        "h": 42
+      },
+      "normal_restored": {
+        "selector": "#themeToggleBtn",
+        "visible": true,
+        "background": "color(srgb 0.223137 0.150784 0.195098)",
+        "backgroundImage": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23D7BCCB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")",
+        "color": "rgb(249, 237, 243)",
+        "appearance": "none",
+        "paddingRight": "42px",
+        "backgroundRepeat": "no-repeat",
+        "backgroundPosition": "calc(100% - 12px) 50%",
+        "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+        "backdrop": "none",
+        "outline": "rgb(249, 237, 243) none 3px",
+        "animationDuration": "0s",
+        "transitionDuration": "0.18s, 0.18s, 0.18s, 0.15s",
+        "disabled": false,
+        "checked": null,
+        "x": 30,
+        "y": 290.390625,
+        "w": 330,
+        "h": 42
+      },
+      "normal_svg_identical_to_before_forced": true,
+      "manual_review": "system black chevron on white forced surface clearly visible; normal theme SVG returned"
+    },
+    "#languageSelect": {
+      "forced": {
+        "selector": "#languageSelect",
+        "visible": true,
+        "background": "rgb(255, 255, 255)",
+        "backgroundImage": "none",
+        "color": "rgb(0, 0, 0)",
+        "appearance": "auto",
+        "paddingRight": "42px",
+        "backgroundRepeat": "no-repeat",
+        "backgroundPosition": "calc(100% - 12px) 50%",
+        "shadow": "none",
+        "backdrop": "none",
+        "outline": "rgba(5, 0, 73, 0.8) solid 2px",
+        "animationDuration": "1e-05s",
+        "transitionDuration": "1e-05s",
+        "disabled": false,
+        "checked": null,
+        "x": 30,
+        "y": 404.390625,
+        "w": 330,
+        "h": 42
+      },
+      "normal_restored": {
+        "selector": "#languageSelect",
+        "visible": true,
+        "background": "rgb(84, 63, 76)",
+        "backgroundImage": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23D7BCCB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")",
+        "color": "rgb(249, 237, 243)",
+        "appearance": "none",
+        "paddingRight": "42px",
+        "backgroundRepeat": "no-repeat",
+        "backgroundPosition": "calc(100% - 12px) 50%",
+        "shadow": "none",
+        "backdrop": "none",
+        "outline": "rgb(231, 177, 202) solid 2px",
+        "animationDuration": "0s",
+        "transitionDuration": "0.18s, 0.18s, 0.18s, 0.15s",
+        "disabled": false,
+        "checked": null,
+        "x": 30,
+        "y": 404.390625,
+        "w": 330,
+        "h": 42
+      },
+      "normal_svg_identical_to_before_forced": true,
+      "manual_review": "system black chevron on white forced surface clearly visible; normal theme SVG returned"
+    }
+  },
+  "tasks_created_through_UI": 1,
+  "tasks_before_after_exact_equal": true,
+  "browser_and_server_closed": true,
+  "prior_visual_issue": "../material-check/report.json preserves original 3aa forced SVG stroke#D7BCCB on white with1.758:1 color contrast; final system-arrow fix does not rewrite that evidence.",
+  "prior_20_normal_png_report_unchanged": true,
+  "prior_20_normal_png_manifest_unchanged": true,
+  "limits": [
+    "Only four listed Chromium simulated media states at390×844, not nativeOS settings or accessibility certification.",
+    "Normal deployment CSP is served over localHTTP; this is not live deployment/TLS acceptance.",
+    "Manual visual acceptance belongs to this agent, not a claim root separately viewed these four PNG.",
+    "Native system arrow appearance is evidenced by screenshot and appearance:auto/image:none, not a measured pixel contrast score for native browser rendering."
+  ]
+}

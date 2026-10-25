@@ -1,0 +1,642 @@
+{
+  "viewport": {
+    "w": 320,
+    "h": 640
+  },
+  "scrollY": 0,
+  "docHeight": 885,
+  "docWidth": 320,
+  "active": {
+    "id": "taskName",
+    "className": ""
+  },
+  "title": "任务跟踪器",
+  "themeColor": "#D3D2E0",
+  "skin": {
+    "accent": "iris",
+    "theme": "light",
+    "chromeSolid": "#D3D2E0"
+  },
+  "headings": [
+    "全部任务",
+    "添加任务"
+  ],
+  "surfaces": [
+    {
+      "selector": "#openModalBtn",
+      "visible": true,
+      "text": "添加任务",
+      "x": 125,
+      "y": 10,
+      "w": 99,
+      "h": 40
+    },
+    {
+      "selector": "#quickAddForm",
+      "visible": false,
+      "text": "\n                    \n                        \n                        快速记录\n    ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#quickAddInput",
+      "visible": false,
+      "text": "",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#toolsDrawer",
+      "visible": true,
+      "text": "搜索任务…\n支持限定搜索：project:项目、tag:标签、status:状态、due:日期。\n筛选\n进行中\n选择\n保存视图",
+      "x": 14,
+      "y": 192,
+      "w": 292,
+      "h": 109
+    },
+    {
+      "selector": "#workspaceOverview",
+      "visible": false,
+      "text": "\n            2026年10月周一周二周三周四周五周六周日282930123456789101112131415161718192021222324",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceWeekIndex",
+      "visible": false,
+      "text": "10月未来7天周一26周二27周三28周四29周五30周六31周日1",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#taskList",
+      "visible": true,
+      "text": "产品 · 2 个任务\n整理交付清单\n#优先\n截止: 2026年10月26日 18:00\n(15小时 38分钟)\n核对新版本界面\n#体验\n截止: 2026年10月",
+      "x": 26,
+      "y": 301,
+      "w": 268,
+      "h": 527
+    },
+    {
+      "selector": "#workspaceTitle",
+      "visible": true,
+      "text": "全部任务",
+      "x": 14,
+      "y": 76,
+      "w": 274,
+      "h": 30
+    },
+    {
+      "selector": "#settingsWorkspace",
+      "visible": false,
+      "text": "\n            设置与数据\n            \n                \n                    外观与语言\n     ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    }
+  ],
+  "buttons": [
+    {
+      "id": "workspaceNavToggle",
+      "text": "打开导航",
+      "x": 14,
+      "y": 10,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "undoBtn",
+      "text": "撤销：新增任务",
+      "x": 86,
+      "y": 10,
+      "w": 34,
+      "h": 40
+    },
+    {
+      "id": "openModalBtn",
+      "text": "添加任务",
+      "x": 125,
+      "y": 10,
+      "w": 99,
+      "h": 40
+    },
+    {
+      "id": "quickCaptureBtn",
+      "text": "快速记录",
+      "x": 225,
+      "y": 10,
+      "w": 36,
+      "h": 40
+    },
+    {
+      "id": "openMenuBtn",
+      "text": "设置与数据",
+      "x": 266,
+      "y": 10,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "workspaceScheduleToggle",
+      "text": "查看日程",
+      "x": 228,
+      "y": 131,
+      "w": 64,
+      "h": 36
+    },
+    {
+      "id": "toolsDrawerToggleBtn",
+      "text": "筛选\n进行中",
+      "x": 26,
+      "y": 245,
+      "w": 104,
+      "h": 44
+    },
+    {
+      "id": "batchModeBtn",
+      "text": "选择",
+      "x": 136,
+      "y": 245,
+      "w": 64,
+      "h": 44
+    },
+    {
+      "id": "saveSmartViewBtn",
+      "text": "保存视图",
+      "x": 206,
+      "y": 245,
+      "w": 88,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "标记为已完成",
+      "x": 26,
+      "y": 344,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "任务操作: 整理交付清单",
+      "x": 262,
+      "y": 344,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "标记为已完成",
+      "x": 26,
+      "y": 470,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "任务操作: 核对新版本界面",
+      "x": 262,
+      "y": 470,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "标记为已完成",
+      "x": 26,
+      "y": 633,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "任务操作: 阅读与本周复盘",
+      "x": 262,
+      "y": 633,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "标记为已完成",
+      "x": 26,
+      "y": 759,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "任务操作: 整理参考资料",
+      "x": 262,
+      "y": 759,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "closeModalBtn",
+      "text": "×",
+      "x": 256,
+      "y": 27,
+      "w": 36,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "今天",
+      "x": 42,
+      "y": 424,
+      "w": 52,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "明天",
+      "x": 100,
+      "y": 424,
+      "w": 52,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "选择",
+      "x": 158,
+      "y": 424,
+      "w": 52,
+      "h": 44
+    },
+    {
+      "id": "addSubtaskBtn",
+      "text": "添加子任务",
+      "x": 248,
+      "y": 664,
+      "w": 44,
+      "h": 44
+    },
+    {
+      "id": "cancelBtn",
+      "text": "取消",
+      "x": 28,
+      "y": 574,
+      "w": 127,
+      "h": 40
+    },
+    {
+      "id": "submitBtn",
+      "text": "添加任务",
+      "x": 165,
+      "y": 574,
+      "w": 127,
+      "h": 40
+    }
+  ],
+  "fields": [
+    {
+      "id": "searchInput",
+      "type": "text",
+      "value": "",
+      "placeholder": "搜索任务…",
+      "x": 26,
+      "y": 203,
+      "w": 268,
+      "h": 36
+    },
+    {
+      "id": "taskName",
+      "type": "text",
+      "value": "",
+      "placeholder": "要完成什么？",
+      "x": 28,
+      "y": 97,
+      "w": 264,
+      "h": 52
+    },
+    {
+      "id": "taskDesc",
+      "type": "textarea",
+      "value": "",
+      "placeholder": "补充背景、链接或执行要点",
+      "x": 28,
+      "y": 195,
+      "w": 264,
+      "h": 78
+    },
+    {
+      "id": "taskProject",
+      "type": "text",
+      "value": "Inbox",
+      "placeholder": "例如：工作 / 个人",
+      "x": 42,
+      "y": 334,
+      "w": 236,
+      "h": 42
+    },
+    {
+      "id": "noDeadline",
+      "type": "checkbox",
+      "value": "on",
+      "placeholder": "",
+      "x": 188,
+      "y": 392,
+      "w": 24,
+      "h": 24
+    },
+    {
+      "id": "taskTags",
+      "type": "text",
+      "value": "",
+      "placeholder": "用逗号分隔标签",
+      "x": 42,
+      "y": 512,
+      "w": 236,
+      "h": 42
+    },
+    {
+      "id": "subtaskInput",
+      "type": "text",
+      "value": "",
+      "placeholder": "输入子任务…",
+      "x": 28,
+      "y": 664,
+      "w": 212,
+      "h": 44
+    }
+  ],
+  "pageErrors": [],
+  "source_index_sha256": "673c2c81f0cb852d5ac02682ef318f3bd8ff41615af52ccec4ee055cdc3b9558",
+  "editor": {
+    "modalVisible": true,
+    "modal": {
+      "x": 12,
+      "y": 12,
+      "w": 296,
+      "h": 616
+    },
+    "body": {
+      "x": 12,
+      "y": 79,
+      "w": 296,
+      "h": 549,
+      "scrollTop": 0,
+      "scrollHeight": 776,
+      "clientHeight": 549
+    },
+    "advanced": false,
+    "fields": [
+      {
+        "id": "taskName",
+        "visible": true,
+        "disabled": false,
+        "checked": false,
+        "required": true,
+        "value": "",
+        "x": 28,
+        "y": 97,
+        "w": 264,
+        "h": 52
+      },
+      {
+        "id": "taskDesc",
+        "visible": true,
+        "disabled": false,
+        "checked": null,
+        "required": false,
+        "value": "",
+        "x": 28,
+        "y": 194.5,
+        "w": 264,
+        "h": 78
+      },
+      {
+        "id": "taskProject",
+        "visible": true,
+        "disabled": false,
+        "checked": false,
+        "required": false,
+        "value": "Inbox",
+        "x": 42,
+        "y": 334,
+        "w": 236,
+        "h": 42
+      },
+      {
+        "id": "noDeadline",
+        "visible": true,
+        "disabled": false,
+        "checked": true,
+        "required": false,
+        "value": "on",
+        "x": 187.984375,
+        "y": 392,
+        "w": 24,
+        "h": 24
+      },
+      {
+        "id": "dueDate",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "2026-10-26",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "dueTime",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "23:59",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "taskTags",
+        "visible": true,
+        "disabled": false,
+        "checked": false,
+        "required": false,
+        "value": "",
+        "x": 42,
+        "y": 511.5,
+        "w": 236,
+        "h": 42
+      },
+      {
+        "id": "subtaskInput",
+        "visible": true,
+        "disabled": false,
+        "checked": false,
+        "required": false,
+        "value": "",
+        "x": 28,
+        "y": 664.390625,
+        "w": 212,
+        "h": 44
+      },
+      {
+        "id": "reminderOffset",
+        "visible": false,
+        "disabled": true,
+        "checked": null,
+        "required": false,
+        "value": "15",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "reminderRepeat",
+        "visible": false,
+        "disabled": true,
+        "checked": null,
+        "required": false,
+        "value": "-1",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatType",
+        "visible": false,
+        "disabled": true,
+        "checked": null,
+        "required": false,
+        "value": "none",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatWeekday1",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "1",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatWeekday2",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "2",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatWeekday3",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "3",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatWeekday4",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "4",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatWeekday5",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "5",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatWeekday6",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "6",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatWeekday0",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "0",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatInterval",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "1",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatPaused",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "on",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      }
+    ],
+    "footer": {
+      "x": 12,
+      "y": 561,
+      "w": 296,
+      "h": 67
+    }
+  }
+}

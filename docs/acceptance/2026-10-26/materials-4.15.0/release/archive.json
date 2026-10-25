@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "archived_at": "2026-10-25T18:26:17.150519+00:00",
+  "original_directory": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538",
+  "scope": "Byte-exact raw scoped 4.15.0 release evidence, including native reports/logs, frozen source/tool identities, fresh baseline audit and wrapper. Original reports unmodified.",
+  "files": {
+    "actual-4.14.0-upgrade.stderr.log": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/actual-4.14.0-upgrade.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "actual-4.14.0-upgrade.stdout.log": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/actual-4.14.0-upgrade.stdout.log",
+      "bytes": 383,
+      "sha256": "93347e0a14e8d0708298fcaf8223e2c04056ec2530583b8e9e39395ab4c5b08a"
+    },
+    "baseline-audit.json": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/baseline-audit.json",
+      "bytes": 14052,
+      "sha256": "9b449dba5d92d663c57833c4f710fe05e923fba8796d0f5740dd2d49ad061d7d"
+    },
+    "files.json": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/files.json",
+      "bytes": 1311,
+      "sha256": "0e4f6ce3979eaced3cb4c210224d3004c74d01bd6bc3b9055057f135de5f35d7"
+    },
+    "frozen-inputs.json": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/frozen-inputs.json",
+      "bytes": 11795,
+      "sha256": "f250e7fa5ab49cd5a0dccac1cea4ea85723d4cd43faea9fcfff890cdf4df8879"
+    },
+    "release.stderr.log": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/release.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "release.stdout.log": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/release.stdout.log",
+      "bytes": 719,
+      "sha256": "93c7560f1218d788176517e2da101b201172ff6c2860f3679c332713547bedb1"
+    },
+    "report.json": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/report.json",
+      "bytes": 26237,
+      "sha256": "c1cc18ec89635a398183ee00fb87da331d63c70b6608be826f16a4c863dc968b"
+    },
+    "retained-files.json": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/retained-files.json",
+      "bytes": 1692,
+      "sha256": "5f2b7470aa75317c1717a28923f8d23e7fe51c06c787bc3aea808e31dc2af490"
+    },
+    "runner.py": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/runner.py",
+      "bytes": 6257,
+      "sha256": "d8ab1bc96f757690c44216ea446bdf38fbe3f95304e1c384858dedb345826f13"
+    },
+    "static7.json": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/static7.json",
+      "bytes": 25022,
+      "sha256": "96f5796c37f64b143420d91082f69bee8ea272cae37990c94769cf08dc7edd44"
+    },
+    "static7.stderr.log": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/static7.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "static7.stdout.log": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/static7.stdout.log",
+      "bytes": 4683,
+      "sha256": "b92ff88e0b85bac82a99ddefdac5db5acfe5128f3e190d399d9355128725e60b"
+    },
+    "summary.json": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/summary.json",
+      "bytes": 3959,
+      "sha256": "abf11084461d999486f4c2a753a157c0008e0ec82ae0c4fe553fd4fff57b4eb3"
+    }
+  }
+}

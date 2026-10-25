@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-10-25T18:26:17.148153+00:00",
+  "status": "passed_scoped_release_acceptance",
+  "repository": "/workspace/Task-Tracer",
+  "app_version": "4.15.0",
+  "resource_version": "4.44",
+  "scope": [
+    "native static7",
+    "two independent reproducible builds and extracted persistence/offline",
+    "actual 4.14.0 ZIP upgrade/rollback/re-upgrade"
+  ],
+  "source_inputs": 23,
+  "verification_inputs": 84,
+  "source_sha256": "1b0d1b9fb6bb6bc206820e91befc14e334c8e907499b1f4403cc563525999649",
+  "verification_sha256": "68e2e3dc1d25455ba3487487307ea590280f5ff63495753005bd5b774361b5cb",
+  "index_sha256": "3aa235f5f9adae2349440b8995c7a9c1ecb0335111f52d232cc8811e29a37561",
+  "source_and_verification_unchanged": true,
+  "vcs_initial": {
+    "commit": "5ce2f9b22bc9c4c1117018eaf64aa5b051e7bc2b",
+    "working_tree_dirty": true
+  },
+  "vcs_final": {
+    "commit": "5ce2f9b22bc9c4c1117018eaf64aa5b051e7bc2b",
+    "working_tree_dirty": true
+  },
+  "record": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/report.json",
+  "record_sha256": "c1cc18ec89635a398183ee00fb87da331d63c70b6608be826f16a4c863dc968b",
+  "native_static7": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/static7.json",
+  "native_static7_sha256": "96f5796c37f64b143420d91082f69bee8ea272cae37990c94769cf08dc7edd44",
+  "phases": [
+    {
+      "name": "static7",
+      "arguments": [
+        "tools/check.py",
+        "--static-only",
+        "--keep-going",
+        "--report",
+        "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/static7.json"
+      ],
+      "started_at": "2026-10-25T18:25:20.077794+00:00",
+      "finished_at": "2026-10-25T18:25:37.327728+00:00",
+      "duration_seconds": 17.25,
+      "exit_code": 0,
+      "stdout": "static7.stdout.log",
+      "stderr": "static7.stderr.log"
+    },
+    {
+      "name": "release",
+      "arguments": [
+        "tools/release_playwright.py"
+      ],
+      "started_at": "2026-10-25T18:25:37.345967+00:00",
+      "finished_at": "2026-10-25T18:25:41.233875+00:00",
+      "duration_seconds": 3.888,
+      "exit_code": 0,
+      "stdout": "release.stdout.log",
+      "stderr": "release.stderr.log"
+    },
+    {
+      "name": "actual-4.14.0-upgrade",
+      "arguments": [
+        "tools/upgrade_playwright.py",
+        "--baseline-archive",
+        "dist/task-tracer-4.14.0.zip"
+      ],
+      "started_at": "2026-10-25T18:25:41.251979+00:00",
+      "finished_at": "2026-10-25T18:26:03.895139+00:00",
+      "duration_seconds": 22.643,
+      "exit_code": 0,
+      "stdout": "actual-4.14.0-upgrade.stdout.log",
+      "stderr": "actual-4.14.0-upgrade.stderr.log"
+    }
+  ],
+  "reproducible_zip_sha256": "0abbf45a1b61d7f09a70f1ea84963b5e243805249b68a88afb8ffff03ab04e26",
+  "distribution_file_count": 24,
+  "baseline_archive": {
+    "path": "/workspace/Task-Tracer/dist/task-tracer-4.14.0.zip",
+    "bytes": 940417,
+    "sha256": "83d651a0badda54a298dd109f0f99d2a18b08ccc520bcc07a8ca5796c7a77351"
+  },
+  "baseline_independent_audit": "/tmp/task-tracer-4.15.0-release/f1f98986-a2a5-471a-92f3-694c6c830538/baseline-audit.json",
+  "temporary_test_archives_retained": false,
+  "public_screenshot_source_index": "3aa235f5f9adae2349440b8995c7a9c1ecb0335111f52d232cc8811e29a37561",
+  "root_owned_material_scope_proof": {
+    "path": "/workspace/design-research/task-tracer-materials-2026-10-26/scope-proof.json",
+    "sha256": "4a52024d3ea8d5f09efd475541ab515fa25a0508453660a841b1157c9386bc38"
+  },
+  "csp_scope": {
+    "static_hash_checks_passed": true,
+    "bypass_csp_context_option_used": false,
+    "artifact_upgrade_http_handlers": "Original handlers do not add CSP headers; runtime enforcement is a separate normal/production header browser evidence scope."
+  },
+  "not_run": [
+    "full registered suite",
+    "full browser matrix",
+    "scale/performance",
+    "production verification",
+    "Git commit or push",
+    "canonical build"
+  ]
+}

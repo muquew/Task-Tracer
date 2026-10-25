@@ -1,0 +1,51 @@
+{
+  "source_sha256": {
+    "index.html": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5",
+    "vercel.json": "f755f54a513ebe8db4ed910564971d9f1fb0053c405882f9e1db1981f9fcd729",
+    "sw.js": "3e3f2e67832911ec52168691412baa3193b03766632120934c1c679ff2a70f1b",
+    "resources/en.json": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd",
+    "resources/zh-CN.json": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9",
+    "tools/editor_safety_playwright.py": "71d673604abb8d93319d917e95e2e7fda32be6bc1c5b4965e25fc1c2934d6f58",
+    "tools/pending_subtask_playwright.py": "d7756172a8e50e346f07a9c684ba03d7419bf678a5d0626acbeb56dcc7bf082c"
+  },
+  "widths": [
+    1280,
+    390
+  ],
+  "normal_motion": true,
+  "production_csp": true,
+  "results": [
+    {
+      "width": 1280,
+      "case": "date-roundtrip",
+      "status": "passed"
+    },
+    {
+      "width": 1280,
+      "case": "empty-weekdays",
+      "status": "passed"
+    },
+    {
+      "width": 1280,
+      "case": "subtask-delete",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "date-roundtrip",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "empty-weekdays",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "subtask-delete",
+      "status": "passed"
+    }
+  ],
+  "browser": "chromium",
+  "native_browser_version": "154.0.8037.57"
+}

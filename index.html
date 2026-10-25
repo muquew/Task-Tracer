@@ -55,7 +55,7 @@
             "image": "https://todo.muquew.com/screenshots/task-list-en.png",
             "description": "Task Tracer is a local-first PWA for tasks, routines, reminders, calendar planning, statistics, import/export backups, and offline use.",
             "inLanguage": ["en", "zh-CN"],
-            "softwareVersion": "4.14.0",
+            "softwareVersion": "4.15.0",
             "author": {
                 "@type": "Person",
                 "name": "muquew"
@@ -1705,7 +1705,7 @@
         .editor-date-presets button:hover { background: var(--bg-hover); color: var(--text-main); }
         .editor-date-presets button[aria-pressed="true"] { color: var(--color-primary); background: var(--bg-active); border-color: var(--color-primary); }
         .editor-date-presets button:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
-        #taskEditor .datetime-group { grid-template-columns: minmax(0,1.35fr) minmax(0,1fr); gap: 8px; }
+        #taskEditor .datetime-group { grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); gap: 8px; }
         #taskEditor .datetime-group input { padding-inline: 8px; }
         #taskEditor .form-field-grid { grid-template-columns: minmax(0,1fr); }
         #taskEditor .task-schedule-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; padding: 6px 0 0; }
@@ -1730,6 +1730,73 @@
             #taskEditor .datetime-group { grid-template-columns: minmax(0,1fr); }
             .editor-date-presets button { min-height: 44px; padding-inline: 12px; font-size: 13px; }
             #taskForm:not(.is-confirm) .form-actions { padding: 12px 16px 14px; }
+        }
+
+        :root {
+            --material-paper: color-mix(in srgb, var(--bg-surface-raised) 40%, var(--bg-surface));
+            --material-field: color-mix(in srgb, var(--bg-surface-raised) 75%, var(--bg-surface-alt));
+            --material-highlight: rgba(255,255,255,.38);
+            --material-button-highlight: rgba(255,255,255,.16);
+            --material-contact: color-mix(in srgb, var(--sidebar-bg) 13%, transparent);
+            --material-ambient: color-mix(in srgb, var(--sidebar-bg) 8%, transparent);
+            --material-sheet-shadow: inset 0 1px 0 var(--material-highlight), 0 2px 3px var(--material-contact), 0 12px 28px var(--material-ambient);
+            --material-inset-shadow: inset 0 1px 2px color-mix(in srgb, var(--sidebar-bg) 7%, transparent);
+            --material-chrome: color-mix(in srgb, var(--theme-header) 88%, transparent);
+            --menu-shadow: inset 0 1px 0 var(--material-highlight), 0 3px 6px var(--material-contact), 0 18px 42px color-mix(in srgb, var(--sidebar-bg) 22%, transparent);
+            --dialog-shadow: inset 0 1px 0 var(--material-highlight), 0 8px 20px color-mix(in srgb, var(--sidebar-bg) 18%, transparent), 0 32px 80px color-mix(in srgb, var(--sidebar-bg) 28%, transparent);
+        }
+        html[data-theme="dark"] {
+            --material-paper: color-mix(in srgb, var(--bg-surface-raised) 20%, var(--bg-surface));
+            --material-field: color-mix(in srgb, var(--page-bg) 85%, var(--bg-surface-alt));
+            --material-highlight: rgba(255,255,255,.055);
+            --material-button-highlight: rgba(255,255,255,.13);
+            --material-contact: rgba(0,0,0,.24);
+            --material-ambient: rgba(0,0,0,.14);
+            --material-inset-shadow: inset 0 1px 3px rgba(0,0,0,.16);
+            --menu-shadow: inset 0 1px 0 var(--material-highlight), 0 3px 6px rgba(0,0,0,.32), 0 18px 42px rgba(0,0,0,.38);
+            --dialog-shadow: inset 0 1px 0 var(--material-highlight), 0 8px 20px rgba(0,0,0,.28), 0 32px 80px rgba(0,0,0,.48);
+        }
+        .workspace-sidebar { background-image: linear-gradient(180deg, color-mix(in srgb, var(--nav-hover) 24%, transparent), transparent 420px); }
+        .workspace-sidebar .workspace-nav-button:is(.active,[aria-pressed="true"],[aria-current="page"]), .workspace-sidebar .view-tab[aria-current="page"] { box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 2px 4px rgba(0,0,0,.08); }
+        .workspace-page-header { background-image: linear-gradient(180deg, var(--material-highlight), transparent); box-shadow: inset 0 1px 0 var(--material-highlight); }
+        .workspace-task-surface, .settings-surface, .stats-review { background-color: var(--material-paper); box-shadow: var(--material-sheet-shadow); }
+        .workspace-overview, .stats-projects, .stats-inventory, .stats-action-grid { box-shadow: inset 0 1px 0 var(--material-highlight), 0 2px 5px var(--material-ambient); }
+        .workspace-theme-option { padding: 13px; border-width: 1px; background-color: var(--material-paper); }
+        .workspace-theme-option:has(input:checked) { box-shadow: inset 0 0 0 1px var(--color-primary); }
+        .tools-drawer, .tools-drawer.is-collapsed, .tools-drawer.is-pinned { background-image: linear-gradient(180deg, var(--material-highlight), transparent 72px); box-shadow: inset 0 1px 0 var(--material-highlight); }
+        .task-group-header { background-color: color-mix(in srgb, var(--bg-surface-alt) 48%, var(--material-paper)); }
+        .task-item:hover { background-color: color-mix(in srgb, var(--bg-hover) 32%, var(--material-paper)); }
+        #searchInput, .quick-add-input, .command-palette-input, .settings-select, .custom-select-btn, input:not([type="checkbox"]):not([type="radio"]), textarea, select { background-color: var(--material-field); box-shadow: var(--material-inset-shadow); }
+        input:not([type="checkbox"]):not([type="radio"]):focus-visible, textarea:focus-visible, select:focus-visible, .custom-select-btn:focus-visible { background-color: var(--field-bg-focus); box-shadow: none; }
+        #taskEditor .task-editor-properties, #taskEditor .task-schedule-fields > .form-card { box-shadow: var(--material-inset-shadow); }
+        #taskEditor .subtask-preview-item { background-color: color-mix(in srgb, var(--bg-surface-alt) 60%, var(--bg-surface-raised)); }
+        .btn-primary:not(:disabled):not(:focus-visible) { background-image: linear-gradient(180deg, rgba(255,255,255,.07), transparent); box-shadow: inset 0 1px 0 var(--material-button-highlight), 0 2px 3px var(--material-contact), 0 5px 12px var(--material-ambient); }
+        .btn-secondary:not(:disabled):not(:focus-visible) { box-shadow: inset 0 1px 0 var(--material-highlight), 0 1px 2px var(--material-contact); }
+        .btn-primary:active:not(:disabled):not(:focus-visible), .btn-secondary:active:not(:disabled):not(:focus-visible) { box-shadow: inset 0 1px 2px var(--material-contact); }
+        .header-actions .undo-btn:not(:disabled) { box-shadow: none; }
+        .editor-date-presets button:not([aria-pressed="true"]) { background-color: var(--material-field); box-shadow: inset 0 1px 0 var(--material-highlight); }
+        .modal-header, .command-palette-header, .workspace-schedule-header { background-image: linear-gradient(180deg, var(--material-highlight), transparent); }
+        .form-actions { box-shadow: 0 -8px 20px var(--material-ambient); }
+        .task-action-menu, .dropdown-menu-content, .custom-select-menu, .batch-more-panel, .command-palette-panel { border: 0; box-shadow: var(--menu-shadow); }
+        .modal-content, #workspaceScheduleDialog { box-shadow: var(--dialog-shadow); }
+        .notification, .update-prompt { box-shadow: var(--menu-shadow); }
+        @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+            header.workspace-topbar, .capture-shelf, .workspace-mobile-dock { background-color: var(--material-chrome); -webkit-backdrop-filter: blur(18px) saturate(1.08); backdrop-filter: blur(18px) saturate(1.08); }
+            .workspace-mobile-dock { box-shadow: 0 -4px 18px var(--material-ambient); }
+        }
+        @media (max-width: 779px) {
+            .workspace-page-header { background-image: none; box-shadow: none; }
+            .workspace-theme-option { padding: 11px; }
+        }
+        @media (prefers-reduced-transparency: reduce) {
+            header.workspace-topbar, .capture-shelf, .workspace-mobile-dock { background-color: var(--chrome-solid); -webkit-backdrop-filter: none; backdrop-filter: none; }
+        }
+        @media (forced-colors: active) {
+            .workspace-sidebar, .workspace-page-header, .tools-drawer, .modal-header, .command-palette-header, .workspace-schedule-header, .btn-primary { background-image: none; }
+            .workspace-task-surface, .settings-surface, .stats-review, .task-action-menu, .dropdown-menu-content, .custom-select-menu, .batch-more-panel, .command-palette-panel, .modal-content, #workspaceScheduleDialog { outline: 1px solid CanvasText; box-shadow: none; }
+            header.workspace-topbar, .capture-shelf, .workspace-mobile-dock { background-color: Canvas; -webkit-backdrop-filter: none; backdrop-filter: none; }
+            select, select.search-input, .workspace-preference select { appearance: auto; -webkit-appearance: auto; background-image: none; }
+            :is(button,input,select,textarea,a,summary):focus-visible { outline-color: Highlight; }
         }
     </style>
     <script>
@@ -2483,7 +2550,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '4.14.0'
+                VERSION: '4.15.0'
             },
             DB: {
                 NAME: 'TaskTrackerDB',

@@ -1,0 +1,167 @@
+{
+  "kind": "derived curated image index",
+  "count": 23,
+  "images": [
+    {
+      "path": "before/desktop/04-populated-list.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/desktop-before/04-populated-list.png",
+      "sha256": "d332aae1e2b0e78f8f0d954d1aca8b95ff016d8c69ebb9754d64c95df6a59a49",
+      "manual_review_attribution": "root; exact list in before/desktop/review.json",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "before/desktop/14-editor-dark.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/desktop-before/14-editor-dark.png",
+      "sha256": "dc9394168e037cd1b0e71bc67a8ae2912de023b3d6e587e2d725661fa74d2de2",
+      "manual_review_attribution": "root; exact list in before/desktop/review.json",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "before/mobile/03-320-light-editor.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/mobile-before/03-320-light-editor.png",
+      "sha256": "fa4a6b970ba51dfa1f50d54cb106ebc8c08a8a97bf89bcdee8264076c2345bfd",
+      "manual_review_attribution": "mobile audit agent; exact list in before/mobile/report.json",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "before/mobile/05-390-light-settings.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/mobile-before/05-390-light-settings.png",
+      "sha256": "687cde6f625efbd48eb975f9c6eda2078dfb9201802858f1b686aa19cc4086c9",
+      "manual_review_attribution": "mobile audit agent; exact list in before/mobile/report.json",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "candidate-final/04-populated-list.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/candidate-final/04-populated-list.png",
+      "sha256": "18646a98c6a45c9c753eac217cd0fa414669824264c9d79a30252d0a4ae99a2e",
+      "manual_review_attribution": "root; exact list in candidate-final/review.json",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "candidate-final/14-pending-child.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/candidate-final/14-pending-child.png",
+      "sha256": "ca82d09282f9554995eef7759b89235efd9214d7921c1608f15a5735137e280b",
+      "manual_review_attribution": "root; exact list in candidate-final/review.json",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "candidate-final/16-calendar.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/candidate-final/16-calendar.png",
+      "sha256": "73eebbaaebda9926bdb2fce628298422d850691eed9aaaf35d2709a26de4d150",
+      "manual_review_attribution": "root; exact list in candidate-final/review.json",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "candidate-final/18-statistics.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/candidate-final/18-statistics.png",
+      "sha256": "86ed38717af055c9113fe57117ce0317ffe39d5a496b69f7df3dc81520aafc6d",
+      "manual_review_attribution": "root; exact list in candidate-final/review.json",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "candidate-final/25-mobile-task-menu.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/candidate-final/25-mobile-task-menu.png",
+      "sha256": "79f3f79915e78ff10643c0a95c86140c7b6b4774388d246a01fa69dee3c21ced",
+      "manual_review_attribution": "root; exact list in candidate-final/review.json",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "candidate-final/34-real-backup.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/candidate-final/34-real-backup.png",
+      "sha256": "0b4e219b2cbb6a3cc07d753b702534a0bade83ef123550844a99aafc14f5f605",
+      "manual_review_attribution": "root; exact list in candidate-final/review.json",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "final-bfb/07-readable-time-and-pending-child.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/final-bfb/07-readable-time-and-pending-child.png",
+      "sha256": "048d550590072440764dfc5087fe6168bd2ecfb9b7996f21e53b17e3a383715d",
+      "manual_review_attribution": "root; exact list in final-bfb/review.json",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "mobile-final/02-390-iris-light-editor.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/mobile-final/02-390-iris-light-editor.png",
+      "sha256": "58123e22868d8dfee6a29adcc33b3bd3aa47f3a74f2dcece384cdb55dcd90f2d",
+      "manual_review_attribution": "mobile review agent; all20 in mobile-final/report.json, eight selected here",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "mobile-final/04-390-iris-dark-editor.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/mobile-final/04-390-iris-dark-editor.png",
+      "sha256": "e21bdf31c765495d06972cfdd26df1d8e43f3f9faafedbcd180293789aea1a26",
+      "manual_review_attribution": "mobile review agent; all20 in mobile-final/report.json, eight selected here",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "mobile-final/06-390-ocean-light-editor.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/mobile-final/06-390-ocean-light-editor.png",
+      "sha256": "5c30753008852171afa6cb7de5f80e004601aa83ade4e1388b817de22cdb67bd",
+      "manual_review_attribution": "mobile review agent; all20 in mobile-final/report.json, eight selected here",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "mobile-final/10-390-pine-light-editor.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/mobile-final/10-390-pine-light-editor.png",
+      "sha256": "692997de42cb269279049973d81c56e621fd13a439e866c4ff4b03f5f76c2da0",
+      "manual_review_attribution": "mobile review agent; all20 in mobile-final/report.json, eight selected here",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "mobile-final/14-390-berry-light-editor.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/mobile-final/14-390-berry-light-editor.png",
+      "sha256": "389bec2d638393a3c10b41c8801ab8548ac30c1d090fa96b4c12fd35e9c17d3d",
+      "manual_review_attribution": "mobile review agent; all20 in mobile-final/report.json, eight selected here",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "mobile-final/17-320-berry-dark-short-editor.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/mobile-final/17-320-berry-dark-short-editor.png",
+      "sha256": "29bfaf14e8d57f8a4a874129e2a45cf139eaa871af3d216530f8f7bab12e7903",
+      "manual_review_attribution": "mobile review agent; all20 in mobile-final/report.json, eight selected here",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "mobile-final/19-390-berry-dark-action-menu.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/mobile-final/19-390-berry-dark-action-menu.png",
+      "sha256": "0b39db982d50c458bcdc71cfa00211531c17b6bd83cfeef0720eb14b59625d56",
+      "manual_review_attribution": "mobile review agent; all20 in mobile-final/report.json, eight selected here",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "mobile-final/20-390-berry-dark-statistics.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/mobile-final/20-390-berry-dark-statistics.png",
+      "sha256": "126528eb68c349041532cac44540cbb0302867534fcb601cf6e448691f944b27",
+      "manual_review_attribution": "mobile review agent; all20 in mobile-final/report.json, eight selected here",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "mobile-final/material-check-final/03-forced-colors-system-select-arrow.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/mobile-final/material-check-final/03-forced-colors-system-select-arrow.png",
+      "sha256": "44ef5751c340530d8742578b90070de57a6ab744a64b4b92d2badae95f15d646",
+      "manual_review_attribution": "fallback review agent; all4 in report.json, one selected here",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "mobile-final/material-check/04-forced-colors-native-selects.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/mobile-final/material-check/04-forced-colors-native-selects.png",
+      "sha256": "230a0d606f6b0ca2d7bf87858c582d068aa7f388591f8997f975e6dd6bc68dce",
+      "manual_review_attribution": "fallback review agent; original4 reviewed, visual followup preserved",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "regression/editor-settings/20261025T182354Z-dd28bd59/native/editor/20261025T182354Z-chromium-2bf259a5/1280-date-roundtrip/roundtrip-restored.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/regression/editor-settings/20261025T182354Z-dd28bd59/native/editor/20261025T182354Z-chromium-2bf259a5/1280-date-roundtrip/roundtrip-restored.png",
+      "sha256": "df925239cad1133564da5a997562185da6af86e9fffaa85716d29057d3744635",
+      "manual_review_attribution": "editor/settings lane agent; only6/14 originally manually reviewed, two selected here",
+      "archive_editor_performed_new_visual_review": false
+    },
+    {
+      "path": "regression/editor-settings/20261025T182354Z-dd28bd59/native/editor/20261025T182354Z-chromium-2bf259a5/390-empty-weekdays/invalid-weekdays-feedback.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/regression/editor-settings/20261025T182354Z-dd28bd59/native/editor/20261025T182354Z-chromium-2bf259a5/390-empty-weekdays/invalid-weekdays-feedback.png",
+      "sha256": "f9f542007f1f0ddab5f0f3d002f4545e42740b3adb1170d1af3cbf1329dd542d",
+      "manual_review_attribution": "editor/settings lane agent; only6/14 originally manually reviewed, two selected here",
+      "archive_editor_performed_new_visual_review": false
+    }
+  ]
+}

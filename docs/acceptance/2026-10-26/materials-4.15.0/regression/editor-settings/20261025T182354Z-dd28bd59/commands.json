@@ -1,0 +1,24 @@
+{
+  "cwd": "/workspace/Task-Tracer",
+  "commands": {
+    "editor": [
+      "python3",
+      "tools/editor_safety_playwright.py",
+      "--report-dir",
+      "/workspace/design-research/task-tracer-materials-2026-10-26/regression/editor-settings/20261025T182354Z-dd28bd59/native/editor",
+      "--expected-index-sha",
+      "3aa235f5f9adae2349440b8995c7a9c1ecb0335111f52d232cc8811e29a37561"
+    ],
+    "settings": [
+      "python3",
+      "tools/settings_flow_playwright.py",
+      "--output",
+      "/workspace/design-research/task-tracer-materials-2026-10-26/regression/editor-settings/20261025T182354Z-dd28bd59/native/settings"
+    ]
+  },
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "TASK_TRACER_BROWSER_EXECUTABLE": "/usr/bin/chromium"
+  },
+  "parallel_independent_profiles": true
+}

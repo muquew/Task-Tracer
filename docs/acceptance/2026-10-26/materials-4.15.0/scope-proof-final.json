@@ -1,0 +1,23 @@
+{
+  "source_before_sha256": "3aa235f5f9adae2349440b8995c7a9c1ecb0335111f52d232cc8811e29a37561",
+  "source_final_sha256": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5",
+  "exact_two_css_changes_only": true,
+  "changes": [
+    {
+      "scope": "forced-colors active only",
+      "rule": "select, select.search-input, .workspace-preference select { appearance: auto; -webkit-appearance: auto; background-image: none; }",
+      "reason": "Custom pale select arrow 1.758:1 on forcedwhite; letUA render system arrow."
+    },
+    {
+      "scope": "desktop task editor date/time columns; mobile remains singlecolumn",
+      "before": "1.35fr 1fr",
+      "after": "1.1fr 1fr",
+      "reason": "Currentrun14-pending-child.png shows native10:30 AM firstdigit clipped at104.7px. Transfer horizontalspace fromdate to time withoutchangingmodalwidth/padding/height."
+    }
+  ],
+  "script_blocks_byte_identical": true,
+  "helper_before_sha256": "ff68f9b4765129ff91f1185d4f061e79e8f80a91411b4a958f5894e70a8e9381",
+  "helper_final_sha256": "1b2fefa04bef90a9fc3323eaf1e2c99a12c99c4641cb110cb9e8bc50dcbf9555",
+  "helper_exact_one_expected_value_added": true,
+  "helper_scope": "Existing4.13.2 main save includes pendingchild; retained-draft helper now verifies3 exactvalues, no other assertionchange."
+}

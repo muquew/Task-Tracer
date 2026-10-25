@@ -1,0 +1,109 @@
+{
+  "kind": "fresh current-run read-only mobile material/hierarchy audit",
+  "source_index_sha256": "e5741f889cb3c8e74d7f5885f36d5030922afa948b397579b759839ffd827f48",
+  "url": "https://todo.muquew.com/",
+  "normal_tls": true,
+  "bypassCSP": false,
+  "normal_motion": true,
+  "browser": "154.0.8037.57",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 320,
+      "height": 700
+    }
+  ],
+  "tasks_created_through_UI": 3,
+  "actions": 47,
+  "accepted_and_manually_viewed_screenshots": [
+    "02-390-light-action-menu.png",
+    "03-320-light-editor.png",
+    "04-320-light-statistics.png",
+    "05-390-light-settings.png",
+    "06-390-dark-settings.png",
+    "07-320-dark-list.png",
+    "08-320-dark-editor.png",
+    "09-390-light-list-quiet.png"
+  ],
+  "all_9_saved_pngs_actually_viewed": true,
+  "excluded_from_curated_evidence": {
+    "file": "01-390-light-list.png",
+    "reason": "new-task confirmation toast partially covered the final row; same list recaptured quietly in09, original kept"
+  },
+  "page_errors": [],
+  "action_errors": [],
+  "all_action_observations_no_horizontal_overflow": true,
+  "findings": [
+    {
+      "id": "M1",
+      "priority": "P2 craft",
+      "steps": [
+        "03-320-light-editor.png"
+      ],
+      "finding": "Light form property container and ordinary input share near-identical grey-purple depth; comparatively dark outlines carry most separation.",
+      "recommendation": "Raise input fill above the property pane, keep the property pane recessed, and harmonize standard border and focus without reducing essential control boundary contrast."
+    },
+    {
+      "id": "M2",
+      "priority": "P2 craft",
+      "steps": [
+        "09-390-light-list-quiet.png",
+        "07-320-dark-list.png"
+      ],
+      "finding": "Filter module, project bands and continuous task sheet are expressed as similar flat fills. Main content has no subtle surface edge or contact depth; grey project bands compete with task titles.",
+      "recommendation": "Give the continuous task sheet a clearer material against the canvas; quiet project bands with typographic separation; keep toolbar secondary and avoid changing into a card per task."
+    },
+    {
+      "id": "M3",
+      "priority": "P2 craft",
+      "steps": [
+        "05-390-light-settings.png",
+        "06-390-dark-settings.png"
+      ],
+      "finding": "Settings preferences and preview gallery are legible, but repeated flat panels and strong inactive theme outlines make different levels read with similar weight.",
+      "recommendation": "Unify preference, theme preview and selected-state material tokens; preserve native radio identity and distinguish actual selected theme from default boundaries."
+    },
+    {
+      "id": "M4",
+      "priority": "P3 craft",
+      "steps": [
+        "04-320-light-statistics.png"
+      ],
+      "finding": "Three-row numeric entry design works and keeps labels visible; its fill and surrounding review blocks are similar flat surfaces.",
+      "recommendation": "Carry the new panel material through compact action rows and review sheet, retaining data meanings and drilldown structure."
+    }
+  ],
+  "healthy_steps": [
+    {
+      "screenshots": [
+        "02-390-light-action-menu.png"
+      ],
+      "health": "Menu visibly escapes the task surface, has a clear float shadow and a separated destructive row; retain geometry and keyboard path."
+    },
+    {
+      "screenshots": [
+        "03-320-light-editor.png",
+        "08-320-dark-editor.png"
+      ],
+      "health": "Centered modal, dim/blur backdrop, visible autofocus name and fixed footer all have clear task focus; preserve responsive form and safe footer geometry."
+    },
+    {
+      "screenshots": [
+        "07-320-dark-list.png",
+        "09-390-light-list-quiet.png"
+      ],
+      "health": "Stable Add task and bottom four-view navigation remain visible; long Chinese task text and metadata wrap without horizontal overflow."
+    }
+  ],
+  "limits": [
+    "Only Iris theme mobile light/dark was operated; not a four-palette or desktop audit.",
+    "Visible screenshot inspection plus DOM/CSS surface metadata, not a WCAG contrast or screen-reader certification.",
+    "Theme controls and task forms operated in new browser data only; no existing user data or production source was changed.",
+    "Not a persistence/offline/regression run.",
+    "Initial HTTP navigation bound source; not one fetch per screenshot."
+  ],
+  "browser_closed": true
+}

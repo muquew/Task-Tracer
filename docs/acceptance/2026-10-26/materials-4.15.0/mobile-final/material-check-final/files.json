@@ -1,0 +1,69 @@
+{
+  "files": {
+    "02-forced-colors-editor.json": {
+      "bytes": 11633,
+      "sha256": "b5f5dab86fe1cb1f4755dbb31724f832155c48eef5cb0e8dff16eeb4aa1ecd71"
+    },
+    "actions.json": {
+      "bytes": 360212,
+      "sha256": "da93402e33bea2904b668413bfe60fd68447f6788034ae022bded370cff58505"
+    },
+    "03-forced-colors-system-select-arrow.json": {
+      "bytes": 10064,
+      "sha256": "d77a9a2226e627cc717c56240a0e0c62973dbececead99c36ced7a42007ec4af"
+    },
+    "report.json": {
+      "bytes": 8520,
+      "sha256": "b464caa70a36d88618492371b17a4e8810f843badeda5af9db1a693bdaad6ef2"
+    },
+    "README.md": {
+      "bytes": 1835,
+      "sha256": "9820ab2c42c6dec3d3a0d71e04a654366fa248c25de0acd0885c88529d8e3c06"
+    },
+    "04-normal-theme-select-arrow-restored.png": {
+      "bytes": 47656,
+      "sha256": "273bbd7edc72ba14dc801166b38541eedc349a6e2de13dc2d6ed0fe2bc2b639d"
+    },
+    "session.json": {
+      "bytes": 449,
+      "sha256": "8b2b8da2d4afdf944f86942bdb6eaf838b9fc24717d378f89bed1d0fe807d607"
+    },
+    "source.json": {
+      "bytes": 1325,
+      "sha256": "0b5e289c7096861ea4da47f6fc7adc22f788ba0ee1b7618880d23ba6160df2c0"
+    },
+    "native-selects-normal.json": {
+      "bytes": 10934,
+      "sha256": "f2a6f5317148bd4211ac6ad57b292e1e71673722ea9735d3bd7e44941f711fa0"
+    },
+    "02-forced-colors-editor.png": {
+      "bytes": 32680,
+      "sha256": "97f28d7ca24a0ef64e8b9ad17764d0bfecc10eedb1099dc905a5c2e37127247f"
+    },
+    "01-reduced-transparency-and-motion-statistics.png": {
+      "bytes": 49738,
+      "sha256": "6f4c2454af29b216c101f77f420c001694cc396ef3b3592175d8c18129d3fead"
+    },
+    "04-normal-theme-select-arrow-restored.json": {
+      "bytes": 11251,
+      "sha256": "55601f321d09f7f28815371e9b454db1d6daaf25815407f60f9e79ec99348783"
+    },
+    "01-reduced-transparency-and-motion-statistics.json": {
+      "bytes": 10985,
+      "sha256": "4e84f0f7732cac26c4a2d59f52c89fcb0497d12aa64fdb3910e2f252e864ad19"
+    },
+    "check.py": {
+      "bytes": 8129,
+      "sha256": "da55d6f90443cd84739b442e3ba1cc86fe4cab69e80ff26928f03a5b7d65e742"
+    },
+    "03-forced-colors-system-select-arrow.png": {
+      "bytes": 32039,
+      "sha256": "44ef5751c340530d8742578b90070de57a6ab744a64b4b92d2badae95f15d646"
+    },
+    "records.json": {
+      "bytes": 1681,
+      "sha256": "6ed791cf20cffc862b68f19ccc1ffd3633ee92995199a36bcbc581dbcc043614"
+    }
+  },
+  "self_excluded": true
+}

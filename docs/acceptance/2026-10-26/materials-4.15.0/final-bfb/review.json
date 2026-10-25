@@ -1,0 +1,28 @@
+{
+  "source_index_sha256": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5",
+  "observations": 16,
+  "browser_closed": true,
+  "page_errors": [],
+  "action_errors": [],
+  "horizontal_overflow": false,
+  "actually_viewed_by_root": [
+    "07-readable-time-and-pending-child.png",
+    "11-english-list.png",
+    "12-task-actions.png",
+    "16-checked-backup.png"
+  ],
+  "native_time_visually_complete": "10:30 AM with clockicon; native10/27/2026 complete too",
+  "native_date_time_widths": {
+    "dueDate": 128.84,
+    "dueTime": 117.16
+  },
+  "backup_file": "task-tracer_backup_2026-10-25_18-32-13-735.json",
+  "backup_sha256": "f263018c83668641553b58f6537a5bb3d4ee96170c2876a8d17c9859812d857a",
+  "backup_checksum_valid": true,
+  "tasks": 1,
+  "saved_local_date": "2026-10-27",
+  "saved_local_time": "10:30",
+  "saved_timezone": "Asia/Shanghai",
+  "pending_child_saved": true,
+  "scope": "Finalbfb desktop focusedhands-on/backup; other16normalmobile/8skins evidence remains3aa with exact2CSSscopeproof."
+}

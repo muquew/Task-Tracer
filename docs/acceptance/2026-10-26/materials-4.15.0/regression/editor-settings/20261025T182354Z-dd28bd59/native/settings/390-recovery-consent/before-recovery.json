@@ -1,0 +1,160 @@
+{
+  "tasks": [
+    {
+      "id": 1792953154891,
+      "createdAt": "2026-10-25T18:24:17.230Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "Settings current-only",
+      "description": "",
+      "project": "Current",
+      "tags": [],
+      "subtasks": [],
+      "dueDate": null,
+      "dueAt": null,
+      "dueLocalDate": null,
+      "dueLocalTime": null,
+      "dueTimeZone": null,
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 10000
+    }
+  ],
+  "config": [
+    {
+      "key": "language",
+      "value": "en"
+    },
+    {
+      "key": "recoveryHistory",
+      "value": [
+        {
+          "id": "3301ed4c-4708-4ca0-aaba-dd4205654b5d",
+          "createdAt": "2026-10-25T18:24:17.060Z",
+          "tasks": [
+            {
+              "id": 1792952993861,
+              "createdAt": "2026-10-25T18:24:15.599Z",
+              "completed": false,
+              "completedAt": null,
+              "archived": false,
+              "archivedAt": null,
+              "focusDate": null,
+              "snoozedUntil": null,
+              "lastReminderAt": null,
+              "repeatSourceId": null,
+              "repeatCreatedFrom": null,
+              "nextRepeatTaskId": null,
+              "repeatWeekdays": [],
+              "repeatPaused": false,
+              "name": "Settings recovery first",
+              "description": "",
+              "project": "Work",
+              "tags": [],
+              "subtasks": [],
+              "dueDate": null,
+              "dueAt": null,
+              "dueLocalDate": null,
+              "dueLocalTime": null,
+              "dueTimeZone": null,
+              "reminderOffset": -1,
+              "reminderRepeat": -1,
+              "repeatType": "none",
+              "repeatInterval": 1,
+              "order": 10000
+            }
+          ]
+        },
+        {
+          "id": "9f268571-c691-451d-8861-4499f07d00ce",
+          "createdAt": "2026-10-25T18:24:16.574Z",
+          "tasks": [
+            {
+              "id": 1792952898435,
+              "createdAt": "2026-10-25T18:24:15.942Z",
+              "completed": false,
+              "completedAt": null,
+              "archived": false,
+              "archivedAt": null,
+              "focusDate": null,
+              "snoozedUntil": null,
+              "lastReminderAt": null,
+              "repeatSourceId": null,
+              "repeatCreatedFrom": null,
+              "nextRepeatTaskId": null,
+              "repeatWeekdays": [],
+              "repeatPaused": false,
+              "name": "Settings recovery second",
+              "description": "",
+              "project": "Personal",
+              "tags": [],
+              "subtasks": [],
+              "dueDate": null,
+              "dueAt": null,
+              "dueLocalDate": null,
+              "dueLocalTime": null,
+              "dueTimeZone": null,
+              "reminderOffset": -1,
+              "reminderRepeat": -1,
+              "repeatType": "none",
+              "repeatInterval": 1,
+              "order": 20000
+            },
+            {
+              "id": 1792952993861,
+              "createdAt": "2026-10-25T18:24:15.599Z",
+              "completed": false,
+              "completedAt": null,
+              "archived": false,
+              "archivedAt": null,
+              "focusDate": null,
+              "snoozedUntil": null,
+              "lastReminderAt": null,
+              "repeatSourceId": null,
+              "repeatCreatedFrom": null,
+              "nextRepeatTaskId": null,
+              "repeatWeekdays": [],
+              "repeatPaused": false,
+              "name": "Settings recovery first",
+              "description": "",
+              "project": "Work",
+              "tags": [],
+              "subtasks": [],
+              "dueDate": null,
+              "dueAt": null,
+              "dueLocalDate": null,
+              "dueLocalTime": null,
+              "dueTimeZone": null,
+              "reminderOffset": -1,
+              "reminderRepeat": -1,
+              "repeatType": "none",
+              "repeatInterval": 1,
+              "order": 10000
+            }
+          ]
+        },
+        {
+          "id": "39bcba08-16f9-4e94-8b2d-42de86c2c365",
+          "createdAt": "2026-10-25T18:24:15.651Z",
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "key": "taskRevision",
+      "value": 5
+    }
+  ]
+}

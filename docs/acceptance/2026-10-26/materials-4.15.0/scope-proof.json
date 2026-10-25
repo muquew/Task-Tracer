@@ -1,0 +1,12 @@
+{
+  "baseline_commit": "5ce2f9b22bc9c4c1117018eaf64aa5b051e7bc2b",
+  "baseline_index_sha256": "e5741f889cb3c8e74d7f5885f36d5030922afa948b397579b759839ffd827f48",
+  "final_index_sha256": "3aa235f5f9adae2349440b8995c7a9c1ecb0335111f52d232cc8811e29a37561",
+  "all_script_blocks_identical_after_version_only_normalization": true,
+  "script_blocks": 4,
+  "html_outside_style_identical_after_version_only_normalization": true,
+  "database_and_task_logic_changed": false,
+  "resource_version": "4.44",
+  "app_version": "4.15.0",
+  "scope": "CSS material refinement; metadata/runtime version only. No product copy, task DOM, persistence, event or calculation changes."
+}

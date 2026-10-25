@@ -1,0 +1,8 @@
+Editor safety evidence: /workspace/design-research/task-tracer-materials-2026-10-26/regression/editor-settings/20261025T182354Z-dd28bd59/native/editor/20261025T182354Z-chromium-2bf259a5
+Editor safety passed: 1280px date-roundtrip
+Editor safety passed: 1280px empty-weekdays
+Editor safety passed: 1280px subtask-delete
+Editor safety passed: 390px date-roundtrip
+Editor safety passed: 390px empty-weekdays
+Editor safety passed: 390px subtask-delete
+Editor safety passed: 6 cases; evidence /workspace/design-research/task-tracer-materials-2026-10-26/regression/editor-settings/20261025T182354Z-dd28bd59/native/editor/20261025T182354Z-chromium-2bf259a5

@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/workspace/design-research/task-tracer-materials-2026-10-26/regression/themes-smoke/5ae66dd1-57d8-475b-90fa-2cdfbc6856e3/csp_server_wrapper.py", line 99, in <module>
+    runpy.run_path(bootstrap, run_name='__main__')
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/design-research/task-tracer-materials-2026-10-26/regression/themes-smoke/5ae66dd1-57d8-475b-90fa-2cdfbc6856e3/csp_wait_bootstrap.py", line 23, in <module>
+    runpy.run_path(entry, run_name='__main__')
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/Task-Tracer/tools/craft_accent_playwright.py", line 451, in <module>
+    run(parser.parse_args().case)
+  File "/workspace/Task-Tracer/tools/craft_accent_playwright.py", line 440, in run
+    check(page, url)
+  File "/workspace/Task-Tracer/tools/craft_accent_playwright.py", line 332, in cross_tab_draft
+    save_preserved_draft(page, records)
+  File "/workspace/Task-Tracer/tools/appearance_preferences_playwright.py", line 313, in save_preserved_draft
+    assert [child['text'] for child in task['subtasks']] == [
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'id': 1792953641847, 'createdAt': '2026-10-25T18:26:51.227Z', 'completed': False, 'completedAt': None, 'archived': False, 'archivedAt': None, 'focusDate': None, 'snoozedUntil': None, 'lastReminderAt': None, 'repeatSourceId': None, 'repeatCreatedFrom': None, 'nextRepeatTaskId': None, 'repeatWeekdays': [], 'repeatPaused': False, 'name': 'Unsaved appearance draft 中文 é', 'description': 'Unsaved description line one.\nSecond line stays selected.', 'project': 'Unsaved project', 'tags': ['draft', 'appearance'], 'subtasks': [{'id': 1792953171298, 'text': 'Inline child text still being edited 中文', 'completed': False}, {'id': 1792953326336, 'text': 'Second unsaved child', 'completed': False}, {'id': 1792953037293, 'text': 'Pending child input, not added', 'completed': False}], 'dueDate': None, 'dueAt': None, 'dueLocalDate': None, 'dueLocalTime': None, 'dueTimeZone': None, 'reminderOffset': -1, 'reminderRepeat': -1, 'repeatType': 'none', 'repeatInterval': 1, 'order': 30000}

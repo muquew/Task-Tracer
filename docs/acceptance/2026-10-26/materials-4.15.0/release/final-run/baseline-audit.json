@@ -1,0 +1,413 @@
+{
+  "recorded_at": "2026-10-25T18:25:15.439303+00:00",
+  "archive": "/workspace/Task-Tracer/dist/task-tracer-4.14.0.zip",
+  "sidecar": "/workspace/Task-Tracer/dist/task-tracer-4.14.0.zip.sha256",
+  "bytes": 940417,
+  "sha256": "83d651a0badda54a298dd109f0f99d2a18b08ccc520bcc07a8ca5796c7a77351",
+  "file_count": 24,
+  "paths": [
+    {
+      "name": "LICENSE",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "README.md",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "README_zh_cn.md",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "THIRD_PARTY_NOTICES.md",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "fav/android-chrome-192x192.png",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "fav/android-chrome-512x512.png",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "fav/apple-touch-icon.png",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "fav/favicon-16x16.png",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "fav/favicon-32x32.png",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "fav/favicon-48x48.png",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "fav/favicon.ico",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "index.html",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "integrity.json",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "manifest.json",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "resources/en.json",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "resources/zh-CN.json",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "robots.txt",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "screenshots/add-task-en.png",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "screenshots/add-task.png",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "screenshots/task-list-en.png",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "screenshots/task-list.png",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "sitemap.xml",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "sw.js",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    },
+    {
+      "name": "vercel.json",
+      "safe_path": true,
+      "is_directory": false,
+      "unix_type": "0o100000",
+      "is_regular_file": true
+    }
+  ],
+  "manifest": {
+    "app": "Task Tracer",
+    "version": "4.14.0",
+    "commit": "b4a2c78902179ecf2a22417042a120380bc8a766",
+    "working_tree_dirty": false,
+    "files": {
+      "LICENSE": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+      "README.md": "7879df983dce7836914d6e8e871a5c6d52177187900f76335e5abc354e89d15f",
+      "README_zh_cn.md": "90c6ea687f214b88fb412c57477e73d0e91212899788b0a9842d5bb798a03fcc",
+      "THIRD_PARTY_NOTICES.md": "a49db18583d3f275de394c74e3c5db9142979ab713fdfd1ac69488236c1d9bf9",
+      "fav/android-chrome-192x192.png": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+      "fav/android-chrome-512x512.png": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+      "fav/apple-touch-icon.png": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+      "fav/favicon-16x16.png": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+      "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+      "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+      "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+      "index.html": "e5741f889cb3c8e74d7f5885f36d5030922afa948b397579b759839ffd827f48",
+      "manifest.json": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718",
+      "resources/en.json": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd",
+      "resources/zh-CN.json": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9",
+      "robots.txt": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+      "screenshots/add-task-en.png": "5bf84f64217e67236a392d0e2d5b7e5a51a94985fab164f64609e32e4fad2d19",
+      "screenshots/add-task.png": "0df695b6319aa59936bf08a74729ca94487199ead9bc7a6ba15aedfc6a784f8e",
+      "screenshots/task-list-en.png": "e1174d65ffc11630061e971c24313e14ad6ce27b5ba1c9911dc3ab7630368de2",
+      "screenshots/task-list.png": "dfac166a1c7bb3dd758422ffad7444a42335e62f3fffe9ca1f0c486bedcdf80b",
+      "sitemap.xml": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+      "sw.js": "33faf13b0a83140f11198a77029d94b9071a621de7238fe45c43cd9b721b0dd9",
+      "vercel.json": "8fa3cfec6fbdc93b0bba4ba7daba5f6eacf850acf6656bb55fb5c8b28ba791c7"
+    }
+  },
+  "entries": [
+    {
+      "name": "LICENSE",
+      "bytes": 2168,
+      "sha256": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+      "manifest_sha256": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "README.md",
+      "bytes": 19588,
+      "sha256": "7879df983dce7836914d6e8e871a5c6d52177187900f76335e5abc354e89d15f",
+      "manifest_sha256": "7879df983dce7836914d6e8e871a5c6d52177187900f76335e5abc354e89d15f",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "README_zh_cn.md",
+      "bytes": 17218,
+      "sha256": "90c6ea687f214b88fb412c57477e73d0e91212899788b0a9842d5bb798a03fcc",
+      "manifest_sha256": "90c6ea687f214b88fb412c57477e73d0e91212899788b0a9842d5bb798a03fcc",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "THIRD_PARTY_NOTICES.md",
+      "bytes": 1694,
+      "sha256": "a49db18583d3f275de394c74e3c5db9142979ab713fdfd1ac69488236c1d9bf9",
+      "manifest_sha256": "a49db18583d3f275de394c74e3c5db9142979ab713fdfd1ac69488236c1d9bf9",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "fav/android-chrome-192x192.png",
+      "bytes": 2245,
+      "sha256": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+      "manifest_sha256": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "fav/android-chrome-512x512.png",
+      "bytes": 6649,
+      "sha256": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+      "manifest_sha256": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "fav/apple-touch-icon.png",
+      "bytes": 2109,
+      "sha256": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+      "manifest_sha256": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "fav/favicon-16x16.png",
+      "bytes": 262,
+      "sha256": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+      "manifest_sha256": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "fav/favicon-32x32.png",
+      "bytes": 425,
+      "sha256": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+      "manifest_sha256": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "fav/favicon-48x48.png",
+      "bytes": 597,
+      "sha256": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+      "manifest_sha256": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "fav/favicon.ico",
+      "bytes": 15086,
+      "sha256": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+      "manifest_sha256": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "index.html",
+      "bytes": 969948,
+      "sha256": "e5741f889cb3c8e74d7f5885f36d5030922afa948b397579b759839ffd827f48",
+      "manifest_sha256": "e5741f889cb3c8e74d7f5885f36d5030922afa948b397579b759839ffd827f48",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "manifest.json",
+      "bytes": 1607,
+      "sha256": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718",
+      "manifest_sha256": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "resources/en.json",
+      "bytes": 57088,
+      "sha256": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd",
+      "manifest_sha256": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "resources/zh-CN.json",
+      "bytes": 55580,
+      "sha256": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9",
+      "manifest_sha256": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "robots.txt",
+      "bytes": 69,
+      "sha256": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+      "manifest_sha256": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "screenshots/add-task-en.png",
+      "bytes": 203109,
+      "sha256": "5bf84f64217e67236a392d0e2d5b7e5a51a94985fab164f64609e32e4fad2d19",
+      "manifest_sha256": "5bf84f64217e67236a392d0e2d5b7e5a51a94985fab164f64609e32e4fad2d19",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "screenshots/add-task.png",
+      "bytes": 202342,
+      "sha256": "0df695b6319aa59936bf08a74729ca94487199ead9bc7a6ba15aedfc6a784f8e",
+      "manifest_sha256": "0df695b6319aa59936bf08a74729ca94487199ead9bc7a6ba15aedfc6a784f8e",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "screenshots/task-list-en.png",
+      "bytes": 149756,
+      "sha256": "e1174d65ffc11630061e971c24313e14ad6ce27b5ba1c9911dc3ab7630368de2",
+      "manifest_sha256": "e1174d65ffc11630061e971c24313e14ad6ce27b5ba1c9911dc3ab7630368de2",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "screenshots/task-list.png",
+      "bytes": 150386,
+      "sha256": "dfac166a1c7bb3dd758422ffad7444a42335e62f3fffe9ca1f0c486bedcdf80b",
+      "manifest_sha256": "dfac166a1c7bb3dd758422ffad7444a42335e62f3fffe9ca1f0c486bedcdf80b",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "sitemap.xml",
+      "bytes": 233,
+      "sha256": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+      "manifest_sha256": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "sw.js",
+      "bytes": 8305,
+      "sha256": "33faf13b0a83140f11198a77029d94b9071a621de7238fe45c43cd9b721b0dd9",
+      "manifest_sha256": "33faf13b0a83140f11198a77029d94b9071a621de7238fe45c43cd9b721b0dd9",
+      "matches": true,
+      "safe_path": true
+    },
+    {
+      "name": "vercel.json",
+      "bytes": 1194,
+      "sha256": "8fa3cfec6fbdc93b0bba4ba7daba5f6eacf850acf6656bb55fb5c8b28ba791c7",
+      "manifest_sha256": "8fa3cfec6fbdc93b0bba4ba7daba5f6eacf850acf6656bb55fb5c8b28ba791c7",
+      "matches": true,
+      "safe_path": true
+    }
+  ],
+  "checks": {
+    "sha256": true,
+    "bytes": true,
+    "file_count": true,
+    "unique_file_names": true,
+    "safe_archive_paths": true,
+    "all_regular_files": true,
+    "payload_count": true,
+    "exact_payload_names": true,
+    "sidecar_exact": true,
+    "manifest_commit": true,
+    "manifest_dirty": true,
+    "manifest_version": true,
+    "all_manifest_hashes": true,
+    "safe_manifest_paths": true
+  },
+  "passed": true,
+  "scope": "Read-only existing 4.14.0 baseline ZIP and sidecar audit for 4.15.0; no build, browser, source/tool/docs or Git mutations; no previous records modified."
+}

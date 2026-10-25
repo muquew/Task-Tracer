@@ -1,0 +1,125 @@
+{
+  "kind": "targeted-settings-ui-flow",
+  "source_before": {
+    "index.html": "3aa235f5f9adae2349440b8995c7a9c1ecb0335111f52d232cc8811e29a37561",
+    "sw.js": "3e3f2e67832911ec52168691412baa3193b03766632120934c1c679ff2a70f1b",
+    "vercel.json": "f755f54a513ebe8db4ed910564971d9f1fb0053c405882f9e1db1981f9fcd729",
+    "resources/en.json": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd",
+    "resources/zh-CN.json": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9"
+  },
+  "runs": [
+    {
+      "width": 1440,
+      "height": 1000,
+      "case": "import-modes-and-settings",
+      "page_errors": [],
+      "checks": {
+        "preferences_geometry": {
+          "preferences": {
+            "top": 249.1875,
+            "bottom": 406.1875
+          },
+          "gallery": {
+            "top": 426.1875,
+            "bottom": 817.625
+          },
+          "language": {
+            "top": 346.1875,
+            "bottom": 388.1875
+          },
+          "viewport": 1000
+        },
+        "current": 3,
+        "incoming": 2,
+        "replace_after": 2,
+        "merge_after": 5,
+        "preview_no_database_writes": true
+      },
+      "passed": true,
+      "seconds": 6.096
+    },
+    {
+      "width": 1440,
+      "height": 1000,
+      "case": "recovery-consent",
+      "page_errors": [],
+      "checks": {
+        "unconfirmed_no_database_writes": true,
+        "point_change_resets_consent": true,
+        "selected_tasks_restored_exactly": 2,
+        "replaced_tasks_checkpointed": 1,
+        "new_editor_not_disabled": true
+      },
+      "passed": true,
+      "seconds": 6.776
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "case": "import-modes-and-settings",
+      "page_errors": [],
+      "checks": {
+        "preferences_geometry": {
+          "preferences": {
+            "top": 235.390625,
+            "bottom": 462.390625
+          },
+          "gallery": {
+            "top": 478.390625,
+            "bottom": 829.828125
+          },
+          "language": {
+            "top": 404.390625,
+            "bottom": 446.390625
+          },
+          "viewport": 844
+        },
+        "current": 3,
+        "incoming": 2,
+        "replace_after": 2,
+        "merge_after": 5,
+        "preview_no_database_writes": true
+      },
+      "passed": true,
+      "seconds": 4.96
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "case": "recovery-consent",
+      "page_errors": [],
+      "checks": {
+        "unconfirmed_no_database_writes": true,
+        "point_change_resets_consent": true,
+        "selected_tasks_restored_exactly": 2,
+        "replaced_tasks_checkpointed": 1,
+        "new_editor_not_disabled": true
+      },
+      "passed": true,
+      "seconds": 4.86
+    }
+  ],
+  "tool_sha256": "f6db709a2d678a862cce2c77449971a64acacd29f707e430fab1bfe4f21b46fb",
+  "helper_sha256": {
+    "smoke_playwright.py": "df5a1a8c557a08c075b2e02a22a0ceb93ac404ddead9877f7651366a09ae166a",
+    "security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e"
+  },
+  "normal_motion": true,
+  "production_csp": true,
+  "screenshots_manually_reviewed": false,
+  "browser": {
+    "engine": "chromium",
+    "version": "154.0.8037.57"
+  },
+  "browser_closed": true,
+  "server_closed": true,
+  "source_after": {
+    "index.html": "3aa235f5f9adae2349440b8995c7a9c1ecb0335111f52d232cc8811e29a37561",
+    "sw.js": "3e3f2e67832911ec52168691412baa3193b03766632120934c1c679ff2a70f1b",
+    "vercel.json": "f755f54a513ebe8db4ed910564971d9f1fb0053c405882f9e1db1981f9fcd729",
+    "resources/en.json": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd",
+    "resources/zh-CN.json": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9"
+  },
+  "source_unchanged": true,
+  "passed": true
+}

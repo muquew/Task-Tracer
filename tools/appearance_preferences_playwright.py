@@ -312,6 +312,7 @@ def save_preserved_draft(page: Page, records: list[dict[str, Any]]) -> None:
     assert task['project'] == 'Unsaved project' and task['tags'] == ['draft', 'appearance'], task
     assert [child['text'] for child in task['subtasks']] == [
         'Inline child text still being edited 中文', 'Second unsaved child',
+        'Pending child input, not added',
     ], task
 
 

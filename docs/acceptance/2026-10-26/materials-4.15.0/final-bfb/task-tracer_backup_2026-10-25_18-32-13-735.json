@@ -1,0 +1,68 @@
+{
+  "version": "2.4",
+  "type": "backup",
+  "exportId": "backup-20261025183213-luw6y25p",
+  "date": "2026-10-25T18:32:13.735Z",
+  "app": "Task Tracer",
+  "schema": {
+    "version": "2.4",
+    "storage": "indexeddb",
+    "includes": [
+      "tasks",
+      "subtasks",
+      "projects",
+      "tags",
+      "localDueDates",
+      "exactDueInstants",
+      "reminders",
+      "repeatRules",
+      "completionDates",
+      "archiveState",
+      "todayPlan"
+    ]
+  },
+  "versionNotes": [
+    "Backup 2.4 includes an integrity checksum, export ID, local due dates, exact reminder instants, tasks, subtasks, projects, tags, advanced repeat rules, completion dates, archive state, and today’s plan.",
+    "The importer reads the tasks array; older export files remain importable through compatibility rules."
+  ],
+  "tasks": [
+    {
+      "id": 1792953820625,
+      "createdAt": "2026-10-25T18:32:08.715Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "核对原生时间与面板层次",
+      "description": "时间应完整显示 10:30 AM；保存后核对。",
+      "project": "Inbox",
+      "tags": [],
+      "subtasks": [
+        {
+          "id": 1792953289176,
+          "text": "待输入的子任务",
+          "completed": false
+        }
+      ],
+      "dueDate": "2026-10-27T02:30:00.000Z",
+      "dueAt": "2026-10-27T02:30:00.000Z",
+      "dueLocalDate": "2026-10-27",
+      "dueLocalTime": "10:30",
+      "dueTimeZone": "Asia/Shanghai",
+      "reminderOffset": 15,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 10000
+    }
+  ],
+  "checksum": "fnv1a32:de5df8d1"
+}

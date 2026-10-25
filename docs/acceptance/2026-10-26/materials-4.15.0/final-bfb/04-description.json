@@ -1,0 +1,1232 @@
+{
+  "viewport": {
+    "w": 1440,
+    "h": 900
+  },
+  "scrollY": 0,
+  "docHeight": 900,
+  "docWidth": 1440,
+  "active": {
+    "id": "taskDesc",
+    "className": ""
+  },
+  "title": "任务跟踪器",
+  "themeColor": "#D3D2E0",
+  "skin": {
+    "accent": "iris",
+    "theme": "light",
+    "chromeSolid": "#D3D2E0"
+  },
+  "headings": [
+    "项目",
+    "全部任务",
+    "还没有任务",
+    "2026年10月",
+    "即将到期",
+    "添加任务"
+  ],
+  "surfaces": [
+    {
+      "selector": "#openModalBtn",
+      "visible": true,
+      "text": "添加任务",
+      "x": 1223,
+      "y": 11,
+      "w": 109,
+      "h": 40
+    },
+    {
+      "selector": "#quickAddForm",
+      "visible": false,
+      "text": "\n                    \n                        \n                        快速记录\n    ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#quickAddInput",
+      "visible": false,
+      "text": "",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#toolsDrawer",
+      "visible": true,
+      "text": "搜索任务…\n支持限定搜索：project:项目、tag:标签、status:状态、due:日期。\n⌘K\n筛选\n进行中\n选择\n保存视图",
+      "x": 252,
+      "y": 208,
+      "w": 866,
+      "h": 69
+    },
+    {
+      "selector": "#workspaceOverview",
+      "visible": true,
+      "text": "2026年10月\n周一\n周二\n周三\n周四\n周五\n周六\n周日\n28\n29\n30\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17",
+      "x": 1138,
+      "y": 208,
+      "w": 278,
+      "h": 464
+    },
+    {
+      "selector": "#workspaceWeekIndex",
+      "visible": true,
+      "text": "10月\n未来7天\n周一\n26\n周二\n27\n周三\n28\n周四\n29\n周五\n30\n周六\n31\n周日\n1",
+      "x": 1038,
+      "y": 102,
+      "w": 356,
+      "h": 68
+    },
+    {
+      "selector": "#taskList",
+      "visible": true,
+      "text": "还没有任务\n\n从顶部“添加任务”开始，记下第一件待办。\n\n用示例了解功能",
+      "x": 268,
+      "y": 277,
+      "w": 834,
+      "h": 194
+    },
+    {
+      "selector": "#workspaceTitle",
+      "visible": true,
+      "text": "全部任务",
+      "x": 274,
+      "y": 107,
+      "w": 746,
+      "h": 34
+    },
+    {
+      "selector": "#settingsWorkspace",
+      "visible": false,
+      "text": "\n            设置与数据\n            \n                \n                    外观与语言\n     ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    }
+  ],
+  "buttons": [
+    {
+      "id": "viewTab-list",
+      "text": "列表",
+      "x": 16,
+      "y": 79,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "viewTab-calendar",
+      "text": "日历",
+      "x": 16,
+      "y": 127,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "viewTab-timeline",
+      "text": "时间线",
+      "x": 16,
+      "y": 175,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "viewTab-stats",
+      "text": "统计",
+      "x": 16,
+      "y": 223,
+      "w": 196,
+      "h": 44
+    },
+    {
+      "id": "workspaceAllTasks",
+      "text": "全部任务\n0",
+      "x": 16,
+      "y": 302,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "focusModeToggleBtn",
+      "text": "今日计划",
+      "x": 16,
+      "y": 349,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "workspaceAllProjects",
+      "text": "全部项目",
+      "x": 16,
+      "y": 451,
+      "w": 196,
+      "h": 40
+    },
+    {
+      "id": "workspaceSettingsBtn",
+      "text": "设置与数据",
+      "x": 16,
+      "y": 810,
+      "w": 196,
+      "h": 42
+    },
+    {
+      "id": "openModalBtn",
+      "text": "添加任务",
+      "x": 1223,
+      "y": 11,
+      "w": 109,
+      "h": 40
+    },
+    {
+      "id": "quickCaptureBtn",
+      "text": "快速记录",
+      "x": 1333,
+      "y": 11,
+      "w": 36,
+      "h": 40
+    },
+    {
+      "id": "openMenuBtn",
+      "text": "设置与数据",
+      "x": 1376,
+      "y": 11,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "",
+      "text": "周一\n26",
+      "x": 1102,
+      "y": 107,
+      "w": 40,
+      "h": 58
+    },
+    {
+      "id": "",
+      "text": "周二\n27",
+      "x": 1144,
+      "y": 107,
+      "w": 40,
+      "h": 58
+    },
+    {
+      "id": "",
+      "text": "周三\n28",
+      "x": 1186,
+      "y": 107,
+      "w": 40,
+      "h": 58
+    },
+    {
+      "id": "",
+      "text": "周四\n29",
+      "x": 1228,
+      "y": 107,
+      "w": 40,
+      "h": 58
+    },
+    {
+      "id": "",
+      "text": "周五\n30",
+      "x": 1270,
+      "y": 107,
+      "w": 40,
+      "h": 58
+    },
+    {
+      "id": "",
+      "text": "周六\n31",
+      "x": 1312,
+      "y": 107,
+      "w": 40,
+      "h": 58
+    },
+    {
+      "id": "",
+      "text": "周日\n1",
+      "x": 1354,
+      "y": 107,
+      "w": 40,
+      "h": 58
+    },
+    {
+      "id": "toolsDrawerToggleBtn",
+      "text": "筛选\n进行中",
+      "x": 767,
+      "y": 222,
+      "w": 137,
+      "h": 40
+    },
+    {
+      "id": "batchModeBtn",
+      "text": "选择",
+      "x": 914,
+      "y": 220,
+      "w": 76,
+      "h": 44
+    },
+    {
+      "id": "saveSmartViewBtn",
+      "text": "保存视图",
+      "x": 1000,
+      "y": 221,
+      "w": 102,
+      "h": 42
+    },
+    {
+      "id": "addExampleTasksBtn",
+      "text": "用示例了解功能",
+      "x": 643,
+      "y": 409,
+      "w": 84,
+      "h": 28
+    },
+    {
+      "id": "workspacePreviousMonth",
+      "text": "上个月",
+      "x": 1336,
+      "y": 224,
+      "w": 32,
+      "h": 36
+    },
+    {
+      "id": "workspaceNextMonth",
+      "text": "下个月",
+      "x": 1368,
+      "y": 224,
+      "w": 32,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "28",
+      "x": 1154,
+      "y": 299,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "29",
+      "x": 1189,
+      "y": 299,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "30",
+      "x": 1225,
+      "y": 299,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "1",
+      "x": 1260,
+      "y": 299,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "2",
+      "x": 1296,
+      "y": 299,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "3",
+      "x": 1331,
+      "y": 299,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "4",
+      "x": 1367,
+      "y": 299,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "5",
+      "x": 1154,
+      "y": 337,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "6",
+      "x": 1189,
+      "y": 337,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "7",
+      "x": 1225,
+      "y": 337,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "8",
+      "x": 1260,
+      "y": 337,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "9",
+      "x": 1296,
+      "y": 337,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "10",
+      "x": 1331,
+      "y": 337,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "11",
+      "x": 1367,
+      "y": 337,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "12",
+      "x": 1154,
+      "y": 375,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "13",
+      "x": 1189,
+      "y": 375,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "14",
+      "x": 1225,
+      "y": 375,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "15",
+      "x": 1260,
+      "y": 375,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "16",
+      "x": 1296,
+      "y": 375,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "17",
+      "x": 1331,
+      "y": 375,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "18",
+      "x": 1367,
+      "y": 375,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "19",
+      "x": 1154,
+      "y": 413,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "20",
+      "x": 1189,
+      "y": 413,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "21",
+      "x": 1225,
+      "y": 413,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "22",
+      "x": 1260,
+      "y": 413,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "23",
+      "x": 1296,
+      "y": 413,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "24",
+      "x": 1331,
+      "y": 413,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "25",
+      "x": 1367,
+      "y": 413,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "26",
+      "x": 1154,
+      "y": 451,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "27",
+      "x": 1189,
+      "y": 451,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "28",
+      "x": 1225,
+      "y": 451,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "29",
+      "x": 1260,
+      "y": 451,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "30",
+      "x": 1296,
+      "y": 451,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "31",
+      "x": 1331,
+      "y": 451,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "1",
+      "x": 1367,
+      "y": 451,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "2",
+      "x": 1154,
+      "y": 489,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "3",
+      "x": 1189,
+      "y": 489,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "4",
+      "x": 1225,
+      "y": 489,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "5",
+      "x": 1260,
+      "y": 489,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "6",
+      "x": 1296,
+      "y": 489,
+      "w": 33,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "7",
+      "x": 1331,
+      "y": 489,
+      "w": 33,
+      "h": 36
+    }
+  ],
+  "fields": [
+    {
+      "id": "searchInput",
+      "type": "text",
+      "value": "",
+      "placeholder": "搜索任务…",
+      "x": 268,
+      "y": 222,
+      "w": 489,
+      "h": 41
+    },
+    {
+      "id": "taskName",
+      "type": "text",
+      "value": "核对原生时间与面板层次",
+      "placeholder": "要完成什么？",
+      "x": 284,
+      "y": 241,
+      "w": 554,
+      "h": 52
+    },
+    {
+      "id": "taskDesc",
+      "type": "textarea",
+      "value": "时间应完整显示 10:30 AM；保存后核对。",
+      "placeholder": "补充背景、链接或执行要点",
+      "x": 284,
+      "y": 339,
+      "w": 554,
+      "h": 132
+    },
+    {
+      "id": "taskProject",
+      "type": "text",
+      "value": "Inbox",
+      "placeholder": "例如：工作 / 个人",
+      "x": 884,
+      "y": 287,
+      "w": 254,
+      "h": 42
+    },
+    {
+      "id": "noDeadline",
+      "type": "checkbox",
+      "value": "on",
+      "placeholder": "",
+      "x": 1048,
+      "y": 347,
+      "w": 24,
+      "h": 24
+    },
+    {
+      "id": "taskTags",
+      "type": "text",
+      "value": "",
+      "placeholder": "用逗号分隔标签",
+      "x": 884,
+      "y": 460,
+      "w": 254,
+      "h": 42
+    },
+    {
+      "id": "subtaskInput",
+      "type": "text",
+      "value": "",
+      "placeholder": "输入子任务…",
+      "x": 284,
+      "y": 543,
+      "w": 502,
+      "h": 44
+    }
+  ],
+  "materials": {
+    "reducedMotion": false,
+    "forcedColors": false,
+    "reducedTransparency": false,
+    "surfaces": [
+      {
+        "selector": ".workspace-task-surface",
+        "visible": true,
+        "backgroundColor": "color(srgb 0.950588 0.951373 0.971765)",
+        "backgroundImage": "none",
+        "color": "rgb(49, 43, 67)",
+        "shadow": "rgba(255, 255, 255, 0.38) 0px 1px 0px 0px inset, color(srgb 0.192157 0.176471 0.282353 / 0.13) 0px 2px 3px 0px, color(srgb 0.192157 0.176471 0.282353 / 0.08) 0px 12px 28px 0px",
+        "borderColor": "rgb(49, 43, 67)",
+        "outline": "rgb(49, 43, 67) none 3px",
+        "backdropFilter": "none",
+        "borderRadius": "14px",
+        "disabled": null,
+        "rect": {
+          "x": 252,
+          "y": 208,
+          "w": 866,
+          "h": 263
+        }
+      },
+      {
+        "selector": ".workspace-overview",
+        "visible": true,
+        "backgroundColor": "rgb(228, 228, 237)",
+        "backgroundImage": "none",
+        "color": "rgb(49, 43, 67)",
+        "shadow": "rgba(255, 255, 255, 0.38) 0px 1px 0px 0px inset, color(srgb 0.192157 0.176471 0.282353 / 0.08) 0px 2px 5px 0px",
+        "borderColor": "rgb(49, 43, 67)",
+        "outline": "rgb(49, 43, 67) none 3px",
+        "backdropFilter": "none",
+        "borderRadius": "14px",
+        "disabled": null,
+        "rect": {
+          "x": 1138,
+          "y": 208,
+          "w": 278,
+          "h": 463.5
+        }
+      },
+      {
+        "selector": ".tools-drawer",
+        "visible": true,
+        "backgroundColor": "rgb(228, 228, 237)",
+        "backgroundImage": "linear-gradient(rgba(255, 255, 255, 0.38), rgba(0, 0, 0, 0) 72px)",
+        "color": "rgb(49, 43, 67)",
+        "shadow": "rgba(255, 255, 255, 0.38) 0px 1px 0px 0px inset",
+        "borderColor": "rgb(49, 43, 67) rgb(49, 43, 67) rgb(197, 194, 212)",
+        "outline": "rgb(49, 43, 67) none 3px",
+        "backdropFilter": "none",
+        "borderRadius": "14px 14px 0px 0px",
+        "disabled": null,
+        "rect": {
+          "x": 252,
+          "y": 208,
+          "w": 866,
+          "h": 69
+        }
+      },
+      {
+        "selector": "#taskEditor .task-editor-properties",
+        "visible": true,
+        "backgroundColor": "rgb(228, 228, 237)",
+        "backgroundImage": "none",
+        "color": "rgb(49, 43, 67)",
+        "shadow": "color(srgb 0.192157 0.176471 0.282353 / 0.07) 0px 1px 2px 0px inset",
+        "borderColor": "rgb(49, 43, 67)",
+        "outline": "rgb(49, 43, 67) none 3px",
+        "backdropFilter": "none",
+        "borderRadius": "12px",
+        "disabled": null,
+        "rect": {
+          "x": 866,
+          "y": 241.25,
+          "w": 290,
+          "h": 307.390625
+        }
+      },
+      {
+        "selector": "#taskProject",
+        "visible": true,
+        "backgroundColor": "color(srgb 0.955882 0.952941 0.973529)",
+        "backgroundImage": "none",
+        "color": "rgb(49, 43, 67)",
+        "shadow": "color(srgb 0.192157 0.176471 0.282353 / 0.07) 0px 1px 2px 0px inset",
+        "borderColor": "rgb(134, 123, 152)",
+        "outline": "rgb(49, 43, 67) none 3px",
+        "backdropFilter": "none",
+        "borderRadius": "8px",
+        "disabled": false,
+        "rect": {
+          "x": 884,
+          "y": 286.75,
+          "w": 254,
+          "h": 42
+        }
+      },
+      {
+        "selector": "#taskDesc",
+        "visible": true,
+        "backgroundColor": "rgb(249, 248, 252)",
+        "backgroundImage": "none",
+        "color": "rgb(49, 43, 67)",
+        "shadow": "none",
+        "borderColor": "rgba(0, 0, 0, 0)",
+        "outline": "rgb(94, 82, 127) solid 2px",
+        "backdropFilter": "none",
+        "borderRadius": "8px",
+        "disabled": false,
+        "rect": {
+          "x": 284,
+          "y": 338.75,
+          "w": 554,
+          "h": 132
+        }
+      },
+      {
+        "selector": "#searchInput",
+        "visible": true,
+        "backgroundColor": "color(srgb 0.955882 0.952941 0.973529)",
+        "backgroundImage": "none",
+        "color": "rgb(49, 43, 67)",
+        "shadow": "color(srgb 0.192157 0.176471 0.282353 / 0.07) 0px 1px 2px 0px inset",
+        "borderColor": "rgba(0, 0, 0, 0)",
+        "outline": "rgb(49, 43, 67) none 3px",
+        "backdropFilter": "none",
+        "borderRadius": "8px",
+        "disabled": false,
+        "rect": {
+          "x": 268,
+          "y": 221.578125,
+          "w": 488.59375,
+          "h": 40.84375
+        }
+      },
+      {
+        "selector": "#languageSelect",
+        "visible": false,
+        "backgroundColor": "color(srgb 0.955882 0.952941 0.973529)",
+        "backgroundImage": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2355516B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")",
+        "color": "rgb(49, 43, 67)",
+        "shadow": "color(srgb 0.192157 0.176471 0.282353 / 0.07) 0px 1px 2px 0px inset",
+        "borderColor": "rgb(134, 123, 152)",
+        "outline": "rgb(49, 43, 67) none 3px",
+        "backdropFilter": "none",
+        "borderRadius": "8px",
+        "disabled": false,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "selector": "#submitBtn",
+        "visible": true,
+        "backgroundColor": "rgb(94, 82, 127)",
+        "backgroundImage": "linear-gradient(rgba(255, 255, 255, 0.07), rgba(0, 0, 0, 0))",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "rgba(255, 255, 255, 0.16) 0px 1px 0px 0px inset, color(srgb 0.192157 0.176471 0.282353 / 0.13) 0px 2px 3px 0px, color(srgb 0.192157 0.176471 0.282353 / 0.08) 0px 5px 12px 0px",
+        "borderColor": "rgba(0, 0, 0, 0)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "backdropFilter": "none",
+        "borderRadius": "8px",
+        "disabled": false,
+        "rect": {
+          "x": 1071.984375,
+          "y": 691.75,
+          "w": 84.015625,
+          "h": 40
+        }
+      },
+      {
+        "selector": "#cancelBtn",
+        "visible": true,
+        "backgroundColor": "rgb(249, 248, 252)",
+        "backgroundImage": "none",
+        "color": "rgb(85, 81, 107)",
+        "shadow": "rgba(255, 255, 255, 0.38) 0px 1px 0px 0px inset, color(srgb 0.192157 0.176471 0.282353 / 0.13) 0px 1px 2px 0px",
+        "borderColor": "rgb(197, 194, 212)",
+        "outline": "rgb(85, 81, 107) none 3px",
+        "backdropFilter": "none",
+        "borderRadius": "8px",
+        "disabled": false,
+        "rect": {
+          "x": 1003.96875,
+          "y": 691.75,
+          "w": 58.015625,
+          "h": 40
+        }
+      },
+      {
+        "selector": ".task-action-menu",
+        "exists": false
+      },
+      {
+        "selector": "header.workspace-topbar",
+        "visible": true,
+        "backgroundColor": "color(srgb 0.827451 0.823529 0.878431 / 0.88)",
+        "backgroundImage": "none",
+        "color": "rgb(49, 43, 67)",
+        "shadow": "none",
+        "borderColor": "rgb(49, 43, 67)",
+        "outline": "rgb(49, 43, 67) none 3px",
+        "backdropFilter": "blur(18px) saturate(1.08)",
+        "borderRadius": "0px",
+        "disabled": null,
+        "rect": {
+          "x": 228,
+          "y": 0,
+          "w": 1212,
+          "h": 62
+        }
+      },
+      {
+        "selector": ".workspace-mobile-dock",
+        "visible": false,
+        "backgroundColor": "color(srgb 0.827451 0.823529 0.878431 / 0.88)",
+        "backgroundImage": "none",
+        "color": "rgb(49, 43, 67)",
+        "shadow": "color(srgb 0.192157 0.176471 0.282353 / 0.08) 0px -4px 18px 0px",
+        "borderColor": "rgb(49, 43, 67)",
+        "outline": "rgb(49, 43, 67) none 3px",
+        "backdropFilter": "blur(18px) saturate(1.08)",
+        "borderRadius": "0px",
+        "disabled": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      },
+      {
+        "selector": ".form-actions",
+        "visible": true,
+        "backgroundColor": "rgb(249, 248, 252)",
+        "backgroundImage": "none",
+        "color": "rgb(49, 43, 67)",
+        "shadow": "color(srgb 0.192157 0.176471 0.282353 / 0.08) 0px -8px 20px 0px",
+        "borderColor": "rgb(197, 194, 212) rgb(49, 43, 67) rgb(49, 43, 67)",
+        "outline": "rgb(49, 43, 67) none 3px",
+        "backdropFilter": "none",
+        "borderRadius": "0px",
+        "disabled": null,
+        "rect": {
+          "x": 260,
+          "y": 676.75,
+          "w": 920,
+          "h": 71
+        }
+      }
+    ]
+  },
+  "pageErrors": [],
+  "source_index_sha256": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5",
+  "editor": {
+    "modalVisible": true,
+    "modal": {
+      "x": 260,
+      "y": 152.25,
+      "w": 920,
+      "h": 595.5
+    },
+    "body": {
+      "x": 260,
+      "y": 219.25,
+      "w": 920,
+      "h": 528.5,
+      "scrollTop": 0,
+      "scrollHeight": 529,
+      "clientHeight": 529
+    },
+    "advanced": false,
+    "fields": [
+      {
+        "id": "taskName",
+        "visible": true,
+        "disabled": false,
+        "checked": false,
+        "required": true,
+        "value": "核对原生时间与面板层次",
+        "x": 284,
+        "y": 241.25,
+        "w": 554,
+        "h": 52
+      },
+      {
+        "id": "taskDesc",
+        "visible": true,
+        "disabled": false,
+        "checked": null,
+        "required": false,
+        "value": "时间应完整显示 10:30 AM；保存后核对。",
+        "x": 284,
+        "y": 338.75,
+        "w": 554,
+        "h": 132
+      },
+      {
+        "id": "taskProject",
+        "visible": true,
+        "disabled": false,
+        "checked": false,
+        "required": false,
+        "value": "Inbox",
+        "x": 884,
+        "y": 286.75,
+        "w": 254,
+        "h": 42
+      },
+      {
+        "id": "noDeadline",
+        "visible": true,
+        "disabled": false,
+        "checked": true,
+        "required": false,
+        "value": "on",
+        "x": 1047.984375,
+        "y": 346.75,
+        "w": 24,
+        "h": 24
+      },
+      {
+        "id": "dueDate",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "2026-10-26",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "dueTime",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "23:59",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "taskTags",
+        "visible": true,
+        "disabled": false,
+        "checked": false,
+        "required": false,
+        "value": "",
+        "x": 884,
+        "y": 460.25,
+        "w": 254,
+        "h": 42
+      },
+      {
+        "id": "subtaskInput",
+        "visible": true,
+        "disabled": false,
+        "checked": false,
+        "required": false,
+        "value": "",
+        "x": 284,
+        "y": 543.25,
+        "w": 502,
+        "h": 44
+      },
+      {
+        "id": "reminderOffset",
+        "visible": false,
+        "disabled": true,
+        "checked": null,
+        "required": false,
+        "value": "15",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "reminderRepeat",
+        "visible": false,
+        "disabled": true,
+        "checked": null,
+        "required": false,
+        "value": "-1",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatType",
+        "visible": false,
+        "disabled": true,
+        "checked": null,
+        "required": false,
+        "value": "none",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatWeekday1",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "1",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatWeekday2",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "2",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatWeekday3",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "3",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatWeekday4",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "4",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatWeekday5",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "5",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatWeekday6",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "6",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatWeekday0",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "0",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatInterval",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "1",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "id": "repeatPaused",
+        "visible": false,
+        "disabled": true,
+        "checked": false,
+        "required": false,
+        "value": "on",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      }
+    ],
+    "footer": {
+      "x": 260,
+      "y": 676.75,
+      "w": 920,
+      "h": 71
+    }
+  }
+}

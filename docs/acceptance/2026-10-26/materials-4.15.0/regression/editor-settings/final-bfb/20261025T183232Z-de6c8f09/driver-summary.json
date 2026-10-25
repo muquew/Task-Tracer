@@ -1,0 +1,31 @@
+{
+  "output": "/workspace/design-research/task-tracer-materials-2026-10-26/regression/editor-settings/final-bfb/20261025T183232Z-de6c8f09",
+  "index_sha256": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5",
+  "tool_sha256": "71d673604abb8d93319d917e95e2e7fda32be6bc1c5b4965e25fc1c2934d6f58",
+  "runtime_assets_and_helpers_unchanged": true,
+  "command": {
+    "cwd": "/workspace/Task-Tracer",
+    "argv": [
+      "python3",
+      "tools/editor_safety_playwright.py",
+      "--report-dir",
+      "/workspace/design-research/task-tracer-materials-2026-10-26/regression/editor-settings/final-bfb/20261025T183232Z-de6c8f09/native/editor",
+      "--expected-index-sha",
+      "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5"
+    ],
+    "environment_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "TASK_TRACER_BROWSER_EXECUTABLE": "/usr/bin/chromium"
+    },
+    "settings_not_rerun": true,
+    "started_at": "2026-10-25T18:32:32.321053+00:00",
+    "exit_code": 0,
+    "seconds": 50.856,
+    "finished_at": "2026-10-25T18:33:23.177871+00:00",
+    "stdout": "/workspace/design-research/task-tracer-materials-2026-10-26/regression/editor-settings/final-bfb/20261025T183232Z-de6c8f09/editor.stdout.log",
+    "stderr": "/workspace/design-research/task-tracer-materials-2026-10-26/regression/editor-settings/final-bfb/20261025T183232Z-de6c8f09/editor.stderr.log"
+  },
+  "passed": true,
+  "settings_rerun": false,
+  "screenshots_manually_reviewed": false
+}

@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'task-tracer-';
-const CACHE_NAME = 'task-tracer-v4.14.0';
+const CACHE_NAME = 'task-tracer-v4.15.0';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',

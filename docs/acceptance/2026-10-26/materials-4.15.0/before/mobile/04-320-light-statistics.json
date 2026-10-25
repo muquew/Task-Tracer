@@ -1,0 +1,344 @@
+{
+  "viewport": {
+    "width": 320,
+    "height": 700
+  },
+  "docWidth": 320,
+  "theme": "light",
+  "accent": "iris",
+  "headings": [
+    "统计",
+    "待处理",
+    "最近 7 天回顾",
+    "按项目安排待办"
+  ],
+  "buttons": [
+    {
+      "id": "workspaceNavToggle",
+      "text": "",
+      "aria": "打开导航",
+      "class": "icon-btn workspace-mobile-only",
+      "x": 14,
+      "y": 10,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "undoBtn",
+      "text": "",
+      "aria": "撤销：新增任务",
+      "class": "icon-btn undo-btn",
+      "x": 85.984375,
+      "y": 10,
+      "w": 34,
+      "h": 40
+    },
+    {
+      "id": "openModalBtn",
+      "text": "添加任务",
+      "aria": "添加任务",
+      "class": "btn btn-primary workspace-add-task",
+      "x": 124.984375,
+      "y": 10,
+      "w": 99.015625,
+      "h": 40
+    },
+    {
+      "id": "quickCaptureBtn",
+      "text": "",
+      "aria": "快速记录",
+      "class": "btn btn-primary workspace-quick-capture",
+      "x": 225,
+      "y": 10,
+      "w": 36,
+      "h": 40
+    },
+    {
+      "id": "openMenuBtn",
+      "text": "",
+      "aria": "设置与数据",
+      "class": "icon-btn",
+      "x": 266,
+      "y": 10,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "toolsDrawerToggleBtn",
+      "text": "筛选",
+      "aria": null,
+      "class": "btn btn-secondary filter-toggle",
+      "x": 26,
+      "y": 173,
+      "w": 167.984375,
+      "h": 44
+    },
+    {
+      "id": "saveSmartViewBtn",
+      "text": "保存视图",
+      "aria": "保存视图",
+      "class": "btn btn-secondary saved-view-save-btn",
+      "x": 205.984375,
+      "y": 173,
+      "w": 88.015625,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "逾期待处理\n0",
+      "aria": null,
+      "class": "stats-action-card overdue",
+      "x": 26,
+      "y": 276.1875,
+      "w": 268,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "今天截止\n1",
+      "aria": null,
+      "class": "stats-action-card today",
+      "x": 26,
+      "y": 330.1875,
+      "w": 268,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "无截止日期\n1",
+      "aria": null,
+      "class": "stats-action-card undated",
+      "x": 26,
+      "y": 384.1875,
+      "w": 268,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "产品\n1 项待办",
+      "aria": null,
+      "class": "stats-project-row",
+      "x": 41,
+      "y": 726.15625,
+      "w": 238,
+      "h": 61
+    },
+    {
+      "id": "",
+      "text": "设计\n1 项待办",
+      "aria": null,
+      "class": "stats-project-row",
+      "x": 41,
+      "y": 787.15625,
+      "w": 238,
+      "h": 61
+    },
+    {
+      "id": "",
+      "text": "Task Tracer\n1 项待办",
+      "aria": null,
+      "class": "stats-project-row",
+      "x": 41,
+      "y": 848.15625,
+      "w": 238,
+      "h": 61
+    },
+    {
+      "id": "viewTab-list",
+      "text": "列表",
+      "aria": "列表",
+      "class": "view-tab",
+      "x": 10,
+      "y": 641,
+      "w": 72,
+      "h": 54
+    },
+    {
+      "id": "viewTab-calendar",
+      "text": "日历",
+      "aria": "日历",
+      "class": "view-tab",
+      "x": 86,
+      "y": 641,
+      "w": 72,
+      "h": 54
+    },
+    {
+      "id": "viewTab-timeline",
+      "text": "时间线",
+      "aria": "时间线",
+      "class": "view-tab",
+      "x": 162,
+      "y": 641,
+      "w": 72,
+      "h": 54
+    },
+    {
+      "id": "viewTab-stats",
+      "text": "统计",
+      "aria": "统计",
+      "class": "view-tab selected",
+      "x": 238,
+      "y": 641,
+      "w": 72,
+      "h": 54
+    }
+  ],
+  "fields": [
+    {
+      "id": "searchInput",
+      "value": "",
+      "checked": false,
+      "x": 26,
+      "y": 131,
+      "w": 268,
+      "h": 36
+    }
+  ],
+  "surfaces": [
+    {
+      "selector": "body",
+      "visible": true,
+      "background": "rgb(221, 220, 231) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundColor": "rgb(221, 220, 231)",
+      "color": "rgb(49, 43, 67)",
+      "border": "0px none rgb(49, 43, 67)",
+      "boxShadow": "none",
+      "backdropFilter": "none",
+      "borderRadius": "0px",
+      "x": 0,
+      "y": 0,
+      "w": 320,
+      "h": 1077.65625
+    },
+    {
+      "selector": ".workspace-header",
+      "missing": true
+    },
+    {
+      "selector": ".workspace-page-header",
+      "visible": true,
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(49, 43, 67)",
+      "border": "0px none rgb(49, 43, 67)",
+      "boxShadow": "none",
+      "backdropFilter": "none",
+      "borderRadius": "0px",
+      "x": 14,
+      "y": 76,
+      "w": 292,
+      "h": 30
+    },
+    {
+      "selector": "#workspaceDayStrip",
+      "visible": false,
+      "background": "rgb(228, 228, 237) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundColor": "rgb(228, 228, 237)",
+      "color": "rgb(49, 43, 67)",
+      "border": "0px none rgb(49, 43, 67)",
+      "boxShadow": "none",
+      "backdropFilter": "none",
+      "borderRadius": "10px",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": ".task-item",
+      "missing": true
+    },
+    {
+      "selector": "#taskModal .modal-content",
+      "visible": false,
+      "background": "rgb(249, 248, 252) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundColor": "rgb(249, 248, 252)",
+      "color": "rgb(49, 43, 67)",
+      "border": "0px none rgb(49, 43, 67)",
+      "boxShadow": "rgba(17, 25, 49, 0.22) 0px 24px 70px 0px",
+      "backdropFilter": "none",
+      "borderRadius": "14px",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#taskModal .modal-header",
+      "visible": false,
+      "background": "rgb(249, 248, 252) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundColor": "rgb(249, 248, 252)",
+      "color": "rgb(49, 43, 67)",
+      "border": "",
+      "boxShadow": "none",
+      "backdropFilter": "none",
+      "borderRadius": "0px",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#taskModal .form-actions",
+      "visible": false,
+      "background": "rgb(249, 248, 252) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundColor": "rgb(249, 248, 252)",
+      "color": "rgb(49, 43, 67)",
+      "border": "",
+      "boxShadow": "rgba(15, 23, 42, 0.06) 0px -12px 24px 0px",
+      "backdropFilter": "none",
+      "borderRadius": "0px",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": ".task-editor-properties",
+      "visible": false,
+      "background": "rgb(228, 228, 237) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundColor": "rgb(228, 228, 237)",
+      "color": "rgb(49, 43, 67)",
+      "border": "0px none rgb(49, 43, 67)",
+      "boxShadow": "none",
+      "backdropFilter": "none",
+      "borderRadius": "12px",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": ".form-control",
+      "missing": true
+    },
+    {
+      "selector": ".task-action-menu",
+      "missing": true
+    },
+    {
+      "selector": ".settings-card",
+      "missing": true
+    },
+    {
+      "selector": ".stats-action-panel",
+      "missing": true
+    },
+    {
+      "selector": "#workspaceMobileDock",
+      "visible": true,
+      "background": "rgb(211, 210, 224) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundColor": "rgb(211, 210, 224)",
+      "color": "rgb(49, 43, 67)",
+      "border": "",
+      "boxShadow": "none",
+      "backdropFilter": "none",
+      "borderRadius": "0px",
+      "x": 0,
+      "y": 635,
+      "w": 320,
+      "h": 65
+    }
+  ]
+}

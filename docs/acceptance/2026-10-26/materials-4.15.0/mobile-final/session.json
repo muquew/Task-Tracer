@@ -1,0 +1,32 @@
+{
+  "source_index_sha256": "3aa235f5f9adae2349440b8995c7a9c1ecb0335111f52d232cc8811e29a37561",
+  "browser_closed": true,
+  "server_closed": true,
+  "source_end_sha256": "3aa235f5f9adae2349440b8995c7a9c1ecb0335111f52d232cc8811e29a37561",
+  "pageErrors": [],
+  "actionErrors": [],
+  "error": null,
+  "screenshots": [
+    "01-390-iris-light-list",
+    "02-390-iris-light-editor",
+    "03-390-iris-dark-list",
+    "04-390-iris-dark-editor",
+    "05-390-ocean-light-list",
+    "06-390-ocean-light-editor",
+    "07-390-ocean-dark-list",
+    "08-390-ocean-dark-editor",
+    "09-390-pine-light-list",
+    "10-390-pine-light-editor",
+    "11-390-pine-dark-list",
+    "12-390-pine-dark-editor",
+    "13-390-berry-light-list",
+    "14-390-berry-light-editor",
+    "15-390-berry-dark-list",
+    "16-390-berry-dark-editor",
+    "17-320-berry-dark-short-editor",
+    "18-390-berry-dark-appearance",
+    "19-390-berry-dark-action-menu",
+    "20-390-berry-dark-statistics"
+  ],
+  "actions": 89
+}

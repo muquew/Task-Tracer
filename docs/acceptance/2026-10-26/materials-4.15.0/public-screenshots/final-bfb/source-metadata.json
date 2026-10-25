@@ -1,0 +1,57 @@
+{
+  "captured_at_beijing": "2026-10-26T02:31:42.652500+08:00",
+  "root": "/workspace/Task-Tracer",
+  "git_head": "5ce2f9b22bc9c4c1117018eaf64aa5b051e7bc2b",
+  "git_status": [
+    " M DESIGN.md",
+    " M GOAL.md",
+    " M README.md",
+    " M README_zh_cn.md",
+    " M index.html",
+    " M package-lock.json",
+    " M package.json",
+    " M screenshots/add-task-en.png",
+    " M screenshots/add-task.png",
+    " M screenshots/task-list-en.png",
+    " M screenshots/task-list.png",
+    " M sw.js",
+    " M tools/appearance_preferences_playwright.py",
+    " M vercel.json",
+    "?? MATERIAL_BRIEF.md",
+    "?? docs/acceptance/2026-10-26/materials-4.15.0/",
+    "?? docs/releases/4.15.0.md"
+  ],
+  "code_snapshot_sha256": "a5332d98194f6d04afa3b7924975642ac3638d81df03ee8e5daf0ce1a8875051",
+  "driver_sha256": "4a4a952795c9c654c3aa8fc1b6933686c537dc160a7c0648f371eb5f0ff991d0",
+  "argv": [
+    "/workspace/design-research/task-tracer-materials-2026-10-26/public-screenshots/final-bfb/capture.py",
+    "--expected-index-sha256",
+    "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5"
+  ],
+  "sources": {
+    "index.html": {
+      "sha256": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5",
+      "bytes": 977388
+    },
+    "sw.js": {
+      "sha256": "3e3f2e67832911ec52168691412baa3193b03766632120934c1c679ff2a70f1b",
+      "bytes": 8305
+    },
+    "resources/en.json": {
+      "sha256": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd",
+      "bytes": 57088
+    },
+    "resources/zh-CN.json": {
+      "sha256": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9",
+      "bytes": 55580
+    },
+    "vercel.json": {
+      "sha256": "f755f54a513ebe8db4ed910564971d9f1fb0053c405882f9e1db1981f9fcd729",
+      "bytes": 1194
+    },
+    "package.json": {
+      "sha256": "e01b855e4beaa03bdff257a618d0835fd50aac3912c8fda64bbb44e5bae30431",
+      "bytes": 451
+    }
+  }
+}

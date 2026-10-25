@@ -1,0 +1,42 @@
+{
+  "index.html": {
+    "sha256": "3aa235f5f9adae2349440b8995c7a9c1ecb0335111f52d232cc8811e29a37561",
+    "bytes": 977247
+  },
+  "manifest.json": {
+    "sha256": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718",
+    "bytes": 1607
+  },
+  "node_modules/axe-core/axe.min.js": {
+    "sha256": "20c09fe157a8a34a30e241aaa1fcdade657734f08ab379ecfbeb7d45cc46e878",
+    "bytes": 652140
+  },
+  "resources/en.json": {
+    "sha256": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd",
+    "bytes": 57088
+  },
+  "resources/zh-CN.json": {
+    "sha256": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9",
+    "bytes": 55580
+  },
+  "sw.js": {
+    "sha256": "3e3f2e67832911ec52168691412baa3193b03766632120934c1c679ff2a70f1b",
+    "bytes": 8305
+  },
+  "tools/security_playwright.py": {
+    "sha256": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+    "bytes": 2979
+  },
+  "tools/security_policy.py": {
+    "sha256": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+    "bytes": 2171
+  },
+  "tools/smoke_playwright.py": {
+    "sha256": "df5a1a8c557a08c075b2e02a22a0ceb93ac404ddead9877f7651366a09ae166a",
+    "bytes": 190584
+  },
+  "vercel.json": {
+    "sha256": "f755f54a513ebe8db4ed910564971d9f1fb0053c405882f9e1db1981f9fcd729",
+    "bytes": 1194
+  }
+}

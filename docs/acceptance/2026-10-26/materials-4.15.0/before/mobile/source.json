@@ -1,0 +1,32 @@
+{
+  "sha256": "e5741f889cb3c8e74d7f5885f36d5030922afa948b397579b759839ffd827f48",
+  "status": 200,
+  "url": "https://todo.muquew.com/",
+  "headers": {
+    "access-control-allow-origin": "*",
+    "age": "202",
+    "cache-control": "public, max-age=0, must-revalidate",
+    "content-disposition": "inline",
+    "content-encoding": "br",
+    "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'sha256-ej+GQwBKll6bownE3STP1CslGIwMjUq+8diEdcdokgM=' 'sha256-a4+lSS8j9v7th/C1LsZTTZBBYYY6a0qxkv7Yr5pk1s8=' 'sha256-E6zQmmfqEgpCc/6oFzMuadkwBdj+Be4x6zkCAb6SqU0=' 'sha256-3zwNh2wOrR6nfxKVQioxGwrJL4j8PxXI/ufLMNU0zVo='; script-src-attr 'none'",
+    "content-type": "text/html; charset=utf-8",
+    "date": "Sun, 25 Oct 2026 18:16:34 GMT",
+    "etag": "W/\"e191e573008f7a67cb9f155a63ffed59\"",
+    "last-modified": "Sun, 25 Oct 2026 18:13:11 GMT",
+    "permissions-policy": "camera=(), microphone=(), geolocation=()",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "server": "envoy",
+    "strict-transport-security": "max-age=63072000",
+    "x-content-type-options": "nosniff",
+    "x-envoy-upstream-service-time": "96",
+    "x-frame-options": "DENY",
+    "x-vercel-cache": "HIT",
+    "x-vercel-id": "cle1::4vbtl-1792952194016-202572b00623"
+  },
+  "captured": "2026-10-25T18:16:34.897987+00:00",
+  "browser": "154.0.8037.57",
+  "bypassCSP": false,
+  "normalMotion": true,
+  "fresh_context": true,
+  "normal_tls": true
+}
