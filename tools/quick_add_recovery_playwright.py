@@ -241,6 +241,8 @@ def capture_metadata(page, url):
     smoke.wait_for_app_ready(page)
     expect(page.locator('#quickAddInput')).to_have_value(title)
     assert page.evaluate('location.search') == ''
+    expect(page.locator('#captureShelf')).to_be_visible()
+    expect(page.locator('#quickAddInput')).to_be_focused()
     mark_document(page)
     before = stored(page)
     raw = '  '+title+'  '

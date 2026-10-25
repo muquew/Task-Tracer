@@ -101,6 +101,9 @@ def browser_launch_options() -> dict[str, Any]:
     executable = os.environ.get("TASK_TRACER_BROWSER_EXECUTABLE")
     if executable:
         options["executable_path"] = executable
+    else:
+        # Full Chromium keeps real notification permission coverage in headless CI.
+        options["channel"] = "chromium"
     return options
 
 

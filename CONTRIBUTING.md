@@ -34,7 +34,9 @@ The static command runs seven programs for consistency, date semantics, deployme
 
 Each command must exit successfully. `--keep-going` collects later outcomes after a failure but does not turn that failure into a pass. The atomic schema-2 report records a fresh run ID, commands, durations, completion state and source/verification identities. `completed: false`, `passed: false`, interrupted runs or input drift do not satisfy release acceptance. Keep native failures and interrupted attempts beside fresh reruns, with their original identities and logs.
 
-CI installs the Playwright-managed Chromium for the pinned dependency. To select a system browser explicitly, use `TASK_TRACER_BROWSER_EXECUTABLE=/usr/bin/chromium python tools/check.py --report dist/check-results.json` and record its actual version. A running development server or an old release's successful report does not validate a new candidate.
+CI installs the Playwright-managed Chromium for the pinned dependency and uses its full headless channel so notification permissions are exercised in the complete browser. To select a system browser explicitly, use `TASK_TRACER_BROWSER_EXECUTABLE=/usr/bin/chromium python tools/check.py --report dist/check-results.json` and record its actual version. A running development server or an old release's successful report does not validate a new candidate.
+
+The CI job summary lists executed programs, exit codes and durations, and failed programs receive an annotation. Missing, interrupted or incomplete reports retain that state; unexecuted programs are not counted as passes.
 
 Changes to interaction structure, focus, colors or translations also need the [accessibility/i18n audit](docs/accessibility-i18n-audit.md) and real keyboard/visual review. Keep checked-state glyph visibility, readable errors and fixed action bars in the inspected screenshots; semantic state or a clean axe scan alone is insufficient. Record unexecuted screen-reader or physical-device checks instead of inferring complete accessibility compliance.
 

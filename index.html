@@ -7942,7 +7942,8 @@
             ];
             const signature = JSON.stringify(options);
             const menu = getDropdownMenu(DOM.dropdowns.project);
-            if (menu.dataset.signature !== signature) {
+            const optionsChanged = menu.dataset.signature !== signature;
+            if (optionsChanged) {
                 menu.textContent = '';
                 options.forEach(option => {
                     const el = document.createElement('button');
@@ -7960,7 +7961,11 @@
             }
             const selected = getAllDropdownOptions(DOM.dropdowns.project)
                 .find(option => option.dataset.project === projectFilterKey(state.projectFilter));
-            if (selected) updateDropdownUI(DOM.dropdowns.project.container, selected, DOM.dropdowns.project.btn);
+            const preserveOpen = !optionsChanged && isElementOpen(DOM.dropdowns.project.container);
+            if (selected) updateDropdownUI(DOM.dropdowns.project.container, selected, DOM.dropdowns.project.btn, { preserveOpen });
+            if (preserveOpen) requestAnimationFrame(() => {
+                if (isElementOpen(DOM.dropdowns.project.container)) positionDropdownMenu(DOM.dropdowns.project);
+            });
         }
         function getProjectNames() {
             return [...new Set(state.tasks.map(task => normalizeTaskProject(task.project)).filter(Boolean))]
@@ -10649,13 +10654,13 @@
             if (sortOpt) updateDropdownUI(DOM.dropdowns.sort.container, sortOpt, DOM.dropdowns.sort.btn);
             if (focusTrigger) focusTrigger.focus();
         }
-        function updateDropdownUI(container, selected, btn) {
+        function updateDropdownUI(container, selected, btn, { preserveOpen = false } = {}) {
             container.querySelectorAll('.dropdown-option').forEach(option => {
                 const isSelected = option === selected;
                 option.classList.toggle(CONFIG.UI.CLASSES.SELECTED, isSelected);
                 option.setAttribute('aria-selected', String(isSelected));
             });
-            closePopover(container, btn);
+            if (!preserveOpen) closePopover(container, btn);
             const span = selected.querySelector('span');
             if (span) {
                 const targetSpan = btn.querySelector('[id^="current"]');
