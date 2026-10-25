@@ -1,0 +1,62 @@
+{
+  "active": "subtaskInput",
+  "activeBox": {
+    "x": 48,
+    "y": 357,
+    "w": 334,
+    "h": 44,
+    "right": 382,
+    "bottom": 401
+  },
+  "footer": {
+    "x": 24,
+    "y": 413,
+    "w": 752,
+    "h": 71,
+    "right": 776,
+    "bottom": 484
+  },
+  "form": {
+    "x": 24,
+    "y": 83,
+    "w": 752,
+    "h": 401,
+    "right": 776,
+    "bottom": 484
+  },
+  "viewport": {
+    "w": 800,
+    "h": 500
+  },
+  "scrollWidth": 800,
+  "activeCenterHit": true,
+  "presetRows": [
+    {
+      "text": "Today",
+      "x": 480,
+      "y": 192.5,
+      "w": 52.03125,
+      "h": 36,
+      "right": 532.03125,
+      "bottom": 228.5
+    },
+    {
+      "text": "Tomorrow",
+      "x": 538.03125,
+      "y": 192.5,
+      "w": 72.6875,
+      "h": 36,
+      "right": 610.71875,
+      "bottom": 228.5
+    },
+    {
+      "text": "Choose",
+      "x": 616.71875,
+      "y": 192.5,
+      "w": 61.375,
+      "h": 36,
+      "right": 678.09375,
+      "bottom": 228.5
+    }
+  ]
+}

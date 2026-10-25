@@ -1,0 +1,35 @@
+- dialog "添加任务":
+  - heading "添加任务" [level=2]
+  - button "取消": ×
+  - text: 任务名称 *
+  - textbox "任务名称 *":
+    - /placeholder: 输入任务名称
+    - text: 子任务编辑中删除前项审查
+  - text: 描述
+  - textbox "描述":
+    - /placeholder: 输入任务描述
+  - text: 项目
+  - textbox "项目":
+    - /placeholder: 例如：工作 / 个人
+    - text: Inbox
+  - text: 截止日期
+  - checkbox "无截止日期" [checked]
+  - text: 无截止日期
+  - group: 日期与时区说明
+  - text: 子任务
+  - textbox "子任务":
+    - /placeholder: 输入子任务…
+  - button "添加子任务"
+  - list:
+    - listitem:
+      - button "编辑子任务：联系负责人A": 联系负责人A
+      - button "删除子任务：联系负责人A"
+    - listitem:
+      - button "编辑子任务：校对数据B": 校对数据B
+      - button "删除子任务：校对数据B"
+    - listitem:
+      - textbox "编辑子任务文本": 检查附件C：已补充关键修改
+      - button "删除子任务：检查附件C"
+  - group: 更多设置
+  - button "取消"
+  - button "添加任务"

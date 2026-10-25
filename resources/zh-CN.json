@@ -108,7 +108,8 @@
       "complete": "批量完成",
       "archive": "批量归档",
       "delete": "批量删除"
-    }
+    },
+    "selectTasks": "选择"
   },
   "undo": {
     "menu": "撤销上一步",
@@ -267,11 +268,11 @@
   "form": {
     "taskName": {
       "label": "任务名称 *",
-      "placeholder": "输入任务名称"
+      "placeholder": "要完成什么？"
     },
     "description": {
       "label": "描述",
-      "placeholder": "输入任务描述"
+      "placeholder": "补充背景、链接或执行要点"
     },
     "project": {
       "label": "项目",
@@ -1024,5 +1025,24 @@
     "deleteActionOne": "删除 {count} 个任务",
     "mergeSnapshot": "合并更改时，会先将当前任务保留为本地恢复点。",
     "mergeSnapshotTitle": "合并前恢复点"
+  },
+  "editor": {
+    "properties": "任务属性",
+    "datePresets": "快捷安排",
+    "today": "今天",
+    "tomorrow": "明天",
+    "pickDate": "选择日期",
+    "scheduling": "提醒与重复",
+    "requiresDate": "设置截止日期后可使用提醒与重复。",
+    "setDate": "设置日期",
+    "weekdayRequired": "请至少选择一个重复星期。",
+    "chooseDate": "选择"
+  },
+  "settingsRefinement": {
+    "storageTitle": "浏览器存储保护",
+    "storageDescription": "查看存储用量、持久保存状态与浏览器能提供的保护。",
+    "storageAction": "查看存储状态",
+    "importReplaceTitle": "替换全部当前任务",
+    "recoveryPreviewToggle": "查看恢复点中的任务"
   }
 }

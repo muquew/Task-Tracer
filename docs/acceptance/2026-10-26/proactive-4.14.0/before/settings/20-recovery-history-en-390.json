@@ -1,0 +1,45 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "scrollY": 17,
+  "docWidth": 390,
+  "docHeight": 1399,
+  "active": {
+    "id": "submitBtn",
+    "tag": "BUTTON"
+  },
+  "dialog": null,
+  "settingsSection": "tab-settingsData",
+  "visibleText": "Back to tasks\nUndo\nAdd task\nSettings & data\nAppearance & language\nBackups & transfer\nReminders & installation\nTask maintenance\nHelp & about\nBackups & transfer\nTasks changed since the last export · exported today. Export again\nTask backup\n\nDownload a restorable backup of all tasks, including archived tasks. Saved views, preferences and recovery history are not included.\n\nDownload backup\nRestore from a backup\n\nChoose a JSON task backup. Preview it before deciding to merge or replace.\n\nChoose backup file\nLocal recovery history\n\nReview recovery points in this browser, then export or restore the selected tasks.\n\nRecovery history\nOther data tools\nSpreadsheet export\n\nDownload a CSV report of all tasks, including archived tasks. Reports cannot restore tasks.\n\nExport all tasks as CSV\nTransfer saved views\n\nExport or import saved searches, filters and layouts in a separate file. Your tasks stay unchanged.\n\nTransfer saved views\nStorage & recovery\n\nReview usage, persistence and the protection your browser can provide.\n\nData safety\nRestore a local recovery point\n×\nRecovery point\n10/26/2026, 1:22:55 AM · 3 tasks\n10/26/2026, 1:20:34 AM · 0 tasks\n10/26/2026, 1:22:55 AM · 3 tasks\n\nCurrent tasks: 3 → recovery point: 3. Restoring replaces all current tasks.\n\nSelected recovery point\n\nShowing 3/3 tasks · 1 completed · 0 archived\n\nReview completed · Completed\nPlan migration · Active\nPrepare audit · Active\n\nKeep up to 10 recovery points in this browser. Changes are saved at most every five minutes, with an extra point before deletion, import, undo or restore. These points are lost if site data is cleared; export a backup to protect against device loss.\n\nDeleted tasks may remain in local recovery points. Export a selected point or clear the recovery history when needed.\n\nExport this recovery pointClear recovery history\nI understand this replaces all current tasks. The current state will be kept as a recovery point.\nCancel\nRestore 3 tasks",
+  "boxes": [
+    {
+      "id": "",
+      "className": "settings-section-navigation",
+      "x": 12,
+      "y": 105,
+      "width": 366,
+      "height": 53
+    },
+    {
+      "id": "taskModal",
+      "className": "modal",
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844
+    },
+    {
+      "id": "",
+      "className": "modal-content",
+      "x": 16,
+      "y": 12,
+      "width": 358,
+      "height": 820
+    }
+  ],
+  "pageErrors": [],
+  "normal_motion": true,
+  "animations_settled_before_capture": true
+}

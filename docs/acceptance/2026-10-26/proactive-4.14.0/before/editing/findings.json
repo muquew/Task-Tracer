@@ -1,0 +1,88 @@
+{
+  "scope": "Fresh read-only audit; repository source, tools and Markdown were not changed during capture. Browser and HTTP server closed.",
+  "metadata": "metadata.json",
+  "observations": "session-observations.json",
+  "findings": [
+    {
+      "id": "E1",
+      "impact": "high",
+      "title": "无截止日期来回切换丢掉正在填写的安排",
+      "steps": [
+        "添加任务，输入名称",
+        "设置2026-11-12 09:30，提前1小时，每1小时重复提醒，每周一三五，暂停重复",
+        "勾选无截止日期，再取消勾选"
+      ],
+      "expected": "本表单内恢复已填写的日期、时间、提醒重复和重复规则；尚未提交时数据库不变。",
+      "actual": {
+        "dueDate": "2026-10-25",
+        "dueTime": "23:59",
+        "reminderOffset": "60",
+        "reminderRepeat": "-1",
+        "repeatType": "none",
+        "weekdays": [],
+        "paused": false
+      },
+      "evidence": [
+        "04-schedule-before-toggle-bottom.png",
+        "05-schedule-after-toggle-top.png",
+        "06-schedule-after-toggle-bottom.png",
+        "schedule-toggle-db.json"
+      ],
+      "recommendation": "切换仅禁用/隐藏并保留原字段值；在最终提交无日期任务时才将日期/提醒/重复归一。"
+    },
+    {
+      "id": "E2",
+      "impact": "high",
+      "title": "每周指定星期全部取消后静默保存为周一三五",
+      "steps": [
+        "选择每周指定星期",
+        "取消全部7个星期复选框",
+        "点击添加任务"
+      ],
+      "expected": "在星期组附近提示至少选择一天并移动焦点，保留草稿且不写数据库。",
+      "actual": "任务成功添加，卡片和原生IndexedDB记录repeatWeekdays均为[1,3,5]，与提交前全空UI不同。",
+      "evidence": [
+        "07-weekdays-none-before-save.png",
+        "07-weekdays-none-before-dom.txt",
+        "08-weekdays-none-saved-mwf.png",
+        "08-weekdays-none-saved-records.json"
+      ],
+      "recommendation": "提交前明确校验可编辑的星期集合，不对用户显式清空的选择应用默认回退。"
+    },
+    {
+      "id": "E3",
+      "impact": "high",
+      "title": "编辑后面子任务时删除前项会丢文字并触发异常",
+      "steps": [
+        "添加A联系负责人、B校对数据、C检查附件三条子任务",
+        "点击C文字进入行内编辑，改为检查附件C：已补充关键修改，不按Enter",
+        "直接点击A的删除按钮",
+        "保存任务"
+      ],
+      "expected": "只删除A，保留C刚输入的文字及B/C稳定ID与完成状态，焦点仍落在有效行内，不发生脚本异常。",
+      "actual": "C退回检查附件C；保存后IndexedDB仅保留B和旧C文本；出现Cannot set properties of undefined (setting text)。",
+      "evidence": [
+        "09-subtask-c-edit-before-delete-a.png",
+        "09-subtask-c-before-dom.txt",
+        "10-subtask-c-edit-after-delete-a.png",
+        "10-subtask-c-after-dom.txt",
+        "11-subtask-delete-saved.png",
+        "11-subtask-delete-saved-records.json",
+        "page-errors.json"
+      ],
+      "recommendation": "先按稳定子任务ID收纳当前行内草稿，删除目标ID，再按幸存编辑ID恢复索引/焦点；重绘前让已拆除input的focusout变成安全无操作。"
+    }
+  ],
+  "healthy_boundaries": [
+    "默认新建入口、主名称焦点、更多设置展开、日期输入、提醒与重复选项均可到达。",
+    "除E3删除时产生的一条pageerror外，本次操作未观察到其它pageerror。",
+    "审查使用全新合成资料；只读原生IndexedDB作结果核对，未注入状态或故障。"
+  ],
+  "not_audited": [
+    "本轮按父任务要求在三项已实证问题后停止扩展；快速记录只打开空面板，未完成交接/取消/组词全路径，不能声称健康。",
+    "未测原生OS输入法、后台通知送达、屏幕阅读器、跨浏览器、真实手机键盘、离线升级或大数据。",
+    "12/13日期清空及后续空quickcapture观察属于未采用补充材料，不作为本三项发现证据。"
+  ],
+  "screenshot_review": "findings所列全部PNG均已逐张view_image实看，不复用上一轮材料。",
+  "report_format": "JSON chosen to honor parent instruction not to modify or create Markdown."
+}

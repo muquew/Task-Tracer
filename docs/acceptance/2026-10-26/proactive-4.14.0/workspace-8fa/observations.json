@@ -1,0 +1,496 @@
+{
+  "baselineCount": 8,
+  "select320": {
+    "drawerExpanded": "false",
+    "buttons": [
+      {
+        "id": "toolsDrawerToggleBtn",
+        "text": "筛选\n进行中",
+        "hidden": false,
+        "box": {
+          "x": 26,
+          "y": 245,
+          "width": 103.96875,
+          "height": 44,
+          "top": 245,
+          "right": 129.96875,
+          "bottom": 289,
+          "left": 26
+        }
+      },
+      {
+        "id": "batchModeBtn",
+        "text": "选择",
+        "hidden": false,
+        "box": {
+          "x": 135.96875,
+          "y": 245,
+          "width": 64.015625,
+          "height": 44,
+          "top": 245,
+          "right": 199.984375,
+          "bottom": 289,
+          "left": 135.96875
+        }
+      },
+      {
+        "id": "saveSmartViewBtn",
+        "text": "保存视图",
+        "hidden": false,
+        "box": {
+          "x": 205.984375,
+          "y": 245,
+          "width": 88.015625,
+          "height": 44,
+          "top": 245,
+          "right": 294,
+          "bottom": 289,
+          "left": 205.984375
+        }
+      }
+    ]
+  },
+  "more320": {
+    "before": {
+      "x": 14,
+      "y": 301,
+      "width": 292,
+      "height": 140
+    },
+    "after": {
+      "x": 14,
+      "y": 301,
+      "width": 292,
+      "height": 140
+    },
+    "panel": [
+      {
+        "id": "",
+        "text": "移动到项目\n加入今日计划\n归档\n删除",
+        "hidden": false,
+        "box": {
+          "x": 45,
+          "y": 446,
+          "width": 260,
+          "height": 202,
+          "top": 446,
+          "right": 305,
+          "bottom": 648,
+          "left": 45
+        }
+      }
+    ],
+    "class": "batch-more-actions",
+    "buttons": [
+      {
+        "id": "batchMoveProjectBtn",
+        "text": "移动到项目",
+        "hidden": false,
+        "box": {
+          "x": 52,
+          "y": 453,
+          "width": 246,
+          "height": 44,
+          "top": 453,
+          "right": 298,
+          "bottom": 497,
+          "left": 52
+        }
+      },
+      {
+        "id": "batchFocusBtn",
+        "text": "加入今日计划",
+        "hidden": false,
+        "box": {
+          "x": 52,
+          "y": 501,
+          "width": 246,
+          "height": 44,
+          "top": 501,
+          "right": 298,
+          "bottom": 545,
+          "left": 52
+        }
+      },
+      {
+        "id": "batchArchiveBtn",
+        "text": "归档",
+        "hidden": false,
+        "box": {
+          "x": 52,
+          "y": 549,
+          "width": 246,
+          "height": 44,
+          "top": 549,
+          "right": 298,
+          "bottom": 593,
+          "left": 52
+        }
+      },
+      {
+        "id": "batchDeleteBtn",
+        "text": "删除",
+        "hidden": false,
+        "box": {
+          "x": 52,
+          "y": 597,
+          "width": 246,
+          "height": 44,
+          "top": 597,
+          "right": 298,
+          "bottom": 641,
+          "left": 52
+        }
+      }
+    ]
+  },
+  "moreInteractions": {
+    "escapeClosed": true,
+    "outsideClosed": true,
+    "pageScrollClosed": true
+  },
+  "moveUndo": {
+    "movedCount": 2,
+    "exactOriginalRecordsRestored": true
+  },
+  "queryPrune": {
+    "selection": "已选择 0 个任务",
+    "matches": [
+      "确认登录流程的评审安排"
+    ]
+  },
+  "drawerPreservation": {
+    "collapsedDuringSelection": true,
+    "expandedBeforeDuringAfter": [
+      true,
+      true,
+      true
+    ]
+  },
+  "stats320": {
+    "rows": [
+      {
+        "id": "",
+        "text": "逾期待处理\n1",
+        "hidden": false,
+        "box": {
+          "x": 26,
+          "y": 276.1875,
+          "width": 268,
+          "height": 54,
+          "top": 276.1875,
+          "right": 294,
+          "bottom": 330.1875,
+          "left": 26
+        }
+      },
+      {
+        "id": "",
+        "text": "今天截止\n2",
+        "hidden": false,
+        "box": {
+          "x": 26,
+          "y": 330.1875,
+          "width": 268,
+          "height": 54,
+          "top": 330.1875,
+          "right": 294,
+          "bottom": 384.1875,
+          "left": 26
+        }
+      },
+      {
+        "id": "",
+        "text": "无截止日期\n2",
+        "hidden": false,
+        "box": {
+          "x": 26,
+          "y": 384.1875,
+          "width": 268,
+          "height": 54,
+          "top": 384.1875,
+          "right": 294,
+          "bottom": 438.1875,
+          "left": 26
+        }
+      }
+    ],
+    "descriptionCount": 1,
+    "repeatHints": 0
+  },
+  "stats390": {
+    "rows": [
+      {
+        "id": "",
+        "text": "逾期待处理\n1",
+        "hidden": false,
+        "box": {
+          "x": 26,
+          "y": 276.1875,
+          "width": 338,
+          "height": 54,
+          "top": 276.1875,
+          "right": 364,
+          "bottom": 330.1875,
+          "left": 26
+        }
+      },
+      {
+        "id": "",
+        "text": "今天截止\n2",
+        "hidden": false,
+        "box": {
+          "x": 26,
+          "y": 330.1875,
+          "width": 338,
+          "height": 54,
+          "top": 330.1875,
+          "right": 364,
+          "bottom": 384.1875,
+          "left": 26
+        }
+      },
+      {
+        "id": "",
+        "text": "无截止日期\n2",
+        "hidden": false,
+        "box": {
+          "x": 26,
+          "y": 384.1875,
+          "width": 338,
+          "height": 54,
+          "top": 384.1875,
+          "right": 364,
+          "bottom": 438.1875,
+          "left": 26
+        }
+      }
+    ]
+  },
+  "statsDrilldown": {
+    "todayTasks": 2,
+    "returnedEmptyQuery": true,
+    "recordsUnchanged": true
+  },
+  "stats1440": {
+    "tiles": [
+      {
+        "id": "",
+        "text": "逾期待处理\n1",
+        "hidden": false,
+        "box": {
+          "x": 268,
+          "y": 319.640625,
+          "width": 377.328125,
+          "height": 104,
+          "top": 319.640625,
+          "right": 645.328125,
+          "bottom": 423.640625,
+          "left": 268
+        }
+      },
+      {
+        "id": "",
+        "text": "今天截止\n2",
+        "hidden": false,
+        "box": {
+          "x": 645.328125,
+          "y": 319.640625,
+          "width": 377.328125,
+          "height": 104,
+          "top": 319.640625,
+          "right": 1022.65625,
+          "bottom": 423.640625,
+          "left": 645.328125
+        }
+      },
+      {
+        "id": "",
+        "text": "无截止日期\n2",
+        "hidden": false,
+        "box": {
+          "x": 1022.65625,
+          "y": 319.640625,
+          "width": 377.34375,
+          "height": 104,
+          "top": 319.640625,
+          "right": 1400,
+          "bottom": 423.640625,
+          "left": 1022.65625
+        }
+      }
+    ]
+  },
+  "stats320English": {
+    "rows": [
+      {
+        "id": "",
+        "text": "Overdue\n1",
+        "hidden": false,
+        "box": {
+          "x": 26,
+          "y": 276.1875,
+          "width": 268,
+          "height": 54,
+          "top": 276.1875,
+          "right": 294,
+          "bottom": 330.1875,
+          "left": 26
+        }
+      },
+      {
+        "id": "",
+        "text": "Due today\n2",
+        "hidden": false,
+        "box": {
+          "x": 26,
+          "y": 330.1875,
+          "width": 268,
+          "height": 54,
+          "top": 330.1875,
+          "right": 294,
+          "bottom": 384.1875,
+          "left": 26
+        }
+      },
+      {
+        "id": "",
+        "text": "No deadline\n2",
+        "hidden": false,
+        "box": {
+          "x": 26,
+          "y": 384.1875,
+          "width": 268,
+          "height": 54,
+          "top": 384.1875,
+          "right": 294,
+          "bottom": 438.1875,
+          "left": 26
+        }
+      }
+    ]
+  },
+  "englishToolbar320": [
+    {
+      "id": "toolsDrawerToggleBtn",
+      "text": "Filters\nActive",
+      "hidden": false,
+      "box": {
+        "x": 26,
+        "y": 273,
+        "width": 83.265625,
+        "height": 44,
+        "top": 273,
+        "right": 109.265625,
+        "bottom": 317,
+        "left": 26
+      }
+    },
+    {
+      "id": "batchModeBtn",
+      "text": "Select",
+      "hidden": false,
+      "box": {
+        "x": 115.265625,
+        "y": 273,
+        "width": 75.359375,
+        "height": 44,
+        "top": 273,
+        "right": 190.625,
+        "bottom": 317,
+        "left": 115.265625
+      }
+    },
+    {
+      "id": "saveSmartViewBtn",
+      "text": "Save view",
+      "hidden": false,
+      "box": {
+        "x": 196.625,
+        "y": 273,
+        "width": 97.375,
+        "height": 44,
+        "top": 273,
+        "right": 294,
+        "bottom": 317,
+        "left": 196.625
+      }
+    }
+  ],
+  "zeroStates": [
+    {
+      "text": "Overdue\n0",
+      "disabled": true,
+      "action": "overdue",
+      "arrow": 0
+    },
+    {
+      "text": "Due today\n2",
+      "disabled": false,
+      "action": "today",
+      "arrow": 1
+    },
+    {
+      "text": "No deadline\n0",
+      "disabled": true,
+      "action": "undated",
+      "arrow": 0
+    }
+  ],
+  "expandedMore": {
+    "class": "batch-more-actions opens-up",
+    "boxes": [
+      {
+        "id": "batchToolbar",
+        "text": "2 tasks selected\nSelect all matching tasks\nClear selection\nComplete\nMore actions\nMove to project\nAdd to today’s plan\nArchive\nDelete\nExit",
+        "hidden": false,
+        "box": {
+          "x": 14,
+          "y": 466,
+          "width": 292,
+          "height": 190,
+          "top": 466,
+          "right": 306,
+          "bottom": 656,
+          "left": 14
+        }
+      },
+      {
+        "id": "",
+        "text": "Move to project\nAdd to today’s plan\nArchive\nDelete",
+        "hidden": false,
+        "box": {
+          "x": 45,
+          "y": 259,
+          "width": 260,
+          "height": 202,
+          "top": 259,
+          "right": 305,
+          "bottom": 461,
+          "left": 45
+        }
+      },
+      {
+        "id": "workspaceMobileDock",
+        "text": "List\nCalendar\nTimeline\nStats",
+        "hidden": false,
+        "box": {
+          "x": 0,
+          "y": 675,
+          "width": 320,
+          "height": 65,
+          "top": 675,
+          "right": 320,
+          "bottom": 740,
+          "left": 0
+        }
+      }
+    ],
+    "uncovered": true
+  },
+  "pageerrors": [],
+  "finalTaskCount": 8,
+  "finalCompletedCount": 1,
+  "browser": "154.0.8037.57",
+  "normalMotion": true
+}

@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "candidate": "4.14.0 / resources 4.44",
+  "source_sha256": "765c354ba6e0c2eb00c01e7dc0bc9e841af11a1fe7eaa6e66537f9058a38f672",
+  "tool_sha256": "71d673604abb8d93319d917e95e2e7fda32be6bc1c5b4965e25fc1c2934d6f58",
+  "source_and_tool_unchanged_at_end": true,
+  "native_browser_version": "154.0.8037.57",
+  "normal_motion": true,
+  "production_csp": true,
+  "cases_passed": 6,
+  "widths": [
+    1280,
+    390
+  ],
+  "pageerrors": 0,
+  "validation_geometry_and_center_hit": {
+    "1280": {
+      "error_bottom": 844.890625,
+      "footer_top": 859,
+      "clearance_px": 14.109375,
+      "center_hit": {
+        "tag": "P",
+        "id": "repeatWeekdaysError",
+        "className": "editor-validation"
+      }
+    },
+    "390": {
+      "error_bottom": 738.859375,
+      "footer_top": 751,
+      "clearance_px": 12.140625,
+      "center_hit": {
+        "tag": "P",
+        "id": "repeatWeekdaysError",
+        "className": "editor-validation"
+      }
+    }
+  },
+  "all_six_result_pngs_viewed": true,
+  "accepted_run": "/tmp/task-tracer-4.14.0-editor-safety/20261025T174322Z-chromium-b5444366",
+  "receipt": "/tmp/task-tracer-4.14.0-editor-safety/20261025T174322Z-chromium-b5444366/results.json",
+  "source_snapshot": "/tmp/task-tracer-4.14.0-editor-safety/20261025T174322Z-chromium-b5444366/source-snapshot",
+  "previous_8fa_run_preserved": "20261025T173538Z-chromium-d45a62e6",
+  "previous_8fa_review": "candidate-8fae3e3e-review.json",
+  "limits": [
+    "Targeted editor safety regression only; no quota or broader matrix.",
+    "Headless native Chromium DOM/UI paths; not a native OS IME or screen-reader certification."
+  ]
+}

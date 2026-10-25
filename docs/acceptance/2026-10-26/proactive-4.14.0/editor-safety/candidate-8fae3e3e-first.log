@@ -1,0 +1,8 @@
+Editor safety evidence: /tmp/task-tracer-4.14.0-editor-safety/20261025T173538Z-chromium-d45a62e6
+Editor safety passed: 1280px date-roundtrip
+Editor safety passed: 1280px empty-weekdays
+Editor safety passed: 1280px subtask-delete
+Editor safety passed: 390px date-roundtrip
+Editor safety passed: 390px empty-weekdays
+Editor safety passed: 390px subtask-delete
+Editor safety passed: 6 cases; evidence /tmp/task-tracer-4.14.0-editor-safety/20261025T173538Z-chromium-d45a62e6

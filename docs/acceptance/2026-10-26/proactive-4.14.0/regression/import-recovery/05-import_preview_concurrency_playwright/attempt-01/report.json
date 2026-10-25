@@ -1,0 +1,61 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/Task-Tracer/tools/import_preview_concurrency_playwright.py"
+  ],
+  "cwd": "/workspace/Task-Tracer",
+  "started_at": "2026-10-25T17:46:34.664393+00:00",
+  "source_before": {
+    "index.html": {
+      "bytes": 969460,
+      "sha256": "765c354ba6e0c2eb00c01e7dc0bc9e841af11a1fe7eaa6e66537f9058a38f672"
+    },
+    "resources/en.json": {
+      "bytes": 57088,
+      "sha256": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd"
+    },
+    "resources/zh-CN.json": {
+      "bytes": 55580,
+      "sha256": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9"
+    },
+    "vercel.json": {
+      "bytes": 1194,
+      "sha256": "2c45cfccd1068c8659881f2f3f80d5fcb86d522c4e029817cdb22d00c31fb389"
+    },
+    "sw.js": {
+      "bytes": 8305,
+      "sha256": "33faf13b0a83140f11198a77029d94b9071a621de7238fe45c43cd9b721b0dd9"
+    }
+  },
+  "tool_sha256_before": "62727ebffd27e142233e9a431a30c6c0039fd7c78dad9497170174a87e068e7a",
+  "log": "05-import_preview_concurrency_playwright/attempt-01/console.log",
+  "finished_at": "2026-10-25T17:47:11.385098+00:00",
+  "seconds": 36.721,
+  "exit_code": 0,
+  "source_after": {
+    "index.html": {
+      "bytes": 969460,
+      "sha256": "765c354ba6e0c2eb00c01e7dc0bc9e841af11a1fe7eaa6e66537f9058a38f672"
+    },
+    "resources/en.json": {
+      "bytes": 57088,
+      "sha256": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd"
+    },
+    "resources/zh-CN.json": {
+      "bytes": 55580,
+      "sha256": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9"
+    },
+    "vercel.json": {
+      "bytes": 1194,
+      "sha256": "2c45cfccd1068c8659881f2f3f80d5fcb86d522c4e029817cdb22d00c31fb389"
+    },
+    "sw.js": {
+      "bytes": 8305,
+      "sha256": "33faf13b0a83140f11198a77029d94b9071a621de7238fe45c43cd9b721b0dd9"
+    }
+  },
+  "tool_sha256_after": "62727ebffd27e142233e9a431a30c6c0039fd7c78dad9497170174a87e068e7a",
+  "report": "05-import_preview_concurrency_playwright/attempt-01/report.json",
+  "source_unchanged": true,
+  "tool_unchanged": true
+}

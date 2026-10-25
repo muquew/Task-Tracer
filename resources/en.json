@@ -108,7 +108,8 @@
       "complete": "batch complete",
       "archive": "batch archive",
       "delete": "batch delete"
-    }
+    },
+    "selectTasks": "Select"
   },
   "undo": {
     "menu": "Undo last action",
@@ -267,11 +268,11 @@
   "form": {
     "taskName": {
       "label": "Task name *",
-      "placeholder": "Enter task name"
+      "placeholder": "What needs to get done?"
     },
     "description": {
       "label": "Description",
-      "placeholder": "Enter task description"
+      "placeholder": "Add context, links, or steps"
     },
     "project": {
       "label": "Project",
@@ -1024,5 +1025,24 @@
     "deleteActionOne": "Delete {count} task",
     "mergeSnapshot": "When merging changes, the current tasks are first kept as a local recovery point.",
     "mergeSnapshotTitle": "Recovery point before merging"
+  },
+  "editor": {
+    "properties": "Task details",
+    "datePresets": "Quick date choices",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "pickDate": "Choose a date",
+    "scheduling": "Reminders & repeat",
+    "requiresDate": "Set a due date to use reminders and repeat.",
+    "setDate": "Set a date",
+    "weekdayRequired": "Choose at least one repeat day.",
+    "chooseDate": "Choose"
+  },
+  "settingsRefinement": {
+    "storageTitle": "Browser storage protection",
+    "storageDescription": "Review storage usage, persistent storage and the protection your browser can provide.",
+    "storageAction": "Review storage status",
+    "importReplaceTitle": "Replace all current tasks",
+    "recoveryPreviewToggle": "Review recovery point tasks"
   }
 }

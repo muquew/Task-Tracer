@@ -1,0 +1,155 @@
+{
+  "kind": "derived-seven-original-cli-summary",
+  "passed": true,
+  "original_programs": 7,
+  "programs": [
+    {
+      "program": "recovery_playwright.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/Task-Tracer/tools/recovery_playwright.py"
+      ],
+      "started_at": "2026-10-25T17:45:36.563550+00:00",
+      "finished_at": "2026-10-25T17:45:59.273769+00:00",
+      "exit_code": 0,
+      "seconds": 22.71,
+      "source_unchanged": true,
+      "tool_unchanged": true,
+      "attempts": 1,
+      "report": "01-recovery_playwright/attempt-01/report.json",
+      "log": "01-recovery_playwright/attempt-01/console.log"
+    },
+    {
+      "program": "recovery_management_playwright.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/Task-Tracer/tools/recovery_management_playwright.py"
+      ],
+      "started_at": "2026-10-25T17:45:59.276909+00:00",
+      "finished_at": "2026-10-25T17:46:17.636764+00:00",
+      "exit_code": 0,
+      "seconds": 18.36,
+      "source_unchanged": true,
+      "tool_unchanged": true,
+      "attempts": 1,
+      "report": "02-recovery_management_playwright/attempt-01/report.json",
+      "log": "02-recovery_management_playwright/attempt-01/console.log"
+    },
+    {
+      "program": "craft_import_summary_playwright.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/Task-Tracer/tools/craft_import_summary_playwright.py"
+      ],
+      "started_at": "2026-10-25T17:46:17.639834+00:00",
+      "finished_at": "2026-10-25T17:46:28.681847+00:00",
+      "exit_code": 0,
+      "seconds": 11.042,
+      "source_unchanged": true,
+      "tool_unchanged": true,
+      "attempts": 1,
+      "report": "03-craft_import_summary_playwright/attempt-01/report.json",
+      "log": "03-craft_import_summary_playwright/attempt-01/console.log"
+    },
+    {
+      "program": "import_conflicts_playwright.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/Task-Tracer/tools/import_conflicts_playwright.py"
+      ],
+      "started_at": "2026-10-25T17:46:28.684313+00:00",
+      "finished_at": "2026-10-25T17:46:34.660854+00:00",
+      "exit_code": 0,
+      "seconds": 5.976,
+      "source_unchanged": true,
+      "tool_unchanged": true,
+      "attempts": 1,
+      "report": "04-import_conflicts_playwright/attempt-01/report.json",
+      "log": "04-import_conflicts_playwright/attempt-01/console.log"
+    },
+    {
+      "program": "import_preview_concurrency_playwright.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/Task-Tracer/tools/import_preview_concurrency_playwright.py"
+      ],
+      "started_at": "2026-10-25T17:46:34.664393+00:00",
+      "finished_at": "2026-10-25T17:47:11.385098+00:00",
+      "exit_code": 0,
+      "seconds": 36.721,
+      "source_unchanged": true,
+      "tool_unchanged": true,
+      "attempts": 1,
+      "report": "05-import_preview_concurrency_playwright/attempt-01/report.json",
+      "log": "05-import_preview_concurrency_playwright/attempt-01/console.log"
+    },
+    {
+      "program": "imported_text_edit_playwright.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/Task-Tracer/tools/imported_text_edit_playwright.py"
+      ],
+      "started_at": "2026-10-25T17:47:11.387807+00:00",
+      "finished_at": "2026-10-25T17:47:51.919465+00:00",
+      "exit_code": 0,
+      "seconds": 40.531,
+      "source_unchanged": true,
+      "tool_unchanged": true,
+      "attempts": 1,
+      "report": "06-imported_text_edit_playwright/attempt-01/report.json",
+      "log": "06-imported_text_edit_playwright/attempt-01/console.log"
+    },
+    {
+      "program": "imported_reminder_edit_playwright.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/Task-Tracer/tools/imported_reminder_edit_playwright.py"
+      ],
+      "started_at": "2026-10-25T17:47:51.927920+00:00",
+      "finished_at": "2026-10-25T17:48:14.983304+00:00",
+      "exit_code": 0,
+      "seconds": 23.055,
+      "source_unchanged": true,
+      "tool_unchanged": true,
+      "attempts": 1,
+      "report": "07-imported_reminder_edit_playwright/attempt-01/report.json",
+      "log": "07-imported_reminder_edit_playwright/attempt-01/console.log"
+    }
+  ],
+  "total_program_seconds": 158.395,
+  "source_inputs": {
+    "index.html": {
+      "bytes": 969460,
+      "sha256": "765c354ba6e0c2eb00c01e7dc0bc9e841af11a1fe7eaa6e66537f9058a38f672"
+    },
+    "resources/en.json": {
+      "bytes": 57088,
+      "sha256": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd"
+    },
+    "resources/zh-CN.json": {
+      "bytes": 55580,
+      "sha256": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9"
+    },
+    "vercel.json": {
+      "bytes": 1194,
+      "sha256": "2c45cfccd1068c8659881f2f3f80d5fcb86d522c4e029817cdb22d00c31fb389"
+    },
+    "sw.js": {
+      "bytes": 8305,
+      "sha256": "33faf13b0a83140f11198a77029d94b9071a621de7238fe45c43cd9b721b0dd9"
+    }
+  },
+  "index_sha256": "765c354ba6e0c2eb00c01e7dc0bc9e841af11a1fe7eaa6e66537f9058a38f672",
+  "all_seven_same_source_inputs": true,
+  "failed_attempts": [],
+  "additional_tool_adaptations_during_this_lane": false,
+  "scope": "Original CLI defaults, one program at a time, Chromium only. Local static HTTP does not attach deployment CSP; original context motion and fixtures are unchanged. No new performance or engine matrix.",
+  "motion_scope": {
+    "recovery_playwright.py": "Original browser context default",
+    "other_six_programs": "Original explicit reduced_motion=reduce contexts preserved"
+  },
+  "browser_scope": "Original Chromium CLI defaults; system /usr/bin/chromium selected. imported_text_edit and imported_reminder_edit native logs report 154.0.8037.57.",
+  "cleanup_scope": "All seven CLI processes exited normally; their original browser/context and local-server close paths completed. This statement does not inspect or close other agents resources.",
+  "repo_markdown_written": false,
+  "registry_or_app_or_resources_changed_by_lane": false
+}

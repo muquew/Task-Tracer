@@ -64,7 +64,10 @@ def run():
             expect(page.locator('[data-import-conflict-index="199"]')).to_have_value('skip')
             expect(page.locator('#import-conflict-100-custom-button')).to_be_focused()
             expect(page.locator('[data-import-conflict-index="220"]')).to_have_count(0)
-            page.locator('#mergeImportMode').uncheck()
+            if page.locator('#mergeImportMode').get_attribute('type') == 'radio':
+                page.locator('#replaceImportMode').check()
+            else:
+                page.locator('#mergeImportMode').uncheck()
             page.locator('#mergeImportMode').check()
             expect(page.locator('.import-conflict-select')).to_have_count(200)
             expect(page.locator('[data-import-conflict-index="0"]')).to_have_value('replace')

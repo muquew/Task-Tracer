@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-10-25T17:59:04.588133+00:00",
+  "status": "passed_scoped_release_acceptance",
+  "repository": "/workspace/Task-Tracer",
+  "app_version": "4.14.0",
+  "resource_version": "4.44",
+  "scope": [
+    "native static7",
+    "two independent reproducible builds and extracted persistence/offline",
+    "actual 4.13.2 ZIP upgrade/rollback/re-upgrade"
+  ],
+  "source_inputs": 23,
+  "verification_inputs": 84,
+  "source_sha256": "ed7e3d65bcf56da1ca48fe542e0818bcfeb8e72c08ffd38f4bb816c7883bd307",
+  "verification_sha256": "bcb64e6bcfae7b7410c81d31fbe3e8288df6ef3cef17a5a9761296ec869d805c",
+  "index_sha256": "e5741f889cb3c8e74d7f5885f36d5030922afa948b397579b759839ffd827f48",
+  "source_and_verification_unchanged": true,
+  "vcs_initial": {
+    "commit": "8dc7ca4bcf594e734e5985869b94255c51aefaf8",
+    "working_tree_dirty": true
+  },
+  "vcs_final": {
+    "commit": "8dc7ca4bcf594e734e5985869b94255c51aefaf8",
+    "working_tree_dirty": true
+  },
+  "record": "/tmp/task-tracer-4.14.0-release/72f57f05-bb05-40fb-981c-cfa975b75054/report.json",
+  "record_sha256": "72e79ef186f05d009bbdb4c8ea4ac7dd894a8fbe79e35831ec3509dac1938c25",
+  "native_static7": "/tmp/task-tracer-4.14.0-release/72f57f05-bb05-40fb-981c-cfa975b75054/static7.json",
+  "native_static7_sha256": "ab4810026999b3cdbaaa993923260538447a03b7535c8b20a0da079fed726c15",
+  "phases": [
+    {
+      "name": "static7",
+      "arguments": [
+        "tools/check.py",
+        "--static-only",
+        "--keep-going",
+        "--report",
+        "/tmp/task-tracer-4.14.0-release/72f57f05-bb05-40fb-981c-cfa975b75054/static7.json"
+      ],
+      "started_at": "2026-10-25T17:58:04.025882+00:00",
+      "finished_at": "2026-10-25T17:58:20.411572+00:00",
+      "duration_seconds": 16.386,
+      "exit_code": 0,
+      "stdout": "static7.stdout.log",
+      "stderr": "static7.stderr.log"
+    },
+    {
+      "name": "release",
+      "arguments": [
+        "tools/release_playwright.py"
+      ],
+      "started_at": "2026-10-25T17:58:20.430614+00:00",
+      "finished_at": "2026-10-25T17:58:24.676244+00:00",
+      "duration_seconds": 4.246,
+      "exit_code": 0,
+      "stdout": "release.stdout.log",
+      "stderr": "release.stderr.log"
+    },
+    {
+      "name": "actual-4.13.2-upgrade",
+      "arguments": [
+        "tools/upgrade_playwright.py",
+        "--baseline-archive",
+        "dist/task-tracer-4.13.2.zip"
+      ],
+      "started_at": "2026-10-25T17:58:24.693821+00:00",
+      "finished_at": "2026-10-25T17:58:45.653502+00:00",
+      "duration_seconds": 20.96,
+      "exit_code": 0,
+      "stdout": "actual-4.13.2-upgrade.stdout.log",
+      "stderr": "actual-4.13.2-upgrade.stderr.log"
+    }
+  ],
+  "reproducible_zip_sha256": "6bf8df704bb2ac70dd92f5e888ed53fa209bc8a48b087f1be2c96a1b7343a993",
+  "distribution_file_count": 24,
+  "baseline_archive": {
+    "path": "/workspace/Task-Tracer/dist/task-tracer-4.13.2.zip",
+    "bytes": 973038,
+    "sha256": "90277f57495db8148a78b721c13305d8aaa511682a5d01ede1763b4f268ae204"
+  },
+  "baseline_independent_audit": "/tmp/task-tracer-4.14.0-release/72f57f05-bb05-40fb-981c-cfa975b75054/baseline-audit.json",
+  "temporary_test_archives_retained": false,
+  "public_screenshot_source_index": "765c354ba6e0c2eb00c01e7dc0bc9e841af11a1fe7eaa6e66537f9058a38f672",
+  "public_screenshot_source_note": "Screenshots retain their actual 765 source provenance. Root separately owns the later final-ui-scope proof; these release programs execute final e574 source.",
+  "csp_scope": {
+    "static_hash_checks_passed": true,
+    "bypass_csp_context_option_used": false,
+    "artifact_upgrade_http_handlers": "Original handlers do not add CSP headers; runtime enforcement is a separate normal/production header browser evidence scope."
+  },
+  "not_run": [
+    "full registered suite",
+    "full browser matrix",
+    "scale/performance",
+    "production verification",
+    "Git commit or push",
+    "canonical build"
+  ]
+}

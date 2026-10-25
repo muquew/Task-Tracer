@@ -1,0 +1,62 @@
+{
+  "active": "openModalBtn",
+  "activeBox": {
+    "x": 580.09375,
+    "y": 11,
+    "w": 111.90625,
+    "h": 40,
+    "right": 692,
+    "bottom": 51
+  },
+  "footer": {
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0,
+    "right": 0,
+    "bottom": 0
+  },
+  "form": {
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0,
+    "right": 0,
+    "bottom": 0
+  },
+  "viewport": {
+    "w": 800,
+    "h": 844
+  },
+  "scrollWidth": 800,
+  "activeCenterHit": true,
+  "presetRows": [
+    {
+      "text": "Today",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    {
+      "text": "Tomorrow",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    {
+      "text": "Choose",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0,
+      "right": 0,
+      "bottom": 0
+    }
+  ]
+}

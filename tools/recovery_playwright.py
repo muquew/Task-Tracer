@@ -77,7 +77,13 @@ def exercise_recovery(page: Page, url: str) -> None:
     open_recovery(page)
     page.locator("#recoverySelect").select_option(str(matching[0]["id"]), force=True)
     expect(page.locator("#recoveryConfirm")).not_to_be_checked()
-    if page.locator("#submitBtn").is_enabled():
+    if page.locator("#recoveryPreviewDetails").count():
+        expect(page.locator("#submitBtn")).to_be_disabled()
+        expect(page.locator("#submitBtn")).to_have_attribute("aria-disabled", "true")
+        expect(page.locator("#recoverySelect")).to_have_value(str(matching[0]["id"]))
+        if read_storage(page) != before_restore:
+            raise AssertionError("Recovery changed data or history without explicit confirmation")
+    elif page.locator("#submitBtn").is_enabled():
         page.locator("#submitBtn").click()
         expect(page.locator("#taskModal")).to_be_visible()
         if read_storage(page) != before_restore:

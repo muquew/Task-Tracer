@@ -103,6 +103,9 @@ def preview_and_export(page, url, browser):
     page.on('download', lambda download: downloads.append(download))
     open_recovery(page)
     expect(page.locator('#recoveryPrivacy')).to_be_visible()
+    preview_details = page.locator('#recoveryPreviewDetails')
+    if preview_details.count() and not preview_details.evaluate('element => element.open'):
+        preview_details.locator(':scope > summary').click()
     rows = page.locator('#recoveryTaskPreview > li')
     expect(rows).to_have_count(100)
     language = page.locator('html').get_attribute('lang')

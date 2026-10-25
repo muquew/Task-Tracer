@@ -1,0 +1,75 @@
+--- a/tools/task_draft_playwright.py
++++ b/tools/task_draft_playwright.py
+@@ -632,6 +632,10 @@
+ 
+ 
+ def check_weekday_recovery(page: Page) -> None:
++    def raw_fields():
++        return page.evaluate("""() => Array.from(document.querySelectorAll('#taskEditor input, #taskEditor textarea, #taskEditor select'),
++            input => ({id:input.id, value:input.value, checked:input.checked, disabled:input.disabled}))""")
++
+     before = get_task_records(page)
+     page.evaluate('() => { window.taskDraftOriginalDocument = true; }')
+     open_task_editor(page)
+@@ -641,23 +645,57 @@
+     for value in ('0', '1', '2', '3', '4', '5', '6'):
+         page.locator(f'#repeatWeekday{value}').uncheck()
+     assert page.locator('.repeat-weekday-input:checked').count() == 0
++    explicit_weekdays = bool(page.locator('#repeatWeekdaysError').count())
++    expected_weekdays = [False] * 7
+     inject_quota_failure(page)
++    if explicit_weekdays:
++        invalid_fields = raw_fields()
++        page.locator('#submitBtn').click()
++        expect(page.locator('#taskModal')).to_be_visible()
++        expect(page.locator('#repeatWeekdaysError')).to_be_visible()
++        expect(page.locator('#storageUnavailableBanner')).to_be_hidden()
++        expect(page.locator('#repeatWeekday0')).not_to_be_checked()
++        expect(page.locator('.repeat-weekday-input:checked')).to_have_count(0)
++        assert page.locator('#repeatWeekdaysRow').evaluate('node => node.contains(document.activeElement)')
++        assert raw_fields() == invalid_fields, 'Invalid weekday submission changed the live raw draft'
++        assert get_task_records(page) == before, 'Invalid weekday submission wrote task data'
++        assert unload_is_guarded(page)
++        page.locator('#repeatWeekday4').check()
++        expected_weekdays[3] = True
++    quota_fields = raw_fields() if explicit_weekdays else None
+     page.locator('#submitBtn').click()
+     expect(page.locator('#storageUnavailableBanner')).to_be_visible()
+     drafts = downloaded_drafts(page)
+-    assert drafts[0]['form']['values']['weekdays'] == [False] * 7
++    assert drafts[0]['form']['values']['weekdays'] == expected_weekdays
+     retry_memory_storage(page)
+     page.locator('#taskDraftRecoveryRestoreBtn').click()
+     expect(page.locator('#repeatType')).to_have_value('weekly-days')
+-    expect(page.locator('.repeat-weekday-input:checked')).to_have_count(0)
++    expect(page.locator('.repeat-weekday-input:checked')).to_have_count(1 if explicit_weekdays else 0)
+     assert unload_is_guarded(page)
+     assert get_task_records(page) == before
++    if explicit_weekdays:
++        expect(page.locator('#repeatWeekday4')).to_be_checked()
++        assert raw_fields() == quota_fields, 'Quota retry/recovery changed the raw weekday draft'
++        page.locator('#repeatWeekday4').uncheck()
++        invalid_fields = raw_fields()
++        page.locator('#submitBtn').click()
++        expect(page.locator('#taskModal')).to_be_visible()
++        expect(page.locator('#repeatWeekdaysError')).to_be_visible()
++        expect(page.locator('.repeat-weekday-input:checked')).to_have_count(0)
++        expect(page.locator('#storageUnavailableBanner')).to_be_hidden()
++        assert raw_fields() == invalid_fields, 'Invalid recovered weekday submission changed its raw draft'
++        assert get_task_records(page) == before, 'Invalid recovered weekday submission wrote task data'
++        assert unload_is_guarded(page)
++        page.locator('#repeatWeekday4').check()
+     page.locator('#submitBtn').click()
+     expect(page.locator('#taskModal')).to_be_hidden()
+     saved = [task for task in get_task_records(page) if task['name'] == 'Quota weekday raw selection draft']
+-    assert len(saved) == 1 and saved[0]['repeatWeekdays'] == [1, 3, 5]
++    assert len(saved) == 1 and saved[0]['repeatWeekdays'] == ([4] if explicit_weekdays else [1, 3, 5])
+     assert not unload_is_guarded(page)
+-    print('Quota weekday raw recovery: all-unchecked selection survives; explicit save retains the existing default weekday policy')
++    if explicit_weekdays:
++        print('Quota weekday raw recovery: empty choices are write-free and stay raw; explicit Thursday survives quota/download/same-document retry/recovery and saves once')
++    else:
++        print('Quota weekday raw recovery: all-unchecked selection survives; explicit save retains the existing default weekday policy')
+ 
+ 
+ def run(browser_name: str, case: str) -> None:

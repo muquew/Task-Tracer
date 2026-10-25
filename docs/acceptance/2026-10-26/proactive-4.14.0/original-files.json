@@ -1,0 +1,1831 @@
+{
+  "schema": "task-tracer-proactive-local-originals-v1",
+  "scope": "Selected original byte copies for the current 2026-10-26 local review and validation. Historical paths, source hashes, failed statuses and filenames are unchanged. Raw Markdown narratives use .md.txt to distinguish preserved external references from the archive navigation.",
+  "omitted": [
+    "trace ZIPs",
+    "complete application source snapshots",
+    "unselected PNGs"
+  ],
+  "files": [
+    {
+      "path": "before/forms/01-empty-desktop.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/01-empty-desktop.json",
+      "bytes": 15631,
+      "sha256": "30df7fb186b2d154ec041418c9e04008d223e99c9d78d08ad42a695c2d25a356",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/02-new-task-desktop.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/02-new-task-desktop.json",
+      "bytes": 16912,
+      "sha256": "c17bdddcca4cfaef2b6273cbeb672947b3c1b03acf5aad48f362567371611e52",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/03-enable-date-desktop.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/03-enable-date-desktop.json",
+      "bytes": 17900,
+      "sha256": "5093c2081d88212e1c32c531bd89fde118a6be307ce45fd60a6ecd9e9d0b10dd",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/04-advanced-desktop.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/04-advanced-desktop.json",
+      "bytes": 17837,
+      "sha256": "2497d568ca09c68437d15f922a9a02987d791d1ed3e46308703fcd64fc744782",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/05-advanced-mobile-390.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/05-advanced-mobile-390.json",
+      "bytes": 12042,
+      "sha256": "7256d3337948dd1af570aab87e46d1c3433ff9eb7147d8746070b8678b106d0d",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/06-filled-task-name.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/06-filled-task-name.json",
+      "bytes": 12098,
+      "sha256": "292f50aa798a9c8ff46342cbe7e1e09396e20dc29622f6c0a6f391aa9711d5fd",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/07-filled-description.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/07-filled-description.json",
+      "bytes": 12276,
+      "sha256": "db21cc1e2a397aeeb8bcb19764347e9c65d2151d44cf41352feb9714144ae0ef",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/08-filled-project.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/08-filled-project.json",
+      "bytes": 12293,
+      "sha256": "3e31d639507ac57b8a01d1639be94c0e6201305a32c72ff51a64e1bb550a57c1",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/09-first-child-input.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/09-first-child-input.json",
+      "bytes": 12318,
+      "sha256": "83ca63bb47c755112fd5965e0d5118a86e94f00cd3d9f70aad3ef471d7f8d042",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/10-first-child.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/10-first-child.json",
+      "bytes": 12432,
+      "sha256": "dffb06da9bcf90bb0a71786758764f5bcd6260625fd5c8e9f578c80f1dcd322f",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/11-second-child-input.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/11-second-child-input.json",
+      "bytes": 12456,
+      "sha256": "6c36608e965af46c5dd9d4b429b3b80abb4f201de8ad8ffe1438d8e8dd824738",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/12-second-child.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/12-second-child.json",
+      "bytes": 12570,
+      "sha256": "9030b8815276df8da5e3f25e4c322300dddf5ab1a330741d1cfbb4819ebfd63c",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/13-form-scroll-origin.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/13-form-scroll-origin.json",
+      "bytes": 12570,
+      "sha256": "9030b8815276df8da5e3f25e4c322300dddf5ab1a330741d1cfbb4819ebfd63c",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/14-advanced-bottom-mobile.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/14-advanced-bottom-mobile.json",
+      "bytes": 12572,
+      "sha256": "087db312d73342d9c07271e2f58cd6e92b4e4014bdf5b2dda0b8f5a79015f0a5",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/15-filled-editor-desktop.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/15-filled-editor-desktop.json",
+      "bytes": 18094,
+      "sha256": "30e5e18fdafc8e962069f0c415383bc76453a2ad4a05c9cc98a718cc321e8c78",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/16-desktop-editor-scroll-origin.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/16-desktop-editor-scroll-origin.json",
+      "bytes": 18094,
+      "sha256": "30e5e18fdafc8e962069f0c415383bc76453a2ad4a05c9cc98a718cc321e8c78",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/17-filled-desktop-top.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/17-filled-desktop-top.json",
+      "bytes": 18089,
+      "sha256": "da1e1ac671b99c56fa3a2def389ce9849d3a1f5ce9aa368a4fa2138a567f5ba1",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/18-collapse-advanced.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/18-collapse-advanced.json",
+      "bytes": 18131,
+      "sha256": "f213f106baefdfa719bd7f1c9ffa2b3f60f4ab8740fcc20de12a2e763cb62438",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/19-without-date-form.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/19-without-date-form.json",
+      "bytes": 17153,
+      "sha256": "448a83c600e4125476529635a50669908bd4428eda2b98e44e7e62cd8510759b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/20-basic-mobile-320.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/20-basic-mobile-320.json",
+      "bytes": 11191,
+      "sha256": "4893ae3fecd10658de683ccc0e441f50c869022c9a4f762fb3969b23f0c9a7ce",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/21-saved-baseline-example.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/21-saved-baseline-example.json",
+      "bytes": 10177,
+      "sha256": "b5d20cddb5f79b6e5bf709dcaf84e4d7ae9987d59f7ee18cdcd4706d443cdbcd",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/session.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/session.json",
+      "bytes": 172,
+      "sha256": "a92f8c98a0f126ce16c7c5c68bbcc75cb45cbb39936df4bc3107c8d3c46d11e2",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/source.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/source.json",
+      "bytes": 1203,
+      "sha256": "947c36519ecda00823a026a6f18e511f3987ecdca0e72c48fccfbe5a1fcb2416",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/02-new-task-desktop.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/02-new-task-desktop.png",
+      "bytes": 147967,
+      "sha256": "3426f3d409c7313371f1ffbce0f0936d610a75cd2bf1a08a892e82cd326a3c9d",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/04-advanced-desktop.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/04-advanced-desktop.png",
+      "bytes": 160133,
+      "sha256": "ba2767e683986bd5644b1d2adf650bfa73828dbc34a8261b18ba4155a77e4f1c",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/forms/20-basic-mobile-320.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/baseline/20-basic-mobile-320.png",
+      "bytes": 38082,
+      "sha256": "0416227c746881d4dcafb8d6e8ddde9d3c6d492e12e939f345da8b49390a2ebe",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/editing/metadata.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/editing/metadata.json",
+      "bytes": 1095,
+      "sha256": "6bfba125e7ab8a95998d6e8c9f59990251dbd13e26e68e0e7a853f6d339d0fb5",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/editing/findings.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/editing/findings.json",
+      "bytes": 4359,
+      "sha256": "0488e0598632b4151851e170235912ab380528c6b818b7997ec9c3ead06d7180",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/editing/session-observations.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/editing/session-observations.json",
+      "bytes": 44835,
+      "sha256": "bd44230d33bd76daab16436011347d8f00457fb42cfb2b1e454bb8b5a5946295",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/editing/page-errors.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/editing/page-errors.json",
+      "bytes": 59,
+      "sha256": "3d2e382a8406bb48a3c2ed298723ccb86a1b7e162e118fb1178d917f64886453",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/editing/schedule-toggle-db.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/editing/schedule-toggle-db.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/editing/07-weekdays-none-before-dom.txt",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/editing/07-weekdays-none-before-dom.txt",
+      "bytes": 1738,
+      "sha256": "5f195de3b2a819854424d46dcfcb1b90e6038c4e08b88685222fda0784c4e14d",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/editing/08-weekdays-none-saved-records.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/editing/08-weekdays-none-saved-records.json",
+      "bytes": 861,
+      "sha256": "b1bf93c2231b583f0e629537159166092527a79b135fe9efe673fac8a5de116e",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/editing/09-subtask-c-before-dom.txt",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/editing/09-subtask-c-before-dom.txt",
+      "bytes": 1135,
+      "sha256": "1c702f9260c5003afba60ba9a81c95bba6d51ce5dace7839b2958f0199ade257",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/editing/10-subtask-c-after-dom.txt",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/editing/10-subtask-c-after-dom.txt",
+      "bytes": 982,
+      "sha256": "026b30773347500edb3d30b6795684df27039cb19f7ba4260e8c43d4f4c9359d",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/editing/11-subtask-delete-saved-records.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/editing/11-subtask-delete-saved-records.json",
+      "bytes": 1845,
+      "sha256": "26393a9ab1930dda1aa0e8edc3fadfa145a201fa033b8b6311669e5f66f0bf91",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/editing/05-schedule-after-toggle-top.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/editing/05-schedule-after-toggle-top.png",
+      "bytes": 163384,
+      "sha256": "7b3b77a0e2cf9fcf45d5db4f66f56be56117794c761cd7d4ffbf25848c90d16c",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/editing/08-weekdays-none-saved-mwf.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/editing/08-weekdays-none-saved-mwf.png",
+      "bytes": 97380,
+      "sha256": "b0e5868e4b2f02ac416445f60dd323d1f948435d7f0516e7534d9fe80e5681ac",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/editing/10-subtask-c-edit-after-delete-a.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/editing/10-subtask-c-edit-after-delete-a.png",
+      "bytes": 169183,
+      "sha256": "c0a2f8b4ffdf6b7ec0c2941c66cc4816e353c8fbfa1b9fe622291235d70622d0",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/workspace/report.original.md.txt",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/workspace/report.md",
+      "bytes": 6033,
+      "sha256": "0afcadd5b7eb2de28ba51ecdf59a52a268616cff3c6a983a601d18aaf09b51e9",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/workspace/session-observations.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/workspace/session-observations.json",
+      "bytes": 245,
+      "sha256": "a998df680dfbce4ebc55903ea21c797e9062e500f126565e22b9c7a2612064d6",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/workspace/12-small-mobile-batch-more.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/workspace/12-small-mobile-batch-more.png",
+      "bytes": 45369,
+      "sha256": "30013e021652e0e1f42b2c16299ae5f00de2f30bd96a7b61ae4e8719d559ea51",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/workspace/14-small-mobile-stats.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/workspace/14-small-mobile-stats.png",
+      "bytes": 44116,
+      "sha256": "7759cfd71cd19c6cf52f20414d9f2e9dece81db133ef5faec23e797f718b45ed",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/settings/source.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/settings/source.json",
+      "bytes": 2574,
+      "sha256": "a7e4cb4b085748aa8cdd461860963572657227bd468506dd32434c4758b7c223",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/settings/browser-source.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/settings/browser-source.json",
+      "bytes": 1193,
+      "sha256": "d64a6cf8e212d28bd51cb0b3ddf86816c6a332bc84deda0f2cdbe8b40fbbf31b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/settings/session-report.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/settings/session-report.json",
+      "bytes": 397,
+      "sha256": "c75e0e16efaa1adddbe626e8eb3e36bea62910a2e160f39c01acaf2bc966da03",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/settings/review-summary.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/settings/review-summary.json",
+      "bytes": 5940,
+      "sha256": "cb8df93dca83b0c6a094f9c14387662cf529d4e94e4ba2be5c91a7352e68dd18",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/settings/settings-refinement-scope.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/settings/settings-refinement-scope.json",
+      "bytes": 3330,
+      "sha256": "8ffa019a9afb9fd31a76a07c5eb4ce66b89d539b99f56f29232978b1ea3174e4",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/settings/report.original.md.txt",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/settings/README.md",
+      "bytes": 7014,
+      "sha256": "08a3b0195881166b73bd41d28287845055c4361d7c59ce812cd8ff4436ef1686",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/settings/17-tasks-import-default-en-390.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/settings/17-tasks-import-default-en-390.json",
+      "bytes": 2644,
+      "sha256": "71975c487d8ac4532efdfa5bff1287c8aaac7760fc80f8d16de985169adcfa5f",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/settings/17-tasks-import-default-en-390.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/settings/17-tasks-import-default-en-390.png",
+      "bytes": 68618,
+      "sha256": "67c9821df39e76e091484b3b60875554ad31c899a5f7a87b9062b49a011fd716",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/settings/20-recovery-history-en-390.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/settings/20-recovery-history-en-390.json",
+      "bytes": 2807,
+      "sha256": "0ba61de5b5c6127055f5c6be651a95b7be804c31313d54c85edeee0e571516fd",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/settings/20-recovery-history-en-390.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/settings/20-recovery-history-en-390.png",
+      "bytes": 78344,
+      "sha256": "87a3f4c52c00c7aacc66db211ac2fde1a41a53ac22f50d0c6ba5671f38cfc77e",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/settings/08-appearance-zh-320-top.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/settings/08-appearance-zh-320-top.json",
+      "bytes": 1354,
+      "sha256": "170b9ca0fb3a60d6cab0c63b55f29a5d804f9a30d1720c60eb22ee622d8ee191",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/settings/08-appearance-zh-320-top.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/settings/08-appearance-zh-320-top.png",
+      "bytes": 28916,
+      "sha256": "19bda3090977439c4a32b1ae3f3d7d38d4075cb1e390ed17c52f0f6d071b35af",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/settings/24-maintenance-after-undo-en-390.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/settings/24-maintenance-after-undo-en-390.json",
+      "bytes": 1074,
+      "sha256": "4effc7ac2acf61bc30977745e5d9ac809b55d61e725bc4660a0bb4dd74a72436",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "before/settings/24-maintenance-after-undo-en-390.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/settings/24-maintenance-after-undo-en-390.png",
+      "bytes": 51860,
+      "sha256": "1d2a7b28097bb7dd10e1e0fe92acef56726c1a323f577761ebfcdf0af00c0902",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "workspace-8fa/inputs.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/workspace/candidate-8fae3e3/inputs.json",
+      "bytes": 357,
+      "sha256": "85f3bdfed175742983deb6c9de8b51f247022f375ad52c80121b5688b2a87029",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "workspace-8fa/source-final.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/workspace/candidate-8fae3e3/source-final.json",
+      "bytes": 404,
+      "sha256": "38d6876517b7a765ac8fac4b10b292441fd54136d664590286d5ec9b927688f4",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "workspace-8fa/observations.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/workspace/candidate-8fae3e3/observations.json",
+      "bytes": 10301,
+      "sha256": "cfca9583a92a38335530ac3ca1728fdfe81115376334e7f532750138d20ed108",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "workspace-8fa/report.original.md.txt",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/workspace/candidate-8fae3e3/report.md",
+      "bytes": 3640,
+      "sha256": "8545295ecba905fc2a351e9afa63e43bffe5925061b73942e550313735b7d2a7",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "workspace-8fa/03-320-selection-context.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/workspace/candidate-8fae3e3/03-320-selection-context.png",
+      "bytes": 53391,
+      "sha256": "50e2a49db8c7701c984f920b6b1a635e2fa9e02d5ab508dfab0410471cff6638",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "workspace-8fa/06-320-stats-rows.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/workspace/candidate-8fae3e3/06-320-stats-rows.png",
+      "bytes": 41758,
+      "sha256": "862072e14bb80c135c6abe618fceaaaa19decea4658a19fe6a144064a69b8825",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/README.original.md.txt",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/README.md",
+      "bytes": 2140,
+      "sha256": "a2aa8968b3280cd97a3620489f6e4a51d62e823d3260b6f6e41e2afa259da096",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/first-run/1440-recovery-consent/after-recovery.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/first-run/1440-recovery-consent/after-recovery.json",
+      "bytes": 6753,
+      "sha256": "850f8e7413fbfe746084c5b6ad210a617346768a09b76edbf897b1db7cc4c351",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/first-run/1440-recovery-consent/before-recovery.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/first-run/1440-recovery-consent/before-recovery.json",
+      "bytes": 4708,
+      "sha256": "b32a21dc53a2eb790a2a60cc4d6eeba8638c8585fd760abdc915ccd79aa1fbc0",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/first-run/390-recovery-consent/after-recovery.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/first-run/390-recovery-consent/after-recovery.json",
+      "bytes": 6753,
+      "sha256": "2805bf61d11adab19234959952c1b181ca2cbc322b77b1018e2716d4dac606c4",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/first-run/390-recovery-consent/before-recovery.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/first-run/390-recovery-consent/before-recovery.json",
+      "bytes": 4708,
+      "sha256": "238a0d4d49b781d14dec3204752926b951faefa73af988ee7c0e421147388fbb",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/first-run/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/first-run/report.json",
+      "bytes": 7247,
+      "sha256": "af28ea886bac568d0009f61a75605534c73d38d83bae720dd4808f765465d29c",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/corrected-run/1440-import-modes-and-settings/after-preview.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/corrected-run/1440-import-modes-and-settings/after-preview.json",
+      "bytes": 3043,
+      "sha256": "08025453769621bceb104c1c416e342058a56411a394fa37c9366eb6237d9890",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/corrected-run/1440-import-modes-and-settings/before-preview.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/corrected-run/1440-import-modes-and-settings/before-preview.json",
+      "bytes": 3043,
+      "sha256": "08025453769621bceb104c1c416e342058a56411a394fa37c9366eb6237d9890",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/corrected-run/1440-import-modes-and-settings/task-tracer_backup_2026-10-25_17-39-49-828.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/corrected-run/1440-import-modes-and-settings/task-tracer_backup_2026-10-25_17-39-49-828.json",
+      "bytes": 2487,
+      "sha256": "fe9a75c1dfaaa9d5184044fa3c18b6c3ff6fe53e597f3805dc760800cb7778b8",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/corrected-run/1440-recovery-consent/after-recovery.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/corrected-run/1440-recovery-consent/after-recovery.json",
+      "bytes": 6753,
+      "sha256": "7120f1831d85ce45a54a4992e194cabda6a2dea218be0572f7ae3d273aeca015",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/corrected-run/1440-recovery-consent/before-recovery.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/corrected-run/1440-recovery-consent/before-recovery.json",
+      "bytes": 4708,
+      "sha256": "40cd6a7ce1f6d40740292cd2b2a867dd9230571b883d24e74dcc3f7aae696d0f",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/corrected-run/390-import-modes-and-settings/after-preview.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/corrected-run/390-import-modes-and-settings/after-preview.json",
+      "bytes": 3043,
+      "sha256": "474fa3ce427a8b1ebd20db01ca70716af162d8c3fe4d204794e52316ea0fa752",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/corrected-run/390-import-modes-and-settings/before-preview.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/corrected-run/390-import-modes-and-settings/before-preview.json",
+      "bytes": 3043,
+      "sha256": "474fa3ce427a8b1ebd20db01ca70716af162d8c3fe4d204794e52316ea0fa752",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/corrected-run/390-import-modes-and-settings/task-tracer_backup_2026-10-25_17-39-58-546.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/corrected-run/390-import-modes-and-settings/task-tracer_backup_2026-10-25_17-39-58-546.json",
+      "bytes": 2487,
+      "sha256": "25419687ea424d8966d8958cb1fd6560e165d84d71102d72784593f2a763bb5c",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/corrected-run/390-recovery-consent/after-recovery.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/corrected-run/390-recovery-consent/after-recovery.json",
+      "bytes": 6753,
+      "sha256": "6aac1197262da4ce82b7a0f7f9ab1852199a751941c98ad30b4ac2f56eb19939",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/corrected-run/390-recovery-consent/before-recovery.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/corrected-run/390-recovery-consent/before-recovery.json",
+      "bytes": 4708,
+      "sha256": "0ae2c5063587a266bd495b330485101a6da35dc071149623e1b00b80c147c259",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/corrected-run/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/corrected-run/report.json",
+      "bytes": 3791,
+      "sha256": "f19d274f4502025ccee6554bb6e3c688ef8306fa43247a91949d58ae0c6671f8",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/corrected-run/retained-files.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/corrected-run/retained-files.json",
+      "bytes": 4020,
+      "sha256": "3ff7aa9af3595453722c886e965b669f149ec910ffaaefc82c42a719959a79e5",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/corrected-run/visual-review.json",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/corrected-run/visual-review.json",
+      "bytes": 2568,
+      "sha256": "8e24a709b81733eb8d6d99b38b0ab7a5502331eccb60a72f250bdf14ab79924e",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/corrected-run/390-import-modes-and-settings/01-replace-default.png",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/corrected-run/390-import-modes-and-settings/01-replace-default.png",
+      "bytes": 68130,
+      "sha256": "ed804ed7c3ddcea5a095b548e2cc776f70d8e319ce9e92bf3abf1870440ac5c2",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "settings-flow/corrected-run/390-recovery-consent/01-unchecked-disabled.png",
+      "original_path": "/tmp/task-tracer-4.14.0-settings-flow/corrected-run/390-recovery-consent/01-unchecked-disabled.png",
+      "bytes": 75403,
+      "sha256": "d87a747af217b513f1aabf6810abbad2be3ae87536b6c94cf54f7b9781d2d01b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/final-summary.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/final-summary.json",
+      "bytes": 1761,
+      "sha256": "da88fa06dee8b5aa0563d091fb749e7eda8c049122d475d4e3af646582018665",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/final-e5741f88-review.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/final-e5741f88-review.json",
+      "bytes": 1761,
+      "sha256": "da88fa06dee8b5aa0563d091fb749e7eda8c049122d475d4e3af646582018665",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/final-e5741f88-geometry.log",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/final-e5741f88-geometry.log",
+      "bytes": 471,
+      "sha256": "c0c11bf93f340f4bfe7aeb4d1d8632027c03991345ee34edcd6c55f4fb5ace7c",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/candidate-8fae3e3e-review.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/candidate-8fae3e3e-review.json",
+      "bytes": 578,
+      "sha256": "e60a675c521ebc0fd67dc318199f66b971d8ea8ccda832f8d08f77e0a0e22f46",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/candidate-8fae3e3e-first.log",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/candidate-8fae3e3e-first.log",
+      "bytes": 471,
+      "sha256": "27cbdef23b1cbf355683a65159de481100066e67ba033702ca6da0ef445eaa19",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/candidate-765c354b-review.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/candidate-765c354b-review.json",
+      "bytes": 1650,
+      "sha256": "be474998d0241c4b7f77b5e2292c94389597a7c37aefdc8f9cb0e8bbef8a1d30",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/candidate-765c354b-geometry.log",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/candidate-765c354b-geometry.log",
+      "bytes": 471,
+      "sha256": "4d484174eb1e101da796b1b457a718a4aa88de8706f9d314ea244b1eddf66755",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/earlier/20261025T173538Z-chromium-d45a62e6/results.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T173538Z-chromium-d45a62e6/results.json",
+      "bytes": 1411,
+      "sha256": "0d1e2366c9a9e3afba30774fdec26c760a107eeb5500631ce95edb29123d5b0b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/earlier/20261025T174322Z-chromium-b5444366/results.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T174322Z-chromium-b5444366/results.json",
+      "bytes": 1411,
+      "sha256": "eb9506026a4c9bc36e0e011cb413bb057347fab9fee95c533eacfe277402aad2",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/browser-events.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/browser-events.json",
+      "bytes": 40,
+      "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/custom-raw-before-save.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/custom-raw-before-save.json",
+      "bytes": 867,
+      "sha256": "3feedeb0c85f252131c5246577c891129a26cf120f5f85b537bbc455c2dd394c",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/custom-raw-before.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/custom-raw-before.json",
+      "bytes": 868,
+      "sha256": "a9ab9c3f76cd5a1d9f1aec160406e10733d8cca4d847cf67b9de9ee50bb66593",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/custom-saved.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/custom-saved.json",
+      "bytes": 3847,
+      "sha256": "0f49fc58aa565a1995a7c93d37b22a6eb32b4ca8f4c99f7abefc6b59e180b0c9",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/final.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/final.json",
+      "bytes": 3847,
+      "sha256": "0f49fc58aa565a1995a7c93d37b22a6eb32b4ca8f4c99f7abefc6b59e180b0c9",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/initial.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/initial.json",
+      "bytes": 1348,
+      "sha256": "b19fbe7a84a790ca010b66b7bf228f64f84c1b9dea61c0091465bc10cd61e589",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/weekly-days-raw-before-save.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/weekly-days-raw-before-save.json",
+      "bytes": 876,
+      "sha256": "4a344563ed89ef5c797fe8fe38613e94ca5fa0ed9cd65d6764700354595cc40d",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/weekly-days-raw-before.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/weekly-days-raw-before.json",
+      "bytes": 876,
+      "sha256": "4a344563ed89ef5c797fe8fe38613e94ca5fa0ed9cd65d6764700354595cc40d",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/weekly-days-saved.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-date-roundtrip/weekly-days-saved.json",
+      "bytes": 2645,
+      "sha256": "05ee7758283372f9b88b558fcd86816c31ac7a16e158e8ea16678c5d8e3187d6",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/browser-events.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/browser-events.json",
+      "bytes": 40,
+      "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/final.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/final.json",
+      "bytes": 2625,
+      "sha256": "d70cd718562686cbfde0869b0dfbb8460ab46456df713c9e9c4a6792e1a446c5",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/initial.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/initial.json",
+      "bytes": 1348,
+      "sha256": "16532b42a2e3e40936408f69718f563802ba1db053019c3a0cef658fe7083a29",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/invalid-db-before.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/invalid-db-before.json",
+      "bytes": 1348,
+      "sha256": "16532b42a2e3e40936408f69718f563802ba1db053019c3a0cef658fe7083a29",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/invalid-dom.txt",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/invalid-dom.txt",
+      "bytes": 2244,
+      "sha256": "fb431587a81ecf440341f4fefde1fa0c61076020467c432f68a27e9c88796ac1",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/invalid-raw-before.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/invalid-raw-before.json",
+      "bytes": 869,
+      "sha256": "9591888edb5eaea8d687f8c6ae02a6da32673dc42271931f28e5157b4765ccde",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/validation-visibility.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/validation-visibility.json",
+      "bytes": 750,
+      "sha256": "0d29471a2c9aca58b9e2c225c8c03ca9a8873b6865ee7ed65bc0b1f697cc119b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-subtask-delete/after-delete-dom.txt",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-subtask-delete/after-delete-dom.txt",
+      "bytes": 2308,
+      "sha256": "f780c778e842aede5f1494646cdea740f36a33666ccf5fd4ee0f5e00a63b44b3",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-subtask-delete/after-save-db.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-subtask-delete/after-save-db.json",
+      "bytes": 2643,
+      "sha256": "a9984b2f2dcee49c4a348a21bf450c332e781419e74a9e84eb731a819bc095db",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-subtask-delete/before-delete-db.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-subtask-delete/before-delete-db.json",
+      "bytes": 2738,
+      "sha256": "a66c324dbe2d3690f4341b601defd22208dcd3473ba79ba22bba86de42b17775",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-subtask-delete/before-delete-dom.txt",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-subtask-delete/before-delete-dom.txt",
+      "bytes": 2422,
+      "sha256": "3758599717413fea80d1f533228d50dcc525c7afbb67d50197549ba127680cb0",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-subtask-delete/browser-events.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-subtask-delete/browser-events.json",
+      "bytes": 40,
+      "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-subtask-delete/final.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-subtask-delete/final.json",
+      "bytes": 2643,
+      "sha256": "a9984b2f2dcee49c4a348a21bf450c332e781419e74a9e84eb731a819bc095db",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-subtask-delete/initial.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-subtask-delete/initial.json",
+      "bytes": 1348,
+      "sha256": "8c958261dd68ad864c5cee864187718b3e4678365a18ceaa5d11d0205bd04ba1",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/browser-events.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/browser-events.json",
+      "bytes": 40,
+      "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/custom-raw-before-save.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/custom-raw-before-save.json",
+      "bytes": 867,
+      "sha256": "3feedeb0c85f252131c5246577c891129a26cf120f5f85b537bbc455c2dd394c",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/custom-raw-before.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/custom-raw-before.json",
+      "bytes": 868,
+      "sha256": "a9ab9c3f76cd5a1d9f1aec160406e10733d8cca4d847cf67b9de9ee50bb66593",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/custom-saved.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/custom-saved.json",
+      "bytes": 3847,
+      "sha256": "338f1beda9dfa749e4b100f7e522e948d64d2ab4cd5ab933228195bd1ffb9399",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/final.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/final.json",
+      "bytes": 3847,
+      "sha256": "338f1beda9dfa749e4b100f7e522e948d64d2ab4cd5ab933228195bd1ffb9399",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/initial.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/initial.json",
+      "bytes": 1348,
+      "sha256": "03a96082b9063a82b577646dacbbf0b31573334f5589f0fee286a98a1145a09a",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/weekly-days-raw-before-save.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/weekly-days-raw-before-save.json",
+      "bytes": 876,
+      "sha256": "4a344563ed89ef5c797fe8fe38613e94ca5fa0ed9cd65d6764700354595cc40d",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/weekly-days-raw-before.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/weekly-days-raw-before.json",
+      "bytes": 876,
+      "sha256": "4a344563ed89ef5c797fe8fe38613e94ca5fa0ed9cd65d6764700354595cc40d",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/weekly-days-saved.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-date-roundtrip/weekly-days-saved.json",
+      "bytes": 2645,
+      "sha256": "e87701200d25d3f01750506a6e2761878a510fa95b271115a6b1e55f2ca010fc",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/browser-events.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/browser-events.json",
+      "bytes": 40,
+      "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/final.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/final.json",
+      "bytes": 2625,
+      "sha256": "c89b21e522bd0f2633c15f0ab5b69476344072714c8c0f4ee5dcc41ec96bafb3",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/initial.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/initial.json",
+      "bytes": 1348,
+      "sha256": "ea04ed7a84f6720a3b1884f819350720d248e8e2bc79eecad8f7c0bc951d5d6b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/invalid-db-before.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/invalid-db-before.json",
+      "bytes": 1348,
+      "sha256": "ea04ed7a84f6720a3b1884f819350720d248e8e2bc79eecad8f7c0bc951d5d6b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/invalid-dom.txt",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/invalid-dom.txt",
+      "bytes": 2244,
+      "sha256": "fb431587a81ecf440341f4fefde1fa0c61076020467c432f68a27e9c88796ac1",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/invalid-raw-before.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/invalid-raw-before.json",
+      "bytes": 869,
+      "sha256": "9591888edb5eaea8d687f8c6ae02a6da32673dc42271931f28e5157b4765ccde",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/validation-visibility.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/validation-visibility.json",
+      "bytes": 737,
+      "sha256": "e1dd990de52e9d30783f5caa1ecccf9afe31bca0f851c19f77f06bdbe8a82786",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/after-delete-dom.txt",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/after-delete-dom.txt",
+      "bytes": 2308,
+      "sha256": "f780c778e842aede5f1494646cdea740f36a33666ccf5fd4ee0f5e00a63b44b3",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/after-save-db.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/after-save-db.json",
+      "bytes": 2643,
+      "sha256": "62ee627be4ce05ad4ed5c98325d26ce3445235d28e18a3c983c4db89d2415a46",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/before-delete-db.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/before-delete-db.json",
+      "bytes": 2738,
+      "sha256": "22b168d782fd9564765aa7516017d43af2a6c2d3dc9efe5ed4de2bae9b24facc",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/before-delete-dom.txt",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/before-delete-dom.txt",
+      "bytes": 2422,
+      "sha256": "3758599717413fea80d1f533228d50dcc525c7afbb67d50197549ba127680cb0",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/browser-events.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/browser-events.json",
+      "bytes": 40,
+      "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/final.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/final.json",
+      "bytes": 2643,
+      "sha256": "62ee627be4ce05ad4ed5c98325d26ce3445235d28e18a3c983c4db89d2415a46",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/initial.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/initial.json",
+      "bytes": 1348,
+      "sha256": "0194c2c79b7cf5dc40a674eb19275b1a8e88947f4e6db24a4d95a16de9228805",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/results.json",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/results.json",
+      "bytes": 1411,
+      "sha256": "96621ecfff89fe741d9e712ec8a182c73686ad8cc836fccde4474a9efbcb2751",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/invalid-weekdays-feedback.png",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/1280-empty-weekdays/invalid-weekdays-feedback.png",
+      "bytes": 161168,
+      "sha256": "160063e68e1d1521776a32ee9743d7098686b4585155e0daed45e1d502b0e9f7",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/invalid-weekdays-feedback.png",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-empty-weekdays/invalid-weekdays-feedback.png",
+      "bytes": 51419,
+      "sha256": "4b2a9f0e0cac2d79f2ac01e8359f8324f0ae1ee1aa6211baf0a123ba766a1688",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/editing-preserved-after-delete.png",
+      "original_path": "/tmp/task-tracer-4.14.0-editor-safety/20261025T175401Z-chromium-f512cc8e/390-subtask-delete/editing-preserved-after-delete.png",
+      "bytes": 51049,
+      "sha256": "e5c4659396dacfdabc49ccb48e0808a20a30f6a97311e5297958cfabd8f4723e",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/01-recovery_playwright/attempt-01/console.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/01-recovery_playwright/attempt-01/console.log",
+      "bytes": 443,
+      "sha256": "7272638c2065dece03b0c995801d6d8c942f8e5a8e396e59774fdda98227c40a",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/01-recovery_playwright/attempt-01/inputs.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/01-recovery_playwright/attempt-01/inputs.json",
+      "bytes": 1095,
+      "sha256": "3cc782df29c1b8046b7d674f1effe311d881346991855c79b3b207117ce12612",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/01-recovery_playwright/attempt-01/recovery_playwright.py",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/01-recovery_playwright/attempt-01/recovery_playwright.py",
+      "bytes": 11417,
+      "sha256": "1f773866b1d05c78af569bf51791e8feec0b89ef2eb46e4e73ea1e5431a49f04",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/01-recovery_playwright/attempt-01/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/01-recovery_playwright/attempt-01/report.json",
+      "bytes": 2088,
+      "sha256": "24f84dcd96d362e3d151954e625493a004c14031d6d3ea285e81535d6e2cf43b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/02-recovery_management_playwright/attempt-01/console.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/02-recovery_management_playwright/attempt-01/console.log",
+      "bytes": 554,
+      "sha256": "e3a3095edcf636946106ba65d815e004980a60a13c7c8213d04c6a1db3b45555",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/02-recovery_management_playwright/attempt-01/inputs.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/02-recovery_management_playwright/attempt-01/inputs.json",
+      "bytes": 1117,
+      "sha256": "7c1adeab033f6d1a460de228dd72a174d85e29990ff31a25413dac8f87f94f82",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/02-recovery_management_playwright/attempt-01/recovery_management_playwright.py",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/02-recovery_management_playwright/attempt-01/recovery_management_playwright.py",
+      "bytes": 16402,
+      "sha256": "baa278f06c9349880b1e1fabe3f93b9821cbe907223ab89f1c0fee13918b7633",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/02-recovery_management_playwright/attempt-01/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/02-recovery_management_playwright/attempt-01/report.json",
+      "bytes": 2121,
+      "sha256": "e8aea5c74f424c2741b7793cf03d4409f0aa588d4caea973bb1b6d8d4b30fdc8",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/03-craft_import_summary_playwright/attempt-01/console.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/03-craft_import_summary_playwright/attempt-01/console.log",
+      "bytes": 350,
+      "sha256": "e093e2dc67bbfce780d31771e6746bb4593a6657d25e95ba940aaa9e5a8ab95b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/03-craft_import_summary_playwright/attempt-01/craft_import_summary_playwright.py",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/03-craft_import_summary_playwright/attempt-01/craft_import_summary_playwright.py",
+      "bytes": 7987,
+      "sha256": "f71535062df2c62ca451a1e918f4c5432c2690c36b0348179828f2082d1a991d",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/03-craft_import_summary_playwright/attempt-01/inputs.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/03-craft_import_summary_playwright/attempt-01/inputs.json",
+      "bytes": 1119,
+      "sha256": "76239d398b4b32a6dc607d04818d8db52ff6748f05ed4d4abe02b37e11c0cf64",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/03-craft_import_summary_playwright/attempt-01/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/03-craft_import_summary_playwright/attempt-01/report.json",
+      "bytes": 2125,
+      "sha256": "b801ca31df127cef844dccac0a846a78eb1c53fd86b96efde168b50572af28b6",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/04-import_conflicts_playwright/attempt-01/console.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/04-import_conflicts_playwright/attempt-01/console.log",
+      "bytes": 123,
+      "sha256": "9f23ad70ad774c11ff625d36bbaadc8909ea74306f7286bdffbdce8039388c88",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/04-import_conflicts_playwright/attempt-01/import_conflicts_playwright.py",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/04-import_conflicts_playwright/attempt-01/import_conflicts_playwright.py",
+      "bytes": 6454,
+      "sha256": "3e65430bd8c89f5dbb2c271cb50a718eb8b65436074ee767a7bda49238da22ed",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/04-import_conflicts_playwright/attempt-01/inputs.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/04-import_conflicts_playwright/attempt-01/inputs.json",
+      "bytes": 1111,
+      "sha256": "9e537ed1149a6a1115868de1d34ecec8dd739584e5d608bcc2cfd8a1939355da",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/04-import_conflicts_playwright/attempt-01/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/04-import_conflicts_playwright/attempt-01/report.json",
+      "bytes": 2112,
+      "sha256": "0dcccdb3ea7d131f2c247bfb27cc75ee5d5cf5602d5255cf599b92ab82723f11",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/05-import_preview_concurrency_playwright/attempt-01/console.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/05-import_preview_concurrency_playwright/attempt-01/console.log",
+      "bytes": 504,
+      "sha256": "dc11c05000a62b166c02229e1c95d09dcb77ecb4dc6d4c135a0e2fe56d605b2b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/05-import_preview_concurrency_playwright/attempt-01/import_preview_concurrency_playwright.py",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/05-import_preview_concurrency_playwright/attempt-01/import_preview_concurrency_playwright.py",
+      "bytes": 10956,
+      "sha256": "62727ebffd27e142233e9a431a30c6c0039fd7c78dad9497170174a87e068e7a",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/05-import_preview_concurrency_playwright/attempt-01/inputs.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/05-import_preview_concurrency_playwright/attempt-01/inputs.json",
+      "bytes": 1131,
+      "sha256": "d9cd623441c10aa1b63b0780e5c2da8acc003a1a58d77ad5b1c49a2543bdc722",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/05-import_preview_concurrency_playwright/attempt-01/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/05-import_preview_concurrency_playwright/attempt-01/report.json",
+      "bytes": 2143,
+      "sha256": "0b0f489e834a59ab087f5ea03e65f3f090ba55f5a7d12e1a60defd93e12545f6",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/06-imported_text_edit_playwright/attempt-01/console.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/06-imported_text_edit_playwright/attempt-01/console.log",
+      "bytes": 470,
+      "sha256": "708cbf7558ea67bce353d4ae2ca5d814be1d35dd002db082df873dcd0f0de7e1",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/06-imported_text_edit_playwright/attempt-01/imported_text_edit_playwright.py",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/06-imported_text_edit_playwright/attempt-01/imported_text_edit_playwright.py",
+      "bytes": 12530,
+      "sha256": "2ace80049486705c085dacc1edc1ad3f9ee102e7aca5d174b2e2f0b82b678063",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/06-imported_text_edit_playwright/attempt-01/inputs.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/06-imported_text_edit_playwright/attempt-01/inputs.json",
+      "bytes": 1115,
+      "sha256": "cd7af4417988ce826607dcd0c985a5fbd913126e74925df7e60bbbc70eac96be",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/06-imported_text_edit_playwright/attempt-01/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/06-imported_text_edit_playwright/attempt-01/report.json",
+      "bytes": 2119,
+      "sha256": "a902150962dcb27c130d007b2cda350bab029840583e40b14da6a0463034283d",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/07-imported_reminder_edit_playwright/attempt-01/console.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/07-imported_reminder_edit_playwright/attempt-01/console.log",
+      "bytes": 769,
+      "sha256": "36606dbcf27f882cd28cd84fdd1d11b229693e625d68100b00eda008a378904a",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/07-imported_reminder_edit_playwright/attempt-01/imported_reminder_edit_playwright.py",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/07-imported_reminder_edit_playwright/attempt-01/imported_reminder_edit_playwright.py",
+      "bytes": 8022,
+      "sha256": "279a51431e6c047d16041b4091b872921c2086e1c354f239967573187bda4265",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/07-imported_reminder_edit_playwright/attempt-01/inputs.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/07-imported_reminder_edit_playwright/attempt-01/inputs.json",
+      "bytes": 1123,
+      "sha256": "ba35ce62f115eca844efef591a57d8d38647efaae8cf9d00fc18e5986db9a41b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/07-imported_reminder_edit_playwright/attempt-01/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/07-imported_reminder_edit_playwright/attempt-01/report.json",
+      "bytes": 2131,
+      "sha256": "019bbdd0caddb000a8786e5775a014589a1ad7fcaf3e78b0582af1caade532e6",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/lane-report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/lane-report.json",
+      "bytes": 19876,
+      "sha256": "718be0d35f769828de07001b8b91937afd08b729375551d7774268731aad747d",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/summary.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/summary.json",
+      "bytes": 6389,
+      "sha256": "599619bb8e3b2f098fa022aec6381c89a8f11ad382c7aecfd2360590faeb8ed8",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/import-recovery/README.original.md.txt",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/import-recovery/README.md",
+      "bytes": 3474,
+      "sha256": "f62170f73738d6248e4664dfdda9eee87257bc64052c1dac8c83d391e0d5a13c",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/lane-summary.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/lane-summary.json",
+      "bytes": 5315,
+      "sha256": "878405064d1ed890c846e06ece559f663ba7bb7735c6f707d38ec39c5c01459b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/weekday-adapter-scope.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/weekday-adapter-scope.json",
+      "bytes": 449,
+      "sha256": "301fc346e2c3eb8aab955a6d8caa8b41a8ec7c80abd8e68a63a0989f039d026d",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/weekday-adapter.patch",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/weekday-adapter.patch",
+      "bytes": 4453,
+      "sha256": "516ecaf44b56d3b82c75719278bb9fc059c7a3d3a8ffd75f23fd5c3864db3122",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/README.original.md.txt",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/README.md",
+      "bytes": 1753,
+      "sha256": "99441576a5693c7d11074f3bedd3e2dc058c767b7e0242a7768c0c22feeec9d3",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/context_creation_playwright.py.stderr.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/context_creation_playwright.py.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/context_creation_playwright.py.stdout.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/context_creation_playwright.py.stdout.log",
+      "bytes": 1745,
+      "sha256": "b86e600e00f103142c95117e7ae41f92b2e9493ad55878ab74de11b3220bd427",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/direct_capture_playwright.py.stderr.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/direct_capture_playwright.py.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/direct_capture_playwright.py.stdout.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/direct_capture_playwright.py.stdout.log",
+      "bytes": 1433,
+      "sha256": "7c873d655318c3f06ddc3342f226a8c4c716bc970c0eb974f40c2d7e19b3455b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/ime_input_playwright.py.stderr.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/ime_input_playwright.py.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/ime_input_playwright.py.stdout.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/ime_input_playwright.py.stdout.log",
+      "bytes": 473,
+      "sha256": "b291568ed1ab8eb8376cafb9397501d7fa66bd31bc7b7eec28b4bfe8494a5d6f",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/pending_subtask_playwright.py.stderr.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/pending_subtask_playwright.py.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/pending_subtask_playwright.py.stdout.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/pending_subtask_playwright.py.stdout.log",
+      "bytes": 858,
+      "sha256": "d6138b636f97615858590a4c9c3c39176b15dcab963307a0c58ee3a469521891",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/quick_add_recovery_playwright.py.stderr.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/quick_add_recovery_playwright.py.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/quick_add_recovery_playwright.py.stdout.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/quick_add_recovery_playwright.py.stdout.log",
+      "bytes": 855,
+      "sha256": "cc142171c18c2f836704b880b872a49cca89ea20e391ca33941f277e5159f86c",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/report.json",
+      "bytes": 17893,
+      "sha256": "d0f8cf552304b27824936b221c32a43ce280ca6f06ab2ffa2e7f10c469354a25",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/task_draft_playwright.py.stderr.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/task_draft_playwright.py.stderr.log",
+      "bytes": 10293,
+      "sha256": "a6d424d8bfc7edca5b2661811d0565fc1de75675c9a9d0e644a3408628f899e1",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/task_draft_playwright.py.stdout.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/task_draft_playwright.py.stdout.log",
+      "bytes": 848,
+      "sha256": "1434a76caa90d905acea2883964413ac1136d90e58d68ff2f4761a9f7609a120",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174949Z-5ae87a60/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174949Z-5ae87a60/report.json",
+      "bytes": 3982,
+      "sha256": "e93f826d38289e5361853eab51762a2352a504e2529ea4fa8da7d41552eb3fe6",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174949Z-5ae87a60/task_draft_playwright.py.stderr.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174949Z-5ae87a60/task_draft_playwright.py.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174949Z-5ae87a60/task_draft_playwright.py.stdout.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174949Z-5ae87a60/task_draft_playwright.py.stdout.log",
+      "bytes": 1190,
+      "sha256": "6e871b51b0de47b972d9a27a96a53fe073ad674b6eb2cec0c9ca414d039d12c0",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/pending-native/20261025T174632Z-chromium-479e4258/results.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/pending-native/20261025T174632Z-chromium-479e4258/results.json",
+      "bytes": 1922,
+      "sha256": "ddd58e24c06ad9bcf29ae282d5cf73a94e7985d26d34ba049e0644a4fc70c957",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/context-native/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/context-native/report.json",
+      "bytes": 3381,
+      "sha256": "464c1367ea64c9f464fbab674b4f18375c28165952a9221f36510455678ffa9f",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/draft-capture/20261025T174530Z-32d5fe02/direct-native/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/draft-capture/20261025T174530Z-32d5fe02/direct-native/report.json",
+      "bytes": 3170,
+      "sha256": "4bc93001c6e48febff0f238171192cb03ee93d4eb047ccabd9714aedc2559d9b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/root-765/accessibility_i18n_audit.py.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/root/749f2040-88e2-4902-af84-8f97eaf65a93/accessibility_i18n_audit.py.log",
+      "bytes": 14676,
+      "sha256": "e641be585b8b84dc76303b20579e787605ec963279ee130ad5295125ea31049e",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/root-765/calendar_focus_return_playwright.py.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/root/749f2040-88e2-4902-af84-8f97eaf65a93/calendar_focus_return_playwright.py.log",
+      "bytes": 1568,
+      "sha256": "c5e8af89bb58b08aa3a8e356f0a84cd82590abf11a51d4be3ed736f10afadce2",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/root-765/foreign_wall_time_playwright.py.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/root/749f2040-88e2-4902-af84-8f97eaf65a93/foreign_wall_time_playwright.py.log",
+      "bytes": 717,
+      "sha256": "de9ef4995f9ff849a6c615bf3394bbe6aa6eb8340ca0d9452992d1a266976179",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/root-765/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/root/749f2040-88e2-4902-af84-8f97eaf65a93/report.json",
+      "bytes": 3170,
+      "sha256": "138c88af648cee42532affeaa5037c453732ecbd2f623340c3acefd4d8930970",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/root-765/smoke_playwright.py.log",
+      "original_path": "/tmp/task-tracer-4.14.0-regression/root/749f2040-88e2-4902-af84-8f97eaf65a93/smoke_playwright.py.log",
+      "bytes": 424,
+      "sha256": "fcb16adcf2a861a6100640d0dcb4326768b8ffcf3f7d86298ce07827b4894eca",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "regression/root-765/calendar-native/20261025T175054Z-c50e1c68/report.json",
+      "original_path": "/tmp/task-tracer-4.13.2-calendar/20261025T175054Z-c50e1c68/report.json",
+      "bytes": 2902,
+      "sha256": "49e0e600ccf467ed437df346055e7d8355b65b4598fa9b464a745ea9293c1a1c",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/01-empty-desktop.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/01-empty-desktop.json",
+      "bytes": 15668,
+      "sha256": "634b1b2d7d9624eab47c5cccae5f3b836969855fb2760b190148629fedf4239b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/02-settings-native-controls.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/02-settings-native-controls.json",
+      "bytes": 10300,
+      "sha256": "918875d89e97cef1d1076235b80c09bb061d66faaeb5c96e47a31ea0abc075da",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/03-english.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/03-english.json",
+      "bytes": 10097,
+      "sha256": "0ce19dcb07b83893662f85972df46f833256f26429af5df238aecf59d1aa175e",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/04-dark.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/04-dark.json",
+      "bytes": 10094,
+      "sha256": "886ce4d2ec72b718fb938a6dcfbd030adfff0b6ac43575f0e38c2e6d40d579e9",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/05-settings-320.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/05-settings-320.json",
+      "bytes": 9643,
+      "sha256": "892bac217bc093eeab6d48001c51d3cdda09b8860053ed45553ef7c8b6a6e06b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/06-back-to-work.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/06-back-to-work.json",
+      "bytes": 9428,
+      "sha256": "5443b43f4268f1233a95dd588809608d1f7e3f7171bc65372fda2d3a2f989af5",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/07-final-editor-dark-320.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/07-final-editor-dark-320.json",
+      "bytes": 10954,
+      "sha256": "2e62daf512fa9835624751311e9668e03532797fc4346b4a3ed4cca9bb75d86a",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/08-final-task-title.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/08-final-task-title.json",
+      "bytes": 10998,
+      "sha256": "4096dbfc162fe9b33917016a412329bea1b73c9049eb094fd9895a8590d8c019",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/09-tomorrow-one-click.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/09-tomorrow-one-click.json",
+      "bytes": 11395,
+      "sha256": "dbab3c35f387beb6b5830d470c181a86d992e6e751ebef475860d6903a5e48e7",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/10-notes.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/10-notes.json",
+      "bytes": 11479,
+      "sha256": "e2e540e78666d04a82a1f5bde6523e6980608d1fe3b07eeb878a7209cea2a010",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/11-tags-directly-visible.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/11-tags-directly-visible.json",
+      "bytes": 11507,
+      "sha256": "5a99ba5d4cdef94fe72b08a53e674c7ee34a194ea5805cab263c7ac759fdaf14",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/12-pending-child.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/12-pending-child.json",
+      "bytes": 11560,
+      "sha256": "23d6cce86838bede061af118650a29fa76b2e38a2552a53b38d39617f37753ec",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/13-short-height-editor.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/13-short-height-editor.json",
+      "bytes": 11563,
+      "sha256": "8551992c419093727277fa8a8b91d9b8a31e309410ab9abd9c10741959fc3951",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/14-filled-desktop-dark.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/14-filled-desktop-dark.json",
+      "bytes": 17384,
+      "sha256": "7eb2027ddba0a8a040b3e737a9d4d5f8a53ee03c4d98d5478a0b3b895fd20189",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/15-saved-task-with-child.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/15-saved-task-with-child.json",
+      "bytes": 15511,
+      "sha256": "e107806afa86580bfd27dac6bfd2f4f427c52eb998ef22a0a17cecb089f54824",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/16-data-settings.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/16-data-settings.json",
+      "bytes": 10602,
+      "sha256": "5fe4efa0ce9633da465ad3dca4b0300e94989de74a0b8f5f99165c5671ba4a49",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/17-backup-tools.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/17-backup-tools.json",
+      "bytes": 11085,
+      "sha256": "54d73ff5140a1b49be4b7d277ad0dc0ae399c79c20e3f5656e2250d8da93e23f",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/18-actual-backup.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/18-actual-backup.json",
+      "bytes": 10978,
+      "sha256": "fbb09016119a5f7c639004e299e3c38628bbe261c7c2b699b00ec77483a40d79",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/session.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/session.json",
+      "bytes": 172,
+      "sha256": "7e18a49d6faa199199180d9f3ebbc632b2f93074d2b1384be38b94590b3f67ee",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/source.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/source.json",
+      "bytes": 1203,
+      "sha256": "21220c6538bb1310b3c5eaa754a789c356dd46c55bd4e91a9421b7f5e067b68b",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/task-tracer_backup_2026-10-25_17-49-44-636.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/task-tracer_backup_2026-10-25_17-49-44-636.json",
+      "bytes": 1956,
+      "sha256": "65bb0dd33af1dcadda427f2acda427940a6e5f52de79e5a370ee54115a470aae",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/07-final-editor-dark-320.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/07-final-editor-dark-320.png",
+      "bytes": 28373,
+      "sha256": "d563483d61dcc8a1f0f5e4b2418ad663e737b4ee6049e21e82ec402e0476ec2d",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/13-short-height-editor.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/13-short-height-editor.png",
+      "bytes": 23668,
+      "sha256": "c7374681cff329daa6dea267b8c10164259835c8be35be1e1af751c1fd21834a",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "forms-765/14-filled-desktop-dark.png",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/forms/candidate-final/14-filled-desktop-dark.png",
+      "bytes": 129307,
+      "sha256": "c583626fe708f98039f1468afb9b6b5464412323644e85b320c316a52f231d35",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "scope/final-ui-scope.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/final-ui-scope.json",
+      "bytes": 907,
+      "sha256": "0b5dc81b737bde0da351fdef03792faf315ff3e9fecbf17b69546728ecf9729e",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "public-screenshots/source-metadata.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/public-screenshots/source-metadata.json",
+      "bytes": 887,
+      "sha256": "058e6b7ba73b3b26326c73519967c2f75482b4ab9bcef06e79d2fea79efb4044",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "public-screenshots/final-images.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/public-screenshots/final-images.json",
+      "bytes": 1779,
+      "sha256": "d5cf80fe1d5e6620439b6ead60964a94bf28ef05ddab3fd2cb736caddf4b9dc4",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "public-screenshots/capture.json",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/public-screenshots/capture.json",
+      "bytes": 7687,
+      "sha256": "978d5eb9466d5ba9e6098d63c33aaa7402e0b092816eb2e8f130d1f9ffa9dd53",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "public-screenshots/capture.log",
+      "original_path": "/workspace/design-research/task-tracer-proactive-2026-10-26/public-screenshots/capture.log",
+      "bytes": 157,
+      "sha256": "16ea6dcdaed2f260ba52f1095314407d7cbdc01452c0c65fbbb28633451d0eae",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/a4eb6e36-826a-49fd-a7c4-51c429c56d79/320-new-editor.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/a4eb6e36-826a-49fd-a7c4-51c429c56d79/320-new-editor.json",
+      "bytes": 944,
+      "sha256": "53b50992010996388a25f1a97c047663eb117487ad48335861f06a8c3215b986",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/a4eb6e36-826a-49fd-a7c4-51c429c56d79/320-response-headers.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/a4eb6e36-826a-49fd-a7c4-51c429c56d79/320-response-headers.json",
+      "bytes": 949,
+      "sha256": "db90d717a125f88c01aa94b5123283a37a2a57566d1a3088c9bab56ed051df8e",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/a4eb6e36-826a-49fd-a7c4-51c429c56d79/320-short-focused-editor.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/a4eb6e36-826a-49fd-a7c4-51c429c56d79/320-short-focused-editor.json",
+      "bytes": 944,
+      "sha256": "de4c511bb0a304ce07045359c6240ec52098203b385cbb210f4a92f691a2d5de",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/a4eb6e36-826a-49fd-a7c4-51c429c56d79/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/a4eb6e36-826a-49fd-a7c4-51c429c56d79/report.json",
+      "bytes": 3543,
+      "sha256": "076500ffc290c04d8a9c536a61a89be20212e8b472129e5bbd777155a3aa5511",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/a4eb6e36-826a-49fd-a7c4-51c429c56d79/runner.py",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/a4eb6e36-826a-49fd-a7c4-51c429c56d79/runner.py",
+      "bytes": 5177,
+      "sha256": "87023897d6b2fb22ce6af676b5d14cbcf9f0d7ff3273c161636ec40c8ed314c2",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/a4eb6e36-826a-49fd-a7c4-51c429c56d79/scope.original.md.txt",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/a4eb6e36-826a-49fd-a7c4-51c429c56d79/scope.md",
+      "bytes": 470,
+      "sha256": "6a6e9bb3063816a9a8e16436dfac6446258ebb8900a36fd1843b6d4f46241b07",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/320-invalid-weekdays.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/320-invalid-weekdays.json",
+      "bytes": 964,
+      "sha256": "99780882555b05633736390c5826d3353976e26eba8528112a2323bfbcf7ff04",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/320-new-editor.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/320-new-editor.json",
+      "bytes": 941,
+      "sha256": "be1f05ef9f3192cf63ea8ecdb20edff188874fe60a247a73e8a496f7c5d27adc",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/320-response-headers.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/320-response-headers.json",
+      "bytes": 949,
+      "sha256": "99a4145d6075a9c43bfa99b4bda3edcb3e53d1f4c8fe27d19224a6202c256aec",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/320-saved-record.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/320-saved-record.json",
+      "bytes": 855,
+      "sha256": "0bbff8acbad43c0416ff5d841d38a06cdf006b743a0e22695c22e45e737fcd38",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/320-saved-records.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/320-saved-records.json",
+      "bytes": 1039,
+      "sha256": "98ac91e932071a1c9ff2a9883120c8d8d8a75ea5f890f71aa101bc99d0afd991",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/320-short-focused-editor.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/320-short-focused-editor.json",
+      "bytes": 948,
+      "sha256": "04eb98c48dbd6201102440b57a58600e6395440ace50680264e4e67a9f9c0af9",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/390-invalid-weekdays.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/390-invalid-weekdays.json",
+      "bytes": 964,
+      "sha256": "b908bcc099174abe39275336d56762bc59426de9a992e1815e02f8e152078805",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/390-new-editor.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/390-new-editor.json",
+      "bytes": 941,
+      "sha256": "f5d2ce1ef13cf1fc86c40e9a1f54e375fcd83d5d4cb0b055d31801e483ae2efc",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/390-response-headers.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/390-response-headers.json",
+      "bytes": 949,
+      "sha256": "acd945d1066d506f8e8c026152f4d1e253a6be9bda9cf6e064c256f1bc84f20f",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/390-saved-record.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/390-saved-record.json",
+      "bytes": 855,
+      "sha256": "18b5fd9dfaeaeb61c512ba5218ad805f5263f87e1ff8c079562fd4fc65d4df20",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/390-saved-records.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/390-saved-records.json",
+      "bytes": 1039,
+      "sha256": "9949ec89b996534312429e3ad3c78e9ae2b77084b0722762aa143d159de05884",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/390-short-focused-editor.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/390-short-focused-editor.json",
+      "bytes": 948,
+      "sha256": "c5ebf48cf7ca1d02f3c6d98ecb0b5e2c43dd7e804b0b0218263b728c7afdef1e",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/800-invalid-weekdays.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/800-invalid-weekdays.json",
+      "bytes": 979,
+      "sha256": "f79cdb32c74ffa52e35e26fa0f39d22dc8b2f8c4dc6a739762001e6563fb5d09",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/800-new-editor.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/800-new-editor.json",
+      "bytes": 976,
+      "sha256": "a1045251070ed529cc9b47fa254d79d7cf8deab2bb42dfce532b22c95d65ef95",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/800-response-headers.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/800-response-headers.json",
+      "bytes": 949,
+      "sha256": "2f0ff54070eed8578657234319fca9035d2a2c0a4c21e4dbaf1edeebab4f9cc7",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/800-saved-record.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/800-saved-record.json",
+      "bytes": 857,
+      "sha256": "dae038841e42827bf670b0671b2b3a5eb133adbf21fea146571b5e78ec8efe0f",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/800-saved-records.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/800-saved-records.json",
+      "bytes": 1039,
+      "sha256": "4f0ab40b6f7b71dd2b9f1ea1f812d02e486b3f45a03141af69e5aa69f61251c2",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/800-short-focused-editor.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/800-short-focused-editor.json",
+      "bytes": 953,
+      "sha256": "c934ec9f9de5dd4c9a49997a723b59b4eb16bab98eb443c0d4193175fe3ead82",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/report.json",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/report.json",
+      "bytes": 17904,
+      "sha256": "b9a6b4cd4d66d8f5d6dc8a7a0de1b340552b74a1bb0e98828887cdf9dce0ddf7",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/runner.py",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/runner.py",
+      "bytes": 5330,
+      "sha256": "2d24edf7534461d970de29828fa18b5fdbdd23c76ded2898b30f6714a4234b59",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/320-short-focused-editor.png",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/320-short-focused-editor.png",
+      "bytes": 24606,
+      "sha256": "d0d219b7a294bc1e80729468815e086f481ebc64b4f6bc91d631e5e1652f72ee",
+      "kind": "original-byte-copy"
+    },
+    {
+      "path": "final-form/8e482985-7152-4903-a410-017e1d46a75a/800-short-focused-editor.png",
+      "original_path": "/tmp/task-tracer-4.14.0-final-form/8e482985-7152-4903-a410-017e1d46a75a/800-short-focused-editor.png",
+      "bytes": 46614,
+      "sha256": "1b673516f1d7a3641f6ed377159314d21dc8076b6963ef6ce5738459a1c46cae",
+      "kind": "original-byte-copy"
+    }
+  ]
+}

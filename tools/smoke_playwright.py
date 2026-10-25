@@ -2871,7 +2871,10 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         page.locator("#mergeImportMode").check()
         expect(page.locator(".import-conflict-select")).to_have_count(1)
         expect(page.locator(".import-conflict-select")).to_have_value("keep")
-        page.locator("#mergeImportMode").uncheck()
+        if page.locator("#mergeImportMode").get_attribute("type") == "radio":
+            page.locator("#replaceImportMode").check()
+        else:
+            page.locator("#mergeImportMode").uncheck()
         expect(page.locator("#confirm-message-text")).to_contain_text("Preview Duplicate")
         expect(page.locator("#confirm-message-text")).to_contain_text(existing_name)
         expect(page.locator("#submitBtn")).to_have_text(re.compile("确认完整性风险|Confirm Integrity Risk", re.I))
@@ -3681,8 +3684,8 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                     const structureIssues = [];
                     if (modernToolbar) {
                         const groups = [
-                            ['.toolbar-main-row', ['.search-box', '#saveSmartViewBtn', '#toolsDrawerToggleBtn']],
-                            ['#toolsDrawerContent .toolbar-filter-row', ['#projectDropdown', '#filterDropdown', '#sortDropdown', '#batchModeBtn']]
+                            ['.toolbar-main-row', ['.search-box', '#saveSmartViewBtn', '#toolsDrawerToggleBtn', '#batchModeBtn']],
+                            ['#toolsDrawerContent .toolbar-filter-row', ['#projectDropdown', '#filterDropdown', '#sortDropdown']]
                         ];
                         const groupRects = [];
                         for (const [selector, children] of groups) {

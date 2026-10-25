@@ -73,7 +73,10 @@ def dynamic_merge(page, url):
     select_visible_option(page, '#import-conflict-0', 'replace')
     assert_summary(page, 'merge', added=1, replaced=1, skipped=0, kept=1, after=3)
     assert_merge_action(page, 2)
-    page.locator('#mergeImportMode').uncheck()
+    if page.locator('#mergeImportMode').get_attribute('type') == 'radio':
+        page.locator('#replaceImportMode').check()
+    else:
+        page.locator('#mergeImportMode').uncheck()
     assert_summary(page, 'replace', current=2, incoming=2, after=2)
     page.locator('#mergeImportMode').check()
     assert_summary(page, 'merge', added=1, replaced=1, skipped=0, kept=1, after=3)

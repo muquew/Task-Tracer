@@ -1,0 +1,17 @@
+{
+  "captures": 24,
+  "page_errors": [],
+  "action_errors": [
+    {
+      "command": {
+        "action": "press",
+        "selector": "#modal",
+        "key": "Escape"
+      },
+      "error": "Locator.press: Timeout 6000ms exceeded.\nCall log:\n  - waiting for locator(\"#modal\")\n"
+    }
+  ],
+  "browser_closed": true,
+  "server_closed": true,
+  "closed_at": "2026-10-25T17:24:27.409098+00:00"
+}

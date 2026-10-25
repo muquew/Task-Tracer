@@ -1,0 +1,31 @@
+{
+  "captured_at": "2026-10-25T17:13:44.475295+00:00",
+  "index_sha256": "79693a476cd75b46df78b71890f9a3a89aef2eb08aa8a2af701c07c4b801c1ad",
+  "browser": "154.0.8037.57",
+  "fresh_synthetic_context": true,
+  "normal_motion": true,
+  "production_csp": true,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "locale": "zh-CN",
+  "timezone": "UTC",
+  "native_user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+  "reduced_motion_requested": false,
+  "reduced_motion_matches": false,
+  "page_errors": [
+    "Cannot set properties of undefined (setting 'text')"
+  ],
+  "source_label_from_parent": "8dc7ca4 / APP 4.13.2 / resources 4.43",
+  "accepted_finding_screenshots_viewed": [
+    "04-schedule-before-toggle-bottom.png",
+    "05-schedule-after-toggle-top.png",
+    "06-schedule-after-toggle-bottom.png",
+    "07-weekdays-none-before-save.png",
+    "08-weekdays-none-saved-mwf.png",
+    "09-subtask-c-edit-before-delete-a.png",
+    "10-subtask-c-edit-after-delete-a.png",
+    "11-subtask-delete-saved.png"
+  ]
+}

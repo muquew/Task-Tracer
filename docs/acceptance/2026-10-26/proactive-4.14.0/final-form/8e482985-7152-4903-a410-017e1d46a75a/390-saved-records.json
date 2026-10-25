@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1792951981299,
+    "createdAt": "2026-10-25T17:56:42.464Z",
+    "completed": false,
+    "completedAt": null,
+    "archived": false,
+    "archivedAt": null,
+    "focusDate": null,
+    "snoozedUntil": null,
+    "lastReminderAt": null,
+    "repeatSourceId": null,
+    "repeatCreatedFrom": null,
+    "nextRepeatTaskId": null,
+    "repeatWeekdays": [
+      4
+    ],
+    "repeatPaused": false,
+    "name": "Review the launch plan",
+    "description": "Confirm owners, dates, and next steps.",
+    "project": "Inbox",
+    "tags": [
+      "launch",
+      "review"
+    ],
+    "subtasks": [
+      {
+        "id": 1792951405318,
+        "text": "Check the final checklist",
+        "completed": false
+      }
+    ],
+    "dueDate": "2026-10-27T15:59:00.000Z",
+    "dueAt": "2026-10-27T15:59:00.000Z",
+    "dueLocalDate": "2026-10-27",
+    "dueLocalTime": "23:59",
+    "dueTimeZone": "Asia/Shanghai",
+    "reminderOffset": 15,
+    "reminderRepeat": -1,
+    "repeatType": "weekly-days",
+    "repeatInterval": 1,
+    "order": 10000
+  }
+]

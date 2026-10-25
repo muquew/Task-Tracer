@@ -1,0 +1,62 @@
+{
+  "active": "repeatWeekday1",
+  "activeBox": {
+    "x": 44,
+    "y": 660.65625,
+    "w": 28,
+    "h": 34,
+    "right": 72,
+    "bottom": 694.65625
+  },
+  "footer": {
+    "x": 12,
+    "y": 765,
+    "w": 296,
+    "h": 67,
+    "right": 308,
+    "bottom": 832
+  },
+  "form": {
+    "x": 12,
+    "y": 79,
+    "w": 296,
+    "h": 753,
+    "right": 308,
+    "bottom": 832
+  },
+  "viewport": {
+    "w": 320,
+    "h": 844
+  },
+  "scrollWidth": 320,
+  "activeCenterHit": true,
+  "presetRows": [
+    {
+      "text": "Today",
+      "x": 42,
+      "y": -237,
+      "w": 60.703125,
+      "h": 44,
+      "right": 102.703125,
+      "bottom": -193
+    },
+    {
+      "text": "Tomorrow",
+      "x": 108.703125,
+      "y": -237,
+      "w": 83.078125,
+      "h": 44,
+      "right": 191.78125,
+      "bottom": -193
+    },
+    {
+      "text": "Choose",
+      "x": 197.78125,
+      "y": -237,
+      "w": 70.8125,
+      "h": 44,
+      "right": 268.59375,
+      "bottom": -193
+    }
+  ]
+}

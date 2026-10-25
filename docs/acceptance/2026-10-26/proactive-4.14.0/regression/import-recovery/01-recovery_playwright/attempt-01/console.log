@@ -1,0 +1,6 @@
+Recovery passed: deleted data survives reload, explicit confirmation, reversible restore, safe task text
+Recovery passed: aborted task write rolls back both task data and recovery history
+Recovery passed: history retains the latest 10 recovery points
+Recovery passed: checkpoint quota failure preserves task/history and emergency export
+Recovery passed: startup quota failure retains readable task data for export
+Local recovery checks passed

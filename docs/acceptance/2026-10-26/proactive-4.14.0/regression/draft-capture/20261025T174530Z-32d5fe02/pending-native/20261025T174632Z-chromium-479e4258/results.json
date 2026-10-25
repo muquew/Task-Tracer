@@ -1,0 +1,90 @@
+{
+  "browser": "chromium",
+  "version": "154.0.8037.57",
+  "production_csp": true,
+  "widths": [
+    1280,
+    390
+  ],
+  "fresh_context_per_case": true,
+  "results": [
+    {
+      "width": 1280,
+      "case": "create",
+      "status": "passed"
+    },
+    {
+      "width": 1280,
+      "case": "explicit",
+      "status": "passed"
+    },
+    {
+      "width": 1280,
+      "case": "edit",
+      "status": "passed"
+    },
+    {
+      "width": 1280,
+      "case": "validation",
+      "status": "passed"
+    },
+    {
+      "width": 1280,
+      "case": "quota",
+      "status": "passed"
+    },
+    {
+      "width": 1280,
+      "case": "abort",
+      "status": "passed"
+    },
+    {
+      "width": 1280,
+      "case": "composition",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "create",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "explicit",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "edit",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "validation",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "quota",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "abort",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "composition",
+      "status": "passed"
+    }
+  ],
+  "source_sha256": {
+    "index.html": "765c354ba6e0c2eb00c01e7dc0bc9e841af11a1fe7eaa6e66537f9058a38f672",
+    "vercel.json": "2c45cfccd1068c8659881f2f3f80d5fcb86d522c4e029817cdb22d00c31fb389",
+    "sw.js": "33faf13b0a83140f11198a77029d94b9071a621de7238fe45c43cd9b721b0dd9",
+    "resources/en.json": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd",
+    "resources/zh-CN.json": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9",
+    "tools/pending_subtask_playwright.py": "d7756172a8e50e346f07a9c684ba03d7419bf678a5d0626acbeb56dcc7bf082c"
+  }
+}

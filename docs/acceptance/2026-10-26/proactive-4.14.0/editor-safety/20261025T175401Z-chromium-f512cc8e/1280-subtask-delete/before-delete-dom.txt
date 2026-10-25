@@ -1,0 +1,73 @@
+- dialog "编辑任务":
+  - heading "编辑任务" [level=2]
+  - button "取消": ×
+  - text: 任务名称 *
+  - textbox "任务名称 *":
+    - /placeholder: 要完成什么？
+    - text: 删除前行保留后行未完成编辑
+  - text: 描述
+  - textbox "描述":
+    - /placeholder: 补充背景、链接或执行要点
+    - text: 不能改动此任务其它原始字段。 保留换行。
+  - region "任务属性":
+    - text: 项目
+    - combobox "项目": 子任务安全
+    - text: 截止日期
+    - checkbox "无截止日期"
+    - text: 无截止日期
+    - group "快捷安排":
+      - button "今天"
+      - button "明天"
+      - button "选择日期": 选择
+    - textbox "截止日期": 2032-05-06
+    - text: 截止时间
+    - textbox "截止时间": 16:35
+    - group: 日期与时区说明
+    - text: 标签
+    - textbox "标签":
+      - /placeholder: 用逗号分隔标签
+      - text: keep, original
+    - group: 标签格式
+  - text: 子任务 3
+  - textbox "子任务":
+    - /placeholder: 输入子任务…
+  - button "添加子任务"
+  - list:
+    - listitem:
+      - button "编辑子任务：联系负责人A": 联系负责人A
+      - button "删除子任务：联系负责人A"
+    - listitem:
+      - button "编辑子任务：校对数据B": 校对数据B
+      - button "删除子任务：校对数据B"
+    - listitem:
+      - textbox "编辑子任务文本": 检查附件C：已补充关键修改
+      - button "删除子任务：检查附件C"
+  - group:
+    - text: 提醒与重复 提醒设置
+    - 'button "提醒设置: 提前 1 小时"': 提前 1 小时
+    - text: 重复提醒
+    - 'button "重复提醒: 不重复"': 不重复
+    - paragraph: 浏览器只会在应用打开或被唤醒时检查提醒；系统级后台提醒不能保证。
+    - text: 重复任务
+    - 'button "重复任务: 每周指定星期"': 每周指定星期
+    - group: 重复规则说明
+    - paragraph: 重复星期
+    - group "重复星期":
+      - checkbox "一"
+      - text: 一
+      - checkbox "二" [checked]
+      - text: 二
+      - checkbox "三"
+      - text: 三
+      - checkbox "四" [checked]
+      - text: 四
+      - checkbox "五"
+      - text: 五
+      - checkbox "六"
+      - text: 六
+      - checkbox "日"
+      - text: 日
+    - checkbox "暂停重复任务" [checked]
+    - text: 暂停重复任务
+  - button "取消"
+  - button "保存更改"

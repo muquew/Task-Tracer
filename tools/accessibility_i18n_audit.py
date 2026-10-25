@@ -617,6 +617,9 @@ def audit_scaled_surfaces(browser, url: str, axe_source: str, viewport: dict) ->
             open_settings(page)
             page.locator('#recoveryBtn').click()
             expect(page.locator('#recoveryTaskPreview > li')).to_have_count(100)
+            preview_details = page.locator('#recoveryPreviewDetails')
+            if preview_details.count() and not preview_details.evaluate('element => element.open'):
+                preview_details.locator(':scope > summary').click()
             assert page.locator('#recoveryTaskPreview').bounding_box()['height'] < viewport['height'] / 2, 'Recovery preview pushes actions below a full page of task rows'
             audit_page_state(page, axe_source, f'{label} recovery preview pagination')
             for selector in ('#recoveryPreviewMore', '#recoveryExportBtn', '#recoveryClearBtn'):

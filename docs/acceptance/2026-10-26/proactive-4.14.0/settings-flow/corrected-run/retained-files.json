@@ -1,0 +1,110 @@
+{
+  "scope": "Corrected targeted settings-flow native result and selected generated evidence; manifest excludes itself. Earlier first-run evidence remains in sibling first-run.",
+  "files": [
+    {
+      "path": "1440-import-modes-and-settings/01-replace-default.png",
+      "bytes": 187714,
+      "sha256": "21828aab7816bb6ca7d712dbd05f263630858abb3a07b44aa092263cc8918ef5"
+    },
+    {
+      "path": "1440-import-modes-and-settings/02-merge-outcome.png",
+      "bytes": 194906,
+      "sha256": "f00ccee25779053d25642ac37c454c3534158943e3660698676aad4e88f60630"
+    },
+    {
+      "path": "1440-import-modes-and-settings/after-preview.json",
+      "bytes": 3043,
+      "sha256": "08025453769621bceb104c1c416e342058a56411a394fa37c9366eb6237d9890"
+    },
+    {
+      "path": "1440-import-modes-and-settings/before-preview.json",
+      "bytes": 3043,
+      "sha256": "08025453769621bceb104c1c416e342058a56411a394fa37c9366eb6237d9890"
+    },
+    {
+      "path": "1440-import-modes-and-settings/task-tracer_backup_2026-10-25_17-39-49-828.json",
+      "bytes": 2487,
+      "sha256": "fe9a75c1dfaaa9d5184044fa3c18b6c3ff6fe53e597f3805dc760800cb7778b8"
+    },
+    {
+      "path": "1440-recovery-consent/01-unchecked-disabled.png",
+      "bytes": 191454,
+      "sha256": "c05f6213795c44d3c500d40837cda5f6e10913efeee162c3a5b18f40285fa82a"
+    },
+    {
+      "path": "1440-recovery-consent/02-restored-exact-records.png",
+      "bytes": 84763,
+      "sha256": "e4a39c887377f0611bce929390a5a30e70a4bb849b1010cd726689084d389b79"
+    },
+    {
+      "path": "1440-recovery-consent/after-recovery.json",
+      "bytes": 6753,
+      "sha256": "7120f1831d85ce45a54a4992e194cabda6a2dea218be0572f7ae3d273aeca015"
+    },
+    {
+      "path": "1440-recovery-consent/before-recovery.json",
+      "bytes": 4708,
+      "sha256": "40cd6a7ce1f6d40740292cd2b2a867dd9230571b883d24e74dcc3f7aae696d0f"
+    },
+    {
+      "path": "390-import-modes-and-settings/01-replace-default.png",
+      "bytes": 68130,
+      "sha256": "ed804ed7c3ddcea5a095b548e2cc776f70d8e319ce9e92bf3abf1870440ac5c2"
+    },
+    {
+      "path": "390-import-modes-and-settings/02-merge-outcome.png",
+      "bytes": 69312,
+      "sha256": "58d3b5e0838d55c5741f49cd6c29b8c4d7a14a9d23cb5a1e3682652d8c3858f5"
+    },
+    {
+      "path": "390-import-modes-and-settings/after-preview.json",
+      "bytes": 3043,
+      "sha256": "474fa3ce427a8b1ebd20db01ca70716af162d8c3fe4d204794e52316ea0fa752"
+    },
+    {
+      "path": "390-import-modes-and-settings/before-preview.json",
+      "bytes": 3043,
+      "sha256": "474fa3ce427a8b1ebd20db01ca70716af162d8c3fe4d204794e52316ea0fa752"
+    },
+    {
+      "path": "390-import-modes-and-settings/task-tracer_backup_2026-10-25_17-39-58-546.json",
+      "bytes": 2487,
+      "sha256": "25419687ea424d8966d8958cb1fd6560e165d84d71102d72784593f2a763bb5c"
+    },
+    {
+      "path": "390-recovery-consent/01-unchecked-disabled.png",
+      "bytes": 75403,
+      "sha256": "d87a747af217b513f1aabf6810abbad2be3ae87536b6c94cf54f7b9781d2d01b"
+    },
+    {
+      "path": "390-recovery-consent/02-restored-exact-records.png",
+      "bytes": 40587,
+      "sha256": "ff3c6335a47b24d42567efd1cf374caba230dcc29f7b92ef09a22a658b5f6ba4"
+    },
+    {
+      "path": "390-recovery-consent/after-recovery.json",
+      "bytes": 6753,
+      "sha256": "6aac1197262da4ce82b7a0f7f9ab1852199a751941c98ad30b4ac2f56eb19939"
+    },
+    {
+      "path": "390-recovery-consent/before-recovery.json",
+      "bytes": 4708,
+      "sha256": "0ae2c5063587a266bd495b330485101a6da35dc071149623e1b00b80c147c259"
+    },
+    {
+      "path": "report.json",
+      "bytes": 3791,
+      "sha256": "f19d274f4502025ccee6554bb6e3c688ef8306fa43247a91949d58ae0c6671f8"
+    },
+    {
+      "path": "tool/settings_flow_playwright.py",
+      "bytes": 14302,
+      "sha256": "f6db709a2d678a862cce2c77449971a64acacd29f707e430fab1bfe4f21b46fb"
+    },
+    {
+      "path": "visual-review.json",
+      "bytes": 2568,
+      "sha256": "8e24a709b81733eb8d6d99b38b0ab7a5502331eccb60a72f250bdf14ab79924e"
+    }
+  ]
+}

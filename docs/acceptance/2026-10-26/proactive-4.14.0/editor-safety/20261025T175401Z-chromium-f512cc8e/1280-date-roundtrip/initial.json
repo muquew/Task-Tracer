@@ -1,0 +1,61 @@
+{
+  "tasks": [
+    {
+      "id": 1792950993485,
+      "createdAt": "2026-10-25T17:54:03.254Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "安全回归哨兵",
+      "description": "所有其它记录必须保持",
+      "project": "Inbox",
+      "tags": [],
+      "subtasks": [
+        {
+          "id": 1792951133193,
+          "text": "保留此ID与内容",
+          "completed": false
+        }
+      ],
+      "dueDate": null,
+      "dueAt": null,
+      "dueLocalDate": null,
+      "dueLocalTime": null,
+      "dueTimeZone": null,
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 10000
+    }
+  ],
+  "config": [
+    {
+      "key": "language",
+      "value": "zh-CN"
+    },
+    {
+      "key": "recoveryHistory",
+      "value": [
+        {
+          "id": "94a1dacc-cee8-4ef1-99fe-ebb500f81a83",
+          "createdAt": "2026-10-25T17:54:03.307Z",
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "key": "taskRevision",
+      "value": 1
+    }
+  ]
+}

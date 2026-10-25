@@ -158,6 +158,8 @@ def main() -> int:
             "quick_add_date_playwright.py",
             "direct_capture_playwright.py",
             "pending_subtask_playwright.py",
+            "editor_safety_playwright.py",
+            "settings_flow_playwright.py",
             "calendar_focus_return_playwright.py",
             "workflow_feedback_playwright.py",
             "sidebar_scroll_playwright.py",

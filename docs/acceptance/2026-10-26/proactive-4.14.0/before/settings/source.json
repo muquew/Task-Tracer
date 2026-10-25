@@ -1,0 +1,83 @@
+{
+  "source_repo": "/workspace/Task-Tracer",
+  "parent_supplied_ref": "8dc7ca4",
+  "version": "4.13.2",
+  "reason_for_snapshot": "Serve the exact current baseline while another owner may edit the live checkout; source files are byte copies and never modified.",
+  "files": [
+    {
+      "path": "index.html",
+      "bytes": 945954,
+      "sha256": "79693a476cd75b46df78b71890f9a3a89aef2eb08aa8a2af701c07c4b801c1ad"
+    },
+    {
+      "path": "vercel.json",
+      "bytes": 1194,
+      "sha256": "cd5289cea11807dc94ce2baa977bba672610c610b6b817296d267c31f3cad583"
+    },
+    {
+      "path": "sw.js",
+      "bytes": 8305,
+      "sha256": "57713a2917787dc9584b724597fda086004d6e675bfab81e078a354ad5339c2a"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 1607,
+      "sha256": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 2168,
+      "sha256": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "bytes": 1694,
+      "sha256": "a49db18583d3f275de394c74e3c5db9142979ab713fdfd1ac69488236c1d9bf9"
+    },
+    {
+      "path": "resources/en.json",
+      "bytes": 56291,
+      "sha256": "6e50d75a046b056913e5be6384515f386733c3e2ff927d0a2adf038172421231"
+    },
+    {
+      "path": "resources/zh-CN.json",
+      "bytes": 54800,
+      "sha256": "e1c2d31d2a1322ac18f1e6554da1b2cb28fbc0ade01109cd58d0c4cf5ef5ef99"
+    },
+    {
+      "path": "fav/android-chrome-192x192.png",
+      "bytes": 2245,
+      "sha256": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584"
+    },
+    {
+      "path": "fav/android-chrome-512x512.png",
+      "bytes": 6649,
+      "sha256": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e"
+    },
+    {
+      "path": "fav/apple-touch-icon.png",
+      "bytes": 2109,
+      "sha256": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7"
+    },
+    {
+      "path": "fav/favicon-16x16.png",
+      "bytes": 262,
+      "sha256": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4"
+    },
+    {
+      "path": "fav/favicon-32x32.png",
+      "bytes": 425,
+      "sha256": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f"
+    },
+    {
+      "path": "fav/favicon-48x48.png",
+      "bytes": 597,
+      "sha256": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c"
+    },
+    {
+      "path": "fav/favicon.ico",
+      "bytes": 15086,
+      "sha256": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011"
+    }
+  ]
+}
