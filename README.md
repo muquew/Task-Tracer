@@ -22,6 +22,8 @@
 
 Task Tracer is a personal task manager that runs in the browser and keeps task data on the current device/browser profile. It is made for people who want a capable daily workspace without accounts, servers, or cloud sync as a requirement.
 
+The continuing development goal, acceptance criteria and current work queue are recorded in [GOAL.md](./GOAL.md).
+
 PWA means Progressive Web App: when the browser supports it, Task Tracer can be installed, opened from the operating system like an app, and loaded offline after the app shell has been cached.
 
 ## What It Helps With
@@ -36,6 +38,12 @@ PWA means Progressive Web App: when the browser supports it, Task Tracer can be 
 | Notice what matters | Reminder offsets, repeat reminders, snooze, missed-reminder notices, and browser limitation guidance. |
 | Review progress | Completion rate, active overdue rate, archive count, today completions, completion streak, and recent completion trend. |
 | Protect local data | Export/backup, backup health, import preview, merge/replace conflict handling, checksum checks, pre-replace snapshots, and emergency backup when storage is blocked. |
+
+## Getting Started
+
+A new workspace starts empty. Add your first task with the **+** button or quick add, or choose **Add 3 example tasks** in the empty state. Examples are clearly labeled, have reminders off, and can be edited, deleted or undone. Refreshing an empty workspace does not add examples automatically. You can backfill a past deadline and edit an overdue task without first moving its date forward. Editing only its name or description keeps the exact stored due instant and timezone, including repeated clock times when daylight saving time ends.
+
+Open **Help and support** from the menu or footer for quick-add and search examples, keyboard shortcuts, reminder/offline limits, and a button to open the command palette. Help remains available when local storage is blocked. For troubleshooting and feedback, see [SUPPORT.md](./SUPPORT.md).
 
 ## Screenshots
 
@@ -54,6 +62,10 @@ tomorrow 20:00 Review English #study /Personal
 This creates a task named `Review English`, due tomorrow at 20:00, tagged `study`, and assigned to the `Personal` project.
 
 When quick add text does not include a `/project`, the task is saved to `Inbox` so unprocessed ideas have a predictable place to land.
+
+If storage fails while Quick add has text, the input stays read-only and selectable for copying. Retry keeps it in the same page, along with captured source details, even if a retry fails again. After storage recovers, submit explicitly; the app does not automatically replay the failed add. Quick-add text remains memory-only and is not included in the retained full-form draft download, so copy important text before refreshing or leaving.
+
+During input-method composition, Enter, Escape and arrow keys stay with text entry rather than triggering application submission or selection. Finish choosing the text before using the app shortcut.
 
 The command palette opens with `Ctrl/Cmd + P`. It can start a new task, focus quick add, switch views, open saved views, enter Today Plan, enter batch actions, undo the latest task change, export/back up data, search, and jump to projects.
 
@@ -94,7 +106,15 @@ Search matches task names, descriptions, projects, tags, and subtask text. Scope
 | `due:no-deadline` | Tasks without a due date. |
 | `project:Work tag:report` | Tasks matching both scopes. |
 
-Saved smart views store the current search, project filter, status filter, sort mode, and view. They are useful for repeatable contexts such as overdue work, weekly study, or a project-specific calendar.
+Saved smart views store the current search, project filter, status filter, sort mode, and view. They are useful for repeatable contexts such as overdue work, weekly study, or a project-specific calendar. Up to 12 distinct views can be saved. At that limit, adding another is refused without removing an existing view, and the name draft stays available. Saving an already matching search/filter/layout updates that view in place; remove a view first if you need a new distinct one.
+
+The saved-view × opens a confirmation naming the view, with Cancel focused. Only explicit deletion removes that view; tasks stay unchanged. View deletion cannot be undone, so export a views file first if you need a copy.
+
+Use **Menu → Transfer saved views** to export or import a separate views JSON file when moving browsers or devices. Task JSON backups do not contain these views. New exports use views JSON 1.1; imports also accept the older 1.0 format. Files support up to 12 views and 1 MiB; review the import preview before adding them. Project names such as `all` and `__none__` remain exact project selections, separate from All projects and tasks without a project. A saved view for a project that is currently absent stays empty instead of expanding to all projects.
+
+Before changing saved views in 4.7 or newer, close or refresh every older app tab and installed-app window. Versions before 4.7 can interpret typed project scopes as All projects and write that interpretation back. Before downgrading, keep a views 1.1 export outside the browser; older apps cannot read it, so return to 4.7 or newer to restore those views.
+
+View import adds distinct search/filter/layout combinations, keeps existing views and names, and shows duplicate and capacity skips. It never removes existing views to make space. If views change in another window, review the updated counts and confirm again. View files can contain private search terms, project names and tags; check them before sharing. This transfer does not reset the task-backup reminder.
 
 ## Views
 
@@ -109,13 +129,25 @@ Saved smart views store the current search, project filter, status filter, sort 
 
 Today Plan is a lightweight execution layer. Adding a task to Today Plan does not change its project, tags, due date, archive state, or recurrence rule; it only marks the task as part of today's working set.
 
-Batch Actions mode adds selection controls to the visible list. Selected tasks can be added to Today Plan, marked complete, archived, or deleted together.
+Batch Actions mode initially renders 100 matching tasks with selection controls and Show more. **Select all matching** selects the entire current search/project/status result, including unloaded pages; selected tasks can be added to Today Plan, completed, archived or deleted together. Changing that range drops selections outside it. Pagination also applies to batch timeline/calendar sections and any batch sort; non-batch manual ordering retains full rendering.
 
-Undo restores the task snapshot from before the most recent task-writing operation. It is available from the header undo button, toast action, command palette, and `Ctrl/Cmd + Z` when focus is not inside a text field.
+Undo reverts the most recent task change while its task state is still current. A newer concurrent task change can withhold or invalidate that Undo, preserving the newer data; review the current tasks and start a fresh action. Undo is available from the header button, toast action, command palette, and `Ctrl/Cmd + Z` when focus is not inside a text field.
+
+## Unsaved Task Forms
+
+Closing an edited task form with Cancel, the close icon, Escape or the backdrop asks whether to continue editing or discard the changes. Continue editing keeps the form contents; Discard closes it. Saving completes before the form can be closed normally.
+
+The app requests a browser departure warning while Quick add has nonblank text, a task form has unsaved changes or retained drafts are waiting. Browser rules can limit that warning, especially on mobile. Drafts are not automatically written to browser storage or a server; save or copy important text before leaving, and do not rely on a prompt to survive a crash.
+
+If a storage failure interrupts an edited form, a banner retains its draft only in the current page's memory. **Download unsaved drafts** copies all retained forms to a separate `task-draft` JSON file for reference; it is not a task backup and cannot be restored through task Import. Check that the file was actually saved. With retained drafts, **Retry** reconnects storage without reloading the page; **Resume editing** opens the next draft, while **Discard next draft** requires confirmation. Another open task form must be finished or discarded first. Resumed edits still respect concurrent-change checks. Refreshing, closing or crashing the page loses drafts left only in memory.
 
 ## Recurrence and Reminders
 
 Recurring tasks can repeat daily, weekly, on selected weekdays, monthly, on the last day of the month, or after a custom number of days. A recurring task can be paused, and the current occurrence can be skipped without deleting the rule.
+
+Recurrence advances in the task’s saved timezone, independently of the device timezone. Newly set or changed deadlines move forward across a skipped clock time and use the first occurrence of a repeated time. An unchanged date/time edit retains its stored instant; this does not bulk-correct old deadlines. See [date and recovery support](./SUPPORT.md) for the saved-time boundary.
+
+Relative-date search, Today Plan, overdue membership and statistics are reconsidered on minute/visibility checks. Active dialogs, inline editing, task-text selection, dragging or selected batch work can defer a rebuild; background timers may be suspended. The overdue rate divides overdue ongoing tasks by ongoing tasks with deadlines, excluding completed, archived and undated tasks from the denominator.
 
 Browser notifications are available when the browser supports them and permission is granted. Task Tracer can check reminders while the app is open, repeat reminders at the chosen interval, snooze a reminder, and show missed reminders when the app runs again.
 
@@ -123,19 +155,41 @@ Browser reminders are not guaranteed system alarms. Delivery can depend on brows
 
 ## Import, Export, and Backup
 
-`Export/Backup` downloads the complete task JSON with an export ID, checksum, version notes, and latest-backup status update.
+`Export/Backup` starts a task JSON download with an export ID, checksum and version notes, and records the export operation. Starting a download does not prove that the file was saved or retained; check the downloaded file and keep a copy outside the browser. It restores supported task fields, including subtasks, projects, tags, due dates, repeat/reminder rules and Today Plan. It does not include saved Smart Views, app settings or recovery checkpoints.
 
-`Import` previews a JSON file before writing it. The preview shows restore checks, task counts, differences, repeated IDs, duplicate names, current-data impact, checksum status, and same-name conflict choices.
+The backup indicator compares the recorded export snapshot with current tasks. Task changes require another export; older date-only export history has unknown coverage rather than establishing that current tasks were exported. A fresh export also does not prove that you kept its file. Task JSON and CSV exports read their task data from a single read-only snapshot without refreshing the current task view. The browser-local backup coverage record refers to the exported task revision and date; it is not an extra field in the task JSON. CSV does not count as a restorable task backup. The optional startup backup reminder skips an open dialog or existing notification; the menu still shows backup status.
 
-Replace import downloads a pre-import snapshot before overwriting existing tasks. If the checksum fails, replace import requires an explicit risk confirmation; merge mode remains available for safer recovery.
+`Import` first shows a cancellable file-reading dialog, then previews the task JSON before writing it. Cancelling a read or choosing a newer file prevents an earlier read from replacing your current form or preview. The preview shows restore checks, task counts, differences, repeated IDs, duplicate names, current-data impact, checksum status, and same-name conflict choices.
+
+Same-name conflict controls appear when merge mode is enabled, initially showing 100 rows with **Show more**. The bulk action applies **Keep both**, **Skip import**, or **Replace local** to all matching names, including rows not shown yet. Changing that action resets individual choices; you can then adjust specific rows. Switching merge mode off and on preserves those choices until you change the bulk action.
+
+Replace import downloads a pre-import snapshot before overwriting existing tasks. If the checksum fails, replace import requires an explicit risk confirmation; merge mode remains available for safer recovery. A background task refresh makes an open preview stale: the app rebuilds it and resets earlier safety approvals. Review it again and, for replacement, download a fresh snapshot before confirming. If a database conflict closes the preview instead, reopen the file to start a new review.
 
 If browser storage is blocked or becomes unavailable, Task Tracer enters a storage-unavailable mode. When an in-memory task snapshot still exists, the emergency backup button can download that snapshot before the page is refreshed or closed.
+
+### Spreadsheet reporting
+
+Choose **Export CSV** in the main menu to download all stored tasks, including completed and archived tasks, regardless of the current search or filter. The UTF-8 file includes task details, dates, recurrence fields, tags and subtasks (JSON cells). Spreadsheet formula-like cells receive a leading apostrophe for safer opening. CSV is a reporting format, not an importable backup; keep using JSON backup for task restoration. CSV export does not reset the backup reminder.
+
+## Recovery History and Multiple Tabs
+
+Open the app menu → `Recovery history`, choose a checkpoint by date and task count, and review its task names and statuses. The preview uses its own scroll area, starts with 100 rows and offers Show more; it keeps full task/completed/archived counts. Changing the checkpoint resets the preview and replacement confirmation. To restore, tick the confirmation and confirm; this replaces the current task list.
+
+**Export this recovery point** downloads that checkpoint as an importable task JSON 2.4 file, including empty checkpoints, without changing current-task backup coverage. Inspect and retain the actual file. **Clear recovery history** asks for a separate confirmation and removes only stored local checkpoints. If history changed in another window, review the refreshed list and confirm again. Current tasks, views, settings, downloaded files and Undo stay unchanged; a later task write creates new checkpoints.
+
+Task Tracer retains up to 10 checkpoints in the same browser. It saves the task state before the first write and at five-minute write intervals, and always before deletion, import/merge, undo, or recovery. Empty task lists can also be restored. Checkpoints and task changes commit together, so a failed transaction cannot leave a partial recovery. Deleting a task from the current list does not remove its older copies from checkpoints. These checkpoints do not survive clearing site data or losing the device.
+
+When another tab changes tasks, a stale write is rejected and the latest task list is loaded. If the task open in your edit form has changed or was deleted, your draft stays visible: copy the changes you need, cancel, and reopen the latest task before saving. Repeatedly submitting the stale form does not overwrite newer work. Task deletion, clearing/archiving completed tasks, batch deletion and checkpoint restoration also reject an outdated confirmation after the task state refreshes. Review the latest tasks and start the action again. This protects tabs sharing the same browser storage; it is not cross-device sync. After upgrading, close or refresh all older app tabs and offline windows before editing: older cached versions do not participate in revision checks.
+
+## Data safety and large workspaces
+
+Use **Menu → Data safety** to inspect site storage and explicitly request browser persistence. A denied or unsupported request does not block your tasks or exports; persistence cannot replace an external backup. Ordinary lists and timelines initially show 100 matching tasks with **Show more**; search still covers the entire workspace. Timeline groups follow chronological date order, put undated work last and show the full matching count for each displayed date. Calendar undated tasks and a selected day’s details also start at 100 items, with independent Show more controls and full matching counts. Non-batch manual ordering retains full rendering. Batch rendering is paged while selection and actions cover all selected matching tasks. See the [measured performance results](./docs/performance.md).
 
 ## Install, Offline, and Updates
 
 Use the app menu to install Task Tracer. If the browser does not expose an automatic install prompt, the same entry shows manual steps for desktop Chrome/Edge, Android Chrome, and iOS Safari.
 
-After the app shell is cached, Task Tracer can load offline. When a newer cached version is ready, the app shows an update prompt with a refresh action.
+After the app shell is cached, Task Tracer can load offline. When a newer cached version is ready, the app shows an update prompt with a refresh action. The HTML includes matching language data for startup if a separate translation request fails. Initial offline use still requires a completed online cache; clearing site data removes that copy. Older open windows keep their installed worker policy, so save drafts and close or refresh those windows after upgrading.
 
 ## Accessibility and Languages
 
@@ -145,7 +199,11 @@ Task Tracer includes Chinese and English UI, synchronized document language, key
 
 Task data is stored in the current browser's IndexedDB. Task Tracer does not require an account and does not upload task content to a server by default.
 
-Before changing browsers, clearing site data, reinstalling the app, or moving devices, use `Export/Backup` to download a JSON file.
+Before changing browsers, clearing site data, reinstalling the app, or moving devices, use `Export/Backup` for task JSON and **Transfer saved views** for a separate views JSON file, and keep copies outside the browser. Local storage and export checksums do not encrypt task contents.
+
+**Help and support → Review diagnostic information** shows a full JSON preview before you choose to download it. It contains application/browser versions and capabilities, permission status and storage estimates; it excludes task content, Smart Views, app settings, URLs and raw error messages. Nothing is uploaded automatically, and a diagnostic file is not a task backup.
+
+Capture/share URLs can contain task text in query parameters. Hosting logs and browser history may record those URLs before the app clears them. See [the security and data boundaries](./SECURITY.md) for deployment guidance.
 
 ## Run
 
@@ -169,8 +227,24 @@ Then open:
 http://127.0.0.1:8080/
 ```
 
+## Development and Release
+
+The application needs no build step. For pinned browser-test dependencies, validation commands, and contribution rules, see [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+```bash
+python3 tools/check.py --static-only
+```
+
+The locally validated [4.8.5 candidate](./docs/releases/4.8.5.md) completes all five [GOAL engineering acceptance queues](./GOAL.md). It passed 58/58 Chromium programs in a summed 1301.444 seconds, the 10,000-task/six-subtask complete-view round trip, all nine same-scale failure cases, [31 programs in each of three engines](./docs/browser-compatibility.md) and all 87 [controlled performance observations](./docs/performance.md). Two independent builds match byte for byte; extracted persistence/offline and actual 4.8.4 archive upgrade/rollback/re-upgrade passed. The [91-input provenance record](./docs/releases/inputs-4.8.5.json) binds the 23-file/812,056-byte artifact and 314 original evidence files. App/cache/package are 4.8.5 and resources are 4.36. Original failures and interruptions stay retained; real-device, remote CI, production deployment and commercial terms remain separate records.
+
+After installing the development dependencies and Chromium as documented there, run `python tools/check.py` for the current registered checks. The preceding locally validated [4.8.4 candidate](./docs/releases/4.8.4.md) passed 56/56 programs in Chromium, including reproducible builds, extracted persistence/offline and the 1,000-task/six-subtask JSON replacement/recovery round trip. Its [schema-2 machine report](./docs/releases/check-results-4.8.4.json) and [87-input provenance record](./docs/releases/inputs-4.8.4.json) bind the completed run to unchanged source/verification inputs. The five new browser-focused suites passed in Firefox/WebKit too; this does not mean all 56 programs ran in every engine. Real-device, remote CI and hosted deployment checks remain unexecuted.
+
+The historical [4.8.2 notes](./docs/releases/4.8.2.md) preserve its successful final run and failed first run separately. [4.8.1](./docs/releases/4.8.1.md), [4.8](./docs/releases/4.8.md), [4.7](./docs/releases/4.7.md) and [4.6](./docs/releases/4.6.md) retain their historical results. The [product roadmap](./docs/product-roadmap.md) describes the local-first professional-edition direction; planned capabilities are not existing features. For vulnerability reporting, see [SECURITY.md](./SECURITY.md).
+
 ## License
 
 Task Tracer is licensed for personal non-commercial use. Personal task management, learning, research, and evaluation are allowed. Commercial use, paid distribution, or integration into commercial services requires prior written permission from `muquew`.
 
 See [LICENSE](./LICENSE) for the full terms.
+
+A verified static archive can be built with `python3 tools/build_release.py`; this does not publish it. The [commercial offering plan](./docs/commercial-plan.md) describes proposed owner-controlled distribution and decisions still needed before selling.

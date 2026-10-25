@@ -1,0 +1,4 @@
+Baseline verified: actual task-tracer-4.8.3.zip SHA256=a3ba565394621b67727e902be400bbaa7656feabdbc0b53a028fd1c4f3e2a162; page and controlling worker are 4.8.3
+Actual 4.8.3 → 4.8.4: fields/views, CRUD and offline reload passed
+Actual rollback to 4.8.3: fields/views, CRUD and offline reload passed
+Actual re-upgrade to 4.8.4: exact tasks/views, CRUD and offline reload passed

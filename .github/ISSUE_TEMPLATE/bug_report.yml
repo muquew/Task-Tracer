@@ -1,0 +1,47 @@
+name: Bug report / 问题反馈
+description: Report a reproducible problem using synthetic task data / 使用示例数据反馈问题
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please use synthetic tasks and redact screenshots, console messages and diagnostic files before posting. Do not attach personal task exports or backups. For a suspected security vulnerability, follow [SECURITY.md](https://github.com/muquew/Task-Tracer/blob/main/SECURITY.md) instead of posting details here.
+
+        请使用示例任务，并在发布前检查截图、控制台信息和诊断文件；不要上传个人任务导出或备份。疑似安全漏洞请先阅读上述安全报告说明，勿公开漏洞详情。
+  - type: input
+    id: app_version
+    attributes:
+      label: App version / 应用版本
+      description: Include the release version or source commit if known; write unknown if unavailable.
+      placeholder: "Example: 4.4, commit abc1234, or unknown"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and operating system / 浏览器与系统
+      description: Include browser and OS versions, and whether this is a browser tab or installed app.
+      placeholder: "Example: Firefox 153 on Windows 11, browser tab"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce / 复现步骤
+      description: Describe the starting state and smallest repeatable sequence. Mention offline use, multiple windows or an upgrade when relevant.
+      placeholder: |
+        1. Create a synthetic task named Example.
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Expected and actual behavior / 预期与实际表现
+      description: Explain what you expected, what happened, and whether the problem happens every time.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Optional evidence / 补充信息
+      description: Add redacted screenshots, error messages or a minimal synthetic example. Do not upload your real task backup. If storage is failing, preserve an export before trying resets or clearing site data.

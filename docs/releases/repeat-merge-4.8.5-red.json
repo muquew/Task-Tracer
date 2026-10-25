@@ -1,0 +1,13 @@
+{
+  "app_version": "4.8.4",
+  "index_sha256": "de9d89305ec568f12851b9f6187267403d4d0f0adbab71183c422e88a464f6c1",
+  "probe": "/tmp/task_tracer_merge_chain_probe.py",
+  "probe_result": "/tmp/task-tracer-merge-chain-probe.json",
+  "result_sha256": "1f9e6fa515aa2414e31dd3c3cfcecd46f88bd4c26c337d2457db29c24d7bd9cc",
+  "exit_code": 1,
+  "case": "same-name merge replacement of nonroot middle occurrence, actual JSON export/replacement import, recomplete older occurrence",
+  "count_before_complete": 4,
+  "count_after_complete": 5,
+  "pageerrors": [],
+  "passed": false
+}

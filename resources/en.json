@@ -6,7 +6,7 @@
   },
   "actions": {
     "exportBackup": "Export/Backup",
-    "exportBackupTitle": "Export complete task data and update backup status",
+    "exportBackupTitle": "Export JSON tasks (not views or preferences) and update backup status",
     "import": "Import",
     "importTitle": "Import and replace current task data",
     "addTask": "Add Task",
@@ -52,7 +52,12 @@
     "deleted": "Smart view deleted: {name}",
     "applied": "Smart view opened: {name}",
     "applyLabel": "Open smart view: {name}",
-    "deleteLabel": "Delete smart view: {name}"
+    "deleteLabel": "Delete smart view: {name}",
+    "updateError": "Could not change saved views. Your previous saved views were kept.",
+    "limitReached": "You already have 12 saved views. Delete one before saving a new view; your draft was kept.",
+    "deleteConfirmTitle": "Delete saved view?",
+    "deleteConfirmMessage": "Delete “{name}”? This removes only this saved view; task data is unchanged. This action cannot be undone.",
+    "deleteConfirmAction": "Delete view"
   },
   "focus": {
     "openTitle": "Open Today Plan",
@@ -72,7 +77,7 @@
     "menuTitle": "Enter batch action mode",
     "activeTitle": "Exit batch action mode",
     "selected": "{count} task(s) selected",
-    "selectVisible": "Select Visible",
+    "selectVisible": "Select all matching",
     "clearSelection": "Clear Selection",
     "addToFocus": "Add Today",
     "complete": "Complete",
@@ -204,7 +209,7 @@
     "streakDays": "Completion streak",
     "daysValue": "{count} days",
     "completedDetail": "{completed}/{total} tasks completed",
-    "overdueDetail": "{overdue}/{total} deadline tasks overdue",
+    "overdueDetail": "{overdue}/{total} ongoing tasks with a deadline are overdue",
     "streakDetail": "{count} consecutive recent days with completions",
     "totalTasks": "Total tasks",
     "completedTasks": "Completed",
@@ -250,7 +255,7 @@
     "tags": {
       "label": "Tags (optional)",
       "placeholder": "Separate tags with commas",
-      "hint": "Tags are included in search."
+      "hint": "Separate tags with commas. Wrap a tag containing a comma in double quotes; write a double quote inside a tag twice. Tags are included in search."
     },
     "dueDate": {
       "label": "Due Date"
@@ -263,7 +268,9 @@
         "atTime": "At time of due date",
         "min15": "15 minutes before",
         "hour1": "1 hour before",
-        "day1": "1 day before"
+        "day1": "1 day before",
+        "customBefore": "{minutes} minutes before (saved value)",
+        "customAfter": "{minutes} minutes after (saved value)"
       }
     },
     "reminderRepeat": {
@@ -273,7 +280,8 @@
         "none": "Do not repeat",
         "min15": "Every 15 minutes",
         "hour1": "Every hour",
-        "day1": "Daily"
+        "day1": "Daily",
+        "custom": "Every {minutes} minutes (saved value)"
       }
     },
     "repeat": {
@@ -310,7 +318,8 @@
       "delete": "Delete subtask: {text}"
     },
     "dueTime": {
-      "label": "Due time"
+      "label": "Due time",
+      "clockChangeHint": "New deadlines in a clock change move nonexistent times forward and use the first occurrence of repeated times. Check the saved time on the task."
     }
   },
   "task": {
@@ -367,7 +376,30 @@
       "emergencyBackupTitle": "Download the current in-memory snapshot",
       "emergencyBackupSuccess": "Emergency backup downloaded with {count} task(s)",
       "noSnapshot": "No task snapshot is available to download"
-    }
+    },
+    "conflict": "Tasks have changed. Refreshing the latest data; review it before trying again.",
+    "editConflict": "This task has changed or was deleted. Your draft is still here; copy any changes you need, cancel, and reopen the latest task.",
+    "upgradeBlocked": "Another app window is blocking a storage upgrade. Close older Task Tracer tabs and installed windows, then retry. Your existing data has not been replaced.",
+    "versionChanged": "Storage was upgraded or removed in another window. Editing is paused to protect your data. Download an emergency backup if available, then reopen the latest app.",
+    "health": {
+      "menu": "Data safety",
+      "description": "Tasks and recovery history stay in this browser. Persistent storage can reduce automatic eviction, but cannot prevent device loss or deliberate site-data deletion. Export a separate backup regularly.",
+      "persistent": "Persistent storage is enabled for this site.",
+      "bestEffort": "The browser currently manages storage on a best-effort basis.",
+      "usage": "Estimated site storage: {used} MiB used of {quota} MiB available quota. This includes offline caches.",
+      "estimateUnavailable": "This browser does not provide a storage estimate.",
+      "request": "Request persistent storage",
+      "enabled": "Persistent storage enabled",
+      "unsupported": "Persistence request unavailable",
+      "granted": "Persistent storage enabled. Keep exporting separate backups.",
+      "notGranted": "The browser did not grant persistence. Your existing data is unchanged; keep a separate backup.",
+      "requestError": "Could not request persistent storage. You can still export a backup."
+    },
+    "quotaExceeded": "Browser storage is full. Export an emergency backup first. You can clear recovery history to free space without deleting current tasks, then retry.",
+    "clearRecovery": "Clear recovery history",
+    "clearRecoveryConfirm": "This permanently removes all local recovery points to free space. Current tasks, settings and downloaded backups will remain. Export an emergency backup before continuing.",
+    "clearRecoveryError": "Could not clear recovery history. Keep an emergency backup and free browser storage before retrying.",
+    "staleConfirmation": "Tasks changed while this confirmation was open. Review the latest tasks and start the action again."
   },
   "status": {
     "completed": "Completed",
@@ -388,6 +420,7 @@
       "markedIncomplete": "Task marked as incomplete",
       "repeatCreated": "Task completed and next occurrence created",
       "repeatSkipped": "This occurrence was skipped and moved to the next one",
+      "repeatAlreadyScheduled": "This occurrence already has a later task. Continue with that task; your changes were kept.",
       "nameRequired": "Please enter a task name",
       "snoozed": "Reminder snoozed for {minutes} minutes",
       "saveError": "Failed to save task, please try again",
@@ -395,7 +428,7 @@
       "updateError": "Failed to update task status, please try again"
     },
     "backup": {
-      "success": "Export/backup file downloaded",
+      "success": "Backup download started. Check that the file was saved.",
       "error": "Export/backup failed. Please try again",
       "reminder": "Download a recent backup to avoid losing tasks if browser data is cleared."
     },
@@ -470,8 +503,8 @@
         "legacy-array": "legacy task array",
         "unknown": "{type}"
       },
-      "mergeMode": "Merge into current tasks without replacing existing data",
-      "mergeModeHint": "Imported tasks are appended to the current list; duplicate names are kept and imported tasks receive new sort positions.",
+      "mergeMode": "Merge into current tasks",
+      "mergeModeHint": "New names are added. For matching names, review Keep both, Skip import or Replace local before confirming.",
       "conflictTitle": "Same-name conflict handling",
       "conflictHint": "These choices are used only when merge import is selected.",
       "conflictExistingCount": "{count} current task(s) use this name",
@@ -480,7 +513,14 @@
       "conflictSkip": "Skip import",
       "conflictReplace": "Replace local",
       "formatError": "Import failed: Invalid file format",
-      "readError": "Import failed: File read error"
+      "readError": "Import failed: File read error",
+      "stalePreview": "Tasks changed while the preview was open. Review the new preview and confirm again; the previous safety approvals have been reset.",
+      "reading": "Reading the task file. You can cancel before the preview is ready.",
+      "readingTitle": "Reading task import",
+      "conflictDefaultLabel": "Action for all matching task names",
+      "conflictDefaultHint": "Changing this resets all individual choices, including tasks not shown yet. You can change individual rows afterward.",
+      "conflictMore": "Show {count} more matching tasks",
+      "conflictShowing": "Showing {shown} of {total} matching names. The selected action also applies to names not shown."
     },
     "clearCompleted": {
       "none": "There are no completed tasks to clear",
@@ -559,16 +599,128 @@
     "health": {
       "empty": "No task data to back up",
       "never": "No backup yet. Export/back up now",
-      "ok": "Backup healthy · {age}",
+      "ok": "Current tasks exported · {age}",
       "due": "Backup recommended · {age}",
-      "today": "backed up today",
-      "yesterday": "backed up yesterday",
-      "daysAgo": "backed up {days} days ago"
+      "today": "exported today",
+      "yesterday": "exported yesterday",
+      "daysAgo": "exported {days} days ago",
+      "changed": "Tasks changed since the last export · {age}. Export again",
+      "coverageUnknown": "Previous export coverage is unknown · {age}. Export again"
     },
     "versionNotes": {
       "schema": "Backup 2.4 includes an integrity checksum, export ID, local due dates, exact reminder instants, tasks, subtasks, projects, tags, advanced repeat rules, completion dates, archive state, and today plan.",
       "compatibility": "The importer reads the tasks array; older export files remain importable through compatibility rules.",
       "emergency": "This file was created from an in-memory snapshot in protected storage-unavailable mode. Restore browser storage and import it as soon as practical."
     }
+  },
+  "recovery": {
+    "menu": "Recovery history",
+    "title": "Restore a local recovery point",
+    "description": "Keep up to 10 recovery points in this browser. Changes are saved at most every five minutes, with an extra point before deletion, import, undo or restore. These points are lost if site data is cleared; export a backup to protect against device loss.",
+    "empty": "No recovery points yet. Points are created automatically when tasks change.",
+    "choose": "Recovery point",
+    "point": "{date} · {count} tasks",
+    "confirm": "I understand this replaces all current tasks. The current state will be kept as a recovery point.",
+    "confirmRequired": "Confirm the replacement before restoring.",
+    "restored": "Tasks restored. The previous state is available in Recovery history.",
+    "error": "Could not finish recovery. Review current tasks and recovery history before retrying.",
+    "privacy": "Deleted tasks may remain in local recovery points. Export a selected point or clear the recovery history when needed.",
+    "previewTitle": "Selected recovery point",
+    "previewSummary": "Showing {shown}/{count} tasks · {completed} completed · {archived} archived",
+    "previewEmpty": "This recovery point contains no tasks.",
+    "exportPoint": "Export this recovery point",
+    "exported": "Download started for {count} tasks from this recovery point. Check the file; current task-backup status is unchanged.",
+    "exportError": "Could not export this recovery point.",
+    "clearHistory": "Clear recovery history",
+    "clearTitle": "Clear all local recovery points?",
+    "clearConfirm": "Permanently remove all recovery points in this browser, including old copies of deleted tasks. Current tasks, views, settings and downloaded files stay unchanged. This cannot be undone.",
+    "cleared": "Recovery history cleared. Current tasks are unchanged.",
+    "clearError": "Could not clear recovery history. Existing recovery points were kept.",
+    "historyChanged": "Recovery history changed in another action or window. Review the updated points before confirming again."
+  },
+  "pagination": {
+    "more": "Show more tasks",
+    "summary": "Showing {shown} of {total} matching tasks. Search includes the entire workspace."
+  },
+  "csv": {
+    "menu": "Export all tasks as CSV",
+    "title": "Spreadsheet report of all tasks, including archives. Use JSON Export/Backup for full restoration.",
+    "success": "CSV exported with {count} tasks. Use JSON Export/Backup for a restorable backup.",
+    "error": "Could not export the CSV report."
+  },
+  "help": {
+    "menu": "Help and support",
+    "intro": "Task Tracer {version} · Your tasks stay in this browser profile. Start with a task, then organize it as needed.",
+    "captureTitle": "Capture and plan",
+    "captureBody": "Open Quick add and filter tools to add a task. Try: tomorrow 20:00 Review notes #study /Personal. Use the full task form for subtasks and recurrence. The target button adds a task to your daily plan. Without a year, a month/day uses the nearest valid date on or after today; February 29 skips non-leap years. Dates or times skipped by a clock change move forward using the same rules as the full form. Today/tomorrow use the local date when you submit.",
+    "findTitle": "Find your work",
+    "findBody": "Search supports project:work, tag:study, status:completed, due:today and #tag. Combine terms to narrow the results. Save the current search, filters and view with the bookmark button.",
+    "backupTitle": "Protect and move tasks",
+    "backupBody": "Export/Backup downloads JSON task data for restoration on another browser or device. It excludes saved views, app preferences and recovery history. CSV exports all tasks for spreadsheet reports and cannot restore the workspace. Recovery history shares this browser’s storage; keep a separate JSON backup before clearing site data or changing domains. Use Transfer saved views for a separate file of saved searches and layouts.",
+    "offlineTitle": "Offline use and reminders",
+    "offlineBody": "Open the app online once before using it offline. Install from the menu or your browser when supported. Notifications require your permission and depend on the browser, operating system and app lifecycle; they are not guaranteed alarms when the app is closed.",
+    "privacyTitle": "Support and privacy",
+    "privacyBody": "Reports open on GitHub, outside this app. Use synthetic tasks and review any files or screenshots before posting. Never attach your personal task backup to a public issue. For security vulnerabilities, follow SECURITY.md in the repository. Text captured through URL links may appear in browser history or hosting request logs.",
+    "shortcuts": "Keyboard shortcuts",
+    "newTask": "New task",
+    "search": "Focus search",
+    "commands": "Open command palette",
+    "undo": "Undo outside text fields",
+    "close": "Close",
+    "diagnostics": "Review diagnostic information",
+    "diagnosticDescription": "Review this report before downloading or sharing it. It contains app and browser versions, capabilities and storage status. It excludes task contents, saved views, preferences, page URLs and error messages. Nothing is sent automatically.",
+    "downloadDiagnostics": "Download diagnostic report",
+    "diagnosticError": "Could not prepare the diagnostic report. Try again.",
+    "support": "Report an issue on GitHub",
+    "datesTitle": "Dates and clock changes",
+    "datesBody": "Deadlines keep their task time zone when the device zone changes. New repeated clock times use the first occurrence; nonexistent times move forward by the clock change. Editing other fields preserves an existing deadline’s exact instant. Repeating tasks advance from the last occurrence’s saved local date and time."
+  },
+  "onboarding": {
+    "examplesAction": "Add 3 example tasks",
+    "examplesHint": "Optional examples are saved as ordinary tasks. You can edit or delete them.",
+    "examplePrefix": "Example: {name}",
+    "examplesAdded": "3 example tasks added. Edit or delete them like your own tasks.",
+    "examplesError": "Could not add example tasks. Existing tasks were kept.",
+    "examplesUndo": "add example tasks"
+  },
+  "viewsTransfer": {
+    "menu": "Transfer saved views",
+    "title": "Transfer saved views",
+    "description": "Move saved searches, filters and layouts with a separate JSON file. Task data uses Export/Backup; app preferences stay on this device.",
+    "privacy": "View files may contain private search terms, project names and tags. Review them before sharing.",
+    "export": "Export views JSON",
+    "import": "Import views JSON",
+    "exported": "Exported {count} saved views.",
+    "invalid": "This is not a valid, unchanged Task Tracer saved-view file (version 1.0 or 1.1). Task backups must use Import.",
+    "fileTooLarge": "View files must be 1 MiB or smaller.",
+    "error": "Could not transfer saved views. Existing data was kept.",
+    "previewTitle": "Review view import",
+    "previewSummary": "{incoming} file views: add {add}, skip {duplicate} matching views and {capacity} beyond the 12-view limit. Existing views stay unchanged.",
+    "confirm": "Add {count} views",
+    "changed": "Saved views changed in another window. Review the updated preview and confirm again.",
+    "imported": "Added {count} saved views. Task data and app preferences were kept.",
+    "close": "Close"
+  },
+  "drafts": {
+    "title": "Discard unsaved changes?",
+    "description": "Your task has unsaved changes. Keep editing or discard them.",
+    "keepEditing": "Continue editing",
+    "discard": "Discard changes",
+    "saving": "Saving your task. Please wait…",
+    "recoveryTitle": "Unsaved task draft retained",
+    "recoveryDescription": "{count} unsaved draft(s) remain only in this page’s memory. Download them before refreshing or leaving; these files are not task backups.",
+    "recoveryDownload": "Download unsaved drafts",
+    "recoveryRestore": "Resume editing",
+    "recoveryWaiting": "Restore browser storage, then resume editing.",
+    "recoveryBlocked": "Finish or discard the current task form before resuming another draft.",
+    "recoveryReady": "Storage is available. Your unsaved drafts are ready to resume.",
+    "recoveryDiscard": "Discard next draft",
+    "recoveryDiscardTitle": "Discard this retained draft?",
+    "recoveryDiscardDescription": "This removes the next unsaved draft from memory. Download it first if you need a copy. Saved tasks are kept.",
+    "quickAddReady": "Storage is available. Your original Quick-add text is retained; review it before adding.",
+    "quickAddRetained": "Quick-add text remains only in this page. You can select and copy it; Retry recovers storage without reloading. Refreshing, closing or crashing may lose this text."
+  },
+  "dialogs": {
+    "loading": "Loading local information…"
   }
 }

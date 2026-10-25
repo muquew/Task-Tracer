@@ -1,0 +1,421 @@
+{
+  "schema_version": 1,
+  "run_id": "f5724a4d-6eb8-47c1-890e-abfef671b520",
+  "started_at": "2026-10-23T18:21:51.982+00:00",
+  "status": "passed",
+  "completed": true,
+  "passed": true,
+  "current_operation": null,
+  "runs": [
+    {
+      "run": 1,
+      "status": "passed",
+      "measurements": [
+        {
+          "operation": "single_edit_save",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 5442.5,
+          "observation_after": {
+            "js_heap_used_bytes": 204631164,
+            "js_heap_total_bytes": 286363648,
+            "browser_dom_counters": {
+              "documents": 6,
+              "nodes": 2350,
+              "jsEventListeners": 171
+            },
+            "connected_dom": {
+              "elements": 810,
+              "task_cards": 1,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        }
+      ],
+      "fixture": {
+        "count": 10000,
+        "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442",
+        "normalized_focus_signature": null,
+        "edited_signature": null,
+        "revision": 2,
+        "history": [
+          {
+            "id": "controlled-history-0",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-1",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-2",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-3",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-4",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-5",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-6",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-7",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-8",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-9",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          }
+        ],
+        "subtasks": 60000,
+        "focused": 0,
+        "valid_repeat_references": true
+      },
+      "page_errors": []
+    },
+    {
+      "run": 2,
+      "status": "passed",
+      "measurements": [
+        {
+          "operation": "single_edit_save",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 6964.7,
+          "observation_after": {
+            "js_heap_used_bytes": 203957104,
+            "js_heap_total_bytes": 280473600,
+            "browser_dom_counters": {
+              "documents": 7,
+              "nodes": 2355,
+              "jsEventListeners": 171
+            },
+            "connected_dom": {
+              "elements": 810,
+              "task_cards": 1,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        }
+      ],
+      "fixture": {
+        "count": 10000,
+        "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442",
+        "normalized_focus_signature": null,
+        "edited_signature": null,
+        "revision": 2,
+        "history": [
+          {
+            "id": "controlled-history-0",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-1",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-2",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-3",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-4",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-5",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-6",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-7",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-8",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-9",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          }
+        ],
+        "subtasks": 60000,
+        "focused": 0,
+        "valid_repeat_references": true
+      },
+      "page_errors": []
+    },
+    {
+      "run": 3,
+      "status": "passed",
+      "measurements": [
+        {
+          "operation": "single_edit_save",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 5818.2,
+          "observation_after": {
+            "js_heap_used_bytes": 204719276,
+            "js_heap_total_bytes": 276094976,
+            "browser_dom_counters": {
+              "documents": 6,
+              "nodes": 2350,
+              "jsEventListeners": 171
+            },
+            "connected_dom": {
+              "elements": 810,
+              "task_cards": 1,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        }
+      ],
+      "fixture": {
+        "count": 10000,
+        "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442",
+        "normalized_focus_signature": null,
+        "edited_signature": null,
+        "revision": 2,
+        "history": [
+          {
+            "id": "controlled-history-0",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-1",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-2",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-3",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-4",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-5",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-6",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-7",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-8",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          },
+          {
+            "id": "controlled-history-9",
+            "count": 10000,
+            "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442"
+          }
+        ],
+        "subtasks": 60000,
+        "focused": 0,
+        "valid_repeat_references": true
+      },
+      "page_errors": []
+    }
+  ],
+  "source": {
+    "files": {
+      "LICENSE": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+      "docs/distribution.md": "2a7114b3d5e378732f0a152f278e765ca5e4d8fa1dfe93e3fc6884a06746b271",
+      "docs/distribution_zh_cn.md": "be23ab8e12e0980a6c6c1faa3f60ed5e28f470eab4b3d31b92c0461baed2377f",
+      "fav/android-chrome-192x192.png": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+      "fav/android-chrome-512x512.png": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+      "fav/apple-touch-icon.png": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+      "fav/favicon-16x16.png": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+      "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+      "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+      "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+      "index.html": "ca8cba66ecd2d63b58a1d791b08524cfcceb798508b7e326bbb56a1484fef180",
+      "manifest.json": "59c91d7732bc64844b1ddb298e4f5f075904b1f97a6a0fb995c48b20645420e0",
+      "resources/en.json": "04188c9b4d22b40050b16b6106eeb6807ec8087f31d295276ef5a951f7199c4c",
+      "resources/zh-CN.json": "225414296a8b5b60b9a47fa05392490ca16450fc1289fee0052443855d5b4cdf",
+      "robots.txt": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+      "screenshots/add-task-en.png": "d5f7f18cc18cdde58f499434fadacca0b0940da45e7b9467dcf4dafbf05693dd",
+      "screenshots/add-task.png": "0d1543f1dfc2e771333ee91c3aea6639291443a3b14ea1c9a1355687725f9f7d",
+      "screenshots/task-list-en.png": "60ff163e92dcbd4ab0e2c804fcd7ba95e7502e6f0b2d54d807ad8bc26ac3b69c",
+      "screenshots/task-list.png": "27c171e7f5fff14fd55429099d9224754c2d92a01c715fbe4a431fbdb2996e06",
+      "sitemap.xml": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+      "sw.js": "0d34f32328e832d8affe2494387015c8109f5c798d37ca0ecb3bc7a258d0633c",
+      "vercel.json": "4f9016d0f3055e7ee5ce2c7c1eb2a521c3f18d014666cb80a469bc8174f87d09"
+    },
+    "sha256": "a52c118e05103e02cd74bce558902b8d8b8bbe765cd6cf1dee5d45bebc86a413"
+  },
+  "measurement_tools": {
+    "files": {
+      "tools/build_release.py": "972c99cee58118e450e3eeb945f0dd98784db4c96be15834c080cc603d496db9",
+      "tools/check.py": "b5a49b235918fbf47b287cef3f1cd8a53e5f8a1635d2c8553a2e4d2cc5653123",
+      "tools/recovery_playwright.py": "482fe50826cbba6de3d5578b902395f2fa88148084b9348fcf2b6caa2a0dbc8f",
+      "tools/smoke_playwright.py": "0cb46349bf0ee05b3336605924d7c9632cd56c350116910df71d9096480083ad",
+      "tools/validate_static.py": "e1abf71dd37ee27eacadc514518b896083b303da27a8576376154728f89f7c79",
+      "tools/workspace_performance_playwright.py": "375ca2022c5e2a789e3d30c8541c13dd50f2bf52e5d94c7fa522d3f0eb0ff505"
+    },
+    "sha256": "c7492c1095db0d58dbcaaaee26dc97fc97502aeecf701f4e85da7add69ddf330"
+  },
+  "integrity_errors": [],
+  "conditions": {
+    "tasks": 10000,
+    "subtasks_per_task": 6,
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "cpu_throttle_rate": 4.0,
+    "runs_requested": 3,
+    "history_points": 10,
+    "newest_history_created_at": "2039-01-01T12:00:00+00:00",
+    "history_edit_policy": "Populated history has a current newest point; ordinary edit should not create another checkpoint inside its interval.",
+    "coverage": "single edit only",
+    "timezone": "UTC",
+    "locale": "en-US",
+    "fixed_clock": "2039-01-01T12:00:00+00:00",
+    "fixture_seed_cpu_throttle_rate": 1,
+    "reload_readiness_scope": "Default active filter excludes the two completed recurrence ancestors; remaining phases explicitly select all tasks.",
+    "calendar_scope": "Clock fixed to January 2039; transition includes visible month, exact dated preview count and bounded undated-card readiness, without month-navigation setup.",
+    "measurement_type": "controlled synthetic cloud run",
+    "host_platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+    "budgets": {
+      "reference": "tools/performance_playwright.py; docs/performance.md",
+      "ceilings_ms": {
+        "reload_list": 15000,
+        "list_tail_search": 5000
+      },
+      "scope": "Existing generous list load/search ceilings applied unchanged to this heavier controlled workload. Other operations are baseline-only."
+    },
+    "limitations": [
+      "CPU throttling and narrow viewports do not reproduce real mobile hardware.",
+      "Elapsed operation times include browser-driver/UI work; fixture setup and full-field signature verification are outside timings.",
+      "Heap and DOM samples are observations after operations, not peak memory, process RSS or a memory budget.",
+      "Fixture injection and integrity checks allocate JavaScript data outside measured intervals; their transient allocations may affect heap observations and collection.",
+      "Each repetition uses a fresh browser context; repeated operations within it are warm-cache observations.",
+      "Batch mode renders bounded pages; Select all matching acts on the complete match set including unloaded tasks."
+    ]
+  },
+  "browser_engine": "chromium",
+  "browser_version": "154.0.8037.57",
+  "source_final": {
+    "files": {
+      "LICENSE": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+      "docs/distribution.md": "2a7114b3d5e378732f0a152f278e765ca5e4d8fa1dfe93e3fc6884a06746b271",
+      "docs/distribution_zh_cn.md": "be23ab8e12e0980a6c6c1faa3f60ed5e28f470eab4b3d31b92c0461baed2377f",
+      "fav/android-chrome-192x192.png": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+      "fav/android-chrome-512x512.png": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+      "fav/apple-touch-icon.png": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+      "fav/favicon-16x16.png": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+      "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+      "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+      "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+      "index.html": "ca8cba66ecd2d63b58a1d791b08524cfcceb798508b7e326bbb56a1484fef180",
+      "manifest.json": "59c91d7732bc64844b1ddb298e4f5f075904b1f97a6a0fb995c48b20645420e0",
+      "resources/en.json": "04188c9b4d22b40050b16b6106eeb6807ec8087f31d295276ef5a951f7199c4c",
+      "resources/zh-CN.json": "225414296a8b5b60b9a47fa05392490ca16450fc1289fee0052443855d5b4cdf",
+      "robots.txt": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+      "screenshots/add-task-en.png": "d5f7f18cc18cdde58f499434fadacca0b0940da45e7b9467dcf4dafbf05693dd",
+      "screenshots/add-task.png": "0d1543f1dfc2e771333ee91c3aea6639291443a3b14ea1c9a1355687725f9f7d",
+      "screenshots/task-list-en.png": "60ff163e92dcbd4ab0e2c804fcd7ba95e7502e6f0b2d54d807ad8bc26ac3b69c",
+      "screenshots/task-list.png": "27c171e7f5fff14fd55429099d9224754c2d92a01c715fbe4a431fbdb2996e06",
+      "sitemap.xml": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+      "sw.js": "0d34f32328e832d8affe2494387015c8109f5c798d37ca0ecb3bc7a258d0633c",
+      "vercel.json": "4f9016d0f3055e7ee5ce2c7c1eb2a521c3f18d014666cb80a469bc8174f87d09"
+    },
+    "sha256": "a52c118e05103e02cd74bce558902b8d8b8bbe765cd6cf1dee5d45bebc86a413"
+  },
+  "source_unchanged": true,
+  "measurement_tools_final": {
+    "files": {
+      "tools/build_release.py": "972c99cee58118e450e3eeb945f0dd98784db4c96be15834c080cc603d496db9",
+      "tools/check.py": "b5a49b235918fbf47b287cef3f1cd8a53e5f8a1635d2c8553a2e4d2cc5653123",
+      "tools/recovery_playwright.py": "482fe50826cbba6de3d5578b902395f2fa88148084b9348fcf2b6caa2a0dbc8f",
+      "tools/smoke_playwright.py": "0cb46349bf0ee05b3336605924d7c9632cd56c350116910df71d9096480083ad",
+      "tools/validate_static.py": "e1abf71dd37ee27eacadc514518b896083b303da27a8576376154728f89f7c79",
+      "tools/workspace_performance_playwright.py": "375ca2022c5e2a789e3d30c8541c13dd50f2bf52e5d94c7fa522d3f0eb0ff505"
+    },
+    "sha256": "c7492c1095db0d58dbcaaaee26dc97fc97502aeecf701f4e85da7add69ddf330"
+  },
+  "measurement_tools_unchanged": true,
+  "aggregate": {
+    "single_edit_save": {
+      "samples_ms": [
+        5442.5,
+        6964.7,
+        5818.2
+      ],
+      "min_ms": 5442.5,
+      "median_ms": 5818.2,
+      "max_ms": 6964.7,
+      "budget_ms": null,
+      "interpretation": "baseline_only"
+    }
+  },
+  "finished_at": "2026-10-23T18:24:47.547+00:00"
+}

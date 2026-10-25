@@ -1,0 +1,7 @@
+Calendar timezone passed: skipped civil day appears once, leap/search/month navigation and add-form date keys remain exact without writes
+Calendar timezone passed: Apia skipped-day add uses the existing forward-gap policy (30→31), preserving existing records
+Calendar timezone passed: live UTC→America/Los_Angeles retains civil month, next/year navigation, local Today and stored task-date display
+Calendar timezone passed: live UTC→Pacific/Kiritimati retains civil month, next/year navigation, local Today and stored task-date display
+Calendar timezone passed: live Pacific/Kiritimati→UTC retains civil month, next/year navigation, local Today and stored task-date display
+Calendar timezone passed: Today Plan follows a real device-local date change without changing stored focus dates
+{"browser_engine": "chromium", "browser": "154.0.8037.57", "case": "all", "live_zone_coverage": "Chromium CDP", "passed": true}

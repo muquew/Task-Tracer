@@ -1,0 +1,133 @@
+{
+  "browser": "chromium",
+  "browser_version": "154.0.8037.57",
+  "planned_cases": [
+    "replace-roundtrip",
+    "consecutive",
+    "keep",
+    "skip",
+    "distinct",
+    "abort-repair",
+    "abort-incoming",
+    "abort-checkpoint",
+    "stale",
+    "ambiguity",
+    "cycle"
+  ],
+  "cases": [
+    {
+      "name": "replace-roundtrip",
+      "passed": true,
+      "duration_seconds": 11.588
+    },
+    {
+      "name": "consecutive",
+      "passed": true,
+      "duration_seconds": 7.12
+    },
+    {
+      "name": "keep",
+      "passed": true,
+      "duration_seconds": 4.163
+    },
+    {
+      "name": "skip",
+      "passed": true,
+      "duration_seconds": 3.873
+    },
+    {
+      "name": "distinct",
+      "passed": true,
+      "duration_seconds": 3.906
+    },
+    {
+      "name": "abort-repair",
+      "passed": true,
+      "duration_seconds": 3.547
+    },
+    {
+      "name": "abort-incoming",
+      "passed": true,
+      "duration_seconds": 3.838
+    },
+    {
+      "name": "abort-checkpoint",
+      "passed": true,
+      "duration_seconds": 3.574
+    },
+    {
+      "name": "stale",
+      "passed": true,
+      "duration_seconds": 10.248
+    },
+    {
+      "name": "ambiguity",
+      "passed": true,
+      "duration_seconds": 3.31
+    },
+    {
+      "name": "cycle",
+      "passed": true,
+      "duration_seconds": 3.195
+    }
+  ],
+  "started_at": "2026-10-23T17:32:31.068+00:00",
+  "finished_at": "2026-10-23T17:33:31.313+00:00",
+  "status": "passed",
+  "passed": true,
+  "source": {
+    "files": {
+      "LICENSE": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+      "docs/distribution.md": "406fa8e6eb49fcd62094b95bf1383d78d15118995821bb43d7809f7bbca0b76c",
+      "docs/distribution_zh_cn.md": "f49ff6da0a42dbb5dd32425e4a544bb6433129cbd091f6cb357572df1310d7ac",
+      "fav/android-chrome-192x192.png": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+      "fav/android-chrome-512x512.png": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+      "fav/apple-touch-icon.png": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+      "fav/favicon-16x16.png": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+      "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+      "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+      "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+      "index.html": "51eb8e1b569971cd582beb8744594738d15726cd31345938ff0d5816a89aa189",
+      "manifest.json": "59c91d7732bc64844b1ddb298e4f5f075904b1f97a6a0fb995c48b20645420e0",
+      "resources/en.json": "a664da31c8a797cac3e547e2af41ca4ff0a8e040e989faad607a8735cfb6b2a2",
+      "resources/zh-CN.json": "29fb0659a700a1154dd4180d6c305462bb1e335799a377961d666b92fd649304",
+      "robots.txt": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+      "screenshots/add-task-en.png": "d5f7f18cc18cdde58f499434fadacca0b0940da45e7b9467dcf4dafbf05693dd",
+      "screenshots/add-task.png": "0d1543f1dfc2e771333ee91c3aea6639291443a3b14ea1c9a1355687725f9f7d",
+      "screenshots/task-list-en.png": "60ff163e92dcbd4ab0e2c804fcd7ba95e7502e6f0b2d54d807ad8bc26ac3b69c",
+      "screenshots/task-list.png": "27c171e7f5fff14fd55429099d9224754c2d92a01c715fbe4a431fbdb2996e06",
+      "sitemap.xml": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+      "sw.js": "61a9891ef8550a190c8c30a8634b1ff94c08cb3380b2a5a3bbc3bc330f08efdc",
+      "vercel.json": "3908e38216703a6723e182e410fc8f2c1fac78e813c29a8619024b0cc6f11f9f"
+    },
+    "sha256": "15d0802be809a4fdd8f99184df2894d06dba8d9dc898686d4bc97836449c2463"
+  },
+  "source_final": {
+    "files": {
+      "LICENSE": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+      "docs/distribution.md": "406fa8e6eb49fcd62094b95bf1383d78d15118995821bb43d7809f7bbca0b76c",
+      "docs/distribution_zh_cn.md": "f49ff6da0a42dbb5dd32425e4a544bb6433129cbd091f6cb357572df1310d7ac",
+      "fav/android-chrome-192x192.png": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+      "fav/android-chrome-512x512.png": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+      "fav/apple-touch-icon.png": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+      "fav/favicon-16x16.png": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+      "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+      "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+      "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+      "index.html": "51eb8e1b569971cd582beb8744594738d15726cd31345938ff0d5816a89aa189",
+      "manifest.json": "59c91d7732bc64844b1ddb298e4f5f075904b1f97a6a0fb995c48b20645420e0",
+      "resources/en.json": "a664da31c8a797cac3e547e2af41ca4ff0a8e040e989faad607a8735cfb6b2a2",
+      "resources/zh-CN.json": "29fb0659a700a1154dd4180d6c305462bb1e335799a377961d666b92fd649304",
+      "robots.txt": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+      "screenshots/add-task-en.png": "d5f7f18cc18cdde58f499434fadacca0b0940da45e7b9467dcf4dafbf05693dd",
+      "screenshots/add-task.png": "0d1543f1dfc2e771333ee91c3aea6639291443a3b14ea1c9a1355687725f9f7d",
+      "screenshots/task-list-en.png": "60ff163e92dcbd4ab0e2c804fcd7ba95e7502e6f0b2d54d807ad8bc26ac3b69c",
+      "screenshots/task-list.png": "27c171e7f5fff14fd55429099d9224754c2d92a01c715fbe4a431fbdb2996e06",
+      "sitemap.xml": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+      "sw.js": "61a9891ef8550a190c8c30a8634b1ff94c08cb3380b2a5a3bbc3bc330f08efdc",
+      "vercel.json": "3908e38216703a6723e182e410fc8f2c1fac78e813c29a8619024b0cc6f11f9f"
+    },
+    "sha256": "15d0802be809a4fdd8f99184df2894d06dba8d9dc898686d4bc97836449c2463"
+  },
+  "error": null
+}

@@ -1,0 +1,65 @@
+{
+  "observed_at": "2026-10-23T19:00:50.360176+00:00",
+  "reason": "Complete mobile workload restarted in fresh contexts after the preceding attempt lost its worker during managed-environment recovery; partial samples are excluded.",
+  "resumed_report": "performance-4.8.5-mobile-resumed.json",
+  "resumed_run_id": "3492be77-a204-4024-af98-8b049ed832ec",
+  "started_at": "2026-10-23T19:00:12.788+00:00",
+  "chromium": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)",
+  "cpu_quota_us": 400000,
+  "cpu_period_us": 100000,
+  "effective_cpu_quota": 4,
+  "cpu_max": "400000 100000",
+  "cpuset_cpus_effective": "0-4",
+  "logical_cpus_exposed": 5,
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "memory_limit_bytes": 34359738368,
+  "source_sha256": "588b005638b004e721a6913d5fde40b615e3915782fadae8ed1e9ec29bd5a5a0",
+  "verification_sha256": "79561466af29cb7342dc758e0fc42aea027485db0703e5805e34a0123e50bb98",
+  "frozen_input_count": 91,
+  "frozen_inputs_match": true,
+  "conditions": {
+    "tasks": 10000,
+    "subtasks_per_task": 6,
+    "viewport": {
+      "width": 390,
+      "height": 900
+    },
+    "cpu_throttle_rate": 4.0,
+    "runs_requested": 3,
+    "history_points": 0,
+    "newest_history_created_at": null,
+    "history_edit_policy": "Populated history has a current newest point; ordinary edit should not create another checkpoint inside its interval.",
+    "coverage": "views, full-workspace batch, download/import and checkpoint recovery",
+    "timezone": "UTC",
+    "locale": "en-US",
+    "fixed_clock": "2039-01-01T12:00:00+00:00",
+    "fixture_seed_cpu_throttle_rate": 1,
+    "reload_readiness_scope": "Default active filter excludes the two completed recurrence ancestors; remaining phases explicitly select all tasks.",
+    "calendar_scope": "Clock fixed to January 2039; transition includes visible month, exact dated preview count and bounded undated-card readiness, without month-navigation setup.",
+    "measurement_type": "controlled synthetic cloud run",
+    "host_platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+    "budgets": {
+      "reference": "tools/performance_playwright.py; docs/performance.md",
+      "ceilings_ms": {
+        "reload_list": 15000,
+        "list_tail_search": 5000
+      },
+      "scope": "Existing generous list load/search ceilings applied unchanged to this heavier controlled workload. Other operations are baseline-only."
+    },
+    "limitations": [
+      "CPU throttling and narrow viewports do not reproduce real mobile hardware.",
+      "Elapsed operation times include browser-driver/UI work; fixture setup and full-field signature verification are outside timings.",
+      "Heap and DOM samples are observations after operations, not peak memory, process RSS or a memory budget.",
+      "Fixture injection and integrity checks allocate JavaScript data outside measured intervals; their transient allocations may affect heap observations and collection.",
+      "Each repetition uses a fresh browser context; repeated operations within it are warm-cache observations.",
+      "Batch mode renders bounded pages; Select all matching acts on the complete match set including unloaded tasks."
+    ]
+  },
+  "limits": "Resource limits and throttling are synthetic executor conditions, not measured physical device capabilities. The resumed and completed desktop runs occupy distinct controlled windows; no interrupted samples are merged."
+}

@@ -2,10 +2,12 @@
 """Browser smoke test for the Task Tracer single-file PWA.
 
 Run with:
-    conda run -n task python tools/smoke_playwright.py
+    python3 tools/smoke_playwright.py
 
 Set TASK_TRACER_URL to test an already-running server. Without it, this script
-starts a temporary static server from the repository root.
+starts a temporary static server from the repository root. Set
+TASK_TRACER_BROWSER_EXECUTABLE to an installed Chromium executable when needed;
+CI uses the browser revision pinned by requirements-dev.txt.
 """
 
 from __future__ import annotations
@@ -26,7 +28,7 @@ from pathlib import Path
 from typing import Any, Iterator
 from urllib.parse import urlencode, urljoin, urlparse
 
-from playwright.sync_api import Browser, BrowserContext, Page, Request, TimeoutError, expect, sync_playwright
+from playwright.sync_api import Browser, BrowserContext, Page, Playwright, Request, TimeoutError, expect, sync_playwright
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -88,6 +90,28 @@ def ensure_conda_library_path() -> None:
     paths = [path for path in current.split(":") if path]
     if lib_path not in paths:
         os.environ["LD_LIBRARY_PATH"] = ":".join([lib_path, *paths])
+
+
+def browser_launch_options() -> dict[str, Any]:
+    options: dict[str, Any] = {"headless": True}
+    executable = os.environ.get("TASK_TRACER_BROWSER_EXECUTABLE")
+    if executable:
+        options["executable_path"] = executable
+    return options
+
+
+def assert_installability_in_regular_profile(playwright: Playwright, url: str) -> None:
+    with tempfile.TemporaryDirectory(prefix="task-tracer-pwa-") as profile:
+        context = playwright.chromium.launch_persistent_context(
+            profile, **browser_launch_options()
+        )
+        try:
+            page = context.pages[0] if context.pages else context.new_page()
+            clear_app_data(page, url)
+            assert_service_worker_and_offline_load(context, page)
+            assert_pwa_installability(page)
+        finally:
+            context.close()
 
 
 def assert_no_page_errors(errors: list[str]) -> None:
@@ -410,6 +434,13 @@ def assert_accessibility_baseline(page: Page, label: str) -> None:
         raise AssertionError(f"Accessibility baseline failed during {label}:\n{joined}")
 
 
+def discard_task_draft(page: Page) -> None:
+    expect(page.locator('#taskModal')).to_be_visible()
+    expect(page.locator('#draftDiscardPrompt')).to_be_visible()
+    page.locator('#draftDiscardBtn').click()
+    expect(page.locator('#taskModal')).to_be_hidden()
+
+
 def exercise_shortcuts_and_modal_closing(page: Page) -> None:
     page.locator("body").click(position={"x": 10, "y": 10})
     press_control_shortcut(page, "k")
@@ -431,6 +462,7 @@ def exercise_shortcuts_and_modal_closing(page: Page) -> None:
     assert_accessibility_baseline(page, "new-task modal")
     exercise_modal_focus_trap(page)
     page.locator("#cancelBtn").click()
+    discard_task_draft(page)
     expect(page.locator("#taskModal")).to_be_hidden()
 
     page.locator("#openModalBtn").click()
@@ -484,6 +516,8 @@ def exercise_keyboard_navigation_patterns(page: Page) -> None:
     page.keyboard.press("Enter")
     wait_for_class(page, "#menu", "show")
     expect(page.locator("#backupBtn")).to_be_focused()
+    page.keyboard.press("ArrowDown")
+    expect(page.locator("#exportCsvBtn")).to_be_focused()
     page.keyboard.press("ArrowDown")
     expect(page.locator("#importBtn")).to_be_focused()
     page.keyboard.press("End")
@@ -548,6 +582,7 @@ def exercise_task_name_validation(page: Page) -> None:
     expect(page.locator("#taskName")).to_be_focused()
     expect(page.locator(".task-item")).to_have_count(0)
     page.locator("#cancelBtn").click()
+    discard_task_draft(page)
     expect(page.locator("#taskModal")).to_be_hidden()
 
 
@@ -585,6 +620,7 @@ def exercise_subtask_draft_editor(page: Page) -> None:
     page.locator("#subtaskListPreview .subtask-delete-btn").last.click()
     expect(page.locator("#subtaskListPreview .subtask-preview-item")).to_have_count(1)
     page.locator("#cancelBtn").click()
+    discard_task_draft(page)
     expect(page.locator("#taskModal")).to_be_hidden()
 
 
@@ -711,6 +747,13 @@ def exercise_quick_capture_entries(page: Page, base_url: str, prefix: str) -> No
         raise AssertionError("Add URL parameters were not cleared")
     if get_task_records(page):
         raise AssertionError("Prefill capture should wait for user confirmation")
+
+    # Discard the already-checked prefill before navigating to an independent capture.
+    # Pending quick-add text now correctly requests a browser departure warning.
+    page.locator("#quickAddInput").fill("")
+    expect(page.locator("#quickAddInput")).to_have_value("")
+    if get_task_records(page):
+        raise AssertionError("Discarding an unsaved prefill unexpectedly created a task")
 
     auto_name = f"{prefix} Auto Save"
     page.goto(urljoin(base_url, "?" + urlencode({"add": auto_name, "save": "1"})), wait_until="domcontentloaded")
@@ -853,6 +896,8 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
     expect(page.locator("#savedViewsList .saved-view-chip")).to_have_count(1)
     expect(page.locator("#savedViewsList .saved-view-meta")).to_have_count(0)
     page.locator("#savedViewsList .saved-view-delete").first.click()
+    expect(page.locator("#savedViewDeleteConfirm")).to_be_visible()
+    page.locator("#submitBtn").click()
     wait_for_notification(page, re.compile("删除|deleted", re.I))
     expect(page.locator("#savedViewsBar")).to_be_hidden()
 
@@ -1052,7 +1097,9 @@ def select_filter(page: Page, value: str) -> None:
 
 def select_project(page: Page, value: str) -> None:
     project_btn = page.locator("#projectFilterBtn")
-    selected_option = page.locator(f'#projectDropdown .dropdown-option[data-project="{value}"]')
+    scope = {'kind': 'all'} if value == 'all' else {'kind': 'unassigned'} if value == '__none__' else {'kind': 'project', 'name': value}
+    encoded = json.dumps(scope, ensure_ascii=False, separators=(',', ':'))
+    selected_option = page.locator(f'#projectDropdown .dropdown-option[data-project={json.dumps(encoded, ensure_ascii=False)}]')
     expect(project_btn).to_have_attribute("aria-controls", "projectFilterMenu")
     project_btn.click()
     selected_option.click()
@@ -2078,8 +2125,10 @@ def stable_json(value: Any) -> str:
 
 def stable_fnv1a32(text: str) -> str:
     value = 2166136261
-    for char in text:
-        value ^= ord(char)
+    # JavaScript charCodeAt hashes UTF-16 code units, including surrogate pairs.
+    encoded = text.encode("utf-16-le", errors="surrogatepass")
+    for index in range(0, len(encoded), 2):
+        value ^= encoded[index] | (encoded[index + 1] << 8)
         value = (value * 16777619) & 0xFFFFFFFF
     return f"{value:08x}"
 
@@ -2133,8 +2182,11 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         if not any(re.search(r"(匹配当前任务|Matches current tasks)[\s\S]*1", row, re.I) for row in rows):
             raise AssertionError(f"Import preview did not report current task matches: {rows}")
         expect(page.locator(".confirm-list")).to_have_count(3)
+        expect(page.locator(".import-conflict-select")).to_have_count(0)
+        page.locator("#mergeImportMode").check()
         expect(page.locator(".import-conflict-select")).to_have_count(1)
         expect(page.locator(".import-conflict-select")).to_have_value("keep")
+        page.locator("#mergeImportMode").uncheck()
         expect(page.locator("#confirm-message-text")).to_contain_text("Preview Duplicate")
         expect(page.locator("#confirm-message-text")).to_contain_text(existing_name)
         expect(page.locator("#submitBtn")).to_have_text(re.compile("确认完整性风险|Confirm Integrity Risk", re.I))
@@ -2737,6 +2789,38 @@ def assert_runtime_storage_fallback_preserves_snapshot(browser: Browser, base_ur
         context.close()
 
 
+
+def assert_notification_does_not_cover_header(browser: Browser, base_url: str) -> None:
+    for width in (1280, 900):
+        context = browser.new_context(viewport={"width": width, "height": 800}, reduced_motion="reduce")
+        try:
+            page = context.new_page()
+            page_errors: list[str] = []
+            page.on("pageerror", lambda error: page_errors.append(str(error)))
+            clear_app_data(page, base_url)
+            task_name = f"Toast pointer access {width}"
+            add_task(page, task_name, no_deadline=True)
+            expect(page.locator("#taskModal")).to_be_hidden()
+            expect(page.locator("#notification")).to_have_class(re.compile(r"\bsuccess\b.*\bshow\b"))
+            expect(page.locator("#notificationUndoBtn")).to_be_visible()
+            before = get_task_records(page)
+            menu_box = page.locator("#openMenuBtn").bounding_box()
+            if not menu_box:
+                raise AssertionError("Main menu has no clickable bounds")
+            # Coordinate clicks expose overlap instead of waiting for a covering toast to disappear.
+            page.mouse.click(menu_box["x"] + menu_box["width"] / 2, menu_box["y"] + menu_box["height"] / 2)
+            expect(page.locator("#menu")).to_have_class(re.compile(r"\bshow\b"))
+            expect(page.locator("#notificationUndoBtn")).to_be_visible()
+            assert get_task_records(page) == before, "Opening the menu changed the added task"
+            page.locator("#notificationUndoBtn").click()
+            expect(task_locator(page, task_name)).to_have_count(0)
+            assert get_task_records(page) == [], "Toast Undo did not remove the added task"
+            assert_no_page_errors(page_errors)
+            print(f"Notification pointer access passed: {width}px header menu and toast Undo remain usable", flush=True)
+        finally:
+            context.close()
+
+
 def exercise_legacy_boolean_normalization(page: Page) -> None:
     task_name = f"Legacy Boolean {int(time.time())}"
     put_task_record(
@@ -2925,7 +3009,7 @@ def smoke(url: str) -> None:
     paused_repeat_name = f"{task_name} Paused Repeat"
 
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=True)
+        browser = playwright.chromium.launch(**browser_launch_options())
         context = browser.new_context(accept_downloads=True)
         context.grant_permissions(["notifications"], origin=get_origin(url))
         page = context.new_page()
@@ -2955,6 +3039,7 @@ def smoke(url: str) -> None:
         assert_pwa_resources(context, url)
         assert_storage_unavailable_mode(browser, url)
         assert_runtime_storage_fallback_preserves_snapshot(browser, url)
+        assert_notification_does_not_cover_header(browser, url)
         clear_app_data(page, url)
         assert_empty_task_list(page)
         assert_accessibility_baseline(page, "empty task list")
@@ -2972,7 +3057,7 @@ def smoke(url: str) -> None:
         exercise_notifications(page)
         assert_service_worker_and_offline_load(context, page)
         exercise_one_time_reminder_persists_across_reload(page)
-        assert_pwa_installability(page)
+        assert_installability_in_regular_profile(playwright, url)
 
         exercise_quick_capture_entries(page, url, f"{task_name} Capture")
         exercise_quick_add(page, quick_name)

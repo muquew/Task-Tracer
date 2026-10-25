@@ -1,0 +1,7 @@
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+Composition webkit: 26.5
+Composition passed: palette; composition keys stay in text and ordinary keys still work
+Composition passed: subtasks; composition keys stay in text and ordinary keys still work
+Composition passed: escape; composition keys stay in text and ordinary keys still work
+Composition passed: search; composition keys stay in text and ordinary keys still work
+Composition passed: forms; composition keys stay in text and ordinary keys still work

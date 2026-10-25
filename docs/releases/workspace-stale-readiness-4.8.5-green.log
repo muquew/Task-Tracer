@@ -1,0 +1,2 @@
+Workspace failure passed: stale-edit; 10000 tasks × 6 subtasks; browser=chromium
+{"status": "passed", "browser_engine": "chromium", "tasks": 10000, "subtasks_per_task": 6, "source_unchanged": true}

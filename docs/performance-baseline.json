@@ -1,0 +1,18 @@
+{
+  "dataset": "10000 synthetic active tasks, 10 projects, no deadlines; managed cloud Chromium, no CPU throttling",
+  "before": {
+    "tasks": 10000,
+    "browser": "154.0.8037.57",
+    "initial_task_nodes": 10000,
+    "load_ms": 7306.3,
+    "search_ms": 3444.0
+  },
+  "after": {
+    "tasks": 10000,
+    "browser": "154.0.8037.57",
+    "initial_task_nodes": 100,
+    "load_ms": 2166.5,
+    "search_ms": 356.2
+  },
+  "limitations": "Single before/after local runs, not a cross-device or production performance guarantee. Search timings include the 300ms input debounce."
+}

@@ -1,0 +1,142 @@
+{
+  "description": "Targeted populated-workspace quick-add recovery correctness on corrected frozen 4.8.2. Not a full import/restoration benchmark or a speed/memory/device guarantee.",
+  "command": "TASK_TRACER_BROWSER_EXECUTABLE=/usr/bin/chromium PYTHONDONTWRITEBYTECODE=1 python3 tools/quick_add_workspace_playwright.py --expect-app-version 4.8.2 --expect-resource-version 4.34 --output /tmp/task-tracer-quick-add-4.8.2-10000.json",
+  "environment": "Linux managed cloud; Python 3.12.14; Playwright 1.62.0; Chromium 154.0.8037.57",
+  "concurrency": "The standalone full accessibility and prior-archive upgrade checks may have overlapped. Single synthetic correctness exercise, not comparative performance evidence.",
+  "run": {
+    "app_version": "4.8.2",
+    "resource_version": "4.34",
+    "index_sha256": "4395cf1ed795db7aab3421caf652cdfd04ba74635a8c7a40d66b198949074726",
+    "database_version": 2,
+    "task_file_version": "2.4",
+    "started_at": "2026-10-23T10:27:54.631603+00:00",
+    "concurrency": "Other final checks may have run concurrently. Single synthetic cloud-browser exercise; no comparative, memory, speed, or device guarantee.",
+    "requested_tasks": 10000,
+    "subtasks_per_original_task": 6,
+    "scope_passed": [
+      "existing workload seed: 10,000 tasks / 60,000 subtasks; actual committed mutation creates a nonempty 10k recovery point",
+      "one genuine tasks.add QuotaExceededError transaction abort; raw quick-add text remains enabled, selectable and readonly; all original task fields plus entire config/revision/populated history unchanged",
+      "same-document Retry retains exact raw text, restores editability, performs zero task writes and leaves complete config/revision/history unchanged",
+      "one explicit resubmit adds exactly one parsed task, advances revision once, preserves every field of all 10,000 originals and every prior recovery point",
+      "actual downloaded JSON backup passes existing metadata/checksum assertions and full-field SHA checks for all 10,001 tasks, including exact new task and every original record"
+    ],
+    "browser": "154.0.8037.57",
+    "baseline": {
+      "tasks": 10000,
+      "subtasks": 60000,
+      "tasks_sha256": "29712dc373a9969c0ed40a5b8f58565c5b61bff5700f9a2ed19b1d91088e0f38",
+      "config_sha256": "0cf835a4e90aaa33f143a2ec96c659c0243d8142097cc02ebd83594d6f371df0",
+      "history_sha256": "5615d695bad83999919546637b024793f08b26766bd80d6c993653602957c100",
+      "history_points": 1,
+      "history_task_counts": [
+        10000
+      ],
+      "revision": 2,
+      "unchanged_original_records": 10000,
+      "changed_original_ids": [],
+      "original_tasks_sha256": "29712dc373a9969c0ed40a5b8f58565c5b61bff5700f9a2ed19b1d91088e0f38",
+      "non_task_mutation_config_sha256": "05c3ef21ae4626b2819a5c338e1e706781ff6ee787486f222cd98db6287740f6",
+      "prior_history_records_preserved": true,
+      "added": []
+    },
+    "after_quota_abort": {
+      "tasks": 10000,
+      "subtasks": 60000,
+      "tasks_sha256": "29712dc373a9969c0ed40a5b8f58565c5b61bff5700f9a2ed19b1d91088e0f38",
+      "config_sha256": "0cf835a4e90aaa33f143a2ec96c659c0243d8142097cc02ebd83594d6f371df0",
+      "history_sha256": "5615d695bad83999919546637b024793f08b26766bd80d6c993653602957c100",
+      "history_points": 1,
+      "history_task_counts": [
+        10000
+      ],
+      "revision": 2,
+      "unchanged_original_records": 10000,
+      "changed_original_ids": [],
+      "original_tasks_sha256": "29712dc373a9969c0ed40a5b8f58565c5b61bff5700f9a2ed19b1d91088e0f38",
+      "non_task_mutation_config_sha256": "05c3ef21ae4626b2819a5c338e1e706781ff6ee787486f222cd98db6287740f6",
+      "prior_history_records_preserved": true,
+      "added": []
+    },
+    "after_same_document_retry": {
+      "tasks": 10000,
+      "subtasks": 60000,
+      "tasks_sha256": "29712dc373a9969c0ed40a5b8f58565c5b61bff5700f9a2ed19b1d91088e0f38",
+      "config_sha256": "0cf835a4e90aaa33f143a2ec96c659c0243d8142097cc02ebd83594d6f371df0",
+      "history_sha256": "5615d695bad83999919546637b024793f08b26766bd80d6c993653602957c100",
+      "history_points": 1,
+      "history_task_counts": [
+        10000
+      ],
+      "revision": 2,
+      "unchanged_original_records": 10000,
+      "changed_original_ids": [],
+      "original_tasks_sha256": "29712dc373a9969c0ed40a5b8f58565c5b61bff5700f9a2ed19b1d91088e0f38",
+      "non_task_mutation_config_sha256": "05c3ef21ae4626b2819a5c338e1e706781ff6ee787486f222cd98db6287740f6",
+      "prior_history_records_preserved": true,
+      "added": []
+    },
+    "after_explicit_resubmit": {
+      "tasks": 10001,
+      "subtasks": 60000,
+      "tasks_sha256": "53cb827ce164a3483e80988a0f0c49cb053a12b5cd2358ec68ed29647cadee4a",
+      "config_sha256": "4c304107e3e6208c18c24af2917c2e480ade1b27dd19881ac64f5ca15c2d13c4",
+      "history_sha256": "5615d695bad83999919546637b024793f08b26766bd80d6c993653602957c100",
+      "history_points": 1,
+      "history_task_counts": [
+        10000
+      ],
+      "revision": 3,
+      "unchanged_original_records": 10000,
+      "changed_original_ids": [],
+      "original_tasks_sha256": "29712dc373a9969c0ed40a5b8f58565c5b61bff5700f9a2ed19b1d91088e0f38",
+      "non_task_mutation_config_sha256": "05c3ef21ae4626b2819a5c338e1e706781ff6ee787486f222cd98db6287740f6",
+      "prior_history_records_preserved": true,
+      "added": [
+        {
+          "id": 1792752107123,
+          "createdAt": "2026-10-23T10:28:09.632Z",
+          "completed": false,
+          "completedAt": null,
+          "archived": false,
+          "archivedAt": null,
+          "focusDate": null,
+          "snoozedUntil": null,
+          "lastReminderAt": null,
+          "repeatSourceId": null,
+          "repeatCreatedFrom": null,
+          "nextRepeatTaskId": null,
+          "repeatWeekdays": [],
+          "repeatPaused": false,
+          "name": "复核 快速输入",
+          "description": "",
+          "project": "个人",
+          "tags": [
+            "待办"
+          ],
+          "subtasks": [],
+          "dueDate": "2026-10-24T20:00:00.000Z",
+          "dueAt": "2026-10-24T20:00:00.000Z",
+          "dueLocalDate": "2026-10-24",
+          "dueLocalTime": "20:00",
+          "dueTimeZone": "UTC",
+          "reminderOffset": 15,
+          "reminderRepeat": -1,
+          "repeatType": "none",
+          "repeatInterval": 1,
+          "order": 10009000
+        }
+      ]
+    },
+    "export": {
+      "tasks": 10001,
+      "file_bytes": 17264528,
+      "tasks_sha256": "53cb827ce164a3483e80988a0f0c49cb053a12b5cd2358ec68ed29647cadee4a",
+      "all_original_records_unchanged": true,
+      "added_task_exact_match": true
+    },
+    "page_errors": [],
+    "passed": true,
+    "elapsed_seconds": 23.379,
+    "completed_at": "2026-10-23T10:28:18.006728+00:00"
+  }
+}

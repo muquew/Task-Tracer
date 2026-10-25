@@ -1,0 +1,413 @@
+Running validate_static.py
+Bundled translation fallback matches resource files and version
+Static validation passed
+Running date_semantics_test.py
+Date semantics passed
+Running security_policy.py
+Deployment CSP hashes match application scripts
+Running release_payload_test.py
+Bundled translation fallback matches resource files and version
+Static validation passed
+Deployment CSP hashes match application scripts
+Bundled translation fallback matches resource files and version
+Static validation passed
+Deployment CSP hashes match application scripts
+Bundled translation fallback matches resource files and version
+Static validation passed
+Deployment CSP hashes match application scripts
+Built and verified /tmp/task-tracer-release-payload-p6ywjlmw/normal/task-tracer-4.8.4.zip (23 files, SHA-256 7316a95a5fe3622d2114a056230c8bb90866203919b4e503eeec3bb9e7db8fce)
+Built and verified /tmp/task-tracer-release-payload-p6ywjlmw/with-unrelated-files/task-tracer-4.8.4.zip (23 files, SHA-256 7316a95a5fe3622d2114a056230c8bb90866203919b4e503eeec3bb9e7db8fce)
+Built and verified /tmp/task-tracer-release-payload-p6ywjlmw/repeat/task-tracer-4.8.4.zip (23 files, SHA-256 7316a95a5fe3622d2114a056230c8bb90866203919b4e503eeec3bb9e7db8fce)
+Release payload passed: three unrelated synthetic files are excluded; exact manifest and repeated bytes match
+Release payload rejection passed: missing required asset
+Release payload rejection passed: source symbolic link index.html
+Release payload rejection passed: source symbolic link docs/distribution.md
+Release payload rejection passed: source symbolic link docs/distribution_zh_cn.md
+Release payload rejection passed: source directory symbolic link
+Release payload rejection passed: unsafe source '../outside-source.txt'
+Release payload rejection passed: unsafe source '/outside-source.txt'
+Release payload rejection passed: unsafe source 'resources/../index.html'
+Release payload rejection passed: unsafe source 'resources\\en.json'
+Release payload rejection passed: unsafe source 'resources//en.json'
+Release payload rejection passed: unsafe source ''
+Release payload rejection passed: unsafe source '.'
+Release payload rejection passed: unsafe archive target '../outside.txt'
+Release payload rejection passed: unsafe archive target '/outside.txt'
+Release payload rejection passed: unsafe archive target 'resources\\extra.txt'
+Release payload rejection passed: unsafe archive target 'integrity.json'
+Release payload checks passed
+Running release_versions_test.py
+Release versions passed: current 4.8.4 metadata builds exactly 23 files
+Release version rejection passed: package version drift
+Release version rejection passed: lock top-level version drift
+Release version rejection passed: lock root version drift
+Release version rejection passed: all package versions stale
+Release version rejection passed: missing package version
+Release version rejection passed: missing lock top-level version
+Release version rejection passed: missing lock root version
+Release version rejection passed: missing lock root metadata
+Release version rejection passed: missing package.json
+Release version rejection passed: missing package-lock.json
+Release versions passed: APP X.Y and npm X.Y.0 remain compatible
+Release versions passed: legitimate translation VERSION/APP/I18N/LANGUAGES/DEFAULTS examples do not alter parsed release metadata
+Release version checks passed
+Running check_runner_test.py
+Check runner passed: SIGINT cannot leave the previous successful report
+Check runner passed: SIGTERM cannot leave the previous successful report
+Check runner passed: SIGKILL cannot leave the previous successful report
+Check runner passed: source change prevents a false successful result
+Check runner passed: verification change prevents a false successful result
+Check runner passed: source transient prevents a false successful result
+Check runner passed: verification transient prevents a false successful result
+Check runner passed: source delete prevents a false successful result
+Check runner passed: workflow change prevents a false successful result
+Check runner passed: fail-fast and keep-going preserve the first failing exit code
+Check runner passed: concurrent readers see complete JSON throughout repeated atomic report replacements
+Check runner passed: missing release contract replaces old success with an initialization error
+Check runner lifecycle passed with 7 static mock programs; no network, Git or browser required
+Running static_syntax_test.py
+Static syntax passed: 30 legal JavaScript samples and explicit comment rejection
+Static syntax passed: neutral-UTC normalization and 8 scoped regression mutations
+Running verify_deployment_test.py
+Deployment verification passed: healthy exact-query precache assets, HTML and configured headers
+Deployment verification rejects: versioned language HTTP 503
+Deployment verification rejects: versioned language stale HTTP 200
+Deployment verification rejects: required icon HTTP 503
+Deployment verification rejects: required icon stale HTTP 200
+Deployment verification rejects: external, absolute, traversal and backslash asset paths
+Running smoke_playwright.py
+Notification pointer access passed: 1280px header menu and toast Undo remain usable
+Notification pointer access passed: 900px header menu and toast Undo remain usable
+Smoke passed: http://127.0.0.1:38385/
+Running recovery_playwright.py
+Recovery passed: deleted data survives reload, explicit confirmation, reversible restore, safe task text
+Recovery passed: aborted task write rolls back both task data and recovery history
+Recovery passed: history retains the latest 10 recovery points
+Recovery passed: checkpoint quota failure preserves task/history and emergency export
+Recovery passed: startup quota failure retains readable task data for export
+Local recovery checks passed
+Running recovery_management_playwright.py
+Recovery management passed: bounded safe preview, reset/focus, read-only historical/empty exports and actual import round trip
+Recovery management passed: explicit/cancellable cleanup removes only history and later writes retain fresh recovery protection
+Recovery management passed: changed history requires a fresh review before cleanup
+Recovery management passed: aborted history cleanup rolls back without data loss
+Recovery management passed: completed old cleanup cannot close or alter a later task draft
+chromium: recovery management checks passed
+Running undo_concurrency_playwright.py
+Undo preserves unrelated records written by another database client
+Undo refuses to overwrite a newer value on the same task
+Undo refuses a stale revision after a second app tab changes tasks
+Stale edit form refuses two saves, preserves draft and remote data
+Stale delete form refuses two saves, preserves draft and remote data
+Undo concurrency checks passed
+Running batch_selection_playwright.py
+Batch/Undo regression: chromium 154.0.8037.57
+Undo batch passed: refuses post-commit remote changes without writes; a fresh action still undoes only itself
+Undo single passed: refuses post-commit remote changes without writes; a fresh action still undoes only itself
+Undo delayed snapshot passed: native read completion remains pending; a later remote write is preserved by a refused transaction
+Batch scope passed: full matches, pruned selection, hidden-task preservation, exact Undo and filtered manual-order slots
+Running csv_playwright.py
+chromium: real Unicode JSON checksum/full-field clean-profile restore; CSV Unicode/multiline/quotes, formula neutralization, full-scope export and backup isolation passed
+Running backup_freshness_playwright.py
+Backup freshness chromium: 154.0.8037.57
+Backup coverage passed: edit, deletion to empty and Undo stay due until a new task backup
+Backup coverage passed: CSV and saved-view exports do not reset task-backup coverage
+Backup coverage passed: legacy timestamps and mismatched date/revision records cannot claim current coverage
+Backup coverage passed: stale-window menu reads current storage, and its export includes the latest task snapshot
+Backup coverage passed: a real download paused across another window write records only its captured revision
+Backup coverage passed: abort metadata failure rolls back both coverage fields after a real download
+Backup coverage passed: quota metadata failure rolls back both coverage fields after a real download
+Running backup_reminder_priority_playwright.py
+Backup reminder priority chromium: 154.0.8037.57
+Reminder after invalid file with modal: {"class": "notification error show", "text": "这不是有效且校验通过的 Task Tracer 视图文件（版本 1.0 或 1.1）。任务备份请使用导入功能。"}
+Backup reminder passed: invalid-file error and active transfer dialog stay intact without writes
+Backup reminder passed: active task form suppresses the optional reminder
+Backup reminder passed: visible error remains unchanged after the dialog closes
+Backup reminder passed: task-form started during the real status read remains intact
+Backup reminder passed: invalid-file-error started during the real status read remains intact
+Backup reminder passed: idle page still shows the due reminder and keeps backup menu status
+Running reminder_concurrency_playwright.py
+Reminder concurrency passed: delayed delivery preserves remote edit
+Reminder concurrency passed: delayed delivery preserves remote delete
+Reminder concurrency passed: delayed delivery preserves remote snooze
+Reminder concurrency passed: delayed delivery preserves remote abort
+Reminder concurrency passed: delayed delivery preserves remote quota
+Running import_reference_playwright.py
+Import references passed: null/blank/invalid stay absent; real zero links stay valid
+Import references passed: invalid task IDs cannot claim explicit zero or erase its links
+Import references passed: zero-root recurrence survives two generations, reload and JSON round-trip
+Import references passed: a previously corrupted self-link can resume recurrence
+Running saved_views_playwright.py
+Saved views passed: stale saves/deletions preserve unrelated changes without resurrection
+Saved views passed: aborted save retains draft and cannot leak phantom state after retry/reload
+Saved views passed: an older confirmation completion cannot close or clear a newer task draft
+Saved views passed: capacity rejects new snapshots without eviction; rename preserves identity/order and rollback retains draft
+Saved views passed: two stale windows compete safely for the twelfth slot, and retained draft saves after another window frees capacity
+Running views_delete_playwright.py
+chromium: saved-view deletion on 154.0.8037.57
+View deletion passed: bilingual exact safe target name, five cancellation paths, default Cancel and return focus preserve every stored field
+View deletion passed: explicit confirmation removes exactly one view, preserves tasks/metadata and focuses the next view or Save view
+View deletion passed: a real deferred-search rebuild during confirmation returns Cancel focus to the new matching delete control
+View deletion passed: identical labels still delete only the selected stable ID
+View deletion passed: atomic deletion preserves newer unrelated views and stale repeat confirmation is idempotent
+View deletion passed: aborted configuration write preserves the view and confirmation retry/cancel controls
+View deletion passed: a committed old deletion callback cannot close, refocus or alter a newer task draft
+chromium: saved-view deletion checks passed
+Running project_scope_playwright.py
+Project scope chromium: 154.0.8037.57
+Project scope passed: all, __none__, encoded-looking and ordinary project names remain distinct from both sentinels
+Project scope passed: command palette selects the same literal project scopes
+Project scope passed: exact scopes survive save, reload, 1.1 export and reviewed reimport
+Project scope passed: legacy config and 1.0 files retain sentinel semantics and treat encoded-looking names literally
+Project scope passed: a saved project with no current tasks stays empty without expanding to all projects
+Project scope passed: malformed 1.1 scope objects rejected without changing saved views or tasks
+Running onboarding_playwright.py
+Onboarding chromium: 154.0.8037.57
+Onboarding passed: fresh/reloaded workspace stays empty; examples are explicit, labeled and duplicate-safe
+Onboarding passed: example addition is undoable and an empty workspace remains empty after reload
+Onboarding passed: stale empty window preserves a task created elsewhere
+Onboarding passed: quota failure rolls back all examples atomically
+Running help_playwright.py
+chromium: Help/diagnostics regression on 154.0.8037.57
+Help passed: en; headings/version, keyboard focus, commands and private explicit-download report
+Help passed: zh-CN; headings/version, keyboard focus, commands and private explicit-download report
+Help passed: cancellation during a delayed storage estimate cannot reopen diagnostics
+Help passed: storage failure retains footer/keyboard/redacted diagnostics; retry restores normal Help and one-download behavior
+Running ime_input_playwright.py
+Composition chromium: 154.0.8037.57
+Composition passed: palette; composition keys stay in text and ordinary keys still work
+Composition passed: subtasks; composition keys stay in text and ordinary keys still work
+Composition passed: escape; composition keys stay in text and ordinary keys still work
+Composition passed: search; composition keys stay in text and ordinary keys still work
+Composition passed: forms; composition keys stay in text and ordinary keys still work
+Running task_draft_playwright.py
+Task draft regression: chromium 154.0.8037.57
+New forms: all four close paths, full draft retention, prompt focus, explicit discard, and reverted changes passed
+Description, project, tags, deadline, reminder, repeat, and unsubmitted subtask changes independently trigger protection
+Existing unchanged edits close directly; subtask-only and stale drafts remain protected without changing committed data
+A genuine aborted write preserves the draft and unlocks editing; explicit retry commits once and closes normally
+Real committed transaction delay: saving freezes input and close paths; late completion preserves both a later draft and a disabled import gate
+Quota: genuine abort, downloadable raw/partial drafts, failed retry, same-document recovery, repeat-failure deduplication, queued discard, blocked overwrite, and stale edit conflict passed
+Quota weekday raw recovery: all-unchecked selection survives; explicit save retains the existing default weekday policy
+Native beforeunload cancellation preserved the live task draft
+Running imported_text_edit_playwright.py
+Imported text edit passed: long; browser=chromium
+Imported text edit passed: comma-tags; browser=chromium
+Imported text edit passed: quoted-tags; browser=chromium
+Imported text edit passed: formatting; browser=chromium
+Imported text edit passed: normalization; browser=chromium
+Imported text edit passed: recovery; browser=chromium
+Imported text edit passed: stale; browser=chromium
+{"browser_engine": "chromium", "browser": "154.0.8037.57", "cases": 7, "passed": true}
+Running imported_reminder_edit_playwright.py
+Imported reminders passed: fractional; full fields/reload/download or explicit UI boundary verified
+Imported reminders passed: after-due; full fields/reload/download or explicit UI boundary verified
+Imported reminders passed: off; full fields/reload/download or explicit UI boundary verified
+Imported reminders passed: undated; full fields/reload/download or explicit UI boundary verified
+Imported reminders passed: change; full fields/reload/download or explicit UI boundary verified
+Imported reminders passed: recovery; full fields/reload/download or explicit UI boundary verified
+Imported reminders passed: labels; full fields/reload/download or explicit UI boundary verified
+{"browser_engine": "chromium", "browser": "154.0.8037.57", "case": "all", "passed": true}
+Running quick_add_recovery_playwright.py
+chromium: quick-add recovery on 154.0.8037.57
+Quick-add recovery passed: exact raw text, selectable read-only fallback, same-document Retry and one task per normal submission
+Quick-add recovery passed: quick-add and full-form drafts coexist and recover without overwriting one another
+Quick-add recovery passed: failed Retry retains raw text and a later successful Retry still saves exactly once
+Quick-add recovery passed: actual native refresh cancellation preserves editable and unavailable read-only drafts; saved text no longer warns
+Quick-add recovery passed: cleared URL parameters cannot erase retained capture description/URL metadata, and reload cannot duplicate the saved task
+Quick-add recovery passed: empty unavailable input stays disabled and keeps the established no-draft Retry path
+chromium: all selected quick-add recovery checks passed
+Running quick_add_date_playwright.py
+Quick-add dates passed: nearest valid month/day, leap centuries, Chinese/separator forms, same-day dates and ordinary year rollover match full forms
+Quick-add dates passed: explicit civil dates in UTC match the full form and its existing forward-gap policy
+Quick-add dates passed: explicit civil dates in Pacific/Apia match the full form and its existing forward-gap policy
+Quick-add dates passed: explicit civil dates in America/New_York match the full form and its existing forward-gap policy
+Quick-add dates passed: impossible dates remain title text; independent time-only behavior and the supported upper year bound are preserved
+Quick-add dates passed: relative words resolve on submission across leap/year midnight; saved cards and edit fields show the actual date
+Quick-add dates passed: relative words resolve on submission across leap/year midnight; saved cards and edit fields show the actual date
+{"browser_engine": "chromium", "browser": "154.0.8037.57", "case": "all", "passed": true}
+Running dialog_lifecycle_playwright.py
+Dialog lifecycle passed: cancelled storage status read cannot cover a later task draft
+Dialog lifecycle passed: cancelled recovery read cannot cover a later task draft
+Dialog lifecycle passed: an older status read cannot replace a repeated newer request
+Dialog lifecycle passed: completed old confirmation cannot close a later task draft
+Dialog lifecycle passed: old false-result confirmation cannot unlock a newer reading gate
+chromium: dialog lifecycle checks passed
+Running views_portability_playwright.py
+View portability chromium: 154.0.8037.57
+View portability passed: immediate distinct search saves capture current queries and default names
+View portability passed: latest file intent wins both read orders; cancellation preserves task drafts
+View portability passed: export reads latest views, Unicode/checksum round-trip, task/backup isolation
+View portability passed: reviewed merge, cancellation, snapshot dedupe and ID collision safety
+View portability passed: 12-view capacity skips overflow without evicting existing views
+View portability passed: changed storage rebuilds preview and requires explicit second confirmation
+View portability passed: atomic abort keeps preview/data and a later retry succeeds
+View portability passed: corrupted/wrong-task/invalid-field/oversized files rejected without writes
+Running import_preview_concurrency_playwright.py
+Import preview concurrency passed: stale replace approval preserves remote changes after background refresh
+Import preview concurrency passed: stale merge approval preserves remote changes after background refresh
+Destructive confirmation passed: stale clear preserves remote changes after background refresh
+Destructive confirmation passed: stale archive preserves remote changes after background refresh
+Destructive confirmation passed: stale recovery preserves remote changes after background refresh
+Running queued_write_concurrency_playwright.py
+Queued write concurrency passed: writer revision is captured before prior read completion
+Running import_read_lifecycle_playwright.py
+Task import read passed: cancelled file completion preserves a later task draft
+Task import read passed: a slower old file cannot replace the latest selected preview
+Running import_conflicts_playwright.py
+Import conflicts passed: lazy/paged controls, persistent choices, bulk reset and hidden-row defaults preserve actual tasks
+Running storage_lifecycle_playwright.py
+Storage upgrade unblocks and retains tasks plus an emergency export
+Blocked startup shows recovery guidance and retry works after the older window closes
+Running storage_health_playwright.py
+Storage health passed: granted; explicit permission, existing tasks and export preserved
+Storage health passed: denied; explicit permission, existing tasks and export preserved
+Storage health passed: unsupported; explicit permission, existing tasks and export preserved
+Running upgrade_playwright.py
+Baseline verified: git 1c3bacb0ca8015fb5840c6b5d1d5efa0937e6e28; page and controlling worker are 4.1
+Actual 4.1 → 4.8.4: fields/views, CRUD and offline reload passed
+Actual rollback to 4.1: fields/views, CRUD and offline reload passed
+Actual re-upgrade to 4.8.4: exact tasks/views, CRUD and offline reload passed
+Running service_worker_update_playwright.py
+PASS: synthetic legacy HTML fixture + verbatim 4.6 networkFirst worker; new HTML + language/SW 503 stays usable after physical offline reload
+PASS: unavailable worker/languages cannot replace an installed complete bundle; physical offline reload works
+PASS: failed candidate precache is discarded while the previous full bundle remains usable offline
+PASS: HTTP-200 old HTML mixed with new worker/resources cannot install an inconsistent bundle
+PASS: TCP connection loss during a required install asset preserves the full previous bundle offline
+PASS: healthy update retains exact old-language URLs and protects known/unknown old clients from background shell fetches
+PASS: active cleanup protects an installing bundle, cleans unused old bundles, and preserves unrelated caches/data offline
+Running security_playwright.py
+Deployment CSP hashes match application scripts
+Security passed: hash-authorized app runs; unsigned inline scripts and event handlers are blocked
+Running timezone_playwright.py
+Timezone chromium: 154.0.8037.57
+Timezone passed: DST gaps/folds, half-hour/quarter-hour offsets, date crossing, invalid/undated zones and JSON round-trip
+Timezone passed: unrelated edits preserve repeated-hour instants and overdue deadlines
+Timezone passed: the full task form accepts a real historical deadline
+Timezone passed: a previously invalid zone falls back to the current device zone after a live change
+Running dst_wall_time_playwright.py
+Deadline wall time chromium: 154.0.8037.57
+Wall time passed: New York spring gap; 2026-03-08 02:30 -> 2026-03-08 03:30
+Wall time passed: New York autumn fold; 2026-11-01 01:30 -> 2026-11-01 01:30
+Wall time passed: Berlin spring gap; 2026-03-29 02:30 -> 2026-03-29 03:30
+Wall time passed: Berlin autumn fold; 2026-10-25 02:30 -> 2026-10-25 02:30
+Wall time passed: Lord Howe half-hour gap; 2026-10-04 02:15 -> 2026-10-04 02:45
+Wall time passed: Lord Howe half-hour fold; 2026-04-05 01:45 -> 2026-04-05 01:45
+Wall time passed: Apia skipped day; 2011-12-30 12:00 -> 2011-12-31 12:00
+Wall time passed: Kathmandu quarter offset; 2026-01-16 00:15 -> 2026-01-16 00:15
+Deadline wall time chromium: all 8 form/edit/reload/export cases passed
+Running foreign_wall_time_playwright.py
+Foreign wall time passed: New York foreign spring gap; exact search, timeline, edit, reload and download
+Foreign wall time passed: Berlin foreign spring gap; exact search, timeline, edit, reload and download
+Foreign wall time passed: Lord Howe foreign half-hour gap; exact search, timeline, edit, reload and download
+Foreign wall time passed: Apia foreign skipped date; exact search, timeline, edit, reload and download
+Foreign wall time passed: New York foreign autumn fold; exact search, timeline, edit, reload and download
+Foreign wall time passed: Kathmandu ordinary control; exact search, timeline, edit, reload and download
+{"browser_engine": "chromium", "browser": "154.0.8037.57", "cases": 6, "passed": true}
+Running recurrence_timezone_playwright.py
+Recurrence host UTC: 15 skip/completion cases plus none/paused controls passed
+Recurrence host America/New_York: 15 skip/completion cases plus none/paused controls passed
+Recurrence host Pacific/Apia: 15 skip/completion cases plus none/paused controls passed
+{"browser": "chromium", "browser_version": "154.0.8037.57", "hosts": ["UTC", "America/New_York", "Pacific/Apia"], "cases_per_host": 15, "operations": ["skip", "complete", "none control", "paused control", "reload"], "passed": true, "cases": [{"case": "daily foreign spring gap", "dueAt": "2026-03-08T02:30:00.000Z", "dueLocalDate": "2026-03-08", "dueLocalTime": "02:30", "dueTimeZone": "UTC"}, {"case": "weekly foreign spring gap", "dueAt": "2026-03-08T02:30:00.000Z", "dueLocalDate": "2026-03-08", "dueLocalTime": "02:30", "dueTimeZone": "UTC"}, {"case": "selected Sunday foreign spring gap", "dueAt": "2026-03-08T02:30:00.000Z", "dueLocalDate": "2026-03-08", "dueLocalTime": "02:30", "dueTimeZone": "UTC"}, {"case": "monthly foreign spring gap", "dueAt": "2026-03-08T02:30:00.000Z", "dueLocalDate": "2026-03-08", "dueLocalTime": "02:30", "dueTimeZone": "UTC"}, {"case": "last day next month", "dueAt": "2026-03-31T02:30:00.000Z", "dueLocalDate": "2026-03-31", "dueLocalTime": "02:30", "dueTimeZone": "UTC"}, {"case": "custom foreign spring gap", "dueAt": "2026-03-08T02:30:00.000Z", "dueLocalDate": "2026-03-08", "dueLocalTime": "02:30", "dueTimeZone": "UTC"}, {"case": "monthly clamp", "dueAt": "2026-02-28T02:30:00.000Z", "dueLocalDate": "2026-02-28", "dueLocalTime": "02:30", "dueTimeZone": "UTC"}, {"case": "monthly leap clamp", "dueAt": "2024-02-29T02:30:00.000Z", "dueLocalDate": "2024-02-29", "dueLocalTime": "02:30", "dueTimeZone": "UTC"}, {"case": "weekly year boundary", "dueAt": "2026-01-05T02:30:00.000Z", "dueLocalDate": "2026-01-05", "dueLocalTime": "02:30", "dueTimeZone": "UTC"}, {"case": "NY target spring", "dueAt": "2026-03-08T14:30:00.000Z", "dueLocalDate": "2026-03-08", "dueLocalTime": "10:30", "dueTimeZone": "America/New_York"}, {"case": "NY target fall", "dueAt": "2026-11-01T15:30:00.000Z", "dueLocalDate": "2026-11-01", "dueLocalTime": "10:30", "dueTimeZone": "America/New_York"}, {"case": "Lord Howe target half-hour", "dueAt": "2026-04-05T00:00:00.000Z", "dueLocalDate": "2026-04-05", "dueLocalTime": "10:30", "dueTimeZone": "Australia/Lord_Howe"}, {"case": "Kathmandu target quarter-hour", "dueAt": "2026-01-15T18:30:00.000Z", "dueLocalDate": "2026-01-16", "dueLocalTime": "00:15", "dueTimeZone": "Asia/Kathmandu"}, {"case": "UTC date skipped by foreign host", "dueAt": "2011-12-30T02:30:00.000Z", "dueLocalDate": "2011-12-30", "dueLocalTime": "02:30", "dueTimeZone": "UTC"}, {"case": "legacy selected weekday fallback", "dueAt": "2012-01-06T02:30:00.000Z", "dueLocalDate": "2012-01-06", "dueLocalTime": "02:30", "dueTimeZone": "UTC"}]}
+Running repeat_lineage_playwright.py
+Repeat lineage chromium: undo passed
+Repeat lineage chromium: edited passed
+Repeat lineage chromium: nonroot passed
+Repeat lineage chromium: roundtrip passed
+Repeat lineage chromium: legacy-ghost passed
+Repeat lineage chromium: legacy-roundtrip passed
+Repeat lineage chromium: tail passed
+Repeat lineage chromium: terminal passed
+Repeat lineage chromium: self passed
+{"browser": "chromium", "browser_version": "154.0.8037.57", "cases": ["undo", "edited", "nonroot", "roundtrip", "legacy-ghost", "legacy-roundtrip", "tail", "terminal", "self"], "passed": true}
+Running repeat_delete_playwright.py
+Repeat delete passed: single; browser=chromium
+Repeat delete passed: batch; browser=chromium
+Repeat delete passed: clear; browser=chromium
+Repeat delete passed: abort-single; browser=chromium
+Repeat delete passed: abort-batch; browser=chromium
+Repeat delete passed: abort-clear; browser=chromium
+Repeat delete passed: stale-single; browser=chromium
+Repeat delete passed: stale-batch; browser=chromium
+Repeat delete passed: stale-clear; browser=chromium
+Repeat delete passed: boundaries; browser=chromium
+Repeat delete passed: ambiguity; browser=chromium
+Repeat delete passed: cycles; browser=chromium
+{"browser_engine": "chromium", "browser": "154.0.8037.57", "cases": 12, "passed": true}
+Running time_refresh_playwright.py
+Time refresh passed: a due task enters an initially empty overdue view without user navigation or writes
+Time refresh passed: due:today follows the new local day without another search edit
+Time refresh passed: Today Plan follows the local day while retaining original task focus dates
+Time refresh passed: completion-today and the last two trend dates follow midnight without writes
+Time refresh passed: midnight preserves modal fields/focus, then applies the deferred view update on close
+Time refresh passed: an open command palette retains its input/focus and deferred results appear after Escape
+Time refresh passed: active text selection survives midnight; clearing it releases the deferred update
+Time refresh passed: batch selection remains intact across midnight until the user clears it
+Time refresh passed: ordinary minutes keep existing controls; a real deadline preserves loaded pages and logical focus
+Time refresh passed: controlled foreground restoration and a backward clock correction immediately refresh the view
+Time refresh passed: crossing the urgent status threshold updates its initially empty search
+Time refresh passed: crossing the warning status threshold updates its initially empty search
+{"browser_engine": "chromium", "browser": "154.0.8037.57", "case": "all", "passed": true}
+Running stats_scope_playwright.py
+chromium 154.0.8037.57: one ongoing overdue + nine completed dated tasks gives 100%
+Ongoing denominator, future/archived/undated/empty cases, project and search intersections, unchanged completion metrics and full IndexedDB read-only checks passed
+Running performance_playwright.py
+Timeline passed: bounded cards, full date counts, chronology, far-end search, focus, resets and read-only rendering
+{"tasks": 1000, "browser": "154.0.8037.57", "initial_task_nodes": 100, "load_ms": 308.5, "search_ms": 331.3, "timeline_load_ms": 179.3, "timeline_initial_nodes": 100, "timeline_search_ms": 432.9}
+Running calendar_performance_playwright.py
+Calendar passed: independent bounded sections, full counts and focus on newly loaded tasks
+Calendar passed: final partial pages reach editable tasks, and reopening a date resets its page
+Calendar passed: far-end dated and undated search covers all tasks and resets display limits
+Calendar passed: view/month/project/filter navigation resets bounds without stale details
+Calendar passed: manual-order behavior is retained and all rendering operations leave IndexedDB unchanged
+{"browser_engine": "chromium", "browser": "154.0.8037.57", "dated_tasks": 251, "undated_tasks": 251, "coverage": "full pagination and navigation", "calendar_initial_ms": 146.8, "initial_undated_nodes": 100, "passed": true}
+Running calendar_navigation_playwright.py
+Calendar navigation passed: after a real edit removes the day More button, closing details focuses that date button
+Calendar navigation passed: unique cross-month search reveals its task; manual month navigation and clearing search retain the chosen month
+Calendar navigation passed: a query with a visible date retains its month, and returning through no results restarts the same-query search
+Calendar navigation passed: absent and undated-only searches preserve the month and all IndexedDB records
+{"browser_engine": "chromium", "browser": "154.0.8037.57", "case": "all", "passed": true}
+Running calendar_timezone_playwright.py
+Calendar timezone passed: skipped civil day appears once, leap/search/month navigation and add-form date keys remain exact without writes
+Calendar timezone passed: Apia skipped-day add uses the existing forward-gap policy (30→31), preserving existing records
+Calendar timezone passed: live UTC→America/Los_Angeles retains civil month, next/year navigation, local Today and stored task-date display
+Calendar timezone passed: live UTC→Pacific/Kiritimati retains civil month, next/year navigation, local Today and stored task-date display
+Calendar timezone passed: live Pacific/Kiritimati→UTC retains civil month, next/year navigation, local Today and stored task-date display
+Calendar timezone passed: Today Plan follows a real device-local date change without changing stored focus dates
+{"browser_engine": "chromium", "browser": "154.0.8037.57", "case": "all", "live_zone_coverage": "Chromium CDP", "passed": true}
+Running workspace_roundtrip_playwright.py
+reload: 329.8 ms
+json_export: 490.1 ms
+json_replace_import: 1394.3 ms
+checkpoint_delete: 310.7 ms
+checkpoint_restore: 445.1 ms
+calendar: 212.0 ms
+list_from_calendar: 206.0 ms
+{"tasks": 1000, "subtasks_per_task": 6, "browser": "154.0.8037.57", "reload_ms": 329.8, "json_export_ms": 490.1, "export_file_bytes": 1725110, "compact_export_bytes": 1220986, "json_replace_import_ms": 1394.3, "checkpoint_delete_ms": 310.7, "checkpoint_restore_ms": 445.1, "calendar_ms": 212.0, "calendar_task_nodes": 36, "list_from_calendar_ms": 206.0, "timeline_skipped": "Pass --full-views to measure timeline navigation, paging and full-dataset search", "passed": true}
+Running compatibility_playwright.py
+chromium 1280px: starting
+chromium: 154.0.8037.57
+chromium: storage initialized
+chromium: CRUD and views passed
+chromium: export and restore passed
+chromium: offline passed
+chromium 390px: starting
+chromium: 154.0.8037.57
+chromium: storage initialized
+chromium: CRUD and views passed
+chromium: export and restore passed
+chromium: offline passed
+chromium: desktop/mobile critical flows and offline reload passed
+Running accessibility_i18n_audit.py
+Accessibility/i18n audit passed
+Running release_playwright.py
+Bundled translation fallback matches resource files and version
+Static validation passed
+Deployment CSP hashes match application scripts
+Bundled translation fallback matches resource files and version
+Static validation passed
+Deployment CSP hashes match application scripts
+Built and verified /tmp/task-tracer-release-grcit07a/one/task-tracer-4.8.4.zip (23 files, SHA-256 e0c2e791a541cd3aebeabbf1bb3bac606cb73b3f982e6f70b6a7d43be0ccab33)
+Built and verified /tmp/task-tracer-release-grcit07a/two/task-tracer-4.8.4.zip (23 files, SHA-256 e0c2e791a541cd3aebeabbf1bb3bac606cb73b3f982e6f70b6a7d43be0ccab33)
+Release passed: reproducible bytes, verified manifest, safe file set, extracted PWA persistence and offline reload
+All 56 check programs passed

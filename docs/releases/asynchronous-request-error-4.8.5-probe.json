@@ -1,0 +1,64 @@
+{
+  "scope": "Real asynchronous duplicate IndexedDB add, not synthetic quota error",
+  "browser_version": "154.0.8037.57",
+  "standalone_events": [
+    {
+      "stage": "request.onerror",
+      "txError": null,
+      "requestError": "ConstraintError",
+      "targetError": "ConstraintError"
+    },
+    {
+      "stage": "tx.onerror",
+      "txError": null,
+      "requestError": "ConstraintError",
+      "targetError": "ConstraintError"
+    },
+    {
+      "stage": "tx.onabort",
+      "txError": "ConstraintError",
+      "requestError": "ConstraintError",
+      "targetError": "ConstraintError"
+    }
+  ],
+  "app_events": [
+    {
+      "stage": "app request.error",
+      "txError": null,
+      "requestError": "ConstraintError",
+      "targetError": "ConstraintError"
+    },
+    {
+      "stage": "app tx.error",
+      "txError": null,
+      "requestError": "ConstraintError",
+      "targetError": "ConstraintError"
+    },
+    {
+      "stage": "app tx.error",
+      "txError": "ConstraintError",
+      "requestError": "ConstraintError",
+      "targetError": "AbortError"
+    },
+    {
+      "stage": "app tx.abort",
+      "txError": "ConstraintError",
+      "requestError": "ConstraintError",
+      "targetError": "ConstraintError"
+    }
+  ],
+  "console": [
+    {
+      "type": "error",
+      "text": "快速添加任务失败: null",
+      "args": [
+        "快速添加任务失败:",
+        null
+      ]
+    }
+  ],
+  "workspace_unchanged": true,
+  "quick_text_retained": true,
+  "storage_unavailable": false,
+  "notification": ""
+}

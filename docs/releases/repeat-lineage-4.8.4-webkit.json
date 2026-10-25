@@ -1,0 +1,16 @@
+{
+  "browser": "webkit",
+  "browser_version": "26.5",
+  "cases": [
+    "undo",
+    "edited",
+    "nonroot",
+    "roundtrip",
+    "legacy-ghost",
+    "legacy-roundtrip",
+    "tail",
+    "terminal",
+    "self"
+  ],
+  "passed": true
+}

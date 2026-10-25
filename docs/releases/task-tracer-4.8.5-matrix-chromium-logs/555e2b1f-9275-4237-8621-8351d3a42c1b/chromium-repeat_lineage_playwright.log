@@ -1,0 +1,10 @@
+Repeat lineage chromium: undo passed
+Repeat lineage chromium: edited passed
+Repeat lineage chromium: nonroot passed
+Repeat lineage chromium: roundtrip passed
+Repeat lineage chromium: legacy-ghost passed
+Repeat lineage chromium: legacy-roundtrip passed
+Repeat lineage chromium: tail passed
+Repeat lineage chromium: terminal passed
+Repeat lineage chromium: self passed
+{"browser": "chromium", "browser_version": "154.0.8037.57", "cases": ["undo", "edited", "nonroot", "roundtrip", "legacy-ghost", "legacy-roundtrip", "tail", "terminal", "self"], "passed": true}

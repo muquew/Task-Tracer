@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "initial_capture_clears_older_success",
+      "passed": true
+    },
+    {
+      "case": "final_capture_failure",
+      "passed": true
+    },
+    {
+      "case": "unchanged_control",
+      "passed": true
+    }
+  ]
+}

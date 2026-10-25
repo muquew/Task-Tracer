@@ -13,13 +13,13 @@
 ## 自动化命令
 
 ```bash
-python3 tools/validate_static.py
-python3 tools/date_semantics_test.py
-/data3/wangyaokun/miniconda3/bin/conda run -n task python tools/smoke_playwright.py
-/data3/wangyaokun/miniconda3/bin/conda run -n task python tools/accessibility_i18n_audit.py
+python tools/check.py
+python tools/accessibility_i18n_audit.py
 ```
 
-`tools/accessibility_i18n_audit.py` 会通过 Playwright 打开真实浏览器并注入 axe-core。首次运行时如果本地没有 axe-core，会用 `npx --yes @axe-core/cli --version` 拉取到 npm 缓存。
+先按 [CONTRIBUTING.md](../CONTRIBUTING.md) 安装开发依赖和 Chromium；专项审计使用 `npm ci --ignore-scripts` 安装的固定版本 axe-core。
+
+`tools/accessibility_i18n_audit.py` 会通过 Playwright 打开真实浏览器并注入 axe-core。缺少 axe-core 时会明确失败，不会临时下载浮动版本。检查覆盖亮暗主题、桌面和移动宽度、恢复与数据安全弹窗、通知对比度，并在有限动画结束后执行扫描，避免将过渡帧误判为最终颜色。
 
 ## 当前保障
 
@@ -47,7 +47,7 @@ python3 tools/date_semantics_test.py
 
 ## 发布前检查
 
-- 跑完上述四条自动化命令。
+- 跑完上述两条自动化命令；记录未执行项与原因，不能把跳过描述为通过。
 - 用键盘完成快速添加、URL 捕获预填、命令面板、新增、编辑、完成、归档、批量操作、导入、导出/备份、筛选、排序、日历详情和统计跳转。
 - 在亮色和暗色主题下检查焦点环、状态文本和完成任务删除线。
 - 使用中英文分别检查移动端布局和弹窗滚动。

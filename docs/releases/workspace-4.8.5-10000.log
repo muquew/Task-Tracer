@@ -1,0 +1,16 @@
+reload: 1381.9 ms
+batch_unfiltered_entry: 368.8 ms
+json_export: 4251.3 ms
+json_replace_import: 14813.9 ms
+batch_focus: 1813.6 ms
+batch_focus_undo: 3309.9 ms
+batch_delete: 6283.6 ms
+batch_delete_undo: 5109.4 ms
+checkpoint_delete: 11481.7 ms
+checkpoint_restore: 5602.6 ms
+list: 132.4 ms
+timeline: 786.9 ms
+calendar: 848.2 ms
+list_from_calendar: 674.9 ms
+final_json_export: 5870.4 ms
+{"schema_version": 2, "run_id": "ecc06376-36e5-45aa-a72d-9dc5a0452edd", "started_at": "2026-10-23T18:25:09.195+00:00", "finished_at": "2026-10-23T18:27:28.940+00:00", "status": "passed", "completed": true, "passed": true, "assertions_passed": true, "app_version": "4.8.5", "tasks": 10000, "subtasks_per_task": 6, "browser_engine": "chromium", "source_unchanged": true, "tool_inputs_unchanged": true, "integrity_errors": [], "error": null, "checks": ["seed-reload-all-task-and-subtask-counts", "unfiltered-batch-entry-no-task-writes", "real-json-download-checksum-all-fields-and-valid-repeat-links", "actual-json-replacement-and-safety-snapshot-all-fields", "scoped-batch-focus-delete-exact-undo-and-checkpoint-restore", "list-and-timeline-pagination-reset-and-tail-search", "calendar-bounded-rendering-tail-search-and-section-paging", "view-navigation-and-search-task-data-read-only", "final-real-json-download-checksum-and-exact-task-fields"], "page_errors": [], "current_operation": null, "scope": {"full_views": true, "synthetic_data": true, "real_device": false, "controlled_performance_benchmark": false, "notes": "Elapsed values describe this correctness run; CPU/load are not controlled."}, "browser": "154.0.8037.57", "reload_ms": 1381.9, "baseline_signature": "e521008f3cd7d75c9034f0e8c05c2e534faba1e22c3901d420821caaf066d15e", "batch_unfiltered_entry_ms": 368.8, "batch_unfiltered_task_nodes": 100, "batch_unfiltered_dom_nodes": 8118, "batch_unfiltered_total_matches": 10000, "batch_unfiltered_selected_tasks": 10000, "batch_unfiltered_loaded_task_nodes": 200, "json_export_ms": 4251.3, "export_file_bytes": 17383726, "compact_export_bytes": 12343602, "fixture_repeat_members": 4, "fixture_repeat_links": 9, "json_replace_import_ms": 14813.9, "batch_focus_ms": 1813.6, "batch_focus_selected_tasks": 1000, "batch_focus_undo_ms": 3309.9, "batch_delete_selected_tasks": 1000, "batch_delete_ms": 6283.6, "batch_delete_undo_ms": 5109.4, "checkpoint_delete_ms": 11481.7, "checkpoint_restore_ms": 5602.6, "list_ms": 132.4, "list_task_nodes": 100, "list_loaded_task_nodes": 200, "list_tail_search_id": 109999, "timeline_ms": 786.9, "timeline_task_nodes": 100, "timeline_loaded_task_nodes": 200, "timeline_tail_search_id": 109999, "calendar_ms": 848.2, "calendar_task_nodes": 37, "calendar_dated_tail_search_id": 109999, "calendar_undated_tail_search_id": 109996, "calendar_loaded_undated_nodes": 200, "calendar_detail_task_nodes": 100, "calendar_detail_total_tasks": 358, "calendar_loaded_detail_nodes": 200, "list_from_calendar_ms": 674.9, "final_json_export_ms": 5870.4}

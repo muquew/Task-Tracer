@@ -1,0 +1,43 @@
+firefox 153.0: starting 31 registered programs
+Running firefox: compatibility_playwright.py
+firefox: compatibility_playwright.py exited 0 in 31.796s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-compatibility_playwright.log)
+Running firefox: csv_playwright.py
+firefox: csv_playwright.py exited 0 in 16.236s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-csv_playwright.log)
+Running firefox: backup_freshness_playwright.py
+firefox: backup_freshness_playwright.py exited 0 in 15.565s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-backup_freshness_playwright.log)
+Running firefox: backup_reminder_priority_playwright.py
+firefox: backup_reminder_priority_playwright.py exited 0 in 13.910s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-backup_reminder_priority_playwright.log)
+Running firefox: project_scope_playwright.py
+firefox: project_scope_playwright.py exited 0 in 36.136s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-project_scope_playwright.log)
+Running firefox: task_draft_playwright.py
+firefox: task_draft_playwright.py exited 0 in 51.150s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-task_draft_playwright.log)
+Running firefox: quick_add_recovery_playwright.py
+firefox: quick_add_recovery_playwright.py exited 0 in 43.270s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-quick_add_recovery_playwright.log)
+Running firefox: quick_add_date_playwright.py
+firefox: quick_add_date_playwright.py exited 0 in 48.182s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-quick_add_date_playwright.log)
+Running firefox: imported_text_edit_playwright.py
+firefox: imported_text_edit_playwright.py exited 0 in 41.761s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-imported_text_edit_playwright.log)
+Running firefox: imported_reminder_edit_playwright.py
+firefox: imported_reminder_edit_playwright.py exited 0 in 36.901s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-imported_reminder_edit_playwright.log)
+Running firefox: repeat_lineage_playwright.py
+firefox: repeat_lineage_playwright.py exited 0 in 67.380s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-repeat_lineage_playwright.log)
+Running firefox: repeat_delete_playwright.py
+firefox: repeat_delete_playwright.py exited 0 in 117.688s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-repeat_delete_playwright.log)
+Running firefox: repeat_merge_playwright.py
+firefox: repeat_merge_playwright.py exited 0 in 124.755s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-repeat_merge_playwright.log)
+Running firefox: dialog_lifecycle_playwright.py
+firefox: dialog_lifecycle_playwright.py exited 0 in 15.921s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-dialog_lifecycle_playwright.log)
+Running firefox: onboarding_playwright.py
+firefox: onboarding_playwright.py exited 0 in 12.906s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-onboarding_playwright.log)
+Running firefox: help_playwright.py
+firefox: help_playwright.py exited 0 in 15.714s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-help_playwright.log)
+Running firefox: ime_input_playwright.py
+firefox: ime_input_playwright.py exited 0 in 27.235s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-ime_input_playwright.log)
+Running firefox: batch_selection_playwright.py
+firefox: batch_selection_playwright.py exited 0 in 30.120s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-batch_selection_playwright.log)
+Running firefox: workspace_failure_playwright.py
+firefox: workspace_failure_playwright.py exited 0 in 44.898s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-workspace_failure_playwright.log)
+Running firefox: calendar_performance_playwright.py
+firefox: calendar_performance_playwright.py exited 0 in 29.648s (/tmp/task-tracer-4.8.5-matrix-firefox-logs/e95094cd-812e-4afd-867e-0bbe7202aacb/firefox-calendar_performance_playwright.log)
+Running firefox: calendar_navigation_playwright.py
+Interrupted by SIGINT

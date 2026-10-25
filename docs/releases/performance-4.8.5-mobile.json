@@ -1,0 +1,1330 @@
+{
+  "schema_version": 1,
+  "run_id": "049e3783-cceb-4c65-86a7-1764a61b95a8",
+  "started_at": "2026-10-23T17:52:13.812+00:00",
+  "status": "passed",
+  "completed": true,
+  "passed": true,
+  "current_operation": null,
+  "runs": [
+    {
+      "run": 1,
+      "status": "passed",
+      "measurements": [
+        {
+          "operation": "single_edit_save",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 3390.3,
+          "observation_after": {
+            "js_heap_used_bytes": 99464268,
+            "js_heap_total_bytes": 163889152,
+            "browser_dom_counters": {
+              "documents": 6,
+              "nodes": 2350,
+              "jsEventListeners": 175
+            },
+            "connected_dom": {
+              "elements": 810,
+              "task_cards": 1,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "reload_list",
+          "status": "passed",
+          "budget_ms": 15000,
+          "budget_scope": "existing regression ceiling",
+          "duration_ms": 2599.8,
+          "observation_after": {
+            "js_heap_used_bytes": 155608584,
+            "js_heap_total_bytes": 235479040,
+            "browser_dom_counters": {
+              "documents": 12,
+              "nodes": 62812,
+              "jsEventListeners": 555
+            },
+            "connected_dom": {
+              "elements": 7928,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          },
+          "budget_passed": true
+        },
+        {
+          "operation": "list_tail_search",
+          "status": "passed",
+          "budget_ms": 5000,
+          "budget_scope": "existing regression ceiling",
+          "duration_ms": 793.3,
+          "observation_after": {
+            "js_heap_used_bytes": 158982104,
+            "js_heap_total_bytes": 236400640,
+            "browser_dom_counters": {
+              "documents": 12,
+              "nodes": 81582,
+              "jsEventListeners": 558
+            },
+            "connected_dom": {
+              "elements": 780,
+              "task_cards": 1,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          },
+          "budget_passed": true
+        },
+        {
+          "operation": "timeline",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 2274.5,
+          "observation_after": {
+            "js_heap_used_bytes": 175101860,
+            "js_heap_total_bytes": 241381376,
+            "browser_dom_counters": {
+              "documents": 12,
+              "nodes": 118666,
+              "jsEventListeners": 558
+            },
+            "connected_dom": {
+              "elements": 7916,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "calendar",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 2480.5,
+          "observation_after": {
+            "js_heap_used_bytes": 165248488,
+            "js_heap_total_bytes": 241905664,
+            "browser_dom_counters": {
+              "documents": 12,
+              "nodes": 137471,
+              "jsEventListeners": 558
+            },
+            "connected_dom": {
+              "elements": 7915,
+              "task_cards": 100,
+              "calendar_preview_buttons": 81,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "batch_enter_bounded_workspace",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 1469.9,
+          "observation_after": {
+            "js_heap_used_bytes": 90615232,
+            "js_heap_total_bytes": 163000320,
+            "browser_dom_counters": {
+              "documents": 9,
+              "nodes": 78416,
+              "jsEventListeners": 364
+            },
+            "connected_dom": {
+              "elements": 8128,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "batch_select_all_matching",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 1778.6,
+          "observation_after": {
+            "js_heap_used_bytes": 88736372,
+            "js_heap_total_bytes": 185057280,
+            "browser_dom_counters": {
+              "documents": 9,
+              "nodes": 97173,
+              "jsEventListeners": 364
+            },
+            "connected_dom": {
+              "elements": 8128,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 100
+            }
+          }
+        },
+        {
+          "operation": "batch_load_more_selected",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 2010.6,
+          "observation_after": {
+            "js_heap_used_bytes": 74188424,
+            "js_heap_total_bytes": 185319424,
+            "browser_dom_counters": {
+              "documents": 9,
+              "nodes": 134629,
+              "jsEventListeners": 364
+            },
+            "connected_dom": {
+              "elements": 15528,
+              "task_cards": 200,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 200
+            }
+          }
+        },
+        {
+          "operation": "batch_focus_full_workspace",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 6464.5,
+          "observation_after": {
+            "js_heap_used_bytes": 63527356,
+            "js_heap_total_bytes": 146870272,
+            "browser_dom_counters": {
+              "documents": 9,
+              "nodes": 88991,
+              "jsEventListeners": 169
+            },
+            "connected_dom": {
+              "elements": 15528,
+              "task_cards": 200,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "batch_undo",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 7053.2,
+          "observation_after": {
+            "js_heap_used_bytes": 188785592,
+            "js_heap_total_bytes": 260792320,
+            "browser_dom_counters": {
+              "documents": 6,
+              "nodes": 113755,
+              "jsEventListeners": 10182
+            },
+            "connected_dom": {
+              "elements": 15528,
+              "task_cards": 200,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "json_export_download",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 2666.7,
+          "observation_after": {
+            "js_heap_used_bytes": 147120568,
+            "js_heap_total_bytes": 215986176,
+            "browser_dom_counters": {
+              "documents": 6,
+              "nodes": 38789,
+              "jsEventListeners": 176
+            },
+            "connected_dom": {
+              "elements": 7928,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "json_replace_import",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 11803.7,
+          "observation_after": {
+            "js_heap_used_bytes": 218857812,
+            "js_heap_total_bytes": 256688128,
+            "browser_dom_counters": {
+              "documents": 8,
+              "nodes": 77186,
+              "jsEventListeners": 189
+            },
+            "connected_dom": {
+              "elements": 8021,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "checkpoint_delete",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 3344.6,
+          "observation_after": {
+            "js_heap_used_bytes": 102800888,
+            "js_heap_total_bytes": 183111680,
+            "browser_dom_counters": {
+              "documents": 6,
+              "nodes": 20467,
+              "jsEventListeners": 181
+            },
+            "connected_dom": {
+              "elements": 714,
+              "task_cards": 0,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "checkpoint_restore",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 5878.3,
+          "observation_after": {
+            "js_heap_used_bytes": 119967428,
+            "js_heap_total_bytes": 192987136,
+            "browser_dom_counters": {
+              "documents": 6,
+              "nodes": 2488,
+              "jsEventListeners": 181
+            },
+            "connected_dom": {
+              "elements": 908,
+              "task_cards": 1,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        }
+      ],
+      "fixture": {
+        "count": 10000,
+        "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442",
+        "normalized_focus_signature": null,
+        "edited_signature": null,
+        "revision": 2,
+        "history": [],
+        "subtasks": 60000,
+        "focused": 0,
+        "valid_repeat_references": true
+      },
+      "export_file_bytes": 17097063,
+      "page_errors": []
+    },
+    {
+      "run": 2,
+      "status": "passed",
+      "measurements": [
+        {
+          "operation": "single_edit_save",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 3448.1,
+          "observation_after": {
+            "js_heap_used_bytes": 117173976,
+            "js_heap_total_bytes": 212070400,
+            "browser_dom_counters": {
+              "documents": 6,
+              "nodes": 21030,
+              "jsEventListeners": 175
+            },
+            "connected_dom": {
+              "elements": 810,
+              "task_cards": 1,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "reload_list",
+          "status": "passed",
+          "budget_ms": 15000,
+          "budget_scope": "existing regression ceiling",
+          "duration_ms": 2458.1,
+          "observation_after": {
+            "js_heap_used_bytes": 54913208,
+            "js_heap_total_bytes": 113987584,
+            "browser_dom_counters": {
+              "documents": 9,
+              "nodes": 41315,
+              "jsEventListeners": 358
+            },
+            "connected_dom": {
+              "elements": 7928,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          },
+          "budget_passed": true
+        },
+        {
+          "operation": "list_tail_search",
+          "status": "passed",
+          "budget_ms": 5000,
+          "budget_scope": "existing regression ceiling",
+          "duration_ms": 955.8,
+          "observation_after": {
+            "js_heap_used_bytes": 57837756,
+            "js_heap_total_bytes": 115957760,
+            "browser_dom_counters": {
+              "documents": 9,
+              "nodes": 60085,
+              "jsEventListeners": 361
+            },
+            "connected_dom": {
+              "elements": 780,
+              "task_cards": 1,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          },
+          "budget_passed": true
+        },
+        {
+          "operation": "timeline",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 2499.8,
+          "observation_after": {
+            "js_heap_used_bytes": 42541020,
+            "js_heap_total_bytes": 105431040,
+            "browser_dom_counters": {
+              "documents": 9,
+              "nodes": 52049,
+              "jsEventListeners": 203
+            },
+            "connected_dom": {
+              "elements": 7916,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "calendar",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 3149.1,
+          "observation_after": {
+            "js_heap_used_bytes": 32515776,
+            "js_heap_total_bytes": 105693184,
+            "browser_dom_counters": {
+              "documents": 6,
+              "nodes": 57565,
+              "jsEventListeners": 160
+            },
+            "connected_dom": {
+              "elements": 7915,
+              "task_cards": 100,
+              "calendar_preview_buttons": 81,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "batch_enter_bounded_workspace",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 1769.9,
+          "observation_after": {
+            "js_heap_used_bytes": 58410244,
+            "js_heap_total_bytes": 127901696,
+            "browser_dom_counters": {
+              "documents": 8,
+              "nodes": 77611,
+              "jsEventListeners": 179
+            },
+            "connected_dom": {
+              "elements": 8128,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "batch_select_all_matching",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 2023.2,
+          "observation_after": {
+            "js_heap_used_bytes": 58777736,
+            "js_heap_total_bytes": 149696512,
+            "browser_dom_counters": {
+              "documents": 8,
+              "nodes": 96368,
+              "jsEventListeners": 179
+            },
+            "connected_dom": {
+              "elements": 8128,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 100
+            }
+          }
+        },
+        {
+          "operation": "batch_load_more_selected",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 2073.8,
+          "observation_after": {
+            "js_heap_used_bytes": 76007884,
+            "js_heap_total_bytes": 149696512,
+            "browser_dom_counters": {
+              "documents": 8,
+              "nodes": 133824,
+              "jsEventListeners": 179
+            },
+            "connected_dom": {
+              "elements": 15528,
+              "task_cards": 200,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 200
+            }
+          }
+        },
+        {
+          "operation": "batch_focus_full_workspace",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 11279.0,
+          "observation_after": {
+            "js_heap_used_bytes": 111508528,
+            "js_heap_total_bytes": 150802432,
+            "browser_dom_counters": {
+              "documents": 8,
+              "nodes": 171289,
+              "jsEventListeners": 180
+            },
+            "connected_dom": {
+              "elements": 15528,
+              "task_cards": 200,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "batch_undo",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 13564.6,
+          "observation_after": {
+            "js_heap_used_bytes": 213394088,
+            "js_heap_total_bytes": 286539776,
+            "browser_dom_counters": {
+              "documents": 8,
+              "nodes": 206665,
+              "jsEventListeners": 10193
+            },
+            "connected_dom": {
+              "elements": 15528,
+              "task_cards": 200,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "json_export_download",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 2592.3,
+          "observation_after": {
+            "js_heap_used_bytes": 265491832,
+            "js_heap_total_bytes": 335249408,
+            "browser_dom_counters": {
+              "documents": 11,
+              "nodes": 99359,
+              "jsEventListeners": 394
+            },
+            "connected_dom": {
+              "elements": 7928,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "json_replace_import",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 12785.6,
+          "observation_after": {
+            "js_heap_used_bytes": 116903972,
+            "js_heap_total_bytes": 175669248,
+            "browser_dom_counters": {
+              "documents": 10,
+              "nodes": 61107,
+              "jsEventListeners": 178
+            },
+            "connected_dom": {
+              "elements": 8021,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "checkpoint_delete",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 3405.3,
+          "observation_after": {
+            "js_heap_used_bytes": 144060904,
+            "js_heap_total_bytes": 197881856,
+            "browser_dom_counters": {
+              "documents": 8,
+              "nodes": 40745,
+              "jsEventListeners": 189
+            },
+            "connected_dom": {
+              "elements": 714,
+              "task_cards": 0,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "checkpoint_restore",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 5124.1,
+          "observation_after": {
+            "js_heap_used_bytes": 269318156,
+            "js_heap_total_bytes": 323420160,
+            "browser_dom_counters": {
+              "documents": 8,
+              "nodes": 41440,
+              "jsEventListeners": 224
+            },
+            "connected_dom": {
+              "elements": 908,
+              "task_cards": 1,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        }
+      ],
+      "fixture": {
+        "count": 10000,
+        "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442",
+        "normalized_focus_signature": null,
+        "edited_signature": null,
+        "revision": 2,
+        "history": [],
+        "subtasks": 60000,
+        "focused": 0,
+        "valid_repeat_references": true
+      },
+      "export_file_bytes": 17097063,
+      "page_errors": []
+    },
+    {
+      "run": 3,
+      "status": "passed",
+      "measurements": [
+        {
+          "operation": "single_edit_save",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 3722.2,
+          "observation_after": {
+            "js_heap_used_bytes": 128233556,
+            "js_heap_total_bytes": 177430528,
+            "browser_dom_counters": {
+              "documents": 7,
+              "nodes": 2353,
+              "jsEventListeners": 192
+            },
+            "connected_dom": {
+              "elements": 810,
+              "task_cards": 1,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "reload_list",
+          "status": "passed",
+          "budget_ms": 15000,
+          "budget_scope": "existing regression ceiling",
+          "duration_ms": 2492.4,
+          "observation_after": {
+            "js_heap_used_bytes": 205342548,
+            "js_heap_total_bytes": 284467200,
+            "browser_dom_counters": {
+              "documents": 13,
+              "nodes": 62914,
+              "jsEventListeners": 589
+            },
+            "connected_dom": {
+              "elements": 7928,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          },
+          "budget_passed": true
+        },
+        {
+          "operation": "list_tail_search",
+          "status": "passed",
+          "budget_ms": 5000,
+          "budget_scope": "existing regression ceiling",
+          "duration_ms": 843.4,
+          "observation_after": {
+            "js_heap_used_bytes": 64397332,
+            "js_heap_total_bytes": 171794432,
+            "browser_dom_counters": {
+              "documents": 9,
+              "nodes": 41214,
+              "jsEventListeners": 171
+            },
+            "connected_dom": {
+              "elements": 780,
+              "task_cards": 1,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          },
+          "budget_passed": true
+        },
+        {
+          "operation": "timeline",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 2448.4,
+          "observation_after": {
+            "js_heap_used_bytes": 76355716,
+            "js_heap_total_bytes": 171794432,
+            "browser_dom_counters": {
+              "documents": 9,
+              "nodes": 78298,
+              "jsEventListeners": 171
+            },
+            "connected_dom": {
+              "elements": 7916,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "calendar",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 2408.3,
+          "observation_after": {
+            "js_heap_used_bytes": 66236280,
+            "js_heap_total_bytes": 171794432,
+            "browser_dom_counters": {
+              "documents": 9,
+              "nodes": 97103,
+              "jsEventListeners": 171
+            },
+            "connected_dom": {
+              "elements": 7915,
+              "task_cards": 100,
+              "calendar_preview_buttons": 81,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "batch_enter_bounded_workspace",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 1562.0,
+          "observation_after": {
+            "js_heap_used_bytes": 60211744,
+            "js_heap_total_bytes": 116891648,
+            "browser_dom_counters": {
+              "documents": 7,
+              "nodes": 38979,
+              "jsEventListeners": 168
+            },
+            "connected_dom": {
+              "elements": 8128,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "batch_select_all_matching",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 1757.3,
+          "observation_after": {
+            "js_heap_used_bytes": 59166568,
+            "js_heap_total_bytes": 138526720,
+            "browser_dom_counters": {
+              "documents": 7,
+              "nodes": 57736,
+              "jsEventListeners": 168
+            },
+            "connected_dom": {
+              "elements": 8128,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 100
+            }
+          }
+        },
+        {
+          "operation": "batch_load_more_selected",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 2104.6,
+          "observation_after": {
+            "js_heap_used_bytes": 76791800,
+            "js_heap_total_bytes": 138526720,
+            "browser_dom_counters": {
+              "documents": 7,
+              "nodes": 95192,
+              "jsEventListeners": 168
+            },
+            "connected_dom": {
+              "elements": 15528,
+              "task_cards": 200,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 200
+            }
+          }
+        },
+        {
+          "operation": "batch_focus_full_workspace",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 6150.6,
+          "observation_after": {
+            "js_heap_used_bytes": 64563952,
+            "js_heap_total_bytes": 127471616,
+            "browser_dom_counters": {
+              "documents": 7,
+              "nodes": 76303,
+              "jsEventListeners": 170
+            },
+            "connected_dom": {
+              "elements": 15528,
+              "task_cards": 200,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "batch_undo",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 9088.6,
+          "observation_after": {
+            "js_heap_used_bytes": 75885996,
+            "js_heap_total_bytes": 145334272,
+            "browser_dom_counters": {
+              "documents": 7,
+              "nodes": 85618,
+              "jsEventListeners": 167
+            },
+            "connected_dom": {
+              "elements": 15528,
+              "task_cards": 200,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "json_export_download",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 2849.7,
+          "observation_after": {
+            "js_heap_used_bytes": 159153424,
+            "js_heap_total_bytes": 229879808,
+            "browser_dom_counters": {
+              "documents": 9,
+              "nodes": 113788,
+              "jsEventListeners": 188
+            },
+            "connected_dom": {
+              "elements": 7928,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "json_replace_import",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 11165.6,
+          "observation_after": {
+            "js_heap_used_bytes": 216639248,
+            "js_heap_total_bytes": 279470080,
+            "browser_dom_counters": {
+              "documents": 7,
+              "nodes": 39159,
+              "jsEventListeners": 186
+            },
+            "connected_dom": {
+              "elements": 8021,
+              "task_cards": 100,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "checkpoint_delete",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 3358.4,
+          "observation_after": {
+            "js_heap_used_bytes": 89900012,
+            "js_heap_total_bytes": 134885376,
+            "browser_dom_counters": {
+              "documents": 7,
+              "nodes": 2216,
+              "jsEventListeners": 168
+            },
+            "connected_dom": {
+              "elements": 714,
+              "task_cards": 0,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        },
+        {
+          "operation": "checkpoint_restore",
+          "status": "passed",
+          "budget_ms": null,
+          "budget_scope": "baseline_only",
+          "duration_ms": 5669.5,
+          "observation_after": {
+            "js_heap_used_bytes": 155929956,
+            "js_heap_total_bytes": 226009088,
+            "browser_dom_counters": {
+              "documents": 7,
+              "nodes": 2676,
+              "jsEventListeners": 181
+            },
+            "connected_dom": {
+              "elements": 908,
+              "task_cards": 1,
+              "calendar_preview_buttons": 0,
+              "calendar_detail_items": 0,
+              "selected_checkboxes": 0
+            }
+          }
+        }
+      ],
+      "fixture": {
+        "count": 10000,
+        "signature": "c4cc526b7da0d8bf28c35f6ab763523bf15e7bfa99ce8ba25fb0a8f64c4e3442",
+        "normalized_focus_signature": null,
+        "edited_signature": null,
+        "revision": 2,
+        "history": [],
+        "subtasks": 60000,
+        "focused": 0,
+        "valid_repeat_references": true
+      },
+      "export_file_bytes": 17097063,
+      "page_errors": []
+    }
+  ],
+  "source": {
+    "files": {
+      "LICENSE": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+      "docs/distribution.md": "2a7114b3d5e378732f0a152f278e765ca5e4d8fa1dfe93e3fc6884a06746b271",
+      "docs/distribution_zh_cn.md": "be23ab8e12e0980a6c6c1faa3f60ed5e28f470eab4b3d31b92c0461baed2377f",
+      "fav/android-chrome-192x192.png": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+      "fav/android-chrome-512x512.png": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+      "fav/apple-touch-icon.png": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+      "fav/favicon-16x16.png": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+      "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+      "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+      "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+      "index.html": "08fc4b2d510c8660070893a25be08e454d52ef3fa9639b572ec0f15bbae5be1a",
+      "manifest.json": "59c91d7732bc64844b1ddb298e4f5f075904b1f97a6a0fb995c48b20645420e0",
+      "resources/en.json": "04188c9b4d22b40050b16b6106eeb6807ec8087f31d295276ef5a951f7199c4c",
+      "resources/zh-CN.json": "225414296a8b5b60b9a47fa05392490ca16450fc1289fee0052443855d5b4cdf",
+      "robots.txt": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+      "screenshots/add-task-en.png": "d5f7f18cc18cdde58f499434fadacca0b0940da45e7b9467dcf4dafbf05693dd",
+      "screenshots/add-task.png": "0d1543f1dfc2e771333ee91c3aea6639291443a3b14ea1c9a1355687725f9f7d",
+      "screenshots/task-list-en.png": "60ff163e92dcbd4ab0e2c804fcd7ba95e7502e6f0b2d54d807ad8bc26ac3b69c",
+      "screenshots/task-list.png": "27c171e7f5fff14fd55429099d9224754c2d92a01c715fbe4a431fbdb2996e06",
+      "sitemap.xml": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+      "sw.js": "0d34f32328e832d8affe2494387015c8109f5c798d37ca0ecb3bc7a258d0633c",
+      "vercel.json": "45ba01773877628805781eee6f8e165a3d0a8c31683ff889905c4f7d27141ab6"
+    },
+    "sha256": "e9aed46a55dfce35f6dd662b73dcb862dfa4677454329578bad75e0669641734"
+  },
+  "measurement_tools": {
+    "files": {
+      "tools/build_release.py": "972c99cee58118e450e3eeb945f0dd98784db4c96be15834c080cc603d496db9",
+      "tools/check.py": "b5a49b235918fbf47b287cef3f1cd8a53e5f8a1635d2c8553a2e4d2cc5653123",
+      "tools/recovery_playwright.py": "482fe50826cbba6de3d5578b902395f2fa88148084b9348fcf2b6caa2a0dbc8f",
+      "tools/smoke_playwright.py": "0cb46349bf0ee05b3336605924d7c9632cd56c350116910df71d9096480083ad",
+      "tools/validate_static.py": "e1abf71dd37ee27eacadc514518b896083b303da27a8576376154728f89f7c79",
+      "tools/workspace_performance_playwright.py": "375ca2022c5e2a789e3d30c8541c13dd50f2bf52e5d94c7fa522d3f0eb0ff505"
+    },
+    "sha256": "c7492c1095db0d58dbcaaaee26dc97fc97502aeecf701f4e85da7add69ddf330"
+  },
+  "integrity_errors": [],
+  "conditions": {
+    "tasks": 10000,
+    "subtasks_per_task": 6,
+    "viewport": {
+      "width": 390,
+      "height": 900
+    },
+    "cpu_throttle_rate": 4.0,
+    "runs_requested": 3,
+    "history_points": 0,
+    "newest_history_created_at": null,
+    "history_edit_policy": "Populated history has a current newest point; ordinary edit should not create another checkpoint inside its interval.",
+    "coverage": "views, full-workspace batch, download/import and checkpoint recovery",
+    "timezone": "UTC",
+    "locale": "en-US",
+    "fixed_clock": "2039-01-01T12:00:00+00:00",
+    "fixture_seed_cpu_throttle_rate": 1,
+    "reload_readiness_scope": "Default active filter excludes the two completed recurrence ancestors; remaining phases explicitly select all tasks.",
+    "calendar_scope": "Clock fixed to January 2039; transition includes visible month, exact dated preview count and bounded undated-card readiness, without month-navigation setup.",
+    "measurement_type": "controlled synthetic cloud run",
+    "host_platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+    "budgets": {
+      "reference": "tools/performance_playwright.py; docs/performance.md",
+      "ceilings_ms": {
+        "reload_list": 15000,
+        "list_tail_search": 5000
+      },
+      "scope": "Existing generous list load/search ceilings applied unchanged to this heavier controlled workload. Other operations are baseline-only."
+    },
+    "limitations": [
+      "CPU throttling and narrow viewports do not reproduce real mobile hardware.",
+      "Elapsed operation times include browser-driver/UI work; fixture setup and full-field signature verification are outside timings.",
+      "Heap and DOM samples are observations after operations, not peak memory, process RSS or a memory budget.",
+      "Fixture injection and integrity checks allocate JavaScript data outside measured intervals; their transient allocations may affect heap observations and collection.",
+      "Each repetition uses a fresh browser context; repeated operations within it are warm-cache observations.",
+      "Batch mode renders bounded pages; Select all matching acts on the complete match set including unloaded tasks."
+    ]
+  },
+  "browser_engine": "chromium",
+  "browser_version": "154.0.8037.57",
+  "source_final": {
+    "files": {
+      "LICENSE": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+      "docs/distribution.md": "2a7114b3d5e378732f0a152f278e765ca5e4d8fa1dfe93e3fc6884a06746b271",
+      "docs/distribution_zh_cn.md": "be23ab8e12e0980a6c6c1faa3f60ed5e28f470eab4b3d31b92c0461baed2377f",
+      "fav/android-chrome-192x192.png": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+      "fav/android-chrome-512x512.png": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+      "fav/apple-touch-icon.png": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+      "fav/favicon-16x16.png": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+      "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+      "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+      "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+      "index.html": "08fc4b2d510c8660070893a25be08e454d52ef3fa9639b572ec0f15bbae5be1a",
+      "manifest.json": "59c91d7732bc64844b1ddb298e4f5f075904b1f97a6a0fb995c48b20645420e0",
+      "resources/en.json": "04188c9b4d22b40050b16b6106eeb6807ec8087f31d295276ef5a951f7199c4c",
+      "resources/zh-CN.json": "225414296a8b5b60b9a47fa05392490ca16450fc1289fee0052443855d5b4cdf",
+      "robots.txt": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+      "screenshots/add-task-en.png": "d5f7f18cc18cdde58f499434fadacca0b0940da45e7b9467dcf4dafbf05693dd",
+      "screenshots/add-task.png": "0d1543f1dfc2e771333ee91c3aea6639291443a3b14ea1c9a1355687725f9f7d",
+      "screenshots/task-list-en.png": "60ff163e92dcbd4ab0e2c804fcd7ba95e7502e6f0b2d54d807ad8bc26ac3b69c",
+      "screenshots/task-list.png": "27c171e7f5fff14fd55429099d9224754c2d92a01c715fbe4a431fbdb2996e06",
+      "sitemap.xml": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+      "sw.js": "0d34f32328e832d8affe2494387015c8109f5c798d37ca0ecb3bc7a258d0633c",
+      "vercel.json": "45ba01773877628805781eee6f8e165a3d0a8c31683ff889905c4f7d27141ab6"
+    },
+    "sha256": "e9aed46a55dfce35f6dd662b73dcb862dfa4677454329578bad75e0669641734"
+  },
+  "source_unchanged": true,
+  "measurement_tools_final": {
+    "files": {
+      "tools/build_release.py": "972c99cee58118e450e3eeb945f0dd98784db4c96be15834c080cc603d496db9",
+      "tools/check.py": "b5a49b235918fbf47b287cef3f1cd8a53e5f8a1635d2c8553a2e4d2cc5653123",
+      "tools/recovery_playwright.py": "482fe50826cbba6de3d5578b902395f2fa88148084b9348fcf2b6caa2a0dbc8f",
+      "tools/smoke_playwright.py": "0cb46349bf0ee05b3336605924d7c9632cd56c350116910df71d9096480083ad",
+      "tools/validate_static.py": "e1abf71dd37ee27eacadc514518b896083b303da27a8576376154728f89f7c79",
+      "tools/workspace_performance_playwright.py": "375ca2022c5e2a789e3d30c8541c13dd50f2bf52e5d94c7fa522d3f0eb0ff505"
+    },
+    "sha256": "c7492c1095db0d58dbcaaaee26dc97fc97502aeecf701f4e85da7add69ddf330"
+  },
+  "measurement_tools_unchanged": true,
+  "aggregate": {
+    "single_edit_save": {
+      "samples_ms": [
+        3390.3,
+        3448.1,
+        3722.2
+      ],
+      "min_ms": 3390.3,
+      "median_ms": 3448.1,
+      "max_ms": 3722.2,
+      "budget_ms": null,
+      "interpretation": "baseline_only"
+    },
+    "reload_list": {
+      "samples_ms": [
+        2599.8,
+        2458.1,
+        2492.4
+      ],
+      "min_ms": 2458.1,
+      "median_ms": 2492.4,
+      "max_ms": 2599.8,
+      "budget_ms": 15000,
+      "interpretation": "existing regression ceiling passed"
+    },
+    "list_tail_search": {
+      "samples_ms": [
+        793.3,
+        955.8,
+        843.4
+      ],
+      "min_ms": 793.3,
+      "median_ms": 843.4,
+      "max_ms": 955.8,
+      "budget_ms": 5000,
+      "interpretation": "existing regression ceiling passed"
+    },
+    "timeline": {
+      "samples_ms": [
+        2274.5,
+        2499.8,
+        2448.4
+      ],
+      "min_ms": 2274.5,
+      "median_ms": 2448.4,
+      "max_ms": 2499.8,
+      "budget_ms": null,
+      "interpretation": "baseline_only"
+    },
+    "calendar": {
+      "samples_ms": [
+        2480.5,
+        3149.1,
+        2408.3
+      ],
+      "min_ms": 2408.3,
+      "median_ms": 2480.5,
+      "max_ms": 3149.1,
+      "budget_ms": null,
+      "interpretation": "baseline_only"
+    },
+    "batch_enter_bounded_workspace": {
+      "samples_ms": [
+        1469.9,
+        1769.9,
+        1562.0
+      ],
+      "min_ms": 1469.9,
+      "median_ms": 1562.0,
+      "max_ms": 1769.9,
+      "budget_ms": null,
+      "interpretation": "baseline_only"
+    },
+    "batch_select_all_matching": {
+      "samples_ms": [
+        1778.6,
+        2023.2,
+        1757.3
+      ],
+      "min_ms": 1757.3,
+      "median_ms": 1778.6,
+      "max_ms": 2023.2,
+      "budget_ms": null,
+      "interpretation": "baseline_only"
+    },
+    "batch_load_more_selected": {
+      "samples_ms": [
+        2010.6,
+        2073.8,
+        2104.6
+      ],
+      "min_ms": 2010.6,
+      "median_ms": 2073.8,
+      "max_ms": 2104.6,
+      "budget_ms": null,
+      "interpretation": "baseline_only"
+    },
+    "batch_focus_full_workspace": {
+      "samples_ms": [
+        6464.5,
+        11279.0,
+        6150.6
+      ],
+      "min_ms": 6150.6,
+      "median_ms": 6464.5,
+      "max_ms": 11279.0,
+      "budget_ms": null,
+      "interpretation": "baseline_only"
+    },
+    "batch_undo": {
+      "samples_ms": [
+        7053.2,
+        13564.6,
+        9088.6
+      ],
+      "min_ms": 7053.2,
+      "median_ms": 9088.6,
+      "max_ms": 13564.6,
+      "budget_ms": null,
+      "interpretation": "baseline_only"
+    },
+    "json_export_download": {
+      "samples_ms": [
+        2666.7,
+        2592.3,
+        2849.7
+      ],
+      "min_ms": 2592.3,
+      "median_ms": 2666.7,
+      "max_ms": 2849.7,
+      "budget_ms": null,
+      "interpretation": "baseline_only"
+    },
+    "json_replace_import": {
+      "samples_ms": [
+        11803.7,
+        12785.6,
+        11165.6
+      ],
+      "min_ms": 11165.6,
+      "median_ms": 11803.7,
+      "max_ms": 12785.6,
+      "budget_ms": null,
+      "interpretation": "baseline_only"
+    },
+    "checkpoint_delete": {
+      "samples_ms": [
+        3344.6,
+        3405.3,
+        3358.4
+      ],
+      "min_ms": 3344.6,
+      "median_ms": 3358.4,
+      "max_ms": 3405.3,
+      "budget_ms": null,
+      "interpretation": "baseline_only"
+    },
+    "checkpoint_restore": {
+      "samples_ms": [
+        5878.3,
+        5124.1,
+        5669.5
+      ],
+      "min_ms": 5124.1,
+      "median_ms": 5669.5,
+      "max_ms": 5878.3,
+      "budget_ms": null,
+      "interpretation": "baseline_only"
+    }
+  },
+  "finished_at": "2026-10-23T17:59:19.291+00:00"
+}

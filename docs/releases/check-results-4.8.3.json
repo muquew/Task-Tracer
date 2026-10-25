@@ -1,0 +1,251 @@
+{
+  "completed": true,
+  "passed": true,
+  "checks": [
+    {
+      "program": "validate_static.py",
+      "exit_code": 0,
+      "duration_seconds": 0.189
+    },
+    {
+      "program": "date_semantics_test.py",
+      "exit_code": 0,
+      "duration_seconds": 0.039
+    },
+    {
+      "program": "security_policy.py",
+      "exit_code": 0,
+      "duration_seconds": 0.046
+    },
+    {
+      "program": "release_payload_test.py",
+      "exit_code": 0,
+      "duration_seconds": 1.071
+    },
+    {
+      "program": "release_versions_test.py",
+      "exit_code": 0,
+      "duration_seconds": 6.355
+    },
+    {
+      "program": "verify_deployment_test.py",
+      "exit_code": 0,
+      "duration_seconds": 0.655
+    },
+    {
+      "program": "smoke_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 70.793
+    },
+    {
+      "program": "recovery_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 18.743
+    },
+    {
+      "program": "recovery_management_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 15.31
+    },
+    {
+      "program": "undo_concurrency_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 35.802
+    },
+    {
+      "program": "batch_selection_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 26.826
+    },
+    {
+      "program": "csv_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 6.256
+    },
+    {
+      "program": "backup_freshness_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 26.646
+    },
+    {
+      "program": "backup_reminder_priority_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 4.229
+    },
+    {
+      "program": "reminder_concurrency_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 33.399
+    },
+    {
+      "program": "import_reference_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 7.446
+    },
+    {
+      "program": "saved_views_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 62.972
+    },
+    {
+      "program": "views_delete_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 12.472
+    },
+    {
+      "program": "project_scope_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 10.953
+    },
+    {
+      "program": "onboarding_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 5.876
+    },
+    {
+      "program": "help_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 4.712
+    },
+    {
+      "program": "ime_input_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 12.538
+    },
+    {
+      "program": "task_draft_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 40.054
+    },
+    {
+      "program": "quick_add_recovery_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 29.934
+    },
+    {
+      "program": "dialog_lifecycle_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 6.326
+    },
+    {
+      "program": "views_portability_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 126.798
+    },
+    {
+      "program": "import_preview_concurrency_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 20.486
+    },
+    {
+      "program": "queued_write_concurrency_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 2.405
+    },
+    {
+      "program": "import_read_lifecycle_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 2.932
+    },
+    {
+      "program": "import_conflicts_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 3.83
+    },
+    {
+      "program": "storage_lifecycle_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 3.314
+    },
+    {
+      "program": "storage_health_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 6.54
+    },
+    {
+      "program": "upgrade_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 17.338
+    },
+    {
+      "program": "service_worker_update_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 12.65
+    },
+    {
+      "program": "security_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 2.396
+    },
+    {
+      "program": "timezone_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 3.868
+    },
+    {
+      "program": "dst_wall_time_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 12.11
+    },
+    {
+      "program": "foreign_wall_time_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 16.198
+    },
+    {
+      "program": "recurrence_timezone_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 18.835
+    },
+    {
+      "program": "time_refresh_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 18.418
+    },
+    {
+      "program": "stats_scope_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 5.902
+    },
+    {
+      "program": "performance_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 13.43
+    },
+    {
+      "program": "calendar_performance_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 12.311
+    },
+    {
+      "program": "calendar_navigation_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 10.732
+    },
+    {
+      "program": "calendar_timezone_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 10.327
+    },
+    {
+      "program": "workspace_roundtrip_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 7.387
+    },
+    {
+      "program": "compatibility_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 11.581
+    },
+    {
+      "program": "accessibility_i18n_audit.py",
+      "exit_code": 0,
+      "duration_seconds": 142.719
+    },
+    {
+      "program": "release_playwright.py",
+      "exit_code": 0,
+      "duration_seconds": 3.571
+    }
+  ]
+}

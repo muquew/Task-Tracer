@@ -1,0 +1,5 @@
+Timezone chromium: 154.0.8037.57
+Timezone passed: DST gaps/folds, half-hour/quarter-hour offsets, date crossing, invalid/undated zones and JSON round-trip
+Timezone passed: unrelated edits preserve repeated-hour instants and overdue deadlines
+Timezone passed: the full task form accepts a real historical deadline
+Timezone passed: a previously invalid zone falls back to the current device zone after a live change

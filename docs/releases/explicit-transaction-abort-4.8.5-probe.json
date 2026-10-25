@@ -1,0 +1,23 @@
+{
+  "browser_version": "154.0.8037.57",
+  "scope": "Actual explicit IDBTransaction.abort with one pending put; no synthetic exception",
+  "events": [
+    {
+      "stage": "request.error",
+      "requestError": "AbortError",
+      "txError": null
+    },
+    {
+      "stage": "transaction.error",
+      "txError": null,
+      "targetError": "AbortError",
+      "captured": "AbortError"
+    },
+    {
+      "stage": "transaction.abort",
+      "txError": null,
+      "captured": "AbortError"
+    }
+  ],
+  "persisted": []
+}

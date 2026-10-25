@@ -1,0 +1,69 @@
+{
+  "status": "passed",
+  "passed": true,
+  "started_at": "2026-10-23T19:10:54.302214+00:00",
+  "current": null,
+  "steps": [
+    {
+      "name": "workspace-10000",
+      "arguments": [
+        "tools/workspace_roundtrip_playwright.py",
+        "--size",
+        "10000",
+        "--subtasks",
+        "6",
+        "--full-views",
+        "--output",
+        "/tmp/task-tracer-4.8.5-workspace-10000-integrated.json"
+      ],
+      "log": "/tmp/task-tracer-4.8.5-workspace-10000-integrated.log",
+      "started_at": "2026-10-23T19:10:54.356745+00:00",
+      "finished_at": "2026-10-23T19:13:21.265485+00:00",
+      "exit_code": 0
+    },
+    {
+      "name": "storage-10000",
+      "arguments": [
+        "tools/workspace_failure_playwright.py",
+        "--size",
+        "10000",
+        "--subtasks",
+        "6",
+        "--output",
+        "/tmp/task-tracer-4.8.5-storage-10000-integrated.json"
+      ],
+      "log": "/tmp/task-tracer-4.8.5-storage-10000-integrated.log",
+      "started_at": "2026-10-23T19:13:21.273360+00:00",
+      "finished_at": "2026-10-23T19:26:18.901983+00:00",
+      "exit_code": 0
+    },
+    {
+      "name": "actual-4.8.4-upgrade",
+      "arguments": [
+        "tools/upgrade_playwright.py",
+        "--baseline-archive",
+        "dist/task-tracer-4.8.4.zip"
+      ],
+      "log": "/tmp/task-tracer-upgrade-4.8.4-to-4.8.5.log",
+      "started_at": "2026-10-23T19:26:18.913942+00:00",
+      "finished_at": "2026-10-23T19:26:45.650899+00:00",
+      "exit_code": 0
+    },
+    {
+      "name": "complete-58",
+      "arguments": [
+        "tools/check.py",
+        "--keep-going",
+        "--report",
+        "dist/check-results-4.8.5.json"
+      ],
+      "log": "/tmp/task-tracer-4.8.5-check-integrated.log",
+      "started_at": "2026-10-23T19:26:45.666619+00:00",
+      "finished_at": "2026-10-23T19:48:28.241544+00:00",
+      "exit_code": 0
+    }
+  ],
+  "freeze": "/tmp/task-tracer-4.8.5-freeze-4.json",
+  "error": null,
+  "finished_at": "2026-10-23T19:48:28.241830+00:00"
+}

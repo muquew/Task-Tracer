@@ -1,0 +1,15 @@
+Real asynchronous request failure observations: {"trace": [{"stage": "request.error", "requestError": "ConstraintError", "transactionError": null}, {"stage": "transaction.error", "transactionError": null, "targetError": "ConstraintError"}, {"stage": "transaction.error", "transactionError": "ConstraintError", "targetError": "AbortError"}, {"stage": "transaction.abort", "transactionError": "ConstraintError"}], "caught": {"errorName": null, "abortObserved": false}, "abortObserved": true, "queued": true}
+Workspace failure FAILED: asynchronous-request-error; AssertionError: Application discarded the native asynchronous request error: {"trace": [{"stage": "request.error", "requestError": "ConstraintError", "transactionError": null}, {"stage": "transaction.error", "transactionError": null, "targetError": "ConstraintError"}, {"stage": "transaction.error", "transactionError": "ConstraintError", "targetError": "AbortError"}, {"stage": "transaction.abort", "transactionError": "ConstraintError"}], "caught": {"errorName": null, "abortObserved": false}, "abortObserved": true, "queued": true}
+{"status": "failed", "browser_engine": "chromium", "tasks": 200, "subtasks_per_task": 6, "source_unchanged": true}
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer/tools/workspace_failure_playwright.py", line 518, in <module>
+    run(args.browser, args.size, args.subtasks, list(CASES) if args.case == 'all' else [args.case], args.output)
+  File "/workspace/Task-Tracer/tools/workspace_failure_playwright.py", line 504, in run
+    raise failure
+  File "/workspace/Task-Tracer/tools/workspace_failure_playwright.py", line 453, in run
+    result['assertions'] = CASES[name](page, before, url)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Task-Tracer/tools/workspace_failure_playwright.py", line 384, in asynchronous_request_error
+    assert observed['caught']['errorName'] == 'ConstraintError', \
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Application discarded the native asynchronous request error: {"trace": [{"stage": "request.error", "requestError": "ConstraintError", "transactionError": null}, {"stage": "transaction.error", "transactionError": null, "targetError": "ConstraintError"}, {"stage": "transaction.error", "transactionError": "ConstraintError", "targetError": "AbortError"}, {"stage": "transaction.abort", "transactionError": "ConstraintError"}], "caught": {"errorName": null, "abortObserved": false}, "abortObserved": true, "queued": true}

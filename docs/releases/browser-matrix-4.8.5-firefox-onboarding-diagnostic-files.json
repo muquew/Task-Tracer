@@ -1,0 +1,37 @@
+{
+  "browser-matrix-4.8.5-firefox-onboarding-diagnostic.py": {
+    "original_path": "/tmp/task_tracer_onboarding_diagnostic_485.py",
+    "bytes": 6033,
+    "sha256": "bb7b66a5fd7432710ce4d9d64fe514f02a14fc474142218b00ba900961c0e59a"
+  },
+  "browser-matrix-4.8.5-firefox-onboarding-diagnostic.json": {
+    "original_path": "/tmp/task-tracer-4.8.5-firefox-onboarding-diagnostic.json",
+    "bytes": 43606,
+    "sha256": "8878f1c5d83e923bffe93fb3ffc55e8f6dc34cc08758e53110cf8b538c9b8ee7"
+  },
+  "browser-matrix-4.8.5-firefox-onboarding-diagnostic-context-4.zip": {
+    "original_path": "/tmp/task-tracer-4.8.5-firefox-onboarding-diagnostic-context-4.zip",
+    "bytes": 404799,
+    "sha256": "f71cc87b2ed35e82927ad337c4342c0184f35748e5b21602fa0cbf8c027f079c"
+  },
+  "browser-matrix-4.8.5-firefox-onboarding-diagnostic-context-3.zip": {
+    "original_path": "/tmp/task-tracer-4.8.5-firefox-onboarding-diagnostic-context-3.zip",
+    "bytes": 3537252,
+    "sha256": "7868b1b94b6e82af3529616c9f69e0cbb5cfdd36770b2de713a8bb3f3d33c487"
+  },
+  "browser-matrix-4.8.5-firefox-onboarding-diagnostic-context-2.zip": {
+    "original_path": "/tmp/task-tracer-4.8.5-firefox-onboarding-diagnostic-context-2.zip",
+    "bytes": 1122693,
+    "sha256": "d24c16adb0393e8ee31f1dd93514f13632ec87995eab2ca0a891ece85211101f"
+  },
+  "browser-matrix-4.8.5-firefox-onboarding-diagnostic-context-1.zip": {
+    "original_path": "/tmp/task-tracer-4.8.5-firefox-onboarding-diagnostic-context-1.zip",
+    "bytes": 1152027,
+    "sha256": "c9ec7e18fb1f0600a1a47ba4ebeb34a1efccd2d9682f17c283d00615e1f63973"
+  },
+  "browser-matrix-4.8.5-firefox-onboarding-diagnostic.log": {
+    "original_path": "/tmp/task-tracer-4.8.5-firefox-onboarding-diagnostic.log",
+    "bytes": 13484,
+    "sha256": "6f7ad17d701af3fbd373b28e0773eadd8d889b8ad600f8a3432f5af660ca438e"
+  }
+}

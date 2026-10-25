@@ -9,6 +9,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from translation_fallback import check as check_translation_fallback, main_script
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 INDEX_PATH = REPO_ROOT / "index.html"
@@ -54,7 +56,8 @@ def first_match(pattern: str, source: str, label: str) -> re.Match[str]:
 
 
 def configured_languages(index_html: str) -> list[str]:
-    block = first_match(r"LANGUAGES:\s*\[(.*?)\]", index_html, "CONFIG.LANGUAGES").group(1)
+    runtime = main_script(index_html).group('content')
+    block = first_match(r"LANGUAGES:\s*\[(.*?)\]", runtime, "CONFIG.LANGUAGES").group(1)
     codes = re.findall(r"code:\s*['\"]([^'\"]+)['\"]", block)
     if not codes:
         raise AssertionError("CONFIG.LANGUAGES has no language codes")
@@ -62,17 +65,20 @@ def configured_languages(index_html: str) -> list[str]:
 
 
 def default_language(index_html: str) -> str:
-    block = first_match(r"DEFAULTS:\s*{(.*?)}", index_html, "CONFIG.DEFAULTS").group(1)
+    runtime = main_script(index_html).group('content')
+    block = first_match(r"DEFAULTS:\s*{(.*?)}", runtime, "CONFIG.DEFAULTS").group(1)
     return first_match(r"LANG:\s*['\"]([^'\"]+)['\"]", block, "CONFIG.DEFAULTS.LANG").group(1)
 
 
 def resource_version(index_html: str) -> str:
-    block = first_match(r"I18N:\s*{(.*?)}", index_html, "CONFIG.I18N").group(1)
+    runtime = main_script(index_html).group('content')
+    block = first_match(r"I18N:\s*{(.*?)}", runtime, "CONFIG.I18N").group(1)
     return first_match(r"RESOURCE_VERSION:\s*['\"]([^'\"]+)['\"]", block, "CONFIG.I18N.RESOURCE_VERSION").group(1)
 
 
 def app_version(index_html: str) -> str:
-    block = first_match(r"APP:\s*{(.*?)}", index_html, "CONFIG.APP").group(1)
+    runtime = main_script(index_html).group('content')
+    block = first_match(r"APP:\s*{(.*?)}", runtime, "CONFIG.APP").group(1)
     return first_match(r"VERSION:\s*['\"]([^'\"]+)['\"]", block, "CONFIG.APP.VERSION").group(1)
 
 
@@ -98,28 +104,173 @@ def tag_blocks(source: str, tag: str) -> list[str]:
 
 
 def contains_js_comment(source: str) -> bool:
-    state = "normal"
-    escape = False
+    expression_start = True
+    previous = ''
+    parentheses = []
+    braces = []
+    template_text = False
+    interpolations = []
+    pending_function = None
+    pending_class = None
+    function_body = None
+    async_expression = False
+    control_keywords = {'if', 'while', 'for', 'with', 'switch', 'catch'}
+    expression_keywords = {'return', 'throw', 'case', 'delete', 'void', 'typeof', 'new',
+                           'in', 'instanceof', 'of', 'yield', 'await', 'else', 'do'}
     i = 0
     while i < len(source):
         char = source[i]
         next_char = source[i + 1] if i + 1 < len(source) else ""
-        if state == "normal":
-            if char == "/" and next_char in {"/", "*"}:
-                return True
-            if char in {"'", '"', "`"}:
-                state = char
-                escape = False
+        if template_text:
+            if char == '\\':
+                i += 2
+                continue
+            if char == '`':
+                template_text = False
+                expression_start = False
+                previous = 'literal'
+            elif char == '$' and next_char == '{':
+                interpolations.append(len(braces))
+                braces.append(None)
+                template_text = False
+                expression_start = True
+                previous = '{'
+                i += 2
+                continue
             i += 1
             continue
-        if escape:
-            escape = False
-        elif char == "\\":
-            escape = True
-        elif char == state:
-            state = "normal"
+        if char.isspace():
+            i += 1
+            continue
+        if char == '/' and next_char in {'/', '*'}:
+            return True
+        if char == '`':
+            template_text = True
+            i += 1
+            continue
+        if char in {"'", '"'}:
+            quote = char
+            i += 1
+            while i < len(source):
+                if source[i] == '\\':
+                    i += 2
+                    continue
+                if source[i] == quote:
+                    i += 1
+                    break
+                i += 1
+            expression_start = False
+            previous = 'literal'
+            continue
+        if char == '/' and expression_start:
+            end = i + 1
+            character_class = False
+            while end < len(source) and source[end] not in '\r\n':
+                current = source[end]
+                if current == '\\':
+                    end += 2
+                    continue
+                if current == '[':
+                    character_class = True
+                elif current == ']':
+                    character_class = False
+                elif current == '/' and not character_class:
+                    end += 1
+                    while end < len(source) and (source[end].isalnum() or source[end] in '_$'):
+                        end += 1
+                    i = end
+                    expression_start = False
+                    previous = 'literal'
+                    break
+                end += 1
+            else:
+                i += 1
+                previous = '/'
+            continue
+        if char.isalpha() or char in '_$':
+            end = i + 1
+            while end < len(source) and (source[end].isalnum() or source[end] in '_$'):
+                end += 1
+            token = source[i:end]
+            property_name = previous in {'.', '?.'}
+            if token in {'function', 'class'} and not property_name:
+                is_expression = (async_expression if previous == 'async' else expression_start) and previous not in {'', ';', '{', '}', 'export', 'default'}
+                if token == 'function':
+                    pending_function = (len(parentheses), is_expression)
+                else:
+                    pending_class = (len(parentheses), is_expression)
+            if token == 'async':
+                async_expression = expression_start and previous not in {'', ';', '{', '}'}
+            expression_start = token in expression_keywords and not property_name
+            previous = 'property' if property_name else token
+            i = end
+            continue
+        if char.isdigit():
+            i += 1
+            while i < len(source) and (source[i].isalnum() or source[i] in '._'):
+                i += 1
+            expression_start = False
+            previous = 'literal'
+            continue
+        if char == '(':
+            function = None
+            if pending_function is not None and pending_function[0] == len(parentheses):
+                function = pending_function[1]
+                pending_function = None
+            parentheses.append((previous in control_keywords, function))
+            expression_start = True
+        elif char == ')':
+            expression_start, function_body = parentheses.pop() if parentheses else (False, None)
+        elif char == '{':
+            block = not expression_start or previous in {'', ';', '{', '}', 'else', 'do', 'try', 'finally', '=>', ')'}
+            if function_body is not None:
+                block = not function_body
+                function_body = None
+            elif pending_class is not None and pending_class[0] == len(parentheses):
+                block = not pending_class[1]
+                pending_class = None
+            elif previous == '=>':
+                block = False
+            braces.append(block)
+            expression_start = True
+        elif char == '}':
+            if interpolations and len(braces) == interpolations[-1] + 1:
+                interpolations.pop()
+                braces.pop()
+                template_text = True
+                i += 1
+                continue
+            expression_start = braces.pop() if braces else True
+        elif char == ']':
+            expression_start = False
+        elif char == '.' and source[i:i + 3] != '...':
+            expression_start = False
+        elif source[i:i + 2] in {'++', '--'}:
+            previous = source[i:i + 2]
+            i += 2
+            continue
+        else:
+            expression_start = True
+        if source[i:i + 2] in {'=>', '?.'}:
+            previous = source[i:i + 2]
+            i += 2
+            continue
+        previous = char
         i += 1
     return False
+
+
+def validate_due_date_semantics(index_html: str, errors: list[str]) -> None:
+    try:
+        runtime = main_script(index_html).group('content')
+        body = first_match(r'(?m)^([ \t]*)function\s+normalizeDueDateValue\s*\([^)]*\)\s*\{(?P<body>.*?)^\1\}',
+                           runtime, 'normalizeDueDateValue').group('body')
+        required = ("new Date(`${text}T12:00:00.000Z`)", 'date.getUTCFullYear() !== year',
+                    'date.getUTCMonth() !== month - 1', 'date.getUTCDate() !== day')
+        if not all(fragment in body for fragment in required):
+            errors.append('Due-date normalization must reject rolled-over calendar dates in neutral UTC')
+    except AssertionError as error:
+        errors.append(str(error))
 
 
 def contains_css_comment(source: str) -> bool:
@@ -289,20 +440,18 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
         if missing_assets:
             errors.append(f"Service worker does not precache required assets: {missing_assets}")
 
-        if not re.search(r"const CACHE_NAME = ['\"]task-tracer-v\d+\.\d+['\"]", sw_source):
-            errors.append("Service worker cache name must be versioned as task-tracer-v<major>.<minor>")
+        if not re.search(r"const CACHE_NAME = ['\"]task-tracer-v\d+\.\d+(?:\.\d+)?['\"]", sw_source):
+            errors.append("Service worker cache name must be versioned as task-tracer-v<major>.<minor>[.<patch>]")
         if cache_name != f"task-tracer-v{runtime_version}":
             errors.append("CONFIG.APP.VERSION must match the service worker CACHE_NAME suffix")
-        if "const CACHE_PREFIX = 'task-tracer-';" not in sw_source or "key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME" not in sw_source:
-            errors.append("Service worker must only delete Task Tracer caches during activation")
-        if "networkFirst(e.request, './index.html')" not in sw_source:
-            errors.append("App shell requests must use networkFirst with an index.html fallback")
-        if "if (networkResponse.ok)" not in sw_source or "getCachedFallback(request, fallbackUrl)" not in sw_source:
-            errors.append("Network-first requests must fall back to cache on non-OK HTTP responses")
-        if "url.pathname.includes('/resources/')" not in sw_source:
-            errors.append("Language resources must have an explicit service worker fetch strategy")
-        if "cacheFirst(e.request)" not in sw_source:
-            errors.append("Static assets should keep a cacheFirst fallback strategy")
+        if "isOlderBundle(name) && !inUse.has(name)" not in sw_source or "if (unknown) return;" not in sw_source:
+            errors.append("Cache cleanup must preserve active, unknown-client and future-installing bundles")
+        if "async function installedShell()" not in sw_source or "ASSET_URLS.has(url.href)" not in sw_source:
+            errors.append("App shell and versioned assets must use the installed bundle")
+        if "LANGUAGE_PATHS.has(url.pathname)" not in sw_source or "await caches.open(name)).match(e.request)" not in sw_source:
+            errors.append("Open older clients need exact-query language fallbacks")
+        if "REPORT_CLIENT_VERSION" not in sw_source or "reportServiceWorkerClientVersion" not in index_html:
+            errors.append("Cache cleanup needs the app/worker version handshake")
     except AssertionError as error:
             errors.append(str(error))
 
@@ -410,8 +559,7 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             errors.append("Timer refresh should skip completed and archived tasks")
         if "task.completed || task.archived || !hasTaskDueDate(task)" not in index_html:
             errors.append("Timer refresh must guard completed and archived records")
-        if "date.getFullYear() !== year" not in index_html or "date.getMonth() !== month - 1" not in index_html:
-            errors.append("Due-date normalization must reject rolled-over calendar dates")
+        validate_due_date_semantics(index_html, errors)
         if "pendingTaskActions: new Set()" not in index_html or "isGuardedTaskAction(action)" not in index_html:
             errors.append("Task actions must guard against duplicate in-flight writes")
         if "taskFormSaving" not in index_html or "quickAddSaving" not in index_html:
@@ -420,12 +568,16 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             errors.append("Stats total must exclude archived tasks")
         if "const completionHistoryTasks = activeScopeTasks.filter(task => task.completed)" not in index_html:
             errors.append("Stats completion history must exclude archived tasks")
-        if not contains_in_order(index_html, ("function shiftCalendarMonth(delta)", "date.setDate(1);", "date.setMonth(date.getMonth() + delta);", "state.calendarDetailDateKey = '';")):
-            errors.append("Calendar month navigation must clamp to day one and clear stale day details")
+        if not contains_in_order(index_html, ("function shiftCalendarMonth(delta)", "date.setUTCDate(1);", "date.setUTCMonth(date.getUTCMonth() + delta);", "state.calendarDetailDateKey = '';")):
+            errors.append("Calendar month navigation must clamp its civil date to day one and clear stale day details")
         state_consistency_checks = {
+            "Task transactions must compare a revision captured before opening the transaction": ("writeTaskTransaction: (write, abortMessage, forceCheckpoint = false)", "const expectedRevision = state.taskRevision;", "const tx = state.db.transaction", "if (currentRevision !== expectedRevision)"),
+            "Import approval must be tied to its preview revision": ("function openTaskImportPreview(", "if (preview.taskRevision !== state.taskRevision)", "openTaskImportPreview(importPayload, importedTasks);", "return false;"),
+            "Cancelled task file reads must not reopen a newer flow": ("function importTasks(file)", "state.pendingTaskImportReader = reader;", "reader.onload = e =>", "state.pendingTaskImportReader !== reader", "!status.isConnected"),
             "Archive completed must write cloned archived records": ("const archivedTasks = completed.map(task => ({ ...task, archived: true, archivedAt }))",),
             "Snooze must persist before mutating the in-memory task": ("const updatedTask = {", "snoozedUntil: snoozedUntilAt", "await dbActions.updateTask(updatedTask);"),
-            "Notification delivery must persist a cloned task before updating memory": ("const updatedTask = { ...task, lastReminderAt, snoozedUntil: null }", "await dbActions.updateTask(updatedTask);"),
+            "Notification delivery must refresh the full committed snapshot before recording session delivery": ("const recorded = await dbActions.recordReminderDelivery(expected, lastReminderAt);", "await refreshTasks();", "if (!recorded) return;", "state.notifiedTasks.add(notificationKey);"),
+            "Reminder persistence must patch a current matching record": ("recordReminderDelivery: (expected, lastReminderAt)", "const request = store.get(expected.id);", "if (!current || current.completed || current.archived) return;", "if (getTaskNotificationKey(current) !== expected.key) return;", "if ((current.snoozedUntil || null) !== expected.snoozedUntil) return;", "if ((current.lastReminderAt || null) !== expected.lastReminderAt) return;", "store.put({ ...current, lastReminderAt, snoozedUntil: null });"),
             "Subtask toggles must persist cloned subtasks before updating memory": ("const updatedSubtasks = task.subtasks.map", "completed: nextCompleted", "await dbActions.updateTask(updatedTask);"),
             "Manual reordering must avoid mutating state before persistence succeeds": ("return mergedTasks.map((task, index) => ({ ...task, order: index * CONFIG.DEFAULTS.MANUAL_ORDER_STEP }))",),
             "Manual reordering must restore the rendered order after save failure": ("catch (err)", "renderTaskList();", "messages.task.saveError"),
@@ -447,15 +599,15 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             "Imported subtask completed fields must normalize to real booleans": ("function normalizeImportedSubtasks(rawSubtasks)", "completed: normalizeBoolean(subtask.completed)"),
             "Today plan markers must be normalized and exported": ("function normalizeFocusDate(value)", "const focusDate = normalizeFocusDate(normalizedTask.focusDate);", "'todayPlan'", "focusDate: normalizeFocusDate(task.focusDate)"),
             "Backup payloads must carry export identity and integrity checksum": ("function createTaskDataPayload(mode, date, tasks, storage = 'indexeddb')", "exportId: createTaskDataExportId(mode, date)", "payload.checksum = createTaskDataChecksum(payload);", "function stableStringify(value)"),
-            "Saved smart views must persist to config storage": ("SAVED_VIEWS: 'savedViews'", "function restoreSavedViews()", "await dbActions.setConfig(CONFIG.STORAGE.SAVED_VIEWS, state.savedViews);"),
+            "Saved smart views must persist to config storage": ("SAVED_VIEWS: 'savedViews'", "function restoreSavedViews()", "updateSavedViews: change => new Promise", "tx.oncomplete = () => resolve(committed);", "const request = store.get(CONFIG.STORAGE.SAVED_VIEWS);", "store.put({ key: CONFIG.STORAGE.SAVED_VIEWS, value: committed });"),
             "Batch mode must avoid drag reordering and support undo": ("function applyBatchTaskUpdate(action, selectedTasks)", "registerUndoSnapshot(utils.translate(`batch.undo.${action}`), beforeTasks);", "function canReorderTasks()", "!state.batchMode"),
-            "Undo must restore a full task snapshot": ("function registerUndoSnapshot(label, beforeTasks)", "await dbActions.replaceAllTasks(snapshot);", "function performUndo()"),
+            "Undo must bind snapshots to revisions and reject newer conflicting edits": ("function captureUndoSnapshot()", "const persistedSnapshot = dbActions.readTaskSnapshot();", "function registerUndoSnapshot(label, beforeTasks)", "const after = dbActions.readTaskSnapshot();", "previous.taskRevision !== previousRevision || saved.taskRevision !== revision || revision !== state.taskRevision", "await dbActions.undoTaskChanges(previous.tasks, saved.tasks);", "function performUndo()", "undoTaskChanges: (beforeTasks, afterTasks)", "JSON.stringify(request.result) !== JSON.stringify(after.get(id))", "TaskConflictError"),
             "Focus mode must be a separate visible task scope": ("function enterFocusMode()", "state.focusMode = true;", "if (state.focusMode && !isTaskInTodayPlan(task)) return false;"),
             "Focus mode entry must be independent of the overflow menu": ('id="focusModeToggleBtn"', 'aria-pressed="false"', 'id="focusModeToggleText"', "DOM.focusModeToggleBtn.addEventListener('click', () => runAppAction('focus.toggle'))", "function syncFocusModeButton()"),
             "Due dates must format and group by the task timezone": ("function getTaskDueDateKey(task)", "getInstantWallPartsInTimeZone(dueAt, getTaskDueTimeZone(task))", "function formatTaskDueDate(task)"),
-            "Imported duplicate IDs must not produce ambiguous repeat links": ("const duplicateIds = new Set(getDuplicateImportIds(rawTasks));", "sanitizeAmbiguousImportedReferences", "if (duplicateIds.has(Number(sanitizedTask[key]))) sanitizedTask[key] = null;"),
-            "Imported repeat links must only point to final imported tasks": ("function sanitizeDanglingTaskReferences(tasks)", "const ids = new Set(tasks.map(task => Number(task.id)).filter(Number.isFinite));", "sanitizedTask[key] = Number.isFinite(value) && ids.has(value) ? value : null;"),
-            "Merged imports must clear repeat links to skipped conflicts": ("function prepareImportedTasksForMerge(importedTasks, conflictActions = new Map())", "const tasksToImport = importedTasks.filter", "const tasks = sanitizeDanglingTaskReferences(remapped.map(task => {"),
+            "Imported duplicate IDs must not produce ambiguous repeat links": ("const duplicateIds = new Set(getDuplicateImportIds(rawTasks));", "sanitizeAmbiguousImportedReferences", "if (duplicateIds.has(normalizeTaskReferenceId(sanitizedTask[key]))) sanitizedTask[key] = null;"),
+            "Imported repeat links must only point to final imported tasks": ("function sanitizeDanglingTaskReferences(tasks)", "const ids = new Set(tasks.map(task => Number(task.id)).filter(Number.isFinite));", "sanitizedTask[key] = value !== null && ids.has(value) ? value : null;"),
+            "Merged imports must clear repeat links to skipped conflicts": ("function prepareImportedTasksForMerge(importedTasks, conflictActions = new Map(), conflictDefault = 'keep')", "const tasksToImport = importedTasks.filter", "const tasks = sanitizeDanglingTaskReferences(remapped.map(task => {"),
             "Import preview must include template restore checks": ("downloadPreImportSnapshot(beforeTasks)", "sourceInfo: getImportSourceInfo(sourceData, compatibilitySteps)", "function getImportSourceInfo(sourceData, compatibilitySteps = [])", "checksumStatus", "function createImportRestoreChecklist(preview, t)", "messages.import.restoreCheckTitle", "function createImportDiffPreview(preview, t)", "return false;"),
             "Startup must verify IndexedDB is writable before normal app mode": ("if (!(await initializeStorageOrFallback())) return;", "function initPersistentStorage()", "await verifyPersistentStorage();", "function verifyPersistentStorage()", "await dbActions.deleteConfig(CONFIG.STORAGE.PROBE);"),
             "Storage fallback must be scoped to the storage initialization stage": ("function initializeStorageOrFallback()", "await initPersistentStorage();", "if (!shouldUseStorageUnavailableMode(error)) throw error;", "handleStorageUnavailable(error);"),
@@ -465,8 +617,8 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
             "Runtime storage failures must route through storage-unavailable fallback": ("function handleStorageOperationError(error", "if (shouldUseStorageUnavailableMode(error))", "handleStorageUnavailable(error);", "return true;"),
             "Background backup health reads must route storage failures through fallback": ("scheduleBackupReminder().catch(handleBackgroundStorageFailure)", "function handleBackgroundStorageFailure(error)", "handleStorageOperationError(error);", "updateBackupHealthStatus().catch(handleBackgroundStorageFailure)"),
             "Task write failures must route storage errors through fallback": ("catch (err)", "handleStorageOperationError(err, 'messages.task.saveError');", "handleStorageOperationError(err);"),
-            "Known missing backup state must not re-read config": ("async function updateBackupHealthStatus(knownLastBackupAt)", "arguments.length > 0", "normalizeStoredDate(await dbActions.getConfig(CONFIG.STORAGE.LAST_BACKUP_AT))"),
-            "Storage fallback events must avoid duplicate theme handlers after normal init": ("eventsBound: false", "if (!state.eventsBound) DOM.themeBtn.addEventListener('click', utils.toggleTheme);", "state.eventsBound = true;"),
+            "Backup status must compare a coherent snapshot and preserve known results": ("async function updateBackupHealthStatus(knownStatus)", "arguments.length > 0 ? knownStatus : await dbActions.getTaskBackupStatus()", "lastTaskBackup.date === lastBackupAt", "lastTaskBackup.taskRevision !== taskRevision"),
+            "Storage fallback events must avoid duplicate theme handlers after normal init": ("essentialEventsBound: false", "function bindEssentialEvents()", "if (state.essentialEventsBound) return;", "state.essentialEventsBound = true;"),
             "Storage fallback must preserve the active language after normal init": ("function getStorageUnavailableLanguage()", "if (state.eventsBound && isSupportedLanguage(state.currentLanguage)) return state.currentLanguage;", "state.currentLanguage = getStorageUnavailableLanguage();"),
             "Runtime storage fallback must preserve an emergency export snapshot": ("storageFallbackTasks: []", "function captureStorageFallbackSnapshot()", "state.storageFallbackTasks = cloneTaskSnapshot(state.tasks);", "function downloadEmergencyBackup()", "memory-fallback"),
         }
@@ -502,7 +654,7 @@ def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
         errors.append("Custom select buttons must focus the selected option when opened with Enter or Space")
     if not contains_in_order(index_html, ("function handleCustomSelectMenuKeydown(e)", "if (e.key === 'Escape') {", "e.stopPropagation();", "closeCustomSelect(option.closest('.custom-select'), true);")):
         errors.append("Custom select Escape handling must stop propagation before closing the menu")
-    if not contains_in_order(index_html, ("if (isTaskDialogOpen())", "else if (e.key === 'Escape') {", "if (!closeOpenCustomSelect(DOM.modal)) closeDialog();", "function closeOpenCustomSelect(root = document)")):
+    if not contains_in_order(index_html, ("if (isTaskDialogOpen())", "else if (e.key === 'Escape') {", "if (!closeOpenCustomSelect(DOM.modal)) requestCloseTaskDialog();", "function closeOpenCustomSelect(root = document)")):
         errors.append("Dialog Escape handling must close an open custom select before closing the dialog")
     if "handleViewSwitcherKeydown" not in index_html or 'role="tab" aria-selected="true" aria-controls="taskList" tabindex="0"' not in index_html:
         errors.append("View tabs must use a roving keyboard tablist model")
@@ -563,6 +715,9 @@ def validate_security_headers(errors: list[str]) -> None:
         errors.append(str(error))
         return
 
+    if config.get('framework', 'auto') is not None or config.get('buildCommand') != '' or config.get('installCommand') != '' or config.get('outputDirectory') != '.':
+        errors.append('Vercel must deploy the static root without installing or building development-only tools')
+
     headers: dict[str, str] = {}
     for route in config.get("headers", []):
         for header in route.get("headers", []):
@@ -594,12 +749,46 @@ def validate_security_headers(errors: list[str]) -> None:
             errors.append(f"Content-Security-Policy is missing directive: {directive}")
 
 
+def validate_package_versions(index_html: str, errors: list[str]) -> None:
+    numeric = r'(?:0|[1-9]\d*)'
+    try:
+        runtime_version = app_version(index_html)
+        if not re.fullmatch(rf'{numeric}\.{numeric}(?:\.{numeric})?', runtime_version):
+            raise AssertionError('CONFIG.APP.VERSION must contain two or three numeric components')
+        components = runtime_version.split('.')
+        expected = '.'.join(components + ['0'] * (3 - len(components)))
+        package = load_json(REPO_ROOT / 'package.json')
+        lock = load_json(REPO_ROOT / 'package-lock.json')
+        if not isinstance(package, dict) or not isinstance(lock, dict):
+            raise AssertionError('package.json and package-lock.json must contain objects')
+        packages = lock.get('packages')
+        if not isinstance(packages, dict) or not isinstance(packages.get(''), dict):
+            raise AssertionError('package-lock.json must contain root package metadata in packages[\'\']')
+        versions = {
+            'package.json version': package.get('version'),
+            'package-lock.json version': lock.get('version'),
+            'package-lock.json packages[\'\'] version': packages[''].get('version'),
+        }
+        for label, value in versions.items():
+            if not isinstance(value, str) or not re.fullmatch(rf'{numeric}\.{numeric}\.{numeric}', value):
+                errors.append(f'{label} must contain a three-component numeric version')
+            elif value != expected:
+                errors.append(f'{label} must match CONFIG.APP.VERSION {runtime_version} (npm version {expected})')
+    except (AssertionError, OSError, UnicodeError) as error:
+        errors.append(str(error))
+
+
 def main() -> int:
     errors: list[str] = []
     index_html = read_text(INDEX_PATH)
+    try:
+        check_translation_fallback()
+    except AssertionError as error:
+        errors.append(str(error))
 
     validate_translations(index_html, errors)
     validate_pwa(index_html, errors)
+    validate_package_versions(index_html, errors)
     validate_seo(index_html, errors)
     validate_loaded_code_is_comment_free(index_html, errors)
     validate_task_state_styles(index_html, errors)

@@ -1,0 +1,28 @@
+name: Feature request / 功能建议
+description: Describe a real workflow and the improvement you need / 描述实际使用场景与改进需求
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Task Tracer is a local-first task workspace. Describe your workflow with synthetic examples; do not include personal task data. A suggestion does not imply an implementation date or a paid-edition commitment.
+
+        请用示例说明实际需求，勿包含个人任务数据。功能建议不代表已确定开发时间或专业版承诺。
+  - type: textarea
+    id: problem
+    attributes:
+      label: Workflow and problem / 场景与问题
+      description: What are you trying to do, and where does the current application get in your way?
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Desired result / 希望的效果
+      description: Describe the behavior that would help and a concrete example. Mention offline access or data export requirements if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Current workaround or alternatives / 当前替代方式
+      description: Optional. Explain how you handle this today and what tradeoff matters most.
