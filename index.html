@@ -55,7 +55,7 @@
             "image": "https://todo.muquew.com/screenshots/task-list-en.png",
             "description": "Task Tracer is a local-first PWA for tasks, routines, reminders, calendar planning, statistics, import/export backups, and offline use.",
             "inLanguage": ["en", "zh-CN"],
-            "softwareVersion": "4.11.0",
+            "softwareVersion": "4.11.1",
             "author": {
                 "@type": "Person",
                 "name": "muquew"
@@ -1213,6 +1213,23 @@
             .toolbar-main-row .filter-toggle { grid-column: 1; grid-row: 2; justify-self: start; max-width: 100%; min-width: 0; white-space: nowrap; }
             .toolbar-main-row .saved-view-save-btn { grid-column: 2; grid-row: 2; margin-inline-start: 0; width: auto; white-space: nowrap; }
         }
+        @media (max-width: 779px) {
+            .toolbar-filter-row { display: grid; grid-template-columns: minmax(116px,1fr) minmax(0,1fr) 40px; gap: 6px; padding-inline-end: 0; }
+            .toolbar-filter-row .dropdown-container { min-width: 0; width: 100%; max-width: 100%; }
+            .toolbar-filter-row #projectDropdown { grid-column: 1 / 3; grid-row: 1; }
+            .toolbar-filter-row #batchModeBtn { grid-column: 3; grid-row: 1; justify-self: end; order: initial; margin-inline-start: 0; }
+            .toolbar-filter-row #filterDropdown { grid-column: 1; grid-row: 2; }
+            .toolbar-filter-row #sortDropdown { grid-column: 2 / 4; grid-row: 2; }
+            .toolbar-filter-row .dropdown-btn { width: 100%; min-height: 38px; height: auto; justify-content: space-between; gap: 8px; }
+            .toolbar-filter-row .dropdown-btn > .icon:not(.chevron) { display: none; }
+            .toolbar-filter-row .dropdown-btn > .chevron { flex: 0 0 16px; width: 16px; height: 16px; }
+            .toolbar-filter-row #currentFilterLabel, .toolbar-filter-row #currentSortLabel { overflow: visible; text-overflow: clip; white-space: nowrap; }
+            .toolbar-filter-row:has(#batchModeBtn[hidden]) #projectDropdown, .toolbar-filter-row:has(#sortDropdown[hidden]) #filterDropdown { grid-column: 1 / -1; }
+        }
+        @media (max-width: 359px) {
+            .toolbar-filter-row #filterDropdown { grid-column: 1 / -1; grid-row: 2; }
+            .toolbar-filter-row #sortDropdown { grid-column: 1 / -1; grid-row: 3; }
+        }
     </style>
     <script>
         (function() {
@@ -1916,7 +1933,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '4.11.0'
+                VERSION: '4.11.1'
             },
             DB: {
                 NAME: 'TaskTrackerDB',

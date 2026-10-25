@@ -24,7 +24,7 @@ Task Tracer is a personal task manager that runs in the browser and keeps task d
 
 The continuing development goal, acceptance criteria and current work queue are recorded in [GOAL.md](./GOAL.md).
 
-**[4.11.0](./docs/releases/4.11.0.md)** reorganizes capture, task editing, mobile views, settings and data tools after a hands-on whole-site review. See the [before-and-after review](./docs/acceptance/2026-10-25/usability-4.11.0/README.md).
+**[4.11.1](./docs/releases/4.11.1.md)** reorganizes capture, task editing, mobile views, settings and data tools after a hands-on whole-site review. See the [before-and-after review](./docs/acceptance/2026-10-25/usability-4.11.0/README.md).
 
 The [4.10.0 baseline](./docs/releases/4.10.0.md) preserves its full engineering results, the single test-navigation recheck and the production language issue repaired by 4.10.1. Earlier [4.9.0](./docs/releases/4.9.0.md) results keep their original identity.
 

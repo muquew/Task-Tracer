@@ -1,0 +1,35 @@
+{
+  "status": "passed_scoped_4.11.1_patch_acceptance",
+  "scope": [
+    "static7",
+    "two independent reproducible distribution builds and extracted persistence/offline",
+    "actual 4.11.0 ZIP upgrade/rollback/re-upgrade"
+  ],
+  "not_run": [
+    "full registered suite",
+    "cross-engine full matrix",
+    "scale/performance suite",
+    "production validation"
+  ],
+  "report": "/tmp/task-tracer-4.11.1-release/658819c7-44b5-44f2-9c44-dfd1280ca8b6/report.json",
+  "report_sha256": "1e84a67323778fcd17263801d4834d516fa76568e0d670433fc03e4eeb05f15f",
+  "source_inputs": 23,
+  "verification_inputs": 71,
+  "source_sha256": "df1de2fe944cb877d850ae16fd64136c71d9cd2cac61031a91f405d3ad8e98bf",
+  "verification_sha256": "924bb4db9c03fd65721bd473841f6863ebb2b1b81a3c03ad6318138088c74919",
+  "source_and_verification_unchanged": true,
+  "baseline_archive": {
+    "path": "/workspace/Task-Tracer-usability/dist/task-tracer-4.11.0.zip",
+    "bytes": 758983,
+    "sha256": "eab49d0ee11a36d0e95798684e1fcf20639028e9c591c7f6578ce5114ae0868a"
+  },
+  "distribution_file_count": 24,
+  "two_reproducible_archive_sha256": "bfa59e11dce57240c9364eea89967cdb7ab0d5e4868be6459eed5524b4720c6f",
+  "temporary_archives_retained": false,
+  "final_dist_build_run": false,
+  "step_exit_codes": {
+    "static7": 0,
+    "release": 0,
+    "actual-4.11.0-upgrade": 0
+  }
+}

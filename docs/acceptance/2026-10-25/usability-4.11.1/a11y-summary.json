@@ -1,0 +1,26 @@
+{
+  "app_version": "4.11.1",
+  "resource_version": "4.39",
+  "completed_at_utc": "2026-10-25T12:46:21.783344+00:00",
+  "argv": [
+    "python",
+    "-u",
+    "tools/accessibility_i18n_audit.py",
+    "--viewport",
+    "mobile",
+    "--skip-scaled",
+    "--collect-axe"
+  ],
+  "exit": 0,
+  "log": "/tmp/task-tracer-4.11.1-protection/accessibility-mobile.log",
+  "scope": "Only the mobile normal-workflow accessibility audit for the final 4.11.1 CSS patch; fresh synthetic browser context, viewport 390x844 and reduced motion.",
+  "result": "Complete mobile workflow pass, no axe violations; original critical/serious/moderate failure rules retained.",
+  "not_run": [
+    "desktop repeat",
+    "full data-protection programs",
+    "scale/pagination workload",
+    "physical mobile device",
+    "browser zoom"
+  ],
+  "no_repository_changes": true
+}
