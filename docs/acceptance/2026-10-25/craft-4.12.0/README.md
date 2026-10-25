@@ -30,10 +30,16 @@
 
 四张公开中英文截图也已逐张审读，来源与SHA见[记录](public-screenshots.json)。此次最终亲用没有页面脚本错误。脚本操作时一次点击折叠库存内容的超时属于审查脚本错误；同版本开发缓存造成的旧页面也未计为代码缺陷。
 
-随后原导入读取保护检查发现，重排预览时没有挂回已有差异组件，确认前不能查看新增任务名称。恢复组件后最终index为 `1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561`，除这一处挂载与CSP哈希外，主体功能未再改变。再次以全新资料真实创建1项本地任务、选择含2项新任务的文件，展开并查看[新增名称与替换范围](final-import-differences.png)，取消后本地任务保留。该修正没有改读取、合并、事务或并发逻辑；前述画面没有冒称来自更新后的源码。
+随后原导入读取保护检查发现，重排预览时没有挂回已有差异组件，确认前不能查看新增任务名称。恢复组件后的候选index为 `1212c0e0ad83d4dd326f14d1f6d1d68e08fb5150b521e710d75be49e19963561`，除这一处挂载与CSP哈希外，主体功能未再改变。再次以全新资料真实创建1项本地任务、选择含2项新任务的文件，展开并查看[新增名称与替换范围](final-import-differences.png)，取消后本地任务保留。该修正没有改读取、合并、事务或并发逻辑；前述画面没有冒称来自更新后的源码。
 
 无障碍复查又发现玻璃底栏透出背景时未选文字对比度4.46:1，最终index `4e251ecbd557fede104a8707fe68ddfdf510df4474c65f19c52f010a6ac6c929` 仅提高手机未选导航字色，脚本及业务HTML没有变化。手机全部正常流程复查无axe违规，桌面结果保留原范围；数据程序不为这一处CSS重复执行。[分阶段结果](protection/summary.json)记录各自真实输入。
 
 另一个检查卡点已由[独立浏览器诊断](animation-diagnosis/probe.log)确认是等待已取消的过渡对象，而非页面仍在持续动画。项目检查工具已改为等待当前活动的有限动画并确认连续两帧稳定，10秒超时给出状态，不取消动画、不修改axe阈值；原生helper的子任务/批量移动前缀复核通过。
 
 本轮不是正式销售验收。真实手机/软键盘、原生通知投递、系统安装及持久存储授权没有因模拟浏览器通过而视为完成。定向保护、发行和真实域名结果见[发布记录](../../../releases/4.12.0.md)。
+
+## 真实域名补验
+
+应用提交df71f29推送后，Vercel上的21项实际响应及安全头匹配最终候选。随后在真实域名的新浏览器资料中创建3任务，完成其中1项，检查统计下钻/返回、归档后空列表/返回、保留完成回顾；切海湾蓝、深色与英文，在390px查看日历底栏和完成趋势，真实下载JSON并打开帮助。29份页面记录没有脚本错误，下载内容为3任务/1完成/1归档。
+
+已逐张审读[返程入口](production-browser/07-production-drilldown.png)、[归档回顾](production-browser/13-production-archive-history.png)、[深色外观](production-browser/17-production-dark.png)、[手机日历导航](production-browser/21-production-mobile-calendar-nav.png)、[手机趋势](production-browser/23-production-mobile-trend.png)和[帮助弹窗](production-browser/28-production-help-dialog.png)。[记录](production-browser/summary.json)保留最终4e25源码身份、实际JSON文件及图片SHA。

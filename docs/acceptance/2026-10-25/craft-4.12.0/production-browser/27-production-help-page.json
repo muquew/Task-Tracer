@@ -1,0 +1,228 @@
+{
+  "viewport": {
+    "w": 390,
+    "h": 844
+  },
+  "scrollY": 0,
+  "docHeight": 987,
+  "title": "Task Tracer",
+  "headings": [
+    "Settings & data",
+    "Help & about"
+  ],
+  "surfaces": [
+    {
+      "selector": "#openModalBtn",
+      "visible": true,
+      "text": "Add task",
+      "x": 274,
+      "y": 10,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "selector": "#quickAddForm",
+      "visible": 0,
+      "text": "\n                    \n                        \n                        Quick cap",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#quickAddInput",
+      "visible": 0,
+      "text": "",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#toolsDrawer",
+      "visible": 0,
+      "text": "\n            \n                    \n                        \n                    ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceOverview",
+      "visible": 0,
+      "text": "\n            October 2026MonTueWedThuFriSatSun2829301234567891011121314151617181",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceWeekIndex",
+      "visible": 0,
+      "text": "OctNext 7 daysSun25Mon26Tue27Wed28Thu29Fri30Sat31",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#taskList",
+      "visible": 0,
+      "text": "Needs attentionFind tasks to handle first, or plan work with no deadline. Due to",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceTitle",
+      "visible": 0,
+      "text": "Stats",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#settingsWorkspace",
+      "visible": true,
+      "text": "Settings & data\n\nManage appearance, reminders and local data.\n\nAppearance & lang",
+      "x": 16,
+      "y": 80,
+      "w": 358,
+      "h": 827
+    }
+  ],
+  "buttons": [
+    {
+      "id": "workspaceNavToggle",
+      "text": "Open navigation",
+      "x": 14,
+      "y": 10,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "settingsBackBtn",
+      "text": "Back to tasks",
+      "x": 76,
+      "y": 10,
+      "w": 121,
+      "h": 40
+    },
+    {
+      "id": "undoBtn",
+      "text": "Undo",
+      "x": 203,
+      "y": 10,
+      "w": 67,
+      "h": 40
+    },
+    {
+      "id": "openModalBtn",
+      "text": "Add task",
+      "x": 274,
+      "y": 10,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "id": "tab-settingsAppearance",
+      "text": "Appearance & language",
+      "x": -270,
+      "y": 150,
+      "w": 149,
+      "h": 38
+    },
+    {
+      "id": "tab-settingsData",
+      "text": "Backups & transfer",
+      "x": -117,
+      "y": 150,
+      "w": 121,
+      "h": 38
+    },
+    {
+      "id": "tab-settingsExperience",
+      "text": "Reminders & installation",
+      "x": 8,
+      "y": 150,
+      "w": 149,
+      "h": 38
+    },
+    {
+      "id": "tab-settingsCleanup",
+      "text": "Task maintenance",
+      "x": 162,
+      "y": 150,
+      "w": 117,
+      "h": 38
+    },
+    {
+      "id": "tab-settingsHelp",
+      "text": "Help & about",
+      "x": 282,
+      "y": 150,
+      "w": 94,
+      "h": 38
+    },
+    {
+      "id": "helpMenuBtn",
+      "text": "Help and support",
+      "x": 32,
+      "y": 335,
+      "w": 164,
+      "h": 44
+    },
+    {
+      "id": "settingsDiagnosticsBtn",
+      "text": "Review diagnostic information",
+      "x": 32,
+      "y": 546,
+      "w": 221,
+      "h": 44
+    },
+    {
+      "id": "workspaceNotificationClose",
+      "text": "Close",
+      "x": 334,
+      "y": 721,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "viewTab-list",
+      "text": "List",
+      "x": 10,
+      "y": 785,
+      "w": 90,
+      "h": 54
+    },
+    {
+      "id": "viewTab-calendar",
+      "text": "Calendar",
+      "x": 104,
+      "y": 785,
+      "w": 90,
+      "h": 54
+    },
+    {
+      "id": "viewTab-timeline",
+      "text": "Timeline",
+      "x": 197,
+      "y": 785,
+      "w": 90,
+      "h": 54
+    },
+    {
+      "id": "viewTab-stats",
+      "text": "Stats",
+      "x": 291,
+      "y": 785,
+      "w": 90,
+      "h": 54
+    }
+  ],
+  "fields": [],
+  "pageErrors": []
+}

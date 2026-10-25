@@ -1,0 +1,62 @@
+{
+  "status": "passed",
+  "url": "https://todo.muquew.com/",
+  "completed_at_beijing": "2026-10-25T22:09:02.209806+08:00",
+  "version": "4.12.0",
+  "index_sha256": "4e251ecbd557fede104a8707fe68ddfdf510df4474c65f19c52f010a6ac6c929",
+  "profile": "Fresh synthetic browser profile; Chromium 154, normal CSP/TLS, Asia/Shanghai, zh-CN to en, 1440x1000 to 390x844",
+  "frames": 29,
+  "page_errors": [],
+  "backup": {
+    "file": "task-tracer_backup_2026-10-25_14-08-11-651.json",
+    "task_count": 3,
+    "completed_count": 1,
+    "archived_count": 1,
+    "sha256": "6fe3de8e8603f7ea66a3e149bdb8976c6ef34042f8828d393b4b38efd9ec0604"
+  },
+  "journeys": [
+    "create three real tasks",
+    "complete task",
+    "today drilldown and return original query",
+    "completed inventory then archive, empty result and return to retained completion history",
+    "settings accent Ocean and dark/English",
+    "mobile calendar dock and statistics/date/count trend",
+    "actual JSON download and help dialog"
+  ],
+  "screenshots": [
+    {
+      "file": "07-production-drilldown.png",
+      "sha256": "5d1ce613addb1e3129889150014362a3c67d387baf6e326fd55238112e7eb51e",
+      "manually_viewed": true
+    },
+    {
+      "file": "13-production-archive-history.png",
+      "sha256": "1f8633cfbdd729e8003569f1e1a729f7290ab9091a67c194ca56ec0d7066398e",
+      "manually_viewed": true
+    },
+    {
+      "file": "17-production-dark.png",
+      "sha256": "de6f4ca1951d309fc45e9f3c569d3c83718f5bfa19115b39499a96c6249aba0d",
+      "manually_viewed": true
+    },
+    {
+      "file": "21-production-mobile-calendar-nav.png",
+      "sha256": "4d020a8b010c8fd5ead1bc52a2edac36c7fd860cb93595c19aa05e059c5f5ee0",
+      "manually_viewed": true
+    },
+    {
+      "file": "23-production-mobile-trend.png",
+      "sha256": "9700dd50e5143cecd47123426953625acd2c96a613926443d2fc948d1917f26b",
+      "manually_viewed": true
+    },
+    {
+      "file": "28-production-help-dialog.png",
+      "sha256": "2c775f0b027f2cdbda32ee86765ecaf5c9575f6e3f9eab3f4dbb538295fc6597",
+      "manually_viewed": true
+    }
+  ],
+  "limitations": [
+    "not native device, keyboard or notification delivery",
+    "not a substitute for local scoped protection, offline and upgrade checks"
+  ]
+}
