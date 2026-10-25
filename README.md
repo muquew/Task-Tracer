@@ -24,7 +24,9 @@ Task Tracer is a personal task manager that runs in the browser and keeps task d
 
 The continuing development goal, acceptance criteria and current work queue are recorded in [GOAL.md](./GOAL.md).
 
-The current release is **[4.13.1](./docs/releases/4.13.1.md)**: one-click full task entry, an explicit in-app update check, and fixes found through hands-on workflow review. Targeted checks, real 4.13.0 archive upgrade, publication and live-site review are complete. The following 4.13.0 results retain their original scope.
+The current candidate is **[4.13.2](./docs/releases/4.13.2.md)**, refining subtask saving, calendar return, task feedback and sidebar navigation while reducing repeated interface copy. Final acceptance and publication are pending.
+
+The published **[4.13.1 baseline](./docs/releases/4.13.1.md)** provides one-click full task entry, an explicit in-app update check and workflow fixes. Its targeted checks, real 4.13.0 archive upgrade, publication and live-site review are complete; those results retain their original scope.
 
 The published **[4.13.0 baseline](./docs/releases/4.13.0.md)** provides four complete workspace themes and revised surfaces and component materials. The [theme brief](./THEME_BRIEF.md) records the direction. Its hands-on visual review, targeted protection, packaging, real 4.12 upgrade and live-site verification are complete; the release record identifies each scope.
 
@@ -51,7 +53,7 @@ PWA means Progressive Web App: when the browser supports it, Task Tracer can be 
 
 ## Workspace controls
 
-The workspace keeps projects and saved views in the sidebar, with a focused task area and a separate deadline overview. **List**, **Calendar**, **Timeline**, and **Statistics** have permanent, labeled navigation in the desktop sidebar and the narrow-screen bottom bar. Collapsing search and filters keeps those four entries available. On narrow screens, **Open navigation** reveals project navigation, and **Show schedule** opens the compact calendar. The date index and small calendar open the existing calendar/date-detail view; they do not change task deadlines.
+The desktop sidebar keeps the brand and **List**, **Calendar**, **Timeline** and **Statistics** at the top, with **Settings & data** at the bottom. A separate middle scroll area contains scopes, every project and saved views. Collapsing search and filters keeps view navigation available. On narrow screens, views use the bottom bar; **Open navigation** opens the drawer with the active scope in view, and **Show schedule** opens the calendar. Date navigation does not change task deadlines.
 
 - Choose **Add task** in the top bar to open the full form directly. The adjacent arrow, **Quick capture**, opens compact text entry with a parsed deadline, project and tag preview; **Full form** carries that text into the full form. If Quick capture already has unsubmitted text, **Add task** continues it in the form. `Ctrl/Cmd + I` opens an independent new form. Tags, reminders and recurrence remain under **More settings**.
 - Open **Settings & data** from the header or sidebar, or press `Ctrl/Cmd + M`. Choose one of five category panels: **Appearance & language**, **Backups & transfer**, **Reminders & installation**, **Task maintenance**, or **Help & about**. The selected category is retained while the page stays open; **Back to tasks** returns to your current view, search, filters and Quick capture text.
@@ -61,11 +63,13 @@ The workspace keeps projects and saved views in the sidebar, with a focused task
 
 Workspace themes are saved in this browser profile and keep the existing four preference choices when upgrading. They remain independent of task data and task backups; database 2, task JSON 2.4 and saved-view 1.1/1.0 import compatibility are unchanged. The themes are part of the local application and retain the offline-use boundaries described below.
 
-The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.13.1 record](./docs/releases/4.13.1.md) documents the current release’s changes and completed acceptance.
+The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.13.2 record](./docs/releases/4.13.2.md) tracks this candidate’s changes, acceptance and publication status.
 
 ## Getting Started
 
 A new workspace starts empty. Choose **Add task (+)** in the top bar to enter your first task in the full form, or choose **Try example tasks** in the empty state to add three examples. Examples are clearly labeled, have reminders off, and can be edited, deleted or undone. Refreshing an empty workspace does not add examples automatically. You can backfill a past deadline and edit an overdue task without first moving its date forward. Editing only its name or description keeps the exact stored due instant and timezone, including repeated clock times when daylight saving time ends.
+
+Saving the task includes text left in the subtask input, even if you have not pressed **+**. Use **+** when preparing several subtasks. In List, Calendar or Timeline, if a saved task is hidden by the current filters, calendar day or loaded page, the success message offers **Open task** without changing your view conditions.
 
 Open **Settings & data → Help & about → Help and support** for command-palette, diagnostics and support actions, followed by keyboard shortcuts. Expand the capture, search, dates, backup, offline or privacy sections as needed. Diagnostics are also available directly in **Help & about**. Settings and help remain available when local storage is blocked; actions that need task storage keep their storage checks. For troubleshooting and feedback, see [SUPPORT.md](./SUPPORT.md).
 
@@ -107,7 +111,7 @@ Installed PWAs expose a `Quick Capture` shortcut that opens `./?capture=1`. Brow
 
 ## Projects, Tags, and Search
 
-Projects are the main grouping layer. A task belongs to one project such as `Inbox`, `Work`, `Personal`, or a named initiative. The project selector narrows the workspace, and the all-project list groups visible tasks by project.
+A task can belong to one project, such as `Inbox`, `Work` or `Personal`, or remain unassigned. Project selection narrows the workspace; the all-project list groups matching tasks. Rows omit a project badge when the group or project view already identifies it, while cross-project search results retain their project labels.
 
 Tags are flexible secondary labels. A task can have multiple tags such as `study`, `design`, or `follow-up`, which makes related work searchable across projects.
 
@@ -145,13 +149,15 @@ View import adds distinct search/filter/layout combinations, keeps existing view
 | View | Best for |
 | --- | --- |
 | List | Daily execution with task actions, subtasks, deadlines, reminders, archive controls, batch actions, and manual ordering. |
-| Calendar | Month planning with a real calendar grid, month/year navigation, today jump, date details, and no-date grouping. |
-| Timeline | Chronological scanning across upcoming work and completed history. |
+| Calendar | Month planning, date details and no-date grouping; task actions return focus to the original agenda item or date after a redraw. |
+| Timeline | Date-grouped work with a compact clock and short status; full deadlines remain available in accessible text and hover details. The list keeps full date presentation. |
 | Statistics | Open overdue, due-today or undated to-dos; review seven-day completions and project workload, with current-task metrics available on demand. |
 
 Statistics follows the current project and search, including explicit search qualifiers, independently of the task-status dropdown. The three workload entries open matching tasks and are disabled at zero; project rows open that project’s to-dos. **Back to statistics** restores the source view after drilling down. Manually changing task scope clears that return context.
 
 The dated seven-day bars, completed-today count and streak use retained tasks with saved completion dates, including archived completions. Archiving completed work therefore keeps it in the review. **Current task summary** is expandable: its task count and completion rate exclude archived tasks, and it lists archives separately. These metrics describe saved tasks rather than productivity over a historical period.
+
+Open **How this is counted** for the review’s calculation notes. Tag-format and recurrence explanations are also available on demand in the task form.
 
 ## Today's plan, batch actions, and Undo
 
@@ -163,11 +169,13 @@ Batch Actions mode initially renders 100 matching tasks with selection controls 
 
 Undo reverts the most recent task change while its task state is still current. A newer concurrent task change can withhold or invalidate that Undo, preserving the newer data; review the current tasks and start a fresh action. Use the header button, command palette, or `Ctrl/Cmd + Z` when focus is not inside a text field.
 
+Hovering over a feedback message or focusing one of its controls pauses its remaining display time; leaving resumes the remainder. Using its **Undo** action returns focus to an available task control.
+
 On very narrow screens, the header Undo control uses its icon and retains an accessible name.
 
 ## Unsaved Task Forms
 
-Closing an edited task form with Cancel, the close icon, Escape or the backdrop asks whether to continue editing or discard the changes. Continue editing keeps the form contents; Discard closes it. Saving completes before the form can be closed normally.
+Closing an edited task form with Cancel, the close icon, Escape or the backdrop asks whether to continue editing or discard the changes. Continue editing keeps the form contents; Discard closes it. Saving completes before the form can be closed normally. Text still waiting in the subtask input is part of these unsaved changes and retained-draft recovery.
 
 The app requests a browser departure warning while Quick add has nonblank text, a task form has unsaved changes or retained drafts are waiting. Browser rules can limit that warning, especially on mobile. Drafts are not automatically written to browser storage or a server; save or copy important text before leaving, and do not rely on a prompt to survive a crash.
 
@@ -273,7 +281,7 @@ The application needs no build step. For pinned browser-test dependencies, valid
 python3 tools/check.py --static-only
 ```
 
-Current-release acceptance and publication are documented in the [4.13.1 record](./docs/releases/4.13.1.md). The following completed records belong to their named historical releases.
+Current-candidate acceptance and publication status are tracked in the [4.13.2 record](./docs/releases/4.13.2.md). The following completed records belong to their named historical releases.
 
 The [4.9.0 release](./docs/releases/4.9.0.md) delivers the redesigned workspace, direct language selection, Light/Dark/System preferences and revised bilingual copy. Clean application commit `e7d58e2` freezes 23 source and 70 verification inputs. The full 59-program checker passed, with program durations totaling 1645.602 seconds; Chromium 154.0.8037.57, Firefox 153.0 and WebKit 26.5 each passed all 32 registered matrix programs. Two independent builds produced the same 797,361-byte, 24-file ZIP, SHA-256 `197bc587145d65f986320ce4b69bd0a2937ce8d48ca3ceb3183a49dfc8849b7b`, with `working_tree_dirty=false`. Actual 4.8.6-archive upgrade/rollback/re-upgrade and an additional 10,000-task/six-subtask full-workspace correctness exercise passed. The [input and artifact record](./docs/releases/inputs-4.9.0.json) binds these results to the frozen candidate; program viewport scopes and live-CDP exclusions remain explicit.
 

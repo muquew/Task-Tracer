@@ -1,0 +1,30 @@
+{
+  "protected_index_sha256": "fb59cc194636eba12251839860d4e42a1d1e60daf3b4b009a30ac68b91b1f1cd",
+  "final_index_sha256": "ec60ab40b209a15f7d86431d0599a4f8e200129f2909646323a17f531f41e508",
+  "non_style_html_byte_identical": true,
+  "all_scripts_byte_identical": true,
+  "changes": [
+    "Three CSS rules move desktop feedback into the workspace and hide background feedback/update prompt while the mobile navigation drawer is open"
+  ],
+  "verification_scope": "Final pending14, calendar4 and feedback10 retain fb59 source identity. Sidebar final including actual notice/Settings pointer checks, normal accessibility and original regressions use ec60. No relabelling of earlier reports.",
+  "final_html_whitespace_cleanup": {
+    "before_sha256": "ec60ab40b209a15f7d86431d0599a4f8e200129f2909646323a17f531f41e508",
+    "after_sha256": "79693a476cd75b46df78b71890f9a3a89aef2eb08aa8a2af701c07c4b801c1ad",
+    "blank_lines": [
+      2097,
+      2106,
+      2112,
+      2118,
+      2124,
+      2288
+    ],
+    "scripts_styles_byte_identical": true,
+    "change": "Remove six whitespace-only HTML lines; no DOM elements, text, scripts or styles changed."
+  },
+  "published_candidate_comparison": {
+    "index_sha256": "79693a476cd75b46df78b71890f9a3a89aef2eb08aa8a2af701c07c4b801c1ad",
+    "all_script_elements_byte_identical_to_protected_fb59": true,
+    "non_style_html_identical_after_normalizing_whitespace_only_lines": true,
+    "scope": "fb59 to published candidate: only three CSS rules and six whitespace-only HTML lines; no data, script, element or visible copy changes."
+  }
+}

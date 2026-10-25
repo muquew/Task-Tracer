@@ -1,0 +1,131 @@
+{
+  "schema": "task-tracer-local-refinement-summary-v1",
+  "kind": "derived-summary",
+  "version": "4.13.2",
+  "status": "local-affected-checks-and-full-smoke-passed-with-documented-scope",
+  "publication_status": "Not established by this local archive; release and production receipts are maintained separately.",
+  "source_phases": {
+    "protected_fb59": "fb59cc194636eba12251839860d4e42a1d1e60daf3b4b009a30ac68b91b1f1cd",
+    "css_ec60": "ec60ab40b209a15f7d86431d0599a4f8e200129f2909646323a17f531f41e508",
+    "candidate_html_whitespace_cleanup": "79693a476cd75b46df78b71890f9a3a89aef2eb08aa8a2af701c07c4b801c1ad",
+    "comparison": "scope/final-css-scope.json"
+  },
+  "native_results": {
+    "pending": {
+      "passed": 14,
+      "total": 14,
+      "source_phase": "protected_fb59",
+      "report": "pending/20261025T161317Z-chromium-7cddb93d/results.json"
+    },
+    "calendar_focus_timeline": {
+      "passed": 4,
+      "total": 4,
+      "source_phase": "protected_fb59",
+      "report": "calendar/20261025T161310Z-64118a07/report.json"
+    },
+    "workflow_feedback": {
+      "passed": 10,
+      "total": 10,
+      "source_phase": "protected_fb59",
+      "report": "feedback/final-run/results.json"
+    },
+    "sidebar": {
+      "passed_viewports": 4,
+      "viewports": [
+        "1280x720",
+        "1280x500",
+        "390x844",
+        "320x640"
+      ],
+      "projects": 40,
+      "saved_views": 4,
+      "source_phase": "css_ec60",
+      "report": "sidebar/final-run/report.json"
+    },
+    "draft_ime": {
+      "exit_codes": [
+        0,
+        0
+      ],
+      "source_phase": "css_ec60",
+      "report": "regression/draft-ime/report.json"
+    },
+    "accessibility_i18n": {
+      "exit_code": 0,
+      "states": 98,
+      "workflow_viewports": [
+        1280,
+        390
+      ],
+      "skip_scaled": true,
+      "source_phase": "css_ec60",
+      "report": "regression/accessibility/report.json"
+    },
+    "foreign_wall_time": {
+      "exit_code": 0,
+      "cases": 6,
+      "source_phase": "css_ec60",
+      "report": "regression/foreign-time/report.json"
+    },
+    "calendar_navigation": {
+      "exit_code": 0,
+      "report": "regression/calendar/report.json"
+    },
+    "calendar_timezone_adapted": {
+      "passed": true,
+      "source_phase": "css_ec60",
+      "report": "regression/calendar/entry-adaptation-ec60/run2/report.json",
+      "original_failure_retained": true,
+      "intermediate_contract_failure_retained": true
+    },
+    "manual_update": {
+      "native_passed": 20,
+      "total": 20,
+      "source_phase": "css_ec60",
+      "report": "manual-update/report.json",
+      "same_original_execution_copied": true,
+      "outer_runner_second_command_exit": 2,
+      "outer_runner_report": "regression/manual-update/report.json"
+    },
+    "full_smoke": {
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 96.16,
+      "source_phase": "candidate_html_whitespace_cleanup",
+      "source_start_end_equal": true,
+      "report": "regression/smoke-final-tail-dialog/report.json",
+      "log": "regression/smoke-final-tail-dialog/smoke_playwright.py.log",
+      "earlier_failed_attempts": "earlier/regression",
+      "calendar_statistics_tool_adaptation": "scope/smoke-calendar-statistics-tool-adaptation.json",
+      "scope": "One full Chromium smoke invocation, not a new full release suite or a three-engine matrix. Tool interface assumptions were adapted; original failed attempts remain unchanged."
+    }
+  },
+  "manual_review": {
+    "observation_count": 38,
+    "all_observation_page_error_arrays_empty": true,
+    "selected_png_count": 6,
+    "all_38_pngs_claimed_viewed": false,
+    "index": "manual/steps.json",
+    "source_binding": "Root execution-stage record; observation JSON does not contain native source hashes.",
+    "actual_download": "manual/final-review/task-tracer_backup_2026-10-25_16-28-10-898.json",
+    "backup_tasks": 7,
+    "backup_completed_tasks": 0,
+    "backup_subtasks": 1
+  },
+  "selected_archive": {
+    "original_files": 185,
+    "png_files": 14,
+    "original_bytes": 1472069,
+    "manifest": "original-files.json",
+    "trace_zip_copied": false,
+    "complete_source_snapshots_copied": false,
+    "scope": "Listed local acceptance files only; release/, canonical/, production/ and production-browser/ receipt subdirectories are excluded. This is not an exact inventory of the containing directory."
+  },
+  "limitations": [
+    "These are Chromium local checks, not a new three-engine matrix.",
+    "DOM composition checks do not certify a physical OS IME.",
+    "Automated accessibility state observations do not establish complete WCAG conformance, assistive-technology or scaled-view coverage.",
+    "Manual observations and screenshots are not interchangeable with independent assertions.",
+    "The update fixture uses synthetic next-version bundles; its 4.13.3 labels are fixture values, not a published application version."
+  ]
+}

@@ -1,0 +1,292 @@
+{
+  "viewport": {
+    "w": 320,
+    "h": 844
+  },
+  "scrollY": 0,
+  "docHeight": 1266,
+  "docWidth": 320,
+  "active": {
+    "id": "settingsTitle",
+    "className": ""
+  },
+  "title": "Task Tracer",
+  "themeColor": "#D3D2E0",
+  "skin": {
+    "accent": "iris",
+    "theme": "light",
+    "chromeSolid": "#D3D2E0"
+  },
+  "headings": [
+    "Settings & data",
+    "Appearance & language"
+  ],
+  "surfaces": [
+    {
+      "selector": "#openModalBtn",
+      "visible": true,
+      "text": "Add task",
+      "x": 167,
+      "y": 10,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "selector": "#quickAddForm",
+      "visible": 0,
+      "text": "\n                    \n                        \n                        Quick cap",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#quickAddInput",
+      "visible": 0,
+      "text": "",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#toolsDrawer",
+      "visible": 0,
+      "text": "\n            \n                    \n                        \n                    ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceOverview",
+      "visible": 0,
+      "text": "\n            October 2026MonTueWedThuFriSatSun2829301234567891011121314151617181",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceWeekIndex",
+      "visible": 0,
+      "text": "OctNext 7 daysMon26Tue27Wed28Thu29Fri30Sat31Sun1",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#taskList",
+      "visible": 0,
+      "text": "产品迭代 · 1 task\n        \n        \n            复核最终界面与操作\n            No deadline0/1",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceTitle",
+      "visible": 0,
+      "text": "All tasks",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#settingsWorkspace",
+      "visible": true,
+      "text": "Settings & data\nAppearance & language\nBackups & transfer\nReminders & installatio",
+      "x": 14,
+      "y": 76,
+      "w": 292,
+      "h": 1106
+    }
+  ],
+  "buttons": [
+    {
+      "id": "workspaceNavToggle",
+      "text": "Open navigation",
+      "x": 14,
+      "y": 10,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "settingsBackBtn",
+      "text": "Back to tasks",
+      "x": 85,
+      "y": 10,
+      "w": 38,
+      "h": 40
+    },
+    {
+      "id": "undoBtn",
+      "text": "Undo: 新增任务",
+      "x": 128,
+      "y": 10,
+      "w": 34,
+      "h": 40
+    },
+    {
+      "id": "openModalBtn",
+      "text": "Add task",
+      "x": 167,
+      "y": 10,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "id": "quickCaptureBtn",
+      "text": "Quick capture",
+      "x": 270,
+      "y": 10,
+      "w": 36,
+      "h": 40
+    },
+    {
+      "id": "tab-settingsAppearance",
+      "text": "Appearance & language",
+      "x": 17,
+      "y": 127,
+      "w": 157,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsData",
+      "text": "Backups & transfer",
+      "x": 178,
+      "y": 127,
+      "w": 121,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsExperience",
+      "text": "Reminders & installation",
+      "x": 303,
+      "y": 127,
+      "w": 149,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsCleanup",
+      "text": "Task maintenance",
+      "x": 457,
+      "y": 127,
+      "w": 117,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsHelp",
+      "text": "Help & about",
+      "x": 577,
+      "y": 127,
+      "w": 89,
+      "h": 42
+    },
+    {
+      "id": "workspaceNotificationClose",
+      "text": "Close",
+      "x": 264,
+      "y": 724,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "viewTab-list",
+      "text": "List",
+      "x": 10,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    },
+    {
+      "id": "viewTab-calendar",
+      "text": "Calendar",
+      "x": 86,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    },
+    {
+      "id": "viewTab-timeline",
+      "text": "Timeline",
+      "x": 162,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    },
+    {
+      "id": "viewTab-stats",
+      "text": "Stats",
+      "x": 238,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    }
+  ],
+  "fields": [
+    {
+      "id": "workspaceTheme-iris",
+      "type": "radio",
+      "value": "iris",
+      "placeholder": "",
+      "x": 16,
+      "y": 299,
+      "w": 288,
+      "h": 140
+    },
+    {
+      "id": "workspaceTheme-ocean",
+      "type": "radio",
+      "value": "ocean",
+      "placeholder": "",
+      "x": 16,
+      "y": 461,
+      "w": 288,
+      "h": 140
+    },
+    {
+      "id": "workspaceTheme-pine",
+      "type": "radio",
+      "value": "pine",
+      "placeholder": "",
+      "x": 16,
+      "y": 623,
+      "w": 288,
+      "h": 140
+    },
+    {
+      "id": "workspaceTheme-berry",
+      "type": "radio",
+      "value": "berry",
+      "placeholder": "",
+      "x": 16,
+      "y": 785,
+      "w": 288,
+      "h": 140
+    },
+    {
+      "id": "themeToggleBtn",
+      "type": "select-one",
+      "value": "system",
+      "placeholder": null,
+      "x": 30,
+      "y": 1010,
+      "w": 260,
+      "h": 42
+    },
+    {
+      "id": "languageSelect",
+      "type": "select-one",
+      "value": "en",
+      "placeholder": null,
+      "x": 30,
+      "y": 1124,
+      "w": 260,
+      "h": 42
+    }
+  ],
+  "pageErrors": []
+}

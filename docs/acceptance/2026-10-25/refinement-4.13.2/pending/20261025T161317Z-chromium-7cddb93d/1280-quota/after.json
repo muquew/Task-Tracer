@@ -1,0 +1,106 @@
+{
+  "tasks": [
+    {
+      "id": 1792944840363,
+      "createdAt": "2026-10-25T16:13:44.780Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "配额失败后恢复并保存一次",
+      "description": "保留原文与换行。\n不能因加入最后一条子任务改动其它字段。",
+      "project": "评审项目",
+      "tags": [
+        "review",
+        "quoted, tag"
+      ],
+      "subtasks": [
+        {
+          "id": 1792944943230,
+          "text": "已经通过加号加入",
+          "completed": false
+        },
+        {
+          "id": 1792945265986,
+          "text": "失败后不能丢失或重复的子任务",
+          "completed": false
+        }
+      ],
+      "dueDate": null,
+      "dueAt": null,
+      "dueLocalDate": null,
+      "dueLocalTime": null,
+      "dueTimeZone": null,
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 20000
+    },
+    {
+      "id": 1792945751445,
+      "createdAt": "2026-10-25T16:13:42.035Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "回归哨兵：不能改动已有记录",
+      "description": "独立合成数据",
+      "project": "Inbox",
+      "tags": [],
+      "subtasks": [
+        {
+          "id": 1792945223492,
+          "text": "保留哨兵子任务",
+          "completed": false
+        }
+      ],
+      "dueDate": null,
+      "dueAt": null,
+      "dueLocalDate": null,
+      "dueLocalTime": null,
+      "dueTimeZone": null,
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 10000
+    }
+  ],
+  "config": [
+    {
+      "key": "language",
+      "value": "zh-CN"
+    },
+    {
+      "key": "recoveryHistory",
+      "value": [
+        {
+          "id": "5514939e-f6ba-4fbc-a0ca-3904d6d9ab5b",
+          "createdAt": "2026-10-25T16:13:42.088Z",
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "key": "taskRevision",
+      "value": 2
+    }
+  ]
+}

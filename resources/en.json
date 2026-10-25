@@ -270,15 +270,16 @@
       "placeholder": "Enter task name"
     },
     "description": {
-      "label": "Description (optional)",
+      "label": "Description",
       "placeholder": "Enter task description"
     },
     "project": {
-      "label": "Project (optional)",
+      "label": "Project",
       "placeholder": "e.g. Work / Personal"
     },
     "tags": {
-      "label": "Tags (optional)",
+      "label": "Tags",
+      "formatLabel": "Tag format",
       "placeholder": "Separate tags with commas",
       "hint": "Separate tags with commas. Wrap a tag containing a comma in double quotes; write a double quote inside a tag twice. Tags are included in search."
     },
@@ -314,6 +315,7 @@
     },
     "repeat": {
       "label": "Repeat task",
+      "helpLabel": "How repeating tasks work",
       "hint": "Creates the next occurrence after completion.",
       "customDays": "Days between repeats",
       "options": {
@@ -338,7 +340,7 @@
       "pause": "Pause repeating task"
     },
     "subtasks": {
-      "label": "Subtasks (optional)",
+      "label": "Subtasks",
       "placeholder": "Add a subtask…",
       "add": "Add subtask",
       "edit": "Edit subtask: {text}",
@@ -731,8 +733,9 @@
     "undo": "Undo outside text fields",
     "close": "Close",
     "diagnostics": "Review diagnostic information",
+    "diagnosticEntryDescription": "Preview a report before downloading. Nothing is sent automatically.",
     "diagnosticDescription": "Review this report before downloading or sharing it. It contains app and browser versions, capabilities and storage status. It excludes task contents, saved views, preferences, page URLs and error messages. Nothing is sent automatically.",
-    "downloadDiagnostics": "Download diagnostic report",
+    "downloadDiagnostics": "Download report",
     "diagnosticError": "Could not prepare the diagnostic report. Try again.",
     "support": "Report an issue on GitHub",
     "datesTitle": "Dates and clock changes",
@@ -801,7 +804,7 @@
     "savedViews": "Saved views",
     "noSavedViews": "No saved views yet",
     "localStorage": "Stored in this browser",
-    "language": "Language",
+    "language": "Interface language",
     "appearance": "Appearance",
     "themeLight": "Light",
     "themeDark": "Dark",
@@ -917,13 +920,15 @@
     "viewTimelineDescription": "Follow tasks with deadlines in chronological order.",
     "viewStatsDescription": "Review completion and trends for your current project and search.",
     "captureRetained": "Unsubmitted text stays in this page. Save it before refreshing or closing.",
+    "savedOutsideView": "Saved. This task isn’t shown in the current view.",
+    "openSavedTask": "Open task",
     "captureDateCheck": "Check the date. A past deadline can also be used to record earlier work.",
     "calendarChooseDay": "Choose a date to see that day’s tasks.",
     "statsRangeHint": "Statistics use your project and search scope, not the task-status dropdown."
   },
   "craft": {
     "accentLabel": "Workspace theme",
-    "accentDescription": "Changes the sidebar, background, panels and selection states. Combine any theme with light or dark appearance.",
+    "accentDescription": "Works with light or dark appearance.",
     "accentIris": "Iris",
     "accentOcean": "Ocean",
     "accentPine": "Pine",
@@ -958,13 +963,13 @@
   },
   "statsInsights": {
     "workloadTitle": "Needs attention",
-    "workloadDescription": "Find tasks to handle first, or plan work with no deadline. Due today can include tasks already overdue.",
+    "workloadDescription": "Tasks due today can also be overdue.",
     "overdueTitle": "Overdue",
     "overdueHint": "Unfinished tasks past their deadline",
     "todayTitle": "Due today",
     "todayHint": "Unfinished tasks with today's due date",
     "undatedTitle": "No deadline",
-    "undatedHint": "To-dos with no due date yet",
+    "undatedHint": "No date set",
     "viewTasks": "View tasks",
     "nothingHere": "No matching to-dos in this scope",
     "scopeRecords": "{count} tasks · {archived} archived",
@@ -990,7 +995,8 @@
     "inventoryTotal": "Unarchived tasks",
     "inventoryCompleted": "Completed (unarchived)",
     "noInventory": "No unarchived tasks in this scope",
-    "noScheduled": "No unfinished tasks with a deadline"
+    "noScheduled": "No unfinished tasks with a deadline",
+    "methodLabel": "How this is counted"
   },
   "dataReview": {
     "importModeTitle": "Choose how to import",

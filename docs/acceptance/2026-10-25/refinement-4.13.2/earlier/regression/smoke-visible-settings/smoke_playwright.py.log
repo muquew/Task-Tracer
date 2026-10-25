@@ -1,0 +1,3 @@
+Notification pointer access passed: 1280px settings entry and toast Undo remain usable
+Notification pointer access passed: 900px settings entry and toast Undo remain usable
+Smoke failed: Saved smart view chip should stay compact: {'x': 16, 'y': 550, 'width': 196, 'height': 55.4375}

@@ -270,15 +270,16 @@
       "placeholder": "输入任务名称"
     },
     "description": {
-      "label": "描述（可选）",
+      "label": "描述",
       "placeholder": "输入任务描述"
     },
     "project": {
-      "label": "项目（可选）",
+      "label": "项目",
       "placeholder": "例如：工作 / 个人"
     },
     "tags": {
-      "label": "标签（可选）",
+      "label": "标签",
+      "formatLabel": "标签格式",
       "placeholder": "用逗号分隔标签",
       "hint": "用逗号分隔标签；含逗号的标签用双引号包裹，标签内的双引号写成两个。标签可用于搜索。"
     },
@@ -314,6 +315,7 @@
     },
     "repeat": {
       "label": "重复任务",
+      "helpLabel": "重复规则说明",
       "hint": "完成后自动创建下一期。",
       "customDays": "重复间隔（天）",
       "options": {
@@ -338,7 +340,7 @@
       "pause": "暂停重复任务"
     },
     "subtasks": {
-      "label": "子任务（可选）",
+      "label": "子任务",
       "placeholder": "输入子任务…",
       "add": "添加子任务",
       "edit": "编辑子任务：{text}",
@@ -731,8 +733,9 @@
     "undo": "在文本输入框之外撤销操作",
     "close": "关闭",
     "diagnostics": "查看诊断信息",
+    "diagnosticEntryDescription": "预览报告后自行下载；不会自动发送。",
     "diagnosticDescription": "下载或分享前请检查此报告。内容包括应用和浏览器版本、功能支持和存储状态，不包含任务内容、保存的视图、偏好设置、页面地址或错误详情；不会自动发送。",
-    "downloadDiagnostics": "下载诊断报告",
+    "downloadDiagnostics": "下载报告",
     "diagnosticError": "未能准备诊断报告，请重试。",
     "support": "到 GitHub 反馈问题",
     "datesTitle": "日期与时钟跳变",
@@ -801,7 +804,7 @@
     "savedViews": "保存的视图",
     "noSavedViews": "还没有保存的视图",
     "localStorage": "数据保存在此浏览器",
-    "language": "语言",
+    "language": "界面语言",
     "appearance": "外观",
     "themeLight": "浅色",
     "themeDark": "深色",
@@ -917,13 +920,15 @@
     "viewTimelineDescription": "按时间顺序查看有截止日期的任务。",
     "viewStatsDescription": "按项目与搜索范围查看完成情况和趋势。",
     "captureRetained": "未提交的记录保留在当前页面；刷新或关闭前请先保存。",
+    "savedOutsideView": "任务已保存，未在当前视图显示。",
+    "openSavedTask": "打开任务",
     "captureDateCheck": "请核对日期；过去的截止时间也可以用于补记任务。",
     "calendarChooseDay": "选择日期，查看当天的任务。",
     "statsRangeHint": "统计按项目和搜索范围汇总，不使用任务状态下拉筛选。"
   },
   "craft": {
     "accentLabel": "工作区主题",
-    "accentDescription": "同步改变侧栏、背景、面板和选中状态，可搭配浅色或深色外观。",
+    "accentDescription": "可搭配浅色或深色外观。",
     "accentIris": "雾紫",
     "accentOcean": "海湾",
     "accentPine": "松林",
@@ -958,13 +963,13 @@
   },
   "statsInsights": {
     "workloadTitle": "待处理",
-    "workloadDescription": "查看需要先处理的任务，或为无截止日期的待办做安排。今天截止的任务也可能已经逾期。",
+    "workloadDescription": "今天截止的任务也可能已经逾期。",
     "overdueTitle": "逾期待处理",
     "overdueHint": "已超过截止时间的未完成任务",
     "todayTitle": "今天截止",
     "todayHint": "截止日期为今天的未完成任务",
     "undatedTitle": "无截止日期",
-    "undatedHint": "尚未安排截止日期的待办",
+    "undatedHint": "未安排日期",
     "viewTasks": "查看任务",
     "nothingHere": "当前范围没有这类待办",
     "scopeRecords": "共 {count} 项任务 · 其中 {archived} 项已归档",
@@ -990,7 +995,8 @@
     "inventoryTotal": "未归档任务",
     "inventoryCompleted": "已完成（未归档）",
     "noInventory": "当前范围没有未归档任务",
-    "noScheduled": "当前没有带截止日期的未完成任务"
+    "noScheduled": "当前没有带截止日期的未完成任务",
+    "methodLabel": "统计口径"
   },
   "dataReview": {
     "importModeTitle": "选择导入方式",

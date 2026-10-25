@@ -1,0 +1,167 @@
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer/tools/calendar_timezone_playwright.py", line 213, in <module>
+    run(args.browser,args.case)
+  File "/workspace/Task-Tracer/tools/calendar_timezone_playwright.py", line 177, in run
+    if case in ('all','static'):verify_static_civil_dates(page,url)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Task-Tracer/tools/calendar_timezone_playwright.py", line 66, in verify_static_civil_dates
+    expect(page.locator('#dueDate')).to_have_value('2011-12-30')
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 22638, in to_have_value
+    self._sync(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 568, in to_have_value
+    await self._expect_impl(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 128, in _expect_impl
+    _record_soft_or_raise(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 60, in _record_soft_or_raise
+    raise error
+AssertionError: Locator expected to have Value '2011-12-30'
+Actual value:  
+Call log:
+  - Expect "to_have_value" with timeout 10000ms
+  - waiting for locator("#dueDate")
+    23 × locator resolved to <input type="date" id="dueDate" class="date-input" aria-describedby="deadlineTimeHint"/>
+       - unexpected value ""
+
+Aria snapshot:
+- complementary "导航":
+  - link "Task Tracer":
+    - /url: ./
+  - navigation "视图切换":
+    - button "列表"
+    - button "日历"
+    - button "时间线"
+    - button "统计"
+  - navigation "导航":
+    - button "全部任务 2" [pressed]
+    - button "打开今日计划": 今日计划
+  - heading "项目" [level=2]
+  - navigation "项目":
+    - button "Inbox 2"
+  - button "全部项目"
+  - button "设置与数据"
+  - text: 数据保存在此浏览器
+- banner:
+  - strong: 日历
+  - button "添加任务"
+  - button "快速记录" [expanded]
+  - button "设置与数据"
+- region "添加任务":
+  - heading "添加任务" [level=2]
+  - button "收起添加"
+  - form "快速记录":
+    - text: 快速记录
+    - textbox "快速记录":
+      - /placeholder: "例如：周三 14:00 讨论方案 #工作 /项目"
+    - button "添加"
+    - paragraph: 日期、时间、#标签、/项目请用空格分隔。默认沿用当前项目范围（全部项目为 Inbox）。
+  - paragraph: "2011年12月31日周六 23:59 · 截止时间已过 · 项目: Inbox"
+  - button "完整表单"
+- main:
+  - heading "日历" [level=1]
+  - paragraph: 全部任务 · 2 个任务
+  - region "任务工具":
+    - toolbar "任务工具":
+      - text: 搜索任务…
+      - textbox "搜索任务…"
+      - text: 支持限定搜索：project:项目、tag:标签、status:状态、due:日期。
+      - button "保存视图"
+      - button "筛选 ·进行中"
+  - region "日历":
+    - heading "2011年12月" [level=2]
+    - button "上一年"
+    - button "上个月"
+    - button "今天"
+    - button "下个月"
+    - button "下一年"
+    - text: 周一 周二 周三 周四 周五 周六 周日
+    - group "2011年11月28日星期一, 0 个任务":
+      - button "在 2011年11月28日 添加任务": "28"
+    - group "2011年11月29日星期二, 0 个任务":
+      - button "在 2011年11月29日 添加任务": "29"
+    - group "2011年11月30日星期三, 0 个任务":
+      - button "在 2011年11月30日 添加任务": "30"
+    - group "2011年12月1日星期四, 0 个任务":
+      - button "在 2011年12月1日 添加任务": "1"
+    - group "2011年12月2日星期五, 0 个任务":
+      - button "在 2011年12月2日 添加任务": "2"
+    - group "2011年12月3日星期六, 0 个任务":
+      - button "在 2011年12月3日 添加任务": "3"
+    - group "2011年12月4日星期日, 0 个任务":
+      - button "在 2011年12月4日 添加任务": "4"
+    - group "2011年12月5日星期一, 0 个任务":
+      - button "在 2011年12月5日 添加任务": "5"
+    - group "2011年12月6日星期二, 0 个任务":
+      - button "在 2011年12月6日 添加任务": "6"
+    - group "2011年12月7日星期三, 0 个任务":
+      - button "在 2011年12月7日 添加任务": "7"
+    - group "2011年12月8日星期四, 0 个任务":
+      - button "在 2011年12月8日 添加任务": "8"
+    - group "2011年12月9日星期五, 0 个任务":
+      - button "在 2011年12月9日 添加任务": "9"
+    - group "2011年12月10日星期六, 0 个任务":
+      - button "在 2011年12月10日 添加任务": "10"
+    - group "2011年12月11日星期日, 0 个任务":
+      - button "在 2011年12月11日 添加任务": "11"
+    - group "2011年12月12日星期一, 0 个任务":
+      - button "在 2011年12月12日 添加任务": "12"
+    - group "2011年12月13日星期二, 0 个任务":
+      - button "在 2011年12月13日 添加任务": "13"
+    - group "2011年12月14日星期三, 0 个任务":
+      - button "在 2011年12月14日 添加任务": "14"
+    - group "2011年12月15日星期四, 0 个任务":
+      - button "在 2011年12月15日 添加任务": "15"
+    - group "2011年12月16日星期五, 0 个任务":
+      - button "在 2011年12月16日 添加任务": "16"
+    - group "2011年12月17日星期六, 0 个任务":
+      - button "在 2011年12月17日 添加任务": "17"
+    - group "2011年12月18日星期日, 0 个任务":
+      - button "在 2011年12月18日 添加任务": "18"
+    - group "2011年12月19日星期一, 0 个任务":
+      - button "在 2011年12月19日 添加任务": "19"
+    - group "2011年12月20日星期二, 0 个任务":
+      - button "在 2011年12月20日 添加任务": "20"
+    - group "2011年12月21日星期三, 0 个任务":
+      - button "在 2011年12月21日 添加任务": "21"
+    - group "2011年12月22日星期四, 0 个任务":
+      - button "在 2011年12月22日 添加任务": "22"
+    - group "2011年12月23日星期五, 0 个任务":
+      - button "在 2011年12月23日 添加任务": "23"
+    - group "2011年12月24日星期六, 0 个任务":
+      - button "在 2011年12月24日 添加任务": "24"
+    - group "2011年12月25日星期日, 0 个任务":
+      - button "在 2011年12月25日 添加任务": "25"
+    - group "2011年12月26日星期一, 0 个任务":
+      - button "在 2011年12月26日 添加任务": "26"
+    - group "2011年12月27日星期二, 0 个任务":
+      - button "在 2011年12月27日 添加任务": "27"
+    - group "2011年12月28日星期三, 0 个任务":
+      - button "在 2011年12月28日 添加任务": "28"
+    - group "2011年12月29日星期四, 0 个任务":
+      - button "在 2011年12月29日 添加任务": "29"
+    - group "2011年12月30日星期五, 1 个任务":
+      - button "在 2011年12月30日 添加任务": "30"
+      - button "Apia skipped civil day, 已逾期": Apia skipped civil day
+    - group "2011年12月31日星期六, 0 个任务":
+      - button "在 2011年12月31日 添加任务": "31"
+    - group "2012年1月1日星期日, 0 个任务":
+      - button "在 2012年1月1日 添加任务": "1"
+    - group "2012年1月2日星期一, 0 个任务":
+      - button "在 2012年1月2日 添加任务": "2"
+    - group "2012年1月3日星期二, 0 个任务":
+      - button "在 2012年1月3日 添加任务": "3"
+    - group "2012年1月4日星期三, 0 个任务":
+      - button "在 2012年1月4日 添加任务": "4"
+    - group "2012年1月5日星期四, 0 个任务":
+      - button "在 2012年1月5日 添加任务": "5"
+    - group "2012年1月6日星期五, 0 个任务":
+      - button "在 2012年1月6日 添加任务": "6"
+    - group "2012年1月7日星期六, 0 个任务":
+      - button "在 2012年1月7日 添加任务": "7"
+    - group "2012年1月8日星期日, 0 个任务":
+      - button "在 2012年1月8日 添加任务": "8"
+  - text: 全工作区（不含归档） 0/2 个任务已完成
+- button "回到顶部 (Alt + T)"
+- text: 日历已更新，当前范围 2 个任务

@@ -54,6 +54,24 @@ def assert_grid(page, year, month):
     assert all(int(key[-2:])==int(label) for key,label in labels), 'Date labels differ from their civil keys'
 
 
+def open_day_task_form(page, day_button):
+    """Follow the actual date -> agenda/capture -> full-form navigation."""
+    day_key = day_button.get_attribute('data-calendar-add-date') or day_button.get_attribute('data-calendar-detail-date')
+    through_capture = False
+    day_button.click()
+    modal = page.locator('#taskModal')
+    if not modal.is_visible():
+        shelf = page.locator('#captureShelf')
+        agenda_add = page.locator(f'.calendar-agenda-add[data-calendar-add-date="{day_key}"]')
+        if agenda_add.is_visible() and not shelf.is_visible():
+            agenda_add.click()
+        if shelf.is_visible():
+            through_capture = True
+            page.locator('#captureDetailsBtn').click()
+    expect(modal).to_be_visible()
+    return through_capture
+
+
 def verify_static_civil_dates(page, url):
     seed_civil_tasks(page,url)
     before=read_workspace(page)
@@ -62,8 +80,10 @@ def verify_static_civil_dates(page, url):
     skipped=page.locator('[data-calendar-add-date="2011-12-30"]')
     expect(skipped).to_have_count(1)
     expect(page.locator('.calendar-day').filter(has=skipped).locator('.calendar-task')).to_have_text('Apia skipped civil day')
-    skipped.click()
-    expect(page.locator('#dueDate')).to_have_value('2011-12-30')
+    through_capture = open_day_task_form(page, skipped)
+    # Capture hands its already-resolved deadline to the full form; the old
+    # direct calendar form retained the original input until submission.
+    expect(page.locator('#dueDate')).to_have_value('2011-12-31' if through_capture else '2011-12-30')
     page.locator('#cancelBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
     page.locator('#searchInput').fill('Leap February calendar target')
@@ -71,7 +91,7 @@ def verify_static_civil_dates(page, url):
     assert_grid(page,2024,2)
     leap=page.locator('[data-calendar-add-date="2024-02-29"]')
     expect(leap).to_have_count(1)
-    leap.click()
+    open_day_task_form(page, leap)
     expect(page.locator('#dueDate')).to_have_value('2024-02-29')
     page.locator('#cancelBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
@@ -89,7 +109,13 @@ def verify_skipped_day_add_policy(page,url):
     seed_civil_tasks(page,url)
     before={task['id']:task for task in get_task_records(page)}
     select_view(page,'calendar')
-    page.locator('[data-calendar-add-date="2011-12-30"]').click()
+    through_capture = open_day_task_form(page, page.locator('[data-calendar-add-date="2011-12-30"]'))
+    if through_capture:
+        expect(page.locator('#dueDate')).to_have_value('2011-12-31')
+        expect(page.locator('#dueTime')).to_have_value('23:59')
+        # Enter the skipped civil day explicitly to keep exercising the full
+        # form's original forward-gap policy, not only capture's conversion.
+        page.locator('#dueDate').fill('2011-12-30')
     expect(page.locator('#dueDate')).to_have_value('2011-12-30')
     page.locator('#taskName').fill('Explicit Apia skipped-day add')
     page.locator('#submitBtn').click()

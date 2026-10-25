@@ -1,0 +1,46 @@
+[
+  {
+    "id": "draft-1792944823520-1",
+    "capturedAt": "2026-10-25T16:13:43.520Z",
+    "form": {
+      "values": {
+        "name": "配额失败后恢复并保存一次",
+        "desc": "保留原文与换行。\n不能因加入最后一条子任务改动其它字段。",
+        "project": "评审项目",
+        "tags": "review, \"quoted, tag\"",
+        "date": "2026-10-25",
+        "time": "23:59",
+        "noDeadline": true,
+        "reminderOffset": "15",
+        "reminderRepeat": "-1",
+        "repeatType": "none",
+        "repeatInterval": "1",
+        "repeatPaused": false,
+        "subtask": "  失败后不能丢失或重复的子任务  ",
+        "weekdays": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "subtasks": [
+        {
+          "id": 1792944943230,
+          "text": "已经通过加号加入",
+          "completed": false
+        }
+      ]
+    },
+    "editingTaskId": null,
+    "editingTaskSnapshot": null,
+    "editingSubtaskIndex": -1,
+    "baseline": "{\"values\":{\"name\":\"\",\"desc\":\"\",\"project\":\"Inbox\",\"tags\":\"\",\"date\":\"2026-10-25\",\"time\":\"23:59\",\"noDeadline\":true,\"reminderOffset\":\"15\",\"reminderRepeat\":\"-1\",\"repeatType\":\"none\",\"repeatInterval\":\"1\",\"repeatPaused\":false,\"subtask\":\"\",\"weekdays\":[false,false,false,false,false,false,false]},\"subtasks\":[]}",
+    "creationFocusDate": null,
+    "captureText": null,
+    "advancedOpen": true
+  }
+]

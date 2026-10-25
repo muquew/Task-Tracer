@@ -494,7 +494,15 @@ def exercise_workspace_navigation(page: Page) -> None:
     expect(toggle).to_have_attribute('aria-expanded', 'true')
     expect(sidebar).to_have_attribute('aria-hidden', 'false')
     expect(sidebar).to_have_js_property('inert', False)
-    expect(sidebar.locator('button').first).to_be_focused()
+    if page.locator('#workspaceSidebarScroll').count():
+        current = (sidebar.locator('.workspace-sidebar-footer #workspaceSettingsBtn')
+                   if page.locator('#settingsWorkspace').is_visible()
+                   else sidebar.locator('.workspace-nav-button[aria-pressed="true"]'))
+        expect(current).to_have_count(1)
+        expect(current).to_be_focused()
+        expect(current).to_be_in_viewport()
+    else:
+        expect(sidebar.locator('button').first).to_be_focused()
     assert_accessibility_baseline(page, 'open workspace navigation')
     page.keyboard.press('Escape')
     expect(toggle).to_have_attribute('aria-expanded', 'false')
@@ -910,10 +918,25 @@ def exercise_task_name_validation(page: Page) -> None:
 
 
 def exercise_empty_state_actions(page: Page) -> None:
+    before = get_task_records(page)
     open_settings(page, 'cleanup')
-    page.locator("#clearCompletedBtn").click()
-    wait_for_notification(page, re.compile("没有已完成的任务可清除|no completed tasks", re.I))
+    if page.locator('#settingsWorkspace').count():
+        eligible = [task for task in before if task.get('completed') and not task.get('archived')]
+        assert not eligible, f'Empty maintenance fixture has completed, unarchived tasks: {eligible}'
+        expect(page.locator('#clearCompletedBtn')).to_be_disabled()
+        expect(page.locator('#clearCompletedBtn')).to_have_attribute('aria-disabled', 'true')
+        language = page.locator('html').get_attribute('lang')
+        empty_status = json.loads((REPO_ROOT / 'resources' / f'{language}.json').read_text())['dataReview']['maintenanceEmpty']
+        expect(page.locator('#maintenanceStatus')).to_have_text(empty_status)
+        expect(page.locator('#taskModal')).to_be_hidden()
+        assert get_task_records(page) == before, 'Empty maintenance navigation changed task records'
+    else:
+        page.locator("#clearCompletedBtn").click()
+        wait_for_notification(page, re.compile("没有已完成的任务可清除|no completed tasks", re.I))
     page.keyboard.press("Escape")
+    if page.locator('#settingsWorkspace').count():
+        expect(page.locator('#taskModal')).to_be_hidden()
+        assert get_task_records(page) == before, 'Leaving empty maintenance changed task records'
 
 
 def exercise_search_empty_state(page: Page, query: str) -> None:
@@ -1160,11 +1183,26 @@ def exercise_quick_capture_entries(page: Page, base_url: str, prefix: str) -> No
 
 def exercise_project_tags(page: Page, alpha_name: str, beta_name: str) -> None:
     alpha = task_locator(page, alpha_name)
-    expect(alpha.locator(".project-chip")).to_contain_text("Smoke Work")
+    if page.locator('#workspaceSidebarScroll').count() and not alpha.locator('.project-chip').count():
+        expect(page.locator('#viewTab-list')).to_have_attribute('aria-current', 'page')
+        expect(page.locator('#searchInput')).to_have_value('')
+        record = get_task_record_by_name(page, alpha_name)
+        assert record.get('project') == 'Smoke Work', f'Implicit project context lost the task project: {record}'
+        group_label = alpha.evaluate("""node => {
+            let previous = node.previousElementSibling;
+            while (previous && !previous.classList.contains('task-group-header')) previous = previous.previousElementSibling;
+            return previous?.textContent.trim() || '';
+        }""")
+        title = page.locator('#workspaceTitle').inner_text().strip()
+        assert re.match(r'^Smoke Work\s*·\s*\S', group_label) or title == 'Smoke Work', \
+            f'The hidden project chip has no matching group or workspace context: {group_label!r}, {title!r}'
+    else:
+        expect(alpha.locator(".project-chip")).to_contain_text("Smoke Work")
     expect(alpha.locator(".tag-chip").first).to_contain_text("#focus")
     page.locator("#searchInput").fill("focus")
     expect(task_locator(page, alpha_name)).to_have_count(1)
     expect(task_locator(page, beta_name)).to_have_count(0)
+    expect(task_locator(page, alpha_name).locator('.project-chip')).to_contain_text('Smoke Work')
     clear_search(page)
     page.locator("#searchInput").fill("  Smoke Work focus  ")
     expect(task_locator(page, alpha_name)).to_have_count(1)
@@ -1225,23 +1263,33 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
     select_project(page, "all")
     select_filter(page, "active")
     clear_search(page)
-    expect(page.locator("#savedViewsBar")).to_be_visible()
+    if page.locator('#workspaceSidebarScroll').count():
+        expect(page.locator('#savedViewsBar')).to_have_js_property('hidden', True)
+        expect(page.locator('#savedViewsEmptyHint')).to_have_count(0)
+    else:
+        expect(page.locator("#savedViewsBar")).to_be_visible()
+        expect(page.locator('#savedViewsEmptyHint')).to_be_visible()
     expect(page.locator('#savedViewsList .saved-view-chip')).to_have_count(0)
-    expect(page.locator('#savedViewsEmptyHint')).to_be_visible()
 
     page.locator("#saveSmartViewBtn").click()
     expect(page.locator("#taskModal")).to_be_visible()
     page.locator("#submitBtn").click()
     wait_for_notification(page, saved_message)
+    if page.locator('#workspaceSidebarScroll').count():
+        expect(page.locator('#savedViewsBar')).to_have_js_property('hidden', False)
     expect(page.locator("#savedViewsList .saved-view-chip")).to_have_count(1)
     expect(page.locator("#savedViewsList .saved-view-meta")).to_have_count(0)
     reveal_workspace_control(page, page.locator("#savedViewsList .saved-view-delete").first).click()
     expect(page.locator("#savedViewDeleteConfirm")).to_be_visible()
     page.locator("#submitBtn").click()
     wait_for_notification(page, re.compile("删除|deleted", re.I))
-    expect(page.locator("#savedViewsBar")).to_be_visible()
+    if page.locator('#workspaceSidebarScroll').count():
+        expect(page.locator('#savedViewsBar')).to_have_js_property('hidden', True)
+        expect(page.locator('#savedViewsEmptyHint')).to_have_count(0)
+    else:
+        expect(page.locator("#savedViewsBar")).to_be_visible()
+        expect(page.locator('#savedViewsEmptyHint')).to_be_visible()
     expect(page.locator('#savedViewsList .saved-view-chip')).to_have_count(0)
-    expect(page.locator('#savedViewsEmptyHint')).to_be_visible()
 
     page.locator("#searchInput").fill("tag:deadline")
     expect(task_locator(page, beta_name)).to_have_count(1)
@@ -1253,9 +1301,44 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
     wait_for_notification(page, saved_message)
     expect(page.locator("#savedViewsList .saved-view-chip")).to_have_count(1)
     expect(page.locator("#savedViewsList .saved-view-meta")).to_have_count(1)
-    chip_box = page.locator("#savedViewsList .saved-view-chip").first.bounding_box()
-    if not chip_box or chip_box["height"] > 44:
-        raise AssertionError(f"Saved smart view chip should stay compact: {chip_box}")
+    chip = page.locator('#savedViewsList .saved-view-chip').first
+    if page.locator('#workspaceSidebarScroll').count():
+        reveal_workspace_control(page, chip.locator('.saved-view-apply'))
+        chip.scroll_into_view_if_needed()
+        expect(chip).to_be_visible()
+        expect(chip.locator('.saved-view-name')).to_have_text('Smoke Deadline View')
+        translations = json.loads((REPO_ROOT / 'resources' / f'{language}.json').read_text())
+        expected_meta = ' · '.join((translations['projects']['all'], translations['filters']['active'], translations['views']['list']))
+        expect(chip.locator('.saved-view-meta')).to_have_text(expected_meta)
+        geometry = chip.evaluate("""node => {
+            const box = element => {
+                const r = element.getBoundingClientRect();
+                return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height,
+                    scrollWidth:element.scrollWidth,clientWidth:element.clientWidth,
+                    scrollHeight:element.scrollHeight,clientHeight:element.clientHeight};
+            };
+            return {chip:box(node),apply:box(node.querySelector('.saved-view-apply')),
+                remove:box(node.querySelector('.saved-view-delete')),name:box(node.querySelector('.saved-view-name')),
+                meta:box(node.querySelector('.saved-view-meta'))};
+        }""")
+        for name, box in geometry.items():
+            assert box['width'] > 0 and box['height'] > 0, f'Saved view {name} has no visible area: {geometry}'
+            assert box['scrollWidth'] <= box['clientWidth'] + 1 and box['scrollHeight'] <= box['clientHeight'] + 1, \
+                f'Saved view {name} clips or overflows its content: {geometry}'
+        for name, parent in (('apply', 'chip'), ('remove', 'chip'), ('name', 'apply'), ('meta', 'apply')):
+            box, bounds = geometry[name], geometry[parent]
+            assert (box['left'] >= bounds['left'] - 1 and box['right'] <= bounds['right'] + 1
+                    and box['top'] >= bounds['top'] - 1 and box['bottom'] <= bounds['bottom'] + 1), \
+                f'Saved view {name} extends outside {parent}: {geometry}'
+        apply, remove = geometry['apply'], geometry['remove']
+        overlap_width = min(apply['right'], remove['right']) - max(apply['left'], remove['left'])
+        overlap_height = min(apply['bottom'], remove['bottom']) - max(apply['top'], remove['top'])
+        assert overlap_width <= 1 or overlap_height <= 1, f'Saved view apply and delete buttons overlap: {geometry}'
+        close_workspace_navigation(page)
+    else:
+        chip_box = chip.bounding_box()
+        if not chip_box or chip_box["height"] > 44:
+            raise AssertionError(f"Saved smart view chip should stay compact: {chip_box}")
     clear_search(page)
     expect(task_locator(page, alpha_name)).to_have_count(1)
     reveal_workspace_control(page, page.locator("#savedViewsList .saved-view-apply").first).click()
@@ -1591,7 +1674,12 @@ def exercise_task_action_menu_viewport(page: Page) -> None:
         assert target['hit'], f'Tail task Delete is not directly reachable by the pointer: {target}, {geometry}'
         page.mouse.click(target['x'], target['y'])
         expect(page.locator('#taskModal')).to_be_visible()
-        expect(page.locator('#modalTitle')).to_have_text(translations['task']['actions']['delete'])
+        if page.locator('#workspaceSidebarScroll').count():
+            expect(page.locator('#modalTitle')).to_have_text(translations['craft']['deleteTaskTitle'])
+            expect(page.locator('#submitBtn')).to_have_text(translations['task']['actions']['delete'])
+            expect(page.locator('#confirm-message-text')).to_contain_text('Task menu viewport 18')
+        else:
+            expect(page.locator('#modalTitle')).to_have_text(translations['task']['actions']['delete'])
         page.locator('#cancelBtn').click()
         expect(page.locator('#taskModal')).to_be_hidden()
         expect(menu).to_be_hidden()
@@ -1681,17 +1769,33 @@ def exercise_theme_fallback_transition(page: Page) -> None:
         Object.defineProperty(document, 'startViewTransition', {configurable: true, value: undefined});
     }""")
     try:
+        before_tasks = get_task_records(page)
         before = page.locator('html').get_attribute('data-theme')
         target = 'light' if before == 'dark' else 'dark'
-        if page.locator('#captureShelf').count():
+        modern_settings = bool(page.locator('#settingsWorkspace').count())
+        if modern_settings:
+            return_to_task_workspace(page)
+            open_settings(page, 'appearance')
+        elif page.locator('#captureShelf').count():
             open_settings(page, 'appearance')
         select = reveal_workspace_control(page, '#themeToggleBtn')
         select.focus()
-        select_theme_preference(page, target)
+        if modern_settings:
+            select.select_option(target)
+            expect(select).to_have_value(target)
+            expect(page.locator('html')).to_have_attribute('data-theme', target)
+            expect(select).to_be_enabled()
+            expect(select).to_be_visible()
+        else:
+            select_theme_preference(page, target)
         expect(select).to_be_focused()
         assert_theme_chrome(page)
         assert page.evaluate("localStorage.getItem('theme')") == target
         return_to_task_workspace(page)
+        if modern_settings:
+            expect(page.locator('#openMenuBtn')).to_be_visible()
+            expect(page.locator('#openMenuBtn')).to_be_focused()
+            assert get_task_records(page) == before_tasks, 'Changing theme without View Transitions changed stored tasks'
     finally:
         page.evaluate("""() => {
             Object.defineProperty(document, 'startViewTransition', {
@@ -1711,8 +1815,13 @@ def exercise_language(page: Page) -> None:
         expect(page.locator('#currentFilterLabel')).to_have_text(translations['filters']['active'])
         assert page.title() == translations['app']['title'], page.title()
         expect(page.locator('.controls-bar')).to_have_attribute('aria-label', translations['app']['toolbar'])
+        if page.locator('#settingsWorkspace').count():
+            open_settings(page, 'appearance')
+            expect(page.locator('#languageSelect')).to_be_visible()
         expect(page.locator('#languageSelect')).to_have_role('combobox')
         expect(page.locator('#languageSelect')).to_have_accessible_name(translations['workspace']['language'])
+        if page.locator('#settingsWorkspace').count():
+            return_to_task_workspace(page)
         assert get_task_records(page) == before, 'Changing the UI language changed stored tasks'
     assert_accessibility_baseline(page, 'language preference')
     page.keyboard.press('Escape')
@@ -1794,6 +1903,23 @@ def exercise_workspace_date_focus(page: Page, *, zero_matches: bool = False) -> 
 
 
 def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_name: str) -> None:
+    modern_calendar = bool(page.locator('#workspaceSidebarScroll').count())
+    original_records = get_task_records(page) if modern_calendar else None
+
+    def open_calendar_day_form(button: Locator) -> None:
+        day_key = button.get_attribute('data-calendar-add-date') or button.get_attribute('data-calendar-detail-date')
+        opens_agenda = button.get_attribute('data-calendar-detail-date') is not None
+        button.click()
+        modal = page.locator('#taskModal')
+        if not modal.is_visible():
+            shelf = page.locator('#captureShelf')
+            agenda_add = page.locator(f'.calendar-agenda-add[data-calendar-add-date="{day_key}"]')
+            if agenda_add.is_visible() and (opens_agenda or not shelf.is_visible()):
+                agenda_add.click()
+            if shelf.is_visible():
+                page.locator('#captureDetailsBtn').click()
+        expect(modal).to_be_visible()
+
     extra_names = [f"Calendar Overflow Extra {index} {int(time.time())}" for index in range(1, 4)]
     month_end_name = f"Calendar Month End {int(time.time())}"
     for index, extra_name in enumerate(extra_names, start=1):
@@ -1829,19 +1955,45 @@ def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_nam
         raise AssertionError("Calendar next-year navigation did not change the visible month title")
     page.locator('[data-calendar-action="prev-year"]').click()
     expect(page.locator(".calendar-title")).to_have_text(month_title)
-    calendar_task_style = page.locator(".calendar-task").filter(has_text=beta_name).first.evaluate(
-        """(element) => {
-            const style = getComputedStyle(element);
+    calendar_task = page.locator(".calendar-task").filter(has_text=beta_name).first
+    if modern_calendar:
+        expect(calendar_task).to_have_text(beta_name)
+        expect(calendar_task).to_have_attribute('title', beta_name)
+        title_geometry = calendar_task.evaluate("""element => {
+            const box = element.getBoundingClientRect();
+            const cell = element.closest('.calendar-day').getBoundingClientRect();
+            const range = document.createRange(); range.selectNodeContents(element);
+            const lines = [...range.getClientRects()];
             return {
-                overflow: style.overflow,
-                textOverflow: style.textOverflow,
-                whiteSpace: style.whiteSpace,
-                title: element.getAttribute('title')
+                width: box.width, height: box.height, lineCount: lines.length,
+                contentFits: element.scrollWidth <= element.clientWidth + 1
+                    && element.scrollHeight <= element.clientHeight + 1,
+                textFits: lines.every(line => line.left >= box.left - 1
+                    && line.right <= box.right + 1 && line.top >= box.top - 1
+                    && line.bottom <= box.bottom + 1),
+                fitsDay: box.left >= cell.left - 1 && box.right <= cell.right + 1
+                    && box.top >= cell.top - 1 && box.bottom <= cell.bottom + 1
             };
-        }"""
-    )
-    if calendar_task_style != {"overflow": "hidden", "textOverflow": "ellipsis", "whiteSpace": "nowrap", "title": beta_name}:
-        raise AssertionError(f"Calendar task title is not constrained to one-line ellipsis: {calendar_task_style}")
+        }""")
+        if not (title_geometry['width'] > 0 and title_geometry['height'] > 0
+                and title_geometry['lineCount'] > 0 and title_geometry['contentFits']
+                and title_geometry['textFits'] and title_geometry['fitsDay']):
+            raise AssertionError(f"Calendar task title is clipped or escapes its date cell: {title_geometry}")
+    else:
+        calendar_task_style = calendar_task.evaluate(
+            """(element) => {
+                const style = getComputedStyle(element);
+                return {
+                    overflow: style.overflow,
+                    textOverflow: style.textOverflow,
+                    whiteSpace: style.whiteSpace,
+                    title: element.getAttribute('title')
+                };
+            }"""
+        )
+        if calendar_task_style != {"overflow": "hidden", "textOverflow": "ellipsis", "whiteSpace": "nowrap", "title": beta_name}:
+            raise AssertionError(f"Calendar task title is not constrained to one-line ellipsis: {calendar_task_style}")
+    before_navigation = get_task_records(page) if modern_calendar else None
     page.locator(".calendar-more-btn").click()
     expect(page.locator(".calendar-day-detail")).to_be_visible()
     expect(page.locator(".calendar-detail-task")).to_have_count(4)
@@ -1861,16 +2013,20 @@ def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_nam
     expect(page.locator(".calendar-day-detail")).to_be_visible()
     page.locator(".calendar-detail-close").click()
     expect(page.locator(".calendar-day-detail")).to_have_count(0)
-    add_button = page.locator(".calendar-day:not(.outside-month) .calendar-date-number[data-calendar-add-date]").first
-    selected_date = add_button.get_attribute("data-calendar-add-date")
-    add_button.click()
-    expect(page.locator("#taskModal")).to_be_visible()
+    add_button = page.locator(".calendar-day:not(.outside-month) .calendar-date-number[data-calendar-add-date], "
+                              ".calendar-day:not(.outside-month) .calendar-date-number[data-calendar-detail-date]").first
+    selected_date = add_button.get_attribute("data-calendar-add-date") or add_button.get_attribute('data-calendar-detail-date')
+    open_calendar_day_form(add_button)
     expect(page.locator("#dueDate")).to_have_value(selected_date)
     page.locator("#cancelBtn").click()
+    if page.locator('#captureShelf').is_visible():
+        page.locator('#captureCloseBtn').click()
     page.locator(".calendar-task").filter(has_text=beta_name).first.click()
     expect(page.locator("#taskModal")).to_be_visible()
     expect(page.locator("#taskName")).to_have_value(beta_name)
     page.locator("#cancelBtn").click()
+    if modern_calendar:
+        assert get_task_records(page) == before_navigation, 'Calendar navigation or cancelling day/task forms changed task records'
 
     put_task_record(
         page,
@@ -1916,15 +2072,46 @@ def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_nam
 
     select_view(page, "list")
     expect(page.locator(".task-item")).to_have_count(3)
+    if modern_calendar:
+        assert get_task_records(page) == original_records, 'Calendar/timeline checks changed an original task field'
 
 
 def exercise_stats_view(page: Page, completed_name: str) -> None:
+    modern_stats = bool(page.locator('#workspaceSidebarScroll').count())
+    before = get_task_records(page) if modern_stats else None
+    if modern_stats:
+        origin_query = page.locator('#searchInput').input_value()
+        origin_filter = page.locator('#filterDropdown .dropdown-option[aria-selected="true"]').get_attribute('data-filter')
+        origin_project = page.locator('#projectDropdown .dropdown-option[aria-selected="true"]').get_attribute('data-project')
     select_view(page, "stats")
     expect(page.locator(".stats-view")).to_be_visible()
-    expect(page.locator(".stat-card").nth(0).locator(".stat-value")).to_have_text("33%")
-    expect(page.locator(".stat-card").nth(1).locator(".stat-value")).to_have_text("50%")
-    expect(page.locator(".stat-card").nth(2).locator(".stat-value")).to_contain_text("1")
-    expect(page.locator(".stats-mini")).to_have_count(5)
+    if modern_stats:
+        inventory = page.locator('.stats-inventory')
+        if not inventory.evaluate('element => element.open'):
+            inventory.locator(':scope > summary').click()
+        expect(inventory).to_have_js_property('open', True)
+        expect(inventory.locator('.stat-card')).to_have_count(2)
+        expect(inventory.locator('.stat-value')).to_have_text(['33%', '50%'])
+        expect(inventory.locator('.stats-mini')).to_have_count(4)
+        for filter_value, count in (('all', 3), ('completed', 1), ('overdue', 1), ('archived', 0)):
+            mini = inventory.locator(f'.stats-mini[data-stats-filter="{filter_value}"]')
+            expect(mini.locator('strong')).to_have_text(str(count))
+            if count:
+                expect(mini).to_be_enabled()
+            else:
+                expect(mini).to_be_disabled()
+        language = page.locator('html').get_attribute('lang') or 'zh-CN'
+        translations = json.loads((REPO_ROOT / 'resources' / f'{language}.json').read_text())
+        review_total = translations['statsInsights']['reviewCompletedOne'].replace('{count}', '1')
+        review_today = translations['statsInsights']['todayReviewOne'].replace('{count}', '1')
+        review_streak = translations['stats']['streakDetailOne'].replace('{count}', '1')
+        expect(page.locator('.stats-review-total')).to_have_text(review_total)
+        expect(page.locator('.stats-review-meta')).to_have_text(f'{review_today} · {review_streak}')
+    else:
+        expect(page.locator(".stat-card").nth(0).locator(".stat-value")).to_have_text("33%")
+        expect(page.locator(".stat-card").nth(1).locator(".stat-value")).to_have_text("50%")
+        expect(page.locator(".stat-card").nth(2).locator(".stat-value")).to_contain_text("1")
+        expect(page.locator(".stats-mini")).to_have_count(5)
     expect(page.locator(".stats-trend")).to_be_visible()
     expect(page.locator(".stats-trend-bar")).to_have_count(7)
     trend_counts = page.locator(".stats-trend-bar").evaluate_all(
@@ -1936,7 +2123,22 @@ def exercise_stats_view(page: Page, completed_name: str) -> None:
     page.locator('.stats-mini[data-stats-filter="completed"]').click()
     expect(page.locator("#currentFilterLabel")).to_have_text(re.compile("已完成|Completed", re.I))
     expect(task_locator(page, completed_name)).to_have_count(1)
-    expect(page.locator("#filterBtn")).to_be_focused()
+    if modern_stats:
+        expect(page.locator('#viewTab-list')).to_have_attribute('aria-current', 'page')
+        expect(page.locator('#searchInput')).to_have_value(re.compile(r'(^|\s)status:completed(\s|$)'))
+        expect(page.locator('#workspaceTitle')).to_be_focused()
+        assert get_task_records(page) == before, 'Statistics completed-task navigation changed stored task records'
+        expect(page.locator('#statsReturnBtn')).to_be_visible()
+        page.locator('#statsReturnBtn').click()
+        expect(page.locator('#viewTab-stats')).to_have_attribute('aria-current', 'page')
+        expect(page.locator('#searchInput')).to_have_value(origin_query)
+        expect(page.locator('#filterDropdown .dropdown-option[aria-selected="true"]')).to_have_attribute('data-filter', origin_filter)
+        expect(page.locator('#projectDropdown .dropdown-option[aria-selected="true"]')).to_have_attribute('data-project', origin_project)
+        expect(page.locator('#statsReturnBar')).to_be_hidden()
+        assert get_task_records(page) == before, 'Returning from the completed-task drilldown changed stored task records'
+        select_view(page, 'list')
+    else:
+        expect(page.locator("#filterBtn")).to_be_focused()
 
 
 def complete_task(page: Page, task_name: str) -> None:
@@ -2252,6 +2454,8 @@ def clear_completed_tasks(page: Page, completed_name: str) -> None:
 
 
 def archive_and_restore_task(page: Page, completed_name: str) -> None:
+    modern_stats = bool(page.locator('#workspaceSidebarScroll').count())
+    completed_before = get_task_record_by_name(page, completed_name) if modern_stats else None
     select_filter(page, "completed")
     task = task_locator(page, completed_name)
     expect(reveal_task_action(task, 'archive')).to_be_visible()
@@ -2259,14 +2463,29 @@ def archive_and_restore_task(page: Page, completed_name: str) -> None:
     wait_for_notification(page, re.compile("已归档|archived", re.I))
     assert_task_action_focus_visible(page)
     select_view(page, "stats")
+    if modern_stats:
+        inventory = page.locator('.stats-inventory')
+        if not inventory.evaluate('element => element.open'):
+            inventory.locator(':scope > summary').click()
+        expect(inventory).to_have_js_property('open', True)
     archived_shortcut = page.locator('.stats-mini[data-stats-filter="archived"]')
     expect(archived_shortcut.locator("strong")).to_have_text("1")
-    expect(page.locator(".stats-mini").nth(4).locator("strong")).to_have_text("0")
+    if modern_stats:
+        expect(page.locator('.stats-mini')).to_have_count(4)
+        expect(page.locator('.stats-mini[data-stats-filter="completed"] strong')).to_have_text('0')
+        archived_record = get_task_record_by_name(page, completed_name)
+        assert archived_record['archived'] and archived_record['archivedAt'], archived_record
+        assert {k: v for k, v in archived_record.items() if k not in {'archived', 'archivedAt'}} == {
+            k: v for k, v in completed_before.items() if k not in {'archived', 'archivedAt'}
+        }, 'Archiving changed completion history or another task field'
+    else:
+        expect(page.locator(".stats-mini").nth(4).locator("strong")).to_have_text("0")
     archived_trend_counts = page.locator(".stats-trend-bar").evaluate_all(
         "bars => bars.map((bar) => Number(bar.dataset.trendCount || 0))"
     )
-    if sum(archived_trend_counts) != 0:
-        raise AssertionError(f"Archived completions leaked into the completion trend: {archived_trend_counts}")
+    expected_trend_count = 1 if modern_stats else 0
+    if sum(archived_trend_counts) != expected_trend_count:
+        raise AssertionError(f"Archived completion history differs from the statistics contract: {archived_trend_counts}")
     archived_shortcut.click()
     expect(page.locator("#currentFilterLabel")).to_have_text(re.compile("已归档|Archived", re.I))
     archived = task_locator(page, completed_name)
@@ -2629,6 +2848,11 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("合并到当前任务|Merge into current tasks", re.I))
         expect(page.locator(".restore-checklist")).to_be_visible()
         expect(page.locator(".restore-check-item")).to_have_count(8)
+        if page.locator('.import-reference').count():
+            reference = page.locator('.import-reference')
+            if not reference.evaluate('element => element.open'):
+                reference.locator(':scope > summary').click()
+            expect(reference).to_have_js_property('open', True)
         expect(page.locator(".import-diff-preview")).to_be_visible()
         expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("恢复检查清单|Restore Checklist", re.I))
         expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("导入差异|Import Difference", re.I))
@@ -2665,7 +2889,13 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         assert_backup_payload_integrity(snapshot, "pre-import-backup")
         if not isinstance(snapshot.get("tasks"), list) or len(snapshot["tasks"]) == 0:
             raise AssertionError(f"Invalid-checksum snapshot did not include current tasks: {snapshot}")
-        expect(page.locator("#submitBtn")).to_have_text(re.compile("继续替换导入|Continue Replace Import", re.I))
+        if page.locator('#workspaceSidebarScroll').count():
+            language = page.locator('html').get_attribute('lang') or 'zh-CN'
+            translations = json.loads((REPO_ROOT / 'resources' / f'{language}.json').read_text())
+            expect(page.locator('#submitBtn')).to_have_text(translations['dataReview']['importReplaceAction'].replace('{count}', '3'))
+            expect(page.locator('#submitBtn')).to_have_class(re.compile(r'(^|\s)btn-danger(\s|$)'))
+        else:
+            expect(page.locator("#submitBtn")).to_have_text(re.compile("继续替换导入|Continue Replace Import", re.I))
         page.locator("#submitBtn").click()
         wait_for_notification(page, re.compile("导入|import", re.I))
         expect(page.locator("#taskModal")).to_be_hidden()
@@ -2711,6 +2941,11 @@ def assert_import_preview_text(page: Page, payload: Any, patterns: list[str]) ->
         expect(page.locator("#taskModal")).to_be_visible()
         expect(page.locator(".restore-checklist")).to_be_visible()
         expect(page.locator(".restore-check-item")).to_have_count(8)
+        if page.locator('.import-reference').count():
+            reference = page.locator('.import-reference')
+            if not reference.evaluate('element => element.open'):
+                reference.locator(':scope > summary').click()
+            expect(reference).to_have_js_property('open', True)
         expect(page.locator(".import-diff-preview")).to_be_visible()
         for pattern in patterns:
             expect(page.locator("#confirm-message-text")).to_contain_text(re.compile(pattern, re.I))
@@ -2845,7 +3080,13 @@ def exercise_import(page: Page, imported_name: str) -> None:
         if not isinstance(snapshot.get("tasks"), list) or len(snapshot["tasks"]) == 0:
             raise AssertionError(f"Pre-import snapshot did not include current tasks: {snapshot}")
         expect(page.locator("#taskModal")).to_be_visible()
-        expect(page.locator("#submitBtn")).to_have_text(re.compile("继续替换导入|Continue Replace Import", re.I))
+        if page.locator('#workspaceSidebarScroll').count():
+            language = page.locator('html').get_attribute('lang') or 'zh-CN'
+            translations = json.loads((REPO_ROOT / 'resources' / f'{language}.json').read_text())
+            expect(page.locator('#submitBtn')).to_have_text(translations['dataReview']['importReplaceActionOne'].replace('{count}', '1'))
+            expect(page.locator('#submitBtn')).to_have_class(re.compile(r'(^|\s)btn-danger(\s|$)'))
+        else:
+            expect(page.locator("#submitBtn")).to_have_text(re.compile("继续替换导入|Continue Replace Import", re.I))
         page.locator("#submitBtn").click()
         wait_for_notification(page, re.compile("导入|import", re.I))
         select_filter(page, "all")
@@ -3356,6 +3597,20 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                 destination_box = destination.bounding_box()
                 if not destination_box or destination_box['width'] < 44 or destination_box['height'] < 44:
                     raise AssertionError(f'{label} main navigation target is undersized: {view}: {destination_box}')
+            if visual_page.locator('#workspaceSidebarScroll').count():
+                expect(visual_page.locator('#toolsDrawerToggleBtn')).to_have_attribute('aria-expanded', 'true')
+                for selector in ('#searchInput', '#saveSmartViewBtn', '#toolsDrawerToggleBtn', '#batchModeBtn',
+                                 '#projectFilterBtn', '#filterBtn', '#sortBtn'):
+                    control = visual_page.locator(selector)
+                    expect(control).to_be_visible()
+                    expect(control).to_be_enabled()
+                    control.scroll_into_view_if_needed()
+                    expect(control).to_be_in_viewport()
+                    assert control.evaluate("""node => {
+                        const r = node.getBoundingClientRect();
+                        const hit = document.elementFromPoint((r.left+r.right)/2, (r.top+r.bottom)/2);
+                        return hit === node || node.contains(hit);
+                    }"""), f'{label} toolbar control is obscured: {selector}'
             visual_page.locator(".task-item").first.scroll_into_view_if_needed()
 
             metrics = visual_page.evaluate(
@@ -3363,7 +3618,10 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                     const viewportWidth = window.innerWidth;
                     const doc = document.documentElement;
                     const selectors = ['header', '.controls-bar', '.task-item', '.task-actions'];
-                    const controlSelectors = ['.search-box', '#projectDropdown', '#filterDropdown', '#sortDropdown', '#saveSmartViewBtn'];
+                    const modernToolbar = Boolean(document.querySelector('#workspaceSidebarScroll'));
+                    const controlSelectors = modernToolbar
+                        ? ['.search-box', '#saveSmartViewBtn', '#toolsDrawerToggleBtn', '#projectDropdown', '#filterDropdown', '#sortDropdown', '#batchModeBtn']
+                        : ['.search-box', '#projectDropdown', '#filterDropdown', '#sortDropdown', '#saveSmartViewBtn'];
                     const controlBar = document.querySelector('.controls-bar');
                     const controlRect = controlBar.getBoundingClientRect();
                     const boxes = selectors.map((selector) => {
@@ -3420,6 +3678,39 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                         || item.right > controlRect.right + 1
                         || item.top < controlRect.top - 1
                         || item.bottom > controlRect.bottom + 1);
+                    const structureIssues = [];
+                    if (modernToolbar) {
+                        const groups = [
+                            ['.toolbar-main-row', ['.search-box', '#saveSmartViewBtn', '#toolsDrawerToggleBtn']],
+                            ['#toolsDrawerContent .toolbar-filter-row', ['#projectDropdown', '#filterDropdown', '#sortDropdown', '#batchModeBtn']]
+                        ];
+                        const groupRects = [];
+                        for (const [selector, children] of groups) {
+                            const group = controlBar.querySelector(selector);
+                            if (!group) { structureIssues.push(`Missing toolbar group: ${selector}`); continue; }
+                            const r = group.getBoundingClientRect();
+                            groupRects.push(r);
+                            if (r.width <= 0 || r.height <= 0 || r.left < controlRect.left - 1
+                                || r.right > controlRect.right + 1 || r.top < controlRect.top - 1
+                                || r.bottom > controlRect.bottom + 1
+                                || group.scrollWidth > group.clientWidth + 1 || group.scrollHeight > group.clientHeight + 1)
+                                structureIssues.push(`Toolbar group clips or overflows: ${selector}`);
+                            for (const childSelector of children) {
+                                const child = group.querySelector(childSelector);
+                                if (!child) { structureIssues.push(`${childSelector} is outside ${selector}`); continue; }
+                                const c = child.getBoundingClientRect();
+                                if (c.left < r.left - 1 || c.right > r.right + 1
+                                    || c.top < r.top - 1 || c.bottom > r.bottom + 1)
+                                    structureIssues.push(`${childSelector} extends beyond ${selector}`);
+                            }
+                        }
+                        if (groupRects.length === 2) {
+                            const [main, filters] = groupRects;
+                            if (Math.min(main.right, filters.right) - Math.max(main.left, filters.left) > 1
+                                && Math.min(main.bottom, filters.bottom) - Math.max(main.top, filters.top) > 1)
+                                structureIssues.push('Main and expanded filter groups overlap');
+                        }
+                    }
 
                     return {
                         label,
@@ -3429,6 +3720,8 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                         controlRows: controlRows.length,
                         controlOverlaps,
                         controlOutside,
+                        modernToolbar,
+                        structureIssues,
                         hasTaskName: Boolean(document.querySelector('.task-name')?.textContent.trim()),
                         hasVisibleActions: [...document.querySelectorAll('.task-actions button, .task-header [data-action="toggle"]')]
                             .filter((button) => !button.hidden && button.offsetParent !== null)
@@ -3458,9 +3751,10 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
 
             max_control_rows = 4 if viewport["width"] <= 640 else 3 if viewport["width"] <= 900 else 2
             if (
-                metrics["controlRows"] > max_control_rows
+                (not metrics['modernToolbar'] and metrics["controlRows"] > max_control_rows)
                 or metrics["controlOverlaps"]
                 or metrics["controlOutside"]
+                or metrics['structureIssues']
             ):
                 raise AssertionError(f"{label} controls layout failed: {metrics}")
 
@@ -3469,7 +3763,7 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                 raise AssertionError(f"{label} screenshot looks unexpectedly small")
 
             if label == "compact mobile":
-                visual_open_task_editor(page)
+                open_task_editor(visual_page)
                 expect(visual_page.locator("#taskModal")).to_be_visible()
                 visual_page.wait_for_timeout(350)
                 modal_box = visual_page.locator(".modal-content").bounding_box()

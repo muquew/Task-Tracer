@@ -1,0 +1,276 @@
+{
+  "viewport": {
+    "w": 320,
+    "h": 844
+  },
+  "scrollY": 0,
+  "docHeight": 844,
+  "docWidth": 320,
+  "active": {
+    "id": "quickAddInput",
+    "className": "quick-add-input"
+  },
+  "title": "Task Tracer",
+  "themeColor": "#292536",
+  "skin": {
+    "accent": "iris",
+    "theme": "dark",
+    "chromeSolid": "#292536"
+  },
+  "headings": [
+    "Add task",
+    "All tasks"
+  ],
+  "surfaces": [
+    {
+      "selector": "#openModalBtn",
+      "visible": true,
+      "text": "Add task",
+      "x": 122,
+      "y": 10,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "selector": "#quickAddForm",
+      "visible": true,
+      "text": "Quick capture\nAdd\n\nSeparate the date, time, #tags and /project with spaces. The ",
+      "x": 14,
+      "y": 100,
+      "w": 292,
+      "h": 103
+    },
+    {
+      "selector": "#quickAddInput",
+      "visible": true,
+      "text": "",
+      "x": 25,
+      "y": 102,
+      "w": 197,
+      "h": 40
+    },
+    {
+      "selector": "#toolsDrawer",
+      "visible": true,
+      "text": "Search tasks…\nSupports scoped search: project:name, tag:name, status:value, and ",
+      "x": 14,
+      "y": 426,
+      "w": 292,
+      "h": 103
+    },
+    {
+      "selector": "#workspaceOverview",
+      "visible": 0,
+      "text": "\n            October 2026MonTueWedThuFriSatSun2829301234567891011121314151617181",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceWeekIndex",
+      "visible": 0,
+      "text": "OctNext 7 daysMon26Tue27Wed28Thu29Fri30Sat31Sun1",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#taskList",
+      "visible": true,
+      "text": "产品迭代 · 1 task\n复核最终界面与操作\nNo deadline\n0/1 Subtasks",
+      "x": 26,
+      "y": 529,
+      "w": 268,
+      "h": 155
+    },
+    {
+      "selector": "#workspaceTitle",
+      "visible": true,
+      "text": "All tasks",
+      "x": 14,
+      "y": 282,
+      "w": 274,
+      "h": 30
+    },
+    {
+      "selector": "#settingsWorkspace",
+      "visible": 0,
+      "text": "\n            Settings & data\n            \n                \n                    A",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    }
+  ],
+  "buttons": [
+    {
+      "id": "workspaceNavToggle",
+      "text": "Open navigation",
+      "x": 14,
+      "y": 10,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "undoBtn",
+      "text": "Undo: 新增任务",
+      "x": 83,
+      "y": 10,
+      "w": 34,
+      "h": 40
+    },
+    {
+      "id": "openModalBtn",
+      "text": "Add task",
+      "x": 122,
+      "y": 10,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "id": "quickCaptureBtn",
+      "text": "Quick capture",
+      "x": 225,
+      "y": 9,
+      "w": 36,
+      "h": 40
+    },
+    {
+      "id": "openMenuBtn",
+      "text": "Settings & data",
+      "x": 266,
+      "y": 10,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "captureCloseBtn",
+      "text": "Close capture",
+      "x": 266,
+      "y": 60,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "",
+      "text": "Add",
+      "x": 242,
+      "y": 102,
+      "w": 64,
+      "h": 40
+    },
+    {
+      "id": "captureDetailsBtn",
+      "text": "Full form",
+      "x": 247,
+      "y": 209,
+      "w": 59,
+      "h": 44
+    },
+    {
+      "id": "workspaceScheduleToggle",
+      "text": "Show schedule",
+      "x": 192,
+      "y": 365,
+      "w": 100,
+      "h": 36
+    },
+    {
+      "id": "saveSmartViewBtn",
+      "text": "Save view",
+      "x": 199,
+      "y": 481,
+      "w": 95,
+      "h": 36
+    },
+    {
+      "id": "toolsDrawerToggleBtn",
+      "text": "Filters\nActive",
+      "x": 26,
+      "y": 481,
+      "w": 129,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "Mark as complete",
+      "x": 26,
+      "y": 572,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "0/1 Subtasks",
+      "x": 67,
+      "y": 633,
+      "w": 190,
+      "h": 40
+    },
+    {
+      "id": "",
+      "text": "Task actions: 复核最终界面与操作",
+      "x": 262,
+      "y": 572,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "viewTab-list",
+      "text": "List",
+      "x": 10,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    },
+    {
+      "id": "viewTab-calendar",
+      "text": "Calendar",
+      "x": 86,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    },
+    {
+      "id": "viewTab-timeline",
+      "text": "Timeline",
+      "x": 162,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    },
+    {
+      "id": "viewTab-stats",
+      "text": "Stats",
+      "x": 238,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    }
+  ],
+  "fields": [
+    {
+      "id": "quickAddInput",
+      "type": "text",
+      "value": "",
+      "placeholder": "For example: tomorrow 14:00 Discuss the plan #work /Project",
+      "x": 25,
+      "y": 102,
+      "w": 197,
+      "h": 40
+    },
+    {
+      "id": "searchInput",
+      "type": "text",
+      "value": "",
+      "placeholder": "Search tasks…",
+      "x": 26,
+      "y": 437,
+      "w": 268,
+      "h": 36
+    }
+  ],
+  "pageErrors": []
+}

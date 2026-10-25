@@ -1,4 +1,4 @@
-# Task Tracer 4.13.1 — static distribution
+# Task Tracer 4.13.2 — static distribution
 
 This archive contains the browser application, deployment headers, icons, translations, third-party notices and an SHA-256 integrity manifest. It does not contain an account service, cloud sync or a payment service.
 
@@ -8,9 +8,11 @@ A new workspace starts empty. **Try example tasks** optionally adds three labele
 
 Use **Add task** in the top bar to open the full form directly. The adjacent **Quick capture** arrow opens text capture with a deadline, project and tag preview; **Full form** carries its text into the full form. Unsubmitted Quick capture text is continued by the main **Add task** action, while `Ctrl/Cmd + I` opens an independent new form. Description and subtasks are in the main form; tags, reminders and recurrence expand under **More settings**. The sidebar opens all tasks, your manually chosen **Today’s plan**, projects and saved views. On narrow screens, the navigation button opens the sidebar. Search and project/status filters cover the complete workspace. **Save view** stores the current search, filters and view for reopening from the sidebar.
 
+Saving the task includes text waiting in the subtask field without requiring **+** first. In List, Calendar or Timeline, if the saved task is outside the current filters, calendar day or loaded page, **Open task** in the success message opens it without automatically changing those conditions.
+
 New tasks in the full form and Quick capture inherit a selected project. The tasks-without-a-project scope keeps them unassigned; **All projects** defaults to `Inbox`. An explicit `/project` in Quick capture takes priority. Creating a task while **Today’s plan** is active adds it to that plan without changing its deadline. If the plan has tasks but search or filters hide them, clear those conditions while staying in the plan.
 
-List, Calendar, Timeline and Statistics are always available in the desktop sidebar and the mobile bottom navigation, including when the search and filter tools are collapsed. Open **Settings & data** for five category panels: **Appearance & language**, **Backups & transfer**, **Reminders & installation**, **Task maintenance**, and **Help & about**. Only the selected panel is shown, and the current category is retained while the page stays open. Returning to a task view preserves the current filters and any unfinished Quick capture text. Archive completed and Delete completed are in **Task maintenance** and act on completed, unarchived tasks across the workspace; they do not use the current project or search filter. The eligible workspace-wide count is shown before acting; both controls are disabled when it is zero.
+The desktop sidebar keeps the brand and List, Calendar, Timeline and Statistics at the top, with **Settings & data** at the bottom. The middle scroll area contains scopes, every project and saved views. On mobile, views stay in the bottom navigation and opening the drawer brings the active scope into view. Settings has five panels: **Appearance & language**, **Backups & transfer**, **Reminders & installation**, **Task maintenance** and **Help & about**. Returning to tasks keeps filters and unfinished Quick capture text. Maintenance shows the workspace-wide completed, unarchived count; archive/delete controls are disabled at zero.
 
 Open **Settings & data → Appearance & language** for four complete **Workspace theme** previews: **Iris**, **Ocean**, **Pine** and **Berry**. The native radio choices preview the sidebar, canvas, header and content; each theme also supplies its own fields, raised menus, text, controls and selected states in light and dark appearance. Appearance (**Light**, **Dark**, **System**) and interface language (**简体中文**, **English**) remain separate native dropdowns. System follows the operating system’s colour preference. Changing a theme preserves current input, tasks and selection without rewriting user content.
 
@@ -18,11 +20,15 @@ Theme preferences stay in this browser profile. Existing Iris/Ocean/Pine/Berry c
 
 Mark a task complete with its leading completion control. Open its **Task actions** menu for available actions such as editing, adding it to today’s plan, snoozing, skipping a repeat occurrence, archiving or deleting. Actions that do not apply to a task are unavailable. The top-bar Undo action restores the latest eligible task change; concurrent newer work can make an old Undo unavailable. On very narrow screens, header Undo uses its icon and retains an accessible name.
 
+Hovering or focusing a feedback message pauses its remaining display time; leaving resumes the remainder. Its **Undo** action returns focus to an available task control.
+
 Single-task and batch archiving both move unarchived tasks out of everyday lists, including unfinished tasks; their completion state is kept. A new occurrence generated from a repeating task does not inherit the previous occurrence’s manual today-plan selection. Snoozed tasks keep the scheduled reminder time visible, with **Notifications are off** when permission or the app setting prevents notifications. A saved reminder time does not guarantee delivery after the app closes.
 
 Statistics starts with three task entries: overdue, due today and undated ongoing work. Counts follow the current project and search, independently of the task-status dropdown; zero-count entries are disabled. Open an entry or project row to inspect its tasks, then use **Back to statistics** to restore the source view. Manually changing the task scope ends that return context. The dated seven-day completion bars, completed-today count and streak include retained archived completions in the same scope. They describe saved completion records, not a reconstructed history of deleted tasks; inventory details remain expandable.
 
 The seven-day date index and small month calendar open that date in the full Calendar view. On narrow screens, **Show schedule** opens the calendar from the today-deadline summary. Choosing a day changes what you are viewing, not a task’s deadline. Today’s plan is a manual collection and remains distinct from tasks due today. List, Calendar, Timeline and Statistics continue to use the same task data.
+
+Calendar task actions restore focus to the original agenda task or date after a redraw. Timeline rows show a compact clock and short status within date groups; accessible text and hover details retain the full deadline, while ordinary lists keep full date presentation. Project badges are omitted when the group or project view already supplies that context and remain in cross-project searches.
 
 Useful shortcuts include `Ctrl/Cmd + I` to add a task, `Ctrl/Cmd + K` to focus search, and `Ctrl/Cmd + P` to open the command palette. Task menus support arrow keys, Home, End and Escape; closing a dialog returns focus to an available initiating control. Shortcuts do not take over text input during input-method composition.
 
@@ -56,7 +62,7 @@ JSON backup restores supported task fields, including subtasks, projects, tags, 
 
 ## Unsaved work and storage failures
 
-Edited task forms ask whether to continue editing or discard changes before Cancel, close-icon, Escape or backdrop closure. Browser departure warnings are requested for nonblank quick-add text, an unsaved task form or retained draft queue and remain subject to browser rules. Drafts are not automatically written to persistent storage or a server; save or copy important text before leaving.
+Edited task forms ask whether to continue editing or discard changes before Cancel, close-icon, Escape or backdrop closure. Browser departure warnings are requested for nonblank quick-add text, an unsaved task form or retained draft queue and remain subject to browser rules. Drafts are not automatically written to persistent storage or a server; save or copy important text before leaving. Pending subtask text participates in unsaved-change confirmation and retained-draft recovery.
 
 If storage fails with unsaved quick-add text, that field stays read-only and selectable for copying. Retry reconnects storage in the same page while quick-add text or retained forms remain, keeping the original text and captured source details. After recovery, explicitly submit again; Retry does not replay the add. Quick-add text is only in page memory and is not part of the full-form draft download. Copy it outside the app before refresh or close; a crash can still lose it.
 

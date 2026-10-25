@@ -1,0 +1,12 @@
+Notification pointer access passed: 1280px settings entry and toast Undo remain usable
+Notification pointer access passed: 900px settings entry and toast Undo remain usable
+Smoke failed: Locator expected to have text '删除任务'
+Actual value: 删除任务？ 
+Call log:
+  - Expect "to_have_text" with timeout 5000ms
+  - waiting for locator("#modalTitle")
+    14 × locator resolved to <h2 id="modalTitle" class="modal-title">删除任务？</h2>
+       - unexpected value "删除任务？"
+
+Aria snapshot:
+- heading "删除任务？" [level=2]

@@ -1,0 +1,99 @@
+Notification pointer access passed: 1280px settings entry and toast Undo remain usable
+Notification pointer access passed: 900px settings entry and toast Undo remain usable
+Smoke failed: Locator expected to have text '0'
+Actual value: None
+Error: element(s) not found 
+Call log:
+  - Expect "to_have_text" with timeout 5000ms
+  - waiting for locator(".stats-mini").nth(4).locator("strong")
+
+Aria snapshot:
+- complementary "导航":
+  - link "Task Tracer":
+    - /url: ./
+  - navigation "视图切换":
+    - button "列表"
+    - button "日历"
+    - button "时间线"
+    - button "统计"
+  - navigation "导航":
+    - button "全部任务 2" [pressed]
+    - button "打开今日计划": 今日计划
+  - heading "项目" [level=2]
+  - navigation "项目":
+    - button "Smoke Personal 1"
+    - button "未分配项目 1"
+  - button "全部项目"
+  - region "保存的视图":
+    - text: 保存的视图
+    - list:
+      - listitem:
+        - button "Smoke Deadline View 全部项目 · 进行中 · 列表"
+        - button "删除保存的视图：Smoke Deadline View"
+  - button "设置与数据"
+  - text: 数据保存在此浏览器
+- banner:
+  - strong: 统计
+  - button "撤销：更新归档状态": 撤销
+  - button "添加任务"
+  - button "快速记录"
+  - button "设置与数据"
+- main:
+  - heading "统计" [level=1]
+  - paragraph: 全部项目 · 共 3 项任务 · 其中 1 项已归档
+  - region "任务工具":
+    - toolbar "任务工具":
+      - text: 搜索任务…
+      - textbox "搜索任务…"
+      - text: 支持限定搜索：project:项目、tag:标签、status:状态、due:日期。
+      - button "保存视图"
+      - button "筛选" [expanded]
+      - 'button "按项目筛选: 全部项目"': 全部项目
+  - region "统计":
+    - region "任务概览":
+      - heading "待处理" [level=2]
+      - paragraph: 今天截止的任务也可能已经逾期。
+      - button "逾期待处理 1 已超过截止时间的未完成任务 查看任务":
+        - text: 逾期待处理
+        - strong: "1"
+        - text: 已超过截止时间的未完成任务 查看任务
+      - button "今天截止 1 截止日期为今天的未完成任务 查看任务":
+        - text: 今天截止
+        - strong: "1"
+        - text: 截止日期为今天的未完成任务 查看任务
+      - button "无截止日期 0" [disabled]:
+        - text: 无截止日期
+        - strong: "0"
+      - heading "最近 7 天回顾" [level=2]
+      - strong: 完成 1 项
+      - paragraph: 2026年10月19日 – 2026年10月25日
+      - img "2026年10月19日 完成 0 个"
+      - text: 周一
+      - img "2026年10月20日 完成 0 个"
+      - text: 周二
+      - img "2026年10月21日 完成 0 个"
+      - text: 周三
+      - img "2026年10月22日 完成 0 个"
+      - text: 周四
+      - img "2026年10月23日 完成 0 个"
+      - text: 周五
+      - img "2026年10月24日 完成 0 个"
+      - text: 周六
+      - img "2026年10月25日 完成 1 个"
+      - text: 周日
+      - paragraph: 今天完成 1 项 · 最近连续 1 天有完成记录
+      - group: 统计口径
+      - heading "按项目安排待办" [level=2]
+      - button "未分配项目 1 项待办 1 项逾期":
+        - text: 未分配项目
+        - strong: 1 项待办
+        - text: 1 项逾期
+      - button "Smoke Personal 1 项待办":
+        - text: Smoke Personal
+        - strong: 1 项待办
+      - group: 当前任务详情
+  - status:
+    - text: 任务已归档
+    - button "撤销"
+    - button "关闭"
+- text: 统计已更新，当前范围 3 个任务

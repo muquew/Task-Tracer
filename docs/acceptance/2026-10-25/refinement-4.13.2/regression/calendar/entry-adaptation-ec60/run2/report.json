@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "source_stable": true,
+  "inputs": {
+    "index.html": "ec60ab40b209a15f7d86431d0599a4f8e200129f2909646323a17f531f41e508",
+    "tools/calendar_timezone_playwright.py": "55cc6c7bd191a2cf29ceea811685ba3d6c6674511d1fb990b72e053d0902bfef",
+    "tools/smoke_playwright.py": "4ef4190f453ee9603be64841b63cf7020384d622eacc7649f5addebcf58d2003"
+  },
+  "browser": {
+    "browser_engine": "chromium",
+    "browser": "154.0.8037.57",
+    "case": "all",
+    "live_zone_coverage": "Chromium CDP",
+    "passed": true
+  },
+  "checks": [
+    "Calendar timezone passed: skipped civil day appears once, leap/search/month navigation and add-form date keys remain exact without writes",
+    "Calendar timezone passed: Apia skipped-day add uses the existing forward-gap policy (30→31), preserving existing records",
+    "Calendar timezone passed: live UTC→America/Los_Angeles retains civil month, next/year navigation, local Today and stored task-date display",
+    "Calendar timezone passed: live UTC→Pacific/Kiritimati retains civil month, next/year navigation, local Today and stored task-date display",
+    "Calendar timezone passed: live Pacific/Kiritimati→UTC retains civil month, next/year navigation, local Today and stored task-date display",
+    "Calendar timezone passed: Today Plan follows a real device-local date change without changing stored focus dates"
+  ],
+  "original_failure": "/tmp/task-tracer-4.13.2-regression/calendar/calendar_timezone_playwright.py.log",
+  "intermediate_capture_contract_failure": "/tmp/task-tracer-4.13.2-regression/calendar/entry-adaptation-ec60/run1/calendar_timezone_playwright.log",
+  "adaptation": "Follow day -> same-day agenda Add (when present) -> capture Details -> form. Capture Apia handoff is asserted as 2011-12-31 23:59; add-policy then explicitly enters 2011-12-30 using the date input before preserving original exact 2011-12-31T09:59:00.000Z and unchanged-record assertions.",
+  "frozen_new_tool_sha256": "5ae783f10bd3de078b7f256e90f3ff75cd2d6cba1813e3f312815480d65ab5da"
+}

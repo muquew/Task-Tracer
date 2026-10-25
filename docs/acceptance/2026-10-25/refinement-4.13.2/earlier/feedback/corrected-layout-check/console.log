@@ -1,0 +1,11 @@
+Feedback passed: hidden search save is persisted exactly once; focused Open survives 7 seconds and opens the correct edit form without changing scope
+Feedback passed: project-changing edit remains saved under the same ID and can be opened from the unchanged project filter
+Feedback passed: an off-month date edit gives saved-task feedback while retaining the visible month and task ID
+Feedback passed: ordinary visible saves retain success/Undo, newer hidden saves open their own task, and unrelated messages clear the old action
+Feedback passed: Open saved task preserves unsubmitted quick-capture text and does not create another record
+Feedback passed: focus pauses real notification time for 7 seconds; leaving resumes the remaining lifetime (4.22s)
+Feedback passed: hover pauses real notification time for 7 seconds; leaving resumes the remaining lifetime (4.27s)
+Feedback passed: ordinary three-second notification pauses while focused and resumes remaining time (1.92s)
+Feedback passed: header and notification bulk Undo restore exact data and return focus to a live task control
+Feedback passed: Ctrl+Z in the search input keeps native text Undo and leaves task data/history intact
+Workflow feedback passed: search, edit-project, edit-calendar, replacement, quick-draft, pause-focus, pause-hover, pause-plain, undo-focus, native-input-undo

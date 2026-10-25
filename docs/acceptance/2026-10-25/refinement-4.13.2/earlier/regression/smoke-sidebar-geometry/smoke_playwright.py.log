@@ -1,0 +1,15 @@
+Notification pointer access passed: 1280px settings entry and toast Undo remain usable
+Notification pointer access passed: 900px settings entry and toast Undo remain usable
+Smoke failed: Locator expected to be focused
+Actual value: inactive 
+Call log:
+  - Expect "to_be_focused" with timeout 5000ms
+  - waiting for locator("#themeToggleBtn")
+    14 × locator resolved to <select id="themeToggleBtn" data-native-select="" class="settings-select">…</select>
+       - unexpected value "inactive"
+
+Aria snapshot:
+- combobox "外观":
+  - option "浅色"
+  - option "深色" [selected]
+  - option "跟随系统"

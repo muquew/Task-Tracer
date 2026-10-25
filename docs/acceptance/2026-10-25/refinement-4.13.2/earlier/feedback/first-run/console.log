@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer/tools/workflow_feedback_playwright.py", line 450, in <module>
+    main()
+  File "/workspace/Task-Tracer/tools/workflow_feedback_playwright.py", line 431, in main
+    detail = CASES[name](page, args.output_dir)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Task-Tracer/tools/workflow_feedback_playwright.py", line 170, in search_saved_task
+    assert_mobile_feedback_layout(page)
+  File "/workspace/Task-Tracer/tools/workflow_feedback_playwright.py", line 146, in assert_mobile_feedback_layout
+    assert not problems, problems
+           ^^^^^^^^^^^^
+AssertionError: ['message squeezed into a narrow vertical strip']

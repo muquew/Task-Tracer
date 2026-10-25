@@ -1,0 +1,505 @@
+{
+  "kind": "derived-index",
+  "source": "38 original final-review step JSON files; this index is not a native test report or 38 assertions.",
+  "source_binding": {
+    "index_sha256": "ec60ab40b209a15f7d86431d0599a4f8e200129f2909646323a17f531f41e508",
+    "basis": "Execution-stage record confirmed by root operator; individual observation JSON files do not contain source hashes."
+  },
+  "driver": "manual/browser-final-review.py",
+  "steps": [
+    {
+      "step": 1,
+      "name": "empty-desktop",
+      "observation": "manual/final-review/01-empty-desktop.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 2,
+      "name": "lean-task-form",
+      "observation": "manual/final-review/02-lean-task-form.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 3,
+      "name": "task-name",
+      "observation": "manual/final-review/03-task-name.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 4,
+      "name": "task-project",
+      "observation": "manual/final-review/04-task-project.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 5,
+      "name": "pending-subtask",
+      "observation": "manual/final-review/05-pending-subtask.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 6,
+      "name": "saved-with-pending-child",
+      "observation": "manual/final-review/06-saved-with-pending-child.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "page_errors": [],
+      "png_archived": true,
+      "png": "manual/final-review/06-saved-with-pending-child.png",
+      "selected_png_viewed_by_archiver": true
+    },
+    {
+      "step": 7,
+      "name": "footer-settings-accessible",
+      "observation": "manual/final-review/07-footer-settings-accessible.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 8,
+      "name": "english-appearance",
+      "observation": "manual/final-review/08-english-appearance.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 9,
+      "name": "lean-appearance-320",
+      "observation": "manual/final-review/09-lean-appearance-320.json",
+      "viewport": {
+        "w": 320,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": true,
+      "png": "manual/final-review/09-lean-appearance-320.png",
+      "selected_png_viewed_by_archiver": true
+    },
+    {
+      "step": 10,
+      "name": "dark-appearance-320",
+      "observation": "manual/final-review/10-dark-appearance-320.json",
+      "viewport": {
+        "w": 320,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 11,
+      "name": "lean-help-320",
+      "observation": "manual/final-review/11-lean-help-320.json",
+      "viewport": {
+        "w": 320,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": true,
+      "png": "manual/final-review/11-lean-help-320.png",
+      "selected_png_viewed_by_archiver": true
+    },
+    {
+      "step": 12,
+      "name": "full-diagnostic-disclosure",
+      "observation": "manual/final-review/12-full-diagnostic-disclosure.json",
+      "viewport": {
+        "w": 320,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 13,
+      "name": "diagnostic-closed",
+      "observation": "manual/final-review/13-diagnostic-closed.json",
+      "viewport": {
+        "w": 320,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 14,
+      "name": "back-to-work",
+      "observation": "manual/final-review/14-back-to-work.json",
+      "viewport": {
+        "w": 320,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 15,
+      "name": "quick-capture",
+      "observation": "manual/final-review/15-quick-capture.json",
+      "viewport": {
+        "w": 320,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 16,
+      "name": "six-task-workspace",
+      "observation": "manual/final-review/16-six-task-workspace.json",
+      "viewport": {
+        "w": 320,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 17,
+      "name": "compact-task-list",
+      "observation": "manual/final-review/17-compact-task-list.json",
+      "viewport": {
+        "w": 320,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 18,
+      "name": "compact-timeline-320",
+      "observation": "manual/final-review/18-compact-timeline-320.json",
+      "viewport": {
+        "w": 320,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": true,
+      "png": "manual/final-review/18-compact-timeline-320.png",
+      "selected_png_viewed_by_archiver": true
+    },
+    {
+      "step": 19,
+      "name": "compact-timeline-390",
+      "observation": "manual/final-review/19-compact-timeline-390.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 20,
+      "name": "compact-statistics",
+      "observation": "manual/final-review/20-compact-statistics.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 21,
+      "name": "statistics-method-on-demand",
+      "observation": "manual/final-review/21-statistics-method-on-demand.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 22,
+      "name": "return-list",
+      "observation": "manual/final-review/22-return-list.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 23,
+      "name": "search-filter",
+      "observation": "manual/final-review/23-search-filter.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 24,
+      "name": "new-task-under-filter",
+      "observation": "manual/final-review/24-new-task-under-filter.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 25,
+      "name": "outside-task-name",
+      "observation": "manual/final-review/25-outside-task-name.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 26,
+      "name": "saved-outside-view",
+      "observation": "manual/final-review/26-saved-outside-view.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": true,
+      "png": "manual/final-review/26-saved-outside-view.png",
+      "selected_png_viewed_by_archiver": true
+    },
+    {
+      "step": 27,
+      "name": "open-saved-record",
+      "observation": "manual/final-review/27-open-saved-record.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 28,
+      "name": "return-filter-preserved",
+      "observation": "manual/final-review/28-return-filter-preserved.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 29,
+      "name": "clear-search",
+      "observation": "manual/final-review/29-clear-search.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 30,
+      "name": "calendar-view",
+      "observation": "manual/final-review/30-calendar-view.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 31,
+      "name": "current-day-agenda",
+      "observation": "manual/final-review/31-current-day-agenda.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 32,
+      "name": "edit-day-task",
+      "observation": "manual/final-review/32-edit-day-task.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 33,
+      "name": "day-description",
+      "observation": "manual/final-review/33-day-description.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 34,
+      "name": "saved-agenda-position",
+      "observation": "manual/final-review/34-saved-agenda-position.json",
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "page_errors": [],
+      "png_archived": true,
+      "png": "manual/final-review/34-saved-agenda-position.png",
+      "selected_png_viewed_by_archiver": true
+    },
+    {
+      "step": 35,
+      "name": "desktop-calendar",
+      "observation": "manual/final-review/35-desktop-calendar.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 36,
+      "name": "desktop-footer-open",
+      "observation": "manual/final-review/36-desktop-footer-open.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 37,
+      "name": "backup-safety-copy",
+      "observation": "manual/final-review/37-backup-safety-copy.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    },
+    {
+      "step": 38,
+      "name": "actual-backup",
+      "observation": "manual/final-review/38-actual-backup.json",
+      "viewport": {
+        "w": 1440,
+        "h": 1000
+      },
+      "page_errors": [],
+      "png_archived": false,
+      "png": null,
+      "selected_png_viewed_by_archiver": false
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+Notification pointer access passed: 1280px settings entry and toast Undo remain usable
+Notification pointer access passed: 900px settings entry and toast Undo remain usable
+Smoke failed: Locator expected to be visible
+Actual value: hidden 
+Call log:
+  - Expect "to_be_visible" with timeout 5000ms
+  - waiting for locator(".import-diff-preview")
+    14 × locator resolved to <section aria-label="导入差异" class="import-diff-preview">…</section>
+       - unexpected value "hidden"
+
+Aria snapshot:
+- complementary "导航":
+  - link "Task Tracer":
+    - /url: ./
+  - navigation "视图切换":
+    - button "列表"
+    - button "日历"
+    - button "时间线"
+    - button "统计"
+  - navigation "导航":
+    - button "全部任务 2" [pressed]
+    - button "打开今日计划": 今日计划
+  - heading "项目" [level=2]
+  - navigation "项目":
+    - button "Smoke Personal 1"
+    - button "未分配项目 1"
+  - button "全部项目"
+  - region "保存的视图":
+    - text: 保存的视图
+    - list:
+      - listitem:
+        - button "Smoke Deadline View 全部项目 · 进行中 · 列表"
+        - button "删除保存的视图：Smoke Deadline View"
+  - button "设置与数据"
+  - text: 数据保存在此浏览器
+- banner:
+  - strong: 设置与数据
+  - button "返回任务"
+  - button "添加任务"
+  - button "快速记录"
+- main:
+  - region "设置与数据":
+    - heading "设置与数据" [level=1]
+    - tablist "设置分类":
+      - tab "外观与语言"
+      - tab "备份与迁移" [selected]
+      - tab "提醒与安装"
+      - tab "任务维护"
+      - tab "帮助与关于"
+    - tabpanel "备份与迁移":
+      - heading "备份与迁移" [level=2]
+      - status: 上次导出后任务已有更改 · 今天导出，请重新备份
+      - heading "任务备份" [level=3]
+      - paragraph: 下载可恢复的全部任务备份，包含归档任务；不包含保存的视图、偏好和恢复历史。
+      - button "下载备份"
+      - heading "从备份恢复" [level=3]
+      - paragraph: 选择 JSON 任务备份，预览后再决定合并或替换。
+      - button "选择备份文件"
+      - heading "本地恢复历史" [level=3]
+      - paragraph: 查看此浏览器的恢复点，预览后选择导出或恢复。
+      - button "恢复历史"
+      - heading "其他数据工具" [level=3]
+      - heading "表格导出" [level=3]
+      - paragraph: 下载全部任务的 CSV 报表，包含归档任务；报表不能用于恢复。
+      - button "导出全部任务 CSV"
+      - heading "迁移保存的视图" [level=3]
+      - paragraph: 单独导出或导入保存的搜索、筛选和布局，任务数据不变。
+      - button "迁移保存的视图"
+      - heading "存储与恢复" [level=3]
+      - paragraph: 查看用量与保存状态，了解浏览器能提供的存储保护。
+      - button "数据安全"
+- dialog "导入预览":
+  - heading "导入预览" [level=2]
+  - button "取消": ×
+  - heading "选择导入方式" [level=3]
+  - checkbox "合并到当前任务 新名称会追加；同名任务可选择保留两份、跳过导入或替换本地，请确认后再导入。"
+  - text: 合并到当前任务 新名称会追加；同名任务可选择保留两份、跳过导入或替换本地，请确认后再导入。
+  - paragraph: 替换模式会用文件中的任务替换当前全部任务。
+  - region "变更预览":
+    - heading "变更预览" [level=3]
+    - status: 当前 2 项任务将替换为文件中的 3 项，完成后共 3 项。
+  - strong: 替换导入保护
+  - text: 完整性校验失败。建议切换到合并模式；如果仍要替换，需要再次确认风险。
+  - region "恢复检查清单":
+    - heading "恢复检查清单" [level=3]
+    - list:
+      - listitem:
+        - img "高影响": "!"
+        - strong: 文件完整性
+        - text: 完整性校验失败；文件可能被截断或手动修改，请谨慎导入。
+      - listitem:
+        - img "注意": "!"
+        - strong: 任务 ID
+        - text: 发现 1 个重复任务 ID；导入时会重新生成并清理模糊引用。
+      - listitem:
+        - img "注意": "!"
+        - strong: 本地同名项
+        - text: 发现 1 个与当前任务同名的导入项；合并模式可逐项处理。
+      - listitem:
+        - img "高影响": "!"
+        - strong: 当前数据影响
+        - text: 默认替换会覆盖当前 2 个任务；如需保留，请勾选合并模式。
+    - group: 已通过 4 项检查
+  - group: 文件检查与变更详情
+  - button "取消"
+  - button "确认完整性风险"
+- text: 列表已更新，当前范围 2 个任务

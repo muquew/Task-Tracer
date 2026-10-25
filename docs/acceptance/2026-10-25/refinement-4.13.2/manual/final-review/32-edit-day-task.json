@@ -1,0 +1,753 @@
+{
+  "viewport": {
+    "w": 390,
+    "h": 844
+  },
+  "scrollY": 128,
+  "docHeight": 1361,
+  "docWidth": 390,
+  "active": {
+    "id": "taskName",
+    "className": ""
+  },
+  "title": "Task Tracer",
+  "themeColor": "#292536",
+  "skin": {
+    "accent": "iris",
+    "theme": "dark",
+    "chromeSolid": "#292536"
+  },
+  "headings": [
+    "Calendar",
+    "October 2026",
+    "Edit task"
+  ],
+  "surfaces": [
+    {
+      "selector": "#openModalBtn",
+      "visible": true,
+      "text": "Add task",
+      "x": 192,
+      "y": -118,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "selector": "#quickAddForm",
+      "visible": 0,
+      "text": "\n                    \n                        \n                        Quick cap",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#quickAddInput",
+      "visible": 0,
+      "text": "",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#toolsDrawer",
+      "visible": true,
+      "text": "Search tasks…\nSupports scoped search: project:name, tag:name, status:value, and ",
+      "x": 14,
+      "y": -8,
+      "w": 362,
+      "h": 103
+    },
+    {
+      "selector": "#workspaceOverview",
+      "visible": 0,
+      "text": "\n            October 2026MonTueWedThuFriSatSun2829301234567891011121314151617181",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceWeekIndex",
+      "visible": 0,
+      "text": "OctNext 7 daysMon26Tue27Wed28Thu29Fri30Sat31Sun1",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#taskList",
+      "visible": true,
+      "text": "October 2026\nToday\nMon\nTue\nWed\nThu\nFri\nSat\nSun\n28\n29\n30\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n",
+      "x": 26,
+      "y": 95,
+      "w": 338,
+      "h": 1018
+    },
+    {
+      "selector": "#workspaceTitle",
+      "visible": true,
+      "text": "Calendar",
+      "x": 14,
+      "y": -52,
+      "w": 344,
+      "h": 30
+    },
+    {
+      "selector": "#settingsWorkspace",
+      "visible": 0,
+      "text": "\n            Settings & data\n            \n                \n                    A",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    }
+  ],
+  "buttons": [
+    {
+      "id": "workspaceNavToggle",
+      "text": "Open navigation",
+      "x": 14,
+      "y": -118,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "undoBtn",
+      "text": "Undo",
+      "x": 121,
+      "y": -118,
+      "w": 67,
+      "h": 40
+    },
+    {
+      "id": "openModalBtn",
+      "text": "Add task",
+      "x": 192,
+      "y": -118,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "id": "quickCaptureBtn",
+      "text": "Quick capture",
+      "x": 295,
+      "y": -118,
+      "w": 36,
+      "h": 40
+    },
+    {
+      "id": "openMenuBtn",
+      "text": "Settings & data",
+      "x": 336,
+      "y": -118,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "saveSmartViewBtn",
+      "text": "Save view",
+      "x": 269,
+      "y": 47,
+      "w": 95,
+      "h": 36
+    },
+    {
+      "id": "toolsDrawerToggleBtn",
+      "text": "Filters\nActive",
+      "x": 26,
+      "y": 47,
+      "w": 129,
+      "h": 36
+    },
+    {
+      "id": "",
+      "text": "Previous year",
+      "x": 38,
+      "y": 141,
+      "w": 38,
+      "h": 34
+    },
+    {
+      "id": "",
+      "text": "Previous month",
+      "x": 102,
+      "y": 141,
+      "w": 38,
+      "h": 34
+    },
+    {
+      "id": "",
+      "text": "Today",
+      "x": 166,
+      "y": 141,
+      "w": 57,
+      "h": 34
+    },
+    {
+      "id": "",
+      "text": "Next month",
+      "x": 250,
+      "y": 141,
+      "w": 38,
+      "h": 34
+    },
+    {
+      "id": "",
+      "text": "Next year",
+      "x": 314,
+      "y": 141,
+      "w": 38,
+      "h": 34
+    },
+    {
+      "id": "",
+      "text": "28",
+      "x": 26,
+      "y": 222,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "29",
+      "x": 74,
+      "y": 222,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "30",
+      "x": 123,
+      "y": 222,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "1",
+      "x": 171,
+      "y": 222,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "2",
+      "x": 219,
+      "y": 222,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "3",
+      "x": 267,
+      "y": 222,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "4",
+      "x": 316,
+      "y": 222,
+      "w": 48,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "5",
+      "x": 26,
+      "y": 277,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "6",
+      "x": 74,
+      "y": 277,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "7",
+      "x": 123,
+      "y": 277,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "8",
+      "x": 171,
+      "y": 277,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "9",
+      "x": 219,
+      "y": 277,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "10",
+      "x": 267,
+      "y": 277,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "11",
+      "x": 316,
+      "y": 277,
+      "w": 48,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "12",
+      "x": 26,
+      "y": 332,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "13",
+      "x": 74,
+      "y": 332,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "14",
+      "x": 123,
+      "y": 332,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "15",
+      "x": 171,
+      "y": 332,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "16",
+      "x": 219,
+      "y": 332,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "17",
+      "x": 267,
+      "y": 332,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "18",
+      "x": 316,
+      "y": 332,
+      "w": 48,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "19",
+      "x": 26,
+      "y": 387,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "20",
+      "x": 74,
+      "y": 387,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "21",
+      "x": 123,
+      "y": 387,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "22",
+      "x": 171,
+      "y": 387,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "23",
+      "x": 219,
+      "y": 387,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "24",
+      "x": 267,
+      "y": 387,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "25",
+      "x": 316,
+      "y": 387,
+      "w": 48,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "26",
+      "x": 26,
+      "y": 442,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "27",
+      "x": 74,
+      "y": 442,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "28",
+      "x": 123,
+      "y": 442,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "29",
+      "x": 171,
+      "y": 442,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "30",
+      "x": 219,
+      "y": 442,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "31",
+      "x": 267,
+      "y": 442,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "1",
+      "x": 316,
+      "y": 442,
+      "w": 48,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "2",
+      "x": 26,
+      "y": 497,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "3",
+      "x": 74,
+      "y": 497,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "4",
+      "x": 123,
+      "y": 497,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "5",
+      "x": 171,
+      "y": 497,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "6",
+      "x": 219,
+      "y": 497,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "7",
+      "x": 267,
+      "y": 497,
+      "w": 47,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "8",
+      "x": 316,
+      "y": 497,
+      "w": 48,
+      "h": 54
+    },
+    {
+      "id": "",
+      "text": "Add task",
+      "x": 281,
+      "y": 578,
+      "w": 71,
+      "h": 34
+    },
+    {
+      "id": "",
+      "text": "10:30\n整理体验反馈\nUrgent",
+      "x": 38,
+      "y": 625,
+      "w": 314,
+      "h": 62
+    },
+    {
+      "id": "",
+      "text": "14:00\n完成日程审查\nUrgent",
+      "x": 38,
+      "y": 694,
+      "w": 314,
+      "h": 62
+    },
+    {
+      "id": "",
+      "text": "Mark as complete",
+      "x": 39,
+      "y": 832,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "0/1 Subtasks",
+      "x": 80,
+      "y": 894,
+      "w": 234,
+      "h": 40
+    },
+    {
+      "id": "",
+      "text": "Task actions: 复核最终界面与操作",
+      "x": 319,
+      "y": 832,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Mark as complete",
+      "x": 39,
+      "y": 952,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Task actions: 整理阅读计划",
+      "x": 319,
+      "y": 952,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Mark as complete",
+      "x": 39,
+      "y": 1030,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Task actions: 在筛选外保存的任务",
+      "x": 319,
+      "y": 1030,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "closeModalBtn",
+      "text": "×",
+      "x": 322,
+      "y": 27,
+      "w": 36,
+      "h": 36
+    }
+  ],
+  "fields": [
+    {
+      "id": "searchInput",
+      "type": "text",
+      "value": "",
+      "placeholder": "Search tasks…",
+      "x": 26,
+      "y": 3,
+      "w": 338,
+      "h": 36
+    },
+    {
+      "id": "taskName",
+      "type": "text",
+      "value": "整理体验反馈",
+      "placeholder": "Enter task name",
+      "x": 46,
+      "y": 134,
+      "w": 298,
+      "h": 42
+    },
+    {
+      "id": "taskDesc",
+      "type": "textarea",
+      "value": "",
+      "placeholder": "Enter task description",
+      "x": 46,
+      "y": 214,
+      "w": 298,
+      "h": 61
+    },
+    {
+      "id": "taskProject",
+      "type": "text",
+      "value": "产品迭代",
+      "placeholder": "e.g. Work / Personal",
+      "x": 46,
+      "y": 313,
+      "w": 298,
+      "h": 42
+    },
+    {
+      "id": "noDeadline",
+      "type": "checkbox",
+      "value": "on",
+      "placeholder": "",
+      "x": 242,
+      "y": 367,
+      "w": 24,
+      "h": 24
+    },
+    {
+      "id": "dueDate",
+      "type": "date",
+      "value": "2026-10-26",
+      "placeholder": "",
+      "x": 46,
+      "y": 399,
+      "w": 298,
+      "h": 42
+    },
+    {
+      "id": "dueTime",
+      "type": "time",
+      "value": "10:30",
+      "placeholder": "",
+      "x": 46,
+      "y": 451,
+      "w": 298,
+      "h": 42
+    },
+    {
+      "id": "subtaskInput",
+      "type": "text",
+      "value": "",
+      "placeholder": "Add a subtask…",
+      "x": 46,
+      "y": 562,
+      "w": 256,
+      "h": 42
+    },
+    {
+      "id": "taskTags",
+      "type": "text",
+      "value": "体验",
+      "placeholder": "Separate tags with commas",
+      "x": 46,
+      "y": 699,
+      "w": 298,
+      "h": 42
+    },
+    {
+      "id": "reminderOffset",
+      "type": "select-one",
+      "value": "15",
+      "placeholder": null,
+      "x": 59,
+      "y": 815,
+      "w": 1,
+      "h": 1
+    },
+    {
+      "id": "reminderRepeat",
+      "type": "select-one",
+      "value": "-1",
+      "placeholder": null,
+      "x": 59,
+      "y": 894,
+      "w": 1,
+      "h": 1
+    },
+    {
+      "id": "repeatType",
+      "type": "select-one",
+      "value": "none",
+      "placeholder": null,
+      "x": 59,
+      "y": 1053,
+      "w": 1,
+      "h": 1
+    }
+  ],
+  "pageErrors": []
+}

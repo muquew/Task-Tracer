@@ -1,0 +1,31 @@
+{
+  "started_at": "2026-10-25T16:12:48.837882+00:00",
+  "index_sha256": "fb59cc194636eba12251839860d4e42a1d1e60daf3b4b009a30ac68b91b1f1cd",
+  "passed": false,
+  "runs": [
+    {
+      "width": 1280,
+      "height": 720,
+      "passed": false,
+      "checks": []
+    }
+  ],
+  "workload_injected": false,
+  "csp_bypassed": false,
+  "browser": {
+    "engine": "chromium",
+    "version": "154.0.8037.57",
+    "executable": "/usr/bin/chromium"
+  },
+  "page_errors": [],
+  "console_errors": [],
+  "workload": {
+    "projects": 40,
+    "tasks": 40,
+    "saved_views": 4,
+    "created_through": "40 quick-capture submissions and 4 saved-view forms",
+    "seconds": 3.48
+  },
+  "error": "Traceback (most recent call last):\n  File \"/workspace/Task-Tracer/tools/sidebar_scroll_playwright.py\", line 328, in run\n    check()\n  File \"/workspace/Task-Tracer/tools/sidebar_scroll_playwright.py\", line 317, in <lambda>\n    lambda:check_scroll_and_reachability(page, entry)),\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Task-Tracer/tools/sidebar_scroll_playwright.py\", line 179, in check_scroll_and_reachability\n    assert_fixed(before, bottom, mobile=mobile)\n  File \"/workspace/Task-Tracer/tools/sidebar_scroll_playwright.py\", line 81, in assert_fixed\n    assert after['windowY'] == before['windowY'], 'Sidebar scrolling also moved the main page'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Sidebar scrolling also moved the main page\n",
+  "completed_at": "2026-10-25T16:12:57.238263+00:00"
+}

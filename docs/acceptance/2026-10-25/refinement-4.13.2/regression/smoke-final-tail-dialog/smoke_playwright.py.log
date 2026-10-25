@@ -1,0 +1,5 @@
+Notification pointer access passed: 1280px settings entry and toast Undo remain usable
+Notification pointer access passed: 900px settings entry and toast Undo remain usable
+Task menu viewport passed: 1280px tail menu and Delete are directly visible; cancel preserves all 18 tasks
+Task menu viewport passed: 390px tail menu and Delete are directly visible; cancel preserves all 18 tasks
+Smoke passed: http://127.0.0.1:35411/

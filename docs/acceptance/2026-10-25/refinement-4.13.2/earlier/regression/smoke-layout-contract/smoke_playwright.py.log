@@ -1,0 +1,3 @@
+Notification pointer access passed: 1280px settings entry and toast Undo remain usable
+Notification pointer access passed: 900px settings entry and toast Undo remain usable
+Smoke failed: Calendar task title is not constrained to one-line ellipsis: {'overflow': 'visible', 'textOverflow': 'clip', 'whiteSpace': 'normal', 'title': 'Smoke Task 1792946376 Beta'}
