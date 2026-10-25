@@ -1,0 +1,9 @@
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+Imported reminders passed: fractional; full fields/reload/download or explicit UI boundary verified
+Imported reminders passed: after-due; full fields/reload/download or explicit UI boundary verified
+Imported reminders passed: off; full fields/reload/download or explicit UI boundary verified
+Imported reminders passed: undated; full fields/reload/download or explicit UI boundary verified
+Imported reminders passed: change; full fields/reload/download or explicit UI boundary verified
+Imported reminders passed: recovery; full fields/reload/download or explicit UI boundary verified
+Imported reminders passed: labels; full fields/reload/download or explicit UI boundary verified
+{"browser_engine": "webkit", "browser": "26.5", "case": "all", "passed": true}

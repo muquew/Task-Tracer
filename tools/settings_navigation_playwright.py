@@ -152,6 +152,9 @@ def exercise_workspace(browser, url, width, language):
         assert actual['tasks'] == preserved['tasks'], 'Settings backup changed its task scope or content'
         expect(page.locator('#settingsWorkspace')).to_be_visible()
         expect(page.locator('#backupHealthText')).to_be_visible()
+        initial_health = translations['backup']['health']
+        expect(page.locator('#backupHealthText')).to_have_text(
+            initial_health['ok'].replace('{age}', initial_health['today']))
         expect(page.locator('#backupBtn')).to_be_focused()
         for theme in ('dark', 'light', 'system'):
             page.locator('#settingsThemeSelect').select_option(theme)
@@ -166,6 +169,10 @@ def exercise_workspace(browser, url, width, language):
             expect(page.locator('html')).to_have_attribute('lang', next_language)
             expect(page.locator('#languageSelect')).to_have_value(next_language)
             expect(page.locator('#settingsLanguageSelect')).to_have_value(next_language)
+            target_health = json.loads((ROOT / 'resources' / f'{next_language}.json').read_text())['backup']['health']
+            expect(page.locator('#backupHealthText')).to_have_text(
+                target_health['ok'].replace('{age}', target_health['today']))
+            expect(page.locator('#settingsWorkspace')).to_be_visible()
         assert_accessibility_baseline(page, f'{width}px {language} settings')
         if width <= 779:
             assert_mobile_targets(page)
@@ -209,6 +216,35 @@ def exercise_workspace(browser, url, width, language):
         assert not errors, errors
         print(f'{width}px {language}: permanent labelled views, collapsed-tools access, settings/back/current-view, '
               'scoped state and draft/selection preservation, real backup, dialog focus, appearance and language passed', flush=True)
+    finally:
+        context.close()
+
+
+def exercise_empty_backup_language(browser, url, width):
+    context = browser.new_context(viewport={'width': width, 'height': 844},
+                                  locale='en-US', timezone_id='Asia/Shanghai', reduced_motion='reduce')
+    errors = []
+    try:
+        page = context.new_page()
+        page.on('pageerror', lambda error: errors.append(str(error)))
+        clear_app_data(page, url)
+        select_language(page, 'zh-CN')
+        before = get_task_records(page)
+        assert before == [], 'Empty backup-language fixture unexpectedly contains tasks'
+        open_settings(page)
+        initial_health = json.loads((ROOT / 'resources' / 'zh-CN.json').read_text())['backup']['health']
+        expect(page.locator('#backupHealthText')).to_have_text(initial_health['empty'])
+        for language in ('en', 'zh-CN'):
+            page.locator('#settingsLanguageSelect').select_option(language)
+            expect(page.locator('html')).to_have_attribute('lang', language)
+            expect(page.locator('#settingsLanguageSelect')).to_have_value(language)
+            expect(page.locator('#languageSelect')).to_have_value(language)
+            target_health = json.loads((ROOT / 'resources' / f'{language}.json').read_text())['backup']['health']
+            expect(page.locator('#backupHealthText')).to_have_text(target_health['empty'])
+            expect(page.locator('#settingsWorkspace')).to_be_visible()
+            assert get_task_records(page) == before, 'Translating the empty backup status changed task data'
+        assert not errors, errors
+        print(f'{width}px empty backup status: both language directions update the exact status in the same settings screen without task changes', flush=True)
     finally:
         context.close()
 
@@ -299,6 +335,7 @@ def run(engine):
             for width in (1440, 390):
                 for language in ('zh-CN', 'en'):
                     exercise_workspace(browser, url, width, language)
+                exercise_empty_backup_language(browser, url, width)
             exercise_unavailable_storage(browser, url)
             exercise_language_rollback(browser, url)
         finally:

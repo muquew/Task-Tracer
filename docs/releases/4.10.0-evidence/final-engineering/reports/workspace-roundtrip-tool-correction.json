@@ -1,0 +1,12 @@
+{
+  "tool_file": "tools/workspace_roundtrip_playwright.py",
+  "before_sha256": "57130f52c1cc4e024e49f4d923137e473608de7dcba38e8f6227c5bbc6228ea1",
+  "after_sha256": "48df391e6f7fcb115af1c5fb34d9a7e2f52c781f318c752f9654ecde665ef441",
+  "source_unchanged_from_full": true,
+  "source": "4a9cd3c8e5836adb3e518758bc573cdbdf074286dfd25161a7786d7967021ca8",
+  "verification_before": "f716121b10dae7ab537ee8cec63a63ce4d983c77aa32124c829db3331cf3b0a7",
+  "verification_after": "5a34fd84fe1cbbeedc68cf601865cad1ac156962d78b8dbe2ec37c8a89cf98cb",
+  "changed_verification_files": [
+    "tools/workspace_roundtrip_playwright.py"
+  ]
+}

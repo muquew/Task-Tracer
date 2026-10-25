@@ -55,7 +55,7 @@
             "image": "https://todo.muquew.com/screenshots/task-list-en.png",
             "description": "Task Tracer is a local-first PWA for tasks, routines, reminders, calendar planning, statistics, import/export backups, and offline use.",
             "inLanguage": ["en", "zh-CN"],
-            "softwareVersion": "4.10.0",
+            "softwareVersion": "4.10.1",
             "author": {
                 "@type": "Person",
                 "name": "muquew"
@@ -1753,7 +1753,7 @@
     (function() {
         const CONFIG = {
             APP: {
-                VERSION: '4.10.0'
+                VERSION: '4.10.1'
             },
             DB: {
                 NAME: 'TaskTrackerDB',
@@ -9220,6 +9220,7 @@
             syncWorkspaceScreen();
             updateNotificationBtnUI();
             syncInstallEntry();
+            if (state.storageAvailable && workspaceUI.screen === 'settings') updateBackupHealthStatus().catch(handleBackgroundStorageFailure);
         }
         function getLanguageDirection(code) {
             return ['ar', 'fa', 'he', 'ur'].includes(normalizeLanguageCode(code).split('-')[0]) ? 'rtl' : 'ltr';
