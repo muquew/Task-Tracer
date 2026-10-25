@@ -1,0 +1,9 @@
+{
+  "application_commit": "0b0835b7c75bd31c2955ca87849d005131de9c45",
+  "working_tree_dirty": false,
+  "zip": "task-tracer-4.11.1.zip",
+  "bytes": 759219,
+  "sha256": "9c4180568e07b370779a68775d3ef440caf3661130646551293c85d7c7a1e8e2",
+  "files": 24,
+  "payload_comparison": "All 23 payload files byte-identical to the independently built and extracted-offline-tested 4.11.1 candidate; only integrity.json commit/dirty metadata changed."
+}
