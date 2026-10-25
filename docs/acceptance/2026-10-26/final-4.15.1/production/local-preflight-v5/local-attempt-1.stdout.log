@@ -1,0 +1,8 @@
+RUN_DIRECTORY /workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15
+{"engine": "chromium", "width": 1280, "passed": true, "seconds": 18.399}
+{"engine": "chromium", "width": 390, "passed": true, "seconds": 14.361}
+{"engine": "firefox", "width": 1280, "passed": true, "seconds": 19.535}
+{"engine": "firefox", "width": 390, "passed": true, "seconds": 15.683}
+{"engine": "webkit", "width": 1280, "passed": true, "seconds": 23.314}
+{"engine": "webkit", "width": 390, "passed": true, "seconds": 17.817}
+REPORT /workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/report.json PASS True

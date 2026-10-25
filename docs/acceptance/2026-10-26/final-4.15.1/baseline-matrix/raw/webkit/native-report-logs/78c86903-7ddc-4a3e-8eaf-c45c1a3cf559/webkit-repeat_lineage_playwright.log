@@ -1,0 +1,11 @@
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+Repeat lineage webkit: undo passed
+Repeat lineage webkit: edited passed
+Repeat lineage webkit: nonroot passed
+Repeat lineage webkit: roundtrip passed
+Repeat lineage webkit: legacy-ghost passed
+Repeat lineage webkit: legacy-roundtrip passed
+Repeat lineage webkit: tail passed
+Repeat lineage webkit: terminal passed
+Repeat lineage webkit: self passed
+{"browser": "webkit", "browser_version": "26.5", "cases": ["undo", "edited", "nonroot", "roundtrip", "legacy-ghost", "legacy-roundtrip", "tail", "terminal", "self"], "passed": true}

@@ -1,0 +1,316 @@
+{
+  "recorded_at": "2026-10-25T22:21:19.208389+00:00",
+  "copied_files": {
+    "native/actual-4.15.0-upgrade.stderr.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/native/84d24450-249f-43b9-83ea-df11a140b723/actual-4.15.0-upgrade.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "native/actual-4.15.0-upgrade.stdout.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/native/84d24450-249f-43b9-83ea-df11a140b723/actual-4.15.0-upgrade.stdout.log",
+      "bytes": 383,
+      "sha256": "3a23763b77a44cebbb7a26244510dc99b7c3369da87c6b6f8133c6589f27ab41",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "native/baseline-audit.json": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/native/84d24450-249f-43b9-83ea-df11a140b723/baseline-audit.json",
+      "bytes": 425,
+      "sha256": "0fb890e0f948f866a1b523efd593ee5f482e2bff081eb8cdf271b8917e2cf954",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "native/original-files.json": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/native/84d24450-249f-43b9-83ea-df11a140b723/files.json",
+      "bytes": 18287,
+      "sha256": "f0aed89a2a1790c64444016afb4f7a1320df1df5db93ae6ab2678244e4335cb2",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": false
+    },
+    "native/frozen-inputs.json": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/native/84d24450-249f-43b9-83ea-df11a140b723/frozen-inputs.json",
+      "bytes": 11795,
+      "sha256": "b548064fc70412868504bf9dc1298c72fae4e39e6d9438ee073f99225b8b9bc7",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "native/release.stderr.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/native/84d24450-249f-43b9-83ea-df11a140b723/release.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "native/release.stdout.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/native/84d24450-249f-43b9-83ea-df11a140b723/release.stdout.log",
+      "bytes": 719,
+      "sha256": "0b77f14cfafeb69570d22cb41726b190d33ee9e2d6c00bba9d1dd9199a1de955",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "native/report.json": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/native/84d24450-249f-43b9-83ea-df11a140b723/report.json",
+      "bytes": 26293,
+      "sha256": "f37d76854b794e172efd90426709269b6c670ddbcd89be24cabb24cbaacad224",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "native/runner.py": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/native/84d24450-249f-43b9-83ea-df11a140b723/runner.py",
+      "bytes": 6882,
+      "sha256": "386908656bc1580bd663988bd2a6eed27beefa048abc7793d17f82e42dc2f3a8",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "native/static7.json": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/native/84d24450-249f-43b9-83ea-df11a140b723/static7.json",
+      "bytes": 25022,
+      "sha256": "e4469b9f73811a5602880925cbe7164b7aaf65a49d5eb936f405b7a0f6ce6f76",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "native/static7.stderr.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/native/84d24450-249f-43b9-83ea-df11a140b723/static7.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "native/static7.stdout.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/native/84d24450-249f-43b9-83ea-df11a140b723/static7.stdout.log",
+      "bytes": 4683,
+      "sha256": "e25e799afc33e21817836a6cccb7a93abc53644b3f227017824ddc03feb90cde",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "candidate/build.stderr.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/candidate-retained/0488b3a6-0d39-4234-8cae-8abd6d1e8901/build.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "candidate/build.stdout.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/candidate-retained/0488b3a6-0d39-4234-8cae-8abd6d1e8901/build.stdout.log",
+      "bytes": 410,
+      "sha256": "0a3b4e443c0c875778a74b5df0c30d7aa97d1587fc423caf7aa150aee6e48ca7",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "candidate/driver.py": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/candidate-retained/0488b3a6-0d39-4234-8cae-8abd6d1e8901/driver.py",
+      "bytes": 3219,
+      "sha256": "5caea14b67806ddbc07fd9b108fa7d1471df1bf61242a391352a27f6660c76ce",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "candidate/original-files.json": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/candidate-retained/0488b3a6-0d39-4234-8cae-8abd6d1e8901/files.json",
+      "bytes": 925,
+      "sha256": "65a1608cd360fcf54baad4499bb5d0c032d934b6ac423c67bbf130c415cea583",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": false
+    },
+    "candidate/integrity.json": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/candidate-retained/0488b3a6-0d39-4234-8cae-8abd6d1e8901/integrity.json",
+      "bytes": 2317,
+      "sha256": "f3cf4e03e71e01de01252dc4188fd1cf16a8f0db28db65241bd485b24983e8ca",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "candidate/summary.json": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/candidate-retained/0488b3a6-0d39-4234-8cae-8abd6d1e8901/summary.json",
+      "bytes": 16956,
+      "sha256": "644ba149436855a06cbaca8f2398e46b246942cb401b1f765b14443a727b00ab",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "canonical/checkout.stderr.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/canonical-prepared/0ebbd959-fe4e-4824-8b5d-80a571619dfa/checkout.stderr.log",
+      "bytes": 69,
+      "sha256": "5b4abfbc7ebc0e0993eaa03fe31297688f207d8b5ebd1e8b9eebcf07a5331e62",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "canonical/checkout.stdout.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/canonical-prepared/0ebbd959-fe4e-4824-8b5d-80a571619dfa/checkout.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "canonical/clone.stderr.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/canonical-prepared/0ebbd959-fe4e-4824-8b5d-80a571619dfa/clone.stderr.log",
+      "bytes": 68,
+      "sha256": "b968d66cdad736ee426d73299b62f1f1f9370803db9c222c7c0e44a126c0daa9",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "canonical/clone.stdout.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/canonical-prepared/0ebbd959-fe4e-4824-8b5d-80a571619dfa/clone.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "canonical/driver.py": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/canonical-prepared/0ebbd959-fe4e-4824-8b5d-80a571619dfa/driver.py",
+      "bytes": 7630,
+      "sha256": "cdec1f77eb9876d1e3101edb84153c5ebd9c88b9c3343b9489d7a94d799999db",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "canonical/original-files.json": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/canonical-prepared/0ebbd959-fe4e-4824-8b5d-80a571619dfa/files.json",
+      "bytes": 1959,
+      "sha256": "e3041879b8d839fa5dcf3eaed36e43c9684f231feb5bf99cca6452fd339dec53",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": false
+    },
+    "canonical/integrity.json": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/canonical-prepared/0ebbd959-fe4e-4824-8b5d-80a571619dfa/integrity.json",
+      "bytes": 2318,
+      "sha256": "d19f377de151b1ddb40db5925557d57b382e486d5633ac0150ed5d570892dfcb",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "canonical/one.stderr.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/canonical-prepared/0ebbd959-fe4e-4824-8b5d-80a571619dfa/one.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "canonical/one.stdout.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/canonical-prepared/0ebbd959-fe4e-4824-8b5d-80a571619dfa/one.stdout.log",
+      "bytes": 406,
+      "sha256": "f7fc4e9feb1dae52adf993495c885f214ff0a1cba190508512e4902a9a1292f6",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "canonical/report.json": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/canonical-prepared/0ebbd959-fe4e-4824-8b5d-80a571619dfa/report.json",
+      "bytes": 61287,
+      "sha256": "9b077a08f9f65ec0af5fb43a7b9553f527e1590215c87cf9312a9b921c10a959",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "canonical/two.stderr.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/canonical-prepared/0ebbd959-fe4e-4824-8b5d-80a571619dfa/two.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "canonical/two.stdout.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/canonical-prepared/0ebbd959-fe4e-4824-8b5d-80a571619dfa/two.stdout.log",
+      "bytes": 406,
+      "sha256": "0f0e11645eedeeee4c6b3d2d3dffda7d05772ba7948d3485b193739c26727863",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "scale/original-files.json": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/scale-10000-full/6a956160-a02e-4960-a984-0a2d9bb620f8/files.json",
+      "bytes": 617,
+      "sha256": "1efb46043d44d3d711139952fc6dd93e976bb453145367ef5faaacc2462741bb",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": false
+    },
+    "scale/report.json": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/scale-10000-full/6a956160-a02e-4960-a984-0a2d9bb620f8/report.json",
+      "bytes": 25312,
+      "sha256": "72577750a3a19abc524c23d1c836bfd4ff12a6a048ad60988c798646dc3b4d72",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "scale/result.json": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/scale-10000-full/6a956160-a02e-4960-a984-0a2d9bb620f8/result.json",
+      "bytes": 8771,
+      "sha256": "a8b8049bdc3e5201f52fc99b946ac9d67769cfd252da6af4d41a88b15c7f37eb",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "scale/runner.py": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/scale-10000-full/6a956160-a02e-4960-a984-0a2d9bb620f8/runner.py",
+      "bytes": 4578,
+      "sha256": "95a09e9640bd225c3cc4c89312312f7da879885bc1ab7042ebc6cb1096a8b35a",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "scale/stderr.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/scale-10000-full/6a956160-a02e-4960-a984-0a2d9bb620f8/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "scale/stdout.log": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/scale-10000-full/6a956160-a02e-4960-a984-0a2d9bb620f8/stdout.log",
+      "bytes": 2951,
+      "sha256": "2c4e197276322ca3816406ecbde89fd5168dee989c42051f9b91e28acccddef6",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": true
+    },
+    "v6-summary.json": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/v6-summary.json",
+      "bytes": 6819,
+      "sha256": "c7e8b0f10f78155d1df560d64df4d98e9b2ba7949ca887c6de2b2e9d3d0ef696",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": false
+    },
+    "archive-driver.py": {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/archive_v6.py",
+      "bytes": 14377,
+      "sha256": "cc4e79c24beac024462d0cb50aae772a812145305d68481ab60f9c79de53a6fe",
+      "byte_identical_to_original": true,
+      "checked_against_original_run_file_index": false
+    }
+  },
+  "derived_files": {
+    "input-index.json": {
+      "derived_from": [
+        "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/native/84d24450-249f-43b9-83ea-df11a140b723/frozen-inputs.json"
+      ],
+      "purpose": "Scope-preserving archive index or explanatory note; original native files remain byte-identical."
+    },
+    "candidate/archive-file-list.json": {
+      "derived_from": [
+        "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/candidate-retained/0488b3a6-0d39-4234-8cae-8abd6d1e8901/summary.json"
+      ],
+      "purpose": "Scope-preserving archive index or explanatory note; original native files remain byte-identical."
+    },
+    "canonical/archive-file-list.json": {
+      "derived_from": [
+        "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/canonical-prepared/0ebbd959-fe4e-4824-8b5d-80a571619dfa/report.json"
+      ],
+      "purpose": "Scope-preserving archive index or explanatory note; original native files remain byte-identical."
+    },
+    "canonical/reverse-proof.json": {
+      "derived_from": [
+        "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/canonical-prepared/0ebbd959-fe4e-4824-8b5d-80a571619dfa/report.json"
+      ],
+      "purpose": "Scope-preserving archive index or explanatory note; original native files remain byte-identical."
+    },
+    "scale/unretained-backups.json": {
+      "derived_from": [
+        "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/scale-10000-full/6a956160-a02e-4960-a984-0a2d9bb620f8/result.json",
+        "/workspace/Task-Tracer/tools/workspace_roundtrip_playwright.py",
+        "/workspace/Task-Tracer/tools/smoke_playwright.py"
+      ],
+      "purpose": "Scope-preserving archive index or explanatory note; original native files remain byte-identical."
+    },
+    "README.md": {
+      "derived_from": [
+        "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/v6-summary.json",
+        "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/native/84d24450-249f-43b9-83ea-df11a140b723/report.json",
+        "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/canonical-prepared/0ebbd959-fe4e-4824-8b5d-80a571619dfa/report.json",
+        "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/scale-10000-full/6a956160-a02e-4960-a984-0a2d9bb620f8/result.json",
+        "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/scale-10000-full/6a956160-a02e-4960-a984-0a2d9bb620f8/report.json"
+      ],
+      "purpose": "Scope-preserving archive index or explanatory note; original native files remain byte-identical."
+    }
+  },
+  "scope": "Only files under this v6 archive were written; original evidence, other docs and all107 product/verification inputs remain unchanged."
+}

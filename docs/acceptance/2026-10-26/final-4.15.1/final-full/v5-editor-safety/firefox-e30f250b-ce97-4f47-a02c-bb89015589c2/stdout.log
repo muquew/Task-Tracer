@@ -1,0 +1,12 @@
+Editor safety evidence: /workspace/design-research/task-tracer-final-delivery-2026-10-26/final-editor-cross-engine-v5/firefox-e30f250b-ce97-4f47-a02c-bb89015589c2/native/20261025T205755Z-firefox-a93222bd
+Editor safety passed: 1280px date-roundtrip
+Editor safety passed: 1280px empty-weekdays
+Editor safety passed: 1280px subtask-delete
+Editor safety passed: 1280px missing-date
+Editor safety passed: 1280px empty-custom-interval
+Editor safety passed: 390px date-roundtrip
+Editor safety passed: 390px empty-weekdays
+Editor safety passed: 390px subtask-delete
+Editor safety passed: 390px missing-date
+Editor safety passed: 390px empty-custom-interval
+Editor safety passed: 10 cases; evidence /workspace/design-research/task-tracer-final-delivery-2026-10-26/final-editor-cross-engine-v5/firefox-e30f250b-ce97-4f47-a02c-bb89015589c2/native/20261025T205755Z-firefox-a93222bd

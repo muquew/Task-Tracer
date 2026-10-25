@@ -1,0 +1,9 @@
+{
+  "fetched_at_utc": "2026-10-25T20:29:18.344070+00:00",
+  "job_id": "121281961144",
+  "url": "https://github.com/muquew/Task-Tracer/actions/runs/40230821013/job/121281961144",
+  "http_status": 200,
+  "html_sha256": "16b970d0f9ef763f516ace941fb2a26cc81bf03546d7c196ea5918fbc6ef5622",
+  "public_excerpt": "Release checks\nci: locate smoke failures with bounded source metadata\n#26\nSign in to view logs\nSign in to view logs\ndeployed_site\nci: locate smoke failures with bounded source metadata\nci: locate smoke failures with bounded source metadata\n#26\nUh oh!\nThere was an error while loading.\nPlease reload this page\n.\nJob log options\nDownload log archive\nThis job was skipped\nLoading\nRe-running jobs...\nYou can’t perform that action at this time.",
+  "evidence_text": "job-121281961144-visible.txt"
+}

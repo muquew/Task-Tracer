@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-25T18:53:17.378136+00:00",
+  "engine": "webkit",
+  "version": "26.5",
+  "source_index_sha256": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5",
+  "http_status": 200,
+  "http_headers": {
+    "date": "Sun, 25 Oct 2026 18:53:14 GMT",
+    "content-type": "text/html",
+    "content-length": "977388",
+    "last-modified": "Sun, 25 Oct 2026 18:46:32 GMT",
+    "server": "SimpleHTTP/0.6 Python/3.12.14"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "page_errors": [],
+  "task_count": 1,
+  "html_width": 1280,
+  "viewport_width": 1280,
+  "official_nonstandard_sysroot_environment": {
+    "LD_LIBRARY_PATH": "/workspace/.cache/browser-libs/root/usr/lib/x86_64-linux-gnu",
+    "PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS": "1"
+  },
+  "browser_closed": true,
+  "server_closed": true,
+  "scope": "Actual WebKit launch/render/real form save with original native local HTTP handler, no CSP or assertion changes. This is a readiness probe, not the registered33 result."
+}

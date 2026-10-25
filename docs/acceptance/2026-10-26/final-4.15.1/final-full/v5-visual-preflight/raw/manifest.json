@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "scope": "89b actual public screenshots, individual image review, exact clone copy receipt and two-function/CSP scope proof; self excluded.",
+  "file_count": 17,
+  "bytes": 852343,
+  "files": {
+    "README.md": {
+      "bytes": 2972,
+      "sha256": "0415c2be15bef254774df718476a90a2dc817891a0176b3874e694fed10e22ce"
+    },
+    "add-task-en.png": {
+      "bytes": 215481,
+      "sha256": "80653a10cfa1eabdb4ed43e39bd38fd0d681ff0ce5aecc8db8623cf9803eb92d"
+    },
+    "add-task.png": {
+      "bytes": 214591,
+      "sha256": "1cb351f6a0366c488f6c9aa100e90a1108ba5659b3cd2f99233de6c54382b000"
+    },
+    "candidate-inputs-after-png-copy.json": {
+      "bytes": 11963,
+      "sha256": "7445abaeda43feb15b9f7d82b616370ecfbbd62f2fad94e2e925d8d32aee321a"
+    },
+    "capture.json": {
+      "bytes": 9141,
+      "sha256": "d36454ec641007263b8dbd68276c53c9201853656ed55d958cd248c73d2dd5c5"
+    },
+    "capture.py": {
+      "bytes": 9178,
+      "sha256": "17f87e758d12a171d03b09af358ae5c4ae4d94609ac587c231468f2a0659db57"
+    },
+    "clone-copy-receipt.json": {
+      "bytes": 27882,
+      "sha256": "0ac5b1b78b888926490fd12d62d77e242b74d97036b091ac3210aa4139476432"
+    },
+    "copy-verification-first-attempt.json": {
+      "bytes": 927,
+      "sha256": "dfe9dbb52616eb5270347c86f4fb858f0249315d765956a29110cd454420302f"
+    },
+    "locked-inputs-after-capture.json": {
+      "bytes": 12132,
+      "sha256": "436e4369531630b6f0ff51d5817b84f225d50af428efba9b389d5988d4c49d7c"
+    },
+    "locked-inputs-before.json": {
+      "bytes": 16789,
+      "sha256": "0c347fec91f21827c5bf66cf2dfdf5a76d1490bdb259686d8f9181fbf74a88c5"
+    },
+    "source-metadata.json": {
+      "bytes": 1601,
+      "sha256": "c8ccb5b8da95059e4d8cda7be14e32c61ce87740a2fd1e9a0362c8caf9158e53"
+    },
+    "stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout.log": {
+      "bytes": 157,
+      "sha256": "16ea6dcdaed2f260ba52f1095314407d7cbdc01452c0c65fbbb28633451d0eae"
+    },
+    "task-list-en.png": {
+      "bytes": 162047,
+      "sha256": "e4f657e2e812887f480c793261f91175738e4de4f7f9bea35c5afc1270205450"
+    },
+    "task-list.png": {
+      "bytes": 162600,
+      "sha256": "8e9302fe1b6bb1a93be603d5a93284347c89fbd68be2585af48b6daf225d90d3"
+    },
+    "two-function-scope-proof.json": {
+      "bytes": 2242,
+      "sha256": "c3336ac706a182e945946a10b8df6f0258a189d7d84a3c28ed95cdbde5a477f1"
+    },
+    "visual-review.json": {
+      "bytes": 2640,
+      "sha256": "e32f75ed0f02569d3b3e16c3664af036b5f2b751f4157cc9aaa8adc87c94ef84"
+    }
+  }
+}

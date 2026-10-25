@@ -1,0 +1,349 @@
+{
+  "version": "4.15.1",
+  "time": "2026-10-26T03:29:50.783520+08:00",
+  "capture_started_at_beijing": "2026-10-26T03:29:30.621480+08:00",
+  "fixtures": "Small illustrative tasks created through real editor controls; names match each screenshot language. Dates use actual capture day. No task records injected.",
+  "index_sha256": "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+  "browser_version": "154.0.8037.57",
+  "steps": [
+    {
+      "action": "create-task-via-direct-full-editor",
+      "language": "zh-CN",
+      "name": "核对本周交付清单",
+      "project": "产品迭代",
+      "tags": [
+        "交付"
+      ],
+      "due": {
+        "date": "2026-10-25",
+        "time": "18:00"
+      },
+      "subtasks": []
+    },
+    {
+      "action": "create-task-via-direct-full-editor",
+      "language": "zh-CN",
+      "name": "完成任务工作台体验复查",
+      "project": "产品迭代",
+      "tags": [
+        "体验"
+      ],
+      "due": {
+        "date": "2026-10-26",
+        "time": "23:59"
+      },
+      "subtasks": [
+        "检查任务与视图衔接",
+        "复查备份和恢复"
+      ]
+    },
+    {
+      "action": "create-task-via-direct-full-editor",
+      "language": "zh-CN",
+      "name": "整理本周用户反馈",
+      "project": "产品迭代",
+      "tags": [
+        "沟通"
+      ],
+      "due": {
+        "date": "2026-10-27",
+        "time": "10:00"
+      },
+      "subtasks": []
+    },
+    {
+      "action": "create-task-via-direct-full-editor",
+      "language": "zh-CN",
+      "name": "更新个人作品集",
+      "project": "个人计划",
+      "tags": [
+        "设计"
+      ],
+      "due": {
+        "date": "2026-10-29",
+        "time": "18:00"
+      },
+      "subtasks": []
+    },
+    {
+      "action": "create-task-via-direct-full-editor",
+      "language": "zh-CN",
+      "name": "阅读《设计中的设计》并记笔记",
+      "project": "个人计划",
+      "tags": [
+        "阅读"
+      ],
+      "due": null,
+      "subtasks": []
+    },
+    {
+      "action": "create-task-via-direct-full-editor",
+      "language": "zh-CN",
+      "name": "梳理备份与恢复流程",
+      "project": "产品迭代",
+      "tags": [
+        "资料"
+      ],
+      "due": null,
+      "subtasks": []
+    },
+    {
+      "action": "complete-task-via-completion-control",
+      "language": "zh-CN",
+      "name": "梳理备份与恢复流程"
+    },
+    {
+      "action": "add-to-today-plan-via-real-menu",
+      "language": "zh-CN",
+      "name": "完成任务工作台体验复查"
+    },
+    {
+      "action": "select-all-status-via-real-filter-menu",
+      "language": "zh-CN"
+    },
+    {
+      "action": "fill-unsaved-direct-editor",
+      "language": "zh-CN",
+      "name": "准备下轮产品迭代计划",
+      "description": "整理反馈，确定下轮交付范围。\n安排复查时间，确认备份与恢复流程。",
+      "project": "产品迭代",
+      "date": "2026-10-27",
+      "time": "17:30",
+      "subtasks": [
+        "归纳关键用户反馈",
+        "安排本周交付顺序"
+      ]
+    },
+    {
+      "action": "create-task-via-direct-full-editor",
+      "language": "en",
+      "name": "Review this week’s delivery checklist",
+      "project": "Product",
+      "tags": [
+        "Delivery"
+      ],
+      "due": {
+        "date": "2026-10-25",
+        "time": "18:00"
+      },
+      "subtasks": []
+    },
+    {
+      "action": "create-task-via-direct-full-editor",
+      "language": "en",
+      "name": "Walk through the task workspace",
+      "project": "Product",
+      "tags": [
+        "Experience"
+      ],
+      "due": {
+        "date": "2026-10-26",
+        "time": "23:59"
+      },
+      "subtasks": [
+        "Check tasks and view transitions",
+        "Review backup and recovery"
+      ]
+    },
+    {
+      "action": "create-task-via-direct-full-editor",
+      "language": "en",
+      "name": "Organize recent user feedback",
+      "project": "Product",
+      "tags": [
+        "Research"
+      ],
+      "due": {
+        "date": "2026-10-27",
+        "time": "10:00"
+      },
+      "subtasks": []
+    },
+    {
+      "action": "create-task-via-direct-full-editor",
+      "language": "en",
+      "name": "Update my design portfolio",
+      "project": "Personal",
+      "tags": [
+        "Design"
+      ],
+      "due": {
+        "date": "2026-10-29",
+        "time": "18:00"
+      },
+      "subtasks": []
+    },
+    {
+      "action": "create-task-via-direct-full-editor",
+      "language": "en",
+      "name": "Read and collect notes on design",
+      "project": "Personal",
+      "tags": [
+        "Reading"
+      ],
+      "due": null,
+      "subtasks": []
+    },
+    {
+      "action": "create-task-via-direct-full-editor",
+      "language": "en",
+      "name": "Map the backup and recovery flow",
+      "project": "Product",
+      "tags": [
+        "Reference"
+      ],
+      "due": null,
+      "subtasks": []
+    },
+    {
+      "action": "complete-task-via-completion-control",
+      "language": "en",
+      "name": "Map the backup and recovery flow"
+    },
+    {
+      "action": "add-to-today-plan-via-real-menu",
+      "language": "en",
+      "name": "Walk through the task workspace"
+    },
+    {
+      "action": "select-all-status-via-real-filter-menu",
+      "language": "en"
+    },
+    {
+      "action": "fill-unsaved-direct-editor",
+      "language": "en",
+      "name": "Plan the next product iteration",
+      "description": "Review feedback and choose the next delivery scope.\nLeave time to check the workflow and backup.",
+      "project": "Product",
+      "date": "2026-10-27",
+      "time": "17:30",
+      "subtasks": [
+        "Summarize the key user feedback",
+        "Arrange the delivery priorities"
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "task-list.png",
+      "captured_at_beijing": "2026-10-26T03:29:39.400594+08:00",
+      "sha256": "3926304fc880ba7d9bdd68ae172b7ad1e68e93a10c96d2a1b336d567ad6f406f",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "language": "zh-CN",
+      "index_sha256": "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+      "real_browser_csp": true,
+      "workspace_theme": "iris",
+      "appearance": "light",
+      "native_date_time": [
+        {
+          "id": "dueDate",
+          "value": "",
+          "width": 0,
+          "clientWidth": 0,
+          "scrollWidth": 0
+        },
+        {
+          "id": "dueTime",
+          "value": "23:59",
+          "width": 0,
+          "clientWidth": 0,
+          "scrollWidth": 0
+        }
+      ]
+    },
+    {
+      "file": "add-task.png",
+      "captured_at_beijing": "2026-10-26T03:29:40.500519+08:00",
+      "sha256": "b0f39872b039a10dfc74f3f8a70266e9d81c601c25abfdf1b12eab3dd4983f47",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "language": "zh-CN",
+      "index_sha256": "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+      "real_browser_csp": true,
+      "workspace_theme": "iris",
+      "appearance": "light",
+      "native_date_time": [
+        {
+          "id": "dueDate",
+          "value": "2026-10-27",
+          "width": 128.84375,
+          "clientWidth": 127,
+          "scrollWidth": 127
+        },
+        {
+          "id": "dueTime",
+          "value": "17:30",
+          "width": 117.15625,
+          "clientWidth": 115,
+          "scrollWidth": 115
+        }
+      ]
+    },
+    {
+      "file": "task-list-en.png",
+      "captured_at_beijing": "2026-10-26T03:29:49.214118+08:00",
+      "sha256": "d9af58179a7cd128a5dd67e7f861035c59649e4af524f39f13f47dd6d15e6f01",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "language": "en",
+      "index_sha256": "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+      "real_browser_csp": true,
+      "workspace_theme": "iris",
+      "appearance": "light",
+      "native_date_time": [
+        {
+          "id": "dueDate",
+          "value": "",
+          "width": 0,
+          "clientWidth": 0,
+          "scrollWidth": 0
+        },
+        {
+          "id": "dueTime",
+          "value": "23:59",
+          "width": 0,
+          "clientWidth": 0,
+          "scrollWidth": 0
+        }
+      ]
+    },
+    {
+      "file": "add-task-en.png",
+      "captured_at_beijing": "2026-10-26T03:29:50.420109+08:00",
+      "sha256": "80653a10cfa1eabdb4ed43e39bd38fd0d681ff0ce5aecc8db8623cf9803eb92d",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "language": "en",
+      "index_sha256": "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+      "real_browser_csp": true,
+      "workspace_theme": "iris",
+      "appearance": "light",
+      "native_date_time": [
+        {
+          "id": "dueDate",
+          "value": "2026-10-27",
+          "width": 128.84375,
+          "clientWidth": 127,
+          "scrollWidth": 127
+        },
+        {
+          "id": "dueTime",
+          "value": "17:30",
+          "width": 117.15625,
+          "clientWidth": 115,
+          "scrollWidth": 115
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

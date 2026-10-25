@@ -1,0 +1,1651 @@
+{
+  "source_sha256": "976cae6020b6f5478c72708242a577ee75b6efb0b5f71ba8094fa2bd43e51feb",
+  "normal_deployment_csp": true,
+  "bypassCSP": false,
+  "runs": [
+    {
+      "index": 0,
+      "method": "native_click_default",
+      "before": {
+        "expanded": "false",
+        "active": "taskName",
+        "rect": {
+          "x": 220,
+          "y": 610.2999877929688,
+          "width": 395,
+          "height": 42,
+          "top": 610.2999877929688,
+          "right": 615,
+          "bottom": 652.2999877929688,
+          "left": 220
+        }
+      },
+      "after": {
+        "expanded": "true",
+        "active": "reminderOffset-custom-button-list-option-5",
+        "rect": {
+          "x": 220,
+          "y": 610.2999877929688,
+          "width": 395,
+          "height": 42,
+          "top": 610.2999877929688,
+          "right": 615,
+          "bottom": 652.2999877929688,
+          "left": 220
+        }
+      },
+      "events": [
+        {
+          "type": "pointerdown",
+          "time": 3050,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "taskName",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "mousedown",
+          "time": 3050,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "taskName",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "focusout",
+          "time": 3050,
+          "target": "taskName",
+          "path": [
+            "taskName",
+            "DIV",
+            "SECTION",
+            "taskEditor"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "BODY",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "focusin",
+          "time": 3051,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "pointerup",
+          "time": 3060,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "mouseup",
+          "time": 3061,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "click",
+          "time": 3061,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "mutation",
+          "time": 3069,
+          "mutations": [
+            {
+              "target": "DIV",
+              "attribute": "class",
+              "old": "custom-select"
+            },
+            {
+              "target": "reminderOffset-custom-button",
+              "attribute": "aria-expanded",
+              "old": "false"
+            },
+            {
+              "target": "DIV",
+              "attribute": "class",
+              "old": "custom-select open"
+            },
+            {
+              "target": "reminderOffset-custom-button-list",
+              "attribute": "aria-activedescendant",
+              "old": null
+            }
+          ],
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        },
+        {
+          "type": "focusout",
+          "time": 3092,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "BODY",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        },
+        {
+          "type": "focusin",
+          "time": 3093,
+          "target": "reminderOffset-custom-button-list-option-5",
+          "path": [
+            "reminderOffset-custom-button-list-option-5",
+            "reminderOffset-custom-button-list",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "reminderOffset-custom-button-list-option-5",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        },
+        {
+          "type": "scroll",
+          "time": 3155,
+          "target": "reminderOffset-custom-button-list",
+          "path": [
+            "reminderOffset-custom-button-list",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "reminderOffset-custom-button-list-option-5",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        }
+      ],
+      "chosen": "60",
+      "exact_records_reload_backup": true,
+      "stored_records": [
+        {
+          "id": 1792956424745,
+          "name": "Imported reminder fixed pointer",
+          "description": "Created by Playwright smoke test.",
+          "project": "Inbox",
+          "tags": [],
+          "dueDate": "2039-01-04T12:00:00.000Z",
+          "dueAt": "2039-01-04T12:00:00.000Z",
+          "dueLocalDate": "2039-01-04",
+          "dueLocalTime": "12:00",
+          "dueTimeZone": "UTC",
+          "reminderOffset": 60,
+          "reminderRepeat": 22.5,
+          "repeatType": "none",
+          "repeatInterval": 1,
+          "repeatWeekdays": [],
+          "repeatPaused": false,
+          "repeatSourceId": null,
+          "repeatCreatedFrom": null,
+          "nextRepeatTaskId": null,
+          "snoozedUntil": null,
+          "lastReminderAt": null,
+          "subtasks": [],
+          "completed": false,
+          "completedAt": null,
+          "archived": false,
+          "archivedAt": null,
+          "focusDate": null,
+          "createdAt": "2026-10-25T19:16:49.924Z",
+          "order": 10000
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "method": "native_click_80ms_press",
+      "before": {
+        "expanded": "false",
+        "active": "taskName",
+        "rect": {
+          "x": 220,
+          "y": 610.2999877929688,
+          "width": 395,
+          "height": 42,
+          "top": 610.2999877929688,
+          "right": 615,
+          "bottom": 652.2999877929688,
+          "left": 220
+        }
+      },
+      "after": {
+        "expanded": "true",
+        "active": "reminderOffset-custom-button-list-option-5",
+        "rect": {
+          "x": 220,
+          "y": 610.2999877929688,
+          "width": 395,
+          "height": 42,
+          "top": 610.2999877929688,
+          "right": 615,
+          "bottom": 652.2999877929688,
+          "left": 220
+        }
+      },
+      "events": [
+        {
+          "type": "pointerdown",
+          "time": 2559,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "taskName",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "mousedown",
+          "time": 2560,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "taskName",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "focusout",
+          "time": 2560,
+          "target": "taskName",
+          "path": [
+            "taskName",
+            "DIV",
+            "SECTION",
+            "taskEditor"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "BODY",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "focusin",
+          "time": 2560,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "pointerup",
+          "time": 2649,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "mouseup",
+          "time": 2649,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "click",
+          "time": 2649,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "mutation",
+          "time": 2659,
+          "mutations": [
+            {
+              "target": "DIV",
+              "attribute": "class",
+              "old": "custom-select"
+            },
+            {
+              "target": "reminderOffset-custom-button",
+              "attribute": "aria-expanded",
+              "old": "false"
+            },
+            {
+              "target": "DIV",
+              "attribute": "class",
+              "old": "custom-select open"
+            },
+            {
+              "target": "reminderOffset-custom-button-list",
+              "attribute": "aria-activedescendant",
+              "old": null
+            }
+          ],
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        },
+        {
+          "type": "focusout",
+          "time": 2711,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "BODY",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        },
+        {
+          "type": "focusin",
+          "time": 2712,
+          "target": "reminderOffset-custom-button-list-option-5",
+          "path": [
+            "reminderOffset-custom-button-list-option-5",
+            "reminderOffset-custom-button-list",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "reminderOffset-custom-button-list-option-5",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        },
+        {
+          "type": "scroll",
+          "time": 2839,
+          "target": "reminderOffset-custom-button-list",
+          "path": [
+            "reminderOffset-custom-button-list",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "reminderOffset-custom-button-list-option-5",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        }
+      ],
+      "chosen": "60",
+      "exact_records_reload_backup": true,
+      "stored_records": [
+        {
+          "id": 1792956424745,
+          "name": "Imported reminder fixed pointer",
+          "description": "Created by Playwright smoke test.",
+          "project": "Inbox",
+          "tags": [],
+          "dueDate": "2039-01-04T12:00:00.000Z",
+          "dueAt": "2039-01-04T12:00:00.000Z",
+          "dueLocalDate": "2039-01-04",
+          "dueLocalTime": "12:00",
+          "dueTimeZone": "UTC",
+          "reminderOffset": 60,
+          "reminderRepeat": 22.5,
+          "repeatType": "none",
+          "repeatInterval": 1,
+          "repeatWeekdays": [],
+          "repeatPaused": false,
+          "repeatSourceId": null,
+          "repeatCreatedFrom": null,
+          "nextRepeatTaskId": null,
+          "snoozedUntil": null,
+          "lastReminderAt": null,
+          "subtasks": [],
+          "completed": false,
+          "completedAt": null,
+          "archived": false,
+          "archivedAt": null,
+          "focusDate": null,
+          "createdAt": "2026-10-25T19:16:49.924Z",
+          "order": 10000
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "method": "native_click_default",
+      "before": {
+        "expanded": "false",
+        "active": "taskName",
+        "rect": {
+          "x": 220,
+          "y": 610.2999877929688,
+          "width": 395,
+          "height": 42,
+          "top": 610.2999877929688,
+          "right": 615,
+          "bottom": 652.2999877929688,
+          "left": 220
+        }
+      },
+      "after": {
+        "expanded": "true",
+        "active": "reminderOffset-custom-button",
+        "rect": {
+          "x": 220,
+          "y": 610.2999877929688,
+          "width": 395,
+          "height": 42,
+          "top": 610.2999877929688,
+          "right": 615,
+          "bottom": 652.2999877929688,
+          "left": 220
+        }
+      },
+      "events": [
+        {
+          "type": "pointerdown",
+          "time": 2914,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "taskName",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "mousedown",
+          "time": 2914,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "taskName",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "focusout",
+          "time": 2921,
+          "target": "taskName",
+          "path": [
+            "taskName",
+            "DIV",
+            "SECTION",
+            "taskEditor"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "BODY",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "focusin",
+          "time": 2922,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "pointerup",
+          "time": 2939,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "mouseup",
+          "time": 2939,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "click",
+          "time": 2939,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "mutation",
+          "time": 2962,
+          "mutations": [
+            {
+              "target": "DIV",
+              "attribute": "class",
+              "old": "custom-select"
+            },
+            {
+              "target": "reminderOffset-custom-button",
+              "attribute": "aria-expanded",
+              "old": "false"
+            },
+            {
+              "target": "DIV",
+              "attribute": "class",
+              "old": "custom-select open"
+            },
+            {
+              "target": "reminderOffset-custom-button-list",
+              "attribute": "aria-activedescendant",
+              "old": null
+            }
+          ],
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        },
+        {
+          "type": "focusout",
+          "time": 3124,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "BODY",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        },
+        {
+          "type": "focusin",
+          "time": 3124,
+          "target": "reminderOffset-custom-button-list-option-5",
+          "path": [
+            "reminderOffset-custom-button-list-option-5",
+            "reminderOffset-custom-button-list",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "reminderOffset-custom-button-list-option-5",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        },
+        {
+          "type": "scroll",
+          "time": 3311,
+          "target": "reminderOffset-custom-button-list",
+          "path": [
+            "reminderOffset-custom-button-list",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "reminderOffset-custom-button-list-option-5",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        }
+      ],
+      "chosen": "60",
+      "exact_records_reload_backup": true,
+      "stored_records": [
+        {
+          "id": 1792956424745,
+          "name": "Imported reminder fixed pointer",
+          "description": "Created by Playwright smoke test.",
+          "project": "Inbox",
+          "tags": [],
+          "dueDate": "2039-01-04T12:00:00.000Z",
+          "dueAt": "2039-01-04T12:00:00.000Z",
+          "dueLocalDate": "2039-01-04",
+          "dueLocalTime": "12:00",
+          "dueTimeZone": "UTC",
+          "reminderOffset": 60,
+          "reminderRepeat": 22.5,
+          "repeatType": "none",
+          "repeatInterval": 1,
+          "repeatWeekdays": [],
+          "repeatPaused": false,
+          "repeatSourceId": null,
+          "repeatCreatedFrom": null,
+          "nextRepeatTaskId": null,
+          "snoozedUntil": null,
+          "lastReminderAt": null,
+          "subtasks": [],
+          "completed": false,
+          "completedAt": null,
+          "archived": false,
+          "archivedAt": null,
+          "focusDate": null,
+          "createdAt": "2026-10-25T19:16:49.924Z",
+          "order": 10000
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "method": "native_click_80ms_press",
+      "before": {
+        "expanded": "false",
+        "active": "taskName",
+        "rect": {
+          "x": 220,
+          "y": 610.2999877929688,
+          "width": 395,
+          "height": 42,
+          "top": 610.2999877929688,
+          "right": 615,
+          "bottom": 652.2999877929688,
+          "left": 220
+        }
+      },
+      "after": {
+        "expanded": "true",
+        "active": "reminderOffset-custom-button-list-option-5",
+        "rect": {
+          "x": 220,
+          "y": 610.2999877929688,
+          "width": 395,
+          "height": 42,
+          "top": 610.2999877929688,
+          "right": 615,
+          "bottom": 652.2999877929688,
+          "left": 220
+        }
+      },
+      "events": [
+        {
+          "type": "pointerdown",
+          "time": 2887,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "taskName",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "mousedown",
+          "time": 2887,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "taskName",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "focusout",
+          "time": 2888,
+          "target": "taskName",
+          "path": [
+            "taskName",
+            "DIV",
+            "SECTION",
+            "taskEditor"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "BODY",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "focusin",
+          "time": 2888,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "pointerup",
+          "time": 2975,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "mouseup",
+          "time": 2975,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "click",
+          "time": 2975,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": 417,
+          "y": 631,
+          "expanded": "false",
+          "className": "custom-select",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "none"
+        },
+        {
+          "type": "mutation",
+          "time": 2982,
+          "mutations": [
+            {
+              "target": "DIV",
+              "attribute": "class",
+              "old": "custom-select"
+            },
+            {
+              "target": "reminderOffset-custom-button",
+              "attribute": "aria-expanded",
+              "old": "false"
+            },
+            {
+              "target": "DIV",
+              "attribute": "class",
+              "old": "custom-select open"
+            },
+            {
+              "target": "reminderOffset-custom-button-list",
+              "attribute": "aria-activedescendant",
+              "old": null
+            }
+          ],
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "reminderOffset-custom-button",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        },
+        {
+          "type": "focusout",
+          "time": 3016,
+          "target": "reminderOffset-custom-button",
+          "path": [
+            "reminderOffset-custom-button",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "BODY",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        },
+        {
+          "type": "focusin",
+          "time": 3016,
+          "target": "reminderOffset-custom-button-list-option-5",
+          "path": [
+            "reminderOffset-custom-button-list-option-5",
+            "reminderOffset-custom-button-list",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "reminderOffset-custom-button-list-option-5",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        },
+        {
+          "type": "scroll",
+          "time": 3212,
+          "target": "reminderOffset-custom-button-list",
+          "path": [
+            "reminderOffset-custom-button-list",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "x": null,
+          "y": null,
+          "expanded": "true",
+          "className": "custom-select open open-up",
+          "active": "reminderOffset-custom-button-list-option-5",
+          "scroll": 0,
+          "rect": {
+            "x": 220,
+            "y": 610.2999877929688,
+            "width": 395,
+            "height": 42,
+            "top": 610.2999877929688,
+            "right": 615,
+            "bottom": 652.2999877929688,
+            "left": 220
+          },
+          "display": "grid"
+        }
+      ],
+      "chosen": "60",
+      "exact_records_reload_backup": true,
+      "stored_records": [
+        {
+          "id": 1792956424745,
+          "name": "Imported reminder fixed pointer",
+          "description": "Created by Playwright smoke test.",
+          "project": "Inbox",
+          "tags": [],
+          "dueDate": "2039-01-04T12:00:00.000Z",
+          "dueAt": "2039-01-04T12:00:00.000Z",
+          "dueLocalDate": "2039-01-04",
+          "dueLocalTime": "12:00",
+          "dueTimeZone": "UTC",
+          "reminderOffset": 60,
+          "reminderRepeat": 22.5,
+          "repeatType": "none",
+          "repeatInterval": 1,
+          "repeatWeekdays": [],
+          "repeatPaused": false,
+          "repeatSourceId": null,
+          "repeatCreatedFrom": null,
+          "nextRepeatTaskId": null,
+          "snoozedUntil": null,
+          "lastReminderAt": null,
+          "subtasks": [],
+          "completed": false,
+          "completedAt": null,
+          "archived": false,
+          "archivedAt": null,
+          "focusDate": null,
+          "createdAt": "2026-10-25T19:16:49.924Z",
+          "order": 10000
+        }
+      ]
+    }
+  ],
+  "keyboard": {
+    "initial_active": "taskName",
+    "tab_path": [
+      "taskDesc",
+      "taskProject",
+      "noDeadline",
+      "",
+      "",
+      "",
+      "dueDate",
+      "dueDate",
+      "dueDate",
+      "dueDate",
+      "dueTime",
+      "dueTime",
+      "dueTime",
+      "",
+      "taskTags",
+      "",
+      "subtaskInput",
+      "addSubtaskBtn",
+      "",
+      "reminderOffset-custom-button"
+    ],
+    "offset_focus_geometry": {
+      "active": "reminderOffset-custom-button",
+      "rect": {
+        "x": 220,
+        "y": 579.2999877929688,
+        "width": 395,
+        "height": 42,
+        "top": 579.2999877929688,
+        "right": 615,
+        "bottom": 621.2999877929688,
+        "left": 220
+      },
+      "footer": {
+        "x": 180,
+        "y": 633,
+        "width": 920,
+        "height": 71,
+        "top": 633,
+        "right": 1100,
+        "bottom": 704,
+        "left": 180
+      },
+      "formScroll": 31
+    },
+    "opened_active": "reminderOffset-custom-button-list-option-5",
+    "up_active": "reminderOffset-custom-button-list-option-4",
+    "down_active": "reminderOffset-custom-button-list-option-5",
+    "escape_returned_to_button": true,
+    "tab_repeat_focus_geometry": {
+      "active": "reminderRepeat-custom-button",
+      "rect": {
+        "x": 220,
+        "y": 578.7999877929688,
+        "width": 395,
+        "height": 42,
+        "top": 578.7999877929688,
+        "right": 615,
+        "bottom": 620.7999877929688,
+        "left": 220
+      },
+      "footer": {
+        "x": 180,
+        "y": 633,
+        "width": 920,
+        "height": 71,
+        "top": 633,
+        "right": 1100,
+        "bottom": 704,
+        "left": 180
+      },
+      "formScroll": 112
+    },
+    "enter_open_escape_close": true,
+    "unchanged_records_after_keyboard_cancel": true
+  },
+  "passed": true,
+  "browser": "153.0",
+  "inputs_unchanged": true,
+  "all_processes_closed": true,
+  "page_errors": []
+}

@@ -1,0 +1,176 @@
+{
+  "status": "passed_with_explicit_transport_scope",
+  "site": "https://todo.muquew.com/",
+  "version": "4.15.1",
+  "accepted_code_commit": "6a3b8e61ba0699cc316fd92a247cc9c917a7521d",
+  "actual_publication_commit_before": "7a0a0f13cc9fb2501017f4e2de153a5dec27331d",
+  "actual_publication_commit_after": "7a0a0f13cc9fb2501017f4e2de153a5dec27331d",
+  "source23_sha256": "58b724aff838339caf9c9ba0e2d5cff3ff05d20dae43e5c16fe93984f8734e54",
+  "verification84_sha256": "1d0a6604a369bd42c75045692eb11536ae9636ee6f4320a0d4e07c4a65ca9561",
+  "index_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+  "final_native_report_sha256": "a69be7a299614c3eb164be3b576910caf1de206cb8ba4bef66e03441637a564d",
+  "final_launch_receipt_sha256": "f28ee3221e94a206c652be091d92bf2f7dee40e1477d0224967297be0e20968c",
+  "final_driver_sha256": "7916c766d2be8f2d7c707ed054966a6f8a3e89d495cf28f7734b9ed3067b25ff",
+  "six_fresh_contexts_passed": true,
+  "results": [
+    {
+      "engine": "chromium",
+      "browser_version": "154.0.8037.57",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "passed": true,
+      "duration_seconds": 9.751,
+      "normal_tls": true,
+      "default_http_representation": true,
+      "firefox_standard_identity_networking_preferences": false,
+      "report": "final-identity/native/chromium-1280/report.json",
+      "download": "final-identity/native/chromium-1280/task-tracer_backup_2026-10-25_22-53-40-859.json",
+      "backup_file_sha256": "b4ff3fc978c81177637a2f36b26c721a111f67c7380eee9b774f8aff4efbb97a",
+      "every_task_field_matches_download_and_before_after_final_indexeddb": true,
+      "original_checksum_assertion_passed": true,
+      "reloaded_response_body_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "page_errors": [],
+      "context_closed": true,
+      "profile_removed": null
+    },
+    {
+      "engine": "chromium",
+      "browser_version": "154.0.8037.57",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "passed": true,
+      "duration_seconds": 9.206,
+      "normal_tls": true,
+      "default_http_representation": true,
+      "firefox_standard_identity_networking_preferences": false,
+      "report": "final-identity/native/chromium-390/report.json",
+      "download": "final-identity/native/chromium-390/task-tracer_backup_2026-10-25_22-53-50-060.json",
+      "backup_file_sha256": "741349f889619597ef26d0cc61e1b54ab685f954140c366815bc2f672f8efe47",
+      "every_task_field_matches_download_and_before_after_final_indexeddb": true,
+      "original_checksum_assertion_passed": true,
+      "reloaded_response_body_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "page_errors": [],
+      "context_closed": true,
+      "profile_removed": null
+    },
+    {
+      "engine": "firefox",
+      "browser_version": "153.0",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "passed": true,
+      "duration_seconds": 13.855,
+      "normal_tls": true,
+      "default_http_representation": false,
+      "firefox_standard_identity_networking_preferences": true,
+      "report": "final-identity/native/firefox-1280/report.json",
+      "download": "final-identity/native/firefox-1280/task-tracer_backup_2026-10-25_22-54-03-588.json",
+      "backup_file_sha256": "91f04eac99ee2474316588b8ec49c06d5b26fe7bb2ca61aa761075d1c53e5dd6",
+      "every_task_field_matches_download_and_before_after_final_indexeddb": true,
+      "original_checksum_assertion_passed": true,
+      "reloaded_response_body_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "page_errors": [],
+      "context_closed": true,
+      "profile_removed": true
+    },
+    {
+      "engine": "firefox",
+      "browser_version": "153.0",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "passed": true,
+      "duration_seconds": 12.819,
+      "normal_tls": true,
+      "default_http_representation": false,
+      "firefox_standard_identity_networking_preferences": true,
+      "report": "final-identity/native/firefox-390/report.json",
+      "download": "final-identity/native/firefox-390/task-tracer_backup_2026-10-25_22-54-16-427.json",
+      "backup_file_sha256": "a27c1bb8e418fb8d75d032d12c5ba072edebd10d4e9fb96ad81308cd578f06a4",
+      "every_task_field_matches_download_and_before_after_final_indexeddb": true,
+      "original_checksum_assertion_passed": true,
+      "reloaded_response_body_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "page_errors": [],
+      "context_closed": true,
+      "profile_removed": true
+    },
+    {
+      "engine": "webkit",
+      "browser_version": "26.5",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "passed": true,
+      "duration_seconds": 13.311,
+      "normal_tls": true,
+      "default_http_representation": true,
+      "firefox_standard_identity_networking_preferences": false,
+      "report": "final-identity/native/webkit-1280/report.json",
+      "download": "final-identity/native/webkit-1280/task-tracer_backup_2026-10-25_22-54-30-077.json",
+      "backup_file_sha256": "dcf48ab3289938fa685472b70696da686bb70b8683e454dcf88968c8716fb178",
+      "every_task_field_matches_download_and_before_after_final_indexeddb": true,
+      "original_checksum_assertion_passed": true,
+      "reloaded_response_body_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "page_errors": [],
+      "context_closed": true,
+      "profile_removed": null
+    },
+    {
+      "engine": "webkit",
+      "browser_version": "26.5",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "passed": true,
+      "duration_seconds": 10.636,
+      "normal_tls": true,
+      "default_http_representation": true,
+      "firefox_standard_identity_networking_preferences": false,
+      "report": "final-identity/native/webkit-390/report.json",
+      "download": "final-identity/native/webkit-390/task-tracer_backup_2026-10-25_22-54-40-812.json",
+      "backup_file_sha256": "31a03666d89355b24c40c4e1dc4a55e9101d3904362275833342d775015081cd",
+      "every_task_field_matches_download_and_before_after_final_indexeddb": true,
+      "original_checksum_assertion_passed": true,
+      "reloaded_response_body_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "page_errors": [],
+      "context_closed": true,
+      "profile_removed": null
+    }
+  ],
+  "runtime5_actual_helper6_driver_unchanged": true,
+  "actual_browser_launch_count": 4,
+  "all_browser_launches_closed": true,
+  "all_temporary_firefox_profiles_removed": true,
+  "normal_tls_csp_motion": true,
+  "certificate_scope": "Normal validation through the existing managed-session proxy and already configured public root CA. This is not a claim about a directly observed origin certificate.",
+  "prior_attempts_preserved": {
+    "attempt-001": "0/6 transport failure; no task operations reached",
+    "attempt-002": "4/6; Firefox completed task/backup operations then original Playwright br SW Response.body failed",
+    "default-br-independent-probe": "Actual UI, all task fields, and cached body hash are correct; original Playwright br Response.body error preserved",
+    "context-header-identity-probe": "Initial body exact, worker still br and original reload body failed",
+    "networking-prefs-identity-probe": "Initial/reload original body exact, SW cache exact and all task fields preserved"
+  },
+  "firefox_br_response_body_api_passed": false,
+  "browser_profile_nss_or_private_key_files_archived": false,
+  "production_local_server_started": false,
+  "scope_limits": [
+    "Viewport emulation on Linux browser engines, not physical iOS/Android/desktop-device certification.",
+    "No production offline installation/OS-notification/screen-reader/physical IME lifecycle claim.",
+    "Settings categories were navigated; production destructive import/reset/cleanup actions were not executed. Local complete native acceptance covers those separately.",
+    "Counts and screenshots do not by themselves establish usability."
+  ],
+  "root_final_review": {
+    "path": "final-identity/root-final-production-review.json",
+    "sha256": "92b362b97b1c936d70be96b5eebd9372d8ecddd40fa34bf9cd6ecffd34ac84e9",
+    "scope": "Root independently inspected four exact screenshots and all six real downloads against before/after/reloaded task fields. A reader schema mistake was corrected; native reports/App were unchanged."
+  }
+}

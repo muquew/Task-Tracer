@@ -1,0 +1,39 @@
+{
+  "repository_source": "/workspace/Task-Tracer/tools/quick_add_recovery_playwright.py",
+  "repository_source_sha256": "0ed4fc9e8415a2963acaa7844873a50fc718e49105c6eeb29adc468a8b26e7a7",
+  "proposed_sha256": "a09c0cd9affc8124132fc1a92e3bbc73513b77fb15df8bbaebe5654c80ed9cf0",
+  "patch_sha256": "f9e8fec2a5bb6a06eb4e16b4c66b52fc02440a6ba23cb751b13d76446bf7999d",
+  "change_scope": "Exactly two expect assertions inserted in capture_metadata immediately after existing input-value and cleared-query assertions. No original statements removed or changed.",
+  "added_lines": [
+    "    expect(page.locator('#captureShelf')).to_be_visible()",
+    "    expect(page.locator('#quickAddInput')).to_be_focused()"
+  ],
+  "added_statement_index_zero_based": 8,
+  "capture_original_statement_count": 21,
+  "capture_proposed_statement_count": 23,
+  "unchanged_function_names": [
+    "mark_document",
+    "assert_same_document",
+    "prepare",
+    "fail_quick_add",
+    "assert_retained_readonly",
+    "retry",
+    "submit_and_check",
+    "quick_add_only",
+    "coexist_with_form",
+    "failed_retry",
+    "native_beforeunload",
+    "empty_input",
+    "main"
+  ],
+  "all_other_function_AST_identical": true,
+  "whole_module_AST_identical_after_removing_only_two_added_assertions": true,
+  "repository_source_unchanged": true,
+  "browser_or_test_executed": false,
+  "files": {
+    "before": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/workspace-fixed/webkit-capture-patch/quick_add_recovery_playwright.before.py",
+    "proposed": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/workspace-fixed/webkit-capture-patch/quick_add_recovery_playwright.proposed.py",
+    "patch": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/workspace-fixed/webkit-capture-patch/quick_add_recovery_playwright.patch",
+    "proof": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/workspace-fixed/webkit-capture-patch/scope-proof.json"
+  }
+}

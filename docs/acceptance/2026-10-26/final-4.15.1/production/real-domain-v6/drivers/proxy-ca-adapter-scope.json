@@ -1,0 +1,20 @@
+{
+  "original_driver_sha256": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91",
+  "environment_adapter_sha256": "5b92fccf8017325bf17df58db6dff591b25cbe668c2c69a21b3f9659997f5d96",
+  "exercise_byte_identical": true,
+  "all_original_functions_except_run_byte_identical": true,
+  "unchanged_function_sha256": {
+    "digest": "50b76bfffc27cbd7a792c95d031f6fd8e49777b6241b96ed8c4c4773edc356cb",
+    "write_json": "88a279a92b174333804c2da5e7c8c7f3cc29239c8a0f40f61cb40f27c029c010",
+    "helper_closure": "48f4bbcca42ee718325d75d9266dd4a57992ebdcb1eb0aa6566a798e952ceb43",
+    "identities": "521b670810d3780f40265848529d4d87c63cc720171f99b7c52e885622ddd931",
+    "normalize_csp": "832ec9a84191071187bec75db9917804f3403e254c3712176bb16ac8f32defc8",
+    "assert_headers": "0577d68141a60e6adcc3b68cd17087bf30a051983d8cbfa4ded71e790831f92a",
+    "check_document": "f0a1bb662acee648044c4ebe36f43b66855951827cde242e1650fdf9a5f0af81",
+    "check_served_runtime": "9b7bce442273db7a1b117f06f5f82cf2c8a741b0215529db390b0756aae3adda",
+    "snapshot": "9de6202efbe1d30cb2a3e836eb3b96c2fe1e95c1d3d488313a2a3b96b233be83",
+    "records_by_id": "8f82f3c9eee5e35dd9c75f7013986ac137deb4920bbf351c215e017e642d9656",
+    "exercise": "d767a4c3b162092cb109f3fb879a784d375e38a729de5ad7c7a882f8dad9f867"
+  },
+  "scope": "Production transport and normal existing CA trust only. Original business exercise/assertion functions unchanged. Firefox each viewport uses a unique temporary NSS profile and its own officially launched persistent browser/context; no profile databases archived. All original six contexts, widths, motion, budgets, checksums, TLS/CSP and business assertions retained."
+}

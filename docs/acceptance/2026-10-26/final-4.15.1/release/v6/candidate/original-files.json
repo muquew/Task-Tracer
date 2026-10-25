@@ -1,0 +1,30 @@
+{
+  "build.stdout.log": {
+    "bytes": 410,
+    "sha256": "0a3b4e443c0c875778a74b5df0c30d7aa97d1587fc423caf7aa150aee6e48ca7"
+  },
+  "driver.py": {
+    "bytes": 3219,
+    "sha256": "5caea14b67806ddbc07fd9b108fa7d1471df1bf61242a391352a27f6660c76ce"
+  },
+  "summary.json": {
+    "bytes": 16956,
+    "sha256": "644ba149436855a06cbaca8f2398e46b246942cb401b1f765b14443a727b00ab"
+  },
+  "build.stderr.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "integrity.json": {
+    "bytes": 2317,
+    "sha256": "f3cf4e03e71e01de01252dc4188fd1cf16a8f0db28db65241bd485b24983e8ca"
+  },
+  "archive/task-tracer-4.15.1.zip.sha256": {
+    "bytes": 89,
+    "sha256": "d62b35dc783dcd0e566bad0d4759f4fd8fbf50d0d4bb42cf5fc18fdcd5dbfc8e"
+  },
+  "archive/task-tracer-4.15.1.zip": {
+    "bytes": 992071,
+    "sha256": "6d90cf54ea4c5b7aeb0a601b99da3bd93f70665f62f0231d748d135d19f781c6"
+  }
+}

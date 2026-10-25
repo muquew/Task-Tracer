@@ -1,0 +1,31 @@
+{
+  "status": "prepared_not_started",
+  "required_gate": "Explicit root/fullchecker confirmation that complete native after-focus-adapter a11y passed every scope.",
+  "index_sha256": "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+  "source_sha256": "61ce62bb18afa3fc612ecb634f20f74ff577162ed458a12d6cf31ef840d46543",
+  "verification_sha256": "6db088edb900683f5de100e8e6759549ff9bf2c225621b895895ed516dadec6e",
+  "source_file_count": 23,
+  "verification_file_count": 84,
+  "command": [
+    "python",
+    "/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-matrix-v3/run_matrix.py",
+    "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+    "61ce62bb18afa3fc612ecb634f20f74ff577162ed458a12d6cf31ef840d46543",
+    "6db088edb900683f5de100e8e6759549ff9bf2c225621b895895ed516dadec6e"
+  ],
+  "cwd": "/workspace/Task-Tracer",
+  "max_engine_workers": 3,
+  "native_command_per_engine": [
+    "python",
+    "tools/browser_matrix.py",
+    "--browser",
+    "<engine>",
+    "--group",
+    "all",
+    "--keep-going",
+    "--report",
+    "<external-new-engine-dir>/native-report.json"
+  ],
+  "runner_sha256": "d8a6d0ba89c456f355c985da2a8306449ffb531bf62d98458cc7efed0d01ca3b",
+  "preserved": "Native HTTP/motion/CSP scopes, performance budgets, registered33 programs, assertions and CDP exclusions unchanged; official real-library WebKit host-preflight flag recorded separately."
+}

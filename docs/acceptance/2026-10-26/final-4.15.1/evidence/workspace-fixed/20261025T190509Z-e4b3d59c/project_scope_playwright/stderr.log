@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer/tools/project_scope_playwright.py", line 294, in <module>
+    run(args.browser, args.grouping_only)
+  File "/workspace/Task-Tracer/tools/project_scope_playwright.py", line 178, in run
+    select_literal_project(page, project)
+  File "/workspace/Task-Tracer/tools/project_scope_playwright.py", line 45, in select_literal_project
+    assert (geometry['left'] >= -1 and geometry['top'] >= -1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Project menu extends outside the viewport: {'left': 499.953125, 'top': 327, 'right': 689.953125, 'bottom': 737, 'width': 1280, 'height': 720}

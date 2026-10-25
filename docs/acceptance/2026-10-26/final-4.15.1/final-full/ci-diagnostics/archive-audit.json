@@ -1,0 +1,121 @@
+{
+  "at": "2026-10-25T21:08:37.147267+00:00",
+  "all_original_copies_byte_identical": true,
+  "copied_original_files": 51,
+  "omitted_original_files": 16,
+  "all_local_readme_links_resolve": true,
+  "relative_link_checks": [
+    {
+      "from": "README.md",
+      "target": "github-readonly/ci-outcome-f8f5/summary.json",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/github-readonly/ci-outcome-f8f5/summary.json",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "github-readonly/ci-location-33d2/summary.json",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/github-readonly/ci-location-33d2/summary.json",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "github-readonly/ci-notification-32e7/summary.json",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/github-readonly/ci-notification-32e7/summary.json",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "ci-smoke-source-location/official-launcher-evidence.json",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/ci-smoke-source-location/official-launcher-evidence.json",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "../../../../../../tools/smoke_playwright.py#L99",
+      "resolved": "/workspace/Task-Tracer/tools/smoke_playwright.py",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "final-mode-proof.json",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/final-mode-proof.json",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "final-mode-normal-code.patch",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/final-mode-normal-code.patch",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "../../../../../../.github/workflows/checks.yml",
+      "resolved": "/workspace/Task-Tracer/.github/workflows/checks.yml",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "ci-outcome-summary/checks.patch",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/ci-outcome-summary/checks.patch",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "ci-outcome-summary/exact-summary-step.sh",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/ci-outcome-summary/exact-summary-step.sh",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "ci-smoke-source-location/checks-source-location.patch",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/ci-smoke-source-location/checks-source-location.patch",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "ci-notification-capability/notification-step.patch",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/ci-notification-capability/notification-step.patch",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "ci-notification-capability/exact-notification-step.sh",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/ci-notification-capability/exact-notification-step.sh",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "ci-outcome-summary/real-report-rendering.json",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/ci-outcome-summary/real-report-rendering.json",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "ci-outcome-summary/current-running-snapshot/summary.md",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/ci-outcome-summary/current-running-snapshot/summary.md",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "manifest.json",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/manifest.json",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "source-origin.json",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/source-origin.json",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "target": "archive-audit.json",
+      "resolved": "/workspace/Task-Tracer/docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics/archive-audit.json",
+      "exists": true
+    }
+  ],
+  "no_browser_or_network_used_for_archiving": true,
+  "archive_scope": "docs/acceptance/2026-10-26/final-4.15.1/final-full/ci-diagnostics",
+  "no_root_manifest_or_index_writes": true,
+  "no_source107_or_head_write": true
+}

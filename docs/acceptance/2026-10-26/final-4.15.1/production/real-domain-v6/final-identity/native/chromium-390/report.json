@@ -1,0 +1,152 @@
+{
+  "engine": "chromium",
+  "browser_version": "154.0.8037.57",
+  "width": 390,
+  "height": 844,
+  "source_before": {
+    "runtime": {
+      "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+      "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+      "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+      "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+    },
+    "helpers": {
+      "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+      "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+      "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+      "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+      "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+      "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+    },
+    "driver": {
+      "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v6-identity/driver.py": "7916c766d2be8f2d7c707ed054966a6f8a3e89d495cf28f7734b9ed3067b25ff"
+    }
+  },
+  "passed": true,
+  "context_closed": true,
+  "firefox_isolated_normal_ca_trust": null,
+  "checks": {
+    "document": {
+      "url": "https://todo.muquew.com/",
+      "status": 200,
+      "index_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "version": "4.15.1",
+      "response_headers": {
+        "access-control-allow-origin": "*",
+        "age": "776",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-disposition": "inline",
+        "content-encoding": "br",
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'sha256-zNix3yZucCHuD+EY+bqCci83cIXtaOtdMlQEHSIctok=' 'sha256-a4+lSS8j9v7th/C1LsZTTZBBYYY6a0qxkv7Yr5pk1s8=' 'sha256-nh8+ITWiJcf+4G2RZS+uXpjJ5HvwYj3TPV/DcDDQfWA=' 'sha256-T5J6MZEgCjOJwhoCWNWtnaU4pMauwNJfjzyVJAQ/rZg='; script-src-attr 'none'",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Sun, 25 Oct 2026 22:53:41 GMT",
+        "etag": "W/\"73664b37e8b871b991aee215a332a71d\"",
+        "last-modified": "Sun, 25 Oct 2026 22:40:45 GMT",
+        "permissions-policy": "camera=(), microphone=(), geolocation=()",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server": "envoy",
+        "strict-transport-security": "max-age=63072000",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "40",
+        "x-frame-options": "DENY",
+        "x-vercel-cache": "HIT",
+        "x-vercel-id": "cle1::ltvxf-1792968821602-e8af6644e836"
+      },
+      "security_details": {
+        "issuer": "openai.com",
+        "protocol": "TLS 1.3",
+        "subjectName": "todo.muquew.com",
+        "validFrom": 1792905430,
+        "validTo": 1824441490
+      },
+      "certificate_errors_ignored": false,
+      "bypass_csp": false,
+      "mode": "production",
+      "tls_scope": "Normal browser HTTPS validation; no ignore_https_errors or certificate override."
+    },
+    "served_runtime": [
+      {
+        "path": "sw.js",
+        "url": "https://todo.muquew.com/sw.js",
+        "status": 200,
+        "sha256": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666"
+      },
+      {
+        "path": "resources/en.json",
+        "url": "https://todo.muquew.com/resources/en.json",
+        "status": 200,
+        "sha256": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe"
+      },
+      {
+        "path": "resources/zh-CN.json",
+        "url": "https://todo.muquew.com/resources/zh-CN.json",
+        "status": 200,
+        "sha256": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+      }
+    ],
+    "tasks_created": 2,
+    "edited_task_id": 1792969135155,
+    "pending_child_saved_once": true,
+    "completed_task_retained": true,
+    "views_exercised": [
+      "calendar",
+      "timeline",
+      "stats",
+      "list"
+    ],
+    "workspace_themes_exercised": [
+      "ocean",
+      "pine",
+      "berry",
+      "iris"
+    ],
+    "appearances_exercised": [
+      "dark",
+      "light"
+    ],
+    "languages_exercised": [
+      "en",
+      "zh-CN"
+    ],
+    "settings_categories_exercised": [
+      "appearance",
+      "data",
+      "experience",
+      "cleanup",
+      "help"
+    ],
+    "backup": {
+      "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v6-identity/production-20261025T225331Z-96921e5e73/chromium-390/task-tracer_backup_2026-10-25_22-53-50-060.json",
+      "sha256": "741349f889619597ef26d0cc61e1b54ab685f954140c366815bc2f672f8efe47",
+      "checksum": "fnv1a32:f2d4bdaa",
+      "checksum_verified_by_original_helper": true,
+      "every_task_field_matches_indexeddb": true
+    },
+    "reload_preserved_every_task_field": true,
+    "physical_device_or_offline_lifecycle_claim": false
+  },
+  "page_errors": [],
+  "source_after": {
+    "runtime": {
+      "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+      "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+      "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+      "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+    },
+    "helpers": {
+      "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+      "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+      "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+      "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+      "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+      "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+    },
+    "driver": {
+      "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v6-identity/driver.py": "7916c766d2be8f2d7c707ed054966a6f8a3e89d495cf28f7734b9ed3067b25ff"
+    }
+  },
+  "inputs_unchanged": true,
+  "duration_seconds": 9.206
+}

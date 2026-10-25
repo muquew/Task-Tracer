@@ -1,0 +1,71 @@
+{
+  "source_sha256": {
+    "index.html": "d70ce830caa7b35b034b9d213721d884fc207f1fa871124cfcc22517fe9d34c9",
+    "vercel.json": "3652803081ded3d0c402b3c966b1bd26019f671c6ccee8f50bf00529c32ce187",
+    "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+    "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+    "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+    "tools/editor_safety_playwright.py": "805cc82de0d882861758f14add569288045e53d277582c006e0604ffef09a41f",
+    "tools/pending_subtask_playwright.py": "d7756172a8e50e346f07a9c684ba03d7419bf678a5d0626acbeb56dcc7bf082c"
+  },
+  "widths": [
+    1280,
+    390
+  ],
+  "normal_motion": true,
+  "production_csp": true,
+  "results": [
+    {
+      "width": 1280,
+      "case": "date-roundtrip",
+      "status": "passed"
+    },
+    {
+      "width": 1280,
+      "case": "empty-weekdays",
+      "status": "passed"
+    },
+    {
+      "width": 1280,
+      "case": "subtask-delete",
+      "status": "passed"
+    },
+    {
+      "width": 1280,
+      "case": "missing-date",
+      "status": "passed"
+    },
+    {
+      "width": 1280,
+      "case": "empty-custom-interval",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "date-roundtrip",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "empty-weekdays",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "subtask-delete",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "missing-date",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "empty-custom-interval",
+      "status": "passed"
+    }
+  ],
+  "browser": "chromium",
+  "native_browser_version": "154.0.8037.57"
+}

@@ -1,0 +1,35 @@
+{
+  "retained_actual_backup_files": false,
+  "initial_real_json_backup": {
+    "recorded_bytes": 17383726,
+    "original_temporary_download_path": null,
+    "temporary_path_recorded_by_native_program": false,
+    "raw_file_sha256": null,
+    "raw_file_sha256_recorded": false,
+    "retention_status": "Not retained. The native program reads the browser-managed temporary download; the original path is not recorded and browser/context cleanup removes those downloads.",
+    "verified_by_original_assertions": [
+      "payload checksum valid",
+      "all task fields identical to complete baseline",
+      "repeat references valid, including root ID zero"
+    ]
+  },
+  "final_real_json_backup": {
+    "retained": false,
+    "bytes_recorded": false,
+    "original_temporary_download_path": null,
+    "raw_file_sha256": null,
+    "verified_by_original_assertions": [
+      "payload checksum valid",
+      "all task fields identical to complete baseline after all operations"
+    ]
+  },
+  "recorded_task_structure_fingerprint": {
+    "value": "015531ff68ccd81cb0af7f2c66a21da4747514de3f2de6b2b676a390534ea6a1",
+    "kind": "native canonical task-structure fingerprint, not the raw downloaded JSON file SHA"
+  },
+  "retained_native_result": {
+    "path": "result.json",
+    "bytes": 8775,
+    "sha256": "198761063662077e47cd5ecd8e3129836206ebc509bbab15cf15c64f926ebd10"
+  }
+}

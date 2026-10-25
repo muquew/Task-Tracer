@@ -1,0 +1,83 @@
+{
+  "fetched_at_utc": "2026-10-25T22:23:51.153205+00:00",
+  "run_url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977",
+  "expected_commit": "6a3b8e61ba0699cc316fd92a247cc9c917a7521d",
+  "poll": 19,
+  "public_get_only": true,
+  "api_or_authenticated_log_access": false,
+  "branch_scope": "codex/final-stable-delivery-20261026; standard full workflow, not main deployment",
+  "status": "In progress",
+  "jobs": [
+    {
+      "name": "compatibility (chromium)",
+      "job_id": "121304917801",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304917801",
+      "http_status": 200,
+      "html_sha256": "f9959655a9b1784abfbba9124756b9401416b9c32b00a3f43de200fd9b25c223",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "13m 25s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304917801-visible.txt"
+    },
+    {
+      "name": "compatibility (firefox)",
+      "job_id": "121304917923",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304917923",
+      "http_status": 200,
+      "html_sha256": "77ca1c8225f1184dbc4572c04a7a40b952d8a5ab859cfc5e42c35eba9b6a78b0",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "11m 17s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304917923-visible.txt"
+    },
+    {
+      "name": "compatibility (webkit)",
+      "job_id": "121304917994",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304917994",
+      "http_status": 200,
+      "html_sha256": "62bda482e4599b1311d533f810ed8e4f364768ec503d0f92850add4d7b938bdd",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "18m 41s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304917994-visible.txt"
+    },
+    {
+      "name": "checks",
+      "job_id": "121304918045",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304918045",
+      "http_status": 200,
+      "html_sha256": "f03154b0b59662edf819892b78c4f74b92f86ad7d084fee24f5a8d14952391b9",
+      "public_ui_conclusion": "started_without_terminal_conclusion",
+      "displayed_duration": null,
+      "public_annotations": null,
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304918045-visible.txt"
+    },
+    {
+      "name": "deployed_site",
+      "job_id": "121304919023",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304919023",
+      "http_status": 200,
+      "html_sha256": "0c3c832f17237255fb9b702429243fdfca6b4d921247689148d5c36cc3125ca6",
+      "public_ui_conclusion": "skipped",
+      "displayed_duration": null,
+      "public_annotations": null,
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304919023-visible.txt"
+    }
+  ],
+  "http_status": 200,
+  "html_sha256": "0fa1d86741c01142081fde0d1a63afbd83d5edccd25ed1cc317867027850958b",
+  "displayed_total_duration": "–",
+  "public_matrix_completion": "3",
+  "new_failed_program_signals": [],
+  "new_failed_jobs": []
+}

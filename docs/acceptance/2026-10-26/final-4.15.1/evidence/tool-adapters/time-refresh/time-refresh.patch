@@ -1,0 +1,23 @@
+--- before/tools/time_refresh_playwright.py
++++ after/tools/time_refresh_playwright.py
+@@ -92,11 +92,15 @@
+     task_locator(page, 'Completed before midnight').locator('[data-action="toggle"]').click()
+     expect(task_locator(page, 'Completed before midnight')).to_have_count(0)
+     select_view(page, 'stats')
+-    today = page.locator('.stats-mini').nth(4).locator('strong')
+-    expect(today).to_have_text('1')
+-    before = read_workspace(page)
+-    after_minutes(page)
+-    expect(today).to_have_text('0')
++    review = page.locator('.stats-review').filter(
++        has=page.get_by_role('heading', name='Last 7 days', exact=True))
++    today = review.locator('.stats-review-meta')
++    expect(today).to_be_visible()
++    expect(today).to_have_text(re.compile(r'^1 completed today · '))
++    before = read_workspace(page)
++    after_minutes(page)
++    expect(today).to_be_visible()
++    expect(today).to_have_text(re.compile(r'^0 completed today · '))
+     trend = page.locator('.stats-trend-bar').evaluate_all('bars=>bars.map(bar=>Number(bar.dataset.trendCount))')
+     assert trend[-2:] == [1,0], f'Completion trend did not follow midnight: {trend}'
+     assert read_workspace(page) == before, 'Midnight statistics refresh wrote tasks/config'

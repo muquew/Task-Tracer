@@ -1,0 +1,24 @@
+{
+  "reviewed_at_utc": "2026-10-25T19:20:26.316426+00:00",
+  "method": "Actual view_image inspection",
+  "reviewed": true,
+  "images": [
+    {
+      "file": "1-first-click-open.png",
+      "sha256": "f171255785226bd868a2742518c32b717f6d67afaca0a7ee3de4e31ba32690b9"
+    },
+    {
+      "file": "3-first-click-open.png",
+      "sha256": "f171255785226bd868a2742518c32b717f6d67afaca0a7ee3de4e31ba32690b9"
+    },
+    {
+      "file": "4-keyboard-menu-open.png",
+      "sha256": "729ad53d4f0adc79a772b24ac3d5dd21df33a1dab17462155c912c80fff01989"
+    },
+    {
+      "file": "5-keyboard-tab-next-control.png",
+      "sha256": "99bdadca2cd0f0c91d7497d531982ed2a822c5ee1d7c087abe8839be3ceb826c"
+    }
+  ],
+  "findings": "Both 80ms first-click menus are visibly open. Keyboard arrow focus ring is visible inside the menu. Tab moves to repeat-reminder button fully above fixed footer. No new visual blocker. Exact stored records/reload/real backup verification is recorded separately in report.json."
+}

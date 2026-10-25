@@ -1,0 +1,8 @@
+{
+  "original_driver": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-theme-review/20261025T192938Z-6f46f346-b8b5-4b2f-a20e-d4090ccd619a/driver.py",
+  "original_sha256": "bfde43d7d351b94868d29056f048c1482939c447c3083e10710867d35a345751",
+  "copied_driver": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-theme-review-v5/driver.py",
+  "copied_sha256": "b8812f3e5368bf8c59b53861aa90c4af669ab632ad466589f9b7015f3832983c",
+  "only_code_change": "Evidence output routing final-theme-review -> final-theme-review-v5; all browser operations,10 cases,assertions and geometry/data/backup checks byte-identical. Expected index supplied through unchanged CLI argument.",
+  "expected_index": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30"
+}

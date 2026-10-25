@@ -1,0 +1,902 @@
+{
+  "after-identities.json": {
+    "sha256": "88420394bf2c1690429545404d61529f75fc8ac9727e0e88b5727685a48a6783",
+    "bytes": 11795
+  },
+  "before-identities.json": {
+    "sha256": "88420394bf2c1690429545404d61529f75fc8ac9727e0e88b5727685a48a6783",
+    "bytes": 11795
+  },
+  "driver.py": {
+    "sha256": "58b44bb3aa73b049fa6137a3cd5e5bbcef489c43f80add6e5b8fde2a0d9e77da",
+    "bytes": 4724
+  },
+  "frozen-inputs/.github/workflows/checks.yml": {
+    "sha256": "e08128690ca9e45cdbd54a3125da1dee1974aee89d50658e65b8b80b963de869",
+    "bytes": 3281
+  },
+  "frozen-inputs/LICENSE": {
+    "sha256": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+    "bytes": 2168
+  },
+  "frozen-inputs/THIRD_PARTY_NOTICES.md": {
+    "sha256": "a49db18583d3f275de394c74e3c5db9142979ab713fdfd1ac69488236c1d9bf9",
+    "bytes": 1694
+  },
+  "frozen-inputs/docs/distribution.md": {
+    "sha256": "bd06369a069adb5c89796c764a5a8fbd5351b1261c36cf887ca36abba0b92cf0",
+    "bytes": 19581
+  },
+  "frozen-inputs/docs/distribution_zh_cn.md": {
+    "sha256": "b7085db1c1c17ee7509d5a69c3371b708e2be2d3fe1c57d22c838cf9aece3457",
+    "bytes": 17211
+  },
+  "frozen-inputs/fav/android-chrome-192x192.png": {
+    "sha256": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+    "bytes": 2245
+  },
+  "frozen-inputs/fav/android-chrome-512x512.png": {
+    "sha256": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+    "bytes": 6649
+  },
+  "frozen-inputs/fav/apple-touch-icon.png": {
+    "sha256": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+    "bytes": 2109
+  },
+  "frozen-inputs/fav/favicon-16x16.png": {
+    "sha256": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+    "bytes": 262
+  },
+  "frozen-inputs/fav/favicon-32x32.png": {
+    "sha256": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+    "bytes": 425
+  },
+  "frozen-inputs/fav/favicon-48x48.png": {
+    "sha256": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+    "bytes": 597
+  },
+  "frozen-inputs/fav/favicon.ico": {
+    "sha256": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+    "bytes": 15086
+  },
+  "frozen-inputs/index.html": {
+    "sha256": "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+    "bytes": 985225
+  },
+  "frozen-inputs/manifest.json": {
+    "sha256": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718",
+    "bytes": 1607
+  },
+  "frozen-inputs/package-lock.json": {
+    "sha256": "3b2ce119ee2cc3a9855061e0baf68415f17d898956aa17681c9d571da767907e",
+    "bytes": 638
+  },
+  "frozen-inputs/package.json": {
+    "sha256": "c8f6f5f9dd328dc47b3584e2defa0f767be1193c64dcac4cd86b0ce375fbecda",
+    "bytes": 451
+  },
+  "frozen-inputs/requirements-dev.txt": {
+    "sha256": "882c62a419989bc6ff175ae700ab509aa70eefacc22070fde17f84031fadb89c",
+    "bytes": 153
+  },
+  "frozen-inputs/resources/en.json": {
+    "sha256": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+    "bytes": 57285
+  },
+  "frozen-inputs/resources/zh-CN.json": {
+    "sha256": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+    "bytes": 55747
+  },
+  "frozen-inputs/robots.txt": {
+    "sha256": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+    "bytes": 69
+  },
+  "frozen-inputs/screenshots/add-task-en.png": {
+    "sha256": "80653a10cfa1eabdb4ed43e39bd38fd0d681ff0ce5aecc8db8623cf9803eb92d",
+    "bytes": 215481
+  },
+  "frozen-inputs/screenshots/add-task.png": {
+    "sha256": "b0f39872b039a10dfc74f3f8a70266e9d81c601c25abfdf1b12eab3dd4983f47",
+    "bytes": 214687
+  },
+  "frozen-inputs/screenshots/task-list-en.png": {
+    "sha256": "d9af58179a7cd128a5dd67e7f861035c59649e4af524f39f13f47dd6d15e6f01",
+    "bytes": 162146
+  },
+  "frozen-inputs/screenshots/task-list.png": {
+    "sha256": "3926304fc880ba7d9bdd68ae172b7ad1e68e93a10c96d2a1b336d567ad6f406f",
+    "bytes": 163122
+  },
+  "frozen-inputs/sitemap.xml": {
+    "sha256": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+    "bytes": 233
+  },
+  "frozen-inputs/sw.js": {
+    "sha256": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+    "bytes": 8305
+  },
+  "frozen-inputs/tools/accessibility_i18n_audit.py": {
+    "sha256": "8d13b408d5b41541b4210d1a74fc762dd3965c57e60d486f56412aebcae4b333",
+    "bytes": 41883
+  },
+  "frozen-inputs/tools/appearance_preferences_playwright.py": {
+    "sha256": "1b2fefa04bef90a9fc3323eaf1e2c99a12c99c4641cb110cb9e8bc50dcbf9555",
+    "bytes": 24607
+  },
+  "frozen-inputs/tools/backup_freshness_playwright.py": {
+    "sha256": "b300cd08c3bcae31303c90c89f90d8ff92b613f1310770db71c26cecb1622d12",
+    "bytes": 14810
+  },
+  "frozen-inputs/tools/backup_reminder_priority_playwright.py": {
+    "sha256": "554ab81a496c54e1baa26d4a9478200201dbd449811ec9d964940d607bb72b32",
+    "bytes": 10489
+  },
+  "frozen-inputs/tools/batch_selection_playwright.py": {
+    "sha256": "7f18906b7115d1c495e3c8c964200b0c2ec95d8740406b591f45317727e80784",
+    "bytes": 19006
+  },
+  "frozen-inputs/tools/browser_matrix.py": {
+    "sha256": "c4eb2acaf88d2c36805dcce6a6e41ca942d51fabe0ef044f4bbfbb008ca95322",
+    "bytes": 14952
+  },
+  "frozen-inputs/tools/build_release.py": {
+    "sha256": "d18896e46b7e266e3898befa6eaaf7d0720dac0d3a54bfe796aa69744b07a5e6",
+    "bytes": 5569
+  },
+  "frozen-inputs/tools/calendar_focus_return_playwright.py": {
+    "sha256": "5ae783f10bd3de078b7f256e90f3ff75cd2d6cba1813e3f312815480d65ab5da",
+    "bytes": 17810
+  },
+  "frozen-inputs/tools/calendar_navigation_playwright.py": {
+    "sha256": "de945d5117db19d4b547e4996f8f89c8fdfc5cc49b05be148da16f0e32e36009",
+    "bytes": 9369
+  },
+  "frozen-inputs/tools/calendar_performance_playwright.py": {
+    "sha256": "9eb8014e4e69519c631d643f95a4ffc766fcfe78290967ef97280ed4323dded9",
+    "bytes": 18738
+  },
+  "frozen-inputs/tools/calendar_timezone_playwright.py": {
+    "sha256": "55cc6c7bd191a2cf29ceea811685ba3d6c6674511d1fb990b72e053d0902bfef",
+    "bytes": 13740
+  },
+  "frozen-inputs/tools/check.py": {
+    "sha256": "93a270bb4107531671b9a3b24287fe9fa98ddd71f122f0fb004fd63a9a12aa7e",
+    "bytes": 13385
+  },
+  "frozen-inputs/tools/check_runner_test.py": {
+    "sha256": "79947bd2b5dc3e1fe4cd09745cbb403f1dcc4c89ac6dfa321f2e5517a852b54d",
+    "bytes": 17559
+  },
+  "frozen-inputs/tools/compatibility_playwright.py": {
+    "sha256": "36537279d5bc5f6488b87e26f8ddd64b56eed5e49b884db1d1967680120b5935",
+    "bytes": 4310
+  },
+  "frozen-inputs/tools/context_creation_playwright.py": {
+    "sha256": "289d3b8624ac639d3d74d3313e956370a38c2934bc9078d747c6b58b418c6442",
+    "bytes": 14062
+  },
+  "frozen-inputs/tools/craft_accent_playwright.py": {
+    "sha256": "b8c139ab4a09f7201686f5af6d47fd813a17921305a749c6c5b2aba04b3a2ed9",
+    "bytes": 22570
+  },
+  "frozen-inputs/tools/craft_batch_project_playwright.py": {
+    "sha256": "98ba789d75cb2e664567efc008edddb37dfa4ecf9ef36ae3e1896bed63a3be36",
+    "bytes": 12281
+  },
+  "frozen-inputs/tools/craft_import_summary_playwright.py": {
+    "sha256": "f71535062df2c62ca451a1e918f4c5432c2690c36b0348179828f2082d1a991d",
+    "bytes": 7987
+  },
+  "frozen-inputs/tools/craft_stats_focus_playwright.py": {
+    "sha256": "6a8bee05c491360c29cff114bfe00ca21c7e3f10bb0e55ebe912d86f3a1bf13c",
+    "bytes": 25043
+  },
+  "frozen-inputs/tools/csv_playwright.py": {
+    "sha256": "04c5b7107cfe1805a8979108224f88aa8d3112249227d2d1169a5898f007b1db",
+    "bytes": 9438
+  },
+  "frozen-inputs/tools/date_semantics_test.py": {
+    "sha256": "7a9aec3b94d2a756bfa5682662c76afd6734a48147746a254b626ff9e9bbb97e",
+    "bytes": 3835
+  },
+  "frozen-inputs/tools/dialog_lifecycle_playwright.py": {
+    "sha256": "512029f0df580331df80b6d2504d84cd75263bb61a310f44df70bb7d65af516b",
+    "bytes": 9536
+  },
+  "frozen-inputs/tools/direct_capture_playwright.py": {
+    "sha256": "b2a69fb6ffdd5e19fe448365a8c7635f80fd9a04cf2fc9e1c68c80035875b425",
+    "bytes": 14583
+  },
+  "frozen-inputs/tools/dst_wall_time_playwright.py": {
+    "sha256": "7c648596409b46cebe2e94003bd1453c50230715c637f17dc85800a36ab6f6c7",
+    "bytes": 4660
+  },
+  "frozen-inputs/tools/editor_safety_playwright.py": {
+    "sha256": "805cc82de0d882861758f14add569288045e53d277582c006e0604ffef09a41f",
+    "bytes": 26658
+  },
+  "frozen-inputs/tools/foreign_wall_time_playwright.py": {
+    "sha256": "588880115089dea42c1c3a52c9d37a0f824dfc2b7c1c9da215e40dce3ac30e11",
+    "bytes": 5079
+  },
+  "frozen-inputs/tools/help_playwright.py": {
+    "sha256": "fdc4c4ce19f24da60a77bad9c378a3d7aedb7aa39eaf7647808ff3aed73ef7c3",
+    "bytes": 12358
+  },
+  "frozen-inputs/tools/ime_input_playwright.py": {
+    "sha256": "babf4d79e554263c3e6f54d18f4448000266c09e19136da5fc0583240260702a",
+    "bytes": 8014
+  },
+  "frozen-inputs/tools/import_conflicts_playwright.py": {
+    "sha256": "3e65430bd8c89f5dbb2c271cb50a718eb8b65436074ee767a7bda49238da22ed",
+    "bytes": 6454
+  },
+  "frozen-inputs/tools/import_preview_concurrency_playwright.py": {
+    "sha256": "62727ebffd27e142233e9a431a30c6c0039fd7c78dad9497170174a87e068e7a",
+    "bytes": 10956
+  },
+  "frozen-inputs/tools/import_read_lifecycle_playwright.py": {
+    "sha256": "6eb34a0d23be7e66f59ec7c2001d4116281d92288cbb5481222316224fc023c2",
+    "bytes": 5141
+  },
+  "frozen-inputs/tools/import_reference_playwright.py": {
+    "sha256": "63f99d8f77668805e7740303cba606097bb6d8139aa9bc4d3b15c2bfa8a0c0a7",
+    "bytes": 7017
+  },
+  "frozen-inputs/tools/imported_reminder_edit_playwright.py": {
+    "sha256": "3b447facf793a03f4d24c2f8925bbd12c1fb55cf705269e59a052cb3e6f4e175",
+    "bytes": 8062
+  },
+  "frozen-inputs/tools/imported_text_edit_playwright.py": {
+    "sha256": "2ace80049486705c085dacc1edc1ad3f9ee102e7aca5d174b2e2f0b82b678063",
+    "bytes": 12530
+  },
+  "frozen-inputs/tools/manual_update_playwright.py": {
+    "sha256": "6224364554cb62677ebd1270e857555a42074381f9f1554deaf731c5ffa4665f",
+    "bytes": 21328
+  },
+  "frozen-inputs/tools/onboarding_playwright.py": {
+    "sha256": "e374f9f0b326a2a6babfe5d3a297b7760fdbafc47303020acecf4f7e3b433989",
+    "bytes": 4837
+  },
+  "frozen-inputs/tools/pending_subtask_playwright.py": {
+    "sha256": "d7756172a8e50e346f07a9c684ba03d7419bf678a5d0626acbeb56dcc7bf082c",
+    "bytes": 24187
+  },
+  "frozen-inputs/tools/performance_playwright.py": {
+    "sha256": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+    "bytes": 13068
+  },
+  "frozen-inputs/tools/project_scope_playwright.py": {
+    "sha256": "f3768ffb59951e9db884c7ca9f6249642dc40c4a83759f93b93e152c4e1c2f26",
+    "bytes": 16160
+  },
+  "frozen-inputs/tools/queued_write_concurrency_playwright.py": {
+    "sha256": "d965fc7d8b57e26bf4f29a20e344467223cc7ada8fdaf3c3c8d4d11043ed4d2d",
+    "bytes": 5085
+  },
+  "frozen-inputs/tools/quick_add_date_playwright.py": {
+    "sha256": "0291ad5c5327eed2837e6628c508dc3f114436ebca112aff496998a40dfb1726",
+    "bytes": 12732
+  },
+  "frozen-inputs/tools/quick_add_recovery_playwright.py": {
+    "sha256": "0ed4fc9e8415a2963acaa7844873a50fc718e49105c6eeb29adc468a8b26e7a7",
+    "bytes": 16176
+  },
+  "frozen-inputs/tools/quick_add_workspace_playwright.py": {
+    "sha256": "05c4756e6de47bc31576ea7e03987059f3737287ca4e1d706df03db54fbb1425",
+    "bytes": 20295
+  },
+  "frozen-inputs/tools/recovery_management_playwright.py": {
+    "sha256": "baa278f06c9349880b1e1fabe3f93b9821cbe907223ab89f1c0fee13918b7633",
+    "bytes": 16402
+  },
+  "frozen-inputs/tools/recovery_playwright.py": {
+    "sha256": "1f773866b1d05c78af569bf51791e8feec0b89ef2eb46e4e73ea1e5431a49f04",
+    "bytes": 11417
+  },
+  "frozen-inputs/tools/recurrence_timezone_playwright.py": {
+    "sha256": "dcfa2c419d6701da99bc58569b6f7d0b91fa6506ea137cd12e6c4238eaabff2c",
+    "bytes": 10263
+  },
+  "frozen-inputs/tools/release_payload_test.py": {
+    "sha256": "6bdd0e719d0bbf53b3aef7493bea42d56a0f225c828dcfa85f55db675ac15d6f",
+    "bytes": 5517
+  },
+  "frozen-inputs/tools/release_playwright.py": {
+    "sha256": "fa0309749d98128ffc7334cba8215ee0385ff70ce8979f7824dafa6a1bb121e5",
+    "bytes": 2706
+  },
+  "frozen-inputs/tools/release_versions_test.py": {
+    "sha256": "33190b5c1ef5fd926ace6e5b782564dc13b1f5c19e8be30fa79295e11fc4c643",
+    "bytes": 8348
+  },
+  "frozen-inputs/tools/reminder_concurrency_playwright.py": {
+    "sha256": "0cafd18005b9ae4708694f32a1b511d2220164c24ed3fbf540ff98dc0cf0241a",
+    "bytes": 10139
+  },
+  "frozen-inputs/tools/repeat_delete_playwright.py": {
+    "sha256": "7ea49a5dd819b9d13561717b12399ef8fd30a311aa85c71e33c1013ad84ee3c0",
+    "bytes": 13883
+  },
+  "frozen-inputs/tools/repeat_lineage_playwright.py": {
+    "sha256": "c00faea8afbe7788de0096fea380245df61756426aa0619adc12992cdd151033",
+    "bytes": 14469
+  },
+  "frozen-inputs/tools/repeat_merge_playwright.py": {
+    "sha256": "2986ed19218980de274a92b12710a668cca68a19b085d963e8362a2bb679bb56",
+    "bytes": 18267
+  },
+  "frozen-inputs/tools/saved_views_playwright.py": {
+    "sha256": "8577c521d0d929939e2dbf189812c5a347d71093604c5b2d64b48d37ab9ab4c5",
+    "bytes": 12310
+  },
+  "frozen-inputs/tools/security_playwright.py": {
+    "sha256": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+    "bytes": 2979
+  },
+  "frozen-inputs/tools/security_policy.py": {
+    "sha256": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+    "bytes": 2171
+  },
+  "frozen-inputs/tools/service_worker_update_playwright.py": {
+    "sha256": "de5a0730a35d9f65cb3e6ce278406667590f7c491cca5f9c1096a922c10a22fd",
+    "bytes": 24885
+  },
+  "frozen-inputs/tools/settings_flow_playwright.py": {
+    "sha256": "372231b55a41812d82ea82ec8e943ff38895a8cb814c3d47d379d55626014150",
+    "bytes": 14401
+  },
+  "frozen-inputs/tools/settings_navigation_playwright.py": {
+    "sha256": "a38bc35effe4c7c8e7dac81b45c9a99c047ec605bce5b6f3618a7fa0faa53dcf",
+    "bytes": 22132
+  },
+  "frozen-inputs/tools/sidebar_scroll_playwright.py": {
+    "sha256": "0ca3d3907809b6124770025755a52e2f1ebf1abf512e369ed4d64a6aa30c987b",
+    "bytes": 23440
+  },
+  "frozen-inputs/tools/smoke_playwright.py": {
+    "sha256": "40d5dc01ae2f2e5b55bb9de45f9037f62f09dfa96802aa4b1cd715b4bc9f535e",
+    "bytes": 191179
+  },
+  "frozen-inputs/tools/static_syntax_test.py": {
+    "sha256": "d1cd751dc356db1ce021b10c94689a8ea65d430ca140b9b1ecbcd2585c0ff8d0",
+    "bytes": 6329
+  },
+  "frozen-inputs/tools/stats_scope_playwright.py": {
+    "sha256": "08993c5756ee2f71c82c41f668263216ce3d8f9406da3653342afb21bdf252e4",
+    "bytes": 8527
+  },
+  "frozen-inputs/tools/storage_health_playwright.py": {
+    "sha256": "7474c37180050e96a548fa32a2156a32ae3bc85241459deff21e79b966b3cdd5",
+    "bytes": 2992
+  },
+  "frozen-inputs/tools/storage_lifecycle_playwright.py": {
+    "sha256": "0c7afab6487ad6a99b8e9f26ff7f16ada9d27b3afe013dc6d0086537302ee35b",
+    "bytes": 3395
+  },
+  "frozen-inputs/tools/task_draft_playwright.py": {
+    "sha256": "9bacf835d7850da3a5b8acfd9bff8f4d92cee01372252444d92ade5356ee5464",
+    "bytes": 37514
+  },
+  "frozen-inputs/tools/time_refresh_playwright.py": {
+    "sha256": "617c3f36466b3648aa0e8a62b5b983eebbc3d54ce918c6a4f903227778f42649",
+    "bytes": 17306
+  },
+  "frozen-inputs/tools/timezone_playwright.py": {
+    "sha256": "9debe614eabe082693e81d43885bdf5d2863d49889ee6d23ce20a8334b682f6b",
+    "bytes": 7505
+  },
+  "frozen-inputs/tools/translation_fallback.py": {
+    "sha256": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+    "bytes": 6383
+  },
+  "frozen-inputs/tools/undo_concurrency_playwright.py": {
+    "sha256": "42f938033284a83dd07fd2e6ef8b2345a31fe358ec61fd3ee40f48897b11aaa7",
+    "bytes": 7601
+  },
+  "frozen-inputs/tools/upgrade_playwright.py": {
+    "sha256": "c5f27bdcd5fc84abfcfdabd026ef6b76fb7264945714193903ff2ad914fae3b2",
+    "bytes": 16415
+  },
+  "frozen-inputs/tools/validate_static.py": {
+    "sha256": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3",
+    "bytes": 54341
+  },
+  "frozen-inputs/tools/verify_deployment.py": {
+    "sha256": "c21aa60543f118b9d6d7d96b94b393816560f69737c53f58891c4ea1bfe43396",
+    "bytes": 4300
+  },
+  "frozen-inputs/tools/verify_deployment_test.py": {
+    "sha256": "9c1171e97a689523e2080830951aee85c8d13730c78368f6d307a45083ea2cd7",
+    "bytes": 5579
+  },
+  "frozen-inputs/tools/views_delete_playwright.py": {
+    "sha256": "4823be6c6d4eea10913d2fda98932fd0ee9b54d230fd048745ee3c11b98f3a7f",
+    "bytes": 14474
+  },
+  "frozen-inputs/tools/views_portability_playwright.py": {
+    "sha256": "95db305b3ff948e43530b0c43bc34454f4da6cdf68a0348a45ef0b70e338aace",
+    "bytes": 19637
+  },
+  "frozen-inputs/tools/workflow_feedback_playwright.py": {
+    "sha256": "383acf8b1b5317ee0df1e6c0fb7fcbf84a4577590c05fe3f3c548d5356b7a17a",
+    "bytes": 22507
+  },
+  "frozen-inputs/tools/workspace_failure_playwright.py": {
+    "sha256": "ea94cc79c10d11d43c28445c0aedd64f271d733b8ed93fa51d91c24dec306d03",
+    "bytes": 27216
+  },
+  "frozen-inputs/tools/workspace_performance_playwright.py": {
+    "sha256": "5062eac9e6045929f385aed1951e534e69cea599a7cbeaf4577bef2d0d40af18",
+    "bytes": 28977
+  },
+  "frozen-inputs/tools/workspace_roundtrip_playwright.py": {
+    "sha256": "d4fb29b24a4945026eacfec065a38cccd95af900a0c822154be635ab68eb6646",
+    "bytes": 28016
+  },
+  "frozen-inputs/vercel.json": {
+    "sha256": "54694b0670fc8546886418e040b2ecccba448e316e350bed7586b02f0dd8ef91",
+    "bytes": 1194
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-date-roundtrip/browser-events.json": {
+    "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+    "bytes": 40
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-date-roundtrip/custom-raw-before-save.json": {
+    "sha256": "3feedeb0c85f252131c5246577c891129a26cf120f5f85b537bbc455c2dd394c",
+    "bytes": 867
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-date-roundtrip/custom-raw-before.json": {
+    "sha256": "a9ab9c3f76cd5a1d9f1aec160406e10733d8cca4d847cf67b9de9ee50bb66593",
+    "bytes": 868
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-date-roundtrip/custom-saved.json": {
+    "sha256": "c8bc9bd1cb611d9c9f351babd336a1dc9eff01be7073a3d7c985b6bf90c4bb88",
+    "bytes": 3847
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-date-roundtrip/final.json": {
+    "sha256": "c8bc9bd1cb611d9c9f351babd336a1dc9eff01be7073a3d7c985b6bf90c4bb88",
+    "bytes": 3847
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-date-roundtrip/initial.json": {
+    "sha256": "399e7cd500e4712f3fec2aa616c4d15b6b3b6305f8c5cd2967c9a18f8c0f2fd1",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-date-roundtrip/roundtrip-restored.png": {
+    "sha256": "75485f1a03fb07deaccd0e32744ea7cbfd0793e8a2e53fa85b2b2d74b7c6ddda",
+    "bytes": 176999
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-date-roundtrip/trace.zip": {
+    "sha256": "3a01a6f1868594262988a29fb8538b49bb02e24f9933edaee5de4651551cef90",
+    "bytes": 25591568
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-date-roundtrip/weekly-days-raw-before-save.json": {
+    "sha256": "4a344563ed89ef5c797fe8fe38613e94ca5fa0ed9cd65d6764700354595cc40d",
+    "bytes": 876
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-date-roundtrip/weekly-days-raw-before.json": {
+    "sha256": "4a344563ed89ef5c797fe8fe38613e94ca5fa0ed9cd65d6764700354595cc40d",
+    "bytes": 876
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-date-roundtrip/weekly-days-saved.json": {
+    "sha256": "65db447d03bee863cafde96e7be1b1148d216b31458bb5ff334f10957d7c3696",
+    "bytes": 2645
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-custom-interval/browser-events.json": {
+    "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+    "bytes": 40
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-custom-interval/corrected-save-db.json": {
+    "sha256": "f5e5e68651f95edcc8f235bb50b61776baeffdf9a92071c04dfde8813c4c8070",
+    "bytes": 2630
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-custom-interval/disabled-rule-save-db.json": {
+    "sha256": "bb087065a37d0edcf432eb8dfe2963c4328a3142c1c0e9fbd96eaca3337b799b",
+    "bytes": 3896
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-custom-interval/final.json": {
+    "sha256": "bb087065a37d0edcf432eb8dfe2963c4328a3142c1c0e9fbd96eaca3337b799b",
+    "bytes": 3896
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-custom-interval/initial.json": {
+    "sha256": "bd53aba069b7cc1cd914a276912fbddf69698a2ae002476f4a4d108746c59410",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-custom-interval/invalid-db-after.json": {
+    "sha256": "bd53aba069b7cc1cd914a276912fbddf69698a2ae002476f4a4d108746c59410",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-custom-interval/invalid-db-before.json": {
+    "sha256": "bd53aba069b7cc1cd914a276912fbddf69698a2ae002476f4a4d108746c59410",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-custom-interval/invalid-raw-after.json": {
+    "sha256": "768a30bb3a08b4ed875af3b023e8175fe25c016e6aa21eb60e5e0d83c02ad126",
+    "bytes": 875
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-custom-interval/invalid-raw-before.json": {
+    "sha256": "768a30bb3a08b4ed875af3b023e8175fe25c016e6aa21eb60e5e0d83c02ad126",
+    "bytes": 875
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-custom-interval/invalid-schedule-feedback.png": {
+    "sha256": "534ad120ed57983670bfac7d1c6994f07da48998f67372010738259b0fa14909",
+    "bytes": 180195
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-custom-interval/trace.zip": {
+    "sha256": "b0a3fc70273d210a028e063613365d660e374cdb9ce53d74afc4b57b6aa6049e",
+    "bytes": 21933530
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-custom-interval/validation-visibility.json": {
+    "sha256": "05df82527bbafed1c9d88d91b22bd1d7b5db21d8baa370030f0431d4fafd7f9d",
+    "bytes": 916
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-weekdays/browser-events.json": {
+    "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+    "bytes": 40
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-weekdays/final.json": {
+    "sha256": "d64119a194d59e1a01d62fc33f944431f139225c2995111e2fa69ee4fb74f792",
+    "bytes": 2625
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-weekdays/initial.json": {
+    "sha256": "9107318dd8b4f7fe9efc2130d1c2ab91d87a388f33ed9125e0a6c8d70026b366",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-weekdays/invalid-db-before.json": {
+    "sha256": "9107318dd8b4f7fe9efc2130d1c2ab91d87a388f33ed9125e0a6c8d70026b366",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-weekdays/invalid-dom.txt": {
+    "sha256": "fb431587a81ecf440341f4fefde1fa0c61076020467c432f68a27e9c88796ac1",
+    "bytes": 2244
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-weekdays/invalid-raw-before.json": {
+    "sha256": "9591888edb5eaea8d687f8c6ae02a6da32673dc42271931f28e5157b4765ccde",
+    "bytes": 869
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-weekdays/invalid-weekdays-feedback.png": {
+    "sha256": "24fa39d29b4a82f3de5c6209d5e94b884bb836c28fc76b3ab6d39ebb776a7d4f",
+    "bytes": 175946
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-weekdays/trace.zip": {
+    "sha256": "9de0f87db157e03bd03ab8a69d38fb2303fb9d0b56ffb2085326b999d9993fba",
+    "bytes": 16726813
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-empty-weekdays/validation-visibility.json": {
+    "sha256": "50895f00b20c458c650dd8c96b25d54a5ba9bfc8744a4d5648d09ce7562e8dce",
+    "bytes": 764
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-missing-date/browser-events.json": {
+    "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+    "bytes": 40
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-missing-date/corrected-save-db.json": {
+    "sha256": "aecd84385686c032fac68b001929d6b17245fe4c08a6885b1cb881090a004ec8",
+    "bytes": 2633
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-missing-date/final.json": {
+    "sha256": "aecd84385686c032fac68b001929d6b17245fe4c08a6885b1cb881090a004ec8",
+    "bytes": 2633
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-missing-date/initial.json": {
+    "sha256": "a0b92e1d5e8cd33c8e37eda4872ebf218b2a1c0e72d26ab11695a054d077d364",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-missing-date/invalid-db-after.json": {
+    "sha256": "a0b92e1d5e8cd33c8e37eda4872ebf218b2a1c0e72d26ab11695a054d077d364",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-missing-date/invalid-db-before.json": {
+    "sha256": "a0b92e1d5e8cd33c8e37eda4872ebf218b2a1c0e72d26ab11695a054d077d364",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-missing-date/invalid-raw-after.json": {
+    "sha256": "acd2151bb3671b6cce5382054e536ede91f437287c050f18ca9848cc9b6c888d",
+    "bytes": 869
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-missing-date/invalid-raw-before.json": {
+    "sha256": "acd2151bb3671b6cce5382054e536ede91f437287c050f18ca9848cc9b6c888d",
+    "bytes": 869
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-missing-date/invalid-schedule-feedback.png": {
+    "sha256": "dc331d52f42d498a7e5612f9c79ca822cf4bcbd6fe0cb0310cdbbd35ed38c453",
+    "bytes": 180715
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-missing-date/trace.zip": {
+    "sha256": "c20e9644576dec44f86526f00d56acbc64453ecc2d8e542a5c741a803a7e767b",
+    "bytes": 12635048
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-missing-date/validation-visibility.json": {
+    "sha256": "0401f39f38d5dc4fcdfa1cc58c402f07fb1d88139cdf8ba6ce4da81cff0b5ef5",
+    "bytes": 887
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-subtask-delete/after-delete-dom.txt": {
+    "sha256": "f780c778e842aede5f1494646cdea740f36a33666ccf5fd4ee0f5e00a63b44b3",
+    "bytes": 2308
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-subtask-delete/after-save-db.json": {
+    "sha256": "ad6b0e19c63871d231b3f83415720d0d0f3be8e7eb27c71579cda398b8569bbe",
+    "bytes": 2643
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-subtask-delete/before-delete-db.json": {
+    "sha256": "0fc8f7a6b0b2fdf196da90f79cc926d096b951037e0427ebb442cea720c1eeb6",
+    "bytes": 2738
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-subtask-delete/before-delete-dom.txt": {
+    "sha256": "3758599717413fea80d1f533228d50dcc525c7afbb67d50197549ba127680cb0",
+    "bytes": 2422
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-subtask-delete/browser-events.json": {
+    "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+    "bytes": 40
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-subtask-delete/editing-preserved-after-delete.png": {
+    "sha256": "501280a44a407459526f76863735873ddbdca684e714aa3381b954ff991b9389",
+    "bytes": 174597
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-subtask-delete/final.json": {
+    "sha256": "ad6b0e19c63871d231b3f83415720d0d0f3be8e7eb27c71579cda398b8569bbe",
+    "bytes": 2643
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-subtask-delete/initial.json": {
+    "sha256": "2f15732515c88da9646e6f1461db2b4a5d71c585ab1a8324bb2be02f5ef3207e",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/1280-subtask-delete/trace.zip": {
+    "sha256": "db5d5259640354ddcbee976300ce75f793b64577d291479c27fe284c78d72917",
+    "bytes": 16729423
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-date-roundtrip/browser-events.json": {
+    "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+    "bytes": 40
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-date-roundtrip/custom-raw-before-save.json": {
+    "sha256": "3feedeb0c85f252131c5246577c891129a26cf120f5f85b537bbc455c2dd394c",
+    "bytes": 867
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-date-roundtrip/custom-raw-before.json": {
+    "sha256": "a9ab9c3f76cd5a1d9f1aec160406e10733d8cca4d847cf67b9de9ee50bb66593",
+    "bytes": 868
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-date-roundtrip/custom-saved.json": {
+    "sha256": "23607c69e7a76c576fbe20e2487e2e8c83b5dcf1916f0e2b8585cc75f7ecdb04",
+    "bytes": 3847
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-date-roundtrip/final.json": {
+    "sha256": "23607c69e7a76c576fbe20e2487e2e8c83b5dcf1916f0e2b8585cc75f7ecdb04",
+    "bytes": 3847
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-date-roundtrip/initial.json": {
+    "sha256": "c9c5b8f340c1b1b5925323ec012b45669002a0535838d14bc56277726f72401b",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-date-roundtrip/roundtrip-restored.png": {
+    "sha256": "804e891b09ccf8c12341a43330f1d7e4d9a2bd74ddb58b0278543d9fbcfe5549",
+    "bytes": 63559
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-date-roundtrip/trace.zip": {
+    "sha256": "eaadfff095b811d732e5f45a726ad3a5f56a2131ad4f50a27eeb25aa479ade22",
+    "bytes": 15255822
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-date-roundtrip/weekly-days-raw-before-save.json": {
+    "sha256": "4a344563ed89ef5c797fe8fe38613e94ca5fa0ed9cd65d6764700354595cc40d",
+    "bytes": 876
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-date-roundtrip/weekly-days-raw-before.json": {
+    "sha256": "4a344563ed89ef5c797fe8fe38613e94ca5fa0ed9cd65d6764700354595cc40d",
+    "bytes": 876
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-date-roundtrip/weekly-days-saved.json": {
+    "sha256": "7f66ccf7ae5f0e04246ca67d5bf218678f8c8d9fa3ee0236068ea5adac36d706",
+    "bytes": 2645
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-custom-interval/browser-events.json": {
+    "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+    "bytes": 40
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-custom-interval/corrected-save-db.json": {
+    "sha256": "60391fca501f9e7343dbbdd76c783446ddc24b9e81b1430fe7e4f392ba87dfcb",
+    "bytes": 2630
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-custom-interval/disabled-rule-save-db.json": {
+    "sha256": "b41c795bd44b3124d8fac62331cb9747b0669f3b9d8d434d9dd6ad86d16900c1",
+    "bytes": 3896
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-custom-interval/final.json": {
+    "sha256": "b41c795bd44b3124d8fac62331cb9747b0669f3b9d8d434d9dd6ad86d16900c1",
+    "bytes": 3896
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-custom-interval/initial.json": {
+    "sha256": "54191b6ca5a8f2021244eefa6096531c575c8b72302865108d282c82328d427e",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-custom-interval/invalid-db-after.json": {
+    "sha256": "54191b6ca5a8f2021244eefa6096531c575c8b72302865108d282c82328d427e",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-custom-interval/invalid-db-before.json": {
+    "sha256": "54191b6ca5a8f2021244eefa6096531c575c8b72302865108d282c82328d427e",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-custom-interval/invalid-raw-after.json": {
+    "sha256": "768a30bb3a08b4ed875af3b023e8175fe25c016e6aa21eb60e5e0d83c02ad126",
+    "bytes": 875
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-custom-interval/invalid-raw-before.json": {
+    "sha256": "768a30bb3a08b4ed875af3b023e8175fe25c016e6aa21eb60e5e0d83c02ad126",
+    "bytes": 875
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-custom-interval/invalid-schedule-feedback.png": {
+    "sha256": "c98cc036cb3574350f568cfb3e62bca77bc3fad0f40c98ffc104ad2b34ae7969",
+    "bytes": 65590
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-custom-interval/trace.zip": {
+    "sha256": "9b7c9b4f5c741f2117628adaea83ccdd0ee3169f7f8371b575ff0376e1bec850",
+    "bytes": 13256231
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-custom-interval/validation-visibility.json": {
+    "sha256": "d92e04cfc52feb97f2a227bbd3123321d8dc205be7d8d098df2157ccd5b17ee0",
+    "bytes": 901
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-weekdays/browser-events.json": {
+    "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+    "bytes": 40
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-weekdays/final.json": {
+    "sha256": "37567331b100505628c856e7e17af2fd3c09e5b6de7ee1b4385bd6c9dd694b0a",
+    "bytes": 2625
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-weekdays/initial.json": {
+    "sha256": "9d282883204b9986b4b578794e641b22c05e849ef69d7c1fa3400515d97844b7",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-weekdays/invalid-db-before.json": {
+    "sha256": "9d282883204b9986b4b578794e641b22c05e849ef69d7c1fa3400515d97844b7",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-weekdays/invalid-dom.txt": {
+    "sha256": "fb431587a81ecf440341f4fefde1fa0c61076020467c432f68a27e9c88796ac1",
+    "bytes": 2244
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-weekdays/invalid-raw-before.json": {
+    "sha256": "9591888edb5eaea8d687f8c6ae02a6da32673dc42271931f28e5157b4765ccde",
+    "bytes": 869
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-weekdays/invalid-weekdays-feedback.png": {
+    "sha256": "6f1a61284c25cec8ff6ab0f328b408c8553d5b51d054c64279f291e3def3ac28",
+    "bytes": 64493
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-weekdays/trace.zip": {
+    "sha256": "831d8e9779e219bbd645cbbb32eb34db00aff797d5ed8deaa5a589d2c9740241",
+    "bytes": 8726395
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-empty-weekdays/validation-visibility.json": {
+    "sha256": "d45bbba19ecf208f9c4bac7f03fac551445d025763350e31ad17555a54f919c0",
+    "bytes": 751
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-missing-date/browser-events.json": {
+    "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+    "bytes": 40
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-missing-date/corrected-save-db.json": {
+    "sha256": "9053cc55e1e709be4c6ea9c62f1b53f12a7b7185e4350e598eddde8effe648a6",
+    "bytes": 2633
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-missing-date/final.json": {
+    "sha256": "9053cc55e1e709be4c6ea9c62f1b53f12a7b7185e4350e598eddde8effe648a6",
+    "bytes": 2633
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-missing-date/initial.json": {
+    "sha256": "3b64849c919822174ec81f15e956c88dd72f577bd567d9a36285b81327d724a4",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-missing-date/invalid-db-after.json": {
+    "sha256": "3b64849c919822174ec81f15e956c88dd72f577bd567d9a36285b81327d724a4",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-missing-date/invalid-db-before.json": {
+    "sha256": "3b64849c919822174ec81f15e956c88dd72f577bd567d9a36285b81327d724a4",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-missing-date/invalid-raw-after.json": {
+    "sha256": "acd2151bb3671b6cce5382054e536ede91f437287c050f18ca9848cc9b6c888d",
+    "bytes": 869
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-missing-date/invalid-raw-before.json": {
+    "sha256": "acd2151bb3671b6cce5382054e536ede91f437287c050f18ca9848cc9b6c888d",
+    "bytes": 869
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-missing-date/invalid-schedule-feedback.png": {
+    "sha256": "c9a8cca69234ef756bc79084bcd4d3bb445ab21784a18b77c0b7166b503c157a",
+    "bytes": 60736
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-missing-date/trace.zip": {
+    "sha256": "62207439f4e57148b8162f9db929fffbd0057e9cfbbc9ea06d8209f432fea585",
+    "bytes": 7130378
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-missing-date/validation-visibility.json": {
+    "sha256": "c4cfd748bdb6143fe23374202cacd5ca188108e7ba9c326979db400e40a17176",
+    "bytes": 840
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-subtask-delete/after-delete-dom.txt": {
+    "sha256": "f780c778e842aede5f1494646cdea740f36a33666ccf5fd4ee0f5e00a63b44b3",
+    "bytes": 2308
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-subtask-delete/after-save-db.json": {
+    "sha256": "ed9f787b1c636da3216dbc9374bb7fd8ad7ab574b6bffe1f01e738116f827549",
+    "bytes": 2643
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-subtask-delete/before-delete-db.json": {
+    "sha256": "756353a6bb6aff9a56814d56afa3d6c31b03ec54d0b90e0adbbf4a00703234df",
+    "bytes": 2738
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-subtask-delete/before-delete-dom.txt": {
+    "sha256": "3758599717413fea80d1f533228d50dcc525c7afbb67d50197549ba127680cb0",
+    "bytes": 2422
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-subtask-delete/browser-events.json": {
+    "sha256": "f6ab673b26fd58cf3f8995c0edd61c97a77b0cb1a0a839c028173e21ddb18a48",
+    "bytes": 40
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-subtask-delete/editing-preserved-after-delete.png": {
+    "sha256": "58049d60a7c0a682083175623a62ea9b8b2060b77907d5347b36ecb138105463",
+    "bytes": 60175
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-subtask-delete/final.json": {
+    "sha256": "ed9f787b1c636da3216dbc9374bb7fd8ad7ab574b6bffe1f01e738116f827549",
+    "bytes": 2643
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-subtask-delete/initial.json": {
+    "sha256": "d599ff7e25dc2097dfc5bd2c04613fcf31b83fa3151d8320a6448271f920f7ad",
+    "bytes": 1348
+  },
+  "native/20261025T195349Z-firefox-04327e97/390-subtask-delete/trace.zip": {
+    "sha256": "6b73c20f40b1bcb91754d06fcb14fa735ce89e609379faaa6ec45160dbc66030",
+    "bytes": 7965983
+  },
+  "native/20261025T195349Z-firefox-04327e97/results.json": {
+    "sha256": "452d1e070f57e874572f41e300311b8d65ac5727b518601f794a2f7b4a75b2df",
+    "bytes": 1774
+  },
+  "native/20261025T195349Z-firefox-04327e97/source-snapshot/index.html": {
+    "sha256": "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+    "bytes": 985225
+  },
+  "native/20261025T195349Z-firefox-04327e97/source-snapshot/resources/en.json": {
+    "sha256": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+    "bytes": 57285
+  },
+  "native/20261025T195349Z-firefox-04327e97/source-snapshot/resources/zh-CN.json": {
+    "sha256": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+    "bytes": 55747
+  },
+  "native/20261025T195349Z-firefox-04327e97/source-snapshot/sw.js": {
+    "sha256": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+    "bytes": 8305
+  },
+  "native/20261025T195349Z-firefox-04327e97/source-snapshot/tools/editor_safety_playwright.py": {
+    "sha256": "805cc82de0d882861758f14add569288045e53d277582c006e0604ffef09a41f",
+    "bytes": 26658
+  },
+  "native/20261025T195349Z-firefox-04327e97/source-snapshot/tools/pending_subtask_playwright.py": {
+    "sha256": "d7756172a8e50e346f07a9c684ba03d7419bf678a5d0626acbeb56dcc7bf082c",
+    "bytes": 24187
+  },
+  "native/20261025T195349Z-firefox-04327e97/source-snapshot/vercel.json": {
+    "sha256": "54694b0670fc8546886418e040b2ecccba448e316e350bed7586b02f0dd8ef91",
+    "bytes": 1194
+  },
+  "stderr.log": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "stdout.log": {
+    "sha256": "b3e2a220a921cfb1f0f7921268fe688a5abd3b8be976298d6e779e1a9117a6e0",
+    "bytes": 864
+  },
+  "summary.json": {
+    "sha256": "9da65751615d2811eb96b00972921a65cc1eae128f4395d8aa43337cef1df281",
+    "bytes": 26235
+  }
+}

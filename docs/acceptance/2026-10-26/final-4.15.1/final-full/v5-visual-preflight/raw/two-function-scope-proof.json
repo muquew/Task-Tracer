@@ -1,0 +1,44 @@
+{
+  "at": "2026-10-25T20:49:16.840324+00:00",
+  "primary": "/workspace/Task-Tracer",
+  "candidate": "/tmp/task-tracer-final-stable-v5-20261026",
+  "primary_index_sha256": "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+  "candidate_index_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+  "two_function_replacement_reconstructs_entire_primary_index_exactly": true,
+  "reconstructed_sha256": "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+  "functions": {
+    "renderProjectFilterOptions": {
+      "original_start_line": 7933,
+      "candidate_start_line": 7933,
+      "next_function": "getProjectNames",
+      "original_sha256": "e9eb58e64fd4a6dd0104b660a9f96b265e849862c963f90c82d78ddf21ef70bc",
+      "candidate_sha256": "66a50c8d440ab65ed91b5674d38d205fae9bbf986b53822d27eabdf099d157fb",
+      "original_bytes": 1879,
+      "candidate_bytes": 2237
+    },
+    "updateDropdownUI": {
+      "original_start_line": 10652,
+      "candidate_start_line": 10657,
+      "next_function": "getDropdownAccessibleName",
+      "original_sha256": "047caa886600c603b87c59602d28b038c61808eb47140a29027e746eef0b1ebd",
+      "candidate_sha256": "72f545ba6d05e4fedfa862a51420f73301f3ac9d0fc11f4867dea31f493d2e53",
+      "original_bytes": 851,
+      "candidate_bytes": 901
+    }
+  },
+  "all_other_index_bytes_including_html_css_dates_editor_db_and_other_logic_unchanged": true,
+  "vercel_only_expected_script_hash_replacement": true,
+  "vercel_old_sha256": "54694b0670fc8546886418e040b2ecccba448e316e350bed7586b02f0dd8ef91",
+  "vercel_candidate_sha256": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+  "changed_inline_scripts": [
+    {
+      "inline_script_index": 3,
+      "old_token": "sha256-lMihxAeTi5Dsq31K5PErVbJxkfsZo8nTjmvaKvJ2tXw=",
+      "new_token": "sha256-T5J6MZEgCjOJwhoCWNWtnaU4pMauwNJfjzyVJAQ/rZg="
+    }
+  ],
+  "driver_copy_only_change": "ROOT path; all UI fixture, CSP, motion, capture and screenshot behavior copied exactly",
+  "original_driver_sha256": "330acf5344b0bb7b83763207ce1917d9d4a5fdd9cb45d235d8ae000f2398cce4",
+  "capture_driver_sha256": "17f87e758d12a171d03b09af358ae5c4ae4d94609ac587c231468f2a0659db57",
+  "clone_images_written": false
+}

@@ -1,0 +1,135 @@
+{
+  "browser": "firefox",
+  "browser_version": "153.0",
+  "planned_cases": [
+    "replace-roundtrip",
+    "consecutive",
+    "keep",
+    "skip",
+    "distinct",
+    "abort-repair",
+    "abort-incoming",
+    "abort-checkpoint",
+    "stale",
+    "ambiguity",
+    "cycle"
+  ],
+  "cases": [
+    {
+      "name": "replace-roundtrip",
+      "passed": true,
+      "duration_seconds": 21.86
+    },
+    {
+      "name": "consecutive",
+      "passed": true,
+      "duration_seconds": 17.26
+    },
+    {
+      "name": "keep",
+      "passed": true,
+      "duration_seconds": 12.252
+    },
+    {
+      "name": "skip",
+      "passed": true,
+      "duration_seconds": 15.936
+    },
+    {
+      "name": "distinct",
+      "passed": true,
+      "duration_seconds": 19.643
+    },
+    {
+      "name": "abort-repair",
+      "passed": true,
+      "duration_seconds": 18.199
+    },
+    {
+      "name": "abort-incoming",
+      "passed": true,
+      "duration_seconds": 12.88
+    },
+    {
+      "name": "abort-checkpoint",
+      "passed": true,
+      "duration_seconds": 12.297
+    },
+    {
+      "name": "stale",
+      "passed": true,
+      "duration_seconds": 13.364
+    },
+    {
+      "name": "ambiguity",
+      "passed": true,
+      "duration_seconds": 11.66
+    },
+    {
+      "name": "cycle",
+      "passed": true,
+      "duration_seconds": 9.779
+    }
+  ],
+  "started_at": "2026-10-25T19:15:44.242+00:00",
+  "finished_at": "2026-10-25T19:18:33.750+00:00",
+  "status": "passed",
+  "passed": true,
+  "source": {
+    "files": {
+      "LICENSE": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+      "THIRD_PARTY_NOTICES.md": "a49db18583d3f275de394c74e3c5db9142979ab713fdfd1ac69488236c1d9bf9",
+      "docs/distribution.md": "7879df983dce7836914d6e8e871a5c6d52177187900f76335e5abc354e89d15f",
+      "docs/distribution_zh_cn.md": "90c6ea687f214b88fb412c57477e73d0e91212899788b0a9842d5bb798a03fcc",
+      "fav/android-chrome-192x192.png": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+      "fav/android-chrome-512x512.png": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+      "fav/apple-touch-icon.png": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+      "fav/favicon-16x16.png": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+      "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+      "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+      "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+      "index.html": "976cae6020b6f5478c72708242a577ee75b6efb0b5f71ba8094fa2bd43e51feb",
+      "manifest.json": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718",
+      "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+      "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+      "robots.txt": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+      "screenshots/add-task-en.png": "59b27cd46a77594cb0441d1b64afdec784bf96120386744ce4dfc07471b3206b",
+      "screenshots/add-task.png": "7a885f47ca4ada16e1f0440ea8c548b2a26bf3aa557ffbd1d372a11fd716ad72",
+      "screenshots/task-list-en.png": "27d0e2de8ca7112b96cb900e68fa2e8f970e6f331b5a51603e73e07ecaf91550",
+      "screenshots/task-list.png": "3f888a3f473a7c15a380c189daddd7392b72deb61c7fae302b64f3bc3ef4d92c",
+      "sitemap.xml": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+      "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+      "vercel.json": "306219407201a7e3ecddaa432ac3bc16a5989415f273670f66c2e8b309e081ea"
+    },
+    "sha256": "fb2cce2cc4253721a14c0a39ea017890b6daa3c143637fe5880e8361b506aec3"
+  },
+  "source_final": {
+    "files": {
+      "LICENSE": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+      "THIRD_PARTY_NOTICES.md": "a49db18583d3f275de394c74e3c5db9142979ab713fdfd1ac69488236c1d9bf9",
+      "docs/distribution.md": "7879df983dce7836914d6e8e871a5c6d52177187900f76335e5abc354e89d15f",
+      "docs/distribution_zh_cn.md": "90c6ea687f214b88fb412c57477e73d0e91212899788b0a9842d5bb798a03fcc",
+      "fav/android-chrome-192x192.png": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+      "fav/android-chrome-512x512.png": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+      "fav/apple-touch-icon.png": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+      "fav/favicon-16x16.png": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+      "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+      "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+      "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+      "index.html": "976cae6020b6f5478c72708242a577ee75b6efb0b5f71ba8094fa2bd43e51feb",
+      "manifest.json": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718",
+      "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+      "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+      "robots.txt": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+      "screenshots/add-task-en.png": "59b27cd46a77594cb0441d1b64afdec784bf96120386744ce4dfc07471b3206b",
+      "screenshots/add-task.png": "7a885f47ca4ada16e1f0440ea8c548b2a26bf3aa557ffbd1d372a11fd716ad72",
+      "screenshots/task-list-en.png": "27d0e2de8ca7112b96cb900e68fa2e8f970e6f331b5a51603e73e07ecaf91550",
+      "screenshots/task-list.png": "3f888a3f473a7c15a380c189daddd7392b72deb61c7fae302b64f3bc3ef4d92c",
+      "sitemap.xml": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+      "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+      "vercel.json": "306219407201a7e3ecddaa432ac3bc16a5989415f273670f66c2e8b309e081ea"
+    },
+    "sha256": "fb2cce2cc4253721a14c0a39ea017890b6daa3c143637fe5880e8361b506aec3"
+  },
+  "error": null
+}

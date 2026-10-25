@@ -1,0 +1,16 @@
+{
+  "reviewed_at_utc": "2026-10-25T20:16:05.940801+00:00",
+  "method": "Actually viewed both original normal-CSP WebKit PNG screenshots",
+  "reviewed": true,
+  "images": [
+    {
+      "file": "01-first-capture-open.png",
+      "sha256": "0d32e2bc4814ebab90e32267fd425132a8d1f7c9bfb53a317860453b085f6219"
+    },
+    {
+      "file": "02-reopened-capture-retained.png",
+      "sha256": "1a6e65e3ae3b807731afe1ac67e634f57c7761c04bfbcee2ebab1ce1659ae0c5"
+    }
+  ],
+  "findings": "Capture shelf is open and focused with the intended shared title on first arrival. Closing via the real X and reopening via the real quick-capture button retains the same text. No unintended task save, toast obstruction or horizontal visual overflow was observed. Exact full database equality is in report.json."
+}

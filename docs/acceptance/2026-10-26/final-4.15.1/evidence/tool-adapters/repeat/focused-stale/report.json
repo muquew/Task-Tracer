@@ -1,0 +1,70 @@
+{
+  "before": {
+    "index.html": "b3cfe5642f93a067e6c2ab3c2373fd4b5e8e7944c835b7a78ca8d441bcb5d8eb",
+    "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+    "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+    "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+    "vercel.json": "2857ae24b2f09e200a9a7c3e8256825db2ff5cbf6f65a64ce040469e58707bcc",
+    "tools/repeat_delete_playwright.py": "df2acc67f125b6505eb753c607a6f3be0ab967bace04ad5d558f326dbe078f23",
+    "tools/repeat_merge_playwright.py": "2986ed19218980de274a92b12710a668cca68a19b085d963e8362a2bb679bb56",
+    "tools/smoke_playwright.py": "df5a1a8c557a08c075b2e02a22a0ceb93ac404ddead9877f7651366a09ae166a",
+    "tools/recovery_management_playwright.py": "baa278f06c9349880b1e1fabe3f93b9821cbe907223ab89f1c0fee13918b7633",
+    "tools/repeat_lineage_playwright.py": "c00faea8afbe7788de0096fea380245df61756426aa0619adc12992cdd151033",
+    "tools/import_reference_playwright.py": "63f99d8f77668805e7740303cba606097bb6d8139aa9bc4d3b15c2bfa8a0c0a7"
+  },
+  "scope": "Firefox, original native StaticHandler; reduced motion; throwaway synthetic data",
+  "cases": [
+    {
+      "case": "stale-single",
+      "page_errors": [],
+      "remote_fixture_exact": true,
+      "conflict_text": "任务已有更新，正在刷新。请检查最新数据后重试。",
+      "confirmation_visible": true,
+      "retry_enabled": true,
+      "conflict_exact_no_write": true,
+      "cancel_exact_no_write": true,
+      "reload_exact_no_write": true,
+      "passed": true
+    },
+    {
+      "case": "stale-batch",
+      "page_errors": [],
+      "remote_fixture_exact": true,
+      "conflict_text": "任务已有更新，正在刷新。请检查最新数据后重试。",
+      "confirmation_visible": false,
+      "retry_enabled": null,
+      "conflict_exact_no_write": true,
+      "cancel_exact_no_write": true,
+      "reload_exact_no_write": true,
+      "passed": true
+    },
+    {
+      "case": "stale-clear",
+      "page_errors": [],
+      "remote_fixture_exact": true,
+      "conflict_text": "任务已有更新，正在刷新。请检查最新数据后重试。",
+      "confirmation_visible": false,
+      "retry_enabled": null,
+      "conflict_exact_no_write": true,
+      "cancel_exact_no_write": true,
+      "reload_exact_no_write": true,
+      "passed": true
+    }
+  ],
+  "browser": "153.0",
+  "after": {
+    "index.html": "b3cfe5642f93a067e6c2ab3c2373fd4b5e8e7944c835b7a78ca8d441bcb5d8eb",
+    "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+    "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+    "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+    "vercel.json": "2857ae24b2f09e200a9a7c3e8256825db2ff5cbf6f65a64ce040469e58707bcc",
+    "tools/repeat_delete_playwright.py": "df2acc67f125b6505eb753c607a6f3be0ab967bace04ad5d558f326dbe078f23",
+    "tools/repeat_merge_playwright.py": "2986ed19218980de274a92b12710a668cca68a19b085d963e8362a2bb679bb56",
+    "tools/smoke_playwright.py": "df5a1a8c557a08c075b2e02a22a0ceb93ac404ddead9877f7651366a09ae166a",
+    "tools/recovery_management_playwright.py": "baa278f06c9349880b1e1fabe3f93b9821cbe907223ab89f1c0fee13918b7633",
+    "tools/repeat_lineage_playwright.py": "c00faea8afbe7788de0096fea380245df61756426aa0619adc12992cdd151033",
+    "tools/import_reference_playwright.py": "63f99d8f77668805e7740303cba606097bb6d8139aa9bc4d3b15c2bfa8a0c0a7"
+  },
+  "source_and_helpers_stable": true,
+  "passed": true
+}

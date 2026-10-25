@@ -1,0 +1,146 @@
+{
+  "recorded_at": "2026-10-25T21:01:51.882306+00:00",
+  "status": "passed_local_v5_release_and_full_workspace_scale_gates",
+  "scope": "Not a publication or overall final-delivery declaration. Root owns remaining full regression, CI, production and handoff gates.",
+  "app_commit": "6da3c7293f08c5d16ca73c7a63d8ff74e17358db",
+  "app_version": "4.15.1",
+  "source_inputs": 23,
+  "source_sha256": "58b724aff838339caf9c9ba0e2d5cff3ff05d20dae43e5c16fe93984f8734e54",
+  "verification_inputs": 84,
+  "verification_sha256": "62ec9c75e4045987bfb29df9905d075bbfeb3525558f671c4c26d159aeef0936",
+  "index_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+  "all_107_inputs_unchanged_in_each_phase": true,
+  "evidence": {
+    "native_release": {
+      "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/native/2a2229e0-1f4b-40f1-b72a-627199b7df75/report.json",
+      "sha256": "9ac5352bdd4457b20e5c0f8846ef1d85f230e51d353336ac7c106d89f2922589"
+    },
+    "candidate_retained": {
+      "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/candidate-retained/019456e1-bcee-4647-953b-02da5c8a3806/summary.json",
+      "sha256": "aa7578e423cfd0c73ea61248588f66419a5fb0f77b294d541d4040dd2fa95c78"
+    },
+    "clean_canonical": {
+      "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/canonical-prepared-v5/fbe6f2cf-78cd-4a55-9608-24a66bb3aa9f/report.json",
+      "sha256": "cea84f5ebb6c181f5adf622b02eedae6285d3d79b4220300efc04f0858eb8afb"
+    },
+    "scale_native": {
+      "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/scale-10000-full/7fc2b28f-1ec8-4b31-aded-91b7328d2ee0/result.json",
+      "sha256": "198761063662077e47cd5ecd8e3129836206ebc509bbab15cf15c64f926ebd10"
+    },
+    "scale_wrapper": {
+      "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/scale-10000-full/7fc2b28f-1ec8-4b31-aded-91b7328d2ee0/report.json",
+      "sha256": "f4dd70ddc0abd4cd80ec92775eb62a9f214ab69b76f88718278438d6a54c4854"
+    }
+  },
+  "native_release_steps": [
+    {
+      "name": "static7",
+      "arguments": [
+        "tools/check.py",
+        "--static-only",
+        "--keep-going",
+        "--report",
+        "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/native/2a2229e0-1f4b-40f1-b72a-627199b7df75/static7.json"
+      ],
+      "started_at": "2026-10-25T20:57:50.203959+00:00",
+      "finished_at": "2026-10-25T20:58:10.904193+00:00",
+      "duration_seconds": 20.7,
+      "exit_code": 0,
+      "stdout": "static7.stdout.log",
+      "stderr": "static7.stderr.log"
+    },
+    {
+      "name": "release",
+      "arguments": [
+        "tools/release_playwright.py"
+      ],
+      "started_at": "2026-10-25T20:58:10.943159+00:00",
+      "finished_at": "2026-10-25T20:58:15.999951+00:00",
+      "duration_seconds": 5.057,
+      "exit_code": 0,
+      "stdout": "release.stdout.log",
+      "stderr": "release.stderr.log"
+    },
+    {
+      "name": "actual-4.15.0-upgrade",
+      "arguments": [
+        "tools/upgrade_playwright.py",
+        "--baseline-archive",
+        "dist/task-tracer-4.15.0.zip"
+      ],
+      "started_at": "2026-10-25T20:58:16.033675+00:00",
+      "finished_at": "2026-10-25T20:58:42.601148+00:00",
+      "duration_seconds": 26.568,
+      "exit_code": 0,
+      "stdout": "actual-4.15.0-upgrade.stdout.log",
+      "stderr": "actual-4.15.0-upgrade.stderr.log"
+    }
+  ],
+  "candidate_archive": {
+    "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/candidate-retained/019456e1-bcee-4647-953b-02da5c8a3806/archive/task-tracer-4.15.1.zip",
+    "sha256": "8f69cc98414e6401dae091edab474a003b1ed7792d65487b41fe0c5fec9f6a65",
+    "bytes": 992072,
+    "files": 24,
+    "identical_to_native_double_build": true
+  },
+  "clean_canonical_archives": [
+    {
+      "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/canonical-prepared-v5/fbe6f2cf-78cd-4a55-9608-24a66bb3aa9f/one/task-tracer-4.15.1.zip",
+      "bytes": 992073,
+      "sha256": "4babded212213f3904f5ae5bafb2dcc37983f9ca4782dadb05d9a892b66f0ca8",
+      "files": 24
+    },
+    {
+      "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/canonical-prepared-v5/fbe6f2cf-78cd-4a55-9608-24a66bb3aa9f/two/task-tracer-4.15.1.zip",
+      "bytes": 992073,
+      "sha256": "4babded212213f3904f5ae5bafb2dcc37983f9ca4782dadb05d9a892b66f0ca8",
+      "files": 24
+    }
+  ],
+  "clean_manifest_commit": "6da3c7293f08c5d16ca73c7a63d8ff74e17358db",
+  "clean_manifest_dirty": false,
+  "all_23_payloads_byte_identical_between_candidate_and_clean": true,
+  "manifest_only_difference": {
+    "working_tree_dirty": {
+      "candidate": true,
+      "clean": false
+    }
+  },
+  "scale": {
+    "tasks": 10000,
+    "subtasks_per_task": 6,
+    "full_views": true,
+    "checks": [
+      "seed-reload-all-task-and-subtask-counts",
+      "unfiltered-batch-entry-no-task-writes",
+      "real-json-download-checksum-all-fields-and-valid-repeat-links",
+      "actual-json-replacement-and-safety-snapshot-all-fields",
+      "scoped-batch-focus-delete-exact-undo-and-checkpoint-restore",
+      "list-and-timeline-pagination-reset-and-tail-search",
+      "calendar-bounded-rendering-tail-search-and-section-paging",
+      "view-navigation-and-search-task-data-read-only",
+      "final-real-json-download-checksum-and-exact-task-fields"
+    ],
+    "duration_seconds": 120.306,
+    "export_file_bytes": 17383726,
+    "browser": "154.0.8037.57",
+    "scope": {
+      "full_views": true,
+      "synthetic_data": true,
+      "real_device": false,
+      "controlled_performance_benchmark": false,
+      "notes": "Elapsed values describe this correctness run; CPU/load are not controlled."
+    },
+    "page_errors": [],
+    "integrity_errors": [],
+    "remaining_live_native_session_processes": []
+  },
+  "actual_previous_zip_sha256": "02cc67c9ac2a454b9ca248c3a122f92060c674677914dfab567cd7de5f6fbca3",
+  "primary_dist_touched": false,
+  "published": false,
+  "limitations": [
+    "Original release/upgrade HTTP handlers do not attach a runtime CSP header. Their build prerequisites validate source CSP hashes; runtime production CSP enforcement is a separate acceptance scope.",
+    "The scale run is synthetic correctness coverage in system Chromium154, with the native reduced-motion setting and original 45-second waits; it is not a controlled benchmark, CI151 parity, real-device test, or independent transaction-fault injection.",
+    "Earlier candidate releases, scale interruptions and prepared packages retain their original identities and are not relabeled as v5 results."
+  ]
+}

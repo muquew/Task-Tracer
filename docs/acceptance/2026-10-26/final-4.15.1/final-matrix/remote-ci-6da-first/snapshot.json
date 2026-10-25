@@ -1,0 +1,79 @@
+{
+  "fetched_at_utc": "2026-10-25T21:18:37.041944+00:00",
+  "run_url": "https://github.com/muquew/Task-Tracer/actions/runs/40233014544",
+  "expected_commit": "6da3c7293f08c5d16ca73c7a63d8ff74e17358db",
+  "poll": 20,
+  "public_get_only": true,
+  "api_or_authenticated_log_access": false,
+  "branch_scope": "codex/final-stable-delivery-20261026; not main deployment",
+  "status": "In progress",
+  "jobs": [
+    {
+      "name": "compatibility (webkit)",
+      "job_id": "121288575649",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40233014544/job/121288575649",
+      "http_status": 200,
+      "html_sha256": "dfa0b7de67bfd6539b5648c85af50740d638a4afb5be6a099846e96892e50e8e",
+      "public_ui_conclusion": "failed",
+      "displayed_duration": "22m 30s",
+      "public_annotations": "1 error, 1 warning, and 1 notice\nValidate critical workflows on desktop and mobile layouts\nProcess completed with exit code 1.\nShow more\nShow less\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121288575649-visible.txt"
+    },
+    {
+      "name": "compatibility (chromium)",
+      "job_id": "121288575939",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40233014544/job/121288575939",
+      "http_status": 200,
+      "html_sha256": "d159876d00bfb59043e2d51784aa0c3a3fee84ca2a9e30f9b76486c36a58b1bc",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "13m 24s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121288575939-visible.txt"
+    },
+    {
+      "name": "checks",
+      "job_id": "121288575952",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40233014544/job/121288575952",
+      "http_status": 200,
+      "html_sha256": "15f232616b18d9749438f6d6dce173b3bede7cad665ff83222e388336914b4ca",
+      "public_ui_conclusion": "not_individually_visible",
+      "displayed_duration": null,
+      "public_annotations": null,
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121288575952-visible.txt"
+    },
+    {
+      "name": "compatibility (firefox)",
+      "job_id": "121288575968",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40233014544/job/121288575968",
+      "http_status": 200,
+      "html_sha256": "0084818ecae2d136a5ed814f7073afe4c93f9cc5e08b9e2e8e5e550800dbe2fb",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "14m 52s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121288575968-visible.txt"
+    },
+    {
+      "name": "deployed_site",
+      "job_id": "121288576846",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40233014544/job/121288576846",
+      "http_status": 200,
+      "html_sha256": "54ba5584c1c5c7297485d6c2d78a470332bad8e1505adc39933d4d06570aaa7f",
+      "public_ui_conclusion": "skipped",
+      "displayed_duration": null,
+      "public_annotations": null,
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121288576846-visible.txt"
+    }
+  ],
+  "http_status": 200,
+  "html_sha256": "0469a0884f2e0d153662e4a680ccadb377b86c29af9f6ae36c5fedc162fe27cd",
+  "displayed_total_duration": "–",
+  "public_matrix_completion": "3",
+  "new_failures": [
+    "compatibility (webkit)"
+  ]
+}

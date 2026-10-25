@@ -1,0 +1,52 @@
+{
+  "engine": "webkit",
+  "browser_version": "26.5",
+  "width": 1280,
+  "height": 900,
+  "source_before": {
+    "runtime": {
+      "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+      "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+      "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+      "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+    },
+    "helpers": {
+      "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+      "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+      "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+      "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+      "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+      "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+    },
+    "driver": {
+      "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+    }
+  },
+  "passed": false,
+  "context_closed": true,
+  "exception": "Traceback (most recent call last):\n  File \"/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py\", line 329, in run\n    item['checks'] = exercise(page,context,base_url,engine,width,folder,mode,errors)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py\", line 152, in exercise\n    served = check_served_runtime(context, base_url)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py\", line 109, in check_served_runtime\n    response = context.request.get(urljoin(base_url, name))\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/sync_api/_generated.py\", line 21154, in get\n    self._sync(\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_sync_base.py\", line 115, in _sync\n    return task.result()\n           ^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_fetch.py\", line 203, in get\n    return await self.fetch(\n           ^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_fetch.py\", line 329, in fetch\n    return await self._inner_fetch(\n           ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_fetch.py\", line 435, in _inner_fetch\n    response = await self._channel.send(\n               ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py\", line 76, in send\n    return await self._connection.wrap_api_call(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py\", line 632, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nplaywright._impl._errors.Error: APIRequestContext.get: getaddrinfo EAI_AGAIN todo.muquew.com\nCall log:\n  - → GET https://todo.muquew.com/sw.js\n    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Safari/605.1.15\n    - accept: */*\n    - accept-encoding: gzip,deflate,br\n\n",
+  "page_errors": [],
+  "source_after": {
+    "runtime": {
+      "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+      "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+      "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+      "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+    },
+    "helpers": {
+      "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+      "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+      "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+      "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+      "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+      "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+    },
+    "driver": {
+      "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+    }
+  },
+  "inputs_unchanged": true,
+  "duration_seconds": 6.33
+}

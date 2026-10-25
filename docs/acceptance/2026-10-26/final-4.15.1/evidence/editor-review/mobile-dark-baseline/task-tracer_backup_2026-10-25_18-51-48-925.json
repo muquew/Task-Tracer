@@ -1,0 +1,101 @@
+{
+  "version": "2.4",
+  "type": "backup",
+  "exportId": "backup-20261025185148-f3kyg76r",
+  "date": "2026-10-25T18:51:48.925Z",
+  "app": "Task Tracer",
+  "schema": {
+    "version": "2.4",
+    "storage": "indexeddb",
+    "includes": [
+      "tasks",
+      "subtasks",
+      "projects",
+      "tags",
+      "localDueDates",
+      "exactDueInstants",
+      "reminders",
+      "repeatRules",
+      "completionDates",
+      "archiveState",
+      "todayPlan"
+    ]
+  },
+  "versionNotes": [
+    "Backup 2.4 includes an integrity checksum, export ID, local due dates, exact reminder instants, tasks, subtasks, projects, tags, advanced repeat rules, completion dates, archive state, and today’s plan.",
+    "The importer reads the tasks array; older export files remain importable through compatibility rules."
+  ],
+  "tasks": [
+    {
+      "id": 1792954730961,
+      "createdAt": "2026-10-25T18:51:44.320Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "Review final delivery with long English task content and 中文混合标题",
+      "description": "First paragraph explains the delivery context and links https://example.com/a-long-path-for-native-wrap-review. 中文说明保持原文。\n\nSecond paragraph should stay readable while editing with a short viewport and scrolling. First paragraph explains the delivery context and links https://example.com/a-long-path-for-native-wrap-review. 中文说明保持原文。\n\nSecond paragraph should stay readable while editing with a short viewport and scrolling. First paragraph explains the delivery context and links https://example.com/a-long-path-for-native-wrap-review. 中文说明保持原文。\n\nSecond paragraph should stay readable while editing with a short viewport and scrolling. First paragraph explains the delivery context and links https://example.com/a-long-path-for-native-wrap-review. 中文说明保持原文。\n\nSecond paragraph should stay readable while editing with a short viewport and scrolling. First paragraph explains the delivery context and links https://example.com/a-long-path-for-native-wrap-review. 中文说明保持原文。\n\nSecond paragraph should stay readable while editing with a short viewport and scrolling.",
+      "project": "Inbox",
+      "tags": [],
+      "subtasks": [
+        {
+          "id": 1792955092824,
+          "text": "Keep pending child with 320 × 500 viewport",
+          "completed": false
+        }
+      ],
+      "dueDate": null,
+      "dueAt": null,
+      "dueLocalDate": null,
+      "dueLocalTime": null,
+      "dueTimeZone": null,
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 10000
+    },
+    {
+      "id": 1792955162955,
+      "createdAt": "2026-10-25T18:51:46.237Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "Final follow-up",
+      "description": "",
+      "project": "Personal",
+      "tags": [
+        "review"
+      ],
+      "subtasks": [],
+      "dueDate": "2026-10-27T06:30:00.000Z",
+      "dueAt": "2026-10-27T06:30:00.000Z",
+      "dueLocalDate": "2026-10-27",
+      "dueLocalTime": "14:30",
+      "dueTimeZone": "Asia/Shanghai",
+      "reminderOffset": 15,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 20000
+    }
+  ],
+  "checksum": "fnv1a32:6a45a770"
+}

@@ -1,0 +1,6 @@
+{
+  "browser_closed": true,
+  "server_closed": true,
+  "observations": 2,
+  "scope": "Original scaled function and assertions retained; wrapper observes exact input focus failure, no threshold bypass."
+}

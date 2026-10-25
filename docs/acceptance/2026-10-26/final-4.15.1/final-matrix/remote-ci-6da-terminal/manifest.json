@@ -1,0 +1,49 @@
+{
+  "created_at_utc": "2026-10-25T21:26:48.678474+00:00",
+  "scope": "Only original6da terminal files listed here; excludes self, first-failure, repeat, diagnostic and production scopes.",
+  "commit": "6da3c7293f08c5d16ca73c7a63d8ff74e17358db",
+  "run": "40233014544",
+  "overall": "Failure",
+  "checks": "succeeded",
+  "webkit": "failed",
+  "file_count": 9,
+  "total_bytes": 32811,
+  "files": {
+    "README.md": {
+      "bytes": 1788,
+      "sha256": "9369f15f842e224b404db912f4533a3f414fa8bbb8d72927a6b44cbeea9bcaaf"
+    },
+    "evidence/job-121288575649-visible.txt": {
+      "bytes": 3324,
+      "sha256": "58616157ff64a5ec967b6de0b309c9ee135205e8ef33752162ccadfdfbf76e92"
+    },
+    "evidence/job-121288575939-visible.txt": {
+      "bytes": 3209,
+      "sha256": "d5b70d2528ea27fd87b6171b3f84ff42f922f41b1030ac0706efdd2539f6bf2b"
+    },
+    "evidence/job-121288575952-visible.txt": {
+      "bytes": 3177,
+      "sha256": "df81c4eb854e84137d2eb63532b090976b84fd06de87696ec9eb009d8cf2dba8"
+    },
+    "evidence/job-121288575968-visible.txt": {
+      "bytes": 3206,
+      "sha256": "cd4812a49d9b6ea414a5c7aaabebed4c1cff174a6fad6de32977558c5af30c5d"
+    },
+    "evidence/job-121288576846-visible.txt": {
+      "bytes": 2582,
+      "sha256": "02fcc45d032d9d804addadf14f581c74073ae1798703668ba885110e21c98b00"
+    },
+    "evidence/run-visible.txt": {
+      "bytes": 5755,
+      "sha256": "064c716beebfe8e1c45209f26383ded23195d07a0378c9a2391e4b6c8845c724"
+    },
+    "receipt.json": {
+      "bytes": 4282,
+      "sha256": "4bc81977e9a538c16d179d870133a7c1b5f9d303834a2dd59b809422727735f8"
+    },
+    "terminal.json": {
+      "bytes": 5488,
+      "sha256": "b5f73edb8af1bd098cc45fe49f13bf34810a3d22cbf62a6b35f69106f0fa121b"
+    }
+  }
+}

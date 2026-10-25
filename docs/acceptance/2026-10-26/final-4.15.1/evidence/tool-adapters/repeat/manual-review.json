@@ -1,0 +1,51 @@
+[
+  {
+    "image": "focused-before/single.png",
+    "sha256": "3c474348c67d17d8e241df0e9c48534230844089f5ad34f65d46b1b021ed8516",
+    "actually_opened_with_view_image": true,
+    "runtime_index_sha256": "b3cfe5642f93a067e6c2ab3c2373fd4b5e8e7944c835b7a78ca8d441bcb5d8eb",
+    "scope": "Firefox, original native local_server headers; reduced motion; throwaway synthetic data"
+  },
+  {
+    "image": "focused-before/batch.png",
+    "sha256": "77594ffb4562b3ada351bdb7f2ba940bc23def4b7b54a7c12e130f76d0e8c406",
+    "actually_opened_with_view_image": true,
+    "runtime_index_sha256": "b3cfe5642f93a067e6c2ab3c2373fd4b5e8e7944c835b7a78ca8d441bcb5d8eb",
+    "scope": "Firefox, original native local_server headers; reduced motion; throwaway synthetic data"
+  },
+  {
+    "image": "focused-before/clear.png",
+    "sha256": "863b7f870a86421a7b9824e60a88a540b0f541d4fcb5a009bedfd5ebe34440a5",
+    "actually_opened_with_view_image": true,
+    "runtime_index_sha256": "b3cfe5642f93a067e6c2ab3c2373fd4b5e8e7944c835b7a78ca8d441bcb5d8eb",
+    "scope": "Firefox, original native local_server headers; reduced motion; throwaway synthetic data"
+  },
+  {
+    "image": "focused-before/skip.png",
+    "sha256": "c773e2ed50a9f7e958a6dec75c04d35e41ca3bb08fa21a718a6fb09fa2aa09db",
+    "actually_opened_with_view_image": true,
+    "runtime_index_sha256": "b3cfe5642f93a067e6c2ab3c2373fd4b5e8e7944c835b7a78ca8d441bcb5d8eb",
+    "scope": "Firefox, original native local_server headers; reduced motion; throwaway synthetic data"
+  },
+  {
+    "image": "focused-stale/single.png",
+    "sha256": "4c7df6129a9298ef5490049e034ec9a50f0704e7bd46593c64ef8deaf1bc7a8e",
+    "actually_opened_with_view_image": true,
+    "runtime_index_sha256": "b3cfe5642f93a067e6c2ab3c2373fd4b5e8e7944c835b7a78ca8d441bcb5d8eb",
+    "scope": "Firefox, original native StaticHandler; reduced motion; throwaway synthetic data"
+  },
+  {
+    "image": "focused-stale/batch.png",
+    "sha256": "fabd4b923c6fecaace891ee4b0ac89fa8ecb7250d3031df09430399143337213",
+    "actually_opened_with_view_image": true,
+    "runtime_index_sha256": "b3cfe5642f93a067e6c2ab3c2373fd4b5e8e7944c835b7a78ca8d441bcb5d8eb",
+    "scope": "Firefox, original native StaticHandler; reduced motion; throwaway synthetic data"
+  },
+  {
+    "image": "focused-stale/clear.png",
+    "sha256": "986192619acfb092317be6284083e057878298db0b1922c4d03d14091bc530b8",
+    "actually_opened_with_view_image": true,
+    "runtime_index_sha256": "b3cfe5642f93a067e6c2ab3c2373fd4b5e8e7944c835b7a78ca8d441bcb5d8eb",
+    "scope": "Firefox, original native StaticHandler; reduced motion; throwaway synthetic data"
+  }
+]

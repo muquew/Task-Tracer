@@ -1,0 +1,128 @@
+--- a/tools/editor_safety_playwright.py
++++ b/tools/editor_safety_playwright.py
+@@ -262,7 +262,124 @@
+     persisted_after_reload(page)
+ 
+ 
+-CASES = {'date-roundtrip': date_roundtrip, 'empty-weekdays': empty_weekdays, 'subtask-delete': subtask_delete}
++def visible_preview_draft_texts(page: Page):
++    return page.locator('#subtaskListPreview .subtask-preview-item').evaluate_all('''items => items.map(item => {
++        const editing = item.querySelector('.subtask-edit-input');
++        return editing ? editing.value : item.querySelector('.subtask-preview-text').textContent;
++    })''')
++
++
++def prepare_invalid_schedule_draft(page: Page, name: str) -> None:
++    fill_schedule(page, name, 'custom')
++    reveal_task_field(page, '#repeatInterval').fill('5')
++    page.locator('#subtaskListPreview .subtask-preview-text').first.click()
++    page.locator('.subtask-edit-input').fill('验证失败仍保留的行内子任务')
++
++
++def assert_editor_input_error(page: Page, evidence: Path, field: str, error: str,
++                              values, before) -> None:
++    expect(page.locator('#taskModal')).to_be_visible()
++    expect(page.locator('#submitBtn')).to_be_enabled()
++    expect(page.locator('#taskDraftSavingStatus')).to_have_count(0)
++    expect(page.locator(field)).to_have_attribute('aria-invalid', 'true')
++    expect(page.locator(field)).to_be_focused()
++    expect(page.locator(error)).to_be_visible()
++    assert raw_form(page) == values, 'Schedule validation changed another unfinished form field'
++    assert visible_preview_draft_texts(page) == ['验证失败仍保留的行内子任务'], 'Schedule validation lost the inline child draft'
++    assert stored(page) == before, 'Invalid schedule wrote tasks, revisions or recovery configuration'
++    geometry_script = '''({field, error}) => {
++        const input = document.querySelector(field), message = document.querySelector(error);
++        const form = document.getElementById('taskForm');
++        const footer = form.querySelector('.form-actions');
++        const header = document.querySelector('#taskModal .modal-header');
++        const rect = node => { const r = node.getBoundingClientRect();
++            return {top:r.top, bottom:r.bottom, left:r.left, right:r.right, width:r.width, height:r.height}; };
++        const e=rect(message), f=rect(form), a=rect(footer), h=rect(header);
++        const clip={top:Math.max(0,f.top,h.bottom),bottom:Math.min(innerHeight,f.bottom,a.top),
++            left:Math.max(0,f.left),right:Math.min(innerWidth,f.right)};
++        const hit=document.elementFromPoint((e.left+e.right)/2,(e.top+e.bottom)/2);
++        return {field:rect(input),error:e,form:f,footer:a,header:h,clip,
++            fullyVisible:!message.hidden&&e.width>0&&e.height>0&&e.top>=clip.top-1&&e.bottom<=clip.bottom+1
++                &&e.left>=clip.left-1&&e.right<=clip.right+1,
++            hitInside:Boolean(hit&&(hit===message||message.contains(hit))),
++            hit:hit?{tag:hit.tagName,id:hit.id,className:hit.className}:null};
++    }'''
++    geometry = page.evaluate(geometry_script, {'field': field, 'error': error})
++    save_json(evidence / 'validation-visibility.json', geometry)
++    assert geometry['fullyVisible'] and geometry['hitInside'], 'Schedule error was covered or outside the visible editor'
++    page.screenshot(path=str(evidence / 'invalid-schedule-feedback.png'), full_page=True)
++    save_json(evidence / 'invalid-raw-after.json', raw_form(page))
++    save_json(evidence / 'invalid-db-after.json', stored(page))
++
++
++def assert_corrected_custom_schedule(page: Page, before, name: str, date_key: str):
++    expect(page.locator('#taskModal')).to_be_hidden()
++    task = only_added(page, before['tasks'], name,
++                      ['验证失败仍保留的行内子任务', '仍在输入框中的子任务'])
++    assert task['dueLocalDate'] == date_key and task['dueLocalTime'] == '16:35', task
++    assert task['repeatType'] == 'custom' and task['repeatInterval'] == 5, task
++    assert task['repeatPaused'] is True, task
++    assert task['reminderOffset'] == 60 and task['reminderRepeat'] == 15, task
++    assert task['description'] == '第一行原始描述。\n第二行保留。', task
++    assert task['project'] == '编辑安全审查' and task['tags'] == ['review', 'tag, with comma'], task
++    assert config(stored(page))['taskRevision'] == config(before)['taskRevision'] + 1
++    return task
++
++
++def missing_date(page: Page, evidence: Path) -> None:
++    name = '未勾无日期时空日期必须阻止保存'
++    prepare_invalid_schedule_draft(page, name)
++    page.locator('#dueDate').fill('')
++    before, values = stored(page), raw_form(page)
++    assert values['noDeadline'] is False and values['dueDate'] == ''
++    assert values['repeatType'] == 'custom' and values['repeatInterval'] == '5'
++    save_json(evidence / 'invalid-raw-before.json', values)
++    save_json(evidence / 'invalid-db-before.json', before)
++    for _ in range(2):
++        page.locator('#submitBtn').click()
++        assert_editor_input_error(page, evidence, '#dueDate', '#dueDateError', values, before)
++    page.locator('#dueDate').fill('2032-05-07')
++    page.locator('#submitBtn').click()
++    assert_corrected_custom_schedule(page, before, name, '2032-05-07')
++    save_json(evidence / 'corrected-save-db.json', stored(page))
++    persisted_after_reload(page)
++
++
++def empty_custom_interval(page: Page, evidence: Path) -> None:
++    name = '空自定义周期不得静默变为每天'
++    prepare_invalid_schedule_draft(page, name)
++    reveal_task_field(page, '#repeatInterval').fill('')
++    before, values = stored(page), raw_form(page)
++    assert values['repeatType'] == 'custom' and values['repeatInterval'] == ''
++    save_json(evidence / 'invalid-raw-before.json', values)
++    save_json(evidence / 'invalid-db-before.json', before)
++    for _ in range(2):
++        page.locator('#submitBtn').click()
++        assert_editor_input_error(page, evidence, '#repeatInterval', '#repeatIntervalError', values, before)
++    page.locator('#repeatInterval').fill('5')
++    page.locator('#submitBtn').click()
++    assert_corrected_custom_schedule(page, before, name, '2032-05-06')
++    save_json(evidence / 'corrected-save-db.json', stored(page))
++    persisted_after_reload(page)
++    # Turning the rule off remains legal even when its inactive interval is empty.
++    followup = '关闭自定义重复不要求填写间隔'
++    fill_schedule(page, followup, 'custom')
++    reveal_task_field(page, '#repeatInterval').fill('')
++    choose(page, '#repeatType', 'none')
++    before_disabled = stored(page)
++    expect(page.locator('#repeatInterval')).to_be_disabled()
++    page.locator('#submitBtn').click()
++    task = only_added(page, before_disabled['tasks'], followup,
++                      ['已经加入的子任务', '仍在输入框中的子任务'])
++    assert task['repeatType'] == 'none' and task['repeatInterval'] == 1, task
++    assert task['dueLocalDate'] == '2032-05-06' and task['dueLocalTime'] == '16:35', task
++    assert task['reminderOffset'] == 60 and task['reminderRepeat'] == 15, task
++    save_json(evidence / 'disabled-rule-save-db.json', stored(page))
++    persisted_after_reload(page)
++
++
++CASES = {'date-roundtrip': date_roundtrip, 'empty-weekdays': empty_weekdays, 'subtask-delete': subtask_delete,
++         'missing-date': missing_date, 'empty-custom-interval': empty_custom_interval}
+ 
+ 
+ def run(engine: str, selected: str, widths: list[int], report_root: Path, expected_sha: str | None) -> None:

@@ -1,0 +1,170 @@
+--- original-production-v5.py
++++ production-v6-identity.py
+@@ -11,9 +11,11 @@
+ from pathlib import Path
+ import re
+ import sys
++import subprocess
++import tempfile
+ import time
+ import traceback
+-from urllib.parse import urljoin, urlsplit
++from urllib.parse import urljoin, urlsplit, unquote
+ import uuid
+ from zoneinfo import ZoneInfo
+ 
+@@ -275,10 +277,66 @@
+             'physical_device_or_offline_lifecycle_claim': False}
+ 
+ 
++
++def production_transport():
++    """Use the existing managed-session HTTPS proxy; retain ordinary certificate verification."""
++    proxy_url = os.environ.get('HTTPS_PROXY') or os.environ.get('https_proxy')
++    assert proxy_url, 'Production acceptance requires the inherited managed-session HTTPS proxy'
++    parsed = urlsplit(proxy_url)
++    assert parsed.scheme in ('http', 'https') and parsed.hostname and not parsed.query and not parsed.fragment, 'Unsupported inherited proxy configuration'
++    host = f'[{parsed.hostname}]' if ':' in parsed.hostname else parsed.hostname
++    proxy = {'server': f'{parsed.scheme}://{host}' + (f':{parsed.port}' if parsed.port else '')}
++    if parsed.username is not None:
++        proxy['username'] = unquote(parsed.username)
++    if parsed.password is not None:
++        proxy['password'] = unquote(parsed.password)
++    bypass = os.environ.get('NO_PROXY') or os.environ.get('no_proxy')
++    if bypass:
++        proxy['bypass'] = bypass
++    ca = Path(os.environ.get('NODE_EXTRA_CA_CERTS', ''))
++    assert ca.is_file(), 'Production API requests require the configured managed-session public CA bundle'
++    assert os.environ.get('NODE_TLS_REJECT_UNAUTHORIZED') != '0' and os.environ.get('PYTHONHTTPSVERIFY') != '0', 'Normal TLS verification is required'
++    metadata = {'inherited_https_proxy_configured': True, 'proxy_scheme': parsed.scheme,
++                'proxy_hostname': parsed.hostname, 'proxy_port': parsed.port,
++                'proxy_auth_present': parsed.username is not None or parsed.password is not None,
++                'proxy_bypass_configured': bool(bypass), 'configured_node_ca_present': True,
++                'configured_node_ca_sha256': digest(ca.read_bytes()),
++                'ignore_https_errors': False, 'node_tls_reject_unauthorized_disabled': False,
++                'scope': 'Existing managed-session proxy and configured public trust anchor only; no policy, DNS route, or certificate verification bypass.'}
++    return proxy, metadata
++
++
++
++def fresh_firefox_trust_profile():
++    """Import only the configured, already system-trusted public CA into an isolated temporary NSS profile."""
++    ca = Path(os.environ['NODE_EXTRA_CA_CERTS'])
++    assert digest(ca.read_bytes()) == '7fa2d7d439db8bfa7c191457e61af5e3f4eb412314eb148766ac09e93786e4c3', 'Configured session trust anchor changed'
++    verified = subprocess.run(['openssl', 'verify', '-CAfile', os.environ['SSL_CERT_FILE'], str(ca)], capture_output=True, text=True)
++    assert verified.returncode == 0, 'Configured public CA is not already trusted by the managed system bundle'
++    certificate = subprocess.run(['openssl', 'x509', '-in', str(ca), '-noout', '-text'], capture_output=True, text=True, check=True).stdout
++    assert 'CA:TRUE' in certificate, 'Configured trust file is not a public CA certificate'
++    profile = tempfile.TemporaryDirectory(prefix='task-tracer-production-firefox-', dir='/tmp')
++    try:
++        subprocess.run(['certutil', '-N', '--empty-password', '-d', f'sql:{profile.name}'], capture_output=True, text=True, check=True)
++        subprocess.run(['certutil', '-A', '-d', f'sql:{profile.name}', '-n', 'Managed existing environment proxy CA', '-t', 'C,,', '-i', str(ca)], capture_output=True, text=True, check=True)
++    except BaseException:
++        profile.cleanup()
++        raise
++    metadata = {'temporary_profile_directory': profile.name, 'profile_reused': False,
++                'configured_public_ca_sha256': digest(ca.read_bytes()), 'public_ca_basic_constraint_verified': True,
++                'public_ca_already_system_trusted': True, 'import_trust': 'C,,',
++                'commands_redacted_temporary_path': [
++                    ['certutil', '-N', '--empty-password', '-d', 'sql:<unique-temporary-profile>'],
++                    ['certutil', '-A', '-d', 'sql:<unique-temporary-profile>', '-n', 'Managed existing environment proxy CA', '-t', 'C,,', '-i', 'NODE_EXTRA_CA_CERTS configured public CA']],
++                'profile_or_nss_database_archived': False, 'temporary_profile_removed': False}
++    return profile, metadata
++
++
+ def run(args):
+     before = identities()
+     assert before['runtime']['index.html'] == EXPECTED_INDEX, 'Checkout is not the fixed final runtime'
+     mode = args.mode
++    proxy, transport_metadata = production_transport() if mode == 'production' else (None, {'scope': 'Local rehearsal; inherited browser transport unchanged.'})
+     if mode == 'production':
+         assert args.url, '--url is required for explicit production mode'
+         parsed = urlsplit(args.url)
+@@ -299,10 +357,12 @@
+     (frozen / 'driver.py').write_bytes(Path(__file__).read_bytes())
+     report = {'mode': mode, 'started_at': datetime.now(timezone.utc).isoformat(),
+               'output': str(out), 'argv': sys.argv, 'source_before': before,
++              'production_transport': transport_metadata,
++              'firefox_standard_http_negotiation': {'network.http.accept-encoding':'identity','network.http.accept-encoding.secure':'identity','scope':'Firefox production only, including worker requests; Chromium/WebKit retain default representation. Prior default-br UI/DB/cache evidence is independent; its Response.body API failed and is not relabeled passed.'} if mode == 'production' else None,
+               'normal_motion': True, 'normal_csp': True, 'ignore_https_errors': False,
+               'bypass_csp': False, 'fresh_isolated_context_per_combo': True,
+               'runtime_scope': 'Five runtime inputs and actual transitive helpers/driver; promotional PNG deliberately not locked.',
+-              'runs': [], 'browsers_closed': {}, 'server_closed': False, 'passed': False}
++              'runs': [], 'browsers_closed': {}, 'firefox_browser_launches': [], 'server_closed': False, 'passed': False}
+     print('RUN_DIRECTORY', out, flush=True)
+     expect.set_options(timeout=10000)
+     try:
+@@ -312,19 +372,42 @@
+                 browser = None
+                 try:
+                     options = browser_launch_options() if engine == 'chromium' else {'headless':True}
+-                    browser = getattr(playwright, engine).launch(**options)
++                    if mode == 'production':
++                        options['proxy'] = proxy
++                    firefox_persistent = mode == 'production' and engine == 'firefox'
++                    if not firefox_persistent:
++                        browser = getattr(playwright, engine).launch(**options)
+                     for width,height in ((1280,900),(390,844)):
+                         folder = out / f'{engine}-{width}'
+                         folder.mkdir()
+                         start = time.monotonic()
+-                        context = browser.new_context(viewport={'width':width,'height':height},locale='zh-CN',timezone_id='Asia/Shanghai',
++                        context_options = {'proxy': proxy} if mode == 'production' else {}
++                        common_context = dict(viewport={'width':width,'height':height},locale='zh-CN',timezone_id='Asia/Shanghai',
+                             reduced_motion='no-preference',color_scheme='light',accept_downloads=True,ignore_https_errors=False)
++                        profile = None
++                        trust_metadata = None
++                        if firefox_persistent:
++                            profile, trust_metadata = fresh_firefox_trust_profile()
++                            try:
++                                context = playwright.firefox.launch_persistent_context(profile.name, **options,
++                                    firefox_user_prefs={'security.enterprise_roots.enabled':True,'network.http.accept-encoding':'identity','network.http.accept-encoding.secure':'identity'}, **common_context)
++                            except BaseException:
++                                profile.cleanup()
++                                trust_metadata['temporary_profile_removed'] = not Path(profile.name).exists()
++                                raise
++                            assert context.browser is not None, 'Persistent Firefox context has no public browser metadata'
++                            current_browser = context.browser
++                            report['firefox_browser_launches'].append({'width':width,'browser_version':current_browser.version,'closed':False})
++                        else:
++                            context = browser.new_context(**context_options, **common_context)
++                            current_browser = browser
+                         page = context.new_page()
+                         page.set_default_timeout(10000)
+                         errors = []
+                         page.on('pageerror',lambda error:errors.append(str(error)))
+-                        item = {'engine':engine,'browser_version':browser.version,'width':width,'height':height,
+-                                'source_before':identities(),'passed':False,'context_closed':False}
++                        item = {'engine':engine,'browser_version':current_browser.version,'width':width,'height':height,
++                                'source_before':identities(),'passed':False,'context_closed':False,
++                                'firefox_isolated_normal_ca_trust':trust_metadata}
+                         try:
+                             item['checks'] = exercise(page,context,base_url,engine,width,folder,mode,errors)
+                             item['passed'] = True
+@@ -338,8 +421,15 @@
+                                 item['failure_capture_exception'] = traceback.format_exc()
+                         finally:
+                             item['page_errors'] = list(errors)
+-                            context.close()
+-                            item['context_closed'] = True
++                            try:
++                                context.close()
++                                item['context_closed'] = True
++                                if firefox_persistent:
++                                    report['firefox_browser_launches'][-1]['closed'] = True
++                            finally:
++                                if profile is not None:
++                                    profile.cleanup()
++                                    trust_metadata['temporary_profile_removed'] = not Path(profile.name).exists()
+                             item['source_after'] = identities()
+                             item['inputs_unchanged'] = item['source_before'] == item['source_after']
+                             item['duration_seconds'] = round(time.monotonic()-start,3)
+@@ -351,6 +441,8 @@
+                     if browser is not None:
+                         browser.close()
+                         report['browsers_closed'][engine] = True
++                    elif engine == 'firefox' and mode == 'production':
++                        report['browsers_closed'][engine] = len(report['firefox_browser_launches']) == 2 and all(item['closed'] for item in report['firefox_browser_launches'])
+         report['server_closed'] = True
+         report['passed'] = len(report['runs']) == 6 and all(run['passed'] for run in report['runs'])
+     except Exception:

@@ -1,0 +1,103 @@
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+Time refresh passed: a due task enters an initially empty overdue view without user navigation or writes
+Time refresh passed: due:today follows the new local day without another search edit
+Time refresh passed: Today Plan follows the local day while retaining original task focus dates
+{"case": "stats", "clock": "2026-10-23T23:59:36.960Z", "visible_tasks": [], "pageerrors": []}
+Traceback (most recent call last):
+  File "/workspace/task-tracer-final-baseline/tools/time_refresh_playwright.py", line 317, in <module>
+    run(args.browser,args.case)
+  File "/workspace/task-tracer-final-baseline/tools/time_refresh_playwright.py", line 297, in run
+    check(page,url)
+  File "/workspace/task-tracer-final-baseline/tools/time_refresh_playwright.py", line 96, in verify_midnight_stats
+    expect(today).to_have_text('1')
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 22839, in to_have_text
+    self._sync(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 648, in to_have_text
+    await self._expect_impl(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 128, in _expect_impl
+    _record_soft_or_raise(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 60, in _record_soft_or_raise
+    raise error
+AssertionError: Locator expected to have text '1'
+Actual value: None
+Error: element(s) not found 
+Call log:
+  - Expect "to_have_text" with timeout 5000ms
+  - waiting for locator(".stats-mini").nth(4).locator("strong")
+
+Aria snapshot:
+- complementary "导航":
+  - link "Task Tracer":
+    - /url: ./
+  - navigation "视图切换":
+    - button "列表"
+    - button "日历"
+    - button "时间线"
+    - button "统计"
+  - navigation "导航":
+    - button "全部任务 1" [pressed]
+    - button "打开今日计划": 今日计划
+  - heading "项目" [level=2]
+  - navigation "项目":
+    - button "Inbox 1"
+  - button "全部项目"
+  - button "设置与数据"
+  - text: 数据保存在此浏览器
+- banner:
+  - strong: 统计
+  - button "撤销：更新完成状态": 撤销
+  - button "添加任务"
+  - button "快速记录"
+  - button "设置与数据"
+- main:
+  - heading "统计" [level=1]
+  - paragraph: 全部项目 · 共 1 项任务 · 其中 0 项已归档
+  - region "任务工具":
+    - toolbar "任务工具":
+      - text: 搜索任务…
+      - textbox "搜索任务…"
+      - text: 支持限定搜索：project:项目、tag:标签、status:状态、due:日期。
+      - button "筛选"
+      - button "保存视图"
+  - region "统计":
+    - region "任务概览":
+      - heading "待处理" [level=2]
+      - button "逾期待处理 0" [disabled]:
+        - text: 逾期待处理
+        - strong: "0"
+      - button "今天截止 0" [disabled]:
+        - text: 今天截止
+        - strong: "0"
+      - button "无截止日期 0" [disabled]:
+        - text: 无截止日期
+        - strong: "0"
+      - paragraph: 今天截止的任务也可能已经逾期。
+      - paragraph: 当前范围没有待处理的任务。可以回顾已完成事项，或切换项目与搜索条件。
+      - heading "最近 7 天回顾" [level=2]
+      - strong: 完成 1 项
+      - paragraph: 2026年10月17日 – 2026年10月23日
+      - img "2026年10月17日 完成 0 个"
+      - text: 周六
+      - img "2026年10月18日 完成 0 个"
+      - text: 周日
+      - img "2026年10月19日 完成 0 个"
+      - text: 周一
+      - img "2026年10月20日 完成 0 个"
+      - text: 周二
+      - img "2026年10月21日 完成 0 个"
+      - text: 周三
+      - img "2026年10月22日 完成 0 个"
+      - text: 周四
+      - img "2026年10月23日 完成 1 个"
+      - text: 周五
+      - paragraph: 今天完成 1 项 · 最近连续 1 天有完成记录
+      - group: 统计口径
+      - group: 当前任务详情
+  - status:
+    - text: 任务已标记完成
+    - button "撤销"
+    - button "关闭"
+- text: 统计已更新，当前范围 1 个任务

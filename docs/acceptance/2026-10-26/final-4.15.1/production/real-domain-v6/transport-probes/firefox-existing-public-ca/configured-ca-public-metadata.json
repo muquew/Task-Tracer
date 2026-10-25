@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-25T22:49:45.800647+00:00",
+  "configured_public_ca_path": "/usr/local/share/ca-certificates/environment-proxy-ca.crt",
+  "configured_public_ca_file_sha256": "7fa2d7d439db8bfa7c191457e61af5e3f4eb412314eb148766ac09e93786e4c3",
+  "public_metadata_no_pem": "subject=C=US, ST=California, L=San Francisco, O=OpenAI, LLC, CN=openai.com\nissuer=C=US, ST=California, L=San Francisco, O=OpenAI, LLC, CN=openai.com\nsha256 Fingerprint=C7:1B:4D:1E:9D:77:75:C5:38:C6:88:AB:10:CE:A9:CE:41:7D:73:12:E8:98:38:F9:D1:5F:F7:32:56:CD:7F:C3\nnotBefore=Dec  3 21:46:23 2024 GMT\nnotAfter=Dec  1 21:46:23 2034 GMT\nX509v3 Basic Constraints: critical\n    CA:TRUE\n",
+  "ca_true": true,
+  "configured_system_bundle": "/etc/ssl/certs/ca-certificates.crt",
+  "configured_bundle_sha256": "43e169bf3454bc74c12d3df8c1403f0b4e7da135bf5959f8ab31eb634896bf73",
+  "existing_certutil_path": "/usr/bin/certutil",
+  "existing_certutil_package_owner": "libnss3-tools: /usr/bin/certutil",
+  "dependencies_installed_by_this_task": false,
+  "certificate_pem_or_private_key_recorded": false
+}

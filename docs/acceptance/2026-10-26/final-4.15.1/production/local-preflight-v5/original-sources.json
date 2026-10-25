@@ -1,0 +1,1386 @@
+{
+  "scope": "docs/acceptance/2026-10-26/final-4.15.1/production/local-preflight-v5",
+  "created_at_utc": "2026-10-25T21:18:36.847742+00:00",
+  "original_reports_modified": false,
+  "files": [
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/README.md",
+      "sha256": "a9f4aa8ed904b96a5ec9298ca3d50ef1950ed8615de32ca8f2f1a63b08e587f7",
+      "bytes": 2145,
+      "archived_path": "preparation-README.md",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/copy-scope.json",
+      "sha256": "ba0ff57606f80774bb86311606a37755efb55030097c0194ec770f755eb16f65",
+      "bytes": 709,
+      "archived_path": "copy-scope.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py",
+      "sha256": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91",
+      "bytes": 20920,
+      "archived_path": "driver.py",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/latest-local.json",
+      "sha256": "e41ae875ee69576fdeac40873f0b9844173c3821736ca4e2eacca2949685b3fd",
+      "bytes": 158,
+      "archived_path": null,
+      "not_archived_reason": "Mutable convenience pointer omitted; the immutable UUID report is archived directly."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/before.json",
+      "sha256": "e0100a07afa9428ce54fd2a369bc213d827b18bc8246840b22230346a790d614",
+      "bytes": 1289,
+      "archived_path": "local-run/before.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/01-fresh-workspace.json",
+      "sha256": "92928e584547464be8fc763860f84ad2f1eae2ed10c58033e1dbf600db0e7f89",
+      "bytes": 670,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/01-fresh-workspace.png",
+      "sha256": "0649de94364bd20a27a3cb29b6226fb5dadeb50d212d1a61af894adef93a92cc",
+      "bytes": 91696,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/02-editor-pending-child.json",
+      "sha256": "139f02dc1f420629b80794f402d6edff3e28670c7023784121aff00407bb0e36",
+      "bytes": 665,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/02-editor-pending-child.png",
+      "sha256": "a62ff8a7a8673502bab3b26ff3f97717121a0e47c1dd4ed858f24977581e847c",
+      "bytes": 159254,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/03-list-completed.json",
+      "sha256": "eb9ed60e211cab241f93df5a2c2fba2ea338e8e2e6169affb83c576e5a0bfa43",
+      "bytes": 646,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/03-list-completed.png",
+      "sha256": "c81ed31f39eac4ca1476ae01971c72a521aae0d5d5afa81af6d967b8958ddf97",
+      "bytes": 125115,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/04-view-calendar.json",
+      "sha256": "17405926705576ddcc84325e9916f370657c401caab2c53028ca307998a44bc4",
+      "bytes": 641,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/04-view-calendar.png",
+      "sha256": "6d333bc33465f6be6f133dc17c31ed47b973d15fdc1d5ec2612b93e1e44a3520",
+      "bytes": 79739,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/04-view-list.json",
+      "sha256": "529a6666b574b84e52e225b19a55d6069a0442f45b5f6f7f8b075188c071985b",
+      "bytes": 649,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/04-view-list.png",
+      "sha256": "d9dce4fc59b81fa94fd508038df4e3506f8055cd7d09a4dd256d412ddc4c9214",
+      "bytes": 124581,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/04-view-stats.json",
+      "sha256": "21a8810d2c297f79204f9c2eb6a33549ced1cd7f015d475f166a17624d1a61ef",
+      "bytes": 678,
+      "archived_path": "local-run/chromium-1280/04-view-stats.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/04-view-stats.png",
+      "sha256": "c2a1fa18416b21ba66e776abd3021472bd4ace585c2db3ae14ff55196ce3d4b7",
+      "bytes": 98552,
+      "archived_path": "local-run/chromium-1280/04-view-stats.png",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/04-view-timeline.json",
+      "sha256": "9300ddab7bc564a45461feb51ccb372a7484acf53cebdadd7de99c8034b051bd",
+      "bytes": 683,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/04-view-timeline.png",
+      "sha256": "f13893f687f506905ca7ca08b9c3fe2cc7fc040566fc2304c2ad75a9502a8b9e",
+      "bytes": 106099,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/05-settings-dark-ocean-chinese.json",
+      "sha256": "8086c46dd4947920ebc5fac3bea9f56e6445dfab9cc8aa61668548cc0f704371",
+      "bytes": 656,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/05-settings-dark-ocean-chinese.png",
+      "sha256": "93ba6a47cebed30a7d609b1a254ca3990f7ee43bd9f07dfb2013df139be4bcc3",
+      "bytes": 81642,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/06-help-version.json",
+      "sha256": "8bcf543639888f66e7c9545820218a14978e234fe3ed03aec46566120971049e",
+      "bytes": 650,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/06-help-version.png",
+      "sha256": "538f41e8985f97acc59247d5560455c7672f55a523e983ce7c804176a24de3b3",
+      "bytes": 106849,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/07-reloaded-final-workspace.json",
+      "sha256": "31865dca03732c33811962785149eb3a57d705da6875e49a6fa56f5ca8593ae5",
+      "bytes": 636,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/07-reloaded-final-workspace.png",
+      "sha256": "f10b015562e6f312b5f76b65eac0289a5047682ab87351f0c2d6bb2b2152dd15",
+      "bytes": 98713,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/after-backup-db.json",
+      "sha256": "023b55c6f9dd2a969b9c619f3fd8c941938498b78a85d79d18bfeb9cdaac736f",
+      "bytes": 2784,
+      "archived_path": "local-run/chromium-1280/after-backup-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/before-backup-db.json",
+      "sha256": "97b4ad659cf6b3aef80872d89d37c01dbfeae4f7425d77adc58167bbc6720a38",
+      "bytes": 2561,
+      "archived_path": "local-run/chromium-1280/before-backup-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/created-db.json",
+      "sha256": "07aa0ee35345326831e897200049202efc4dcff8fa7903a0ac0776526b6c7adf",
+      "bytes": 2384,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/document-initial.json",
+      "sha256": "4511de01dfd3267a8206f78b2aa37b9c29be85fa7a0225dbd16b6cde8f03d33c",
+      "bytes": 1312,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/document-reloaded.json",
+      "sha256": "8c1ade649231729f944f57d7efeb23b1294095751d6a8f61582253cfa7079925",
+      "bytes": 1312,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/edited-db.json",
+      "sha256": "fcc8dcfd1c89a2f2e1be4a6e0ef5b16ae297caba3043a76a1ffbbf7aa91574ac",
+      "bytes": 2540,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/final-db.json",
+      "sha256": "023b55c6f9dd2a969b9c619f3fd8c941938498b78a85d79d18bfeb9cdaac736f",
+      "bytes": 2784,
+      "archived_path": "local-run/chromium-1280/final-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/report.json",
+      "sha256": "c323291b8af3257e14c72ad3fc5bbadd63433d15ad5b3f9d373bb8b981c2e14c",
+      "bytes": 6163,
+      "archived_path": "local-run/chromium-1280/report.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/task-tracer_backup_2026-10-25_21-01-06-418.json",
+      "sha256": "daa7f4b77f33f588619478d8aee3ea6743f488483792b68e9fba858d2ee142d8",
+      "bytes": 3047,
+      "archived_path": "local-run/chromium-1280/task-tracer_backup_2026-10-25_21-01-06-418.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/01-fresh-workspace.json",
+      "sha256": "7cbafa925beff367b6ef3b257aa7e8e63f44cfa76d7d73f750e179dadab7e1bc",
+      "bytes": 614,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/01-fresh-workspace.png",
+      "sha256": "b8640a080897efa2d3d7b43cb0c6f14c4fb5fdfa576b65d58ef530b7ea539dfc",
+      "bytes": 40603,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/02-editor-pending-child.json",
+      "sha256": "eaf541a55409203d3fa0470028f5076368a9d51ed2d51d0974d8674850ca9203",
+      "bytes": 611,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/02-editor-pending-child.png",
+      "sha256": "bb2221d2293f55cb6a418fba12cc0519ebf343d3776720b0839319cebf452c4d",
+      "bytes": 51397,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/03-list-completed.json",
+      "sha256": "f7c800ffdaa9b76153d711d3f3493ea2adcd6d9ac0c4fb13fbc6cc33ebaa10bd",
+      "bytes": 592,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/03-list-completed.png",
+      "sha256": "39a717227101b3fc6f35568aae5a0681472f2a40901f98ff6b2e144628374a25",
+      "bytes": 61151,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/04-view-calendar.json",
+      "sha256": "109318c3abcc98c9cde80cb6f3920068263c421f21b02bcca305798f723a510f",
+      "bytes": 603,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/04-view-calendar.png",
+      "sha256": "4dce588d2cdd61f2cf50cfe90f7e29fdd3bab6e5543b2625fd2be11b2eb7f25f",
+      "bytes": 54611,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/04-view-list.json",
+      "sha256": "09bc60e9bfc54039c25731457c7ae46d927812ac749b3e5e3e94a3d3b1533447",
+      "bytes": 595,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/04-view-list.png",
+      "sha256": "39a717227101b3fc6f35568aae5a0681472f2a40901f98ff6b2e144628374a25",
+      "bytes": 61151,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/04-view-stats.json",
+      "sha256": "92890f0714c7c73374d242cbabd467326afa1051571e5b6f93a3b7c8fba4e1ef",
+      "bytes": 661,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/04-view-stats.png",
+      "sha256": "8a3bac48f30f0dba5f9fa9326df06db0109c1d8f3562c0ead781146d10e3dad2",
+      "bytes": 46095,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/04-view-timeline.json",
+      "sha256": "aed2a20624630ae702996bc89a09d1757cc939ea1d26b9982786499367ed31c7",
+      "bytes": 665,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/04-view-timeline.png",
+      "sha256": "042283eefe64ee3f90b7d24a1631862c0336da39811bccccf5ab2430d2428651",
+      "bytes": 61722,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/05-settings-dark-ocean-chinese.json",
+      "sha256": "d1d92fe317030f0df73527d1e5cbc052e375d3c5bc2586c4bf0754e352d46833",
+      "bytes": 640,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/05-settings-dark-ocean-chinese.png",
+      "sha256": "1a947e810d3e8ca6dae79cd3c898693f0625cf9a45d1acb2ea8f72d21f3d031e",
+      "bytes": 46969,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/06-help-version.json",
+      "sha256": "9d1a4585c43fe85321e4391052f8bab6f0a075700c2ae85a877aafc79f7167e3",
+      "bytes": 634,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/06-help-version.png",
+      "sha256": "775aa129555d8973fa8307a28d50a8450d7ce9bad4e07ed5d51e9e3c118e138f",
+      "bytes": 64766,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/07-reloaded-final-workspace.json",
+      "sha256": "eb532896e18d0a72be29b1d5402619fee7e3e8ca86e139b8648353cbcac7d37a",
+      "bytes": 582,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/07-reloaded-final-workspace.png",
+      "sha256": "92fd2601ba85742d87d5f864ecbbefb3bd6f66c524692da9dba965f305fe6345",
+      "bytes": 44594,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/after-backup-db.json",
+      "sha256": "61388ae653b8c70b935d9867f1af9c2db92931326436be72175adb4ef7b3efc1",
+      "bytes": 2782,
+      "archived_path": "local-run/chromium-390/after-backup-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/before-backup-db.json",
+      "sha256": "a1199d2dad2f7da2887b722b48b2ae3b90c9536339783893e470091202b09fee",
+      "bytes": 2559,
+      "archived_path": "local-run/chromium-390/before-backup-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/created-db.json",
+      "sha256": "67426c151b3ebe8a37d1fd2183e69a096845235225bba6d303fb28e3300d87dd",
+      "bytes": 2382,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/document-initial.json",
+      "sha256": "05b4967433e0a96b6f9f399a73146aa03d91ad85f45b0e428189f25963c30014",
+      "bytes": 1312,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/document-reloaded.json",
+      "sha256": "05b4967433e0a96b6f9f399a73146aa03d91ad85f45b0e428189f25963c30014",
+      "bytes": 1312,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/edited-db.json",
+      "sha256": "d1adfd46b3bad177ba5a451b6c9bd722cfd50cdad91ab4a9e7cefd1a78c0579d",
+      "bytes": 2538,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/final-db.json",
+      "sha256": "61388ae653b8c70b935d9867f1af9c2db92931326436be72175adb4ef7b3efc1",
+      "bytes": 2782,
+      "archived_path": "local-run/chromium-390/final-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/report.json",
+      "sha256": "9c2cc8b2b479acc50e6bd613a34c0a685dcc0aeecb795c6cd766a43c74c7d216",
+      "bytes": 6161,
+      "archived_path": "local-run/chromium-390/report.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/task-tracer_backup_2026-10-25_21-01-21-200.json",
+      "sha256": "8b375e65ba99fbc0ee19d6cba273134fbf8c8e75157ae084832d6e7220c42b89",
+      "bytes": 3045,
+      "archived_path": "local-run/chromium-390/task-tracer_backup_2026-10-25_21-01-21-200.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/01-fresh-workspace.json",
+      "sha256": "92928e584547464be8fc763860f84ad2f1eae2ed10c58033e1dbf600db0e7f89",
+      "bytes": 670,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/01-fresh-workspace.png",
+      "sha256": "e7018d77bb52ad0b44886804acb802d8586faccf5e8bc5cceb4ff6cbf6330b60",
+      "bytes": 101459,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/02-editor-pending-child.json",
+      "sha256": "139f02dc1f420629b80794f402d6edff3e28670c7023784121aff00407bb0e36",
+      "bytes": 665,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/02-editor-pending-child.png",
+      "sha256": "5a66432cbb7504b4387d95645a8659b6a9bc96265a5e78c5c1386a23c4441baf",
+      "bytes": 153851,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/03-list-completed.json",
+      "sha256": "eb9ed60e211cab241f93df5a2c2fba2ea338e8e2e6169affb83c576e5a0bfa43",
+      "bytes": 646,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/03-list-completed.png",
+      "sha256": "493db614f1f127e8312421159ca22acf9fc89ecdb61db1252a7d63b9ad311134",
+      "bytes": 138660,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/04-view-calendar.json",
+      "sha256": "17405926705576ddcc84325e9916f370657c401caab2c53028ca307998a44bc4",
+      "bytes": 641,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/04-view-calendar.png",
+      "sha256": "23fe93a80a9156c521b6d2921d0335ddaf3eb8cb44d713efc970d3e0b79be7cb",
+      "bytes": 96037,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/04-view-list.json",
+      "sha256": "529a6666b574b84e52e225b19a55d6069a0442f45b5f6f7f8b075188c071985b",
+      "bytes": 649,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/04-view-list.png",
+      "sha256": "493db614f1f127e8312421159ca22acf9fc89ecdb61db1252a7d63b9ad311134",
+      "bytes": 138660,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/04-view-stats.json",
+      "sha256": "07baa0faeb226756a58d020fa21216cb69f9ca88053b0f2b7e7a62a3cdc1c49b",
+      "bytes": 678,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/04-view-stats.png",
+      "sha256": "dc261173348350560afcb3c64aa929eb237d3f26c8c99dbcee539520e489452e",
+      "bytes": 111266,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/04-view-timeline.json",
+      "sha256": "9300ddab7bc564a45461feb51ccb372a7484acf53cebdadd7de99c8034b051bd",
+      "bytes": 683,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/04-view-timeline.png",
+      "sha256": "a66be42e0e470fdac1f4cd0cc7156e9fb4cd7fb962626cbe607cd749e7463c13",
+      "bytes": 118813,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/05-settings-dark-ocean-chinese.json",
+      "sha256": "8086c46dd4947920ebc5fac3bea9f56e6445dfab9cc8aa61668548cc0f704371",
+      "bytes": 656,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/05-settings-dark-ocean-chinese.png",
+      "sha256": "aa63616e175aa3ea2730b8a851c35cd20d5107f18aaeecabfb0e45ab379653ba",
+      "bytes": 94905,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/06-help-version.json",
+      "sha256": "8bcf543639888f66e7c9545820218a14978e234fe3ed03aec46566120971049e",
+      "bytes": 650,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/06-help-version.png",
+      "sha256": "587588b32b49a3d027500fe369789a7af5924371cd5fd83ea0ad9c707a9ae658",
+      "bytes": 120318,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/07-reloaded-final-workspace.json",
+      "sha256": "31865dca03732c33811962785149eb3a57d705da6875e49a6fa56f5ca8593ae5",
+      "bytes": 636,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/07-reloaded-final-workspace.png",
+      "sha256": "55b913024dc50ce583ae99a70773e6d620323afd7f8aaf07c8367d1283be154c",
+      "bytes": 109385,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/after-backup-db.json",
+      "sha256": "29b143fd67cb26626fb5f19e053caf9d5b01a040dcd8472e043b3a4a71f84233",
+      "bytes": 2782,
+      "archived_path": "local-run/firefox-1280/after-backup-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/before-backup-db.json",
+      "sha256": "a8799cc042a9feb383ca1375d063f470c5ba379dee7512ffbdea904ab839ac62",
+      "bytes": 2559,
+      "archived_path": "local-run/firefox-1280/before-backup-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/created-db.json",
+      "sha256": "ef2c9d1c74435e9e9709bf8d06583c17bdd3a03c6f85f8973187d94b764bef59",
+      "bytes": 2382,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/document-initial.json",
+      "sha256": "1da07cf00497b19700e0c0a67091180ad3ee833b0af2c8d5e57c040e5a06e573",
+      "bytes": 1312,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/document-reloaded.json",
+      "sha256": "2835f1185bb96b20245d9c60e3c1a4a06177d3c0bd341a707897ef70a7cc74dc",
+      "bytes": 1312,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/edited-db.json",
+      "sha256": "4f133594ba369d1fb9cb5a1e1faa7fa9311e6f0705c8d0600c828be71919e7a1",
+      "bytes": 2538,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/final-db.json",
+      "sha256": "29b143fd67cb26626fb5f19e053caf9d5b01a040dcd8472e043b3a4a71f84233",
+      "bytes": 2782,
+      "archived_path": "local-run/firefox-1280/final-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/report.json",
+      "sha256": "c70a8725dd407f203a34431012ec8955c5a7b9d0bb122a23c1fee920a2c415b7",
+      "bytes": 6153,
+      "archived_path": "local-run/firefox-1280/report.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/task-tracer_backup_2026-10-25_21-01-41-154.json",
+      "sha256": "b6ee90d57657d7e379857b11cdf1a7cad9d7f112292968badb67b71575558662",
+      "bytes": 3045,
+      "archived_path": "local-run/firefox-1280/task-tracer_backup_2026-10-25_21-01-41-154.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/01-fresh-workspace.json",
+      "sha256": "7cbafa925beff367b6ef3b257aa7e8e63f44cfa76d7d73f750e179dadab7e1bc",
+      "bytes": 614,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/01-fresh-workspace.png",
+      "sha256": "1260d16c2e9f3404744999b0542eb23a62495a7eddf344728356e86058bd1de7",
+      "bytes": 46691,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/02-editor-pending-child.json",
+      "sha256": "eaf541a55409203d3fa0470028f5076368a9d51ed2d51d0974d8674850ca9203",
+      "bytes": 611,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/02-editor-pending-child.png",
+      "sha256": "77b306fa9a59a820409815fc3ffa4a14882ed25facf66fa683f71d8860121d62",
+      "bytes": 61796,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/03-list-completed.json",
+      "sha256": "dc22300b89567363e4ab1f43b56b7e9d0527858389b8341077a3702caeb037a9",
+      "bytes": 592,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/03-list-completed.png",
+      "sha256": "cca111aeca89094eb74cdf696688c37e606967804f6eceeaba9f55141b6a8a13",
+      "bytes": 71482,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/04-view-calendar.json",
+      "sha256": "109318c3abcc98c9cde80cb6f3920068263c421f21b02bcca305798f723a510f",
+      "bytes": 603,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/04-view-calendar.png",
+      "sha256": "6d9478a703f24aac8ff7b1d8d6336635f1773c7dce8d0698e20fd885e401a1fd",
+      "bytes": 68284,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/04-view-list.json",
+      "sha256": "b00d4d8c1d7a39259f7da36447c73eb9281021abab54dae67ef5a7400aed48a3",
+      "bytes": 595,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/04-view-list.png",
+      "sha256": "cca111aeca89094eb74cdf696688c37e606967804f6eceeaba9f55141b6a8a13",
+      "bytes": 71482,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/04-view-stats.json",
+      "sha256": "e972b38ea46d5c58cd2fb6e82b4820216d4c3e52b9736c1b1566b6e3cde3c173",
+      "bytes": 661,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/04-view-stats.png",
+      "sha256": "a27f3fdd8d251a40fa2ebdbe037b1fef997c7ab903af6c5247b741cbb51ed98d",
+      "bytes": 56853,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/04-view-timeline.json",
+      "sha256": "aed2a20624630ae702996bc89a09d1757cc939ea1d26b9982786499367ed31c7",
+      "bytes": 665,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/04-view-timeline.png",
+      "sha256": "970a0be5333e412f9ca5cb248ac7b6518e95cfddaf752c948ae5f829e4c381dd",
+      "bytes": 72747,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/05-settings-dark-ocean-chinese.json",
+      "sha256": "d1d92fe317030f0df73527d1e5cbc052e375d3c5bc2586c4bf0754e352d46833",
+      "bytes": 640,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/05-settings-dark-ocean-chinese.png",
+      "sha256": "320585f28eeb8057d3e9b5e5fc052701558f9384123099db2085e69f9af235e0",
+      "bytes": 57140,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/06-help-version.json",
+      "sha256": "9d1a4585c43fe85321e4391052f8bab6f0a075700c2ae85a877aafc79f7167e3",
+      "bytes": 634,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/06-help-version.png",
+      "sha256": "80b4191cbd6179321f5a2d6db29698a045d639f368d9cf14cb0bd76b10e1c095",
+      "bytes": 76409,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/07-reloaded-final-workspace.json",
+      "sha256": "eb532896e18d0a72be29b1d5402619fee7e3e8ca86e139b8648353cbcac7d37a",
+      "bytes": 582,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/07-reloaded-final-workspace.png",
+      "sha256": "48f2eb3c36fe89d1950e6576065e3eb833ac2f62c7b5a023f4ef37f78a10c9d1",
+      "bytes": 51942,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/after-backup-db.json",
+      "sha256": "8093fe7cf8ffa5fefa1dc557e29f4c1a6dac977c8846fca5e1ceaaa2ced70c62",
+      "bytes": 2780,
+      "archived_path": "local-run/firefox-390/after-backup-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/before-backup-db.json",
+      "sha256": "95edbabeecd326bbdc55b464992c99769fc3854db7198101412c5e11b965ad6d",
+      "bytes": 2557,
+      "archived_path": "local-run/firefox-390/before-backup-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/created-db.json",
+      "sha256": "c2e973bdb4dce847fca2dd247a82ef63f848fd7c6e6c58c02bae43ae6ccadaaa",
+      "bytes": 2380,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/document-initial.json",
+      "sha256": "154437fc91c5154b8635652e20cba9479c7568e69df60aa9e22412d452422074",
+      "bytes": 1312,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/document-reloaded.json",
+      "sha256": "154437fc91c5154b8635652e20cba9479c7568e69df60aa9e22412d452422074",
+      "bytes": 1312,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/edited-db.json",
+      "sha256": "3c80162866915615e53a94d93e5982ab31254aeb8edfd9b7f2a1d03e88d4dbbe",
+      "bytes": 2536,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/final-db.json",
+      "sha256": "8093fe7cf8ffa5fefa1dc557e29f4c1a6dac977c8846fca5e1ceaaa2ced70c62",
+      "bytes": 2780,
+      "archived_path": "local-run/firefox-390/final-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/report.json",
+      "sha256": "1583a4280521f6a6476dd2464c62ae74333097cc97dbc6a346fee3941063444c",
+      "bytes": 6151,
+      "archived_path": "local-run/firefox-390/report.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/task-tracer_backup_2026-10-25_21-01-56-967.json",
+      "sha256": "7f8c5895effc6495a919ff543789de0eef9c68037291c3406fe19777e73451b1",
+      "bytes": 3043,
+      "archived_path": "local-run/firefox-390/task-tracer_backup_2026-10-25_21-01-56-967.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/frozen-inputs/driver.py",
+      "sha256": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91",
+      "bytes": 20920,
+      "archived_path": null,
+      "not_archived_reason": "Duplicate runtime/helper/source bytes omitted; original path/hash/size retained, before/after maps and freeze archived."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/frozen-inputs/index.html",
+      "sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "bytes": 985633,
+      "archived_path": null,
+      "not_archived_reason": "Duplicate runtime/helper/source bytes omitted; original path/hash/size retained, before/after maps and freeze archived."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/frozen-inputs/resources/en.json",
+      "sha256": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+      "bytes": 57285,
+      "archived_path": null,
+      "not_archived_reason": "Duplicate runtime/helper/source bytes omitted; original path/hash/size retained, before/after maps and freeze archived."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/frozen-inputs/resources/zh-CN.json",
+      "sha256": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+      "bytes": 55747,
+      "archived_path": null,
+      "not_archived_reason": "Duplicate runtime/helper/source bytes omitted; original path/hash/size retained, before/after maps and freeze archived."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/frozen-inputs/sw.js",
+      "sha256": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+      "bytes": 8305,
+      "archived_path": null,
+      "not_archived_reason": "Duplicate runtime/helper/source bytes omitted; original path/hash/size retained, before/after maps and freeze archived."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/frozen-inputs/tools/performance_playwright.py",
+      "sha256": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+      "bytes": 13068,
+      "archived_path": null,
+      "not_archived_reason": "Duplicate runtime/helper/source bytes omitted; original path/hash/size retained, before/after maps and freeze archived."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/frozen-inputs/tools/security_playwright.py",
+      "sha256": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+      "bytes": 2979,
+      "archived_path": null,
+      "not_archived_reason": "Duplicate runtime/helper/source bytes omitted; original path/hash/size retained, before/after maps and freeze archived."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/frozen-inputs/tools/security_policy.py",
+      "sha256": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+      "bytes": 2171,
+      "archived_path": null,
+      "not_archived_reason": "Duplicate runtime/helper/source bytes omitted; original path/hash/size retained, before/after maps and freeze archived."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/frozen-inputs/tools/smoke_playwright.py",
+      "sha256": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+      "bytes": 191313,
+      "archived_path": null,
+      "not_archived_reason": "Duplicate runtime/helper/source bytes omitted; original path/hash/size retained, before/after maps and freeze archived."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/frozen-inputs/tools/translation_fallback.py",
+      "sha256": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+      "bytes": 6383,
+      "archived_path": null,
+      "not_archived_reason": "Duplicate runtime/helper/source bytes omitted; original path/hash/size retained, before/after maps and freeze archived."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/frozen-inputs/tools/validate_static.py",
+      "sha256": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3",
+      "bytes": 54341,
+      "archived_path": null,
+      "not_archived_reason": "Duplicate runtime/helper/source bytes omitted; original path/hash/size retained, before/after maps and freeze archived."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/frozen-inputs/vercel.json",
+      "sha256": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+      "bytes": 1194,
+      "archived_path": null,
+      "not_archived_reason": "Duplicate runtime/helper/source bytes omitted; original path/hash/size retained, before/after maps and freeze archived."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/report.json",
+      "sha256": "21e3dc55b584540aff26bd72d73cea93fe2b2d2060515380dc5f35f8a5fc4067",
+      "bytes": 43780,
+      "archived_path": "local-run/report.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/01-fresh-workspace.json",
+      "sha256": "92928e584547464be8fc763860f84ad2f1eae2ed10c58033e1dbf600db0e7f89",
+      "bytes": 670,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/01-fresh-workspace.png",
+      "sha256": "a5f408722aa98961989fe88cb7a71258d5b5c4f68f95115ffa789956dcd2a3ca",
+      "bytes": 100674,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/02-editor-pending-child.json",
+      "sha256": "139f02dc1f420629b80794f402d6edff3e28670c7023784121aff00407bb0e36",
+      "bytes": 665,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/02-editor-pending-child.png",
+      "sha256": "d0b23803b14b5fcfabeb80a61c792af531e28485d3651ca51e929cf79a564785",
+      "bytes": 141910,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/03-list-completed.json",
+      "sha256": "eb9ed60e211cab241f93df5a2c2fba2ea338e8e2e6169affb83c576e5a0bfa43",
+      "bytes": 646,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/03-list-completed.png",
+      "sha256": "778e8a96e27d4608ef3dcf6b71a5aac804c90bf0438c2895a39b9745e19d2601",
+      "bytes": 132950,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/04-view-calendar.json",
+      "sha256": "17405926705576ddcc84325e9916f370657c401caab2c53028ca307998a44bc4",
+      "bytes": 641,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/04-view-calendar.png",
+      "sha256": "48579c340a404127066ffe6904474aec9ffe0577d010a83d656ec7979f52ba6f",
+      "bytes": 81926,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/04-view-list.json",
+      "sha256": "529a6666b574b84e52e225b19a55d6069a0442f45b5f6f7f8b075188c071985b",
+      "bytes": 649,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/04-view-list.png",
+      "sha256": "778e8a96e27d4608ef3dcf6b71a5aac804c90bf0438c2895a39b9745e19d2601",
+      "bytes": 132950,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/04-view-stats.json",
+      "sha256": "21a8810d2c297f79204f9c2eb6a33549ced1cd7f015d475f166a17624d1a61ef",
+      "bytes": 678,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/04-view-stats.png",
+      "sha256": "f600fc7b35ff07bee832a47239e959ab95b4655f6a7a0692ae755d45d5890750",
+      "bytes": 104460,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/04-view-timeline.json",
+      "sha256": "9300ddab7bc564a45461feb51ccb372a7484acf53cebdadd7de99c8034b051bd",
+      "bytes": 683,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/04-view-timeline.png",
+      "sha256": "b5e2cc3254baba1fbdf51169892ef31e8659a7fa834c26cc2647af0253d49dc5",
+      "bytes": 111062,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/05-settings-dark-ocean-chinese.json",
+      "sha256": "8086c46dd4947920ebc5fac3bea9f56e6445dfab9cc8aa61668548cc0f704371",
+      "bytes": 656,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/05-settings-dark-ocean-chinese.png",
+      "sha256": "42c35f5f6a9e63023c047319fd1a81c73320730562c14eccffeb5742ce16ac32",
+      "bytes": 88324,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/06-help-version.json",
+      "sha256": "8bcf543639888f66e7c9545820218a14978e234fe3ed03aec46566120971049e",
+      "bytes": 650,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/06-help-version.png",
+      "sha256": "2269e56b1af66d339bdc282559e3c0f133654283464cc23549240f242504a39b",
+      "bytes": 118036,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/07-reloaded-final-workspace.json",
+      "sha256": "31865dca03732c33811962785149eb3a57d705da6875e49a6fa56f5ca8593ae5",
+      "bytes": 636,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/07-reloaded-final-workspace.png",
+      "sha256": "664688bc12f396aa633b986eb203499640d9510d444f747642cda03ebdf3308a",
+      "bytes": 103570,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/after-backup-db.json",
+      "sha256": "1bfcf2e1c47ea1dbc2020810d07b1a949d2b8525e919692f1cb9affbf96dc933",
+      "bytes": 2780,
+      "archived_path": "local-run/webkit-1280/after-backup-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/before-backup-db.json",
+      "sha256": "e9b2057dd84fee510955cc5a372e874f6639082c984228d4929bba546071f2e2",
+      "bytes": 2557,
+      "archived_path": "local-run/webkit-1280/before-backup-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/created-db.json",
+      "sha256": "3a0a5deb0d31d6b40d65ddc41988ab449732859c3cad56bb22c67c2f650f8237",
+      "bytes": 2380,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/document-initial.json",
+      "sha256": "4b252fb8c3fdf29b2bd9858c9518e3c39d9913954b0389bae42391ad06671222",
+      "bytes": 1312,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/document-reloaded.json",
+      "sha256": "22f3733aad36747bb62e3d858dc5887919bfe80ecb9e08e7c47c02663739ce12",
+      "bytes": 1312,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/edited-db.json",
+      "sha256": "42795e431ac170c7ddcd324787274cc745ebcb2ee7547eeacf7e88b72e49c526",
+      "bytes": 2536,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/final-db.json",
+      "sha256": "1bfcf2e1c47ea1dbc2020810d07b1a949d2b8525e919692f1cb9affbf96dc933",
+      "bytes": 2780,
+      "archived_path": "local-run/webkit-1280/final-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/report.json",
+      "sha256": "1df6e28fd253f0872fb27b20e7ca7303019182d42f16c80aa09a1a7fec98ada6",
+      "bytes": 6150,
+      "archived_path": "local-run/webkit-1280/report.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/task-tracer_backup_2026-10-25_21-02-20-726.json",
+      "sha256": "37a84a5e164ca537eab03f08f941606df7036684f4d4f05276617a917af2dd32",
+      "bytes": 3043,
+      "archived_path": "local-run/webkit-1280/task-tracer_backup_2026-10-25_21-02-20-726.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/01-fresh-workspace.json",
+      "sha256": "7cbafa925beff367b6ef3b257aa7e8e63f44cfa76d7d73f750e179dadab7e1bc",
+      "bytes": 614,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/01-fresh-workspace.png",
+      "sha256": "0965a46ef005178dd59b9b7068b1647d4bf1710b30f6d1b1f4c97f45b2815299",
+      "bytes": 48528,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/02-editor-pending-child.json",
+      "sha256": "eaf541a55409203d3fa0470028f5076368a9d51ed2d51d0974d8674850ca9203",
+      "bytes": 611,
+      "archived_path": "local-run/webkit-390/02-editor-pending-child.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/02-editor-pending-child.png",
+      "sha256": "ebf428bd688afe4605f93c9262f76d39dbb5b4ea6c289365a09de00624fb9174",
+      "bytes": 58356,
+      "archived_path": "local-run/webkit-390/02-editor-pending-child.png",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/03-list-completed.json",
+      "sha256": "dc22300b89567363e4ab1f43b56b7e9d0527858389b8341077a3702caeb037a9",
+      "bytes": 592,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/03-list-completed.png",
+      "sha256": "44d4c43aea8326b02aae1fc32633fede5693354e0e2c0e8e5a329e5c80fd9549",
+      "bytes": 69078,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/04-view-calendar.json",
+      "sha256": "109318c3abcc98c9cde80cb6f3920068263c421f21b02bcca305798f723a510f",
+      "bytes": 603,
+      "archived_path": "local-run/webkit-390/04-view-calendar.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/04-view-calendar.png",
+      "sha256": "36eecf4e740883637b839c1babe972c7f5866b66812d4fb34ab42c24ad95a3f8",
+      "bytes": 56947,
+      "archived_path": "local-run/webkit-390/04-view-calendar.png",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/04-view-list.json",
+      "sha256": "b00d4d8c1d7a39259f7da36447c73eb9281021abab54dae67ef5a7400aed48a3",
+      "bytes": 595,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/04-view-list.png",
+      "sha256": "44d4c43aea8326b02aae1fc32633fede5693354e0e2c0e8e5a329e5c80fd9549",
+      "bytes": 69078,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/04-view-stats.json",
+      "sha256": "92890f0714c7c73374d242cbabd467326afa1051571e5b6f93a3b7c8fba4e1ef",
+      "bytes": 661,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/04-view-stats.png",
+      "sha256": "2b5ee8617c844b22085ea64681d7f72fe516ed2b2ba8b510ff9f1a1df5009780",
+      "bytes": 54242,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/04-view-timeline.json",
+      "sha256": "aed2a20624630ae702996bc89a09d1757cc939ea1d26b9982786499367ed31c7",
+      "bytes": 665,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/04-view-timeline.png",
+      "sha256": "75a3cb346447568fa9990034b022c7eb70a45af7e4069932c37beb7aefb6cc3f",
+      "bytes": 68893,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/05-settings-dark-ocean-chinese.json",
+      "sha256": "d1d92fe317030f0df73527d1e5cbc052e375d3c5bc2586c4bf0754e352d46833",
+      "bytes": 640,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/05-settings-dark-ocean-chinese.png",
+      "sha256": "1d9f3328f70bc16b0555193d59843eaaf6abefb3889b6ef8eb347313292352b5",
+      "bytes": 55542,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/06-help-version.json",
+      "sha256": "9d1a4585c43fe85321e4391052f8bab6f0a075700c2ae85a877aafc79f7167e3",
+      "bytes": 634,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/06-help-version.png",
+      "sha256": "a8c2472e151f72fea642a576e30b12cac16cdf460e05b0dbc4573676510207bb",
+      "bytes": 79325,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/07-reloaded-final-workspace.json",
+      "sha256": "eb532896e18d0a72be29b1d5402619fee7e3e8ca86e139b8648353cbcac7d37a",
+      "bytes": 582,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/07-reloaded-final-workspace.png",
+      "sha256": "5132729e94094f45d5720f0502ce6ac27045971e6a8ce87ef1854e1cb9a2b938",
+      "bytes": 49737,
+      "archived_path": null,
+      "not_archived_reason": "Only the three receipt-reviewed representative PNGs are retained under the bounded archive budget; no claim of human review for the other action captures."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/after-backup-db.json",
+      "sha256": "28bcf7689b777c926031007ef7df741d236cc810440f43c1783333af779f8c28",
+      "bytes": 2778,
+      "archived_path": "local-run/webkit-390/after-backup-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/before-backup-db.json",
+      "sha256": "ce76f664ccd885e949ef0180a0a96ca33c166f1a460b2303239b29891cd24ad7",
+      "bytes": 2555,
+      "archived_path": "local-run/webkit-390/before-backup-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/created-db.json",
+      "sha256": "196d8ef197115e93cc4dcead0099e0867251f97e924130adb1c522662778d638",
+      "bytes": 2378,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/document-initial.json",
+      "sha256": "e99ede160b60b8e899edde734e72bb2d904e9d51a87cca19ba1f0d87378b320d",
+      "bytes": 1312,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/document-reloaded.json",
+      "sha256": "4da9409fd4dfa9a53fd2262320fe61f98c3afd06085324082c94ebd6589fa22e",
+      "bytes": 1312,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/edited-db.json",
+      "sha256": "95530aec6c48df71d2e3af3b7e3d5105d3bde11336a5ecd5e959b9315a772847",
+      "bytes": 2534,
+      "archived_path": null,
+      "not_archived_reason": "Additional action-capture state or intermediate DB evidence omitted from this bounded scope; original path/hash/size retained."
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/final-db.json",
+      "sha256": "28bcf7689b777c926031007ef7df741d236cc810440f43c1783333af779f8c28",
+      "bytes": 2778,
+      "archived_path": "local-run/webkit-390/final-db.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/report.json",
+      "sha256": "7a725ddac9f0042d289ed421797aec910458914e8231a36fb1aa0a4e72e81746",
+      "bytes": 6148,
+      "archived_path": "local-run/webkit-390/report.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/task-tracer_backup_2026-10-25_21-02-38-646.json",
+      "sha256": "faf110d58d12362aa2664f33d3758ccbaeb8b5125e9b1f7009d683aa657b4897",
+      "bytes": 3041,
+      "archived_path": "local-run/webkit-390/task-tracer_backup_2026-10-25_21-02-38-646.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-attempt-1.stderr.log",
+      "sha256": "311d758247ad5a7f633b7b5447fd008f3c664bd4979680875c364a3f29f3e6b2",
+      "bytes": 236,
+      "archived_path": "local-attempt-1.stderr.log",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-attempt-1.stdout.log",
+      "sha256": "b4371ee66358dfd4c83fb9bc153b06b8337d1d33b8c858a9c722068f90ba2f60",
+      "bytes": 710,
+      "archived_path": "local-attempt-1.stdout.log",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/preparation-receipt.json",
+      "sha256": "0dea5611b34810dfac0322e4c7170be8c39a8d70967935201f05e102af2d9527",
+      "bytes": 7275,
+      "archived_path": "preparation-receipt.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-freeze-v5/inputs.json",
+      "sha256": "a25f6cd57e3369ffec2192f5026f0d2ef630656efac6437c0f4565109abdec4f",
+      "bytes": 12181,
+      "archived_path": "v5-freeze-inputs.json",
+      "not_archived_reason": null
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final/driver.py",
+      "sha256": "4f07d97cc9fd795494bc48730bb130d5e951d35e4cc900c5edb4a5f134c938c0",
+      "bytes": 20920,
+      "archived_path": null,
+      "not_archived_reason": "Prior-stage driver retained under its original identity; current driver and exact one-constant copy proof are archived."
+    }
+  ]
+}

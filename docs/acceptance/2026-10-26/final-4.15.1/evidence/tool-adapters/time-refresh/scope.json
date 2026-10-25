@@ -1,0 +1,55 @@
+{
+  "created_at": "2026-10-25T19:13:07.002812+00:00",
+  "repo_files_changed_this_task": [
+    "tools/time_refresh_playwright.py"
+  ],
+  "before_sha256": "ac9f48264b21cf8143d27acd9eaae9d005f8e8d371967199d6580160cd7bdeae",
+  "after_sha256": "d170488d550ce256657e266d6b01b871c615b87c3990c3d0da3fe432ab66422c",
+  "runtime_index_sha256_at_adapter_edit": "64cde762d16756e935978377696d35aaca618574dde1469275a219cec8dd0c01",
+  "english_resource_sha256_at_adapter_edit": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+  "english_contract": {
+    "reviewTitle": "Last 7 days",
+    "todayReview": "{count} completed today",
+    "todayReviewOne": "{count} completed today"
+  },
+  "selector_contract": "Stats review section identified by exact Last 7 days heading; visible today-review sentence must transition strictly from 1 to 0 at midnight.",
+  "visibility_contract": "createStatsReview hides meta only when completedWeek===0; this fixture retains the completed task in the 7-day window across midnight, so the zero-today row remains visible.",
+  "preserved": [
+    "All 12 original cases",
+    "All original fixture/clock setup",
+    "trend[-2:] == [1,0]",
+    "full workspace DB/config read equality",
+    "All non-verify_midnight_stats AST nodes identical",
+    "Original timeout values",
+    "No product, resource, shared helper changes"
+  ],
+  "static_validation": {
+    "ast_parse": "passed",
+    "compile_without_execution": "passed",
+    "all_original_function_names_retained": [
+      "after_minutes",
+      "verify_overdue",
+      "verify_midnight_search",
+      "prepare_today_plan",
+      "verify_midnight_focus",
+      "verify_midnight_stats",
+      "prepare_relative_search",
+      "verify_draft_protection",
+      "verify_command_protection",
+      "verify_selection_protection",
+      "verify_batch_protection",
+      "verify_stability_and_paging",
+      "verify_visibility_and_clock_change",
+      "verify_status_boundary",
+      "run"
+    ],
+    "exact_replacement_only": true
+  },
+  "native_cli": "NOT RUN; parent requested waiting for stable runtime",
+  "not_modified": [
+    "Product source",
+    "Resource translations",
+    "Shared helpers",
+    "Other repo tools"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "recorded_at": "2026-10-25T22:39:19.833081+00:00",
+  "status": "four_files_copied_verified_no_commit_or_publish",
+  "execution_receipt_sha256": "03f4c2677b6ea223aec9af1b5cb1592cd033e8c673478097fefbb18aeccb961f",
+  "files": [
+    {
+      "path": "/workspace/Task-Tracer/dist/task-tracer-4.15.1.zip",
+      "bytes": 992071,
+      "sha256": "0540eca3d0d83a140c3695f575e24e6c73252afe08e5ae2f4f3457cef4691aca",
+      "byte_identical_to_canonical_source": true,
+      "ignored": true,
+      "tracked_intended": false
+    },
+    {
+      "path": "/workspace/Task-Tracer/dist/task-tracer-4.15.1.zip.sha256",
+      "bytes": 89,
+      "sha256": "8cc365b19b759f6833dc922cf8917e4654957417fc298a083801df98126b94bc",
+      "byte_identical_to_canonical_source": true,
+      "ignored": true,
+      "tracked_intended": false
+    },
+    {
+      "path": "/workspace/Task-Tracer/downloads/task-tracer-4.15.1.zip",
+      "bytes": 992071,
+      "sha256": "0540eca3d0d83a140c3695f575e24e6c73252afe08e5ae2f4f3457cef4691aca",
+      "byte_identical_to_canonical_source": true,
+      "ignored": false,
+      "tracked_intended": true
+    },
+    {
+      "path": "/workspace/Task-Tracer/downloads/task-tracer-4.15.1.zip.sha256",
+      "bytes": 89,
+      "sha256": "8cc365b19b759f6833dc922cf8917e4654957417fc298a083801df98126b94bc",
+      "byte_identical_to_canonical_source": true,
+      "ignored": false,
+      "tracked_intended": true
+    }
+  ],
+  "package_files": 24,
+  "manifest_sha256": "d19f377de151b1ddb40db5925557d57b382e486d5633ac0150ed5d570892dfcb",
+  "manifest_commit": "6a3b8e61ba0699cc316fd92a247cc9c917a7521d",
+  "manifest_dirty": false,
+  "all23_packaged_payloads_verified_in_execution_receipt": true,
+  "old_4_15_0_package": {
+    "path": "/workspace/Task-Tracer/dist/task-tracer-4.15.0.zip",
+    "bytes": 990442,
+    "sha256": "02cc67c9ac2a454b9ca248c3a122f92060c674677914dfab567cd7de5f6fbca3",
+    "files": 24,
+    "manifest_commit": "93c990012deaf8556517cbc5995dfebfd2a2a952",
+    "manifest_dirty": false
+  },
+  "all107_and_HEAD_unchanged": true,
+  "commit_or_publish_executed": false,
+  "scope": "Only the authorized four-file local copy after parent GO; later staging, main publication and production verification are separate."
+}

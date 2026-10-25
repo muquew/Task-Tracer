@@ -1,0 +1,58 @@
+{
+  "fetched_at_utc": "2026-10-25T19:57:43.495817+00:00",
+  "run_url": "https://github.com/muquew/Task-Tracer/actions/runs/40228144776",
+  "expected_commit": "2771d561181a4f10afeeacdf2e476dcbb754a49b",
+  "poll": 1,
+  "public_get_only": true,
+  "api_or_authenticated_log_access": false,
+  "branch_scope": "codex/final-stable-delivery-20261026; not main deployment",
+  "status": "In progress",
+  "jobs": [
+    {
+      "name": "checks",
+      "job_id": "121273896279",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40228144776/job/121273896279",
+      "http_status": 200,
+      "html_sha256": "b1d06926975868593612abbdc10cb4caa15e3631717a572915d0cc9a5c690181",
+      "public_ui_conclusion": "failed",
+      "displayed_duration": "1m 8s",
+      "public_annotations": "1 error, 1 warning, and 1 notice\nValidate static files, dates, and browser workflows\nProcess completed with exit code 1.\nShow more\nShow less\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121273896279-visible.txt"
+    },
+    {
+      "name": "deployed_site",
+      "job_id": "121273897502",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40228144776/job/121273897502",
+      "http_status": 200,
+      "html_sha256": "b8ed51069e707f66d8870143c4c8cf2cd728ccce0be6dbab266fddfb4f53b60e",
+      "public_ui_conclusion": "skipped",
+      "displayed_duration": null,
+      "public_annotations": null,
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121273897502-visible.txt"
+    },
+    {
+      "name": "compatibility (chromium)",
+      "public_ui_conclusion": "not_individually_visible",
+      "limit": "Collapsed public matrix has no job link yet; expanded public HTML fragment returned404. Do not infer a pass or precise running/queued state."
+    },
+    {
+      "name": "compatibility (firefox)",
+      "public_ui_conclusion": "not_individually_visible",
+      "limit": "Collapsed public matrix has no job link yet; expanded public HTML fragment returned404. Do not infer a pass or precise running/queued state."
+    },
+    {
+      "name": "compatibility (webkit)",
+      "public_ui_conclusion": "not_individually_visible",
+      "limit": "Collapsed public matrix has no job link yet; expanded public HTML fragment returned404. Do not infer a pass or precise running/queued state."
+    }
+  ],
+  "http_status": 200,
+  "html_sha256": "4dc8b60b8dc335eb97ea63dbfce6d02dff3b095b449f9d081c18320b182750cc",
+  "displayed_total_duration": "–",
+  "public_matrix_completion": "0/3",
+  "new_failures": [
+    "checks"
+  ]
+}

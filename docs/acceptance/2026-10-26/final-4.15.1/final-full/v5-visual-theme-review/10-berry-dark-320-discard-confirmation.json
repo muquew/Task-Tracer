@@ -1,0 +1,414 @@
+{
+  "viewport": {
+    "width": 320,
+    "height": 500
+  },
+  "docWidth": 320,
+  "bodyWidth": 320,
+  "normalMotion": true,
+  "language": "zh-CN",
+  "theme": "dark",
+  "accent": "berry",
+  "footer": {
+    "visible": true,
+    "rect": {
+      "left": 12,
+      "right": 308,
+      "top": 421,
+      "bottom": 488,
+      "width": 296,
+      "height": 67
+    }
+  },
+  "header": {
+    "left": 12,
+    "right": 308,
+    "top": 12,
+    "bottom": 79,
+    "width": 296,
+    "height": 67
+  },
+  "form": {
+    "rect": {
+      "left": 12,
+      "right": 308,
+      "top": 79,
+      "bottom": 488,
+      "width": 296,
+      "height": 409
+    },
+    "scrollTop": 0,
+    "scrollHeight": 1163,
+    "clientHeight": 409
+  },
+  "clip": {
+    "left": 12,
+    "right": 308,
+    "top": 79,
+    "bottom": 421
+  },
+  "controls": [
+    {
+      "selector": "#taskName",
+      "visible": true,
+      "rect": {
+        "left": 28,
+        "right": 292,
+        "top": 327.578125,
+        "bottom": 379.578125,
+        "width": 264,
+        "height": 52
+      },
+      "disabled": false,
+      "required": true,
+      "ariaInvalid": null,
+      "text": "",
+      "value": "未保存的体验检查",
+      "fullyInFormClip": true,
+      "hitInside": false
+    },
+    {
+      "selector": "#taskDesc",
+      "visible": true,
+      "rect": {
+        "left": 28,
+        "right": 292,
+        "top": 425.078125,
+        "bottom": 503.078125,
+        "width": 264,
+        "height": 78
+      },
+      "disabled": false,
+      "required": false,
+      "ariaInvalid": null,
+      "text": "",
+      "value": "",
+      "fullyInFormClip": false,
+      "hitInside": false
+    },
+    {
+      "selector": "#taskProject",
+      "visible": true,
+      "rect": {
+        "left": 42,
+        "right": 278,
+        "top": 564.578125,
+        "bottom": 606.578125,
+        "width": 236,
+        "height": 42
+      },
+      "disabled": false,
+      "required": false,
+      "ariaInvalid": null,
+      "text": "",
+      "value": "Inbox",
+      "fullyInFormClip": false,
+      "hitInside": false
+    },
+    {
+      "selector": "#taskTags",
+      "visible": true,
+      "rect": {
+        "left": 42,
+        "right": 278,
+        "top": 898.5625,
+        "bottom": 940.5625,
+        "width": 236,
+        "height": 42
+      },
+      "disabled": false,
+      "required": false,
+      "ariaInvalid": null,
+      "text": "",
+      "value": "",
+      "fullyInFormClip": false,
+      "hitInside": false
+    },
+    {
+      "selector": "#dueDate",
+      "visible": true,
+      "rect": {
+        "left": 42,
+        "right": 278,
+        "top": 706.578125,
+        "bottom": 748.875,
+        "width": 236,
+        "height": 42.296875
+      },
+      "disabled": false,
+      "required": true,
+      "ariaInvalid": "true",
+      "text": "",
+      "value": "",
+      "fullyInFormClip": false,
+      "hitInside": false
+    },
+    {
+      "selector": "#dueTime",
+      "visible": true,
+      "rect": {
+        "left": 42,
+        "right": 278,
+        "top": 756.875,
+        "bottom": 799.171875,
+        "width": 236,
+        "height": 42.296875
+      },
+      "disabled": false,
+      "required": false,
+      "ariaInvalid": null,
+      "text": "",
+      "value": "23:59",
+      "fullyInFormClip": false,
+      "hitInside": false
+    },
+    {
+      "selector": "#dueDateError",
+      "visible": true,
+      "rect": {
+        "left": 42,
+        "right": 278,
+        "top": 807.171875,
+        "bottom": 826.671875,
+        "width": 236,
+        "height": 19.5
+      },
+      "disabled": null,
+      "required": null,
+      "ariaInvalid": null,
+      "text": "请选择截止日期，或勾选“无截止日期”。",
+      "value": null,
+      "fullyInFormClip": false,
+      "hitInside": false
+    },
+    {
+      "selector": "#repeatInterval",
+      "visible": false,
+      "rect": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0
+      },
+      "disabled": true,
+      "required": false,
+      "ariaInvalid": null,
+      "text": "",
+      "value": "1",
+      "fullyInFormClip": false,
+      "hitInside": false
+    },
+    {
+      "selector": "#repeatIntervalError",
+      "visible": false,
+      "rect": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0
+      },
+      "disabled": null,
+      "required": null,
+      "ariaInvalid": null,
+      "text": "",
+      "value": null,
+      "fullyInFormClip": false,
+      "hitInside": false
+    },
+    {
+      "selector": "#submitBtn",
+      "visible": true,
+      "rect": {
+        "left": 165,
+        "right": 292,
+        "top": 434,
+        "bottom": 474,
+        "width": 127,
+        "height": 40
+      },
+      "disabled": true,
+      "required": null,
+      "ariaInvalid": null,
+      "text": "添加任务",
+      "value": "",
+      "fullyInFormClip": false,
+      "hitInside": true
+    },
+    {
+      "selector": "#cancelBtn",
+      "visible": true,
+      "rect": {
+        "left": 28,
+        "right": 155,
+        "top": 434,
+        "bottom": 474,
+        "width": 127,
+        "height": 40
+      },
+      "disabled": true,
+      "required": null,
+      "ariaInvalid": null,
+      "text": "取消",
+      "value": "",
+      "fullyInFormClip": false,
+      "hitInside": true
+    },
+    {
+      "selector": "#draftDiscardPrompt",
+      "visible": true,
+      "rect": {
+        "left": 28,
+        "right": 292,
+        "top": 95,
+        "bottom": 309.578125,
+        "width": 264,
+        "height": 214.578125
+      },
+      "disabled": null,
+      "required": null,
+      "ariaInvalid": null,
+      "text": "放弃未保存的更改？\n\n任务有未保存的更改，请选择继续编辑或放弃更改。\n\n继续编辑\n放弃更改",
+      "value": null,
+      "fullyInFormClip": true,
+      "hitInside": true
+    },
+    {
+      "selector": "#draftKeepEditingBtn",
+      "visible": true,
+      "rect": {
+        "left": 42,
+        "right": 278,
+        "top": 197.578125,
+        "bottom": 241.578125,
+        "width": 236,
+        "height": 44
+      },
+      "disabled": false,
+      "required": null,
+      "ariaInvalid": null,
+      "text": "继续编辑",
+      "value": "",
+      "fullyInFormClip": true,
+      "hitInside": true
+    },
+    {
+      "selector": "#draftDiscardBtn",
+      "visible": true,
+      "rect": {
+        "left": 42,
+        "right": 278,
+        "top": 251.578125,
+        "bottom": 295.578125,
+        "width": 236,
+        "height": 44
+      },
+      "disabled": false,
+      "required": null,
+      "ariaInvalid": null,
+      "text": "放弃更改",
+      "value": "",
+      "fullyInFormClip": true,
+      "hitInside": true
+    }
+  ],
+  "surfaces": [
+    {
+      "selector": "#taskModal .modal-content",
+      "visible": true,
+      "background": "rgb(84, 63, 76)",
+      "backgroundImage": "none",
+      "color": "rgb(249, 237, 243)",
+      "border": "rgb(249, 237, 243)",
+      "shadow": "rgba(255, 255, 255, 0.055) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.28) 0px 8px 20px 0px, rgba(0, 0, 0, 0.48) 0px 32px 80px 0px",
+      "backdropFilter": "none",
+      "radius": "14px"
+    },
+    {
+      "selector": "#taskEditor",
+      "visible": true,
+      "background": "rgba(0, 0, 0, 0)",
+      "backgroundImage": "none",
+      "color": "rgb(249, 237, 243)",
+      "border": "rgb(249, 237, 243)",
+      "shadow": "none",
+      "backdropFilter": "none",
+      "radius": "0px"
+    },
+    {
+      "selector": ".task-editor-properties",
+      "visible": true,
+      "background": "rgb(62, 41, 54)",
+      "backgroundImage": "none",
+      "color": "rgb(249, 237, 243)",
+      "border": "rgb(249, 237, 243)",
+      "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+      "backdropFilter": "none",
+      "radius": "12px"
+    },
+    {
+      "selector": "#taskDesc",
+      "visible": true,
+      "background": "color(srgb 0.223137 0.150784 0.195098)",
+      "backgroundImage": "none",
+      "color": "rgb(249, 237, 243)",
+      "border": "rgb(177, 139, 159)",
+      "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+      "backdropFilter": "none",
+      "radius": "8px"
+    },
+    {
+      "selector": "#dueDate",
+      "visible": true,
+      "background": "color(srgb 0.223137 0.150784 0.195098)",
+      "backgroundImage": "none",
+      "color": "rgb(249, 237, 243)",
+      "border": "rgb(177, 139, 159)",
+      "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+      "backdropFilter": "none",
+      "radius": "8px"
+    },
+    {
+      "selector": "#submitBtn",
+      "visible": true,
+      "background": "rgb(231, 177, 202)",
+      "backgroundImage": "none",
+      "color": "rgb(69, 36, 53)",
+      "border": "rgba(0, 0, 0, 0)",
+      "shadow": "none",
+      "backdropFilter": "none",
+      "radius": "8px"
+    },
+    {
+      "selector": ".form-actions",
+      "visible": true,
+      "background": "rgb(84, 63, 76)",
+      "backgroundImage": "none",
+      "color": "rgb(249, 237, 243)",
+      "border": "rgb(119, 87, 106) rgb(249, 237, 243) rgb(249, 237, 243)",
+      "shadow": "rgba(0, 0, 0, 0.14) 0px -8px 20px 0px",
+      "backdropFilter": "none",
+      "radius": "0px"
+    },
+    {
+      "selector": "#draftDiscardPrompt",
+      "visible": true,
+      "background": "rgb(62, 41, 54)",
+      "backgroundImage": "none",
+      "color": "rgb(249, 237, 243)",
+      "border": "rgb(249, 237, 243)",
+      "shadow": "none",
+      "backdropFilter": "none",
+      "radius": "12px"
+    }
+  ],
+  "activeElement": "draftKeepEditingBtn",
+  "png": "10-berry-dark-320-discard-confirmation.png",
+  "png_sha256": "6b264d12e6588d94f64a4a7d05e9b63bd204b10919837f8931f5f6aad95b77b1",
+  "task_fields_exactly_unchanged": true,
+  "task_revision_history_exactly_unchanged": true,
+  "kind": "discard"
+}

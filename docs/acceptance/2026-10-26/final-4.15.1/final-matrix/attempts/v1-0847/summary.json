@@ -1,0 +1,46 @@
+{
+  "status": "withdrawn_interrupted",
+  "final_candidate_passed": false,
+  "withdrawal_reason": "产品日历详情按钮存在 axe serious 的 label-content-name-mismatch，需要删除冗余 aria-label 后重新冻结源码。",
+  "source_sha256": "18f4b3c2b16fc0b21ec7cf895cf9a42e4fd8002b8c834a1ad90e9ef7183e9cbc",
+  "verification_sha256": "6fc0d03b8437601b3f07a7304c6059d0f644b625f8c8a4213110e14a298593f3",
+  "index_sha256": "0847b854ea99e95d37ada7a77e307c3266b2a3d2b54db51d6f8309875a506fb4",
+  "source_inputs": 23,
+  "verification_inputs": 84,
+  "source_snapshots_omitted": 107,
+  "engines": {
+    "chromium": {
+      "status": "interrupted",
+      "completed": false,
+      "passed": false,
+      "completed_programs": 1,
+      "planned_programs": 33,
+      "exit_code": 143,
+      "duration_seconds": 38.042,
+      "source_unchanged": true,
+      "verification_unchanged": true,
+      "native_report": "final-matrix/attempts/v1-0847/raw/chromium/native-report.json",
+      "sha256": "311f7ad90b40ead7d49e991605e706c40f269b2e65f83fd97ffaa4f7f99f0395",
+      "bytes": 33941
+    },
+    "firefox": {
+      "status": "interrupted",
+      "completed": false,
+      "passed": false,
+      "completed_programs": 0,
+      "planned_programs": 33,
+      "exit_code": 143,
+      "duration_seconds": 38.052,
+      "source_unchanged": true,
+      "verification_unchanged": true,
+      "native_report": "final-matrix/attempts/v1-0847/raw/firefox/native-report.json",
+      "sha256": "0b75c653f97af877b32c26038c23246be9af7e57f0da5085230158f574b83558",
+      "bytes": 33700
+    },
+    "webkit": {
+      "status": "not_started",
+      "completed_programs": 0,
+      "passed": false
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "index.html": {
+    "sha256": "d70ce830caa7b35b034b9d213721d884fc207f1fa871124cfcc22517fe9d34c9",
+    "bytes": 982572
+  },
+  "resources/en.json": {
+    "sha256": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+    "bytes": 57285
+  },
+  "resources/zh-CN.json": {
+    "sha256": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+    "bytes": 55747
+  },
+  "sw.js": {
+    "sha256": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+    "bytes": 8305
+  },
+  "vercel.json": {
+    "sha256": "3652803081ded3d0c402b3c966b1bd26019f671c6ccee8f50bf00529c32ce187",
+    "bytes": 1194
+  },
+  "tools/performance_playwright.py": {
+    "sha256": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+    "bytes": 13068
+  },
+  "tools/project_scope_playwright.py": {
+    "sha256": "da3be05b5329f02eb4db990e34afe47e5d651640094f990c3bebeb29d94ac0e9",
+    "bytes": 16166
+  },
+  "tools/quick_add_date_playwright.py": {
+    "sha256": "0291ad5c5327eed2837e6628c508dc3f114436ebca112aff496998a40dfb1726",
+    "bytes": 12732
+  },
+  "tools/saved_views_playwright.py": {
+    "sha256": "8577c521d0d929939e2dbf189812c5a347d71093604c5b2d64b48d37ab9ab4c5",
+    "bytes": 12310
+  },
+  "tools/security_playwright.py": {
+    "sha256": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+    "bytes": 2979
+  },
+  "tools/security_policy.py": {
+    "sha256": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+    "bytes": 2171
+  },
+  "tools/smoke_playwright.py": {
+    "sha256": "df5a1a8c557a08c075b2e02a22a0ceb93ac404ddead9877f7651366a09ae166a",
+    "bytes": 190584
+  },
+  "tools/views_portability_playwright.py": {
+    "sha256": "95db305b3ff948e43530b0c43bc34454f4da6cdf68a0348a45ef0b70e338aace",
+    "bytes": 19637
+  }
+}

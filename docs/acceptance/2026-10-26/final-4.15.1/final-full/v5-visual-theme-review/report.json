@@ -1,0 +1,3964 @@
+{
+  "started_at": "2026-10-25T21:07:58.777853+00:00",
+  "scope": "Fresh synthetic local profile; ProductionHeaderHandler CSP; no bypassCSP; normal motion; Chromium; real controls only; five runtime files and actual tools locked, public PNGs excluded",
+  "captures": [
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 1000
+      },
+      "docWidth": 1280,
+      "bodyWidth": 1280,
+      "normalMotion": true,
+      "language": "en",
+      "theme": "light",
+      "accent": "iris",
+      "footer": {
+        "visible": true,
+        "rect": {
+          "left": 180,
+          "right": 1100,
+          "top": 859,
+          "bottom": 930,
+          "width": 920,
+          "height": 71
+        }
+      },
+      "header": {
+        "left": 180,
+        "right": 1100,
+        "top": 70,
+        "bottom": 137,
+        "width": 920,
+        "height": 67
+      },
+      "form": {
+        "rect": {
+          "left": 180,
+          "right": 1100,
+          "top": 137,
+          "bottom": 930,
+          "width": 920,
+          "height": 793
+        },
+        "scrollTop": 0,
+        "scrollHeight": 882,
+        "clientHeight": 793
+      },
+      "clip": {
+        "left": 180,
+        "right": 1100,
+        "top": 137,
+        "bottom": 859
+      },
+      "controls": [
+        {
+          "selector": "#taskName",
+          "visible": true,
+          "rect": {
+            "left": 204,
+            "right": 758,
+            "top": 159,
+            "bottom": 211,
+            "width": 554,
+            "height": 52
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "交付体验检查 · Product release",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "rect": {
+            "left": 204,
+            "right": 758,
+            "top": 256.5,
+            "bottom": 388.5,
+            "width": 554,
+            "height": 132
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "确认任务、时间与项目完整保留。\nReview the details before shipping.",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskProject",
+          "visible": true,
+          "rect": {
+            "left": 804,
+            "right": 1058,
+            "top": 204.5,
+            "bottom": 246.5,
+            "width": 254,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "Task Tracer",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskTags",
+          "visible": true,
+          "rect": {
+            "left": 804,
+            "right": 1058,
+            "top": 456.6875,
+            "bottom": 498.6875,
+            "width": 254,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "release, design",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "rect": {
+            "left": 804,
+            "right": 932.84375,
+            "top": 340.5,
+            "bottom": 382.796875,
+            "width": 128.84375,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "2032-05-06",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueTime",
+          "visible": true,
+          "rect": {
+            "left": 940.84375,
+            "right": 1058,
+            "top": 340.5,
+            "bottom": 382.796875,
+            "width": 117.15625,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "16:35",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDateError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Choose a due date, or select No deadline.",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatInterval",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": true,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "1",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatIntervalError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Enter a whole number from 1 to 365 days.",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "rect": {
+            "left": 957.28125,
+            "right": 1076,
+            "top": 874,
+            "bottom": 914,
+            "width": 118.71875,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Save changes",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#cancelBtn",
+          "visible": true,
+          "rect": {
+            "left": 872.640625,
+            "right": 947.28125,
+            "top": 874,
+            "bottom": 914,
+            "width": 74.640625,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Cancel",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftKeepEditingBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftDiscardBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        }
+      ],
+      "surfaces": [
+        {
+          "selector": "#taskModal .modal-content",
+          "visible": true,
+          "background": "rgb(249, 248, 252)",
+          "backgroundImage": "none",
+          "color": "rgb(49, 43, 67)",
+          "border": "rgb(49, 43, 67)",
+          "shadow": "rgba(255, 255, 255, 0.38) 0px 1px 0px 0px inset, color(srgb 0.192157 0.176471 0.282353 / 0.18) 0px 8px 20px 0px, color(srgb 0.192157 0.176471 0.282353 / 0.28) 0px 32px 80px 0px",
+          "backdropFilter": "none",
+          "radius": "16px"
+        },
+        {
+          "selector": "#taskEditor",
+          "visible": true,
+          "background": "rgba(0, 0, 0, 0)",
+          "backgroundImage": "none",
+          "color": "rgb(49, 43, 67)",
+          "border": "rgb(49, 43, 67)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": ".task-editor-properties",
+          "visible": true,
+          "background": "rgb(228, 228, 237)",
+          "backgroundImage": "none",
+          "color": "rgb(49, 43, 67)",
+          "border": "rgb(49, 43, 67)",
+          "shadow": "color(srgb 0.192157 0.176471 0.282353 / 0.07) 0px 1px 2px 0px inset",
+          "backdropFilter": "none",
+          "radius": "12px"
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "background": "color(srgb 0.955882 0.952941 0.973529)",
+          "backgroundImage": "none",
+          "color": "rgb(49, 43, 67)",
+          "border": "rgb(134, 123, 152)",
+          "shadow": "color(srgb 0.192157 0.176471 0.282353 / 0.07) 0px 1px 2px 0px inset",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "background": "rgb(249, 248, 252)",
+          "backgroundImage": "none",
+          "color": "rgb(49, 43, 67)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "background": "rgb(94, 82, 127)",
+          "backgroundImage": "linear-gradient(rgba(255, 255, 255, 0.07), rgba(0, 0, 0, 0))",
+          "color": "rgb(255, 255, 255)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(255, 255, 255, 0.16) 0px 1px 0px 0px inset, color(srgb 0.192157 0.176471 0.282353 / 0.13) 0px 2px 3px 0px, color(srgb 0.192157 0.176471 0.282353 / 0.08) 0px 5px 12px 0px",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": ".form-actions",
+          "visible": true,
+          "background": "rgb(249, 248, 252)",
+          "backgroundImage": "none",
+          "color": "rgb(49, 43, 67)",
+          "border": "rgb(197, 194, 212) rgb(49, 43, 67) rgb(49, 43, 67)",
+          "shadow": "color(srgb 0.192157 0.176471 0.282353 / 0.08) 0px -8px 20px 0px",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "exists": false
+        }
+      ],
+      "activeElement": "dueDate",
+      "png": "01-iris-light-1280-en.png",
+      "png_sha256": "04d454e9af70d134c6aea1d67dc2a82fe5131da567532025219ec369b604e72f",
+      "task_fields_exactly_unchanged": true,
+      "task_revision_history_exactly_unchanged": true,
+      "kind": "editor"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "docWidth": 390,
+      "bodyWidth": 390,
+      "normalMotion": true,
+      "language": "zh-CN",
+      "theme": "dark",
+      "accent": "iris",
+      "footer": {
+        "visible": true,
+        "rect": {
+          "left": 12,
+          "right": 378,
+          "top": 765,
+          "bottom": 832,
+          "width": 366,
+          "height": 67
+        }
+      },
+      "header": {
+        "left": 12,
+        "right": 378,
+        "top": 12,
+        "bottom": 79,
+        "width": 366,
+        "height": 67
+      },
+      "form": {
+        "rect": {
+          "left": 12,
+          "right": 378,
+          "top": 79,
+          "bottom": 832,
+          "width": 366,
+          "height": 753
+        },
+        "scrollTop": 0,
+        "scrollHeight": 1497,
+        "clientHeight": 753
+      },
+      "clip": {
+        "left": 12,
+        "right": 378,
+        "top": 79,
+        "bottom": 765
+      },
+      "controls": [
+        {
+          "selector": "#taskName",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 362,
+            "top": 97,
+            "bottom": 149,
+            "width": 334,
+            "height": 52
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "交付体验检查 · Product release",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 362,
+            "top": 194.5,
+            "bottom": 272.5,
+            "width": 334,
+            "height": 78
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "确认任务、时间与项目完整保留。\nReview the details before shipping.",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskProject",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 334,
+            "bottom": 376,
+            "width": 306,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "Task Tracer",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskTags",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 640.484375,
+            "bottom": 682.484375,
+            "width": 306,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "release, design",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 476,
+            "bottom": 518.296875,
+            "width": 306,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "2032-05-06",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueTime",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 526.296875,
+            "bottom": 568.59375,
+            "width": 306,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "16:35",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDateError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "请选择截止日期，或勾选“无截止日期”。",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatInterval",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": true,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "1",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatIntervalError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "请输入1至365之间的整数天数。",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "rect": {
+            "left": 200,
+            "right": 362,
+            "top": 778,
+            "bottom": 818,
+            "width": 162,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "保存更改",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#cancelBtn",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 190,
+            "top": 778,
+            "bottom": 818,
+            "width": 162,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "取消",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftKeepEditingBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftDiscardBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        }
+      ],
+      "surfaces": [
+        {
+          "selector": "#taskModal .modal-content",
+          "visible": true,
+          "background": "rgb(55, 50, 70)",
+          "backgroundImage": "none",
+          "color": "rgb(241, 238, 248)",
+          "border": "rgb(241, 238, 248)",
+          "shadow": "rgba(255, 255, 255, 0.055) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.28) 0px 8px 20px 0px, rgba(0, 0, 0, 0.48) 0px 32px 80px 0px",
+          "backdropFilter": "none",
+          "radius": "14px"
+        },
+        {
+          "selector": "#taskEditor",
+          "visible": true,
+          "background": "rgba(0, 0, 0, 0)",
+          "backgroundImage": "none",
+          "color": "rgb(241, 238, 248)",
+          "border": "rgb(241, 238, 248)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": ".task-editor-properties",
+          "visible": true,
+          "background": "rgb(36, 33, 50)",
+          "backgroundImage": "none",
+          "color": "rgb(241, 238, 248)",
+          "border": "rgb(241, 238, 248)",
+          "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+          "backdropFilter": "none",
+          "radius": "12px"
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "background": "color(srgb 0.131176 0.119412 0.182745)",
+          "backgroundImage": "none",
+          "color": "rgb(241, 238, 248)",
+          "border": "rgb(139, 128, 158)",
+          "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "background": "rgb(55, 50, 70)",
+          "backgroundImage": "none",
+          "color": "rgb(241, 238, 248)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "background": "rgb(194, 176, 226)",
+          "backgroundImage": "linear-gradient(rgba(255, 255, 255, 0.07), rgba(0, 0, 0, 0))",
+          "color": "rgb(39, 30, 53)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(255, 255, 255, 0.13) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.24) 0px 2px 3px 0px, rgba(0, 0, 0, 0.14) 0px 5px 12px 0px",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": ".form-actions",
+          "visible": true,
+          "background": "rgb(55, 50, 70)",
+          "backgroundImage": "none",
+          "color": "rgb(241, 238, 248)",
+          "border": "rgb(81, 75, 100) rgb(241, 238, 248) rgb(241, 238, 248)",
+          "shadow": "rgba(0, 0, 0, 0.14) 0px -8px 20px 0px",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "exists": false
+        }
+      ],
+      "activeElement": "dueDate",
+      "png": "02-iris-dark-390-zh-CN.png",
+      "png_sha256": "ef70123c935d1897ead2a8a2a8630dea568a87a3156ee17ce29a323ac464e082",
+      "task_fields_exactly_unchanged": true,
+      "task_revision_history_exactly_unchanged": true,
+      "kind": "editor"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "docWidth": 390,
+      "bodyWidth": 390,
+      "normalMotion": true,
+      "language": "zh-CN",
+      "theme": "light",
+      "accent": "ocean",
+      "footer": {
+        "visible": true,
+        "rect": {
+          "left": 12,
+          "right": 378,
+          "top": 765,
+          "bottom": 832,
+          "width": 366,
+          "height": 67
+        }
+      },
+      "header": {
+        "left": 12,
+        "right": 378,
+        "top": 12,
+        "bottom": 79,
+        "width": 366,
+        "height": 67
+      },
+      "form": {
+        "rect": {
+          "left": 12,
+          "right": 378,
+          "top": 79,
+          "bottom": 832,
+          "width": 366,
+          "height": 753
+        },
+        "scrollTop": 0,
+        "scrollHeight": 1497,
+        "clientHeight": 753
+      },
+      "clip": {
+        "left": 12,
+        "right": 378,
+        "top": 79,
+        "bottom": 765
+      },
+      "controls": [
+        {
+          "selector": "#taskName",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 362,
+            "top": 97,
+            "bottom": 149,
+            "width": 334,
+            "height": 52
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "交付体验检查 · Product release",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 362,
+            "top": 194.5,
+            "bottom": 272.5,
+            "width": 334,
+            "height": 78
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "确认任务、时间与项目完整保留。\nReview the details before shipping.",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskProject",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 334,
+            "bottom": 376,
+            "width": 306,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "Task Tracer",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskTags",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 640.484375,
+            "bottom": 682.484375,
+            "width": 306,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "release, design",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 476,
+            "bottom": 518.296875,
+            "width": 306,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "2032-05-06",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueTime",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 526.296875,
+            "bottom": 568.59375,
+            "width": 306,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "16:35",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDateError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "请选择截止日期，或勾选“无截止日期”。",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatInterval",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": true,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "1",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatIntervalError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "请输入1至365之间的整数天数。",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "rect": {
+            "left": 200,
+            "right": 362,
+            "top": 778,
+            "bottom": 818,
+            "width": 162,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "保存更改",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#cancelBtn",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 190,
+            "top": 778,
+            "bottom": 818,
+            "width": 162,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "取消",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftKeepEditingBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftDiscardBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        }
+      ],
+      "surfaces": [
+        {
+          "selector": "#taskModal .modal-content",
+          "visible": true,
+          "background": "rgb(246, 250, 252)",
+          "backgroundImage": "none",
+          "color": "rgb(36, 60, 73)",
+          "border": "rgb(36, 60, 73)",
+          "shadow": "rgba(255, 255, 255, 0.38) 0px 1px 0px 0px inset, color(srgb 0.129412 0.231373 0.282353 / 0.18) 0px 8px 20px 0px, color(srgb 0.129412 0.231373 0.282353 / 0.28) 0px 32px 80px 0px",
+          "backdropFilter": "none",
+          "radius": "14px"
+        },
+        {
+          "selector": "#taskEditor",
+          "visible": true,
+          "background": "rgba(0, 0, 0, 0)",
+          "backgroundImage": "none",
+          "color": "rgb(36, 60, 73)",
+          "border": "rgb(36, 60, 73)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": ".task-editor-properties",
+          "visible": true,
+          "background": "rgb(221, 233, 239)",
+          "backgroundImage": "none",
+          "color": "rgb(36, 60, 73)",
+          "border": "rgb(36, 60, 73)",
+          "shadow": "color(srgb 0.129412 0.231373 0.282353 / 0.07) 0px 1px 2px 0px inset",
+          "backdropFilter": "none",
+          "radius": "12px"
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "background": "color(srgb 0.940196 0.963726 0.97549)",
+          "backgroundImage": "none",
+          "color": "rgb(36, 60, 73)",
+          "border": "rgb(105, 134, 150)",
+          "shadow": "color(srgb 0.129412 0.231373 0.282353 / 0.07) 0px 1px 2px 0px inset",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "background": "rgb(246, 250, 252)",
+          "backgroundImage": "none",
+          "color": "rgb(36, 60, 73)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "background": "rgb(35, 95, 125)",
+          "backgroundImage": "linear-gradient(rgba(255, 255, 255, 0.07), rgba(0, 0, 0, 0))",
+          "color": "rgb(255, 255, 255)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(255, 255, 255, 0.16) 0px 1px 0px 0px inset, color(srgb 0.129412 0.231373 0.282353 / 0.13) 0px 2px 3px 0px, color(srgb 0.129412 0.231373 0.282353 / 0.08) 0px 5px 12px 0px",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": ".form-actions",
+          "visible": true,
+          "background": "rgb(246, 250, 252)",
+          "backgroundImage": "none",
+          "color": "rgb(36, 60, 73)",
+          "border": "rgb(191, 205, 213) rgb(36, 60, 73) rgb(36, 60, 73)",
+          "shadow": "color(srgb 0.129412 0.231373 0.282353 / 0.08) 0px -8px 20px 0px",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "exists": false
+        }
+      ],
+      "activeElement": "dueDate",
+      "png": "03-ocean-light-390-zh-CN.png",
+      "png_sha256": "4fe81f69847814026258ab9525ca6b443071919cd99b451d0bd7d04c2ab8d661",
+      "task_fields_exactly_unchanged": true,
+      "task_revision_history_exactly_unchanged": true,
+      "kind": "editor"
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 1000
+      },
+      "docWidth": 1280,
+      "bodyWidth": 1280,
+      "normalMotion": true,
+      "language": "en",
+      "theme": "dark",
+      "accent": "ocean",
+      "footer": {
+        "visible": true,
+        "rect": {
+          "left": 180,
+          "right": 1100,
+          "top": 859,
+          "bottom": 930,
+          "width": 920,
+          "height": 71
+        }
+      },
+      "header": {
+        "left": 180,
+        "right": 1100,
+        "top": 70,
+        "bottom": 137,
+        "width": 920,
+        "height": 67
+      },
+      "form": {
+        "rect": {
+          "left": 180,
+          "right": 1100,
+          "top": 137,
+          "bottom": 930,
+          "width": 920,
+          "height": 793
+        },
+        "scrollTop": 0,
+        "scrollHeight": 882,
+        "clientHeight": 793
+      },
+      "clip": {
+        "left": 180,
+        "right": 1100,
+        "top": 137,
+        "bottom": 859
+      },
+      "controls": [
+        {
+          "selector": "#taskName",
+          "visible": true,
+          "rect": {
+            "left": 204,
+            "right": 758,
+            "top": 159,
+            "bottom": 211,
+            "width": 554,
+            "height": 52
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "交付体验检查 · Product release",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "rect": {
+            "left": 204,
+            "right": 758,
+            "top": 256.5,
+            "bottom": 388.5,
+            "width": 554,
+            "height": 132
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "确认任务、时间与项目完整保留。\nReview the details before shipping.",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskProject",
+          "visible": true,
+          "rect": {
+            "left": 804,
+            "right": 1058,
+            "top": 204.5,
+            "bottom": 246.5,
+            "width": 254,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "Task Tracer",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskTags",
+          "visible": true,
+          "rect": {
+            "left": 804,
+            "right": 1058,
+            "top": 456.6875,
+            "bottom": 498.6875,
+            "width": 254,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "release, design",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "rect": {
+            "left": 804,
+            "right": 932.84375,
+            "top": 340.5,
+            "bottom": 382.796875,
+            "width": 128.84375,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "2032-05-06",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueTime",
+          "visible": true,
+          "rect": {
+            "left": 940.84375,
+            "right": 1058,
+            "top": 340.5,
+            "bottom": 382.796875,
+            "width": 117.15625,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "16:35",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDateError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Choose a due date, or select No deadline.",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatInterval",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": true,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "1",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatIntervalError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Enter a whole number from 1 to 365 days.",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "rect": {
+            "left": 957.28125,
+            "right": 1076,
+            "top": 874,
+            "bottom": 914,
+            "width": 118.71875,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Save changes",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#cancelBtn",
+          "visible": true,
+          "rect": {
+            "left": 872.640625,
+            "right": 947.28125,
+            "top": 874,
+            "bottom": 914,
+            "width": 74.640625,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Cancel",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftKeepEditingBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftDiscardBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        }
+      ],
+      "surfaces": [
+        {
+          "selector": "#taskModal .modal-content",
+          "visible": true,
+          "background": "rgb(46, 75, 89)",
+          "backgroundImage": "none",
+          "color": "rgb(232, 244, 249)",
+          "border": "rgb(232, 244, 249)",
+          "shadow": "rgba(255, 255, 255, 0.055) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.28) 0px 8px 20px 0px, rgba(0, 0, 0, 0.48) 0px 32px 80px 0px",
+          "backdropFilter": "none",
+          "radius": "16px"
+        },
+        {
+          "selector": "#taskEditor",
+          "visible": true,
+          "background": "rgba(0, 0, 0, 0)",
+          "backgroundImage": "none",
+          "color": "rgb(232, 244, 249)",
+          "border": "rgb(232, 244, 249)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": ".task-editor-properties",
+          "visible": true,
+          "background": "rgb(27, 50, 64)",
+          "backgroundImage": "none",
+          "color": "rgb(232, 244, 249)",
+          "border": "rgb(232, 244, 249)",
+          "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+          "backdropFilter": "none",
+          "radius": "12px"
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "background": "color(srgb 0.0958824 0.176078 0.22098)",
+          "backgroundImage": "none",
+          "color": "rgb(232, 244, 249)",
+          "border": "rgb(120, 154, 170)",
+          "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "background": "rgb(46, 75, 89)",
+          "backgroundImage": "none",
+          "color": "rgb(232, 244, 249)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "background": "rgb(167, 213, 237)",
+          "backgroundImage": "linear-gradient(rgba(255, 255, 255, 0.07), rgba(0, 0, 0, 0))",
+          "color": "rgb(23, 51, 68)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(255, 255, 255, 0.13) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.24) 0px 2px 3px 0px, rgba(0, 0, 0, 0.14) 0px 5px 12px 0px",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": ".form-actions",
+          "visible": true,
+          "background": "rgb(46, 75, 89)",
+          "backgroundImage": "none",
+          "color": "rgb(232, 244, 249)",
+          "border": "rgb(69, 99, 114) rgb(232, 244, 249) rgb(232, 244, 249)",
+          "shadow": "rgba(0, 0, 0, 0.14) 0px -8px 20px 0px",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "exists": false
+        }
+      ],
+      "activeElement": "dueDate",
+      "png": "04-ocean-dark-1280-en.png",
+      "png_sha256": "5d5e54e08caeed5bdf9395ed0a053de55d772d67527d6df89038b360dbb7f327",
+      "task_fields_exactly_unchanged": true,
+      "task_revision_history_exactly_unchanged": true,
+      "kind": "editor"
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 1000
+      },
+      "docWidth": 1280,
+      "bodyWidth": 1280,
+      "normalMotion": true,
+      "language": "en",
+      "theme": "light",
+      "accent": "pine",
+      "footer": {
+        "visible": true,
+        "rect": {
+          "left": 180,
+          "right": 1100,
+          "top": 859,
+          "bottom": 930,
+          "width": 920,
+          "height": 71
+        }
+      },
+      "header": {
+        "left": 180,
+        "right": 1100,
+        "top": 70,
+        "bottom": 137,
+        "width": 920,
+        "height": 67
+      },
+      "form": {
+        "rect": {
+          "left": 180,
+          "right": 1100,
+          "top": 137,
+          "bottom": 930,
+          "width": 920,
+          "height": 793
+        },
+        "scrollTop": 0,
+        "scrollHeight": 882,
+        "clientHeight": 793
+      },
+      "clip": {
+        "left": 180,
+        "right": 1100,
+        "top": 137,
+        "bottom": 859
+      },
+      "controls": [
+        {
+          "selector": "#taskName",
+          "visible": true,
+          "rect": {
+            "left": 204,
+            "right": 758,
+            "top": 159,
+            "bottom": 211,
+            "width": 554,
+            "height": 52
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "交付体验检查 · Product release",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "rect": {
+            "left": 204,
+            "right": 758,
+            "top": 256.5,
+            "bottom": 388.5,
+            "width": 554,
+            "height": 132
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "确认任务、时间与项目完整保留。\nReview the details before shipping.",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskProject",
+          "visible": true,
+          "rect": {
+            "left": 804,
+            "right": 1058,
+            "top": 204.5,
+            "bottom": 246.5,
+            "width": 254,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "Task Tracer",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskTags",
+          "visible": true,
+          "rect": {
+            "left": 804,
+            "right": 1058,
+            "top": 456.6875,
+            "bottom": 498.6875,
+            "width": 254,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "release, design",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "rect": {
+            "left": 804,
+            "right": 932.84375,
+            "top": 340.5,
+            "bottom": 382.796875,
+            "width": 128.84375,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "2032-05-06",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueTime",
+          "visible": true,
+          "rect": {
+            "left": 940.84375,
+            "right": 1058,
+            "top": 340.5,
+            "bottom": 382.796875,
+            "width": 117.15625,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "16:35",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDateError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Choose a due date, or select No deadline.",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatInterval",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": true,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "1",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatIntervalError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Enter a whole number from 1 to 365 days.",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "rect": {
+            "left": 957.28125,
+            "right": 1076,
+            "top": 874,
+            "bottom": 914,
+            "width": 118.71875,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Save changes",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#cancelBtn",
+          "visible": true,
+          "rect": {
+            "left": 872.640625,
+            "right": 947.28125,
+            "top": 874,
+            "bottom": 914,
+            "width": 74.640625,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Cancel",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftKeepEditingBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftDiscardBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        }
+      ],
+      "surfaces": [
+        {
+          "selector": "#taskModal .modal-content",
+          "visible": true,
+          "background": "rgb(247, 251, 246)",
+          "backgroundImage": "none",
+          "color": "rgb(36, 60, 49)",
+          "border": "rgb(36, 60, 49)",
+          "shadow": "rgba(255, 255, 255, 0.38) 0px 1px 0px 0px inset, color(srgb 0.141176 0.235294 0.211765 / 0.18) 0px 8px 20px 0px, color(srgb 0.141176 0.235294 0.211765 / 0.28) 0px 32px 80px 0px",
+          "backdropFilter": "none",
+          "radius": "16px"
+        },
+        {
+          "selector": "#taskEditor",
+          "visible": true,
+          "background": "rgba(0, 0, 0, 0)",
+          "backgroundImage": "none",
+          "color": "rgb(36, 60, 49)",
+          "border": "rgb(36, 60, 49)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": ".task-editor-properties",
+          "visible": true,
+          "background": "rgb(223, 234, 223)",
+          "backgroundImage": "none",
+          "color": "rgb(36, 60, 49)",
+          "border": "rgb(36, 60, 49)",
+          "shadow": "color(srgb 0.141176 0.235294 0.211765 / 0.07) 0px 1px 2px 0px inset",
+          "backdropFilter": "none",
+          "radius": "12px"
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "background": "color(srgb 0.945098 0.967647 0.942157)",
+          "backgroundImage": "none",
+          "color": "rgb(36, 60, 49)",
+          "border": "rgb(108, 136, 119)",
+          "shadow": "color(srgb 0.141176 0.235294 0.211765 / 0.07) 0px 1px 2px 0px inset",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "background": "rgb(247, 251, 246)",
+          "backgroundImage": "none",
+          "color": "rgb(36, 60, 49)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "background": "rgb(44, 102, 80)",
+          "backgroundImage": "linear-gradient(rgba(255, 255, 255, 0.07), rgba(0, 0, 0, 0))",
+          "color": "rgb(255, 255, 255)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(255, 255, 255, 0.16) 0px 1px 0px 0px inset, color(srgb 0.141176 0.235294 0.211765 / 0.13) 0px 2px 3px 0px, color(srgb 0.141176 0.235294 0.211765 / 0.08) 0px 5px 12px 0px",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": ".form-actions",
+          "visible": true,
+          "background": "rgb(247, 251, 246)",
+          "backgroundImage": "none",
+          "color": "rgb(36, 60, 49)",
+          "border": "rgb(193, 209, 197) rgb(36, 60, 49) rgb(36, 60, 49)",
+          "shadow": "color(srgb 0.141176 0.235294 0.211765 / 0.08) 0px -8px 20px 0px",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "exists": false
+        }
+      ],
+      "activeElement": "dueDate",
+      "png": "05-pine-light-1280-en.png",
+      "png_sha256": "b932bb01a2e39f0f91efd2ef4c1b152076b410728408975a705f5f74ee3be124",
+      "task_fields_exactly_unchanged": true,
+      "task_revision_history_exactly_unchanged": true,
+      "kind": "editor"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "docWidth": 390,
+      "bodyWidth": 390,
+      "normalMotion": true,
+      "language": "zh-CN",
+      "theme": "dark",
+      "accent": "pine",
+      "footer": {
+        "visible": true,
+        "rect": {
+          "left": 12,
+          "right": 378,
+          "top": 765,
+          "bottom": 832,
+          "width": 366,
+          "height": 67
+        }
+      },
+      "header": {
+        "left": 12,
+        "right": 378,
+        "top": 12,
+        "bottom": 79,
+        "width": 366,
+        "height": 67
+      },
+      "form": {
+        "rect": {
+          "left": 12,
+          "right": 378,
+          "top": 79,
+          "bottom": 832,
+          "width": 366,
+          "height": 753
+        },
+        "scrollTop": 0,
+        "scrollHeight": 1497,
+        "clientHeight": 753
+      },
+      "clip": {
+        "left": 12,
+        "right": 378,
+        "top": 79,
+        "bottom": 765
+      },
+      "controls": [
+        {
+          "selector": "#taskName",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 362,
+            "top": 97,
+            "bottom": 149,
+            "width": 334,
+            "height": 52
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "交付体验检查 · Product release",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 362,
+            "top": 194.5,
+            "bottom": 272.5,
+            "width": 334,
+            "height": 78
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "确认任务、时间与项目完整保留。\nReview the details before shipping.",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskProject",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 334,
+            "bottom": 376,
+            "width": 306,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "Task Tracer",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskTags",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 640.484375,
+            "bottom": 682.484375,
+            "width": 306,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "release, design",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 476,
+            "bottom": 518.296875,
+            "width": 306,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "2032-05-06",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueTime",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 526.296875,
+            "bottom": 568.59375,
+            "width": 306,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "16:35",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDateError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "请选择截止日期，或勾选“无截止日期”。",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatInterval",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": true,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "1",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatIntervalError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "请输入1至365之间的整数天数。",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "rect": {
+            "left": 200,
+            "right": 362,
+            "top": 778,
+            "bottom": 818,
+            "width": 162,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "保存更改",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#cancelBtn",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 190,
+            "top": 778,
+            "bottom": 818,
+            "width": 162,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "取消",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftKeepEditingBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftDiscardBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        }
+      ],
+      "surfaces": [
+        {
+          "selector": "#taskModal .modal-content",
+          "visible": true,
+          "background": "rgb(51, 80, 64)",
+          "backgroundImage": "none",
+          "color": "rgb(239, 247, 238)",
+          "border": "rgb(239, 247, 238)",
+          "shadow": "rgba(255, 255, 255, 0.055) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.28) 0px 8px 20px 0px, rgba(0, 0, 0, 0.48) 0px 32px 80px 0px",
+          "backdropFilter": "none",
+          "radius": "14px"
+        },
+        {
+          "selector": "#taskEditor",
+          "visible": true,
+          "background": "rgba(0, 0, 0, 0)",
+          "backgroundImage": "none",
+          "color": "rgb(239, 247, 238)",
+          "border": "rgb(239, 247, 238)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": ".task-editor-properties",
+          "visible": true,
+          "background": "rgb(32, 56, 45)",
+          "backgroundImage": "none",
+          "color": "rgb(239, 247, 238)",
+          "border": "rgb(239, 247, 238)",
+          "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+          "backdropFilter": "none",
+          "radius": "12px"
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "background": "color(srgb 0.112157 0.192941 0.156471)",
+          "backgroundImage": "none",
+          "color": "rgb(239, 247, 238)",
+          "border": "rgb(125, 165, 138)",
+          "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "background": "rgb(51, 80, 64)",
+          "backgroundImage": "none",
+          "color": "rgb(239, 247, 238)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "background": "rgb(176, 219, 182)",
+          "backgroundImage": "linear-gradient(rgba(255, 255, 255, 0.07), rgba(0, 0, 0, 0))",
+          "color": "rgb(32, 60, 42)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(255, 255, 255, 0.13) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.24) 0px 2px 3px 0px, rgba(0, 0, 0, 0.14) 0px 5px 12px 0px",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": ".form-actions",
+          "visible": true,
+          "background": "rgb(51, 80, 64)",
+          "backgroundImage": "none",
+          "color": "rgb(239, 247, 238)",
+          "border": "rgb(71, 103, 80) rgb(239, 247, 238) rgb(239, 247, 238)",
+          "shadow": "rgba(0, 0, 0, 0.14) 0px -8px 20px 0px",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "exists": false
+        }
+      ],
+      "activeElement": "dueDate",
+      "png": "06-pine-dark-390-zh-CN.png",
+      "png_sha256": "c24ef5550b8ded8a008a72cf0a4ce2c5001eaadd3ae127756cdf1b630bd6f8a5",
+      "task_fields_exactly_unchanged": true,
+      "task_revision_history_exactly_unchanged": true,
+      "kind": "editor"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "docWidth": 390,
+      "bodyWidth": 390,
+      "normalMotion": true,
+      "language": "zh-CN",
+      "theme": "light",
+      "accent": "berry",
+      "footer": {
+        "visible": true,
+        "rect": {
+          "left": 12,
+          "right": 378,
+          "top": 765,
+          "bottom": 832,
+          "width": 366,
+          "height": 67
+        }
+      },
+      "header": {
+        "left": 12,
+        "right": 378,
+        "top": 12,
+        "bottom": 79,
+        "width": 366,
+        "height": 67
+      },
+      "form": {
+        "rect": {
+          "left": 12,
+          "right": 378,
+          "top": 79,
+          "bottom": 832,
+          "width": 366,
+          "height": 753
+        },
+        "scrollTop": 0,
+        "scrollHeight": 1497,
+        "clientHeight": 753
+      },
+      "clip": {
+        "left": 12,
+        "right": 378,
+        "top": 79,
+        "bottom": 765
+      },
+      "controls": [
+        {
+          "selector": "#taskName",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 362,
+            "top": 97,
+            "bottom": 149,
+            "width": 334,
+            "height": 52
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "交付体验检查 · Product release",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 362,
+            "top": 194.5,
+            "bottom": 272.5,
+            "width": 334,
+            "height": 78
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "确认任务、时间与项目完整保留。\nReview the details before shipping.",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskProject",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 334,
+            "bottom": 376,
+            "width": 306,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "Task Tracer",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskTags",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 640.484375,
+            "bottom": 682.484375,
+            "width": 306,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "release, design",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 476,
+            "bottom": 518.296875,
+            "width": 306,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "2032-05-06",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueTime",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 348,
+            "top": 526.296875,
+            "bottom": 568.59375,
+            "width": 306,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "16:35",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDateError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "请选择截止日期，或勾选“无截止日期”。",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatInterval",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": true,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "1",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatIntervalError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "请输入1至365之间的整数天数。",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "rect": {
+            "left": 200,
+            "right": 362,
+            "top": 778,
+            "bottom": 818,
+            "width": 162,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "保存更改",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#cancelBtn",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 190,
+            "top": 778,
+            "bottom": 818,
+            "width": 162,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "取消",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftKeepEditingBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftDiscardBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        }
+      ],
+      "surfaces": [
+        {
+          "selector": "#taskModal .modal-content",
+          "visible": true,
+          "background": "rgb(252, 246, 248)",
+          "backgroundImage": "none",
+          "color": "rgb(73, 44, 57)",
+          "border": "rgb(73, 44, 57)",
+          "shadow": "rgba(255, 255, 255, 0.38) 0px 1px 0px 0px inset, color(srgb 0.298039 0.188235 0.243137 / 0.18) 0px 8px 20px 0px, color(srgb 0.298039 0.188235 0.243137 / 0.28) 0px 32px 80px 0px",
+          "backdropFilter": "none",
+          "radius": "14px"
+        },
+        {
+          "selector": "#taskEditor",
+          "visible": true,
+          "background": "rgba(0, 0, 0, 0)",
+          "backgroundImage": "none",
+          "color": "rgb(73, 44, 57)",
+          "border": "rgb(73, 44, 57)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": ".task-editor-properties",
+          "visible": true,
+          "background": "rgb(236, 223, 230)",
+          "backgroundImage": "none",
+          "color": "rgb(73, 44, 57)",
+          "border": "rgb(73, 44, 57)",
+          "shadow": "color(srgb 0.298039 0.188235 0.243137 / 0.07) 0px 1px 2px 0px inset",
+          "backdropFilter": "none",
+          "radius": "12px"
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "background": "color(srgb 0.972549 0.942157 0.954902)",
+          "backgroundImage": "none",
+          "color": "rgb(73, 44, 57)",
+          "border": "rgb(151, 115, 131)",
+          "shadow": "color(srgb 0.298039 0.188235 0.243137 / 0.07) 0px 1px 2px 0px inset",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "background": "rgb(252, 246, 248)",
+          "backgroundImage": "none",
+          "color": "rgb(73, 44, 57)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "background": "rgb(135, 65, 91)",
+          "backgroundImage": "linear-gradient(rgba(255, 255, 255, 0.07), rgba(0, 0, 0, 0))",
+          "color": "rgb(255, 255, 255)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(255, 255, 255, 0.16) 0px 1px 0px 0px inset, color(srgb 0.298039 0.188235 0.243137 / 0.13) 0px 2px 3px 0px, color(srgb 0.298039 0.188235 0.243137 / 0.08) 0px 5px 12px 0px",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": ".form-actions",
+          "visible": true,
+          "background": "rgb(252, 246, 248)",
+          "backgroundImage": "none",
+          "color": "rgb(73, 44, 57)",
+          "border": "rgb(213, 189, 200) rgb(73, 44, 57) rgb(73, 44, 57)",
+          "shadow": "color(srgb 0.298039 0.188235 0.243137 / 0.08) 0px -8px 20px 0px",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "exists": false
+        }
+      ],
+      "activeElement": "dueDate",
+      "png": "07-berry-light-390-zh-CN.png",
+      "png_sha256": "3fc9b04c2c50d41a5f9e10fc1052d5c1357afb80ba65fa57fa7118fbf8cdb68e",
+      "task_fields_exactly_unchanged": true,
+      "task_revision_history_exactly_unchanged": true,
+      "kind": "editor"
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 1000
+      },
+      "docWidth": 1280,
+      "bodyWidth": 1280,
+      "normalMotion": true,
+      "language": "en",
+      "theme": "dark",
+      "accent": "berry",
+      "footer": {
+        "visible": true,
+        "rect": {
+          "left": 180,
+          "right": 1100,
+          "top": 859,
+          "bottom": 930,
+          "width": 920,
+          "height": 71
+        }
+      },
+      "header": {
+        "left": 180,
+        "right": 1100,
+        "top": 70,
+        "bottom": 137,
+        "width": 920,
+        "height": 67
+      },
+      "form": {
+        "rect": {
+          "left": 180,
+          "right": 1100,
+          "top": 137,
+          "bottom": 930,
+          "width": 920,
+          "height": 793
+        },
+        "scrollTop": 0,
+        "scrollHeight": 882,
+        "clientHeight": 793
+      },
+      "clip": {
+        "left": 180,
+        "right": 1100,
+        "top": 137,
+        "bottom": 859
+      },
+      "controls": [
+        {
+          "selector": "#taskName",
+          "visible": true,
+          "rect": {
+            "left": 204,
+            "right": 758,
+            "top": 159,
+            "bottom": 211,
+            "width": 554,
+            "height": 52
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "交付体验检查 · Product release",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "rect": {
+            "left": 204,
+            "right": 758,
+            "top": 256.5,
+            "bottom": 388.5,
+            "width": 554,
+            "height": 132
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "确认任务、时间与项目完整保留。\nReview the details before shipping.",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskProject",
+          "visible": true,
+          "rect": {
+            "left": 804,
+            "right": 1058,
+            "top": 204.5,
+            "bottom": 246.5,
+            "width": 254,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "Task Tracer",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#taskTags",
+          "visible": true,
+          "rect": {
+            "left": 804,
+            "right": 1058,
+            "top": 456.6875,
+            "bottom": 498.6875,
+            "width": 254,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "release, design",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "rect": {
+            "left": 804,
+            "right": 932.84375,
+            "top": 340.5,
+            "bottom": 382.796875,
+            "width": 128.84375,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "2032-05-06",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueTime",
+          "visible": true,
+          "rect": {
+            "left": 940.84375,
+            "right": 1058,
+            "top": 340.5,
+            "bottom": 382.796875,
+            "width": 117.15625,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "16:35",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDateError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Choose a due date, or select No deadline.",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatInterval",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": true,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "1",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatIntervalError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Enter a whole number from 1 to 365 days.",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "rect": {
+            "left": 957.28125,
+            "right": 1076,
+            "top": 874,
+            "bottom": 914,
+            "width": 118.71875,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Save changes",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#cancelBtn",
+          "visible": true,
+          "rect": {
+            "left": 872.640625,
+            "right": 947.28125,
+            "top": 874,
+            "bottom": 914,
+            "width": 74.640625,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "Cancel",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftKeepEditingBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftDiscardBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        }
+      ],
+      "surfaces": [
+        {
+          "selector": "#taskModal .modal-content",
+          "visible": true,
+          "background": "rgb(84, 63, 76)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(249, 237, 243)",
+          "shadow": "rgba(255, 255, 255, 0.055) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.28) 0px 8px 20px 0px, rgba(0, 0, 0, 0.48) 0px 32px 80px 0px",
+          "backdropFilter": "none",
+          "radius": "16px"
+        },
+        {
+          "selector": "#taskEditor",
+          "visible": true,
+          "background": "rgba(0, 0, 0, 0)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(249, 237, 243)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": ".task-editor-properties",
+          "visible": true,
+          "background": "rgb(62, 41, 54)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(249, 237, 243)",
+          "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+          "backdropFilter": "none",
+          "radius": "12px"
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "background": "color(srgb 0.223137 0.150784 0.195098)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(177, 139, 159)",
+          "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "background": "rgb(84, 63, 76)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "background": "rgb(231, 177, 202)",
+          "backgroundImage": "linear-gradient(rgba(255, 255, 255, 0.07), rgba(0, 0, 0, 0))",
+          "color": "rgb(69, 36, 53)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(255, 255, 255, 0.13) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.24) 0px 2px 3px 0px, rgba(0, 0, 0, 0.14) 0px 5px 12px 0px",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": ".form-actions",
+          "visible": true,
+          "background": "rgb(84, 63, 76)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(119, 87, 106) rgb(249, 237, 243) rgb(249, 237, 243)",
+          "shadow": "rgba(0, 0, 0, 0.14) 0px -8px 20px 0px",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "exists": false
+        }
+      ],
+      "activeElement": "dueDate",
+      "png": "08-berry-dark-1280-en.png",
+      "png_sha256": "97fc4a3022e28855c584bd171c0fce7ced26ee871690216b320a597eb1c9e067",
+      "task_fields_exactly_unchanged": true,
+      "task_revision_history_exactly_unchanged": true,
+      "kind": "editor"
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 500
+      },
+      "docWidth": 320,
+      "bodyWidth": 320,
+      "normalMotion": true,
+      "language": "zh-CN",
+      "theme": "dark",
+      "accent": "berry",
+      "footer": {
+        "visible": true,
+        "rect": {
+          "left": 12,
+          "right": 308,
+          "top": 421,
+          "bottom": 488,
+          "width": 296,
+          "height": 67
+        }
+      },
+      "header": {
+        "left": 12,
+        "right": 308,
+        "top": 12,
+        "bottom": 79,
+        "width": 296,
+        "height": 67
+      },
+      "form": {
+        "rect": {
+          "left": 12,
+          "right": 308,
+          "top": 79,
+          "bottom": 488,
+          "width": 296,
+          "height": 409
+        },
+        "scrollTop": 301,
+        "scrollHeight": 932,
+        "clientHeight": 409
+      },
+      "clip": {
+        "left": 12,
+        "right": 308,
+        "top": 79,
+        "bottom": 421
+      },
+      "controls": [
+        {
+          "selector": "#taskName",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 292,
+            "top": -204,
+            "bottom": -152,
+            "width": 264,
+            "height": 52
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "未保存的体验检查",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 292,
+            "top": -106.5,
+            "bottom": -28.5,
+            "width": 264,
+            "height": 78
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#taskProject",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 278,
+            "top": 33,
+            "bottom": 75,
+            "width": 236,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "Inbox",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#taskTags",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 278,
+            "top": 366.984375,
+            "bottom": 408.984375,
+            "width": 236,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 278,
+            "top": 175,
+            "bottom": 217.296875,
+            "width": 236,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": "true",
+          "text": "",
+          "value": "",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueTime",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 278,
+            "top": 225.296875,
+            "bottom": 267.59375,
+            "width": 236,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "23:59",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#dueDateError",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 278,
+            "top": 275.59375,
+            "bottom": 295.09375,
+            "width": 236,
+            "height": 19.5
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "请选择截止日期，或勾选“无截止日期”。",
+          "value": null,
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#repeatInterval",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": true,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "1",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatIntervalError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "rect": {
+            "left": 165,
+            "right": 292,
+            "top": 433,
+            "bottom": 473,
+            "width": 127,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "添加任务",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#cancelBtn",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 155,
+            "top": 434,
+            "bottom": 474,
+            "width": 127,
+            "height": 40
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "取消",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftKeepEditingBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#draftDiscardBtn",
+          "visible": false,
+          "rect": null,
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": null,
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        }
+      ],
+      "surfaces": [
+        {
+          "selector": "#taskModal .modal-content",
+          "visible": true,
+          "background": "rgb(84, 63, 76)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(249, 237, 243)",
+          "shadow": "rgba(255, 255, 255, 0.055) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.28) 0px 8px 20px 0px, rgba(0, 0, 0, 0.48) 0px 32px 80px 0px",
+          "backdropFilter": "none",
+          "radius": "14px"
+        },
+        {
+          "selector": "#taskEditor",
+          "visible": true,
+          "background": "rgba(0, 0, 0, 0)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(249, 237, 243)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": ".task-editor-properties",
+          "visible": true,
+          "background": "rgb(62, 41, 54)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(249, 237, 243)",
+          "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+          "backdropFilter": "none",
+          "radius": "12px"
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "background": "color(srgb 0.223137 0.150784 0.195098)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(177, 139, 159)",
+          "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "background": "rgb(84, 63, 76)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "background": "rgb(244, 208, 226)",
+          "backgroundImage": "linear-gradient(rgba(255, 255, 255, 0.07), rgba(0, 0, 0, 0))",
+          "color": "rgb(69, 36, 53)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(255, 255, 255, 0.13) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.24) 0px 2px 3px 0px, rgba(0, 0, 0, 0.14) 0px 5px 12px 0px",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": ".form-actions",
+          "visible": true,
+          "background": "rgb(84, 63, 76)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(119, 87, 106) rgb(249, 237, 243) rgb(249, 237, 243)",
+          "shadow": "rgba(0, 0, 0, 0.14) 0px -8px 20px 0px",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "exists": false
+        }
+      ],
+      "activeElement": "dueDate",
+      "png": "09-berry-dark-320-empty-date-error.png",
+      "png_sha256": "4384229af8f2f1cb83ef9c36c9243d60f45e94d817fa8a3550201defc1a92612",
+      "task_fields_exactly_unchanged": true,
+      "task_revision_history_exactly_unchanged": true,
+      "kind": "error"
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 500
+      },
+      "docWidth": 320,
+      "bodyWidth": 320,
+      "normalMotion": true,
+      "language": "zh-CN",
+      "theme": "dark",
+      "accent": "berry",
+      "footer": {
+        "visible": true,
+        "rect": {
+          "left": 12,
+          "right": 308,
+          "top": 421,
+          "bottom": 488,
+          "width": 296,
+          "height": 67
+        }
+      },
+      "header": {
+        "left": 12,
+        "right": 308,
+        "top": 12,
+        "bottom": 79,
+        "width": 296,
+        "height": 67
+      },
+      "form": {
+        "rect": {
+          "left": 12,
+          "right": 308,
+          "top": 79,
+          "bottom": 488,
+          "width": 296,
+          "height": 409
+        },
+        "scrollTop": 0,
+        "scrollHeight": 1163,
+        "clientHeight": 409
+      },
+      "clip": {
+        "left": 12,
+        "right": 308,
+        "top": 79,
+        "bottom": 421
+      },
+      "controls": [
+        {
+          "selector": "#taskName",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 292,
+            "top": 327.578125,
+            "bottom": 379.578125,
+            "width": 264,
+            "height": 52
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "未保存的体验检查",
+          "fullyInFormClip": true,
+          "hitInside": false
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 292,
+            "top": 425.078125,
+            "bottom": 503.078125,
+            "width": 264,
+            "height": 78
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#taskProject",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 278,
+            "top": 564.578125,
+            "bottom": 606.578125,
+            "width": 236,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "Inbox",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#taskTags",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 278,
+            "top": 898.5625,
+            "bottom": 940.5625,
+            "width": 236,
+            "height": 42
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 278,
+            "top": 706.578125,
+            "bottom": 748.875,
+            "width": 236,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": true,
+          "ariaInvalid": "true",
+          "text": "",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#dueTime",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 278,
+            "top": 756.875,
+            "bottom": 799.171875,
+            "width": 236,
+            "height": 42.296875
+          },
+          "disabled": false,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "23:59",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#dueDateError",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 278,
+            "top": 807.171875,
+            "bottom": 826.671875,
+            "width": 236,
+            "height": 19.5
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "请选择截止日期，或勾选“无截止日期”。",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatInterval",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": true,
+          "required": false,
+          "ariaInvalid": null,
+          "text": "",
+          "value": "1",
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#repeatIntervalError",
+          "visible": false,
+          "rect": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "",
+          "value": null,
+          "fullyInFormClip": false,
+          "hitInside": false
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "rect": {
+            "left": 165,
+            "right": 292,
+            "top": 434,
+            "bottom": 474,
+            "width": 127,
+            "height": 40
+          },
+          "disabled": true,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "添加任务",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#cancelBtn",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 155,
+            "top": 434,
+            "bottom": 474,
+            "width": 127,
+            "height": 40
+          },
+          "disabled": true,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "取消",
+          "value": "",
+          "fullyInFormClip": false,
+          "hitInside": true
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "visible": true,
+          "rect": {
+            "left": 28,
+            "right": 292,
+            "top": 95,
+            "bottom": 309.578125,
+            "width": 264,
+            "height": 214.578125
+          },
+          "disabled": null,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "放弃未保存的更改？\n\n任务有未保存的更改，请选择继续编辑或放弃更改。\n\n继续编辑\n放弃更改",
+          "value": null,
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#draftKeepEditingBtn",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 278,
+            "top": 197.578125,
+            "bottom": 241.578125,
+            "width": 236,
+            "height": 44
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "继续编辑",
+          "value": "",
+          "fullyInFormClip": true,
+          "hitInside": true
+        },
+        {
+          "selector": "#draftDiscardBtn",
+          "visible": true,
+          "rect": {
+            "left": 42,
+            "right": 278,
+            "top": 251.578125,
+            "bottom": 295.578125,
+            "width": 236,
+            "height": 44
+          },
+          "disabled": false,
+          "required": null,
+          "ariaInvalid": null,
+          "text": "放弃更改",
+          "value": "",
+          "fullyInFormClip": true,
+          "hitInside": true
+        }
+      ],
+      "surfaces": [
+        {
+          "selector": "#taskModal .modal-content",
+          "visible": true,
+          "background": "rgb(84, 63, 76)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(249, 237, 243)",
+          "shadow": "rgba(255, 255, 255, 0.055) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.28) 0px 8px 20px 0px, rgba(0, 0, 0, 0.48) 0px 32px 80px 0px",
+          "backdropFilter": "none",
+          "radius": "14px"
+        },
+        {
+          "selector": "#taskEditor",
+          "visible": true,
+          "background": "rgba(0, 0, 0, 0)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(249, 237, 243)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": ".task-editor-properties",
+          "visible": true,
+          "background": "rgb(62, 41, 54)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(249, 237, 243)",
+          "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+          "backdropFilter": "none",
+          "radius": "12px"
+        },
+        {
+          "selector": "#taskDesc",
+          "visible": true,
+          "background": "color(srgb 0.223137 0.150784 0.195098)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(177, 139, 159)",
+          "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#dueDate",
+          "visible": true,
+          "background": "color(srgb 0.223137 0.150784 0.195098)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(177, 139, 159)",
+          "shadow": "rgba(0, 0, 0, 0.16) 0px 1px 3px 0px inset",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": "#submitBtn",
+          "visible": true,
+          "background": "rgb(231, 177, 202)",
+          "backgroundImage": "none",
+          "color": "rgb(69, 36, 53)",
+          "border": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "8px"
+        },
+        {
+          "selector": ".form-actions",
+          "visible": true,
+          "background": "rgb(84, 63, 76)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(119, 87, 106) rgb(249, 237, 243) rgb(249, 237, 243)",
+          "shadow": "rgba(0, 0, 0, 0.14) 0px -8px 20px 0px",
+          "backdropFilter": "none",
+          "radius": "0px"
+        },
+        {
+          "selector": "#draftDiscardPrompt",
+          "visible": true,
+          "background": "rgb(62, 41, 54)",
+          "backgroundImage": "none",
+          "color": "rgb(249, 237, 243)",
+          "border": "rgb(249, 237, 243)",
+          "shadow": "none",
+          "backdropFilter": "none",
+          "radius": "12px"
+        }
+      ],
+      "activeElement": "draftKeepEditingBtn",
+      "png": "10-berry-dark-320-discard-confirmation.png",
+      "png_sha256": "6b264d12e6588d94f64a4a7d05e9b63bd204b10919837f8931f5f6aad95b77b1",
+      "task_fields_exactly_unchanged": true,
+      "task_revision_history_exactly_unchanged": true,
+      "kind": "discard"
+    }
+  ],
+  "page_errors": [],
+  "console_errors": [],
+  "actions": [
+    {
+      "name": "Create representative task using real editor controls",
+      "passed": true
+    }
+  ],
+  "closed": true,
+  "before": {
+    "runtime": {
+      "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+      "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+      "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+      "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15"
+    },
+    "actual_tools": {
+      "tools/recovery_management_playwright.py": "baa278f06c9349880b1e1fabe3f93b9821cbe907223ab89f1c0fee13918b7633",
+      "tools/recovery_playwright.py": "1f773866b1d05c78af569bf51791e8feec0b89ef2eb46e4e73ea1e5431a49f04",
+      "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+      "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+      "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5"
+    }
+  },
+  "source": {
+    "url": "http://127.0.0.1:43047/",
+    "status": 200,
+    "response_headers": {
+      "content-length": "985633",
+      "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'sha256-zNix3yZucCHuD+EY+bqCci83cIXtaOtdMlQEHSIctok=' 'sha256-a4+lSS8j9v7th/C1LsZTTZBBYYY6a0qxkv7Yr5pk1s8=' 'sha256-nh8+ITWiJcf+4G2RZS+uXpjJ5HvwYj3TPV/DcDDQfWA=' 'sha256-T5J6MZEgCjOJwhoCWNWtnaU4pMauwNJfjzyVJAQ/rZg='; script-src-attr 'none'",
+      "content-type": "text/html",
+      "date": "Sun, 25 Oct 2026 21:07:59 GMT",
+      "last-modified": "Sun, 25 Oct 2026 20:55:44 GMT",
+      "permissions-policy": "camera=(), microphone=(), geolocation=()",
+      "referrer-policy": "strict-origin-when-cross-origin",
+      "server": "SimpleHTTP/0.6 Python/3.12.14",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "DENY"
+    },
+    "index_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+    "browser": "154.0.8037.57",
+    "bypassCSP": false,
+    "normalMotion": true
+  },
+  "backup": {
+    "path": "task-tracer_backup_2026-10-25_21-08-17-160.json",
+    "sha256": "e6c7005899da0c02e28f8695352a81ea22bc8b41b102fc8443a9b48614f8b05a",
+    "checksum_valid": true,
+    "tasks_exactly_equal_before": true
+  },
+  "passed": true,
+  "after": {
+    "runtime": {
+      "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+      "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+      "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+      "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15"
+    },
+    "actual_tools": {
+      "tools/recovery_management_playwright.py": "baa278f06c9349880b1e1fabe3f93b9821cbe907223ab89f1c0fee13918b7633",
+      "tools/recovery_playwright.py": "1f773866b1d05c78af569bf51791e8feec0b89ef2eb46e4e73ea1e5431a49f04",
+      "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+      "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+      "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5"
+    }
+  },
+  "runtime_and_actual_tools_stable": true,
+  "finished_at": "2026-10-25T21:08:17.429480+00:00"
+}

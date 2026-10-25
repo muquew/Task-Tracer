@@ -1,0 +1,19 @@
+--- repeat_merge_playwright.py.before
++++ repeat_merge_playwright.py.after
+@@ -167,7 +167,15 @@
+     payload = payload_for(page, [incoming])
+     before = stored(page)
+     open_merge(page, payload, action)
+-    submit_merge(page)
++    if action == 'skip':
++        expect(page.locator('#submitBtn')).to_have_attribute('data-no-import-changes', 'true')
++        expect(page.locator('#submitBtn')).to_be_disabled()
++        assert stored(page) == before, 'All-skip preview changed tasks, revision, history, config or backup metadata'
++        page.locator('#cancelBtn').click()
++        expect(page.locator('#taskModal')).to_be_hidden()
++        assert stored(page) == before, 'Closing the all-skip preview changed persisted state'
++    else:
++        submit_merge(page)
+     current = get_task_records(page)
+     by_id = {task['id']: task for task in current}
+     assert all(by_id[task['id']] == task for task in before['tasks']), \

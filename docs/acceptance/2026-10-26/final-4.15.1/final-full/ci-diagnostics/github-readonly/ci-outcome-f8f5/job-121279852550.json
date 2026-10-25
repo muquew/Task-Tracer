@@ -1,0 +1,13 @@
+{
+  "fetched_at_utc": "2026-10-25T20:20:10.639863+00:00",
+  "job_id": "121279852550",
+  "url": "https://github.com/muquew/Task-Tracer/actions/runs/40230125789/job/121279852550",
+  "http_status": 200,
+  "html_sha256": "5c39aa8574e1f4309d0ffe6efe678c18c4f0f2fcece357b012c3358e25815abf",
+  "visible_text_path": "job-121279852550-visible.txt",
+  "public_excerpt": "Release checks\nci: summarize check program outcomes for diagnosis\n#25\nSign in to view logs\nSign in to view logs\ndeployed_site\nci: summarize check program outcomes for diagnosis\nci: summarize check program outcomes for diagnosis\n#25\nUh oh!\nThere was an error while loading.\nPlease reload this page\n.\nJob log options\nDownload log archive\nThis job was skipped\nLoading\nRe-running jobs...\nYou can’t perform that action at this time.",
+  "public_summary_urls": [
+    "/muquew/Task-Tracer/actions/runs/40230125789/navigation_partial?attempt=1&selected_check_run_id=121279852550&selected_tab=summary"
+  ],
+  "public_step_annotation_links": []
+}

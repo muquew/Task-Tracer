@@ -1,0 +1,70 @@
+Traceback (most recent call last):
+  File "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-full/calendar-label-diagnostic/run.py", line 24, in <module>
+    audit.audit_scaled_surfaces(browser,url,audit.find_axe_source().read_text(),{'width':1280,'height':720})
+  File "/workspace/task-tracer-final-baseline/tools/accessibility_i18n_audit.py", line 615, in audit_scaled_surfaces
+    audit_page_state(page, axe_source, f'{label} calendar day pagination')
+  File "/workspace/task-tracer-final-baseline/tools/accessibility_i18n_audit.py", line 373, in audit_page_state
+    run_axe(page, axe_source, label)
+  File "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-full/calendar-label-diagnostic/run.py", line 18, in observed
+    return original(page,source,label)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/task-tracer-final-baseline/tools/accessibility_i18n_audit.py", line 136, in run_axe
+    raise AssertionError(message)
+AssertionError: axe violations during 1280px light calendar day pagination:
+[
+  {
+    "id": "label-content-name-mismatch",
+    "impact": "serious",
+    "help": "Elements must have their visible text as part of their accessible name",
+    "nodes": [
+      {
+        "target": [
+          ".calendar-detail-task[data-calendar-task-id=\"800000\"][aria-label=\"Dated accessibility 0 中文, 已逾期\"]"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      },
+      {
+        "target": [
+          ".calendar-detail-task[data-calendar-task-id=\"800001\"][aria-label=\"Dated accessibility 1 中文, 已逾期\"]"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      },
+      {
+        "target": [
+          ".calendar-detail-task[data-calendar-task-id=\"800002\"][aria-label=\"Dated accessibility 2 中文, 已逾期\"]"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      },
+      {
+        "target": [
+          "button[data-calendar-task-id=\"800003\"]"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      },
+      {
+        "target": [
+          "button[data-calendar-task-id=\"800004\"]"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      },
+      {
+        "target": [
+          "button[data-calendar-task-id=\"800005\"]"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      },
+      {
+        "target": [
+          "button[data-calendar-task-id=\"800006\"]"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      },
+      {
+        "target": [
+          "button[data-calendar-task-id=\"800007\"]"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      }
+    ]
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "repeat_merge_playwright.py": {
+    "only_changed_function": "keep_or_skip",
+    "other_module_statements_ast_identical": true,
+    "before_sha256": "c9fbae748b1a996ada9a6e161ee00873ce76a93f4f7cfc2d3cf393f506fb9d60",
+    "after_sha256": "2986ed19218980de274a92b12710a668cca68a19b085d963e8362a2bb679bb56"
+  },
+  "repeat_delete_playwright.py": {
+    "only_changed_function": "abort_delete",
+    "other_module_statements_ast_identical": true,
+    "before_sha256": "f92dacb4c081aa43dab0106c653a1f9bd226ec54abde0843586cb05b1edf2627",
+    "after_sha256": "df2acc67f125b6505eb753c607a6f3be0ab967bace04ad5d558f326dbe078f23"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "yaml_parsed": true,
+  "embedded_python_compiles": true,
+  "shell_syntax_valid": true,
+  "runs": [
+    {
+      "fixture": "baseline-failed",
+      "original_report": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-full/full.json",
+      "snapshot_sha256": "75873c5482a4454c8649dfaba257192f4274b23d967c2a185de5ea3c2be136d7",
+      "captured_at": "2026-10-25T20:16:25.080536+00:00",
+      "status": "failed",
+      "completed": true,
+      "passed": false,
+      "planned": 73,
+      "executed": 73,
+      "failure_annotations": 9,
+      "exit_code": 0,
+      "summary_sha256": "c7bee13184246dbf08a021e89498935663a54e5582fcd93bd256e9453e1ac214",
+      "only_executed_rows": true,
+      "did_not_label_unfinished_as_passed": true
+    },
+    {
+      "fixture": "current-running-snapshot",
+      "original_report": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-full/full.json",
+      "snapshot_sha256": "3b7a7cd7d34d9b74bd38f88d6eb461b19a66f77c2777a5c9a70326a17e9b35b9",
+      "captured_at": "2026-10-25T20:16:25.189825+00:00",
+      "status": "running",
+      "completed": false,
+      "passed": false,
+      "planned": 73,
+      "executed": 31,
+      "failure_annotations": 0,
+      "exit_code": 0,
+      "summary_sha256": "d9b7f0e35857395da9896b194486cd86310cbd43a9a5d61ec0708591fdb25894",
+      "only_executed_rows": true,
+      "did_not_label_unfinished_as_passed": true
+    }
+  ]
+}

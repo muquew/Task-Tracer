@@ -1,0 +1,884 @@
+{
+  "mode": "local",
+  "started_at": "2026-10-25T21:00:48.187411+00:00",
+  "output": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15",
+  "argv": [
+    "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py",
+    "--mode",
+    "local"
+  ],
+  "source_before": {
+    "runtime": {
+      "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+      "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+      "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+      "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+    },
+    "helpers": {
+      "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+      "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+      "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+      "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+      "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+      "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+    },
+    "driver": {
+      "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+    }
+  },
+  "normal_motion": true,
+  "normal_csp": true,
+  "ignore_https_errors": false,
+  "bypass_csp": false,
+  "fresh_isolated_context_per_combo": true,
+  "runtime_scope": "Five runtime inputs and actual transitive helpers/driver; promotional PNG deliberately not locked.",
+  "runs": [
+    {
+      "engine": "chromium",
+      "browser_version": "154.0.8037.57",
+      "width": 1280,
+      "height": 900,
+      "source_before": {
+        "runtime": {
+          "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+          "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+          "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+          "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+        },
+        "helpers": {
+          "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+          "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+          "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+          "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+          "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+          "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+        },
+        "driver": {
+          "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+        }
+      },
+      "passed": true,
+      "context_closed": true,
+      "checks": {
+        "document": {
+          "url": "http://127.0.0.1:53189/",
+          "status": 200,
+          "index_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "version": "4.15.1",
+          "response_headers": {
+            "content-length": "985633",
+            "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'sha256-zNix3yZucCHuD+EY+bqCci83cIXtaOtdMlQEHSIctok=' 'sha256-a4+lSS8j9v7th/C1LsZTTZBBYYY6a0qxkv7Yr5pk1s8=' 'sha256-nh8+ITWiJcf+4G2RZS+uXpjJ5HvwYj3TPV/DcDDQfWA=' 'sha256-T5J6MZEgCjOJwhoCWNWtnaU4pMauwNJfjzyVJAQ/rZg='; script-src-attr 'none'",
+            "content-type": "text/html",
+            "date": "Sun, 25 Oct 2026 21:00:49 GMT",
+            "last-modified": "Sun, 25 Oct 2026 20:55:44 GMT",
+            "permissions-policy": "camera=(), microphone=(), geolocation=()",
+            "referrer-policy": "strict-origin-when-cross-origin",
+            "server": "SimpleHTTP/0.6 Python/3.12.14",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY"
+          },
+          "security_details": null,
+          "certificate_errors_ignored": false,
+          "bypass_csp": false,
+          "mode": "local",
+          "tls_scope": "Local HTTP; no TLS claim."
+        },
+        "served_runtime": [
+          {
+            "path": "sw.js",
+            "url": "http://127.0.0.1:53189/sw.js",
+            "status": 200,
+            "sha256": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666"
+          },
+          {
+            "path": "resources/en.json",
+            "url": "http://127.0.0.1:53189/resources/en.json",
+            "status": 200,
+            "sha256": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe"
+          },
+          {
+            "path": "resources/zh-CN.json",
+            "url": "http://127.0.0.1:53189/resources/zh-CN.json",
+            "status": 200,
+            "sha256": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+          }
+        ],
+        "tasks_created": 2,
+        "edited_task_id": 1792962735921,
+        "pending_child_saved_once": true,
+        "completed_task_retained": true,
+        "views_exercised": [
+          "calendar",
+          "timeline",
+          "stats",
+          "list"
+        ],
+        "workspace_themes_exercised": [
+          "ocean",
+          "pine",
+          "berry",
+          "iris"
+        ],
+        "appearances_exercised": [
+          "dark",
+          "light"
+        ],
+        "languages_exercised": [
+          "en",
+          "zh-CN"
+        ],
+        "settings_categories_exercised": [
+          "appearance",
+          "data",
+          "experience",
+          "cleanup",
+          "help"
+        ],
+        "backup": {
+          "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/task-tracer_backup_2026-10-25_21-01-06-418.json",
+          "sha256": "daa7f4b77f33f588619478d8aee3ea6743f488483792b68e9fba858d2ee142d8",
+          "checksum": "fnv1a32:457287b5",
+          "checksum_verified_by_original_helper": true,
+          "every_task_field_matches_indexeddb": true
+        },
+        "reload_preserved_every_task_field": true,
+        "physical_device_or_offline_lifecycle_claim": false
+      },
+      "page_errors": [],
+      "source_after": {
+        "runtime": {
+          "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+          "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+          "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+          "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+        },
+        "helpers": {
+          "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+          "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+          "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+          "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+          "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+          "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+        },
+        "driver": {
+          "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+        }
+      },
+      "inputs_unchanged": true,
+      "duration_seconds": 18.399
+    },
+    {
+      "engine": "chromium",
+      "browser_version": "154.0.8037.57",
+      "width": 390,
+      "height": 844,
+      "source_before": {
+        "runtime": {
+          "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+          "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+          "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+          "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+        },
+        "helpers": {
+          "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+          "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+          "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+          "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+          "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+          "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+        },
+        "driver": {
+          "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+        }
+      },
+      "passed": true,
+      "context_closed": true,
+      "checks": {
+        "document": {
+          "url": "http://127.0.0.1:53189/",
+          "status": 200,
+          "index_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "version": "4.15.1",
+          "response_headers": {
+            "content-length": "985633",
+            "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'sha256-zNix3yZucCHuD+EY+bqCci83cIXtaOtdMlQEHSIctok=' 'sha256-a4+lSS8j9v7th/C1LsZTTZBBYYY6a0qxkv7Yr5pk1s8=' 'sha256-nh8+ITWiJcf+4G2RZS+uXpjJ5HvwYj3TPV/DcDDQfWA=' 'sha256-T5J6MZEgCjOJwhoCWNWtnaU4pMauwNJfjzyVJAQ/rZg='; script-src-attr 'none'",
+            "content-type": "text/html",
+            "date": "Sun, 25 Oct 2026 21:01:08 GMT",
+            "last-modified": "Sun, 25 Oct 2026 20:55:44 GMT",
+            "permissions-policy": "camera=(), microphone=(), geolocation=()",
+            "referrer-policy": "strict-origin-when-cross-origin",
+            "server": "SimpleHTTP/0.6 Python/3.12.14",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY"
+          },
+          "security_details": null,
+          "certificate_errors_ignored": false,
+          "bypass_csp": false,
+          "mode": "local",
+          "tls_scope": "Local HTTP; no TLS claim."
+        },
+        "served_runtime": [
+          {
+            "path": "sw.js",
+            "url": "http://127.0.0.1:53189/sw.js",
+            "status": 200,
+            "sha256": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666"
+          },
+          {
+            "path": "resources/en.json",
+            "url": "http://127.0.0.1:53189/resources/en.json",
+            "status": 200,
+            "sha256": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe"
+          },
+          {
+            "path": "resources/zh-CN.json",
+            "url": "http://127.0.0.1:53189/resources/zh-CN.json",
+            "status": 200,
+            "sha256": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+          }
+        ],
+        "tasks_created": 2,
+        "edited_task_id": 1792962384841,
+        "pending_child_saved_once": true,
+        "completed_task_retained": true,
+        "views_exercised": [
+          "calendar",
+          "timeline",
+          "stats",
+          "list"
+        ],
+        "workspace_themes_exercised": [
+          "ocean",
+          "pine",
+          "berry",
+          "iris"
+        ],
+        "appearances_exercised": [
+          "dark",
+          "light"
+        ],
+        "languages_exercised": [
+          "en",
+          "zh-CN"
+        ],
+        "settings_categories_exercised": [
+          "appearance",
+          "data",
+          "experience",
+          "cleanup",
+          "help"
+        ],
+        "backup": {
+          "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-390/task-tracer_backup_2026-10-25_21-01-21-200.json",
+          "sha256": "8b375e65ba99fbc0ee19d6cba273134fbf8c8e75157ae084832d6e7220c42b89",
+          "checksum": "fnv1a32:9bc0c83c",
+          "checksum_verified_by_original_helper": true,
+          "every_task_field_matches_indexeddb": true
+        },
+        "reload_preserved_every_task_field": true,
+        "physical_device_or_offline_lifecycle_claim": false
+      },
+      "page_errors": [],
+      "source_after": {
+        "runtime": {
+          "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+          "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+          "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+          "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+        },
+        "helpers": {
+          "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+          "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+          "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+          "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+          "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+          "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+        },
+        "driver": {
+          "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+        }
+      },
+      "inputs_unchanged": true,
+      "duration_seconds": 14.361
+    },
+    {
+      "engine": "firefox",
+      "browser_version": "153.0",
+      "width": 1280,
+      "height": 900,
+      "source_before": {
+        "runtime": {
+          "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+          "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+          "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+          "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+        },
+        "helpers": {
+          "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+          "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+          "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+          "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+          "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+          "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+        },
+        "driver": {
+          "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+        }
+      },
+      "passed": true,
+      "context_closed": true,
+      "checks": {
+        "document": {
+          "url": "http://127.0.0.1:53189/",
+          "status": 200,
+          "index_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "version": "4.15.1",
+          "response_headers": {
+            "server": "SimpleHTTP/0.6 Python/3.12.14",
+            "date": "Sun, 25 Oct 2026 21:01:23 GMT",
+            "content-type": "text/html",
+            "content-length": "985633",
+            "last-modified": "Sun, 25 Oct 2026 20:55:44 GMT",
+            "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'sha256-zNix3yZucCHuD+EY+bqCci83cIXtaOtdMlQEHSIctok=' 'sha256-a4+lSS8j9v7th/C1LsZTTZBBYYY6a0qxkv7Yr5pk1s8=' 'sha256-nh8+ITWiJcf+4G2RZS+uXpjJ5HvwYj3TPV/DcDDQfWA=' 'sha256-T5J6MZEgCjOJwhoCWNWtnaU4pMauwNJfjzyVJAQ/rZg='; script-src-attr 'none'",
+            "referrer-policy": "strict-origin-when-cross-origin",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY",
+            "permissions-policy": "camera=(), microphone=(), geolocation=()"
+          },
+          "security_details": null,
+          "certificate_errors_ignored": false,
+          "bypass_csp": false,
+          "mode": "local",
+          "tls_scope": "Local HTTP; no TLS claim."
+        },
+        "served_runtime": [
+          {
+            "path": "sw.js",
+            "url": "http://127.0.0.1:53189/sw.js",
+            "status": 200,
+            "sha256": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666"
+          },
+          {
+            "path": "resources/en.json",
+            "url": "http://127.0.0.1:53189/resources/en.json",
+            "status": 200,
+            "sha256": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe"
+          },
+          {
+            "path": "resources/zh-CN.json",
+            "url": "http://127.0.0.1:53189/resources/zh-CN.json",
+            "status": 200,
+            "sha256": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+          }
+        ],
+        "tasks_created": 2,
+        "edited_task_id": 1792962637614,
+        "pending_child_saved_once": true,
+        "completed_task_retained": true,
+        "views_exercised": [
+          "calendar",
+          "timeline",
+          "stats",
+          "list"
+        ],
+        "workspace_themes_exercised": [
+          "ocean",
+          "pine",
+          "berry",
+          "iris"
+        ],
+        "appearances_exercised": [
+          "dark",
+          "light"
+        ],
+        "languages_exercised": [
+          "en",
+          "zh-CN"
+        ],
+        "settings_categories_exercised": [
+          "appearance",
+          "data",
+          "experience",
+          "cleanup",
+          "help"
+        ],
+        "backup": {
+          "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-1280/task-tracer_backup_2026-10-25_21-01-41-154.json",
+          "sha256": "b6ee90d57657d7e379857b11cdf1a7cad9d7f112292968badb67b71575558662",
+          "checksum": "fnv1a32:5279cd5c",
+          "checksum_verified_by_original_helper": true,
+          "every_task_field_matches_indexeddb": true
+        },
+        "reload_preserved_every_task_field": true,
+        "physical_device_or_offline_lifecycle_claim": false
+      },
+      "page_errors": [],
+      "source_after": {
+        "runtime": {
+          "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+          "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+          "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+          "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+        },
+        "helpers": {
+          "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+          "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+          "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+          "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+          "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+          "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+        },
+        "driver": {
+          "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+        }
+      },
+      "inputs_unchanged": true,
+      "duration_seconds": 19.535
+    },
+    {
+      "engine": "firefox",
+      "browser_version": "153.0",
+      "width": 390,
+      "height": 844,
+      "source_before": {
+        "runtime": {
+          "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+          "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+          "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+          "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+        },
+        "helpers": {
+          "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+          "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+          "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+          "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+          "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+          "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+        },
+        "driver": {
+          "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+        }
+      },
+      "passed": true,
+      "context_closed": true,
+      "checks": {
+        "document": {
+          "url": "http://127.0.0.1:53189/",
+          "status": 200,
+          "index_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "version": "4.15.1",
+          "response_headers": {
+            "server": "SimpleHTTP/0.6 Python/3.12.14",
+            "date": "Sun, 25 Oct 2026 21:01:42 GMT",
+            "content-type": "text/html",
+            "content-length": "985633",
+            "last-modified": "Sun, 25 Oct 2026 20:55:44 GMT",
+            "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'sha256-zNix3yZucCHuD+EY+bqCci83cIXtaOtdMlQEHSIctok=' 'sha256-a4+lSS8j9v7th/C1LsZTTZBBYYY6a0qxkv7Yr5pk1s8=' 'sha256-nh8+ITWiJcf+4G2RZS+uXpjJ5HvwYj3TPV/DcDDQfWA=' 'sha256-T5J6MZEgCjOJwhoCWNWtnaU4pMauwNJfjzyVJAQ/rZg='; script-src-attr 'none'",
+            "referrer-policy": "strict-origin-when-cross-origin",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY",
+            "permissions-policy": "camera=(), microphone=(), geolocation=()"
+          },
+          "security_details": null,
+          "certificate_errors_ignored": false,
+          "bypass_csp": false,
+          "mode": "local",
+          "tls_scope": "Local HTTP; no TLS claim."
+        },
+        "served_runtime": [
+          {
+            "path": "sw.js",
+            "url": "http://127.0.0.1:53189/sw.js",
+            "status": 200,
+            "sha256": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666"
+          },
+          {
+            "path": "resources/en.json",
+            "url": "http://127.0.0.1:53189/resources/en.json",
+            "status": 200,
+            "sha256": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe"
+          },
+          {
+            "path": "resources/zh-CN.json",
+            "url": "http://127.0.0.1:53189/resources/zh-CN.json",
+            "status": 200,
+            "sha256": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+          }
+        ],
+        "tasks_created": 2,
+        "edited_task_id": 1792962138721,
+        "pending_child_saved_once": true,
+        "completed_task_retained": true,
+        "views_exercised": [
+          "calendar",
+          "timeline",
+          "stats",
+          "list"
+        ],
+        "workspace_themes_exercised": [
+          "ocean",
+          "pine",
+          "berry",
+          "iris"
+        ],
+        "appearances_exercised": [
+          "dark",
+          "light"
+        ],
+        "languages_exercised": [
+          "en",
+          "zh-CN"
+        ],
+        "settings_categories_exercised": [
+          "appearance",
+          "data",
+          "experience",
+          "cleanup",
+          "help"
+        ],
+        "backup": {
+          "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/firefox-390/task-tracer_backup_2026-10-25_21-01-56-967.json",
+          "sha256": "7f8c5895effc6495a919ff543789de0eef9c68037291c3406fe19777e73451b1",
+          "checksum": "fnv1a32:873900b2",
+          "checksum_verified_by_original_helper": true,
+          "every_task_field_matches_indexeddb": true
+        },
+        "reload_preserved_every_task_field": true,
+        "physical_device_or_offline_lifecycle_claim": false
+      },
+      "page_errors": [],
+      "source_after": {
+        "runtime": {
+          "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+          "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+          "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+          "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+        },
+        "helpers": {
+          "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+          "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+          "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+          "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+          "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+          "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+        },
+        "driver": {
+          "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+        }
+      },
+      "inputs_unchanged": true,
+      "duration_seconds": 15.683
+    },
+    {
+      "engine": "webkit",
+      "browser_version": "26.5",
+      "width": 1280,
+      "height": 900,
+      "source_before": {
+        "runtime": {
+          "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+          "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+          "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+          "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+        },
+        "helpers": {
+          "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+          "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+          "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+          "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+          "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+          "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+        },
+        "driver": {
+          "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+        }
+      },
+      "passed": true,
+      "context_closed": true,
+      "checks": {
+        "document": {
+          "url": "http://127.0.0.1:53189/",
+          "status": 200,
+          "index_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "version": "4.15.1",
+          "response_headers": {
+            "date": "Sun, 25 Oct 2026 21:01:58 GMT",
+            "content-type": "text/html",
+            "content-length": "985633",
+            "last-modified": "Sun, 25 Oct 2026 20:55:44 GMT",
+            "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'sha256-zNix3yZucCHuD+EY+bqCci83cIXtaOtdMlQEHSIctok=' 'sha256-a4+lSS8j9v7th/C1LsZTTZBBYYY6a0qxkv7Yr5pk1s8=' 'sha256-nh8+ITWiJcf+4G2RZS+uXpjJ5HvwYj3TPV/DcDDQfWA=' 'sha256-T5J6MZEgCjOJwhoCWNWtnaU4pMauwNJfjzyVJAQ/rZg='; script-src-attr 'none'",
+            "referrer-policy": "strict-origin-when-cross-origin",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY",
+            "server": "SimpleHTTP/0.6 Python/3.12.14",
+            "permissions-policy": "camera=(), microphone=(), geolocation=()"
+          },
+          "security_details": null,
+          "certificate_errors_ignored": false,
+          "bypass_csp": false,
+          "mode": "local",
+          "tls_scope": "Local HTTP; no TLS claim."
+        },
+        "served_runtime": [
+          {
+            "path": "sw.js",
+            "url": "http://127.0.0.1:53189/sw.js",
+            "status": 200,
+            "sha256": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666"
+          },
+          {
+            "path": "resources/en.json",
+            "url": "http://127.0.0.1:53189/resources/en.json",
+            "status": 200,
+            "sha256": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe"
+          },
+          {
+            "path": "resources/zh-CN.json",
+            "url": "http://127.0.0.1:53189/resources/zh-CN.json",
+            "status": 200,
+            "sha256": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+          }
+        ],
+        "tasks_created": 2,
+        "edited_task_id": 1792962211235,
+        "pending_child_saved_once": true,
+        "completed_task_retained": true,
+        "views_exercised": [
+          "calendar",
+          "timeline",
+          "stats",
+          "list"
+        ],
+        "workspace_themes_exercised": [
+          "ocean",
+          "pine",
+          "berry",
+          "iris"
+        ],
+        "appearances_exercised": [
+          "dark",
+          "light"
+        ],
+        "languages_exercised": [
+          "en",
+          "zh-CN"
+        ],
+        "settings_categories_exercised": [
+          "appearance",
+          "data",
+          "experience",
+          "cleanup",
+          "help"
+        ],
+        "backup": {
+          "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-1280/task-tracer_backup_2026-10-25_21-02-20-726.json",
+          "sha256": "37a84a5e164ca537eab03f08f941606df7036684f4d4f05276617a917af2dd32",
+          "checksum": "fnv1a32:7e5a733c",
+          "checksum_verified_by_original_helper": true,
+          "every_task_field_matches_indexeddb": true
+        },
+        "reload_preserved_every_task_field": true,
+        "physical_device_or_offline_lifecycle_claim": false
+      },
+      "page_errors": [],
+      "source_after": {
+        "runtime": {
+          "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+          "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+          "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+          "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+        },
+        "helpers": {
+          "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+          "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+          "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+          "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+          "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+          "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+        },
+        "driver": {
+          "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+        }
+      },
+      "inputs_unchanged": true,
+      "duration_seconds": 23.314
+    },
+    {
+      "engine": "webkit",
+      "browser_version": "26.5",
+      "width": 390,
+      "height": 844,
+      "source_before": {
+        "runtime": {
+          "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+          "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+          "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+          "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+        },
+        "helpers": {
+          "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+          "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+          "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+          "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+          "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+          "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+        },
+        "driver": {
+          "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+        }
+      },
+      "passed": true,
+      "context_closed": true,
+      "checks": {
+        "document": {
+          "url": "http://127.0.0.1:53189/",
+          "status": 200,
+          "index_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "version": "4.15.1",
+          "response_headers": {
+            "date": "Sun, 25 Oct 2026 21:02:21 GMT",
+            "content-type": "text/html",
+            "content-length": "985633",
+            "last-modified": "Sun, 25 Oct 2026 20:55:44 GMT",
+            "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'sha256-zNix3yZucCHuD+EY+bqCci83cIXtaOtdMlQEHSIctok=' 'sha256-a4+lSS8j9v7th/C1LsZTTZBBYYY6a0qxkv7Yr5pk1s8=' 'sha256-nh8+ITWiJcf+4G2RZS+uXpjJ5HvwYj3TPV/DcDDQfWA=' 'sha256-T5J6MZEgCjOJwhoCWNWtnaU4pMauwNJfjzyVJAQ/rZg='; script-src-attr 'none'",
+            "referrer-policy": "strict-origin-when-cross-origin",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY",
+            "server": "SimpleHTTP/0.6 Python/3.12.14",
+            "permissions-policy": "camera=(), microphone=(), geolocation=()"
+          },
+          "security_details": null,
+          "certificate_errors_ignored": false,
+          "bypass_csp": false,
+          "mode": "local",
+          "tls_scope": "Local HTTP; no TLS claim."
+        },
+        "served_runtime": [
+          {
+            "path": "sw.js",
+            "url": "http://127.0.0.1:53189/sw.js",
+            "status": 200,
+            "sha256": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666"
+          },
+          {
+            "path": "resources/en.json",
+            "url": "http://127.0.0.1:53189/resources/en.json",
+            "status": 200,
+            "sha256": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe"
+          },
+          {
+            "path": "resources/zh-CN.json",
+            "url": "http://127.0.0.1:53189/resources/zh-CN.json",
+            "status": 200,
+            "sha256": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+          }
+        ],
+        "tasks_created": 2,
+        "edited_task_id": 1792962424304,
+        "pending_child_saved_once": true,
+        "completed_task_retained": true,
+        "views_exercised": [
+          "calendar",
+          "timeline",
+          "stats",
+          "list"
+        ],
+        "workspace_themes_exercised": [
+          "ocean",
+          "pine",
+          "berry",
+          "iris"
+        ],
+        "appearances_exercised": [
+          "dark",
+          "light"
+        ],
+        "languages_exercised": [
+          "en",
+          "zh-CN"
+        ],
+        "settings_categories_exercised": [
+          "appearance",
+          "data",
+          "experience",
+          "cleanup",
+          "help"
+        ],
+        "backup": {
+          "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/task-tracer_backup_2026-10-25_21-02-38-646.json",
+          "sha256": "faf110d58d12362aa2664f33d3758ccbaeb8b5125e9b1f7009d683aa657b4897",
+          "checksum": "fnv1a32:0ec334ed",
+          "checksum_verified_by_original_helper": true,
+          "every_task_field_matches_indexeddb": true
+        },
+        "reload_preserved_every_task_field": true,
+        "physical_device_or_offline_lifecycle_claim": false
+      },
+      "page_errors": [],
+      "source_after": {
+        "runtime": {
+          "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+          "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+          "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+          "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+          "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+        },
+        "helpers": {
+          "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+          "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+          "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+          "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+          "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+          "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+        },
+        "driver": {
+          "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+        }
+      },
+      "inputs_unchanged": true,
+      "duration_seconds": 17.817
+    }
+  ],
+  "browsers_closed": {
+    "chromium": true,
+    "firefox": true,
+    "webkit": true
+  },
+  "server_closed": true,
+  "passed": true,
+  "base_url": "http://127.0.0.1:53189/",
+  "source_after": {
+    "runtime": {
+      "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+      "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+      "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+      "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+    },
+    "helpers": {
+      "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+      "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+      "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+      "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+      "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+      "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+    },
+    "driver": {
+      "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+    }
+  },
+  "inputs_unchanged": true,
+  "finished_at": "2026-10-25T21:02:39.828701+00:00"
+}

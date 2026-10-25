@@ -1,0 +1,55 @@
+{
+  "tasks": [
+    {
+      "id": 1792969686877,
+      "createdAt": "2026-10-25T22:52:47.595Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "Independent Firefox reload evidence",
+      "description": "Created through the actual UI for one isolated reload diagnostic.",
+      "project": "Inbox",
+      "tags": [],
+      "subtasks": [],
+      "dueDate": null,
+      "dueAt": null,
+      "dueLocalDate": null,
+      "dueLocalTime": null,
+      "dueTimeZone": null,
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 10000
+    }
+  ],
+  "config": [
+    {
+      "key": "language",
+      "value": "en"
+    },
+    {
+      "key": "recoveryHistory",
+      "value": [
+        {
+          "id": "bc0d74c9-6c63-43d3-b90a-a1da576382a2",
+          "createdAt": "2026-10-25T22:52:47.596Z",
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "key": "taskRevision",
+      "value": 1
+    }
+  ]
+}

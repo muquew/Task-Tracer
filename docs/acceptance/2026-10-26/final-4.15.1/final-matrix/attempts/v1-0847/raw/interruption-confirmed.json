@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-25T19:29:11.040300+00:00",
+  "stage": "withdrawn0847_original_final_attempt",
+  "reason": "Root revoked final freeze to fix calendar detail pagination accessible-name mismatch; original native reports remain interrupted.",
+  "engines": {
+    "chromium": {
+      "native_status": "interrupted",
+      "completed": false,
+      "passed": false,
+      "invoked_completed_programs": 1,
+      "source_unchanged": true,
+      "verification_unchanged": true,
+      "worker_group_alive": false,
+      "original_report_sha256": "311f7ad90b40ead7d49e991605e706c40f269b2e65f83fd97ffaa4f7f99f0395"
+    },
+    "firefox": {
+      "native_status": "interrupted",
+      "completed": false,
+      "passed": false,
+      "invoked_completed_programs": 0,
+      "source_unchanged": true,
+      "verification_unchanged": true,
+      "worker_group_alive": false,
+      "original_report_sha256": "0b75c653f97af877b32c26038c23246be9af7e57f0da5085230158f574b83558"
+    }
+  },
+  "final_webkit_started": false
+}

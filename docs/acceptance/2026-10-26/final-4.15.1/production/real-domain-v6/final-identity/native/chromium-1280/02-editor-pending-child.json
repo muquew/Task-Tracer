@@ -1,0 +1,31 @@
+{
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "document": {
+    "width": 1280,
+    "height": 900
+  },
+  "title": "Task Tracer",
+  "language": "en",
+  "theme": "light",
+  "accent": "iris",
+  "currentView": "list",
+  "active": {
+    "id": "subtaskInput",
+    "tag": "INPUT"
+  },
+  "headings": [
+    "Projects",
+    "All tasks",
+    "October 2026",
+    "Upcoming",
+    "Edit task"
+  ],
+  "settingsVisible": false,
+  "reducedMotion": false,
+  "page_errors_so_far": [],
+  "source_index_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+  "visual_review": "Action capture only; no automatic claim of human screenshot review."
+}

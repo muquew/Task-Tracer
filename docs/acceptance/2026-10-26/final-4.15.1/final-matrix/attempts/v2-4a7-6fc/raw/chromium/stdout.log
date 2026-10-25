@@ -1,0 +1,10 @@
+chromium 154.0.8037.57: starting 33 registered programs
+Running chromium: compatibility_playwright.py
+chromium: compatibility_playwright.py exited 0 in 28.230s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-matrix-v2/chromium/native-report-logs/cee8a39d-52d5-4336-8dbd-99a7cbf17961/chromium-compatibility_playwright.log)
+Running chromium: appearance_preferences_playwright.py
+chromium: appearance_preferences_playwright.py exited 0 in 90.662s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-matrix-v2/chromium/native-report-logs/cee8a39d-52d5-4336-8dbd-99a7cbf17961/chromium-appearance_preferences_playwright.log)
+Running chromium: settings_navigation_playwright.py
+chromium: settings_navigation_playwright.py exited 0 in 83.427s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-matrix-v2/chromium/native-report-logs/cee8a39d-52d5-4336-8dbd-99a7cbf17961/chromium-settings_navigation_playwright.log)
+Running chromium: csv_playwright.py
+chromium: csv_playwright.py exited 0 in 19.398s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-matrix-v2/chromium/native-report-logs/cee8a39d-52d5-4336-8dbd-99a7cbf17961/chromium-csv_playwright.log)
+Running chromium: backup_freshness_playwright.py

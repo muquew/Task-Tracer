@@ -1,0 +1,35 @@
+{
+  "command": [
+    "python",
+    "tools/settings_flow_playwright.py"
+  ],
+  "exit_code": 0,
+  "stdout": {
+    "passed": true,
+    "runs": 4,
+    "report": "/tmp/task-tracer-settings-flow/dc40d47e3f104204ba69f3676d891171/report.json"
+  },
+  "native_report_copied_without_changes": true,
+  "native_files": {
+    "native/report.json": "2b6fa6d6ea3c85d0048869be0f71dfead5a351bce879eb2fba39126ef5c06dba",
+    "native/1440-import-modes-and-settings/02-merge-outcome.png": "1f91558611aeb24f7ce1dd52d8282e5b6f9927bc1989146ea8de0c41d3fd027b",
+    "native/1440-import-modes-and-settings/task-tracer_backup_2026-10-25_19-24-44-442.json": "401855918bbcc3c1f7d007ecc5e607b07b296b1c21ed4f476e953f9129340d18",
+    "native/1440-import-modes-and-settings/01-replace-default.png": "52dbefcc328657de9fafecce1d50f48b2a974d25d25350c874e750709b3e19a5",
+    "native/1440-import-modes-and-settings/after-preview.json": "e40f8ae3c782577e4f1153a53de0bc12b3652ed9e8649acbb4dbe6fad9b2eb0f",
+    "native/1440-import-modes-and-settings/before-preview.json": "e40f8ae3c782577e4f1153a53de0bc12b3652ed9e8649acbb4dbe6fad9b2eb0f",
+    "native/390-import-modes-and-settings/02-merge-outcome.png": "d3a6b1c99eb047f5ae3ab5f2a552f7bf1146afde3f91295d3fadf8afc1552a25",
+    "native/390-import-modes-and-settings/task-tracer_backup_2026-10-25_19-24-53-709.json": "7c1ba99e068586f87a4a3797445a71253a479f895632d81224e020aa6d489a87",
+    "native/390-import-modes-and-settings/01-replace-default.png": "862083d7dd3f43db8628a4569c7531c63c0c1222baa34b3d29610087942b9817",
+    "native/390-import-modes-and-settings/after-preview.json": "8fc04fa6c2e1bf048bcc42abc61196d46827fd776840e908daa576e67606410c",
+    "native/390-import-modes-and-settings/before-preview.json": "8fc04fa6c2e1bf048bcc42abc61196d46827fd776840e908daa576e67606410c",
+    "native/390-recovery-consent/02-restored-exact-records.png": "9afb4155262b62a84bdcdc3a2347d12168ffac682233c8e5c5e484301bec98f2",
+    "native/390-recovery-consent/01-unchecked-disabled.png": "9669e741c14cfbee90e1e30ce6e604b63a7034fa78c4307f0ba4b6733a2eb7ca",
+    "native/390-recovery-consent/before-recovery.json": "4c8f7deca43fcf5b0777da9c92335dcaf942b8396a328b5f2eba154a91d3be07",
+    "native/390-recovery-consent/after-recovery.json": "7b1ab171f85d6c93656b7010e8876c976fab94226a996376b00d7af7511936d8",
+    "native/1440-recovery-consent/02-restored-exact-records.png": "5dce1acb1af0247717adea7a61b30551295e088682b1b4c93a1a82fad83e83df",
+    "native/1440-recovery-consent/01-unchecked-disabled.png": "bc429b7e9189d8a4cd37f61b03537044b4b58ac8d69c07a8af35062251d0406b",
+    "native/1440-recovery-consent/before-recovery.json": "9a5d7e6a8b87b3fbb1bccced4a248f0fc3724394071856b90e8e058ce7842f8e",
+    "native/1440-recovery-consent/after-recovery.json": "873f67ca16af2ab3eaf367eb3b76b6d86be04ed8e85961de498d55f732d209dc"
+  },
+  "notes": "Native no-argument CLI. Original output path is per-run UUID. Browser and server cleanup fields retained in native report."
+}

@@ -1,0 +1,45 @@
+{
+  "kind": "read_only_document_review",
+  "captured_at_utc": "2026-10-25T18:48:19.357995+00:00",
+  "initial_head": "54b95cce891d167617d42bc489cdc801317f00c5",
+  "read_head": "54b95cce891d167617d42bc489cdc801317f00c5",
+  "file_sha256": {
+    "README.md": "29df223ee1f09746be6bb46a487ab6ae479a6a00aff076f25d229544c183de3e",
+    "README_zh_cn.md": "9e228e763e1242f219eed3bfc92756bb5f231bd12dc1f40dc7cf64848dd0fdc4",
+    "CONTRIBUTING.md": "5d44506e028b26e4101d19ecf8b64cb53d7d42f377d4e754db6f62672d20625f",
+    "SUPPORT.md": "1cb6e1861e524b9e435b9bf52053df7756bf66be54e1bfedd04b78cc046d8ad7",
+    "SECURITY.md": "83bc7afe50f68ce7140c36fa842e1fffcbd23ae0596b9d5137be5bd8d1013dca",
+    "LICENSE": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+    "THIRD_PARTY_NOTICES.md": "a49db18583d3f275de394c74e3c5db9142979ab713fdfd1ac69488236c1d9bf9",
+    "docs/distribution.md": "7879df983dce7836914d6e8e871a5c6d52177187900f76335e5abc354e89d15f",
+    "docs/distribution_zh_cn.md": "90c6ea687f214b88fb412c57477e73d0e91212899788b0a9842d5bb798a03fcc",
+    "docs/product-roadmap.md": "056970cc7e942be563faf2b0e635f5d8a4ce1af848139b8779687dc6786e3f07",
+    "docs/manual-device-checklist.md": "25bd226eeb5fbe2459669bc7855466ee45083b5776b91965134a0537f0a5d92d",
+    "docs/browser-compatibility.md": "25371bdfcfd844bfe1f6234338316dbe4a2fe126f475ce1afd9f8c68eae0bf6f",
+    "docs/performance.md": "50e4ff7297d104ae51c07ea946133b4627d791fe0a4110cdba22c8a28964c1ff",
+    "docs/commercial-plan.md": "75a377ec4939faffb4f98facfcf026ec0d9277f7af27c3f130a3840fac2218e1",
+    "docs/commercial-launch-draft.md": "3e20f859dcb929eef163234db90c9c3f4429f63f0197affb4f0a6cddcafb400b",
+    ".github/workflows/checks.yml": "75ff88cb2daeb6887bd0a804a46ace7e64dc85a3240166d5714484aa58f1f7cc"
+  },
+  "checked_relative_markdown_file_targets": 351,
+  "missing_file_targets": [],
+  "current_registered_programs": {
+    "static": 7,
+    "browser": 66,
+    "total": 73
+  },
+  "findings": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 5
+  },
+  "not_run": [
+    "browser audit",
+    "physical devices",
+    "external URL availability",
+    "anchor validation",
+    "remote CI",
+    "paid distribution"
+  ],
+  "repo_files_edited": false
+}

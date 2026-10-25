@@ -1,0 +1,67 @@
+webkit 26.5: starting 33 registered programs
+Running webkit: compatibility_playwright.py
+webkit: compatibility_playwright.py exited 0 in 21.231s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-compatibility_playwright.log)
+Running webkit: appearance_preferences_playwright.py
+webkit: appearance_preferences_playwright.py exited 0 in 94.446s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-appearance_preferences_playwright.log)
+Running webkit: settings_navigation_playwright.py
+webkit: settings_navigation_playwright.py exited 0 in 66.171s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-settings_navigation_playwright.log)
+Running webkit: csv_playwright.py
+webkit: csv_playwright.py exited 0 in 11.687s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-csv_playwright.log)
+Running webkit: backup_freshness_playwright.py
+webkit: backup_freshness_playwright.py exited 0 in 13.723s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-backup_freshness_playwright.log)
+Running webkit: backup_reminder_priority_playwright.py
+webkit: backup_reminder_priority_playwright.py exited 0 in 7.044s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-backup_reminder_priority_playwright.log)
+Running webkit: project_scope_playwright.py
+webkit: project_scope_playwright.py exited 1 in 36.662s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-project_scope_playwright.log)
+Running webkit: task_draft_playwright.py
+webkit: task_draft_playwright.py exited 0 in 39.800s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-task_draft_playwright.log)
+Running webkit: quick_add_recovery_playwright.py
+webkit: quick_add_recovery_playwright.py exited 0 in 19.427s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-quick_add_recovery_playwright.log)
+Running webkit: quick_add_date_playwright.py
+webkit: quick_add_date_playwright.py exited 0 in 75.999s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-quick_add_date_playwright.log)
+Running webkit: imported_text_edit_playwright.py
+webkit: imported_text_edit_playwright.py exited 0 in 105.487s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-imported_text_edit_playwright.log)
+Running webkit: imported_reminder_edit_playwright.py
+webkit: imported_reminder_edit_playwright.py exited 0 in 77.025s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-imported_reminder_edit_playwright.log)
+Running webkit: repeat_lineage_playwright.py
+webkit: repeat_lineage_playwright.py exited 0 in 66.255s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-repeat_lineage_playwright.log)
+Running webkit: repeat_delete_playwright.py
+webkit: repeat_delete_playwright.py exited 1 in 41.057s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-repeat_delete_playwright.log)
+Running webkit: repeat_merge_playwright.py
+webkit: repeat_merge_playwright.py exited 1 in 82.297s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-repeat_merge_playwright.log)
+Running webkit: dialog_lifecycle_playwright.py
+webkit: dialog_lifecycle_playwright.py exited 0 in 17.492s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-dialog_lifecycle_playwright.log)
+Running webkit: onboarding_playwright.py
+webkit: onboarding_playwright.py exited 1 in 7.137s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-onboarding_playwright.log)
+Running webkit: help_playwright.py
+webkit: help_playwright.py exited 1 in 9.990s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-help_playwright.log)
+Running webkit: ime_input_playwright.py
+webkit: ime_input_playwright.py exited 0 in 21.836s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-ime_input_playwright.log)
+Running webkit: batch_selection_playwright.py
+webkit: batch_selection_playwright.py exited 0 in 34.521s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-batch_selection_playwright.log)
+Running webkit: workspace_failure_playwright.py
+webkit: workspace_failure_playwright.py exited 0 in 48.376s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-workspace_failure_playwright.log)
+Running webkit: calendar_performance_playwright.py
+webkit: calendar_performance_playwright.py exited 1 in 57.807s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-calendar_performance_playwright.log)
+Running webkit: calendar_navigation_playwright.py
+webkit: calendar_navigation_playwright.py exited 0 in 16.151s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-calendar_navigation_playwright.log)
+Running webkit: calendar_timezone_playwright.py
+webkit: calendar_timezone_playwright.py exited 0 in 9.394s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-calendar_timezone_playwright.log)
+Running webkit: recovery_management_playwright.py
+webkit: recovery_management_playwright.py exited 0 in 31.324s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-recovery_management_playwright.log)
+Running webkit: views_portability_playwright.py
+webkit: views_portability_playwright.py exited 0 in 20.694s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-views_portability_playwright.log)
+Running webkit: views_delete_playwright.py
+webkit: views_delete_playwright.py exited 0 in 27.285s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-views_delete_playwright.log)
+Running webkit: timezone_playwright.py
+webkit: timezone_playwright.py exited 0 in 7.919s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-timezone_playwright.log)
+Running webkit: dst_wall_time_playwright.py
+webkit: dst_wall_time_playwright.py exited 0 in 27.624s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-dst_wall_time_playwright.log)
+Running webkit: foreign_wall_time_playwright.py
+webkit: foreign_wall_time_playwright.py exited 0 in 39.191s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-foreign_wall_time_playwright.log)
+Running webkit: recurrence_timezone_playwright.py
+webkit: recurrence_timezone_playwright.py exited 0 in 66.826s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-recurrence_timezone_playwright.log)
+Running webkit: time_refresh_playwright.py
+webkit: time_refresh_playwright.py exited 1 in 16.999s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-time_refresh_playwright.log)
+Running webkit: stats_scope_playwright.py
+webkit: stats_scope_playwright.py exited 0 in 8.215s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-stats_scope_playwright.log)

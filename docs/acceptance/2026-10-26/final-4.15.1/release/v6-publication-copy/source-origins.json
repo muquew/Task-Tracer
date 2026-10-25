@@ -1,0 +1,36 @@
+{
+  "copied_originals": {
+    "execution-receipt.json": {
+      "source": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/copy-execution/df4c3bf8-86b5-4c98-b65f-4a9abd99b8b9/receipt.json",
+      "bytes": 39353,
+      "sha256": "03f4c2677b6ea223aec9af1b5cb1592cd033e8c673478097fefbb18aeccb961f",
+      "byte_identical_to_original": true
+    },
+    "copy-driver.py": {
+      "source": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/copy-execution/df4c3bf8-86b5-4c98-b65f-4a9abd99b8b9/driver.py",
+      "bytes": 9062,
+      "sha256": "165467a014a3c9288e0db9b0c36b102ecc490e5dec5cc7c82b5b4da8c9dba5e4",
+      "byte_identical_to_original": true
+    },
+    "original-files.json": {
+      "source": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/copy-execution/df4c3bf8-86b5-4c98-b65f-4a9abd99b8b9/files.json",
+      "bytes": 251,
+      "sha256": "aad73e4a04c15df0b404387a84e44ea05d4c8edcf0f767acb03458e8394c6083",
+      "byte_identical_to_original": true
+    }
+  },
+  "derived_files": {
+    "distribution-integrity.json": {
+      "source_zip": "/workspace/Task-Tracer/downloads/task-tracer-4.15.1.zip",
+      "source_entry": "integrity.json",
+      "sha256": "d19f377de151b1ddb40db5925557d57b382e486d5633ac0150ed5d570892dfcb"
+    },
+    "four-file-copy-summary.json": {
+      "derived_from": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/copy-execution/df4c3bf8-86b5-4c98-b65f-4a9abd99b8b9/receipt.json"
+    },
+    "README.md": {
+      "derived_from": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/release-proof/v6/copy-execution/df4c3bf8-86b5-4c98-b65f-4a9abd99b8b9/receipt.json"
+    }
+  },
+  "scope": "Only this new publication-copy evidence directory; no old candidate manifest or evidence changed."
+}

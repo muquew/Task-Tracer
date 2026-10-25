@@ -1,0 +1,106 @@
+{
+  "tasks": [
+    {
+      "id": 1792954970068,
+      "createdAt": "2026-10-25T19:00:02.506Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": true,
+      "name": "空自定义周期不得静默变为每天",
+      "description": "第一行原始描述。\n第二行保留。",
+      "project": "编辑安全审查",
+      "tags": [
+        "review",
+        "tag, with comma"
+      ],
+      "subtasks": [
+        {
+          "id": 1792955071397,
+          "text": "验证失败仍保留的行内子任务",
+          "completed": false
+        },
+        {
+          "id": 1792955692413,
+          "text": "仍在输入框中的子任务",
+          "completed": false
+        }
+      ],
+      "dueDate": "2032-05-06T16:35:00.000Z",
+      "dueAt": "2032-05-06T16:35:00.000Z",
+      "dueLocalDate": "2032-05-06",
+      "dueLocalTime": "16:35",
+      "dueTimeZone": "UTC",
+      "reminderOffset": 60,
+      "reminderRepeat": 15,
+      "repeatType": "custom",
+      "repeatInterval": 5,
+      "order": 20000
+    },
+    {
+      "id": 1792955560604,
+      "createdAt": "2026-10-25T18:59:57.701Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "安全回归哨兵",
+      "description": "所有其它记录必须保持",
+      "project": "Inbox",
+      "tags": [],
+      "subtasks": [
+        {
+          "id": 1792955644509,
+          "text": "保留此ID与内容",
+          "completed": false
+        }
+      ],
+      "dueDate": null,
+      "dueAt": null,
+      "dueLocalDate": null,
+      "dueLocalTime": null,
+      "dueTimeZone": null,
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 10000
+    }
+  ],
+  "config": [
+    {
+      "key": "language",
+      "value": "zh-CN"
+    },
+    {
+      "key": "recoveryHistory",
+      "value": [
+        {
+          "id": "ec463bb4-a2e4-4510-b61b-029700237c9d",
+          "createdAt": "2026-10-25T18:59:57.714Z",
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "key": "taskRevision",
+      "value": 2
+    }
+  ]
+}

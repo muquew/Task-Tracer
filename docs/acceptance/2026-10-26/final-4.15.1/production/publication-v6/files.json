@@ -1,0 +1,75 @@
+{
+  "scope": "All files in this publication-v6 archive except this files.json; original receipts and sidecar remain byte-identical",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3627,
+      "sha256": "a525e6abf4fd0c3f3e392b19345821e1d7c2758a90ab4c4f19f7775ea6234a6c"
+    },
+    {
+      "path": "attempt-001.json",
+      "bytes": 3548,
+      "sha256": "95764b3045f2cf20bdd564cee74ce2f72a43f4d56fc4868efe6bcce6707a78ff"
+    },
+    {
+      "path": "copy-execution-receipt.json",
+      "bytes": 39353,
+      "sha256": "03f4c2677b6ea223aec9af1b5cb1592cd033e8c673478097fefbb18aeccb961f"
+    },
+    {
+      "path": "freeze-inputs-v6.json",
+      "bytes": 12351,
+      "sha256": "f2c62095210b338ab126286ba8b7d62adefb05743269d8f3fc84179872a34a22"
+    },
+    {
+      "path": "native-verifier-source.py",
+      "bytes": 4300,
+      "sha256": "c21aa60543f118b9d6d7d96b94b393816560f69737c53f58891c4ea1bfe43396"
+    },
+    {
+      "path": "omitted-package.json",
+      "bytes": 719,
+      "sha256": "57df0094145406a87a1763f80a3258b86b6d32df999cd750808deb64f2312f91"
+    },
+    {
+      "path": "previous-package-unchanged.json",
+      "bytes": 781,
+      "sha256": "70d6f22ca52aee94abefc5213c7361bf469bddac2106722f6e982c5a1b7c426e"
+    },
+    {
+      "path": "public-package-receipt.json",
+      "bytes": 1751,
+      "sha256": "ef60ff00bc773bc12b96417beb648bce55539b41ba4224c98c1dfb405f627763"
+    },
+    {
+      "path": "publication-transition.json",
+      "bytes": 1407,
+      "sha256": "5f089aec3f0e9cc5418b638f4e1afd407e3f17e4298f73532ce2d811176bdd54"
+    },
+    {
+      "path": "published-input-maps.json",
+      "bytes": 12262,
+      "sha256": "39dd14922dcf3a95e6ac23051ff6270647d09e28d19edeac298dcd5996652fea"
+    },
+    {
+      "path": "source-origin.json",
+      "bytes": 4652,
+      "sha256": "6ab60b1f2c65faa071e048ea5946d45d967ccbe2593099a2681b29f9ca815ffb"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 3008,
+      "sha256": "93cc8888d3bbf05d3620277639270351ff1c326f56b787332687705279453455"
+    },
+    {
+      "path": "task-tracer-4.15.1.zip.sha256",
+      "bytes": 89,
+      "sha256": "8cc365b19b759f6833dc922cf8917e4654957417fc298a083801df98126b94bc"
+    },
+    {
+      "path": "verify.py",
+      "bytes": 2654,
+      "sha256": "6b82fe74c69138570759664ce3d8127c7a166f6418a2d32a675d979c473391fc"
+    }
+  ]
+}

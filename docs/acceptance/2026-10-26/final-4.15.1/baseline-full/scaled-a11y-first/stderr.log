@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer/tools/accessibility_i18n_audit.py", line 784, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/workspace/Task-Tracer/tools/accessibility_i18n_audit.py", line 776, in main
+    audit_context(local_url, axe_source, reduced_motion=reduced, include_scaled=not args.skip_scaled)
+  File "/workspace/Task-Tracer/tools/accessibility_i18n_audit.py", line 751, in audit_context
+    audit_scaled_surfaces(browser, url, axe_source, {'width': 390, 'height': 844} if reduced_motion else {'width': 1280, 'height': 720})
+  File "/workspace/Task-Tracer/tools/accessibility_i18n_audit.py", line 647, in audit_scaled_surfaces
+    assert_focus_visible(page, '#quickAddInput', label)
+  File "/workspace/Task-Tracer/tools/accessibility_i18n_audit.py", line 168, in assert_focus_visible
+    raise AssertionError(f"Focused control has no visible focus treatment: {label}")
+AssertionError: Focused control has no visible focus treatment: 1280px light

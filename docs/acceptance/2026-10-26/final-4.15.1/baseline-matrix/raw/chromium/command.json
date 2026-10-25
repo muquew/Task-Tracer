@@ -1,0 +1,24 @@
+{
+  "command": [
+    "python",
+    "tools/browser_matrix.py",
+    "--browser",
+    "chromium",
+    "--group",
+    "all",
+    "--keep-going",
+    "--report",
+    "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/chromium/native-report.json"
+  ],
+  "cwd": "/workspace/task-tracer-final-baseline",
+  "at": "2026-10-25T18:50:32.910229+00:00",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "XDG_CACHE_HOME": "/workspace/.cache",
+    "PLAYWRIGHT_BROWSERS_PATH": "/workspace/.cache/ms-playwright",
+    "PYTHONUNBUFFERED": "1",
+    "TASK_TRACER_BROWSER_EXECUTABLE": "/usr/bin/chromium",
+    "TASK_TRACER_PRODUCTION_HEADERS": null
+  },
+  "http_scope": "Original native handlers and motion; no global CSP override or wrapper."
+}

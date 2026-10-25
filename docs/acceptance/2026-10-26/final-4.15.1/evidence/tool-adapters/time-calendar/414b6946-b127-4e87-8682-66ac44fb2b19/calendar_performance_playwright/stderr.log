@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer/tools/calendar_performance_playwright.py", line 330, in <module>
+    run(args.browser, args.per_section, args.output, args.scale_only)
+  File "/workspace/Task-Tracer/tools/calendar_performance_playwright.py", line 288, in run
+    with local_server() as url, sync_playwright() as p:
+         ^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/workspace/Task-Tracer/tools/smoke_playwright.py", line 70, in local_server
+    port = reserve_port()
+           ^^^^^^^^^^^^^^
+  File "/workspace/Task-Tracer/tools/smoke_playwright.py", line 63, in reserve_port
+    with contextlib.closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sock:
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+    _socket.socket.__init__(self, family, type, proto, fileno)
+PermissionError: [Errno 1] Operation not permitted

@@ -1,0 +1,154 @@
+{
+  "recorded_at_utc": "2026-10-25T21:59:52.908433+00:00",
+  "kind": "one_authorized_identical_commit_independent_ref_standard_repeat",
+  "run_id": "40235376686",
+  "run_url": "https://github.com/muquew/Task-Tracer/actions/runs/40235376686",
+  "commit": "6da3c7293f08c5d16ca73c7a63d8ff74e17358db",
+  "branch": "codex/final-stable-repeat-20261026",
+  "original_run_id": "40233014544",
+  "relationship": "Same exact Git commit/code/workflow as original standard run, different ref, one bounded repeat only. Original first failure and terminal receipts unchanged.",
+  "terminal_at_utc": "2026-10-25T21:58:48.037185+00:00",
+  "overall": "Failure",
+  "duration": "33m12s",
+  "jobs": [
+    {
+      "name": "checks",
+      "job_id": "121295698128",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40235376686/job/121295698128",
+      "http_status": 200,
+      "html_sha256": "6df391584e190e4ea30ae50ef9835abde1042078f13821ac7ef08bfb97aa837b",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "33m 9s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "full_logs_accessible_anonymously": false
+    },
+    {
+      "name": "compatibility (firefox)",
+      "job_id": "121295698292",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40235376686/job/121295698292",
+      "http_status": 200,
+      "html_sha256": "679fa9c55385118258031c19a779e750cdbb9994c78cd48beb32e4ed97503e34",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "12m 51s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "full_logs_accessible_anonymously": false
+    },
+    {
+      "name": "compatibility (webkit)",
+      "job_id": "121295698298",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40235376686/job/121295698298",
+      "http_status": 200,
+      "html_sha256": "333d7b90c80208e56d95cd3656656dd5bb0d329160b1c19c59bdd923ac610cb6",
+      "public_ui_conclusion": "failed",
+      "displayed_duration": "26m 46s",
+      "public_annotations": "1 error, 1 warning, and 1 notice\nValidate critical workflows on desktop and mobile layouts\nProcess completed with exit code 1.\nShow more\nShow less\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "full_logs_accessible_anonymously": false
+    },
+    {
+      "name": "compatibility (chromium)",
+      "job_id": "121295698339",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40235376686/job/121295698339",
+      "http_status": 200,
+      "html_sha256": "db9f0481b0012b40b3261263b134954bad6ccd6f2c4737a788f65f35ae388eb7",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "15m 22s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "full_logs_accessible_anonymously": false
+    },
+    {
+      "name": "deployed_site",
+      "job_id": "121295699364",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40235376686/job/121295699364",
+      "http_status": 200,
+      "html_sha256": "28cb192f671238dd1e3ea2ce02c57aac33a6369e471c1a1a44e05e241d0530b8",
+      "public_ui_conclusion": "skipped",
+      "displayed_duration": null,
+      "public_annotations": null,
+      "full_logs_accessible_anonymously": false
+    }
+  ],
+  "first_wk_failure_at_utc": "2026-10-25T21:51:48Z",
+  "reproduced_fact": "Both standard same6da runs have successful checks/Chromium/Firefox and failedWebKit. Failed basename/exception inside WK is not exposed in these pages.",
+  "isolated_diagnostic": "Separate cfe8d6de236fa6e771934379c67efd711df5c029 WK-only diagnostic was reported succeeded; it is not substituted for this standard repeat.",
+  "full_native_per_program_report_obtained": false,
+  "raw_artifact_or_protected_logs_obtained": false,
+  "main_or_production_published_by_this_review": false,
+  "monitor_interval_seconds": 60,
+  "poll_count": 34,
+  "monitor_exit_code": 0,
+  "repository_runtime_or_verification_edits_by_reviewer": [],
+  "originals": [
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6da3-repeat/terminal.json",
+      "archived_path": "terminal.json",
+      "bytes": 5527,
+      "sha256": "0064602e93df6e25233822570a818bebebbb424d2a011500b79ed7c127db932b"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6da3-repeat/run-discovery.json",
+      "archived_path": "run-discovery.json",
+      "bytes": 1071,
+      "sha256": "dce36b55a302e576e79e156b556497a7003b5b1d0c25a68f06bf09005e67c5cb"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6da3-repeat/monitor.stdout.log",
+      "archived_path": "monitor.stdout.log",
+      "bytes": 17272,
+      "sha256": "bbbb757da971239bfb4e2ed41d1a922d7d20e472ba4f090e3ccc25620b486d8c"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6da3-repeat/monitor.stderr.log",
+      "archived_path": "monitor.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6da3-repeat/poll-027-20261025T215148Z/snapshot.json",
+      "archived_path": "first-wk-failure.json",
+      "bytes": 5001,
+      "sha256": "6d33c219cd8ea279e764b734f80a0521e67534e37b8fcea5e7ebe621cffe94fb"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6da3-repeat/poll-027-20261025T215148Z/job-121295698298-visible.txt",
+      "archived_path": "evidence/first-wk-failure-visible.txt",
+      "bytes": 3324,
+      "sha256": "3f25b4442b4aa0918d4337e7e164bced4cc754c7a37fc38475f11a09a7770bc4"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6da3-repeat/poll-034-20261025T215848Z/run-visible.txt",
+      "archived_path": "evidence/run-visible.txt",
+      "bytes": 5751,
+      "sha256": "ece85295f4dea8b96b877f2458c41e8480fb5acaf16490189c11b40722eb2950"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6da3-repeat/poll-034-20261025T215848Z/job-121295698128-visible.txt",
+      "archived_path": "evidence/job-121295698128-visible.txt",
+      "bytes": 3177,
+      "sha256": "e651300dccf9ed2f7e80124508aa9a5bdec8caf9af7e35b1c0b06034b3565b79"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6da3-repeat/poll-034-20261025T215848Z/job-121295698292-visible.txt",
+      "archived_path": "evidence/job-121295698292-visible.txt",
+      "bytes": 3206,
+      "sha256": "ec53ae40214d0c4fc019ecc61943f7e00d6dc97db62cfcd6d9817d4f17ce07ce"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6da3-repeat/poll-034-20261025T215848Z/job-121295698298-visible.txt",
+      "archived_path": "evidence/job-121295698298-visible.txt",
+      "bytes": 3324,
+      "sha256": "3f25b4442b4aa0918d4337e7e164bced4cc754c7a37fc38475f11a09a7770bc4"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6da3-repeat/poll-034-20261025T215848Z/job-121295698339-visible.txt",
+      "archived_path": "evidence/job-121295698339-visible.txt",
+      "bytes": 3209,
+      "sha256": "39df9ac67ce51f1a11fd8102c872b88a0dca5bc7b9649375de2eb780ce8e3d06"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6da3-repeat/poll-034-20261025T215848Z/job-121295699364-visible.txt",
+      "archived_path": "evidence/job-121295699364-visible.txt",
+      "bytes": 2582,
+      "sha256": "6e3ef3ae3bacbfcc5100a8c1252a38db082b4d9e43e42acf55f4705a116f105d"
+    }
+  ]
+}

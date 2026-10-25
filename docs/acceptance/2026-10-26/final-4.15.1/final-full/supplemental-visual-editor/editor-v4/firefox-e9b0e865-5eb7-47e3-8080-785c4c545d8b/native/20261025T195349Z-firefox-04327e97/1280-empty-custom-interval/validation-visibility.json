@@ -1,0 +1,55 @@
+{
+  "field": {
+    "top": 763.9000244140625,
+    "bottom": 805.9000244140625,
+    "left": 795,
+    "right": 1060,
+    "width": 265,
+    "height": 42
+  },
+  "error": {
+    "top": 815.9000244140625,
+    "bottom": 835.4000244140625,
+    "left": 665,
+    "right": 1060,
+    "width": 395,
+    "height": 19.5
+  },
+  "form": {
+    "top": 137,
+    "bottom": 930,
+    "left": 180,
+    "right": 1100,
+    "width": 920,
+    "height": 793
+  },
+  "footer": {
+    "top": 859,
+    "bottom": 930,
+    "left": 180,
+    "right": 1100,
+    "width": 920,
+    "height": 71
+  },
+  "header": {
+    "top": 70,
+    "bottom": 137,
+    "left": 180,
+    "right": 1100,
+    "width": 920,
+    "height": 67
+  },
+  "clip": {
+    "top": 137,
+    "bottom": 859,
+    "left": 180,
+    "right": 1100
+  },
+  "fullyVisible": true,
+  "hitInside": true,
+  "hit": {
+    "tag": "P",
+    "id": "repeatIntervalError",
+    "className": "editor-validation"
+  }
+}

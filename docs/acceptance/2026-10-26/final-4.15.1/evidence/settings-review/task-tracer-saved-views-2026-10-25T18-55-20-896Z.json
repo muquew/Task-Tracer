@@ -1,0 +1,20 @@
+{
+  "app": "Task Tracer",
+  "type": "saved-views",
+  "version": "1.1",
+  "date": "2026-10-25T18:55:20.896Z",
+  "savedViews": [
+    {
+      "id": "view-1792954518330-qmbz3p",
+      "name": "项目甲工作台",
+      "searchQuery": "project:项目甲",
+      "filter": "active",
+      "projectFilter": {
+        "kind": "all"
+      },
+      "sort": "smart",
+      "viewMode": "list"
+    }
+  ],
+  "checksum": "fnv1a32:c8d44d19"
+}

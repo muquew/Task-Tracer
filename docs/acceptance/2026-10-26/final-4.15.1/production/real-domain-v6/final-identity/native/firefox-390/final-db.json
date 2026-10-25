@@ -1,0 +1,111 @@
+{
+  "tasks": [
+    {
+      "id": 1792969500632,
+      "createdAt": "2026-10-25T22:54:08.302Z",
+      "completed": true,
+      "completedAt": "2026-10-25T22:54:09.527Z",
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "Edited acceptance task firefox-390",
+      "description": "Edited through the actual interface.\n待输入子任务由主保存收纳。",
+      "project": "Acceptance workspace",
+      "tags": [
+        "acceptance",
+        "review"
+      ],
+      "subtasks": [
+        {
+          "id": 1792968871720,
+          "text": "Already added child",
+          "completed": false
+        },
+        {
+          "id": 1792969751336,
+          "text": "Pending child saved with task",
+          "completed": false
+        }
+      ],
+      "dueDate": "2026-10-26T10:20:00.000Z",
+      "dueAt": "2026-10-26T10:20:00.000Z",
+      "dueLocalDate": "2026-10-26",
+      "dueLocalTime": "18:20",
+      "dueTimeZone": "Asia/Shanghai",
+      "reminderOffset": 15,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 10000
+    },
+    {
+      "id": 1792969588242,
+      "createdAt": "2026-10-25T22:54:08.783Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "Undated acceptance task firefox-390",
+      "description": "A task without a deadline.",
+      "project": "Acceptance workspace",
+      "tags": [],
+      "subtasks": [],
+      "dueDate": null,
+      "dueAt": null,
+      "dueLocalDate": null,
+      "dueLocalTime": null,
+      "dueTimeZone": null,
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 20000
+    }
+  ],
+  "config": [
+    {
+      "key": "language",
+      "value": "en"
+    },
+    {
+      "key": "lastBackupAt",
+      "value": "2026-10-25T22:54:16.427Z"
+    },
+    {
+      "key": "lastTaskBackup",
+      "value": {
+        "date": "2026-10-25T22:54:16.427Z",
+        "taskRevision": 4
+      }
+    },
+    {
+      "key": "recoveryHistory",
+      "value": [
+        {
+          "id": "a74271c7-e178-4715-85ce-8a20943325ee",
+          "createdAt": "2026-10-25T22:54:08.304Z",
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "key": "taskRevision",
+      "value": 4
+    }
+  ]
+}

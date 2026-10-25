@@ -1,0 +1,26 @@
+{
+  "command": [
+    "python",
+    "tools/browser_matrix.py",
+    "--browser",
+    "webkit",
+    "--group",
+    "all",
+    "--keep-going",
+    "--report",
+    "/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-matrix-v2/webkit/native-report.json"
+  ],
+  "cwd": "/workspace/Task-Tracer",
+  "at": "2026-10-25T19:30:53.946226+00:00",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "XDG_CACHE_HOME": "/workspace/.cache",
+    "PLAYWRIGHT_BROWSERS_PATH": "/workspace/.cache/ms-playwright",
+    "PYTHONUNBUFFERED": "1",
+    "TASK_TRACER_BROWSER_EXECUTABLE": null,
+    "TASK_TRACER_PRODUCTION_HEADERS": null,
+    "LD_LIBRARY_PATH": "/workspace/.cache/browser-libs/root/usr/lib/x86_64-linux-gnu",
+    "PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS": "1"
+  },
+  "http_scope": "Original native handlers and motion; no global CSP override or wrapper."
+}

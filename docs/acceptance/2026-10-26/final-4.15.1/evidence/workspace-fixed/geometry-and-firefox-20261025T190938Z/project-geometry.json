@@ -1,0 +1,73 @@
+{
+  "browser": "154.0.8037.57",
+  "geometry": {
+    "left": 499.953125,
+    "top": 327,
+    "right": 689.953125,
+    "bottom": 777,
+    "width": 1280,
+    "height": 720,
+    "scrollHeight": 450,
+    "clientHeight": 450,
+    "optionCount": 11,
+    "options": [
+      {
+        "text": "All projects",
+        "top": 332,
+        "bottom": 372
+      },
+      {
+        "text": "No project",
+        "top": 372,
+        "bottom": 412
+      },
+      {
+        "text": "Project0",
+        "top": 412,
+        "bottom": 452
+      },
+      {
+        "text": "Project1",
+        "top": 452,
+        "bottom": 492
+      },
+      {
+        "text": "Project2",
+        "top": 492,
+        "bottom": 532
+      },
+      {
+        "text": "Project3",
+        "top": 532,
+        "bottom": 572
+      },
+      {
+        "text": "Project4",
+        "top": 572,
+        "bottom": 612
+      },
+      {
+        "text": "Project5",
+        "top": 612,
+        "bottom": 652
+      },
+      {
+        "text": "Project6",
+        "top": 652,
+        "bottom": 692
+      },
+      {
+        "text": "Project7",
+        "top": 692,
+        "bottom": 732
+      },
+      {
+        "text": "Project8",
+        "top": 732,
+        "bottom": 772
+      }
+    ]
+  },
+  "viewport_overflow": true,
+  "page_errors": []
+}

@@ -1,0 +1,247 @@
+{
+  "kind": "freshhands-oneditorcaptureaudit",
+  "captured_at": "2026-10-25T18:56:11.692698+00:00",
+  "source_index_sha256": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5",
+  "baseline_commit": "54b95cce891d167617d42bc489cdc801317f00c5",
+  "browser": "Chromium154.0.8037.57",
+  "normal_deployment_csp": true,
+  "normal_motion": true,
+  "bypass_csp": false,
+  "contexts": 2,
+  "source_binding": "Firstloadedpage fromprimarybfb, neverreloaded. Secondindependentcontext servedfrozen/workspace/task-tracer-final-baselinebfb. Notclaimprimaryfilesstablethroughrootconcurrentfixes.",
+  "observations": 84,
+  "phases": {
+    "zh_desktop_mobile": {
+      "observations": 63,
+      "session_closed": true
+    },
+    "en_dark_short_baseline": {
+      "observations": 21,
+      "session_closed": true
+    }
+  },
+  "page_errors": [],
+  "action_errors": [],
+  "horizontal_overflow_observations": 0,
+  "actual_manually_viewed_screenshots": [
+    "02-new-editor.png",
+    "03-advanced-no-date.png",
+    "10-date-cleared.png",
+    "11-save-blank-date.png",
+    "23-save-blank-interval.png",
+    "27-save-five-day-rule.png",
+    "30-clear-existing-five-day-rule.png",
+    "31-existing-rule-silently-becomes-one-day.png",
+    "38-capture-to-full-editor.png",
+    "48-remove-a-retain-c.png",
+    "49-dirty-close-confirmation.png",
+    "51-mobile-preserved-draft.png",
+    "55-mobile-edit-saved-task.png",
+    "57-cancel-mobile-edit.png",
+    "59-quick-capture-cleared-after-full-save.png",
+    "63-complete-editor-evidence-backup.png",
+    "mobile-dark-baseline/09-long-description.png",
+    "mobile-dark-baseline/10-focused-pending-child.png",
+    "mobile-dark-baseline/12-short-dirty-confirm.png",
+    "mobile-dark-baseline/14-long-task-saved.png",
+    "mobile-dark-baseline/16-english-preview.png"
+  ],
+  "findings": [
+    {
+      "id": "E-FINAL-1",
+      "severity": "P1",
+      "title": "Unchecked No deadline plus cleared date silently drops scheduling",
+      "repro": [
+        "Add task, select Tomorrow, set08:45",
+        "Open Reminders & repeat, choosecustom5days",
+        "Clear dueDate while noDeadline remainsunchecked",
+        "Save succeeds asundated; reminder/repeat rules disappear"
+      ],
+      "evidence": [
+        "10-date-cleared.png",
+        "10-date-cleared.json",
+        "11-save-blank-date.png",
+        "task-tracer_backup_2026-10-25_18-46-49-132.json"
+      ],
+      "raw_before": {
+        "noDeadline": false,
+        "dueDate": "",
+        "dueTime": "08:45",
+        "repeatType": "custom",
+        "repeatInterval": "5",
+        "reminderOffset": "15"
+      },
+      "saved_after": {
+        "dueAt": null,
+        "repeatType": "none",
+        "repeatInterval": 1,
+        "reminderOffset": -1
+      },
+      "recommendation": "Validate required valid date before building/saving payload when No deadline isunchecked; retainrawdraft/config/database andfocuserror."
+    },
+    {
+      "id": "E-FINAL-2",
+      "severity": "P1",
+      "title": "Cleared custom interval silently becomes one day",
+      "repro": [
+        "Savecustomrepeat task with5-dayinterval",
+        "Edit task andclearrepeatInterval",
+        "Save succeeds andtaskchangesfrom5-dayto1-dayrepeat"
+      ],
+      "evidence": [
+        "27-save-five-day-rule.png",
+        "30-clear-existing-five-day-rule.png",
+        "30-clear-existing-five-day-rule.json",
+        "31-existing-rule-silently-becomes-one-day.png",
+        "task-tracer_backup_2026-10-25_18-48-16-745.json"
+      ],
+      "raw_before": {
+        "repeatType": "custom",
+        "repeatInterval": ""
+      },
+      "saved_after": {
+        "repeatType": "custom",
+        "repeatInterval": 1
+      },
+      "recommendation": "Validatecustom enabledinterval asnonempty integer1–365 without changingrawinputs orwritingdatabase; explicitdisable remainslegal."
+    },
+    {
+      "id": "E-FINAL-3",
+      "severity": "P2",
+      "title": "Unsaved-change confirmation lost editor insets",
+      "evidence": [
+        "49-dirty-close-confirmation.png",
+        "57-cancel-mobile-edit.png",
+        "mobile-dark-baseline/12-short-dirty-confirm.png"
+      ],
+      "recommendation": "Give dynamicprepend discardprompt its ownresponsiveinsets andgroupdesktopactions; retainsafeContinue/Discard behavior. Checksimilarsavingstatus surface."
+    }
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "description": "Desktop direct entry and no-date schedule disclosure",
+      "health": "usable",
+      "evidence": [
+        "02-new-editor.png",
+        "03-advanced-no-date.png"
+      ]
+    },
+    {
+      "step": 2,
+      "description": "Date and custom interval invalid save boundaries",
+      "health": "2confirmedP1blockers",
+      "finding_ids": [
+        "E-FINAL-1",
+        "E-FINAL-2"
+      ]
+    },
+    {
+      "step": 3,
+      "description": "Chinese quick capture carries title, project, tags and18:20 into full form",
+      "health": "passedactualUIandbackup",
+      "evidence": [
+        "38-capture-to-full-editor.png"
+      ]
+    },
+    {
+      "step": 4,
+      "description": "Inline childC retained when earlierA removed; pendingD included atmain save",
+      "health": "passedactualUIandbackup",
+      "evidence": [
+        "48-remove-a-retain-c.png",
+        "task-tracer_backup_2026-10-25_18-50-29-524.json"
+      ]
+    },
+    {
+      "step": 5,
+      "description": "Continue draft and explicitly discard edited description",
+      "health": "behaviorpassed; visualP2insets",
+      "finding_ids": [
+        "E-FINAL-3"
+      ],
+      "evidence": [
+        "49-dirty-close-confirmation.png",
+        "57-cancel-mobile-edit.png"
+      ]
+    },
+    {
+      "step": 6,
+      "description": "390px mobile full form and clean quick capture aftersave",
+      "health": "passed",
+      "evidence": [
+        "51-mobile-preserved-draft.png",
+        "59-quick-capture-cleared-after-full-save.png"
+      ]
+    },
+    {
+      "step": 7,
+      "description": "Englishdark320x500 longcontent, pendingchild, focus andparser",
+      "health": "passedwithnativehorizontaltextscroll; noOSIMEclaim",
+      "evidence": [
+        "mobile-dark-baseline/10-focused-pending-child.png",
+        "mobile-dark-baseline/16-english-preview.png"
+      ]
+    },
+    {
+      "step": 8,
+      "description": "Four actual downloadedbackup payload checksums and exactrecords",
+      "health": "passed; recordsalso demonstrateP1boundaries",
+      "evidence": [
+        "task-tracer_backup_2026-10-25_18-50-29-524.json",
+        "mobile-dark-baseline/task-tracer_backup_2026-10-25_18-51-48-925.json"
+      ]
+    }
+  ],
+  "actual_backup_count": 4,
+  "actual_checksum_helper_used": "smoke_playwright.assert_backup_payload_integrity(payload, backup)",
+  "healthy_data_checks": {
+    "zh_records": 3,
+    "zh_full_capture": {
+      "project": "交付",
+      "tags": [
+        "优先"
+      ],
+      "dueLocalDate": "2026-10-27",
+      "dueLocalTime": "18:20",
+      "subtasks": [
+        "确认B",
+        "附件C的未保存修订",
+        "最后待输入D"
+      ],
+      "description_discard_not_saved": true
+    },
+    "en_records": 2,
+    "en_followup": {
+      "name": "Final follow-up",
+      "project": "Personal",
+      "tags": [
+        "review"
+      ],
+      "dueLocalDate": "2026-10-27",
+      "dueLocalTime": "14:30"
+    },
+    "long_description_chars_gt900": true,
+    "en_pending_child_retained": true
+  },
+  "test_patch": {
+    "baseline_helper_sha256": "71d673604abb8d93319d917e95e2e7fda32be6bc1c5b4965e25fc1c2934d6f58",
+    "candidate_helper_sha256": "805cc82de0d882861758f14add569288045e53d277582c006e0604ffef09a41f",
+    "patch_sha256": "12c06528657f40f1fd188e8986bd150a870c699e077091c9fcc0653f9e401771",
+    "existing_cases_untouched": true,
+    "new_cases": [
+      "missing-date",
+      "empty-custom-interval"
+    ],
+    "total_default_combinations": 10,
+    "compiled": true,
+    "executed": false,
+    "contract": "Root planned dueDateError/repeatIntervalError, aria-invalid on real input, focus on actual invalid field; clear repeat option bypass remains legal."
+  },
+  "limits": [
+    "No nativeOSIME/softkeyboard/realphone/notificationdeliverytest",
+    "Onlylisted21PNGwereactuallyopened; otherimagesareactioncaptures",
+    "A temporarytoast coverspartof longtasksaved14image; notproofthatentiretaskrowfitsfirstviewport",
+    "Read-onlyaudit; findings notpatchedbythisagent; rootowns4.15.1fixes"
+  ]
+}

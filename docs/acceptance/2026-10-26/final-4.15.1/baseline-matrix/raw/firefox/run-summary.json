@@ -1,0 +1,20 @@
+{
+  "engine": "firefox",
+  "command": [
+    "python",
+    "tools/browser_matrix.py",
+    "--browser",
+    "firefox",
+    "--group",
+    "all",
+    "--keep-going",
+    "--report",
+    "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report.json"
+  ],
+  "started_at": "2026-10-25T18:50:32.910078+00:00",
+  "finished_at": "2026-10-25T19:08:54.942062+00:00",
+  "duration_seconds": 1102.032,
+  "exit_code": 1,
+  "source_and_tools_unchanged": true,
+  "worker_returned": true
+}

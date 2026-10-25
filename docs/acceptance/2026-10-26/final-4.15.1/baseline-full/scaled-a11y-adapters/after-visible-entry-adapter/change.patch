@@ -1,0 +1,14 @@
+--- before
++++ after
+@@ -628,7 +628,10 @@
+             expect(page.locator('[data-calendar-action="undated-more"]')).to_be_visible()
+             audit_page_state(page, axe_source, f'{label} calendar pagination')
+             assert_focus_visible(page, '[data-calendar-action="undated-more"]', label)
+-            page.locator(f'.calendar-more-btn[data-calendar-detail-date="{day}"]').click()
++            day_entry = page.locator(f'[data-calendar-detail-date="{day}"]').filter(visible=True)
++            expect(day_entry).to_have_count(1)
++            expect(day_entry).to_be_visible()
++            day_entry.click()
+             expect(page.locator('#calendarDayTasks .calendar-detail-task')).to_have_count(100)
+             audit_page_state(page, axe_source, f'{label} calendar day pagination')
+             assert_focus_visible(page, '[data-calendar-action="detail-more"]', label)

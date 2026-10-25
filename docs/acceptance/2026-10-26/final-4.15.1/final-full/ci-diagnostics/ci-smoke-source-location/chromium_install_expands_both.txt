@@ -1,0 +1,27 @@
+33597:       }
+33598:       resolveBrowsers(aliases2, options) {
+33599:         if (aliases2.length === 0)
+33600:           return this._defaultBrowsersToInstall(options);
+33601:         const faultyArguments = [];
+33602:         const executables = [];
+33603:         const handleArgument = (arg) => {
+33604:           const executable = this.findExecutable(arg);
+33605:           if (!executable || executable.installType === "none")
+33606:             faultyArguments.push(arg);
+33607:           else
+33608:             executables.push(executable);
+33609:           if (executable?.browserName)
+33610:             executables.push(this.findExecutable("ffmpeg"));
+33611:         };
+33612:         for (const alias of aliases2) {
+33613:           if (alias === "chromium" || chromiumAliases.includes(alias)) {
+33614:             if (options.shell !== "only")
+33615:               handleArgument("chromium");
+33616:             if (options.shell !== "no")
+33617:               handleArgument("chromium-headless-shell");
+33618:           } else if (alias === "chromium-tip-of-tree") {
+33619:             if (options.shell !== "only")
+33620:               handleArgument("chromium-tip-of-tree");
+33621:             if (options.shell !== "no")
+33622:               handleArgument("chromium-tip-of-tree-headless-shell");
+33623:           } else {

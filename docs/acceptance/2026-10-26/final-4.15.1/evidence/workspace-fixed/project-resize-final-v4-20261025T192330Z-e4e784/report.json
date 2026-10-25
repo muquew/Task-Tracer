@@ -1,0 +1,448 @@
+{
+  "source_sha256": "0847b854ea99e95d37ada7a77e307c3266b2a3d2b54db51d6f8309875a506fb4",
+  "normal_deployment_csp": true,
+  "bypassCSP": false,
+  "geometries": [
+    {
+      "menu": {
+        "x": 499.953125,
+        "y": 327,
+        "width": 190,
+        "height": 387,
+        "top": 327,
+        "right": 689.953125,
+        "bottom": 714,
+        "left": 499.953125
+      },
+      "button": {
+        "x": 268,
+        "y": 279,
+        "width": 421.953125,
+        "height": 42,
+        "top": 279,
+        "right": 689.953125,
+        "bottom": 321,
+        "left": 268
+      },
+      "header": {
+        "x": 228,
+        "y": 0,
+        "width": 1052,
+        "height": 62,
+        "top": 0,
+        "right": 1280,
+        "bottom": 62,
+        "left": 228
+      },
+      "dock": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "dockDisplay": "none",
+      "viewportWidth": 1280,
+      "viewportHeight": 720,
+      "scrollHeight": 450,
+      "clientHeight": 387,
+      "scrollTop": 0,
+      "overflow": "auto",
+      "style": "inset: 100% auto auto 231.953px; max-height: 387px; overflow-y: auto;",
+      "active": "",
+      "windowScroll": 0,
+      "requiredBounds": {
+        "top": 62,
+        "bottom": 720,
+        "left": 0,
+        "right": 1280
+      },
+      "inBounds": true,
+      "end": {
+        "active": "",
+        "option": {
+          "x": 504.953125,
+          "y": 669,
+          "width": 180,
+          "height": 40,
+          "top": 669,
+          "right": 684.953125,
+          "bottom": 709,
+          "left": 504.953125
+        },
+        "menu": {
+          "x": 499.953125,
+          "y": 327,
+          "width": 190,
+          "height": 387,
+          "top": 327,
+          "right": 689.953125,
+          "bottom": 714,
+          "left": 499.953125
+        },
+        "scrollTop": 63
+      },
+      "escape_returned_focus": true,
+      "selection_method": "native_pointer_click",
+      "project8_exact_scope": true,
+      "restore_all_exact_scope": true
+    },
+    {
+      "menu": {
+        "x": 499.953125,
+        "y": 327,
+        "width": 190,
+        "height": 267,
+        "top": 327,
+        "right": 689.953125,
+        "bottom": 594,
+        "left": 499.953125
+      },
+      "button": {
+        "x": 268,
+        "y": 279,
+        "width": 421.953125,
+        "height": 42,
+        "top": 279,
+        "right": 689.953125,
+        "bottom": 321,
+        "left": 268
+      },
+      "header": {
+        "x": 228,
+        "y": 0,
+        "width": 1052,
+        "height": 62,
+        "top": 0,
+        "right": 1280,
+        "bottom": 62,
+        "left": 228
+      },
+      "dock": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "dockDisplay": "none",
+      "viewportWidth": 1280,
+      "viewportHeight": 600,
+      "scrollHeight": 450,
+      "clientHeight": 267,
+      "scrollTop": 0,
+      "overflow": "auto",
+      "style": "overflow-y: auto; inset: 100% auto auto 231.953px; max-height: 267px;",
+      "active": "",
+      "windowScroll": 0,
+      "requiredBounds": {
+        "top": 62,
+        "bottom": 600,
+        "left": 0,
+        "right": 1280
+      },
+      "inBounds": true,
+      "end": {
+        "active": "",
+        "option": {
+          "x": 504.953125,
+          "y": 549,
+          "width": 180,
+          "height": 40,
+          "top": 549,
+          "right": 684.953125,
+          "bottom": 589,
+          "left": 504.953125
+        },
+        "menu": {
+          "x": 499.953125,
+          "y": 327,
+          "width": 190,
+          "height": 267,
+          "top": 327,
+          "right": 689.953125,
+          "bottom": 594,
+          "left": 499.953125
+        },
+        "scrollTop": 183
+      },
+      "escape_returned_focus": true,
+      "selection_method": "native_pointer_click",
+      "project8_exact_scope": true,
+      "restore_all_exact_scope": true
+    },
+    {
+      "menu": {
+        "x": 26,
+        "y": 344,
+        "width": 190,
+        "height": 410,
+        "top": 344,
+        "right": 216,
+        "bottom": 754,
+        "left": 26
+      },
+      "button": {
+        "x": 26,
+        "y": 300,
+        "width": 338,
+        "height": 38,
+        "top": 300,
+        "right": 364,
+        "bottom": 338,
+        "left": 26
+      },
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 60,
+        "top": 0,
+        "right": 390,
+        "bottom": 60,
+        "left": 0
+      },
+      "dock": {
+        "x": 0,
+        "y": 779,
+        "width": 390,
+        "height": 65,
+        "top": 779,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "dockDisplay": "block",
+      "viewportWidth": 390,
+      "viewportHeight": 844,
+      "scrollHeight": 450,
+      "clientHeight": 410,
+      "scrollTop": 0,
+      "overflow": "auto",
+      "style": "overflow-y: auto; inset: 100% auto auto 0px; max-height: 410px;",
+      "active": "",
+      "windowScroll": 0,
+      "requiredBounds": {
+        "top": 60,
+        "bottom": 779,
+        "left": 0,
+        "right": 390
+      },
+      "inBounds": true,
+      "end": {
+        "active": "",
+        "option": {
+          "x": 31,
+          "y": 714,
+          "width": 180,
+          "height": 40,
+          "top": 714,
+          "right": 211,
+          "bottom": 754,
+          "left": 31
+        },
+        "menu": {
+          "x": 26,
+          "y": 344,
+          "width": 190,
+          "height": 410,
+          "top": 344,
+          "right": 216,
+          "bottom": 754,
+          "left": 26
+        },
+        "scrollTop": 35
+      },
+      "escape_returned_focus": true,
+      "selection_method": "native_pointer_click",
+      "project8_exact_scope": true,
+      "restore_all_exact_scope": true
+    },
+    {
+      "menu": {
+        "x": 26,
+        "y": 66,
+        "width": 190,
+        "height": 256,
+        "top": 66,
+        "right": 216,
+        "bottom": 322,
+        "left": 26
+      },
+      "button": {
+        "x": 26,
+        "y": 328,
+        "width": 268,
+        "height": 38,
+        "top": 328,
+        "right": 294,
+        "bottom": 366,
+        "left": 26
+      },
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 60,
+        "top": 0,
+        "right": 320,
+        "bottom": 60,
+        "left": 0
+      },
+      "dock": {
+        "x": 0,
+        "y": 435,
+        "width": 320,
+        "height": 65,
+        "top": 435,
+        "right": 320,
+        "bottom": 500,
+        "left": 0
+      },
+      "dockDisplay": "block",
+      "viewportWidth": 320,
+      "viewportHeight": 500,
+      "scrollHeight": 450,
+      "clientHeight": 256,
+      "scrollTop": 0,
+      "overflow": "auto",
+      "style": "overflow-y: auto; inset: auto auto calc(100% + 6px) 0px; max-height: 256px;",
+      "active": "",
+      "windowScroll": 0,
+      "requiredBounds": {
+        "top": 60,
+        "bottom": 435,
+        "left": 0,
+        "right": 320
+      },
+      "inBounds": true,
+      "end": {
+        "active": "",
+        "option": {
+          "x": 31,
+          "y": 277,
+          "width": 180,
+          "height": 40,
+          "top": 277,
+          "right": 211,
+          "bottom": 317,
+          "left": 31
+        },
+        "menu": {
+          "x": 26,
+          "y": 66,
+          "width": 190,
+          "height": 256,
+          "top": 66,
+          "right": 216,
+          "bottom": 322,
+          "left": 26
+        },
+        "scrollTop": 194
+      },
+      "escape_returned_focus": true,
+      "selection_method": "native_pointer_click",
+      "project8_exact_scope": true,
+      "restore_all_exact_scope": true
+    },
+    {
+      "menu": {
+        "x": 499.953125,
+        "y": 186,
+        "width": 190,
+        "height": 410,
+        "top": 186,
+        "right": 689.953125,
+        "bottom": 596,
+        "left": 499.953125
+      },
+      "button": {
+        "x": 268,
+        "y": 138,
+        "width": 421.953125,
+        "height": 42,
+        "top": 138,
+        "right": 689.953125,
+        "bottom": 180,
+        "left": 268
+      },
+      "header": {
+        "x": 228,
+        "y": 0,
+        "width": 1052,
+        "height": 62,
+        "top": 0,
+        "right": 1280,
+        "bottom": 62,
+        "left": 228
+      },
+      "dock": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "dockDisplay": "none",
+      "viewportWidth": 1280,
+      "viewportHeight": 720,
+      "scrollHeight": 450,
+      "clientHeight": 410,
+      "scrollTop": 0,
+      "overflow": "auto",
+      "style": "overflow-y: auto; inset: 100% auto auto 231.953px; max-height: 410px;",
+      "active": "",
+      "windowScroll": 141,
+      "requiredBounds": {
+        "top": 62,
+        "bottom": 720,
+        "left": 0,
+        "right": 1280
+      },
+      "inBounds": true,
+      "end": {
+        "active": "",
+        "option": {
+          "x": 504.953125,
+          "y": 556,
+          "width": 180,
+          "height": 40,
+          "top": 556,
+          "right": 684.953125,
+          "bottom": 596,
+          "left": 504.953125
+        },
+        "menu": {
+          "x": 499.953125,
+          "y": 186,
+          "width": 190,
+          "height": 410,
+          "top": 186,
+          "right": 689.953125,
+          "bottom": 596,
+          "left": 499.953125
+        },
+        "scrollTop": 35
+      },
+      "escape_returned_focus": true,
+      "selection_method": "native_pointer_click",
+      "project8_exact_scope": true,
+      "restore_all_exact_scope": true
+    }
+  ],
+  "passed": true,
+  "browser": "154.0.8037.57",
+  "task_records_unchanged": true,
+  "page_errors": [],
+  "inputs_unchanged": true,
+  "all_processes_closed": true
+}

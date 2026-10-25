@@ -1,0 +1,11 @@
+{
+  "omitted_binary": true,
+  "original_download_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/deployment-final-v5/public-package/task-tracer-4.15.1.zip",
+  "existing_repository_path": "downloads/task-tracer-4.15.1.zip",
+  "existing_repository_absolute_path": "/workspace/Task-Tracer/downloads/task-tracer-4.15.1.zip",
+  "url": "https://todo.muquew.com/downloads/task-tracer-4.15.1.zip",
+  "bytes": 992071,
+  "sha256": "0540eca3d0d83a140c3695f575e24e6c73252afe08e5ae2f4f3457cef4691aca",
+  "identity_source": "public-package-receipt.json.downloads[0]",
+  "reason": "The already published repository package is retained in downloads; no second binary is copied into this evidence directory."
+}

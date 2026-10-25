@@ -1,0 +1,10 @@
+--- 0847-original-index.html
++++ 4a7-before-snapshot/index.html
+@@ -8205,7 +8205,6 @@
+             button.className = 'calendar-detail-task';
+             button.dataset.calendarTaskId = String(task.id);
+             button.style.setProperty('--task-color', getStatusColorFromClass(status.cls));
+-            button.setAttribute('aria-label', `${task.name}, ${status.text}`);
+             const name = document.createElement('span');
+             name.className = 'calendar-detail-task-name';
+             name.textContent = task.name;

@@ -1,0 +1,148 @@
+{
+  "created_at_utc": "2026-10-25T21:03:06.375092+00:00",
+  "status": "local_six_context_rehearsal_passed_waiting_for_main_and_matching_vercel_signal",
+  "production_execution": false,
+  "head_before_copy": "6da3c7293f08c5d16ca73c7a63d8ff74e17358db",
+  "head_after_rehearsal": "6da3c7293f08c5d16ca73c7a63d8ff74e17358db",
+  "copy_scope": {
+    "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/copy-scope.json",
+    "sha256": "ba0ff57606f80774bb86311606a37755efb55030097c0194ec770f755eb16f65",
+    "only_expected_index_changed": true
+  },
+  "driver": {
+    "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py",
+    "sha256": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91"
+  },
+  "report": {
+    "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/report.json",
+    "sha256": "21e3dc55b584540aff26bd72d73cea93fe2b2d2060515380dc5f35f8a5fc4067"
+  },
+  "command": [
+    "python",
+    "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py",
+    "--mode",
+    "local"
+  ],
+  "cwd": "/workspace/Task-Tracer",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "TASK_TRACER_BROWSER_EXECUTABLE": "/usr/bin/chromium",
+    "XDG_CACHE_HOME": "/workspace/.cache",
+    "PLAYWRIGHT_BROWSERS_PATH": "/workspace/.cache/ms-playwright",
+    "LD_LIBRARY_PATH": "/workspace/.cache/browser-libs/root/usr/lib/x86_64-linux-gnu",
+    "PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS": "1"
+  },
+  "environment_scope": "Same established browser/sysroot environment as prior successful rehearsal. Official host-precheck skip only, no product cases/TLS/CSP bypass.",
+  "runtime_before": {
+    "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+    "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+    "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+    "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+    "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+  },
+  "runtime_after": {
+    "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+    "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+    "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+    "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+    "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+  },
+  "actual_helpers_before": {
+    "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+    "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+    "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+    "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+    "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+    "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+  },
+  "actual_helpers_after": {
+    "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+    "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+    "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+    "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+    "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+    "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+  },
+  "driver_identity_stable": true,
+  "all_six_contexts_passed": true,
+  "all_inputs_stable": true,
+  "all_contexts_browsers_server_closed": true,
+  "page_errors": [],
+  "backups": [
+    {
+      "engine": "chromium",
+      "width": 1280,
+      "checksum": "fnv1a32:457287b5",
+      "checksum_verified": true,
+      "every_task_field_matches_indexeddb": true
+    },
+    {
+      "engine": "chromium",
+      "width": 390,
+      "checksum": "fnv1a32:9bc0c83c",
+      "checksum_verified": true,
+      "every_task_field_matches_indexeddb": true
+    },
+    {
+      "engine": "firefox",
+      "width": 1280,
+      "checksum": "fnv1a32:5279cd5c",
+      "checksum_verified": true,
+      "every_task_field_matches_indexeddb": true
+    },
+    {
+      "engine": "firefox",
+      "width": 390,
+      "checksum": "fnv1a32:873900b2",
+      "checksum_verified": true,
+      "every_task_field_matches_indexeddb": true
+    },
+    {
+      "engine": "webkit",
+      "width": 1280,
+      "checksum": "fnv1a32:7e5a733c",
+      "checksum_verified": true,
+      "every_task_field_matches_indexeddb": true
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "checksum": "fnv1a32:0ec334ed",
+      "checksum_verified": true,
+      "every_task_field_matches_indexeddb": true
+    }
+  ],
+  "logs": {
+    "local-attempt-1.stdout.log": {
+      "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-attempt-1.stdout.log",
+      "sha256": "b4371ee66358dfd4c83fb9bc153b06b8337d1d33b8c858a9c722068f90ba2f60",
+      "bytes": 710
+    },
+    "local-attempt-1.stderr.log": {
+      "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-attempt-1.stderr.log",
+      "sha256": "311d758247ad5a7f633b7b5447fd008f3c664bd4979680875c364a3f29f3e6b2",
+      "bytes": 236
+    }
+  },
+  "actually_viewed_screenshots": [
+    {
+      "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/chromium-1280/04-view-stats.png",
+      "sha256": "c2a1fa18416b21ba66e776abd3021472bd4ace585c2db3ae14ff55196ce3d4b7"
+    },
+    {
+      "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/04-view-calendar.png",
+      "sha256": "36eecf4e740883637b839c1babe972c7f5866b66812d4fb34ab42c24ad95a3f8"
+    },
+    {
+      "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/local-20261025T210048Z-0230ecaa15/webkit-390/02-editor-pending-child.png",
+      "sha256": "ebf428bd688afe4605f93c9262f76d39dbb5b4ea6c289365a09de00624fb9174"
+    }
+  ],
+  "visual_scope": "Only these three images were reopened by reviewer; remaining action captures are not claimed human-reviewed.",
+  "no_wider_acceptance_claim": "Local HTTP/normalCSP/motion and source/helper/driver stability only; not remote CI final73/99, real OS devices, main deployment or HTTPS production acceptance.",
+  "repository_files_modified": [],
+  "root_freeze_reference": {
+    "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-freeze-v5/inputs.json",
+    "sha256": "a25f6cd57e3369ffec2192f5026f0d2ef630656efac6437c0f4565109abdec4f"
+  }
+}

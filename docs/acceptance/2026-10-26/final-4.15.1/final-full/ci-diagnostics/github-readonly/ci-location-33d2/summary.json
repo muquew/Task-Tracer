@@ -1,0 +1,65 @@
+{
+  "created_at_utc": "2026-10-25T20:29:53.273769+00:00",
+  "kind": "temporary_public_source_location_diagnostic",
+  "run_id": "40230821013",
+  "run_url": "https://github.com/muquew/Task-Tracer/actions/runs/40230821013",
+  "commit": "33d2d9bf6e15b3234383ef1b02a50f56a6ff285d",
+  "branch": "codex/ci-outcome-summary-20261026",
+  "public_run_conclusion": "Failure",
+  "public_run_duration": "1m30s",
+  "checks_job": {
+    "id": "121281960309",
+    "url": "https://github.com/muquew/Task-Tracer/actions/runs/40230821013/job/121281960309",
+    "conclusion": "failed",
+    "duration": "1m28s"
+  },
+  "public_pwa_variant_outcomes": {
+    "pwa_default": "pass",
+    "pwa_full": "pass"
+  },
+  "original_default_smoke_failure": {
+    "variant": "smoke_default",
+    "outcome": "fail",
+    "exception_type": "AssertionError",
+    "source_basename": "smoke_playwright.py",
+    "line": 2596,
+    "function": "exercise_notifications",
+    "exact_annotation": "smoke_default fail AssertionError smoke_playwright.py:2596:exercise_notifications",
+    "file_annotation": "tools/smoke_playwright.py#L2596"
+  },
+  "other_public_step_annotations": [
+    {
+      "step": "Summarize check program outcomes",
+      "annotation": "smoke_playwright.py exit=1"
+    },
+    {
+      "step": "Validate static files, dates, and browser workflows",
+      "annotation": "Process completed with exit code 1."
+    },
+    {
+      "step": "Locate a failed smoke assertion with public source metadata",
+      "annotation": "Process completed with exit code 1."
+    }
+  ],
+  "deployed_site": {
+    "id": "121281961144",
+    "url": "https://github.com/muquew/Task-Tracer/actions/runs/40230821013/job/121281961144",
+    "conclusion": "skipped"
+  },
+  "local_source_lookup": {
+    "path": "tools/smoke_playwright.py",
+    "checkout_head": "2771d561181a4f10afeeacdf2e476dcbb754a49b",
+    "file_sha256": "40d5dc01ae2f2e5b55bb9de45f9037f62f09dfa96802aa4b1cd715b4bc9f535e",
+    "line2596": "    expect(page.locator(\"#notificationToggleBtn\")).to_have_attribute(\"aria-label\", \"关闭通知\")",
+    "scope": "Read-only lookup of primary source; actual expected/actual runtime value is not public."
+  },
+  "limits": [
+    "PWA probes are actual reported pass variants; no claim that every possible launcher difference is ruled out.",
+    "Specific actual aria-label or permission state at notification failure is not exposed.",
+    "Full logs, raw reports, artifacts, runtime environment and original exception message were not accessed.",
+    "Compatibility jobs excluded for this temporary diagnostic; no final73/99/main or production pass."
+  ],
+  "network_scope": "Only normal public HTTPS GET of this new run and its two jobs. No old restricted API/log/artifact, credentials, internal headers, workflow writes or network forwarding.",
+  "repository_files_modified": [],
+  "production_driver": "still waiting for main/Vercel signal"
+}

@@ -1,0 +1,461 @@
+{
+  "kind": "derived_diagnostic_baseline_matrix_summary",
+  "generated_at": "2026-10-25T19:31:43.881872+00:00",
+  "checkout": "/workspace/task-tracer-final-baseline",
+  "baseline_commit": "54b95cce891d167617d42bc489cdc801317f00c5",
+  "planned_engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "registered_programs_per_engine": 33,
+  "maximum_engine_workers": 2,
+  "final_delivery_claim": false,
+  "engines": {
+    "chromium": {
+      "status": "failed",
+      "native_completed": true,
+      "native_passed": false,
+      "native_report": "chromium/native-report.json",
+      "native_report_sha256": "65b0fc23d1a51e4693deb7f88c6c72ce0070240b1da65cfa7aff595e28edb55b",
+      "browser": {
+        "status": "passed",
+        "version": "154.0.8037.57",
+        "version_source": "Actual probe using the same Playwright launcher and options as the registered programs",
+        "exit_code": 0,
+        "started_at": "2026-10-25T18:50:32.957+00:00",
+        "finished_at": "2026-10-25T18:50:33.871+00:00",
+        "duration_seconds": 0.914,
+        "log": {
+          "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/chromium/native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-probe.log",
+          "relative_path": "native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-probe.log",
+          "bytes": 52,
+          "sha256": "7eaef05f557c5062e470cac0fd92cb23fd8a488785bf3be66618c3eb5375994b"
+        }
+      },
+      "executed_programs": 33,
+      "passed_programs": 26,
+      "failures": [
+        {
+          "program": "project_scope_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 36.972,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/chromium/native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-project_scope_playwright.log",
+            "relative_path": "native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-project_scope_playwright.log",
+            "bytes": 2834,
+            "sha256": "b6a330cd01c5df1b6ebcbadf2e7bc50ecb9e08547bbe9a84a8a3c71e3cd777ed"
+          }
+        },
+        {
+          "program": "repeat_delete_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 19.07,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/chromium/native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-repeat_delete_playwright.log",
+            "relative_path": "native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-repeat_delete_playwright.log",
+            "bytes": 9255,
+            "sha256": "fff5ff40697a181c5f821f6e2b51b250bf58c2159ef82565959765a6b064de30"
+          }
+        },
+        {
+          "program": "repeat_merge_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 65.475,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/chromium/native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-repeat_merge_playwright.log",
+            "relative_path": "native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-repeat_merge_playwright.log",
+            "bytes": 3209,
+            "sha256": "a159084749dc683dbef3e3b8200c2f413de99a5e1649725a3fb07f5717a297a8"
+          }
+        },
+        {
+          "program": "onboarding_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 6.843,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/chromium/native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-onboarding_playwright.log",
+            "relative_path": "native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-onboarding_playwright.log",
+            "bytes": 1783,
+            "sha256": "22b23d2c063db39a68ab3e7eb403b1bf71e9a8f4c4ab45d735c26dab05fa7f1a"
+          }
+        },
+        {
+          "program": "help_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 8.863,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/chromium/native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-help_playwright.log",
+            "relative_path": "native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-help_playwright.log",
+            "bytes": 4395,
+            "sha256": "fd5f5329d9ec1865ec39d3ec90d3d7929848a13542e1f0da97ad4804d913bcf4"
+          }
+        },
+        {
+          "program": "calendar_performance_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 44.746,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/chromium/native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-calendar_performance_playwright.log",
+            "relative_path": "native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-calendar_performance_playwright.log",
+            "bytes": 3222,
+            "sha256": "ff431257a99f4b5a5b23ac8a39af9f2e8ba223419a89af3e2d34dc54163aed31"
+          }
+        },
+        {
+          "program": "time_refresh_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 12.779,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/chromium/native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-time_refresh_playwright.log",
+            "relative_path": "native-report-logs/185b9453-47f4-4670-a63f-6b1dffb5e2d7/chromium-time_refresh_playwright.log",
+            "bytes": 4449,
+            "sha256": "4cd5f96af4fa915213b5211eb230bd6299755af8094b239a93e5b457e12ce3a3"
+          }
+        }
+      ],
+      "unexecuted_checks": [],
+      "current_check": null,
+      "source_unchanged": true,
+      "verification_unchanged": true,
+      "source_sha256": "131121b361e13fce65d1df18bcc1873478b41098fabf5803620334721e7ff221",
+      "verification_sha256": "a207e5cfd27f752382036e35f15fd62c5dc8fee330b1699ad09aa270262b0a63",
+      "coverage_exceptions": [],
+      "runner_summary": {
+        "engine": "chromium",
+        "command": [
+          "python",
+          "tools/browser_matrix.py",
+          "--browser",
+          "chromium",
+          "--group",
+          "all",
+          "--keep-going",
+          "--report",
+          "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/chromium/native-report.json"
+        ],
+        "started_at": "2026-10-25T18:50:32.910229+00:00",
+        "finished_at": "2026-10-25T19:09:00.219871+00:00",
+        "duration_seconds": 1107.31,
+        "exit_code": 1,
+        "source_and_tools_unchanged": true,
+        "worker_returned": true
+      }
+    },
+    "firefox": {
+      "status": "failed",
+      "native_completed": true,
+      "native_passed": false,
+      "native_report": "firefox/native-report.json",
+      "native_report_sha256": "a2cb2805275c502d6bf643b73a3a42257ce6b8e721ed977539f6795d73898676",
+      "browser": {
+        "status": "passed",
+        "version": "153.0",
+        "version_source": "Actual probe using the same Playwright launcher and options as the registered programs",
+        "exit_code": 0,
+        "started_at": "2026-10-25T18:50:32.968+00:00",
+        "finished_at": "2026-10-25T18:50:34.433+00:00",
+        "duration_seconds": 1.465,
+        "log": {
+          "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-probe.log",
+          "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-probe.log",
+          "bytes": 43,
+          "sha256": "b5247e1b6b1f7474ec4ac4fd18c8b347c6292e54372bf67e6c0f91bf6dfed7f2"
+        }
+      },
+      "executed_programs": 33,
+      "passed_programs": 25,
+      "failures": [
+        {
+          "program": "project_scope_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 38.719,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-project_scope_playwright.log",
+            "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-project_scope_playwright.log",
+            "bytes": 2825,
+            "sha256": "4732c158dc04905363b47524fb3d32e985a0bb6181d596cf3166d56ac5d06e65"
+          }
+        },
+        {
+          "program": "imported_reminder_edit_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 55.95,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-imported_reminder_edit_playwright.log",
+            "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-imported_reminder_edit_playwright.log",
+            "bytes": 3484,
+            "sha256": "42c929bd659ca97175f070589a353980fbd4a125e912dc1f5f67df03bc2da0cf"
+          }
+        },
+        {
+          "program": "repeat_delete_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 36.661,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-repeat_delete_playwright.log",
+            "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-repeat_delete_playwright.log",
+            "bytes": 2464,
+            "sha256": "c48c2e2b9f2c9a791b7f3f742b0cdcee14fa876a622e86f2691b3872bacc497e"
+          }
+        },
+        {
+          "program": "repeat_merge_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 63.185,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-repeat_merge_playwright.log",
+            "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-repeat_merge_playwright.log",
+            "bytes": 3137,
+            "sha256": "59497cb2ee2c4d97019949f216fe21feeaf00fc45650ba95cca65e0e3afc7d5e"
+          }
+        },
+        {
+          "program": "onboarding_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 8.749,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-onboarding_playwright.log",
+            "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-onboarding_playwright.log",
+            "bytes": 1774,
+            "sha256": "b14ba61b0d7475100d3726a437b9bc38018c2d730fa323550b42c4c1816d9ebe"
+          }
+        },
+        {
+          "program": "help_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 12.034,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-help_playwright.log",
+            "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-help_playwright.log",
+            "bytes": 4386,
+            "sha256": "57804ad15b19d79d3c24f2eeee16f3adf1cfeefc5b5966087baae3a34e65adca"
+          }
+        },
+        {
+          "program": "calendar_performance_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 49.121,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-calendar_performance_playwright.log",
+            "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-calendar_performance_playwright.log",
+            "bytes": 3222,
+            "sha256": "99b252dc1393163c63ea8e9a03e1a06e85da424bb16364fbb74bab7927a61f50"
+          }
+        },
+        {
+          "program": "time_refresh_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 17.362,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-time_refresh_playwright.log",
+            "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-time_refresh_playwright.log",
+            "bytes": 4449,
+            "sha256": "daa0204033a619701451a8a83f286df172704c29b9e208251b4256b98461bae0"
+          }
+        }
+      ],
+      "unexecuted_checks": [],
+      "current_check": null,
+      "source_unchanged": true,
+      "verification_unchanged": true,
+      "source_sha256": "131121b361e13fce65d1df18bcc1873478b41098fabf5803620334721e7ff221",
+      "verification_sha256": "a207e5cfd27f752382036e35f15fd62c5dc8fee330b1699ad09aa270262b0a63",
+      "coverage_exceptions": [
+        {
+          "browser": "firefox",
+          "program": "timezone_playwright.py",
+          "case": "Live device-timezone override",
+          "status": "not_run",
+          "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+        },
+        {
+          "browser": "firefox",
+          "program": "calendar_timezone_playwright.py",
+          "case": "Live device-timezone override",
+          "status": "not_run",
+          "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+        }
+      ],
+      "runner_summary": {
+        "engine": "firefox",
+        "command": [
+          "python",
+          "tools/browser_matrix.py",
+          "--browser",
+          "firefox",
+          "--group",
+          "all",
+          "--keep-going",
+          "--report",
+          "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report.json"
+        ],
+        "started_at": "2026-10-25T18:50:32.910078+00:00",
+        "finished_at": "2026-10-25T19:08:54.942062+00:00",
+        "duration_seconds": 1102.032,
+        "exit_code": 1,
+        "source_and_tools_unchanged": true,
+        "worker_returned": true
+      }
+    },
+    "webkit": {
+      "status": "failed",
+      "native_completed": true,
+      "native_passed": false,
+      "native_report": "webkit/native-report.json",
+      "native_report_sha256": "562d9953f1ef452990487c5dde9b0c2528c0efd04d4f4d628eab55ac9ca9c580",
+      "browser": {
+        "status": "passed",
+        "version": "26.5",
+        "version_source": "Actual probe using the same Playwright launcher and options as the registered programs",
+        "exit_code": 0,
+        "started_at": "2026-10-25T19:09:01.767+00:00",
+        "finished_at": "2026-10-25T19:09:02.286+00:00",
+        "duration_seconds": 0.52,
+        "log": {
+          "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-probe.log",
+          "relative_path": "native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-probe.log",
+          "bytes": 159,
+          "sha256": "5dfd915ed3be4dc76a2600b3879e0b42a7365781a67d6e0db7ac4236330bcf75"
+        }
+      },
+      "executed_programs": 33,
+      "passed_programs": 26,
+      "failures": [
+        {
+          "program": "project_scope_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 36.662,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-project_scope_playwright.log",
+            "relative_path": "native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-project_scope_playwright.log",
+            "bytes": 3001,
+            "sha256": "5dde26018ad50f268919b6736f6b4f64e851c7f57ebf0fe89fc845ef227f1174"
+          }
+        },
+        {
+          "program": "repeat_delete_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 41.057,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-repeat_delete_playwright.log",
+            "relative_path": "native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-repeat_delete_playwright.log",
+            "bytes": 2579,
+            "sha256": "7e4f07a5b58d9cfce7297222a1c919472946d0d42f1e19e43f2d4fd0f10b81e9"
+          }
+        },
+        {
+          "program": "repeat_merge_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 82.297,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-repeat_merge_playwright.log",
+            "relative_path": "native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-repeat_merge_playwright.log",
+            "bytes": 3250,
+            "sha256": "74218ccc18147288daa2909a8a59084510d51eeb1d226a62f6525fd0dbb95405"
+          }
+        },
+        {
+          "program": "onboarding_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 7.137,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-onboarding_playwright.log",
+            "relative_path": "native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-onboarding_playwright.log",
+            "bytes": 1890,
+            "sha256": "253464c9e53894554c2c40c73ae63997e8c1dbf6e822ec1d99c63ef570f89b02"
+          }
+        },
+        {
+          "program": "help_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 9.99,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-help_playwright.log",
+            "relative_path": "native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-help_playwright.log",
+            "bytes": 4502,
+            "sha256": "addf133177f96e5460cb718b9128fd99e35a6b0c92418afde093efa365b693ed"
+          }
+        },
+        {
+          "program": "calendar_performance_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 57.807,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-calendar_performance_playwright.log",
+            "relative_path": "native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-calendar_performance_playwright.log",
+            "bytes": 3340,
+            "sha256": "999e58e8a2ab50a3d3045dc65ff586955fca7a88c601a51b2ad59a28d1e7293d"
+          }
+        },
+        {
+          "program": "time_refresh_playwright.py",
+          "exit_code": 1,
+          "duration_seconds": 16.999,
+          "log": {
+            "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-time_refresh_playwright.log",
+            "relative_path": "native-report-logs/78c86903-7ddc-4a3e-8eaf-c45c1a3cf559/webkit-time_refresh_playwright.log",
+            "bytes": 4567,
+            "sha256": "0ceafb01a4c7044991d55a558a758e86c8d1241296fec944af83a91b32103ff8"
+          }
+        }
+      ],
+      "unexecuted_checks": [],
+      "current_check": null,
+      "source_unchanged": true,
+      "verification_unchanged": true,
+      "source_sha256": "131121b361e13fce65d1df18bcc1873478b41098fabf5803620334721e7ff221",
+      "verification_sha256": "a207e5cfd27f752382036e35f15fd62c5dc8fee330b1699ad09aa270262b0a63",
+      "coverage_exceptions": [
+        {
+          "browser": "webkit",
+          "program": "timezone_playwright.py",
+          "case": "Live device-timezone override",
+          "status": "not_run",
+          "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+        },
+        {
+          "browser": "webkit",
+          "program": "calendar_timezone_playwright.py",
+          "case": "Live device-timezone override",
+          "status": "not_run",
+          "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+        }
+      ],
+      "runner_summary": {
+        "engine": "webkit",
+        "command": [
+          "python",
+          "tools/browser_matrix.py",
+          "--browser",
+          "webkit",
+          "--group",
+          "all",
+          "--keep-going",
+          "--report",
+          "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/native-report.json"
+        ],
+        "started_at": "2026-10-25T19:09:01.719956+00:00",
+        "finished_at": "2026-10-25T19:29:29.996362+00:00",
+        "duration_seconds": 1228.276,
+        "exit_code": 1,
+        "source_and_tools_unchanged": true,
+        "worker_returned": true
+      }
+    }
+  },
+  "all_engines_completed": true,
+  "all_engines_passed": false,
+  "webkit_environment": {
+    "LD_LIBRARY_PATH": "/workspace/.cache/browser-libs/root/usr/lib/x86_64-linux-gnu",
+    "PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS": "1",
+    "actual_ldd_and_render_probe": "probes/webkit-sysroot.json and probes/webkit-actual-render.json",
+    "note": "Initial global ldconfig DLOPEN host precheck failed. Superuser install unavailable. Real cached dependencies resolve, actual WebKit renders; official flag skips static host precheck only, with original33 product assertions retained. System dependencies were not installed."
+  },
+  "limits": [
+    "This is an isolated original4.15.0 diagnostic baseline, not a newer source or tool result.",
+    "Completed means each registered program was invoked; a failed program may stop its own remaining internal subcases.",
+    "Original native HTTP and motion are unchanged; no global deployment-CSP override.",
+    "Browser engines and simulated viewports are Linux environments, not physical-device or Safari/iOS certification."
+  ]
+}

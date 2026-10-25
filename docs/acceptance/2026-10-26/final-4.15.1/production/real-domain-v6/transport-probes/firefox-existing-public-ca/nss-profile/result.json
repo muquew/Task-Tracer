@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-25T22:47:15.576959+00:00",
+  "mode": "nss-profile",
+  "configured_ca_path": "/usr/local/share/ca-certificates/environment-proxy-ca.crt",
+  "configured_ca_sha256": "7fa2d7d439db8bfa7c191457e61af5e3f4eb412314eb148766ac09e93786e4c3",
+  "configured_ca_is_existing_enterprise_root_not_site_leaf": true,
+  "tls_validation_enabled": true,
+  "ignore_https_errors": false,
+  "firefox_user_prefs": {
+    "security.enterprise_roots.enabled": true
+  },
+  "explicit_managed_launch_and_context_proxy": true,
+  "proxy_credentials_present": false,
+  "proxy_and_pem_values_recorded": false,
+  "headless": true,
+  "page_url": "https://todo.muquew.com/",
+  "browser_closed": true,
+  "application_crud_or_fullsuite_run": false,
+  "browser_version": "153.0",
+  "isolated_user_profile": "/tmp/task-tracer-firefox-enterprise-ca-ih8xm4qm",
+  "status": 200,
+  "security_details": {
+    "issuer": "openai.com",
+    "protocol": "TLS 1.3",
+    "subjectName": "todo.muquew.com",
+    "validFrom": 1792905430,
+    "validTo": 1824441490
+  },
+  "source_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+  "csp_present": true,
+  "page_title": "Task Tracer - Local-first Task Manager",
+  "context_request_homepage_status": 200,
+  "context_request_homepage_source_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+  "passed": true,
+  "context_closed": true
+}

@@ -1,0 +1,30 @@
+{
+  "command": [
+    "python",
+    "tools/quick_add_recovery_playwright.py",
+    "--browser",
+    "webkit",
+    "--case",
+    "capture"
+  ],
+  "cwd": "/workspace/Task-Tracer",
+  "original_cli": true,
+  "http_scope": "Original StaticHandler and reduced-motion context, no global production header override",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONUNBUFFERED": "1",
+    "XDG_CACHE_HOME": "/workspace/.cache",
+    "PLAYWRIGHT_BROWSERS_PATH": "/workspace/.cache/ms-playwright",
+    "LD_LIBRARY_PATH": "/workspace/.cache/browser-libs/root/usr/lib/x86_64-linux-gnu",
+    "PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS": "1",
+    "TASK_TRACER_BROWSER_EXECUTABLE": null,
+    "TASK_TRACER_PRODUCTION_HEADERS": null
+  },
+  "started_at": "2026-10-25T20:10:31.182433+00:00",
+  "finished_at": "2026-10-25T20:10:53.664447+00:00",
+  "duration_seconds": 22.482,
+  "exit_code": 1,
+  "inputs_unchanged": true,
+  "source_sha256": "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+  "out": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/workspace-fixed/webkit-capture-native-20261025T201031Z-2732f9"
+}

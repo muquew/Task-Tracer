@@ -1,0 +1,9 @@
+::error::project_scope_playwright.py exit=1
+::error::onboarding_playwright.py exit=1
+::error::help_playwright.py exit=1
+::error::settings_flow_playwright.py exit=2
+::error::repeat_delete_playwright.py exit=1
+::error::repeat_merge_playwright.py exit=1
+::error::time_refresh_playwright.py exit=1
+::error::calendar_performance_playwright.py exit=1
+::error::accessibility_i18n_audit.py exit=1

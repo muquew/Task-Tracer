@@ -1,0 +1,72 @@
+{
+  "started_at_utc": "2026-10-25T22:48:50.568904+00:00",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v6-env/driver.py",
+    "--mode",
+    "production",
+    "--url",
+    "https://todo.muquew.com/"
+  ],
+  "cwd": "/workspace/Task-Tracer",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "TASK_TRACER_BROWSER_EXECUTABLE": "/usr/bin/chromium",
+    "XDG_CACHE_HOME": "/workspace/.cache",
+    "PLAYWRIGHT_BROWSERS_PATH": "/workspace/.cache/ms-playwright",
+    "LD_LIBRARY_PATH": "/workspace/.cache/browser-libs/root/usr/lib/x86_64-linux-gnu",
+    "PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS": "1"
+  },
+  "driver_sha256": "5b92fccf8017325bf17df58db6dff591b25cbe668c2c69a21b3f9659997f5d96",
+  "actual_head_before": "7a0a0f13cc9fb2501017f4e2de153a5dec27331d",
+  "runtime_before": {
+    "index.html": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+    "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+    "vercel.json": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+    "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+    "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728"
+  },
+  "helpers_before": {
+    "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+    "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+    "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+    "tools/smoke_playwright.py": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+    "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+    "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+  },
+  "wrapper_scope": "Only launch/receipt capture. Production proxy and normal existing-CA trust adaptation is external; original exercise and all other assertion functions are byte-identical. Six fresh real-UI contexts and assertions retained. Firefox uses two unique temporary trusted-CA profiles and two browser launches, Chromium/WebKit one browser launch each (four total); no profile/NSS databases archived. HEAD is observed, not hardcoded.",
+  "passed": false,
+  "exit_code": 1,
+  "native_report": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v6-env/production-20261025T224850Z-cc0fcc5f03/report.json",
+  "native_report_sha256": "baf7e1961360dee4ca1a55be19b1d870ed7b643252545169e00533bb8c4d9760",
+  "native_passed": false,
+  "contexts": 6,
+  "native_inputs_unchanged": true,
+  "firefox_browser_launches": [
+    {
+      "width": 1280,
+      "browser_version": "153.0",
+      "closed": true
+    },
+    {
+      "width": 390,
+      "browser_version": "153.0",
+      "closed": true
+    }
+  ],
+  "actual_browser_launch_count": 4,
+  "all_browser_launches_closed": true,
+  "all_temporary_profiles_removed": true,
+  "actual_head_after": "7a0a0f13cc9fb2501017f4e2de153a5dec27331d",
+  "head_unchanged": true,
+  "duration_seconds": 70.673,
+  "finished_at_utc": "2026-10-25T22:50:01.241813+00:00",
+  "stdout": {
+    "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v6-env/production-launch-20261025T224850Z-be2e888d/stdout.log",
+    "sha256": "50a62e9c528d7603ccec49d8807c6126a3da3c7f4d596df19011927ab7b2c98b"
+  },
+  "stderr": {
+    "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v6-env/production-launch-20261025T224850Z-be2e888d/stderr.log",
+    "sha256": "a2bd64fd7cc56bbbce3a5b71dd28a343e928db3395c7b70d55a871af6070e9c7"
+  }
+}

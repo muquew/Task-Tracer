@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer/tools/project_scope_playwright.py", line 294, in <module>
+    run(args.browser, args.grouping_only)
+  File "/workspace/Task-Tracer/tools/project_scope_playwright.py", line 172, in run
+    add_unassigned_task(page, 'Unassigned scope task')
+  File "/workspace/Task-Tracer/tools/project_scope_playwright.py", line 62, in add_unassigned_task
+    click_task_action(page, task_locator(page, name), 'edit')
+TypeError: click_task_action() takes 2 positional arguments but 3 were given

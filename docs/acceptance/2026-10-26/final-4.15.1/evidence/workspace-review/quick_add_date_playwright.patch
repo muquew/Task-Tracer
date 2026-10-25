@@ -1,0 +1,49 @@
+--- a/tools/quick_add_date_playwright.py
++++ b/tools/quick_add_date_playwright.py
+@@ -148,6 +148,29 @@
+     assert_task_ui(page,added[0])
+     quick(page,'明天 10:00 After midnight parser case','After midnight parser case',after_tomorrow,'10:00')
+     print('Quick-add dates passed: relative words resolve on submission across leap/year midnight; saved cards and edit fields show the actual date',flush=True)
++
++
++def past_relative(page, url):
++    clear_app_data(page, url)
++    cases = (
++        ('2024-03-01T12:00:00+00:00', '昨天', '2024-02-29'),
++        ('2026-01-01T12:00:00+00:00', 'YESTERDAY', '2025-12-31'),
++        ('2026-03-01T12:00:00+00:00', '昨日', '2026-02-28'),
++        ('2024-03-01T12:00:00+00:00', '前天', '2024-02-28'),
++        ('2026-01-01T12:00:00+00:00', '前天', '2025-12-30'),
++    )
++    for index, (now, token, expected_date) in enumerate(cases):
++        page.clock.set_system_time(datetime.fromisoformat(now))
++        name = f'Past relative civil case {index}'
++        record = quick(page, f'{token} 15:00 {name} #past /History', name,
++                       expected_date, '15:00', project='History', tags=['past'])
++        compare_form(page, record, expected_date, '15:00', f'past relative {index}')
++    page.clock.set_system_time(datetime(2026, 3, 1, 12, tzinfo=timezone.utc))
++    quick(page, '15:00 Time-only control remains today', 'Time-only control remains today',
++          '2026-03-01', '15:00')
++    quick(page, 'yesteryear 15:00 Ordinary word remains title',
++          'yesteryear Ordinary word remains title', '2026-03-01', '15:00')
++    print('Quick-add past-relative dates passed: Chinese yesterday/day-before-yesterday and English yesterday cross leap/month/year boundaries, match full forms, and preserve time-only/ordinary-word behavior', flush=True)
+ 
+ 
+ def weekdays(page, url):
+@@ -177,7 +200,7 @@
+ 
+ def run(engine,selected):
+     expect.set_options(timeout=10000)
+-    cases=[('weekday','UTC',weekdays),('yearless','UTC',yearless),('explicit','UTC',explicit),
++    cases=[('past-relative','UTC',past_relative),('weekday','UTC',weekdays),('yearless','UTC',yearless),('explicit','UTC',explicit),
+            ('apia','Pacific/Apia',explicit),('gap','America/New_York',explicit),('invalid','UTC',invalid),
+            ('midnight','UTC',lambda page,url:relative(page,url,'2024-02-28T23:59:40+00:00','2024-02-29','2024-02-29','2024-03-01')),
+            ('yearend','UTC',lambda page,url:relative(page,url,'2026-12-31T23:59:40+00:00','2027-01-01','2027-01-01','2027-01-02'))]
+@@ -204,6 +227,6 @@
+ if __name__=='__main__':
+     parser=argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--browser',choices=('chromium','firefox','webkit'),default='chromium')
+-    parser.add_argument('--case',choices=('all','weekday','yearless','explicit','apia','gap','invalid','midnight','yearend'),default='all')
++    parser.add_argument('--case',choices=('all','past-relative','weekday','yearless','explicit','apia','gap','invalid','midnight','yearend'),default='all')
+     args=parser.parse_args()
+     run(args.browser,args.case)

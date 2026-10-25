@@ -1,0 +1,6 @@
+{
+  "browser_closed": true,
+  "server_closed": true,
+  "calendar_day_observed": 1,
+  "scope": "Exact original audit_scaled_surfaces; wrapper observes DOM and screenshot before original run_axe unchanged; original HTTP/motion."
+}

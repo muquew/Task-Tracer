@@ -1,0 +1,6 @@
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+webkit: Help/diagnostics regression on 26.5
+Help passed: en; headings/version, keyboard focus, commands and private explicit-download report
+Help passed: zh-CN; headings/version, keyboard focus, commands and private explicit-download report
+Help passed: cancellation during a delayed storage estimate cannot reopen diagnostics
+Help passed: storage failure retains settings Help, keyboard access and redacted diagnostics; retry restores normal Help and one-download behavior

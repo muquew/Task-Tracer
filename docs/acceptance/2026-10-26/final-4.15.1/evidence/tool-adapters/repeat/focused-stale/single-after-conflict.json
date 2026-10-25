@@ -1,0 +1,185 @@
+{
+  "tasks": [
+    {
+      "id": 0,
+      "name": "Lineage root",
+      "description": "Original series record",
+      "project": "",
+      "tags": [],
+      "dueDate": "2027-01-01T08:30:00.000Z",
+      "dueAt": "2027-01-01T08:30:00.000Z",
+      "dueLocalDate": "2027-01-01",
+      "dueLocalTime": "08:30",
+      "dueTimeZone": "UTC",
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "daily",
+      "repeatInterval": 1,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": 1792955833496,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "subtasks": [
+        {
+          "id": 31,
+          "text": "Original checklist",
+          "completed": true
+        }
+      ],
+      "completed": true,
+      "completedAt": "2026-10-25T19:11:36.808Z",
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "createdAt": "2026-10-25T19:11:35.514Z",
+      "order": 10000
+    },
+    {
+      "id": 1792955833496,
+      "name": "Lineage root",
+      "description": "Original series record",
+      "project": "",
+      "tags": [],
+      "dueDate": "2027-01-02T08:30:00.000Z",
+      "dueAt": "2027-01-02T08:30:00.000Z",
+      "dueLocalDate": "2027-01-02",
+      "dueLocalTime": "08:30",
+      "dueTimeZone": "UTC",
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "daily",
+      "repeatInterval": 1,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "repeatSourceId": 0,
+      "repeatCreatedFrom": 0,
+      "nextRepeatTaskId": 1792955876828,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "subtasks": [
+        {
+          "id": 31,
+          "text": "Original checklist",
+          "completed": false
+        }
+      ],
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "createdAt": "2026-10-25T19:11:36.808Z",
+      "order": 20000
+    },
+    {
+      "id": 1792955876828,
+      "name": "Lineage root",
+      "description": "Original series record",
+      "project": "",
+      "tags": [],
+      "dueDate": "2027-01-03T08:30:00.000Z",
+      "dueAt": "2027-01-03T08:30:00.000Z",
+      "dueLocalDate": "2027-01-03",
+      "dueLocalTime": "08:30",
+      "dueTimeZone": "UTC",
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "daily",
+      "repeatInterval": 1,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "repeatSourceId": 0,
+      "repeatCreatedFrom": 1792955833496,
+      "nextRepeatTaskId": 1792956490896,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "subtasks": [
+        {
+          "id": 31,
+          "text": "Original checklist",
+          "completed": false
+        }
+      ],
+      "completed": true,
+      "completedAt": "2026-10-25T19:11:37.475Z",
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "createdAt": "2026-10-25T19:11:37.109Z",
+      "order": 30000
+    },
+    {
+      "id": 1792956490896,
+      "name": "Manually planned future",
+      "description": "A newer write from another database client",
+      "project": "",
+      "tags": [],
+      "dueDate": "2026-12-15T15:45:00.000Z",
+      "dueAt": "2026-12-15T15:45:00.000Z",
+      "dueLocalDate": "2026-12-15",
+      "dueLocalTime": "15:45",
+      "dueTimeZone": "UTC",
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "daily",
+      "repeatInterval": 1,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "repeatSourceId": 0,
+      "repeatCreatedFrom": 1792955876828,
+      "nextRepeatTaskId": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "subtasks": [
+        {
+          "id": 31,
+          "text": "Original checklist",
+          "completed": false
+        },
+        {
+          "id": 1792956176512,
+          "text": "Future-only checklist",
+          "completed": false
+        }
+      ],
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "createdAt": "2026-10-25T19:11:37.475Z",
+      "order": 40000
+    }
+  ],
+  "config": [
+    {
+      "key": "language",
+      "value": "zh-CN"
+    },
+    {
+      "key": "notifications_enabled",
+      "value": false
+    },
+    {
+      "key": "recoveryHistory",
+      "value": [
+        {
+          "id": "7919e02f-ea19-4513-a59c-e02c96ba53eb",
+          "createdAt": "2026-10-25T19:11:35.627Z",
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "key": "sampleTasksAdded",
+      "value": true
+    },
+    {
+      "key": "taskRevision",
+      "value": 7
+    }
+  ]
+}

@@ -2,11 +2,9 @@
 
 Task Tracer is a local-first personal task workspace for capture, planning, recurring work, reminders and review. The existing product works without an account or task server. Task ownership, export, recovery and offline access must stay independent of an optional purchase service.
 
-## Current stable-delivery target
+## Current stable delivery
 
-The **4.15.1 stable web release** defines this delivery scope: close confirmed functional and usability gaps, complete whole-product acceptance on the final candidate, produce the verified distribution and finish the existing GitHub→Vercel publication flow. [GOAL.md](../GOAL.md) tracks execution; [the stable delivery record](stable-delivery.md) is the authoritative version, acceptance status, artifact and evidence entry. An initial run or an older version's pass does not complete this target.
-
-The delivery scope is the existing local-first web product. Its stable handoff requires the release gates below; later bug/security fixes and optional features remain normal maintenance.
+The **4.15.1** engineering delivery status is **complete**. [GOAL.md](../GOAL.md), [the stable delivery record](stable-delivery.md) and [final evidence](acceptance/2026-10-26/final-4.15.1/final-full/final-delivery.md) identify the frozen application, canonical archive, actual gate outcomes and publication. The scope is the existing local-first web product; later bug/security fixes and optional features remain normal maintenance.
 
 ## Existing product scope
 
@@ -40,4 +38,4 @@ Accounts, cloud sync, collaboration and subscriptions are not implemented by thi
 
 ## Historical release records
 
-The published [4.15.0](releases/4.15.0.md), [4.14.0](releases/4.14.0.md), [4.13.0](releases/4.13.0.md), [4.12.0](releases/4.12.0.md), [4.10.1](releases/4.10.1.md), [4.9.0](releases/4.9.0.md), [4.8.6](releases/4.8.6.md) and [4.8.5](releases/4.8.5.md) retain their original implementations, acceptance outcomes and failed attempts. Their program counts, measurements and deployment results are historical, not new checks on the stable-delivery target. [Browser compatibility](browser-compatibility.md) and [performance evidence](performance.md) explain their declared scopes.
+The published [4.15.0](releases/4.15.0.md), [4.14.0](releases/4.14.0.md), [4.13.0](releases/4.13.0.md), [4.12.0](releases/4.12.0.md), [4.10.1](releases/4.10.1.md), [4.9.0](releases/4.9.0.md), [4.8.6](releases/4.8.6.md) and [4.8.5](releases/4.8.5.md) retain their original implementations, acceptance outcomes and failed attempts. The current [4.15.1 record](releases/4.15.1.md) has its own input identities and outcomes. Earlier program counts, measurements and deployments remain historical. [Browser compatibility](browser-compatibility.md) and [performance evidence](performance.md) explain their declared scopes.

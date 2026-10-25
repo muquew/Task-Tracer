@@ -1,0 +1,68 @@
+{
+  "scope": "Actual main publication, original normal-TLS static/header verification and actual public package retrieval; production-browser acceptance remains separate",
+  "published_main_commit": "7a0a0f13cc9fb2501017f4e2de153a5dec27331d",
+  "old_main_commit": "54b95cce891d167617d42bc489cdc801317f00c5",
+  "accepted_code_commit": "6a3b8e61ba0699cc316fd92a247cc9c917a7521d",
+  "push_observed_at": "2026-10-25T22:40:22Z",
+  "static_attempt_passed": true,
+  "normal_tls": true,
+  "static_started_at": "2026-10-25T22:40:44.497897+00:00",
+  "static_finished_at": "2026-10-25T22:40:49.640611+00:00",
+  "native_checked_responses": 15,
+  "extra_checked_responses": 6,
+  "total_checked_responses": 21,
+  "root_security_header_names_checked": [
+    "Content-Security-Policy",
+    "Referrer-Policy",
+    "X-Content-Type-Options",
+    "X-Frame-Options",
+    "Permissions-Policy"
+  ],
+  "root_security_header_count": 5,
+  "public_package_finished_at": "2026-10-25T22:41:44.806214+00:00",
+  "actual_downloads": [
+    {
+      "url": "https://todo.muquew.com/downloads/task-tracer-4.15.1.zip",
+      "effective_url": "https://todo.muquew.com/downloads/task-tracer-4.15.1.zip",
+      "status": 200,
+      "bytes": 992071,
+      "sha256": "0540eca3d0d83a140c3695f575e24e6c73252afe08e5ae2f4f3457cef4691aca",
+      "headers": {
+        "Content-Type": "application/zip",
+        "Content-Length": "992071",
+        "ETag": "\"3f523811963e7c03d743a1ac52331bbc\"",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "X-Vercel-Id": "cle1::4jsr8-1792968104256-9c346eae3097"
+      }
+    },
+    {
+      "url": "https://todo.muquew.com/downloads/task-tracer-4.15.1.zip.sha256",
+      "effective_url": "https://todo.muquew.com/downloads/task-tracer-4.15.1.zip.sha256",
+      "status": 200,
+      "bytes": 89,
+      "sha256": "8cc365b19b759f6833dc922cf8917e4654957417fc298a083801df98126b94bc",
+      "headers": {
+        "Content-Type": "application/octet-stream",
+        "Content-Length": "89",
+        "ETag": "\"32b2522b671a400bf0fcc823711205ea\"",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "X-Vercel-Id": "cle1::t8bbv-1792968104727-a02bad8c303b"
+      }
+    }
+  ],
+  "archive": {
+    "files": 24,
+    "payload_files": 23,
+    "integrity_commit": "6a3b8e61ba0699cc316fd92a247cc9c917a7521d",
+    "working_tree_dirty": false,
+    "integrity_sha256": "d19f377de151b1ddb40db5925557d57b382e486d5633ac0150ed5d570892dfcb"
+  },
+  "source_sha256": "58b724aff838339caf9c9ba0e2d5cff3ff05d20dae43e5c16fe93984f8734e54",
+  "verification_sha256": "1d0a6604a369bd42c75045692eb11536ae9636ee6f4320a0d4e07c4a65ca9561",
+  "accepted_to_published_only_downloads_pair": true,
+  "old_4_15_0_sha256": "02cc67c9ac2a454b9ca248c3a122f92060c674677914dfab567cd7de5f6fbca3",
+  "old_package_copy_receipt_unchanged": true,
+  "no_new_network_or_browser_or_verifier_run_for_archiving": true,
+  "no_binary_duplicate_copied": true,
+  "production_browser_status": "Separate scope; not established by these records."
+}

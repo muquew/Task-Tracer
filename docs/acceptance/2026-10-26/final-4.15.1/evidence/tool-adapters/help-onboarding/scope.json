@@ -1,0 +1,25 @@
+{
+  "kind": "current_UI_contract_adapter",
+  "files": [
+    {
+      "file": "tools/onboarding_playwright.py",
+      "before_sha256": "dd0cce183b109129556899075eb8c16a0c4c377565a8ddbf6e786308c260dcbd",
+      "after_sha256": "e374f9f0b326a2a6babfe5d3a297b7760fdbafc47303020acecf4f7e3b433989"
+    },
+    {
+      "file": "tools/help_playwright.py",
+      "before_sha256": "84e82f89b7519da18541670b9c96209c497f14399b0ed901e0a5b5ab45c8c840",
+      "after_sha256": "fdc4c4ce19f24da60a77bad9c378a3d7aedb7aa39eaf7647808ff3aed73ef7c3"
+    }
+  ],
+  "changes": [
+    "Exact English onboardingaccessible label updated; all4originalcases,3-recordchecks/keyboard/undo/multi-window/quota assertions unchanged.",
+    "Original5help section-heading lookups now open current native details, assert full exact translated body and visibility, thenclose; addsactual Dates topic. Remainingcommands/version/focus/privacy/diagnostic/error/retry cases unchanged."
+  ],
+  "application_or_shared_helper_edits": false,
+  "timeouts_changed": false,
+  "cases_removed": false,
+  "help_exact_only_section_loop_replaced": true,
+  "onboarding_exact_only_accessible_name_changed": true,
+  "all_other_bytes_identical": true
+}

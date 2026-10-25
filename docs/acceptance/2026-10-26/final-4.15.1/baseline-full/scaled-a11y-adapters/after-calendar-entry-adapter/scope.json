@@ -1,0 +1,7 @@
+{
+  "old_sha256": "55b88c7e8f889e10c21136cd601ba77831cbbbf42498503a641725b8da267903",
+  "new_sha256": "1ca4e88ffb3a51efb54b1a8fcf6c90e44009b02859ca03dd7da6bb4546a4085c",
+  "change": "audit_scaled_surfaces exact calendar-date-number entry only; both legitimate date entry buttons retained, no arbitrary first/force",
+  "assertions_budgets_program_scope_unchanged": true,
+  "one_selector_reversal_exact_old": true
+}

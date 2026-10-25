@@ -1,0 +1,1004 @@
+{
+  "schema_version": 1,
+  "run_id": "dd2fd23b-343a-460d-aeb8-cbf2a3760293",
+  "status": "failed",
+  "started_at": "2026-10-25T18:50:32.954+00:00",
+  "updated_at": "2026-10-25T19:08:54.863+00:00",
+  "finished_at": "2026-10-25T19:08:54.863+00:00",
+  "scope": {
+    "browsers": [
+      "firefox"
+    ],
+    "programs": [
+      "compatibility_playwright.py",
+      "appearance_preferences_playwright.py",
+      "settings_navigation_playwright.py",
+      "csv_playwright.py",
+      "backup_freshness_playwright.py",
+      "backup_reminder_priority_playwright.py",
+      "project_scope_playwright.py",
+      "task_draft_playwright.py",
+      "quick_add_recovery_playwright.py",
+      "quick_add_date_playwright.py",
+      "imported_text_edit_playwright.py",
+      "imported_reminder_edit_playwright.py",
+      "repeat_lineage_playwright.py",
+      "repeat_delete_playwright.py",
+      "repeat_merge_playwright.py",
+      "dialog_lifecycle_playwright.py",
+      "onboarding_playwright.py",
+      "help_playwright.py",
+      "ime_input_playwright.py",
+      "batch_selection_playwright.py",
+      "workspace_failure_playwright.py",
+      "calendar_performance_playwright.py",
+      "calendar_navigation_playwright.py",
+      "calendar_timezone_playwright.py",
+      "recovery_management_playwright.py",
+      "views_portability_playwright.py",
+      "views_delete_playwright.py",
+      "timezone_playwright.py",
+      "dst_wall_time_playwright.py",
+      "foreign_wall_time_playwright.py",
+      "recurrence_timezone_playwright.py",
+      "time_refresh_playwright.py",
+      "stats_scope_playwright.py"
+    ],
+    "registry_program_count": 33,
+    "all_registered_programs": true,
+    "all_engines": false,
+    "core_program": "compatibility_playwright.py",
+    "core_viewports": [
+      {
+        "width": 1280,
+        "height": 800
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "other_program_viewports": "Defined by each program; not all special-purpose programs exercise both core viewports.",
+    "device_scope": "Linux desktop browser engines and synthetic viewports; not real mobile devices or Safari/iOS.",
+    "coverage_exceptions": [
+      {
+        "browser": "firefox",
+        "program": "timezone_playwright.py",
+        "case": "Live device-timezone override",
+        "status": "not_run",
+        "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+      },
+      {
+        "browser": "firefox",
+        "program": "calendar_timezone_playwright.py",
+        "case": "Live device-timezone override",
+        "status": "not_run",
+        "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+      }
+    ]
+  },
+  "planned_checks": [
+    {
+      "browser": "firefox",
+      "program": "compatibility_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "appearance_preferences_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "settings_navigation_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "csv_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "backup_freshness_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "backup_reminder_priority_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "project_scope_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "task_draft_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "quick_add_recovery_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "quick_add_date_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "imported_text_edit_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "imported_reminder_edit_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "repeat_lineage_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "repeat_delete_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "repeat_merge_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "dialog_lifecycle_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "onboarding_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "help_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "ime_input_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "batch_selection_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "workspace_failure_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "calendar_performance_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "calendar_navigation_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "calendar_timezone_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "recovery_management_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "views_portability_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "views_delete_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "timezone_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "dst_wall_time_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "foreign_wall_time_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "recurrence_timezone_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "time_refresh_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "stats_scope_playwright.py"
+    }
+  ],
+  "current_check": null,
+  "log_directory": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293",
+  "browsers": {
+    "firefox": {
+      "status": "passed",
+      "version": "153.0",
+      "version_source": "Actual probe using the same Playwright launcher and options as the registered programs",
+      "exit_code": 0,
+      "started_at": "2026-10-25T18:50:32.968+00:00",
+      "finished_at": "2026-10-25T18:50:34.433+00:00",
+      "duration_seconds": 1.465,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-probe.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-probe.log",
+        "bytes": 43,
+        "sha256": "b5247e1b6b1f7474ec4ac4fd18c8b347c6292e54372bf67e6c0f91bf6dfed7f2"
+      }
+    }
+  },
+  "source": {
+    "files": {
+      "LICENSE": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+      "THIRD_PARTY_NOTICES.md": "a49db18583d3f275de394c74e3c5db9142979ab713fdfd1ac69488236c1d9bf9",
+      "docs/distribution.md": "7879df983dce7836914d6e8e871a5c6d52177187900f76335e5abc354e89d15f",
+      "docs/distribution_zh_cn.md": "90c6ea687f214b88fb412c57477e73d0e91212899788b0a9842d5bb798a03fcc",
+      "fav/android-chrome-192x192.png": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+      "fav/android-chrome-512x512.png": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+      "fav/apple-touch-icon.png": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+      "fav/favicon-16x16.png": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+      "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+      "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+      "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+      "index.html": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5",
+      "manifest.json": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718",
+      "resources/en.json": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd",
+      "resources/zh-CN.json": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9",
+      "robots.txt": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+      "screenshots/add-task-en.png": "59b27cd46a77594cb0441d1b64afdec784bf96120386744ce4dfc07471b3206b",
+      "screenshots/add-task.png": "7a885f47ca4ada16e1f0440ea8c548b2a26bf3aa557ffbd1d372a11fd716ad72",
+      "screenshots/task-list-en.png": "27d0e2de8ca7112b96cb900e68fa2e8f970e6f331b5a51603e73e07ecaf91550",
+      "screenshots/task-list.png": "3f888a3f473a7c15a380c189daddd7392b72deb61c7fae302b64f3bc3ef4d92c",
+      "sitemap.xml": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+      "sw.js": "3e3f2e67832911ec52168691412baa3193b03766632120934c1c679ff2a70f1b",
+      "vercel.json": "f755f54a513ebe8db4ed910564971d9f1fb0053c405882f9e1db1981f9fcd729"
+    },
+    "sha256": "131121b361e13fce65d1df18bcc1873478b41098fabf5803620334721e7ff221"
+  },
+  "verification": {
+    "files": {
+      ".github/workflows/checks.yml": "75ff88cb2daeb6887bd0a804a46ace7e64dc85a3240166d5714484aa58f1f7cc",
+      "package-lock.json": "4fff53ca4a7d64c0510db39b857768182be18a4010199810e3b61c8f40cdde5d",
+      "package.json": "e01b855e4beaa03bdff257a618d0835fd50aac3912c8fda64bbb44e5bae30431",
+      "requirements-dev.txt": "882c62a419989bc6ff175ae700ab509aa70eefacc22070fde17f84031fadb89c",
+      "tools/accessibility_i18n_audit.py": "68e2626cc356315aa21b5293c1fb48ef64e480d264ca029db5dbb3f72e40eb11",
+      "tools/appearance_preferences_playwright.py": "1b2fefa04bef90a9fc3323eaf1e2c99a12c99c4641cb110cb9e8bc50dcbf9555",
+      "tools/backup_freshness_playwright.py": "b300cd08c3bcae31303c90c89f90d8ff92b613f1310770db71c26cecb1622d12",
+      "tools/backup_reminder_priority_playwright.py": "554ab81a496c54e1baa26d4a9478200201dbd449811ec9d964940d607bb72b32",
+      "tools/batch_selection_playwright.py": "7f18906b7115d1c495e3c8c964200b0c2ec95d8740406b591f45317727e80784",
+      "tools/browser_matrix.py": "c4eb2acaf88d2c36805dcce6a6e41ca942d51fabe0ef044f4bbfbb008ca95322",
+      "tools/build_release.py": "d18896e46b7e266e3898befa6eaaf7d0720dac0d3a54bfe796aa69744b07a5e6",
+      "tools/calendar_focus_return_playwright.py": "5ae783f10bd3de078b7f256e90f3ff75cd2d6cba1813e3f312815480d65ab5da",
+      "tools/calendar_navigation_playwright.py": "de945d5117db19d4b547e4996f8f89c8fdfc5cc49b05be148da16f0e32e36009",
+      "tools/calendar_performance_playwright.py": "53ee54f992807621799b832314de4fef92d2538f52dbe83fe3a2c366defec408",
+      "tools/calendar_timezone_playwright.py": "55cc6c7bd191a2cf29ceea811685ba3d6c6674511d1fb990b72e053d0902bfef",
+      "tools/check.py": "93a270bb4107531671b9a3b24287fe9fa98ddd71f122f0fb004fd63a9a12aa7e",
+      "tools/check_runner_test.py": "79947bd2b5dc3e1fe4cd09745cbb403f1dcc4c89ac6dfa321f2e5517a852b54d",
+      "tools/compatibility_playwright.py": "36537279d5bc5f6488b87e26f8ddd64b56eed5e49b884db1d1967680120b5935",
+      "tools/context_creation_playwright.py": "289d3b8624ac639d3d74d3313e956370a38c2934bc9078d747c6b58b418c6442",
+      "tools/craft_accent_playwright.py": "b8c139ab4a09f7201686f5af6d47fd813a17921305a749c6c5b2aba04b3a2ed9",
+      "tools/craft_batch_project_playwright.py": "98ba789d75cb2e664567efc008edddb37dfa4ecf9ef36ae3e1896bed63a3be36",
+      "tools/craft_import_summary_playwright.py": "f71535062df2c62ca451a1e918f4c5432c2690c36b0348179828f2082d1a991d",
+      "tools/craft_stats_focus_playwright.py": "6a8bee05c491360c29cff114bfe00ca21c7e3f10bb0e55ebe912d86f3a1bf13c",
+      "tools/csv_playwright.py": "04c5b7107cfe1805a8979108224f88aa8d3112249227d2d1169a5898f007b1db",
+      "tools/date_semantics_test.py": "7a9aec3b94d2a756bfa5682662c76afd6734a48147746a254b626ff9e9bbb97e",
+      "tools/dialog_lifecycle_playwright.py": "512029f0df580331df80b6d2504d84cd75263bb61a310f44df70bb7d65af516b",
+      "tools/direct_capture_playwright.py": "b2a69fb6ffdd5e19fe448365a8c7635f80fd9a04cf2fc9e1c68c80035875b425",
+      "tools/dst_wall_time_playwright.py": "7c648596409b46cebe2e94003bd1453c50230715c637f17dc85800a36ab6f6c7",
+      "tools/editor_safety_playwright.py": "71d673604abb8d93319d917e95e2e7fda32be6bc1c5b4965e25fc1c2934d6f58",
+      "tools/foreign_wall_time_playwright.py": "588880115089dea42c1c3a52c9d37a0f824dfc2b7c1c9da215e40dce3ac30e11",
+      "tools/help_playwright.py": "84e82f89b7519da18541670b9c96209c497f14399b0ed901e0a5b5ab45c8c840",
+      "tools/ime_input_playwright.py": "babf4d79e554263c3e6f54d18f4448000266c09e19136da5fc0583240260702a",
+      "tools/import_conflicts_playwright.py": "3e65430bd8c89f5dbb2c271cb50a718eb8b65436074ee767a7bda49238da22ed",
+      "tools/import_preview_concurrency_playwright.py": "62727ebffd27e142233e9a431a30c6c0039fd7c78dad9497170174a87e068e7a",
+      "tools/import_read_lifecycle_playwright.py": "6eb34a0d23be7e66f59ec7c2001d4116281d92288cbb5481222316224fc023c2",
+      "tools/import_reference_playwright.py": "63f99d8f77668805e7740303cba606097bb6d8139aa9bc4d3b15c2bfa8a0c0a7",
+      "tools/imported_reminder_edit_playwright.py": "279a51431e6c047d16041b4091b872921c2086e1c354f239967573187bda4265",
+      "tools/imported_text_edit_playwright.py": "2ace80049486705c085dacc1edc1ad3f9ee102e7aca5d174b2e2f0b82b678063",
+      "tools/manual_update_playwright.py": "6224364554cb62677ebd1270e857555a42074381f9f1554deaf731c5ffa4665f",
+      "tools/onboarding_playwright.py": "dd0cce183b109129556899075eb8c16a0c4c377565a8ddbf6e786308c260dcbd",
+      "tools/pending_subtask_playwright.py": "d7756172a8e50e346f07a9c684ba03d7419bf678a5d0626acbeb56dcc7bf082c",
+      "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+      "tools/project_scope_playwright.py": "481497a0658d57b9a62cbeb1e0579228373370cd2a755f19907136b4950ec744",
+      "tools/queued_write_concurrency_playwright.py": "d965fc7d8b57e26bf4f29a20e344467223cc7ada8fdaf3c3c8d4d11043ed4d2d",
+      "tools/quick_add_date_playwright.py": "62a2f266b64bffb4c0fe768d71c13841c50e35eb241256d2a8a7e88c3d74c676",
+      "tools/quick_add_recovery_playwright.py": "0ed4fc9e8415a2963acaa7844873a50fc718e49105c6eeb29adc468a8b26e7a7",
+      "tools/quick_add_workspace_playwright.py": "05c4756e6de47bc31576ea7e03987059f3737287ca4e1d706df03db54fbb1425",
+      "tools/recovery_management_playwright.py": "baa278f06c9349880b1e1fabe3f93b9821cbe907223ab89f1c0fee13918b7633",
+      "tools/recovery_playwright.py": "1f773866b1d05c78af569bf51791e8feec0b89ef2eb46e4e73ea1e5431a49f04",
+      "tools/recurrence_timezone_playwright.py": "dcfa2c419d6701da99bc58569b6f7d0b91fa6506ea137cd12e6c4238eaabff2c",
+      "tools/release_payload_test.py": "6bdd0e719d0bbf53b3aef7493bea42d56a0f225c828dcfa85f55db675ac15d6f",
+      "tools/release_playwright.py": "fa0309749d98128ffc7334cba8215ee0385ff70ce8979f7824dafa6a1bb121e5",
+      "tools/release_versions_test.py": "33190b5c1ef5fd926ace6e5b782564dc13b1f5c19e8be30fa79295e11fc4c643",
+      "tools/reminder_concurrency_playwright.py": "0cafd18005b9ae4708694f32a1b511d2220164c24ed3fbf540ff98dc0cf0241a",
+      "tools/repeat_delete_playwright.py": "f92dacb4c081aa43dab0106c653a1f9bd226ec54abde0843586cb05b1edf2627",
+      "tools/repeat_lineage_playwright.py": "c00faea8afbe7788de0096fea380245df61756426aa0619adc12992cdd151033",
+      "tools/repeat_merge_playwright.py": "c9fbae748b1a996ada9a6e161ee00873ce76a93f4f7cfc2d3cf393f506fb9d60",
+      "tools/saved_views_playwright.py": "8577c521d0d929939e2dbf189812c5a347d71093604c5b2d64b48d37ab9ab4c5",
+      "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+      "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+      "tools/service_worker_update_playwright.py": "de5a0730a35d9f65cb3e6ce278406667590f7c491cca5f9c1096a922c10a22fd",
+      "tools/settings_flow_playwright.py": "f6db709a2d678a862cce2c77449971a64acacd29f707e430fab1bfe4f21b46fb",
+      "tools/settings_navigation_playwright.py": "a38bc35effe4c7c8e7dac81b45c9a99c047ec605bce5b6f3618a7fa0faa53dcf",
+      "tools/sidebar_scroll_playwright.py": "0ca3d3907809b6124770025755a52e2f1ebf1abf512e369ed4d64a6aa30c987b",
+      "tools/smoke_playwright.py": "df5a1a8c557a08c075b2e02a22a0ceb93ac404ddead9877f7651366a09ae166a",
+      "tools/static_syntax_test.py": "d1cd751dc356db1ce021b10c94689a8ea65d430ca140b9b1ecbcd2585c0ff8d0",
+      "tools/stats_scope_playwright.py": "08993c5756ee2f71c82c41f668263216ce3d8f9406da3653342afb21bdf252e4",
+      "tools/storage_health_playwright.py": "7474c37180050e96a548fa32a2156a32ae3bc85241459deff21e79b966b3cdd5",
+      "tools/storage_lifecycle_playwright.py": "0c7afab6487ad6a99b8e9f26ff7f16ada9d27b3afe013dc6d0086537302ee35b",
+      "tools/task_draft_playwright.py": "9bacf835d7850da3a5b8acfd9bff8f4d92cee01372252444d92ade5356ee5464",
+      "tools/time_refresh_playwright.py": "ac9f48264b21cf8143d27acd9eaae9d005f8e8d371967199d6580160cd7bdeae",
+      "tools/timezone_playwright.py": "9debe614eabe082693e81d43885bdf5d2863d49889ee6d23ce20a8334b682f6b",
+      "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+      "tools/undo_concurrency_playwright.py": "42f938033284a83dd07fd2e6ef8b2345a31fe358ec61fd3ee40f48897b11aaa7",
+      "tools/upgrade_playwright.py": "c5f27bdcd5fc84abfcfdabd026ef6b76fb7264945714193903ff2ad914fae3b2",
+      "tools/validate_static.py": "dedc1b17f651f70f6b17621cfb98e0009efcc512b5a3375dece62915f1fad084",
+      "tools/verify_deployment.py": "c21aa60543f118b9d6d7d96b94b393816560f69737c53f58891c4ea1bfe43396",
+      "tools/verify_deployment_test.py": "9c1171e97a689523e2080830951aee85c8d13730c78368f6d307a45083ea2cd7",
+      "tools/views_delete_playwright.py": "4823be6c6d4eea10913d2fda98932fd0ee9b54d230fd048745ee3c11b98f3a7f",
+      "tools/views_portability_playwright.py": "95db305b3ff948e43530b0c43bc34454f4da6cdf68a0348a45ef0b70e338aace",
+      "tools/workflow_feedback_playwright.py": "383acf8b1b5317ee0df1e6c0fb7fcbf84a4577590c05fe3f3c548d5356b7a17a",
+      "tools/workspace_failure_playwright.py": "ea94cc79c10d11d43c28445c0aedd64f271d733b8ed93fa51d91c24dec306d03",
+      "tools/workspace_performance_playwright.py": "5062eac9e6045929f385aed1951e534e69cea599a7cbeaf4577bef2d0d40af18",
+      "tools/workspace_roundtrip_playwright.py": "d4fb29b24a4945026eacfec065a38cccd95af900a0c822154be635ab68eb6646"
+    },
+    "sha256": "a207e5cfd27f752382036e35f15fd62c5dc8fee330b1699ad09aa270262b0a63"
+  },
+  "source_final": {
+    "files": {
+      "LICENSE": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+      "THIRD_PARTY_NOTICES.md": "a49db18583d3f275de394c74e3c5db9142979ab713fdfd1ac69488236c1d9bf9",
+      "docs/distribution.md": "7879df983dce7836914d6e8e871a5c6d52177187900f76335e5abc354e89d15f",
+      "docs/distribution_zh_cn.md": "90c6ea687f214b88fb412c57477e73d0e91212899788b0a9842d5bb798a03fcc",
+      "fav/android-chrome-192x192.png": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+      "fav/android-chrome-512x512.png": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+      "fav/apple-touch-icon.png": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+      "fav/favicon-16x16.png": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+      "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+      "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+      "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+      "index.html": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5",
+      "manifest.json": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718",
+      "resources/en.json": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd",
+      "resources/zh-CN.json": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9",
+      "robots.txt": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+      "screenshots/add-task-en.png": "59b27cd46a77594cb0441d1b64afdec784bf96120386744ce4dfc07471b3206b",
+      "screenshots/add-task.png": "7a885f47ca4ada16e1f0440ea8c548b2a26bf3aa557ffbd1d372a11fd716ad72",
+      "screenshots/task-list-en.png": "27d0e2de8ca7112b96cb900e68fa2e8f970e6f331b5a51603e73e07ecaf91550",
+      "screenshots/task-list.png": "3f888a3f473a7c15a380c189daddd7392b72deb61c7fae302b64f3bc3ef4d92c",
+      "sitemap.xml": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+      "sw.js": "3e3f2e67832911ec52168691412baa3193b03766632120934c1c679ff2a70f1b",
+      "vercel.json": "f755f54a513ebe8db4ed910564971d9f1fb0053c405882f9e1db1981f9fcd729"
+    },
+    "sha256": "131121b361e13fce65d1df18bcc1873478b41098fabf5803620334721e7ff221"
+  },
+  "verification_final": {
+    "files": {
+      ".github/workflows/checks.yml": "75ff88cb2daeb6887bd0a804a46ace7e64dc85a3240166d5714484aa58f1f7cc",
+      "package-lock.json": "4fff53ca4a7d64c0510db39b857768182be18a4010199810e3b61c8f40cdde5d",
+      "package.json": "e01b855e4beaa03bdff257a618d0835fd50aac3912c8fda64bbb44e5bae30431",
+      "requirements-dev.txt": "882c62a419989bc6ff175ae700ab509aa70eefacc22070fde17f84031fadb89c",
+      "tools/accessibility_i18n_audit.py": "68e2626cc356315aa21b5293c1fb48ef64e480d264ca029db5dbb3f72e40eb11",
+      "tools/appearance_preferences_playwright.py": "1b2fefa04bef90a9fc3323eaf1e2c99a12c99c4641cb110cb9e8bc50dcbf9555",
+      "tools/backup_freshness_playwright.py": "b300cd08c3bcae31303c90c89f90d8ff92b613f1310770db71c26cecb1622d12",
+      "tools/backup_reminder_priority_playwright.py": "554ab81a496c54e1baa26d4a9478200201dbd449811ec9d964940d607bb72b32",
+      "tools/batch_selection_playwright.py": "7f18906b7115d1c495e3c8c964200b0c2ec95d8740406b591f45317727e80784",
+      "tools/browser_matrix.py": "c4eb2acaf88d2c36805dcce6a6e41ca942d51fabe0ef044f4bbfbb008ca95322",
+      "tools/build_release.py": "d18896e46b7e266e3898befa6eaaf7d0720dac0d3a54bfe796aa69744b07a5e6",
+      "tools/calendar_focus_return_playwright.py": "5ae783f10bd3de078b7f256e90f3ff75cd2d6cba1813e3f312815480d65ab5da",
+      "tools/calendar_navigation_playwright.py": "de945d5117db19d4b547e4996f8f89c8fdfc5cc49b05be148da16f0e32e36009",
+      "tools/calendar_performance_playwright.py": "53ee54f992807621799b832314de4fef92d2538f52dbe83fe3a2c366defec408",
+      "tools/calendar_timezone_playwright.py": "55cc6c7bd191a2cf29ceea811685ba3d6c6674511d1fb990b72e053d0902bfef",
+      "tools/check.py": "93a270bb4107531671b9a3b24287fe9fa98ddd71f122f0fb004fd63a9a12aa7e",
+      "tools/check_runner_test.py": "79947bd2b5dc3e1fe4cd09745cbb403f1dcc4c89ac6dfa321f2e5517a852b54d",
+      "tools/compatibility_playwright.py": "36537279d5bc5f6488b87e26f8ddd64b56eed5e49b884db1d1967680120b5935",
+      "tools/context_creation_playwright.py": "289d3b8624ac639d3d74d3313e956370a38c2934bc9078d747c6b58b418c6442",
+      "tools/craft_accent_playwright.py": "b8c139ab4a09f7201686f5af6d47fd813a17921305a749c6c5b2aba04b3a2ed9",
+      "tools/craft_batch_project_playwright.py": "98ba789d75cb2e664567efc008edddb37dfa4ecf9ef36ae3e1896bed63a3be36",
+      "tools/craft_import_summary_playwright.py": "f71535062df2c62ca451a1e918f4c5432c2690c36b0348179828f2082d1a991d",
+      "tools/craft_stats_focus_playwright.py": "6a8bee05c491360c29cff114bfe00ca21c7e3f10bb0e55ebe912d86f3a1bf13c",
+      "tools/csv_playwright.py": "04c5b7107cfe1805a8979108224f88aa8d3112249227d2d1169a5898f007b1db",
+      "tools/date_semantics_test.py": "7a9aec3b94d2a756bfa5682662c76afd6734a48147746a254b626ff9e9bbb97e",
+      "tools/dialog_lifecycle_playwright.py": "512029f0df580331df80b6d2504d84cd75263bb61a310f44df70bb7d65af516b",
+      "tools/direct_capture_playwright.py": "b2a69fb6ffdd5e19fe448365a8c7635f80fd9a04cf2fc9e1c68c80035875b425",
+      "tools/dst_wall_time_playwright.py": "7c648596409b46cebe2e94003bd1453c50230715c637f17dc85800a36ab6f6c7",
+      "tools/editor_safety_playwright.py": "71d673604abb8d93319d917e95e2e7fda32be6bc1c5b4965e25fc1c2934d6f58",
+      "tools/foreign_wall_time_playwright.py": "588880115089dea42c1c3a52c9d37a0f824dfc2b7c1c9da215e40dce3ac30e11",
+      "tools/help_playwright.py": "84e82f89b7519da18541670b9c96209c497f14399b0ed901e0a5b5ab45c8c840",
+      "tools/ime_input_playwright.py": "babf4d79e554263c3e6f54d18f4448000266c09e19136da5fc0583240260702a",
+      "tools/import_conflicts_playwright.py": "3e65430bd8c89f5dbb2c271cb50a718eb8b65436074ee767a7bda49238da22ed",
+      "tools/import_preview_concurrency_playwright.py": "62727ebffd27e142233e9a431a30c6c0039fd7c78dad9497170174a87e068e7a",
+      "tools/import_read_lifecycle_playwright.py": "6eb34a0d23be7e66f59ec7c2001d4116281d92288cbb5481222316224fc023c2",
+      "tools/import_reference_playwright.py": "63f99d8f77668805e7740303cba606097bb6d8139aa9bc4d3b15c2bfa8a0c0a7",
+      "tools/imported_reminder_edit_playwright.py": "279a51431e6c047d16041b4091b872921c2086e1c354f239967573187bda4265",
+      "tools/imported_text_edit_playwright.py": "2ace80049486705c085dacc1edc1ad3f9ee102e7aca5d174b2e2f0b82b678063",
+      "tools/manual_update_playwright.py": "6224364554cb62677ebd1270e857555a42074381f9f1554deaf731c5ffa4665f",
+      "tools/onboarding_playwright.py": "dd0cce183b109129556899075eb8c16a0c4c377565a8ddbf6e786308c260dcbd",
+      "tools/pending_subtask_playwright.py": "d7756172a8e50e346f07a9c684ba03d7419bf678a5d0626acbeb56dcc7bf082c",
+      "tools/performance_playwright.py": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+      "tools/project_scope_playwright.py": "481497a0658d57b9a62cbeb1e0579228373370cd2a755f19907136b4950ec744",
+      "tools/queued_write_concurrency_playwright.py": "d965fc7d8b57e26bf4f29a20e344467223cc7ada8fdaf3c3c8d4d11043ed4d2d",
+      "tools/quick_add_date_playwright.py": "62a2f266b64bffb4c0fe768d71c13841c50e35eb241256d2a8a7e88c3d74c676",
+      "tools/quick_add_recovery_playwright.py": "0ed4fc9e8415a2963acaa7844873a50fc718e49105c6eeb29adc468a8b26e7a7",
+      "tools/quick_add_workspace_playwright.py": "05c4756e6de47bc31576ea7e03987059f3737287ca4e1d706df03db54fbb1425",
+      "tools/recovery_management_playwright.py": "baa278f06c9349880b1e1fabe3f93b9821cbe907223ab89f1c0fee13918b7633",
+      "tools/recovery_playwright.py": "1f773866b1d05c78af569bf51791e8feec0b89ef2eb46e4e73ea1e5431a49f04",
+      "tools/recurrence_timezone_playwright.py": "dcfa2c419d6701da99bc58569b6f7d0b91fa6506ea137cd12e6c4238eaabff2c",
+      "tools/release_payload_test.py": "6bdd0e719d0bbf53b3aef7493bea42d56a0f225c828dcfa85f55db675ac15d6f",
+      "tools/release_playwright.py": "fa0309749d98128ffc7334cba8215ee0385ff70ce8979f7824dafa6a1bb121e5",
+      "tools/release_versions_test.py": "33190b5c1ef5fd926ace6e5b782564dc13b1f5c19e8be30fa79295e11fc4c643",
+      "tools/reminder_concurrency_playwright.py": "0cafd18005b9ae4708694f32a1b511d2220164c24ed3fbf540ff98dc0cf0241a",
+      "tools/repeat_delete_playwright.py": "f92dacb4c081aa43dab0106c653a1f9bd226ec54abde0843586cb05b1edf2627",
+      "tools/repeat_lineage_playwright.py": "c00faea8afbe7788de0096fea380245df61756426aa0619adc12992cdd151033",
+      "tools/repeat_merge_playwright.py": "c9fbae748b1a996ada9a6e161ee00873ce76a93f4f7cfc2d3cf393f506fb9d60",
+      "tools/saved_views_playwright.py": "8577c521d0d929939e2dbf189812c5a347d71093604c5b2d64b48d37ab9ab4c5",
+      "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+      "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+      "tools/service_worker_update_playwright.py": "de5a0730a35d9f65cb3e6ce278406667590f7c491cca5f9c1096a922c10a22fd",
+      "tools/settings_flow_playwright.py": "f6db709a2d678a862cce2c77449971a64acacd29f707e430fab1bfe4f21b46fb",
+      "tools/settings_navigation_playwright.py": "a38bc35effe4c7c8e7dac81b45c9a99c047ec605bce5b6f3618a7fa0faa53dcf",
+      "tools/sidebar_scroll_playwright.py": "0ca3d3907809b6124770025755a52e2f1ebf1abf512e369ed4d64a6aa30c987b",
+      "tools/smoke_playwright.py": "df5a1a8c557a08c075b2e02a22a0ceb93ac404ddead9877f7651366a09ae166a",
+      "tools/static_syntax_test.py": "d1cd751dc356db1ce021b10c94689a8ea65d430ca140b9b1ecbcd2585c0ff8d0",
+      "tools/stats_scope_playwright.py": "08993c5756ee2f71c82c41f668263216ce3d8f9406da3653342afb21bdf252e4",
+      "tools/storage_health_playwright.py": "7474c37180050e96a548fa32a2156a32ae3bc85241459deff21e79b966b3cdd5",
+      "tools/storage_lifecycle_playwright.py": "0c7afab6487ad6a99b8e9f26ff7f16ada9d27b3afe013dc6d0086537302ee35b",
+      "tools/task_draft_playwright.py": "9bacf835d7850da3a5b8acfd9bff8f4d92cee01372252444d92ade5356ee5464",
+      "tools/time_refresh_playwright.py": "ac9f48264b21cf8143d27acd9eaae9d005f8e8d371967199d6580160cd7bdeae",
+      "tools/timezone_playwright.py": "9debe614eabe082693e81d43885bdf5d2863d49889ee6d23ce20a8334b682f6b",
+      "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+      "tools/undo_concurrency_playwright.py": "42f938033284a83dd07fd2e6ef8b2345a31fe358ec61fd3ee40f48897b11aaa7",
+      "tools/upgrade_playwright.py": "c5f27bdcd5fc84abfcfdabd026ef6b76fb7264945714193903ff2ad914fae3b2",
+      "tools/validate_static.py": "dedc1b17f651f70f6b17621cfb98e0009efcc512b5a3375dece62915f1fad084",
+      "tools/verify_deployment.py": "c21aa60543f118b9d6d7d96b94b393816560f69737c53f58891c4ea1bfe43396",
+      "tools/verify_deployment_test.py": "9c1171e97a689523e2080830951aee85c8d13730c78368f6d307a45083ea2cd7",
+      "tools/views_delete_playwright.py": "4823be6c6d4eea10913d2fda98932fd0ee9b54d230fd048745ee3c11b98f3a7f",
+      "tools/views_portability_playwright.py": "95db305b3ff948e43530b0c43bc34454f4da6cdf68a0348a45ef0b70e338aace",
+      "tools/workflow_feedback_playwright.py": "383acf8b1b5317ee0df1e6c0fb7fcbf84a4577590c05fe3f3c548d5356b7a17a",
+      "tools/workspace_failure_playwright.py": "ea94cc79c10d11d43c28445c0aedd64f271d733b8ed93fa51d91c24dec306d03",
+      "tools/workspace_performance_playwright.py": "5062eac9e6045929f385aed1951e534e69cea599a7cbeaf4577bef2d0d40af18",
+      "tools/workspace_roundtrip_playwright.py": "d4fb29b24a4945026eacfec065a38cccd95af900a0c822154be635ab68eb6646"
+    },
+    "sha256": "a207e5cfd27f752382036e35f15fd62c5dc8fee330b1699ad09aa270262b0a63"
+  },
+  "source_unchanged": true,
+  "verification_unchanged": true,
+  "integrity_errors": [],
+  "checks": [
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "compatibility_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T18:50:34.461+00:00",
+      "finished_at": "2026-10-25T18:51:08.685+00:00",
+      "duration_seconds": 34.224,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-compatibility_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-compatibility_playwright.log",
+        "bytes": 382,
+        "sha256": "6db78ae7af7123c25165538f4f7329d7e9c6e6c5fec61c1a4e82c4823fa9a945"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "appearance_preferences_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T18:51:08.703+00:00",
+      "finished_at": "2026-10-25T18:52:21.600+00:00",
+      "duration_seconds": 72.898,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-appearance_preferences_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-appearance_preferences_playwright.log",
+        "bytes": 634,
+        "sha256": "ad193492c2b33f029909aad4863bbc050cee7a29332bc71611333e6228e5a4ad"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "settings_navigation_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T18:52:21.625+00:00",
+      "finished_at": "2026-10-25T18:53:20.069+00:00",
+      "duration_seconds": 58.444,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-settings_navigation_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-settings_navigation_playwright.log",
+        "bytes": 1381,
+        "sha256": "b61a4e0b0a4e0a769593786b5a08215ba5188136e6afa68cef229bdeff530705"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "csv_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T18:53:20.084+00:00",
+      "finished_at": "2026-10-25T18:53:33.957+00:00",
+      "duration_seconds": 13.873,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-csv_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-csv_playwright.log",
+        "bytes": 170,
+        "sha256": "41efc4c5d787cbe0746750a988cf485b4bd32a0a6478c4cf1412a36b15269a3b"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "backup_freshness_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T18:53:33.976+00:00",
+      "finished_at": "2026-10-25T18:53:50.510+00:00",
+      "duration_seconds": 16.534,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-backup_freshness_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-backup_freshness_playwright.log",
+        "bytes": 742,
+        "sha256": "82db308d54e6978a7765db94ec5668fde6509ba49ad8b18933bc70763ffc381b"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "backup_reminder_priority_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T18:53:50.533+00:00",
+      "finished_at": "2026-10-25T18:54:01.423+00:00",
+      "duration_seconds": 10.89,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-backup_reminder_priority_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-backup_reminder_priority_playwright.log",
+        "bytes": 772,
+        "sha256": "d2b783ba37c3323be5a29ebeff48cbb55064aec610dd721b7e56d99cc7c53b27"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "project_scope_playwright.py",
+      "status": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-25T18:54:01.443+00:00",
+      "finished_at": "2026-10-25T18:54:40.162+00:00",
+      "duration_seconds": 38.719,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-project_scope_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-project_scope_playwright.log",
+        "bytes": 2825,
+        "sha256": "4732c158dc04905363b47524fb3d32e985a0bb6181d596cf3166d56ac5d06e65"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "task_draft_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T18:54:40.182+00:00",
+      "finished_at": "2026-10-25T18:55:30.353+00:00",
+      "duration_seconds": 50.171,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-task_draft_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-task_draft_playwright.log",
+        "bytes": 1181,
+        "sha256": "bd4d1375293a08b8695f1391d5f2ae3b5533a5f7fcc27477f0a221e963facfb2"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "quick_add_recovery_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T18:55:30.365+00:00",
+      "finished_at": "2026-10-25T18:56:12.268+00:00",
+      "duration_seconds": 41.903,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-quick_add_recovery_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-quick_add_recovery_playwright.log",
+        "bytes": 845,
+        "sha256": "db244947f5a2afcde311ddcafc99c43b9d659d2ef8111548fd8e526081d6b2e8"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "quick_add_date_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T18:56:12.286+00:00",
+      "finished_at": "2026-10-25T18:57:21.253+00:00",
+      "duration_seconds": 68.967,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-quick_add_date_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-quick_add_date_playwright.log",
+        "bytes": 1132,
+        "sha256": "62b900dc776f209ec04bfc8d7efce64acda3c84372170d3677cffeeca848e1e1"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "imported_text_edit_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T18:57:21.268+00:00",
+      "finished_at": "2026-10-25T18:57:53.619+00:00",
+      "duration_seconds": 32.351,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-imported_text_edit_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-imported_text_edit_playwright.log",
+        "bytes": 454,
+        "sha256": "5a072bbd377af1ed0825b8c70cb6676f97395710a0d374d0c052c29e45d4ee6d"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "imported_reminder_edit_playwright.py",
+      "status": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-25T18:57:53.638+00:00",
+      "finished_at": "2026-10-25T18:58:49.588+00:00",
+      "duration_seconds": 55.95,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-imported_reminder_edit_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-imported_reminder_edit_playwright.log",
+        "bytes": 3484,
+        "sha256": "42c929bd659ca97175f070589a353980fbd4a125e912dc1f5f67df03bc2da0cf"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "repeat_lineage_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T18:58:49.617+00:00",
+      "finished_at": "2026-10-25T18:59:53.204+00:00",
+      "duration_seconds": 63.588,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-repeat_lineage_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-repeat_lineage_playwright.log",
+        "bytes": 542,
+        "sha256": "bf4ce1c3b141ccbd33913fae68d4a9a73d7662400ebd0ec0abd46ed11cf11ecb"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "repeat_delete_playwright.py",
+      "status": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-25T18:59:53.224+00:00",
+      "finished_at": "2026-10-25T19:00:29.885+00:00",
+      "duration_seconds": 36.661,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-repeat_delete_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-repeat_delete_playwright.log",
+        "bytes": 2464,
+        "sha256": "c48c2e2b9f2c9a791b7f3f742b0cdcee14fa876a622e86f2691b3872bacc497e"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "repeat_merge_playwright.py",
+      "status": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-25T19:00:29.898+00:00",
+      "finished_at": "2026-10-25T19:01:33.083+00:00",
+      "duration_seconds": 63.185,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-repeat_merge_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-repeat_merge_playwright.log",
+        "bytes": 3137,
+        "sha256": "59497cb2ee2c4d97019949f216fe21feeaf00fc45650ba95cca65e0e3afc7d5e"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "dialog_lifecycle_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:01:33.096+00:00",
+      "finished_at": "2026-10-25T19:01:54.401+00:00",
+      "duration_seconds": 21.305,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-dialog_lifecycle_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-dialog_lifecycle_playwright.log",
+        "bytes": 468,
+        "sha256": "3886a062921064e4debf230df9384192e7f88b9da7be1d422fb4a734285eafec"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "onboarding_playwright.py",
+      "status": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-25T19:01:54.421+00:00",
+      "finished_at": "2026-10-25T19:02:03.170+00:00",
+      "duration_seconds": 8.749,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-onboarding_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-onboarding_playwright.log",
+        "bytes": 1774,
+        "sha256": "b14ba61b0d7475100d3726a437b9bc38018c2d730fa323550b42c4c1816d9ebe"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "help_playwright.py",
+      "status": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-25T19:02:03.185+00:00",
+      "finished_at": "2026-10-25T19:02:15.219+00:00",
+      "duration_seconds": 12.034,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-help_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-help_playwright.log",
+        "bytes": 4386,
+        "sha256": "57804ad15b19d79d3c24f2eeee16f3adf1cfeefc5b5966087baae3a34e65adca"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "ime_input_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:02:15.234+00:00",
+      "finished_at": "2026-10-25T19:02:38.504+00:00",
+      "duration_seconds": 23.27,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-ime_input_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-ime_input_playwright.log",
+        "bytes": 464,
+        "sha256": "8476fbb3139c4b98c22c71374426056b42b6815a77e4984763a537374c404905"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "batch_selection_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:02:38.517+00:00",
+      "finished_at": "2026-10-25T19:03:06.102+00:00",
+      "duration_seconds": 27.585,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-batch_selection_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-batch_selection_playwright.log",
+        "bytes": 557,
+        "sha256": "31a0f0c06ef1ff0b2ffdb7e7a136f4c79445e26024b9260627514f5b07d3f84d"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "workspace_failure_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:03:06.115+00:00",
+      "finished_at": "2026-10-25T19:03:51.585+00:00",
+      "duration_seconds": 45.471,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-workspace_failure_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-workspace_failure_playwright.log",
+        "bytes": 1428,
+        "sha256": "42bf9ac2c8a58517010fbbd7f36e4b81c3a8c992ee73087d6857f5a567fa98c2"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "calendar_performance_playwright.py",
+      "status": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-25T19:03:51.601+00:00",
+      "finished_at": "2026-10-25T19:04:40.722+00:00",
+      "duration_seconds": 49.121,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-calendar_performance_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-calendar_performance_playwright.log",
+        "bytes": 3222,
+        "sha256": "99b252dc1393163c63ea8e9a03e1a06e85da424bb16364fbb74bab7927a61f50"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "calendar_navigation_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:04:40.744+00:00",
+      "finished_at": "2026-10-25T19:04:54.917+00:00",
+      "duration_seconds": 14.173,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-calendar_navigation_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-calendar_navigation_playwright.log",
+        "bytes": 582,
+        "sha256": "2e5130a0c155552a9c194e161cf79302743a229ecdd1d53d4734ca4d5c4af469"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "calendar_timezone_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:04:54.934+00:00",
+      "finished_at": "2026-10-25T19:05:03.397+00:00",
+      "duration_seconds": 8.463,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-calendar_timezone_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-calendar_timezone_playwright.log",
+        "bytes": 402,
+        "sha256": "cda5cb824881e874dc75d25c143e60213892f98b2efe0131f751b7795d6c98c7"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "recovery_management_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:05:03.413+00:00",
+      "finished_at": "2026-10-25T19:05:27.931+00:00",
+      "duration_seconds": 24.518,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-recovery_management_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-recovery_management_playwright.log",
+        "bytes": 553,
+        "sha256": "9c49ae1ac974c14d2ef98a6ba4344fd20bb78cfd939a0adf96986069e8dee882"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "views_portability_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:05:27.949+00:00",
+      "finished_at": "2026-10-25T19:05:44.310+00:00",
+      "duration_seconds": 16.361,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-views_portability_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-views_portability_playwright.log",
+        "bytes": 804,
+        "sha256": "227dfbeb20b1b0bb3453c3658b3511064a2d0dbe7a400162cca9c22a73d8dd85"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "views_delete_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:05:44.324+00:00",
+      "finished_at": "2026-10-25T19:06:09.531+00:00",
+      "duration_seconds": 25.206,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-views_delete_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-views_delete_playwright.log",
+        "bytes": 893,
+        "sha256": "63eed6801df2202995b7ce2175d32733b50438922723196debf51def06d0f1c3"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "timezone_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:06:09.548+00:00",
+      "finished_at": "2026-10-25T19:06:20.069+00:00",
+      "duration_seconds": 10.522,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-timezone_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-timezone_playwright.log",
+        "bytes": 402,
+        "sha256": "82d404f01de2ed276fba59ad2846dbdc3ebfe35904e86529f27d91ac5ad441f8"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "dst_wall_time_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:06:20.086+00:00",
+      "finished_at": "2026-10-25T19:06:59.676+00:00",
+      "duration_seconds": 39.591,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-dst_wall_time_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-dst_wall_time_playwright.log",
+        "bytes": 722,
+        "sha256": "1f8b91f60d78d7b774b0185f24522d77e98c1d84e99c0daba2e385c5d4792436"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "foreign_wall_time_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:06:59.691+00:00",
+      "finished_at": "2026-10-25T19:07:34.430+00:00",
+      "duration_seconds": 34.739,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-foreign_wall_time_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-foreign_wall_time_playwright.log",
+        "bytes": 708,
+        "sha256": "4b990c9644c6504c2005498781e54f150f5b206d12dbea32d17a0d9bc7519a9c"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "recurrence_timezone_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:07:34.452+00:00",
+      "finished_at": "2026-10-25T19:08:28.380+00:00",
+      "duration_seconds": 53.928,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-recurrence_timezone_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-recurrence_timezone_playwright.log",
+        "bytes": 2819,
+        "sha256": "521197df4cbf0960b49312d033aeaa8d8e8ab1586428b8c9a21a70fca0914b18"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "time_refresh_playwright.py",
+      "status": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-25T19:08:28.394+00:00",
+      "finished_at": "2026-10-25T19:08:45.757+00:00",
+      "duration_seconds": 17.362,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-time_refresh_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-time_refresh_playwright.log",
+        "bytes": 4449,
+        "sha256": "daa0204033a619701451a8a83f286df172704c29b9e208251b4256b98461bae0"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "program": "stats_scope_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:08:45.779+00:00",
+      "finished_at": "2026-10-25T19:08:54.836+00:00",
+      "duration_seconds": 9.057,
+      "log": {
+        "path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/firefox/native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-stats_scope_playwright.log",
+        "relative_path": "native-report-logs/dd2fd23b-343a-460d-aeb8-cbf2a3760293/firefox-stats_scope_playwright.log",
+        "bytes": 272,
+        "sha256": "5c7b9dceef15d2b31b41317bd852d592805afd53bc0355601872ffb493f75c8f"
+      }
+    }
+  ],
+  "unexecuted_checks": [],
+  "error": null,
+  "completed": true,
+  "passed": false
+}

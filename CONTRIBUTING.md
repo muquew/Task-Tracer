@@ -21,7 +21,7 @@ The application is available on port 8080. The browser checks start their own te
 
 ## Current delivery
 
-Use [the stable delivery record](docs/stable-delivery.md) for the current version, acceptance status, artifact and evidence, and [GOAL.md](GOAL.md) for execution. The 4.15.1 delivery target requires whole-product acceptance; a planned or running check is not a pass. The published [4.15.0 baseline](docs/releases/4.15.0.md) and earlier results retain the source and scope of their named release.
+The [4.15.1 delivery record](docs/stable-delivery.md) records **complete**, the exact artifact and completed scope. [Final evidence](docs/acceptance/2026-10-26/final-4.15.1/final-full/final-delivery.md) separates the original local 73-program report from public remote-CI outcomes and production verification. [GOAL.md](GOAL.md) records closure; earlier releases retain their own source and scope.
 
 ## Validation
 
@@ -96,6 +96,8 @@ python3 tools/service_worker_update_playwright.py
 
 The builder writes a verified ZIP and checksum under ignored `dist/`; it does not publish. `DISTRIBUTION_SOURCES` currently maps **23 required sources** to 23 entries, plus generated `integrity.json` for a **24-file archive**. Add intended assets deliberately; never replace the mapping with recursive directory inclusion. Mapped source paths must be local regular files/directories without symlinks. The payload test rejects unsafe/missing inputs and unrelated-file inclusion; the release program verifies independent byte-for-byte builds and executes the extracted PWA for persistence/offline checks.
 
+To reproduce the 4.15.1 canonical ZIP checksum `0540eca3d0d83a140c3695f575e24e6c73252afe08e5ae2f4f3457cef4691aca`, use a separate clean checkout of `6a3b8e61ba0699cc316fd92a247cc9c917a7521d` before running `PYTHONDONTWRITEBYTECODE=1 python3 tools/build_release.py --output-dir /tmp/task-tracer-4.15.1-repro`, with output outside that checkout. A later release-artifact/acceptance-documentation HEAD has a different VCS identity even if the same 23 payload files are unchanged; retain the named canonical archive rather than assigning its checksum to a new build.
+
 For release acceptance, retain and verify the actual previous archive before using `--baseline-archive`; the example above targets the published 4.15.0 artifact when validating 4.15.1. Do not rebuild old version numbers from new code. The default git-baseline regression instead uses `1c3bacb0ca8015fb5840c6b5d1d5efa0937e6e28`, or `TASK_TRACER_UPGRADE_BASE`; keep the required history available (`git fetch --unshallow` for a shallow checkout). Record which method ran. Same-schema task compatibility does not establish compatibility for a future database migration or all older configuration formats.
 
 Close or refresh older clients before editing typed project scopes. Keep a view-file 1.1 export before downgrading; interfaces before 4.7 cannot safely interpret those scopes, despite DB2/task-JSON2.4 compatibility. The service-worker update program uses self-contained interrupted-update fixtures; `--legacy-archive` can additionally select an actual verified earlier bundle. Synthetic and real-archive results remain separate.
@@ -112,4 +114,4 @@ This read-only verifier compares actual response bodies and configured security 
 
 Complete a fresh real-domain browser workflow and actual backup download as complementary acceptance. Record whether offline behavior used the browser offline API or an unavailable origin; neither method proves physical-device installation or OS background delivery. Vercel serves the static directory without the development-only npm build or Python archive step. Preserve `vercel.json`, deploy files together and verify the response headers on the chosen host.
 
-The [stable delivery record](docs/stable-delivery.md) holds current outcomes. Historical acceptance remains in the named [4.15.0](docs/releases/4.15.0.md), [4.10.1](docs/releases/4.10.1.md), [4.9.0](docs/releases/4.9.0.md), [4.8.6](docs/releases/4.8.6.md) and [4.8.5](docs/releases/4.8.5.md) records, including original failed or partial attempts.
+The [4.15.1 release record](docs/releases/4.15.1.md) and [stable delivery guide](docs/stable-delivery.md) hold current outcomes. Historical [4.15.0](docs/releases/4.15.0.md) and earlier records retain their original failed, partial and completed attempts; they are not results for a later application input.

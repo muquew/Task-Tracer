@@ -1,0 +1,63 @@
+{
+  "tasks": [
+    {
+      "id": 1792960156224,
+      "createdAt": "2026-10-25T20:12:38.282Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "Existing task protected during quick-add Retry",
+      "description": "Created by Playwright smoke test.",
+      "project": "Inbox",
+      "tags": [],
+      "subtasks": [],
+      "dueDate": null,
+      "dueAt": null,
+      "dueLocalDate": null,
+      "dueLocalTime": null,
+      "dueTimeZone": null,
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 10000
+    }
+  ],
+  "config": [
+    {
+      "key": "language",
+      "value": "zh-CN"
+    },
+    {
+      "key": "notifications_enabled",
+      "value": false
+    },
+    {
+      "key": "recoveryHistory",
+      "value": [
+        {
+          "id": "0dfef1f5-f5e8-4bc1-91cd-d65a34712ad6",
+          "createdAt": "2026-10-25T20:12:38.290Z",
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "key": "sampleTasksAdded",
+      "value": true
+    },
+    {
+      "key": "taskRevision",
+      "value": 1
+    }
+  ]
+}

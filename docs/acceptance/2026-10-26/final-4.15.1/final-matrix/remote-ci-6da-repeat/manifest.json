@@ -1,0 +1,69 @@
+{
+  "created_at_utc": "2026-10-25T21:59:52.935831+00:00",
+  "scope": "Only listed single standard repeat evidence; excludes self, original run, CFE diagnostic, futurev6 and production scopes.",
+  "run": "40235376686",
+  "commit": "6da3c7293f08c5d16ca73c7a63d8ff74e17358db",
+  "overall": "Failure",
+  "checks": "succeeded",
+  "webkit": "failed",
+  "file_count": 14,
+  "total_bytes": 65826,
+  "files": {
+    "README.md": {
+      "bytes": 2283,
+      "sha256": "5f33f60de9b0c806d795bd94fb6d622f9d4a90ae716768dfa4279403800d692d"
+    },
+    "evidence/first-wk-failure-visible.txt": {
+      "bytes": 3324,
+      "sha256": "3f25b4442b4aa0918d4337e7e164bced4cc754c7a37fc38475f11a09a7770bc4"
+    },
+    "evidence/job-121295698128-visible.txt": {
+      "bytes": 3177,
+      "sha256": "e651300dccf9ed2f7e80124508aa9a5bdec8caf9af7e35b1c0b06034b3565b79"
+    },
+    "evidence/job-121295698292-visible.txt": {
+      "bytes": 3206,
+      "sha256": "ec53ae40214d0c4fc019ecc61943f7e00d6dc97db62cfcd6d9817d4f17ce07ce"
+    },
+    "evidence/job-121295698298-visible.txt": {
+      "bytes": 3324,
+      "sha256": "3f25b4442b4aa0918d4337e7e164bced4cc754c7a37fc38475f11a09a7770bc4"
+    },
+    "evidence/job-121295698339-visible.txt": {
+      "bytes": 3209,
+      "sha256": "39df9ac67ce51f1a11fd8102c872b88a0dca5bc7b9649375de2eb780ce8e3d06"
+    },
+    "evidence/job-121295699364-visible.txt": {
+      "bytes": 2582,
+      "sha256": "6e3ef3ae3bacbfcc5100a8c1252a38db082b4d9e43e42acf55f4705a116f105d"
+    },
+    "evidence/run-visible.txt": {
+      "bytes": 5751,
+      "sha256": "ece85295f4dea8b96b877f2458c41e8480fb5acaf16490189c11b40722eb2950"
+    },
+    "first-wk-failure.json": {
+      "bytes": 5001,
+      "sha256": "6d33c219cd8ea279e764b734f80a0521e67534e37b8fcea5e7ebe621cffe94fb"
+    },
+    "monitor.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "monitor.stdout.log": {
+      "bytes": 17272,
+      "sha256": "bbbb757da971239bfb4e2ed41d1a922d7d20e472ba4f090e3ccc25620b486d8c"
+    },
+    "receipt.json": {
+      "bytes": 10099,
+      "sha256": "6d8b57aa43a01dfe9c6bd92c1f41f02f3649dbffe5ba1130dd2b33155eaeaabc"
+    },
+    "run-discovery.json": {
+      "bytes": 1071,
+      "sha256": "dce36b55a302e576e79e156b556497a7003b5b1d0c25a68f06bf09005e67c5cb"
+    },
+    "terminal.json": {
+      "bytes": 5527,
+      "sha256": "0064602e93df6e25233822570a818bebebbb424d2a011500b79ed7c127db932b"
+    }
+  }
+}

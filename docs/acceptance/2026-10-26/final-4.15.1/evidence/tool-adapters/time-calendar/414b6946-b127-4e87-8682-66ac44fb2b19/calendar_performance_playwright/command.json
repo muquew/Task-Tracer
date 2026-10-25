@@ -1,0 +1,17 @@
+{
+  "cwd": "/workspace/Task-Tracer",
+  "argv": [
+    "python",
+    "tools/calendar_performance_playwright.py",
+    "--browser",
+    "chromium"
+  ],
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "TASK_TRACER_BROWSER_EXECUTABLE": "/usr/bin/chromium",
+    "XDG_CACHE_HOME": "/workspace/.cache",
+    "PLAYWRIGHT_BROWSERS_PATH": "/workspace/.cache/ms-playwright",
+    "TASK_TRACER_PRODUCTION_HEADERS": "0"
+  },
+  "scope": "Original full CLI defaults; both programs retain original reduced-motion contexts; default static HTTP without production CSP; no bypassCSP options."
+}

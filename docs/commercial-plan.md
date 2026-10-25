@@ -2,7 +2,7 @@
 
 Muquew has confirmed copyright ownership. The public [personal non-commercial license](../LICENSE) can remain while the owner grants separate written commercial rights. This document is an internal proposal, not an issued commercial license, published purchase offer or entitlement check.
 
-Engineering delivery is tracked separately in [the stable delivery record](stable-delivery.md), which identifies the actual version, acceptance status and artifact. The published [4.15.0 record](releases/4.15.0.md) and older releases keep their own evidence. Completion of an engineering release does not activate sales or complete paid delivery.
+The **4.15.1 engineering delivery** is recorded as **complete** in [the stable delivery guide](stable-delivery.md), with its artifact and exact acceptance scope. The [4.15.0 record](releases/4.15.0.md) and earlier releases retain historical evidence. Engineering completion does not activate sales, set a price or issue commercial rights.
 
 ## Owner decisions still pending
 

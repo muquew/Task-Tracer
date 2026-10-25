@@ -1,0 +1,151 @@
+{
+  "tasks": [
+    {
+      "id": 1792962364970,
+      "createdAt": "2026-10-25T20:58:56.227Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "安全回归哨兵",
+      "description": "所有其它记录必须保持",
+      "project": "Inbox",
+      "tags": [],
+      "subtasks": [
+        {
+          "id": 1792962694299,
+          "text": "保留此ID与内容",
+          "completed": false
+        }
+      ],
+      "dueDate": null,
+      "dueAt": null,
+      "dueLocalDate": null,
+      "dueLocalTime": null,
+      "dueTimeZone": null,
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 10000
+    },
+    {
+      "id": 1792962453748,
+      "createdAt": "2026-10-25T20:59:09.055Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "关闭自定义重复不要求填写间隔",
+      "description": "第一行原始描述。\n第二行保留。",
+      "project": "编辑安全审查",
+      "tags": [
+        "review",
+        "tag, with comma"
+      ],
+      "subtasks": [
+        {
+          "id": 1792962808351,
+          "text": "已经加入的子任务",
+          "completed": false
+        },
+        {
+          "id": 1792962709904,
+          "text": "仍在输入框中的子任务",
+          "completed": false
+        }
+      ],
+      "dueDate": "2032-05-06T16:35:00.000Z",
+      "dueAt": "2032-05-06T16:35:00.000Z",
+      "dueLocalDate": "2032-05-06",
+      "dueLocalTime": "16:35",
+      "dueTimeZone": "UTC",
+      "reminderOffset": 60,
+      "reminderRepeat": 15,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 30000
+    },
+    {
+      "id": 1792962663404,
+      "createdAt": "2026-10-25T20:59:02.975Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": true,
+      "name": "空自定义周期不得静默变为每天",
+      "description": "第一行原始描述。\n第二行保留。",
+      "project": "编辑安全审查",
+      "tags": [
+        "review",
+        "tag, with comma"
+      ],
+      "subtasks": [
+        {
+          "id": 1792962713227,
+          "text": "验证失败仍保留的行内子任务",
+          "completed": false
+        },
+        {
+          "id": 1792962700700,
+          "text": "仍在输入框中的子任务",
+          "completed": false
+        }
+      ],
+      "dueDate": "2032-05-06T16:35:00.000Z",
+      "dueAt": "2032-05-06T16:35:00.000Z",
+      "dueLocalDate": "2032-05-06",
+      "dueLocalTime": "16:35",
+      "dueTimeZone": "UTC",
+      "reminderOffset": 60,
+      "reminderRepeat": 15,
+      "repeatType": "custom",
+      "repeatInterval": 5,
+      "order": 20000
+    }
+  ],
+  "config": [
+    {
+      "key": "language",
+      "value": "zh-CN"
+    },
+    {
+      "key": "recoveryHistory",
+      "value": [
+        {
+          "id": "da242c1a-1b28-450c-a3c0-2b3dbe51199c",
+          "createdAt": "2026-10-25T20:58:56.235Z",
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "key": "taskRevision",
+      "value": 3
+    }
+  ]
+}

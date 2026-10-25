@@ -1,0 +1,12 @@
+39395:       constructor(parent, browserName) {
+39396:         super(parent, "browser-type");
+39397:         this.attribution.browserType = this;
+39398:         this._name = browserName;
+39399:         this.logName = "browser";
+39400:       }
+39401:       executablePath() {
+39402:         return registry.findExecutable(this._name).executablePath() || "";
+39403:       }
+39404:       name() {
+39405:         return this._name;
+39406:       }

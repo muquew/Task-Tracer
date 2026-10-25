@@ -1,0 +1,30 @@
+{
+  "id": "40222503249",
+  "name": "Release checks",
+  "runNumber": 23,
+  "runUrl": "https://github.com/muquew/Task-Tracer/actions/runs/40222503249",
+  "state": {
+    "status": "WORKFLOW_RUN_STATUS_COMPLETED",
+    "conclusion": "WORKFLOW_RUN_CONCLUSION_FAILURE"
+  },
+  "timing": {
+    "kind": "WORKFLOW_RUN_TIMING_KIND_DURATION",
+    "text": "46m 0s"
+  },
+  "createdAt": {
+    "timestamp": "2026-10-25T18:42:14Z",
+    "isToday": true,
+    "isCurrentYear": true
+  },
+  "workflowFilePath": ".github/workflows/checks.yml",
+  "commit_url": "/muquew/Task-Tracer/commit/54b95cce891d167617d42bc489cdc801317f00c5",
+  "commit": "54b95cce891d167617d42bc489cdc801317f00c5",
+  "http_status": 200,
+  "public_run_html_sha256": "9bbc9937a2972836ebfed7daf39831cd117a5da5d1e1d49c6d6879d6bf1bd14e",
+  "public_job_html_access": "All five pages returned200 through normal public HTTPS GET.",
+  "full_logs_accessible_anonymously": false,
+  "full_logs_limit": "Public pages explicitly show Sign in to view logs. No authenticated/log/API endpoint was accessed.",
+  "parse_method": "Actions list has allWorkflowRunsRoute.workflowRuns payload; run/job pages were inspected for application/json, whose available embeddedData only had props, not the Actions-list payload. Their server-rendered public status and annotation text supplies the job evidence.",
+  "channel_or_signed_embedded_data_copied": false,
+  "api_access_attempted_by_this_review": false
+}

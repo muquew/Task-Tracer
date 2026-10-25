@@ -1,0 +1,47 @@
+{
+  "allowed_files": [
+    "CONTRIBUTING.md",
+    "docs/browser-compatibility.md",
+    "docs/manual-device-checklist.md",
+    "docs/product-roadmap.md",
+    "docs/commercial-plan.md"
+  ],
+  "files": [
+    {
+      "file": "CONTRIBUTING.md",
+      "before_bytes": 24938,
+      "after_bytes": 14240,
+      "before_sha256": "5d44506e028b26e4101d19ecf8b64cb53d7d42f377d4e754db6f62672d20625f",
+      "after_sha256": "e61655b49182c2d65436dd58f976117ea1669709dcb9fbcc6657eebb2594f933"
+    },
+    {
+      "file": "docs/browser-compatibility.md",
+      "before_bytes": 25656,
+      "after_bytes": 5891,
+      "before_sha256": "25371bdfcfd844bfe1f6234338316dbe4a2fe126f475ce1afd9f8c68eae0bf6f",
+      "after_sha256": "93c2c008ffe7b734ce7c0ba8b80c1d6e0d5b24aa1dc93c7505d8928a1c90883d"
+    },
+    {
+      "file": "docs/manual-device-checklist.md",
+      "before_bytes": 8732,
+      "after_bytes": 8864,
+      "before_sha256": "25bd226eeb5fbe2459669bc7855466ee45083b5776b91965134a0537f0a5d92d",
+      "after_sha256": "efb9f2272c355db53656e92cdea45621a1565a6ab0e24281cd7adc3aa96d8d22"
+    },
+    {
+      "file": "docs/product-roadmap.md",
+      "before_bytes": 24861,
+      "after_bytes": 5971,
+      "before_sha256": "056970cc7e942be563faf2b0e635f5d8a4ce1af848139b8779687dc6786e3f07",
+      "after_sha256": "daa383507163b125c4c22048a1129dd84439e72527702653969d6a4187590f3a"
+    },
+    {
+      "file": "docs/commercial-plan.md",
+      "before_bytes": 4303,
+      "after_bytes": 4052,
+      "before_sha256": "75a377ec4939faffb4f98facfcf026ec0d9277f7af27c3f130a3840fac2218e1",
+      "after_sha256": "56e3e11578370fe2ba3a89db39964d4bdbe48677fbd0857f888933a0c130125c"
+    }
+  ],
+  "repo_scope": "Onlythese5documentswritten; no commit/push/source/tool/README/GOALwrites."
+}

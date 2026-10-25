@@ -1,0 +1,37 @@
+{
+  "program": "help_playwright.py",
+  "command": [
+    "python",
+    "tools/help_playwright.py",
+    "--browser",
+    "chromium"
+  ],
+  "started_at": "2026-10-25T19:04:49.395840+00:00",
+  "finished_at": "2026-10-25T19:05:00.657903+00:00",
+  "duration_seconds": 11.262,
+  "exit_code": 0,
+  "before": {
+    "index.html": "b3cfe5642f93a067e6c2ab3c2373fd4b5e8e7944c835b7a78ca8d441bcb5d8eb",
+    "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+    "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+    "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+    "vercel.json": "2857ae24b2f09e200a9a7c3e8256825db2ff5cbf6f65a64ce040469e58707bcc",
+    "tools/onboarding_playwright.py": "e374f9f0b326a2a6babfe5d3a297b7760fdbafc47303020acecf4f7e3b433989",
+    "tools/help_playwright.py": "fdc4c4ce19f24da60a77bad9c378a3d7aedb7aa39eaf7647808ff3aed73ef7c3",
+    "tools/smoke_playwright.py": "df5a1a8c557a08c075b2e02a22a0ceb93ac404ddead9877f7651366a09ae166a",
+    "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+  },
+  "after": {
+    "index.html": "b3cfe5642f93a067e6c2ab3c2373fd4b5e8e7944c835b7a78ca8d441bcb5d8eb",
+    "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+    "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+    "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+    "vercel.json": "2857ae24b2f09e200a9a7c3e8256825db2ff5cbf6f65a64ce040469e58707bcc",
+    "tools/onboarding_playwright.py": "e374f9f0b326a2a6babfe5d3a297b7760fdbafc47303020acecf4f7e3b433989",
+    "tools/help_playwright.py": "fdc4c4ce19f24da60a77bad9c378a3d7aedb7aa39eaf7647808ff3aed73ef7c3",
+    "tools/smoke_playwright.py": "df5a1a8c557a08c075b2e02a22a0ceb93ac404ddead9877f7651366a09ae166a",
+    "tools/validate_static.py": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3"
+  },
+  "scope": "OriginalCLI/fullprogram; originalStaticHTTP handler without deployedCSP; noCSPbypass option; onboardingdefaultmotion,helpdeclaredreducedmotion.",
+  "source_tools_unchanged": true
+}

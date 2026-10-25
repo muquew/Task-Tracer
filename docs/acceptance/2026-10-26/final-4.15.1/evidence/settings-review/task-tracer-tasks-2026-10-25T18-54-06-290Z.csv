@@ -1,0 +1,5 @@
+﻿"id","name","description","project","tags","status","due_at","due_local_date","due_local_time","due_time_zone","completed_at","created_at","repeat_type","repeat_interval","repeat_weekdays","repeat_paused","subtasks"
+"1792954152055","设置验收乙","","项目乙","[]","completed","2026-10-26T10:00:00.000Z","2026-10-26","18:00","Asia/Shanghai","2026-10-25T18:48:56.702Z","2026-10-25T18:48:55.247Z","none","1","[]","false","[]"
+"1792954488581","设置验收甲","","项目甲","[""资料""]","active","2026-10-27T02:30:00.000Z","2026-10-27","10:30","Asia/Shanghai","","2026-10-25T18:48:55.167Z","none","1","[]","false","[]"
+"1792954656052","无日期验收项","","收集箱","[]","active","","","","","","2026-10-25T18:48:55.307Z","none","1","[]","false","[]"
+"1792954666238","替换前应保留的任务","","临时","[]","active","","","","","","2026-10-25T18:50:56.722Z","none","1","[]","false","[]"

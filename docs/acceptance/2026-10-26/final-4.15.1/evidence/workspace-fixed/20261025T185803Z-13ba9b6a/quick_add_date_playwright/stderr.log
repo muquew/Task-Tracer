@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer/tools/quick_add_date_playwright.py", line 232, in <module>
+    run(args.browser,args.case)
+  File "/workspace/Task-Tracer/tools/quick_add_date_playwright.py", line 217, in run
+    check(page,url)
+  File "/workspace/Task-Tracer/tools/quick_add_date_playwright.py", line 169, in past_relative
+    quick(page, '15:00 Time-only control remains today', 'Time-only control remains today',
+  File "/workspace/Task-Tracer/tools/quick_add_date_playwright.py", line 62, in quick
+    assert record['name']==name,(raw,record['name'])
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('15:00 Time-only control remains today', 'Time-only control remains')

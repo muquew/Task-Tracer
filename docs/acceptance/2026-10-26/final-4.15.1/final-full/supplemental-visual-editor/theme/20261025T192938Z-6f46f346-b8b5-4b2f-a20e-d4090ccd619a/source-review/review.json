@@ -1,0 +1,25 @@
+{
+  "reviewed_source_sha256": "0847b854ea99e95d37ada7a77e307c3266b2a3d2b54db51d6f8309875a506fb4",
+  "validated_current_index_diff": "source-review/0847-to-4a7-index.diff",
+  "current_index_sha256": "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+  "new_obvious_blockers": [],
+  "conclusions": [
+    {
+      "lines": "10302-10345",
+      "finding": "Generic confirmation switches its main action to type=button, so retained required date/custom interval fields cannot block normal confirm-button click or Enter activation of that button. Cancel and draft decision buttons also use type=button."
+    },
+    {
+      "lines": "5960-5967, 9494-9534, 9585-9666",
+      "finding": "handleTaskSave prevents default and guards modalMode/session/prompt; reset restores submit type only for form mode; the next open recomputes required/disabled and clears date/interval error plus aria-invalid/describedby state."
+    },
+    {
+      "lines": "9860-9963, 6028-6045",
+      "finding": "Cancel retires the session, unlocks inert/disabled state, removes discard/saving status and clears confirmation handler. Save failure finally unlocks and restores focus; current-session checks protect subsequent dialogs."
+    },
+    {
+      "lines": "4107-4138, 10508-10578",
+      "finding": "Pointer focus suppression is released on pointerup/pointercancel/keydown/blur; deferred focus verifies the active target. Resize RAF repositions only menus still open, with no task-write or submit path."
+    }
+  ],
+  "boundary": "Source review, not a repeated browser test of every confirmation sequence; existing original no-argument settings_flow 4/4 run belongs to root. 0847 to current source is proven to differ by only one removed redundant calendar aria-label line."
+}

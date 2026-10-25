@@ -1,0 +1,10 @@
+Task draft regression: chromium 154.0.8037.57
+New forms: all four close paths, full draft retention, prompt focus, explicit discard, and reverted changes passed
+Description, project, tags, deadline, reminder, repeat, and unsubmitted subtask changes independently trigger protection
+Existing unchanged edits close directly; subtask-only and stale drafts remain protected without changing committed data
+A genuine aborted write preserves the draft and unlocks editing; explicit retry commits once and closes normally
+Real committed transaction delay: saving freezes input and close paths; late completion preserves both a later draft and a disabled import gate
+Quota: genuine abort, downloadable raw/partial drafts, failed retry, same-document recovery, repeat-failure deduplication, queued discard, blocked overwrite, and stale edit conflict passed
+Quota weekday raw recovery: empty choices are write-free and stay raw; explicit Thursday survives quota/download/same-document retry/recovery and saves once
+Capture handoff: parsed fields, cancel/discard retain raw text without writes, and one save clears the associated capture
+Native beforeunload cancellation preserved the live task draft

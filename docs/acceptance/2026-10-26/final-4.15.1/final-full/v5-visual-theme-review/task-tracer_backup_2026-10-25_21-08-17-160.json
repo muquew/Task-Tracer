@@ -1,0 +1,79 @@
+{
+  "version": "2.4",
+  "type": "backup",
+  "exportId": "backup-20261025210817-155ofelr",
+  "date": "2026-10-25T21:08:17.160Z",
+  "app": "Task Tracer",
+  "schema": {
+    "version": "2.4",
+    "storage": "indexeddb",
+    "includes": [
+      "tasks",
+      "subtasks",
+      "projects",
+      "tags",
+      "localDueDates",
+      "exactDueInstants",
+      "reminders",
+      "repeatRules",
+      "completionDates",
+      "archiveState",
+      "todayPlan"
+    ]
+  },
+  "versionNotes": [
+    "2.4 备份包含完整性校验、导出 ID、本地截止日期、真实提醒时间、任务、子任务、项目、标签、高级重复规则、完成时间、归档状态和今日计划。",
+    "导入器会读取 tasks 数组；旧版导出文件仍可通过兼容规则导入。"
+  ],
+  "tasks": [
+    {
+      "id": 1792963397365,
+      "createdAt": "2026-10-25T21:08:02.639Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [
+        2,
+        4
+      ],
+      "repeatPaused": false,
+      "name": "交付体验检查 · Product release",
+      "description": "确认任务、时间与项目完整保留。\nReview the details before shipping.",
+      "project": "Task Tracer",
+      "tags": [
+        "release",
+        "design"
+      ],
+      "subtasks": [
+        {
+          "id": 1792962754256,
+          "text": "复核关键路径 · Review flows",
+          "completed": false
+        },
+        {
+          "id": 1792963269784,
+          "text": "整理交付清单 · Prepare release",
+          "completed": false
+        }
+      ],
+      "dueDate": "2032-05-06T08:35:00.000Z",
+      "dueAt": "2032-05-06T08:35:00.000Z",
+      "dueLocalDate": "2032-05-06",
+      "dueLocalTime": "16:35",
+      "dueTimeZone": "Asia/Shanghai",
+      "reminderOffset": 60,
+      "reminderRepeat": 15,
+      "repeatType": "weekly-days",
+      "repeatInterval": 1,
+      "order": 10000
+    }
+  ],
+  "checksum": "fnv1a32:b4c606d1"
+}

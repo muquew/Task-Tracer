@@ -1,0 +1,96 @@
+{
+  "source_index_sha256": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5",
+  "observations": 83,
+  "all_observations_no_page_errors": true,
+  "horizontal_overflow_observations": 0,
+  "browser_closed": true,
+  "operator_errors": [
+    {
+      "command": {
+        "action": "click",
+        "selector": "#emptyStateClearBtn",
+        "name": "plan-clear-search"
+      },
+      "error": "Locator.click: Timeout 6000ms exceeded.\nCall log:\n  - waiting for locator(\"#emptyStateClearBtn\")\n"
+    }
+  ],
+  "operator_error_classification": "One nonexistent guessed #emptyStateClearBtn automationselector; actual named visiblebutton used successfully in41; not a producterror. Original retained.",
+  "actually_viewed_pngs": [
+    "04-list-desktop.png",
+    "06-statistics-with-record.png",
+    "07-statistics-today-drilldown.png",
+    "09-calendar-populated.png",
+    "10-calendar-selected-today.png",
+    "11-timeline-populated.png",
+    "14-search-empty.png",
+    "19-keyboard-manual-reorder.png",
+    "23-saved-view-created.png",
+    "25-saved-view-applied.png",
+    "31-batch-more.png",
+    "34-two-tasks-moved.png",
+    "35-batch-move-undone.png",
+    "39-plan-empty-search.png",
+    "45-delete-confirmation.png",
+    "49-delete-undone.png",
+    "54-mobile-dark-list.png",
+    "59-small-mobile-batch.png",
+    "62-small-mobile-statistics.png",
+    "65-small-mobile-calendar.png",
+    "66-small-mobile-day-agenda.png",
+    "68-mobile-navigation.png",
+    "71-yesterday-preview.png",
+    "73-english-yesterday-preview.png",
+    "75-day-before-preview.png",
+    "83-actual-data-backup.png"
+  ],
+  "manualorder_changed": {
+    "before": [
+      "产品方案审阅",
+      "完成界面验收",
+      "梳理发布清单",
+      "昨天 跟进遗留事项"
+    ],
+    "after": [
+      "产品方案审阅",
+      "梳理发布清单",
+      "完成界面验收",
+      "昨天 跟进遗留事项"
+    ]
+  },
+  "exact_records_equal_after_batch_undo": true,
+  "exact_records_equal_after_archive_undo": true,
+  "exact_records_equal_after_delete_cancel_undo": true,
+  "savedview_scope_restored": true,
+  "todayplan_search_recovery_preserved": true,
+  "backup_file": "task-tracer_backup_2026-10-25_18-50-36-694.json",
+  "backup_sha256": "a1ed94568fb485b78917dc0b7cf5336e5fc9b892f8cc499dddbd93dde186c8a9",
+  "backup_integrity_valid": true,
+  "backup_tasks": 11,
+  "confirmed_relative_past_issue": [
+    {
+      "id": 1792954710842,
+      "name": "昨天 历史复盘",
+      "dueLocalDate": "2026-10-26",
+      "dueLocalTime": "15:00",
+      "dueTimeZone": "Asia/Shanghai",
+      "project": "产品"
+    },
+    {
+      "id": 1792955070054,
+      "name": "yesterday Historical review",
+      "dueLocalDate": "2026-10-26",
+      "dueLocalTime": "15:00",
+      "dueTimeZone": "Asia/Shanghai",
+      "project": "产品"
+    },
+    {
+      "id": 1792954273427,
+      "name": "前天 历史事项",
+      "dueLocalDate": "2026-10-26",
+      "dueLocalTime": "15:00",
+      "dueTimeZone": "Asia/Shanghai",
+      "project": "产品"
+    }
+  ],
+  "limits": "CurrentrunChromium154 local normalCSP/normalmotion isolated4.15 snapshot; nofullWCAG/OS/mobilehardwareclaims; selected26PNGactuallyviewed, remainingobservationsnotindividuallyclaimedviewed."
+}

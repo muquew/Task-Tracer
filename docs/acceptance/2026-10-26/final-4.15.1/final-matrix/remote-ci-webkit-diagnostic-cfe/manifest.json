@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "status": "independent_diagnostic_public_success_not_standard_gate",
+  "diagnostic_commit": "cfe8d6de236fa6e771934379c67efd711df5c029",
+  "base_commit": "6da3c7293f08c5d16ca73c7a63d8ff74e17358db",
+  "manifest_excludes_only_itself": true,
+  "files": {
+    "terminal-source-clarification-driver.py": {
+      "bytes": 2704,
+      "sha256": "f85b9e24dd39b430491e911f07f5eb5402c25a4bfbaf4555ec6ecf4ab724c9d8"
+    },
+    "archive-driver.py": {
+      "bytes": 12367,
+      "sha256": "5f4e9f43a319dff918f2f53295260038c397b5e1f16e12db8c3eba4265df7103"
+    },
+    "public-observation-events.jsonl": {
+      "bytes": 1670,
+      "sha256": "2e87727fdc9ee5d9a7bb75fc3370a7d15de16572115259f475bf6ea379f95ea2"
+    },
+    "public-monitor-driver.py": {
+      "bytes": 4588,
+      "sha256": "9801716e64d5fc55a96f4bae6a52218ecf55e1c48465beaff3da5f0b95847274"
+    },
+    "README.md": {
+      "bytes": 3583,
+      "sha256": "77788525c22a4b3eba0811a7b38f3b143bf3fc3576986b8a900390d2a60fd243"
+    },
+    "diagnostic-workflow.yml": {
+      "bytes": 1238,
+      "sha256": "2e6da853fcd1304bcb198bbdeb3b08787aa8a2a883f11aa4f7f1c01411718be8"
+    },
+    "source-origins.json": {
+      "bytes": 6093,
+      "sha256": "5c6ce1f3be737b082f35dc55e1d0d28e5e6b80afcd556b1f9c4482f442f2b6fe"
+    },
+    "byte-comparison-proof.json": {
+      "bytes": 37516,
+      "sha256": "aadcb4ddf9bd9c1ccc2be1da714372e65d0f04bb58609faf4b72649d1cc6405a"
+    },
+    "unretained-public-page-index.json": {
+      "bytes": 1799,
+      "sha256": "69d3150cda467bef70992312b305fd80f49c9b5ccb9f728bef2fec4baeef2bbe"
+    },
+    "preparation-report.json": {
+      "bytes": 12641,
+      "sha256": "e475d6108dd52415c1d1bde0dc3cc8ada5c49552ee39d9d00111319cecdd32b5"
+    },
+    "safe-webkit-outcomes.py": {
+      "bytes": 4539,
+      "sha256": "55713e2c5d9e65a6fce08a9aaf0e91444772186c092e2e44c75e65e4847f9b49"
+    },
+    "push-receipt.json": {
+      "bytes": 22175,
+      "sha256": "9aa5da3f1fd290a4f29b5c230b40093896b86611513e9bb46500a7b430e4e7ed"
+    },
+    "public-terminal-status.json": {
+      "bytes": 428,
+      "sha256": "3d845436f1ae755abcc58258df654df04e06675d5f1846ed362a5bbe4bb22a12"
+    },
+    "public-terminal-witness.json": {
+      "bytes": 1383,
+      "sha256": "7664ac37ebee1e5b2b22c8348b4a64aba769685e6c22aba2e47e087145349b9f"
+    }
+  }
+}

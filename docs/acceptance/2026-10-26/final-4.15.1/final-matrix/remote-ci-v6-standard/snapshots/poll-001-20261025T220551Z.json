@@ -1,0 +1,59 @@
+{
+  "fetched_at_utc": "2026-10-25T22:05:51.150342+00:00",
+  "run_url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977",
+  "expected_commit": "6a3b8e61ba0699cc316fd92a247cc9c917a7521d",
+  "poll": 1,
+  "public_get_only": true,
+  "api_or_authenticated_log_access": false,
+  "branch_scope": "codex/final-stable-delivery-20261026; standard full workflow, not main deployment",
+  "status": "In progress",
+  "jobs": [
+    {
+      "name": "checks",
+      "job_id": "121304918045",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304918045",
+      "http_status": 200,
+      "html_sha256": "09997d13f7f34d04468352a54f426e131f0f11212f6a8f70d5b8e72080858c5d",
+      "public_ui_conclusion": "started_without_terminal_conclusion",
+      "displayed_duration": null,
+      "public_annotations": null,
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304918045-visible.txt"
+    },
+    {
+      "name": "deployed_site",
+      "job_id": "121304919023",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304919023",
+      "http_status": 200,
+      "html_sha256": "d2ba9acfb223dfd8ec24eb4d64768376953eb7903d821aba587863dc233b0a25",
+      "public_ui_conclusion": "skipped",
+      "displayed_duration": null,
+      "public_annotations": null,
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304919023-visible.txt"
+    },
+    {
+      "name": "compatibility (chromium)",
+      "public_ui_conclusion": "not_individually_visible",
+      "limit": "Public collapsed matrix has no individual link yet; no terminal conclusion inferred."
+    },
+    {
+      "name": "compatibility (firefox)",
+      "public_ui_conclusion": "not_individually_visible",
+      "limit": "Public collapsed matrix has no individual link yet; no terminal conclusion inferred."
+    },
+    {
+      "name": "compatibility (webkit)",
+      "public_ui_conclusion": "not_individually_visible",
+      "limit": "Public collapsed matrix has no individual link yet; no terminal conclusion inferred."
+    }
+  ],
+  "http_status": 200,
+  "html_sha256": "e93d7db953ebd2c5d52956cc451eea6e9d046d538e5790c481839132c74b9353",
+  "displayed_total_duration": "–",
+  "public_matrix_completion": "0/3",
+  "new_failed_program_signals": [],
+  "new_failed_jobs": []
+}

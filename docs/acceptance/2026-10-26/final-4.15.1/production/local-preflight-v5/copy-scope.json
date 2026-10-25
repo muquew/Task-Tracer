@@ -1,0 +1,11 @@
+{
+  "old_driver": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final/driver.py",
+  "old_driver_sha256": "4f07d97cc9fd795494bc48730bb130d5e951d35e4cc900c5edb4a5f134c938c0",
+  "new_driver": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py",
+  "new_driver_sha256": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91",
+  "only_change": "EXPECTED_INDEX4a7\u219289b; all other bytes identical",
+  "expected_head": "6da3c7293f08c5d16ca73c7a63d8ff74e17358db",
+  "expected_index": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+  "all_other_bytes_identical": true,
+  "production_execution": "not_run"
+}

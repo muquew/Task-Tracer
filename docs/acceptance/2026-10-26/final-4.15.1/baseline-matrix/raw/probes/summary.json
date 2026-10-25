@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-25T18:48:21.500710+00:00",
+  "results": [
+    {
+      "engine": "firefox",
+      "command": [
+        "python",
+        "tools/browser_matrix.py",
+        "--probe-browser",
+        "firefox"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.408,
+      "stdout": "firefox.stdout.log",
+      "stderr": "firefox.stderr.log"
+    },
+    {
+      "engine": "webkit",
+      "command": [
+        "python",
+        "tools/browser_matrix.py",
+        "--probe-browser",
+        "webkit"
+      ],
+      "exit_code": 1,
+      "duration_seconds": 0.751,
+      "stdout": "webkit.stdout.log",
+      "stderr": "webkit.stderr.log"
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+webkit: Help/diagnostics regression on 26.5
+Traceback (most recent call last):
+  File "/workspace/task-tracer-final-baseline/tools/help_playwright.py", line 230, in <module>
+    run(parser.parse_args().browser)
+  File "/workspace/task-tracer-final-baseline/tools/help_playwright.py", line 126, in run
+    expect(page.get_by_role('heading', name=translations[f'{section}Title'], exact=True)).to_be_visible()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 23332, in to_be_visible
+    self._sync(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 852, in to_be_visible
+    await self._expect_impl(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 128, in _expect_impl
+    _record_soft_or_raise(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 60, in _record_soft_or_raise
+    raise error
+AssertionError: Locator expected to be visible
+Actual value: None
+Error: element(s) not found 
+Call log:
+  - Expect "to_be_visible" with timeout 5000ms
+  - waiting for get_by_role("heading", name="Capture and plan", exact=True)
+
+Aria snapshot:
+- complementary "Navigation":
+  - link "Task Tracer":
+    - /url: ./
+  - navigation "View switcher":
+    - button "List"
+    - button "Calendar"
+    - button "Timeline"
+    - button "Stats"
+  - navigation "Navigation":
+    - button "All tasks 1"
+    - button "Open today’s plan": Today’s plan
+  - heading "Projects" [level=2]
+  - navigation "Projects":
+    - button "PRIVATE-PROJECT-724 1"
+  - button "All projects"
+  - button "Settings & data"
+  - text: Stored in this browser
+- banner:
+  - strong: Settings & data
+  - button "Back to tasks"
+  - button "Add task"
+  - button "Quick capture"
+- main:
+  - region "Settings & data":
+    - heading "Settings & data" [level=1]
+    - tablist "Settings sections":
+      - tab "Appearance & language"
+      - tab "Backups & transfer"
+      - tab "Reminders & installation"
+      - tab "Task maintenance"
+      - tab "Help & about" [selected]
+    - tabpanel "Help & about":
+      - heading "Help & about" [level=2]
+      - heading "App update" [level=3]
+      - paragraph: Check for a new version. Save your work before reloading.
+      - button "Check for updates"
+      - heading "User guide" [level=3]
+      - button "Help and support"
+      - heading "Diagnostics and support" [level=3]
+      - paragraph: Preview a report before downloading. Nothing is sent automatically.
+      - button "Review diagnostic information"
+      - strong: Task Tracer
+      - text: 4.15.0
+      - paragraph: Tasks stay in this browser profile. Save a separate JSON backup before clearing site data or moving to another browser or device.
+      - paragraph: Open the app online first to finish caching it for offline use. Reminders still depend on the browser and app state.
+      - link "GitHub":
+        - /url: https://github.com/muquew/Task-Tracer
+      - text: © 2025 muquew · Personal Non-Commercial License
+- dialog "Help and support":
+  - heading "Help and support" [level=2]
+  - button "Cancel": ×
+  - paragraph: Task Tracer 4.15.0 · Your tasks stay in this browser profile. Start with a task, then organize it as needed.
+  - button "Open command palette"
+  - button "Review diagnostic information"
+  - link "Report an issue on GitHub":
+    - /url: https://github.com/muquew/Task-Tracer/issues/new/choose
+  - heading "Keyboard shortcuts" [level=3]
+  - term: Ctrl / ⌘ + I
+  - definition: New task
+  - term: Ctrl / ⌘ + K
+  - definition: Focus search
+  - term: Ctrl / ⌘ + P
+  - definition: Open command palette
+  - term: Ctrl / ⌘ + M
+  - definition: Open Settings & data
+  - term: Ctrl / ⌘ + Z
+  - definition: Undo outside text fields
+  - group: Capture and plan
+  - group: Find your work
+  - group: Dates and clock changes
+  - group: Protect and move tasks
+  - group: Offline use and reminders
+  - group: Support and privacy
+  - button "Close"

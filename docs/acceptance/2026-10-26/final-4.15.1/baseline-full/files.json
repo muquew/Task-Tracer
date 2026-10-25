@@ -1,0 +1,320 @@
+{
+  "scope": "All files in this archive except this files.json; copied source evidence remains byte-for-byte original",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 6893,
+      "sha256": "270151f29f7c3aa14646012a68570ff990ccf4043bf03c4b1c75763cc6d3a033"
+    },
+    {
+      "path": "baseline-run/README.original.md.txt",
+      "bytes": 2763,
+      "sha256": "4910e03d29c7687cb7feec48ba4202d1b9c4eabf966e25334366fb1347e696a1"
+    },
+    {
+      "path": "baseline-run/calendar-label-diagnostic/aria-snapshot.txt",
+      "bytes": 9879,
+      "sha256": "ff4d91d32feffef31e4fb83545b031fa405fe41177417683d12cd3e690d67c3e"
+    },
+    {
+      "path": "baseline-run/calendar-label-diagnostic/calendar-day-label-mismatch.png",
+      "bytes": 96728,
+      "sha256": "9f82628d28eba445a259de07352fb38ab71bfae9375293d45c3a963b0191139a"
+    },
+    {
+      "path": "baseline-run/calendar-label-diagnostic/native-error.txt",
+      "bytes": 3171,
+      "sha256": "eefcf8e0c65f8533fe105bae8328886921aff291e21e7889dd4b5b527c4dd1e6"
+    },
+    {
+      "path": "baseline-run/calendar-label-diagnostic/nodes.json",
+      "bytes": 3513,
+      "sha256": "524fea74aa6d8cef14201fd8fa4c3ec2aee779ee0060a847633807e3dd5e0cf8"
+    },
+    {
+      "path": "baseline-run/calendar-label-diagnostic/run.py",
+      "bytes": 2192,
+      "sha256": "cf7bc5f2001b680c3ce6f768de1b9acb94924242caf137d95d892c9622396593"
+    },
+    {
+      "path": "baseline-run/calendar-label-diagnostic/session.json",
+      "bytes": 229,
+      "sha256": "de65cb50be1ceae4551e96e642130e4e9f4a408d00e6b9d401dcfb7bc793e6ec"
+    },
+    {
+      "path": "baseline-run/failures-observed.json",
+      "bytes": 694,
+      "sha256": "8051341047a7327c395572c9ace99dd89be7b5540497d5bde5668387268796e3"
+    },
+    {
+      "path": "baseline-run/files.original.json",
+      "bytes": 2679,
+      "sha256": "b51f09aca896edd8fc9681a2e573bc9789b0230193b5ae49b44ee22889cc42d1"
+    },
+    {
+      "path": "baseline-run/full.json",
+      "bytes": 35215,
+      "sha256": "75873c5482a4454c8649dfaba257192f4274b23d967c2a185de5ea3c2be136d7"
+    },
+    {
+      "path": "baseline-run/initial-inputs.json",
+      "bytes": 11972,
+      "sha256": "1d523c5e595d6e5374be27f54f73f3b74702c3229454c3f7cb33e63c4c06ee51"
+    },
+    {
+      "path": "baseline-run/resource-samples.jsonl",
+      "bytes": 458,
+      "sha256": "0d8b6ed6ccce76de98c96de882091b19e0f3e42cee6aca894886f4fb60b53d16"
+    },
+    {
+      "path": "baseline-run/run.json",
+      "bytes": 25224,
+      "sha256": "7ea15dbb167b5c0c617e64bec2854ffdc7abc3d04a4d31233df8fccbbda75633"
+    },
+    {
+      "path": "baseline-run/run.py",
+      "bytes": 3029,
+      "sha256": "65d86f896b5f70fc87eae05caf7b604abe3b5657dfc784d4584a989462280c89"
+    },
+    {
+      "path": "baseline-run/stderr.log",
+      "bytes": 25205,
+      "sha256": "982afa6574d3d3ce5065ad2566b28669d440aa075e9a9755cdd9f1e84984a92b"
+    },
+    {
+      "path": "baseline-run/stdout.log",
+      "bytes": 120676,
+      "sha256": "0af8a6652d76a8678956cc109122a9a5912dfbf1c9a3d9dcae593a69ad1f68a2"
+    },
+    {
+      "path": "baseline-run/summary.json",
+      "bytes": 3643,
+      "sha256": "f65287b6fbae928545c2c021852c92cade8a62b24b515e983577a4dacc14d1ce"
+    },
+    {
+      "path": "original-files.json",
+      "bytes": 21884,
+      "sha256": "c6e9124f4e040d628517e2be506c0e74477e30fe1d0c873c1d0dc47c9916fd0a"
+    },
+    {
+      "path": "quick-add-focus-diagnostic/applied-scope.json",
+      "bytes": 630,
+      "sha256": "f19009c82cfa895bd1956dc9214587c1007dc1531c8412043ad9515a85883748"
+    },
+    {
+      "path": "quick-add-focus-diagnostic/focus-helper.patch",
+      "bytes": 1704,
+      "sha256": "2501b18ea8378852bc5d667cede92b9962e1842e5bf59fa2df3e1079b71577b4"
+    },
+    {
+      "path": "quick-add-focus-diagnostic/focused-input-and-wrapper.json",
+      "bytes": 1304,
+      "sha256": "0c031444c21a007e4d7fefd48b051e4b73a1314f8ae8cbe46e180c79262fc8d1"
+    },
+    {
+      "path": "quick-add-focus-diagnostic/helper-at-import.py",
+      "bytes": 40510,
+      "sha256": "68e2626cc356315aa21b5293c1fb48ef64e480d264ca029db5dbb3f72e40eb11"
+    },
+    {
+      "path": "quick-add-focus-diagnostic/patch-scope.json",
+      "bytes": 524,
+      "sha256": "418f15599e6d3acc688a748ebb786d7616f98ca5f97bfaffd9d7eb7de7220cbf"
+    },
+    {
+      "path": "quick-add-focus-diagnostic/run.py",
+      "bytes": 2786,
+      "sha256": "2f99244b25dde7ee591edb61103431e5ff5f9e513efdb894526a8a3ae1b69efa"
+    },
+    {
+      "path": "quick-add-focus-diagnostic/session.json",
+      "bytes": 204,
+      "sha256": "eb2effafa85a20617ecae67cd9f20c6705bb77403e488f79e3f540cd1a96f0d6"
+    },
+    {
+      "path": "quick-add-focus-diagnostic/visible-wrapper-focus.png",
+      "bytes": 127384,
+      "sha256": "47930d3be0b548b0bed1a9af9f7e82288a4884a6756cea499404e06b71c72b38"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-calendar-entry-adapter/change.patch",
+      "bytes": 736,
+      "sha256": "c30558de7880847c8281a6e7bc7d857f23b88a484be2ff03514fbfb915e5e376"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-calendar-entry-adapter/run.json",
+      "bytes": 19899,
+      "sha256": "be2737b07ceefde665702b08573141bc3fa93aacd4645fc156653b09ada1d9af"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-calendar-entry-adapter/run.py",
+      "bytes": 3427,
+      "sha256": "ab1dc23facc5770867a5b8dc50e980b62ede90249260fa50c714e1faf9c4e122"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-calendar-entry-adapter/scope.json",
+      "bytes": 414,
+      "sha256": "c77c6c6c448e1d05bf8f97381c90074006ca25d50432aa8141e9690e6b2010ca"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-calendar-entry-adapter/stderr.log",
+      "bytes": 2355,
+      "sha256": "1b816c17761694066f8e3e67488ad62a3d161f152e465b8041896d3fdcc740ac"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-calendar-entry-adapter/stdout.log",
+      "bytes": 7275,
+      "sha256": "35711bec0fd3cd4e7654bab68fb921ce4c3ebbd538f1cb4b9fe2cf5117c6a02f"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-more-entry-adapter/change.patch",
+      "bytes": 754,
+      "sha256": "7e8cb84b48a2d28d5ce7a50de9bbcf1a67848f29ec5b72ce5d72b092b360d7e2"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-more-entry-adapter/run.py",
+      "bytes": 3427,
+      "sha256": "ab1dc23facc5770867a5b8dc50e980b62ede90249260fa50c714e1faf9c4e122"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-more-entry-adapter/scaled-1280-detail.png",
+      "bytes": 62600,
+      "sha256": "fb3370c86a461384ce41a33e63ceab6910ddcc868ec8bd0f80883241039fc17c"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-more-entry-adapter/scaled-preflight-error.txt",
+      "bytes": 759,
+      "sha256": "c36d9c11b2aaf7eab31be0eb4ae17ca6be44eef43aef72283935244e06112d8e"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-more-entry-adapter/scaled-preflight.json",
+      "bytes": 1354,
+      "sha256": "d919be9c7dde8b7c46b47f52d0ed0ffb4c877f5bfb72e87ccc78bf38ea12b13d"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-more-entry-adapter/scaled-preflight.py",
+      "bytes": 2754,
+      "sha256": "9f75e9777d72c699432a627cde66d5ba99edf387b00a4db3544011acfd2a37c0"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-more-entry-adapter/scaled-preflight.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-more-entry-adapter/scaled-preflight.stdout.log",
+      "bytes": 2147,
+      "sha256": "f2b652726c37a6355f03bd05353e487ac4b30322da7ffee840f0b7f7bd158b76"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-more-entry-adapter/scope.json",
+      "bytes": 475,
+      "sha256": "c13ea12777e0ea3c33878b3cfcdaea5c54780e5371ccbe2c4d8fb7006c53e63b"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-visible-entry-adapter/change.patch",
+      "bytes": 885,
+      "sha256": "36caecd728b93babec3c78a05f59151ef472f53f2dded83b58ebaa4f26726ebf"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-visible-entry-adapter/run.json",
+      "bytes": 20010,
+      "sha256": "0a9c61ff8028fefa1394428813d03c9ce1d6aae102f4989560ba29d501910e4f"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-visible-entry-adapter/run.py",
+      "bytes": 3427,
+      "sha256": "ab1dc23facc5770867a5b8dc50e980b62ede90249260fa50c714e1faf9c4e122"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-visible-entry-adapter/scaled-1280-detail.png",
+      "bytes": 62600,
+      "sha256": "fb3370c86a461384ce41a33e63ceab6910ddcc868ec8bd0f80883241039fc17c"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-visible-entry-adapter/scaled-390-detail.png",
+      "bytes": 45864,
+      "sha256": "dc485209ba1768b840825e8bc16c1f8e686c134d38458c93c9d3b07766a6d740"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-visible-entry-adapter/scaled-preflight.json",
+      "bytes": 2327,
+      "sha256": "6e3bc9430ad964ad704dd83bb411c7dd1e5b3f3382717fd5b0656291a0f97707"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-visible-entry-adapter/scaled-preflight.py",
+      "bytes": 3187,
+      "sha256": "9349535f2b6a7652d79be1cea26b31c51a3859ee3b42769da0d3db99d7216823"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-visible-entry-adapter/scaled-preflight.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-visible-entry-adapter/scaled-preflight.stdout.log",
+      "bytes": 3795,
+      "sha256": "da738f406bf65a9deca73385eef9a44be16f7127beafcb89652e89625b114d72"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-visible-entry-adapter/scope.json",
+      "bytes": 441,
+      "sha256": "4b631a4f76342ac7d34b02ec4eff37426fb62058ee7f472fb826f914c6d16ee8"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-visible-entry-adapter/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "scaled-a11y-adapters/after-visible-entry-adapter/stdout.log",
+      "bytes": 16032,
+      "sha256": "fdbbe8a7e88a877c40540794b1cf7bd4bc6b188c2fd710e85d8be6380e655161"
+    },
+    {
+      "path": "scaled-a11y-after-focus/run.json",
+      "bytes": 19952,
+      "sha256": "7a003ded95f5271cbb623a507dc69fa3139c6387eef40673ee7bb372c3bc17e1"
+    },
+    {
+      "path": "scaled-a11y-after-focus/run.py",
+      "bytes": 3427,
+      "sha256": "ab1dc23facc5770867a5b8dc50e980b62ede90249260fa50c714e1faf9c4e122"
+    },
+    {
+      "path": "scaled-a11y-after-focus/stderr.log",
+      "bytes": 3024,
+      "sha256": "b3c61c255fe7d3b1ab93210166da3c7c2836547c3ed4468ac4cca96f218b797c"
+    },
+    {
+      "path": "scaled-a11y-after-focus/stdout.log",
+      "bytes": 15270,
+      "sha256": "24befa3d3b5831f6d6c78047307ce8caaeaa35cba247b44815fe2e98954d11c4"
+    },
+    {
+      "path": "scaled-a11y-first/run.json",
+      "bytes": 19900,
+      "sha256": "18617d80725bd3f0b7c818417ce87cffb7ad59ead2142f18b5033c977bbe90fd"
+    },
+    {
+      "path": "scaled-a11y-first/run.py",
+      "bytes": 3427,
+      "sha256": "ab1dc23facc5770867a5b8dc50e980b62ede90249260fa50c714e1faf9c4e122"
+    },
+    {
+      "path": "scaled-a11y-first/stderr.log",
+      "bytes": 1020,
+      "sha256": "5e33f42d52094275386a6bfa8a14ea83f17654194ab26459df517c9abc717184"
+    },
+    {
+      "path": "scaled-a11y-first/stdout.log",
+      "bytes": 7525,
+      "sha256": "1b628f81d485dde33db6eb90970c9806379dc67f53bc3d9247a29fbd5583bf49"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 1455,
+      "sha256": "c047843d7dca15aeda27014a6675f6d70a6eb9274809c18be79a6cd02e945694"
+    }
+  ]
+}

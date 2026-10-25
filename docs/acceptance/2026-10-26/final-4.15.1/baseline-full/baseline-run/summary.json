@@ -1,0 +1,89 @@
+{
+  "phase": "Unmodified 4.15.0 baseline diagnostic, not final delivery acceptance",
+  "native_completed": true,
+  "native_passed": false,
+  "programs_planned": 73,
+  "programs_executed": 73,
+  "programs_passed": 64,
+  "programs_failed": 9,
+  "failures": [
+    {
+      "program": "project_scope_playwright.py",
+      "exit_code": 1,
+      "duration_seconds": 36.911,
+      "observed_reason": "Direct click on hidden project filter without exposing collapsed filters."
+    },
+    {
+      "program": "onboarding_playwright.py",
+      "exit_code": 1,
+      "duration_seconds": 7.41,
+      "observed_reason": "Expected old exact Add 3 example tasks label; actual Try example tasks."
+    },
+    {
+      "program": "help_playwright.py",
+      "exit_code": 1,
+      "duration_seconds": 7.785,
+      "observed_reason": "Expected old Capture and plan heading; actual native details/group."
+    },
+    {
+      "program": "settings_flow_playwright.py",
+      "exit_code": 2,
+      "duration_seconds": 0.128,
+      "observed_reason": "Registered no-argument invocation rejected because argparse requires --output; zero browser cases ran."
+    },
+    {
+      "program": "repeat_delete_playwright.py",
+      "exit_code": 1,
+      "duration_seconds": 41.233,
+      "observed_reason": "Batch-delete action remained invisible after old reveal helper; single case passed before failure."
+    },
+    {
+      "program": "repeat_merge_playwright.py",
+      "exit_code": 1,
+      "duration_seconds": 54.672,
+      "observed_reason": "Skip-all scenario clicks intentionally disabled data-no-import-changes submit."
+    },
+    {
+      "program": "time_refresh_playwright.py",
+      "exit_code": 1,
+      "duration_seconds": 13.996,
+      "observed_reason": "Old .stats-mini:nth(4) locator absent after current statistics redesign."
+    },
+    {
+      "program": "calendar_performance_playwright.py",
+      "exit_code": 1,
+      "duration_seconds": 44.956,
+      "observed_reason": "Old sort helper clicked hidden sort button after earlier pagination/search/navigation stages passed."
+    },
+    {
+      "program": "accessibility_i18n_audit.py",
+      "exit_code": 1,
+      "duration_seconds": 92.514,
+      "observed_reason": "Real serious axe label-content-name-mismatch in scaled calendar day details: visible time omitted by explicit aria-label."
+    }
+  ],
+  "duration_seconds": 2280.523,
+  "program_duration_sum_seconds": 2279.131,
+  "source_sha256": "131121b361e13fce65d1df18bcc1873478b41098fabf5803620334721e7ff221",
+  "verification_sha256": "a207e5cfd27f752382036e35f15fd62c5dc8fee330b1699ad09aa270262b0a63",
+  "source_unchanged": true,
+  "verification_unchanged": true,
+  "vcs_initial": {
+    "commit": "54b95cce891d167617d42bc489cdc801317f00c5",
+    "status": ""
+  },
+  "vcs_final": {
+    "commit": "54b95cce891d167617d42bc489cdc801317f00c5",
+    "status": ""
+  },
+  "native_command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "tools/check.py",
+    "--keep-going",
+    "--report",
+    "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-full/full.json"
+  ],
+  "scope": "Original complete native CLI with keep-going; no global CSP forcing, viewport filtering, timing/threshold changes or case suppression. Original HTTP/motion belong to each tool. The registered upgrade has its default 4.1 fixture, not a supplied actual previous-release archive.",
+  "extra_readonly_diagnostic": "calendar-label-diagnostic repeats original scaled function and retains original failure, actual DOM and PNG; its screenshot is not asserted manually reviewed here.",
+  "checker_process_group_present": false
+}

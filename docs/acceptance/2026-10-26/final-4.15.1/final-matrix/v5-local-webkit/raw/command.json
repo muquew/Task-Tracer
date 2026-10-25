@@ -1,0 +1,26 @@
+{
+  "command": [
+    "python",
+    "tools/browser_matrix.py",
+    "--browser",
+    "webkit",
+    "--keep-going",
+    "--report",
+    "/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-matrix-v5-local-webkit/report.json"
+  ],
+  "cwd": "/workspace/Task-Tracer",
+  "started_at": "2026-10-25T21:20:44.660319+00:00",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "XDG_CACHE_HOME": "/workspace/.cache",
+    "PLAYWRIGHT_BROWSERS_PATH": "/workspace/.cache/ms-playwright",
+    "PYTHONUNBUFFERED": "1",
+    "LD_LIBRARY_PATH": "/workspace/.cache/browser-libs/root/usr/lib/x86_64-linux-gnu",
+    "PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS": "1",
+    "TASK_TRACER_BROWSER_EXECUTABLE": null,
+    "TASK_TRACER_PRODUCTION_HEADERS": null
+  },
+  "scope": "Independent local reproduction of new6da hosted WebKit33 failure; original default full registry, original assertions/timeouts/budgets/HTTP/motion. No retries, group/program filters, global CSP override, or notification mocks.",
+  "runtime_note": "Actual prevalidated custom library sysroot; official skip flag omits static host-library preflight only, not browser launch or product tests. Native probe remains required.",
+  "runner_sha256": "a1fbfb35d199f94b79e819770a81f8d36d590df1d97960f0e540f3fd2af2e4ab"
+}

@@ -1,0 +1,100 @@
+{
+  "tasks": [
+    {
+      "id": 1792962452839,
+      "createdAt": "2026-10-25T21:00:53.961Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "Undated acceptance task chromium-1280",
+      "description": "A task without a deadline.",
+      "project": "Acceptance workspace",
+      "tags": [],
+      "subtasks": [],
+      "dueDate": null,
+      "dueAt": null,
+      "dueLocalDate": null,
+      "dueLocalTime": null,
+      "dueTimeZone": null,
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 20000
+    },
+    {
+      "id": 1792962735921,
+      "createdAt": "2026-10-25T21:00:53.312Z",
+      "completed": true,
+      "completedAt": "2026-10-25T21:00:55.389Z",
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "Edited acceptance task chromium-1280",
+      "description": "Edited through the actual interface.\n待输入子任务由主保存收纳。",
+      "project": "Acceptance workspace",
+      "tags": [
+        "acceptance",
+        "review"
+      ],
+      "subtasks": [
+        {
+          "id": 1792962592428,
+          "text": "Already added child",
+          "completed": false
+        },
+        {
+          "id": 1792962832771,
+          "text": "Pending child saved with task",
+          "completed": false
+        }
+      ],
+      "dueDate": "2026-10-26T10:20:00.000Z",
+      "dueAt": "2026-10-26T10:20:00.000Z",
+      "dueLocalDate": "2026-10-26",
+      "dueLocalTime": "18:20",
+      "dueTimeZone": "Asia/Shanghai",
+      "reminderOffset": 15,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 10000
+    }
+  ],
+  "config": [
+    {
+      "key": "language",
+      "value": "en"
+    },
+    {
+      "key": "recoveryHistory",
+      "value": [
+        {
+          "id": "d76c4638-baac-4aa9-8270-88b6b2a4a181",
+          "createdAt": "2026-10-25T21:00:53.323Z",
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "key": "taskRevision",
+      "value": 4
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "public_page_contents_copied": false,
+  "reason": "Retain only approved safe metadata/status witnesses. Original public HTML includes unrelated website bootstrap fields and is indexed by SHA/bytes rather than copied.",
+  "pages": [
+    {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/ci-webkit-outcomes/85ab7611-74ef-450e-b012-9e8447a397ae/actions-initial.html",
+      "bytes": 216249,
+      "sha256": "42540bfa6d92355ddce8ffc1cf84b9787f66bb3c965adeb96345179bf9ef0a98",
+      "copied": false
+    },
+    {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/ci-webkit-outcomes/85ab7611-74ef-450e-b012-9e8447a397ae/run-initial.html",
+      "bytes": 195931,
+      "sha256": "88d809e2f3a87df5d97d834241a2daf6372187785c7ee9917e6beb657d897ad5",
+      "copied": false
+    },
+    {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/ci-webkit-outcomes/85ab7611-74ef-450e-b012-9e8447a397ae/job-initial.html",
+      "bytes": 199572,
+      "sha256": "c339d1d1c23886c73c5c68a4e5a590884aa6ca4148cd7b61166947dae40426dc",
+      "copied": false
+    },
+    {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/ci-webkit-outcomes/85ab7611-74ef-450e-b012-9e8447a397ae/monitor/20261025T214418Z-job.html",
+      "bytes": 199571,
+      "sha256": "38cdd7bcc9b0ff706c781cde5d640248d1dbcce549f50b9491c185f162dbbac6",
+      "copied": false
+    },
+    {
+      "source_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/ci-webkit-outcomes/85ab7611-74ef-450e-b012-9e8447a397ae/monitor/20261025T214418Z-run.html",
+      "bytes": 204928,
+      "sha256": "9e55945bd36368aa345ce2be674cd975d01c1f14fa21938b127a29c479a8aea5",
+      "copied": false
+    }
+  ]
+}

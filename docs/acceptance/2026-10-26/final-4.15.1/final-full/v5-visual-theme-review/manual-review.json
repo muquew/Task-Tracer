@@ -1,0 +1,95 @@
+{
+  "reviewed_at_utc": "2026-10-25T21:10:08.530391+00:00",
+  "source_index_sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+  "frozen_commit": "6da3c7293f08c5d16ca73c7a63d8ff74e17358db",
+  "full_source23_sha256": "58b724aff838339caf9c9ba0e2d5cff3ff05d20dae43e5c16fe93984f8734e54",
+  "full_verification84_sha256": "62ec9c75e4045987bfb29df9905d075bbfeb3525558f671c4c26d159aeef0936",
+  "scope": "Ten fresh final89b source editor screenshots only: four themes x light/dark, original1280 English/390 Chinese assignments, plus320 Berry dark empty-date/discard. Date-focused scrollable form views; not a claim all controls fit simultaneously or all site workflows/devices passed.",
+  "method": "Actually opened each original new PNG with view_image; no old4a7 image reused or edited. Original driver operations/assertions unchanged; only output routing differs and the existing expected-index CLI receives89b.",
+  "images": [
+    {
+      "file": "01-iris-light-1280-en.png",
+      "sha256": "04d454e9af70d134c6aea1d67dc2a82fe5131da567532025219ec369b604e72f",
+      "bytes": 179699,
+      "actually_viewed_with_view_image": true,
+      "observation": "Iris浅色：淡紫表面、属性卡片与输入框边界层次清晰；原生日期时间和底部主次操作完整。"
+    },
+    {
+      "file": "02-iris-dark-390-zh-CN.png",
+      "sha256": "ef70123c935d1897ead2a8a2a8630dea568a87a3156ee17ce29a323ac464e082",
+      "bytes": 48387,
+      "actually_viewed_with_view_image": true,
+      "observation": "Iris深色移动端：紫色层次和浅紫保存按钮清楚；双语示例内容、日期时间、操作条不溢出。"
+    },
+    {
+      "file": "03-ocean-light-390-zh-CN.png",
+      "sha256": "4fe81f69847814026258ab9525ca6b443071919cd99b451d0bd7d04c2ab8d661",
+      "bytes": 51869,
+      "actually_viewed_with_view_image": true,
+      "observation": "Ocean浅色移动端：蓝灰属性卡片与浅色输入区有区分；焦点环、日期时间及按钮完整可见。"
+    },
+    {
+      "file": "04-ocean-dark-1280-en.png",
+      "sha256": "5d5e54e08caeed5bdf9395ed0a053de55d772d67527d6df89038b360dbb7f327",
+      "bytes": 157362,
+      "actually_viewed_with_view_image": true,
+      "observation": "Ocean深色桌面：深海蓝表面与更深属性/输入区有层次，浅蓝操作按钮明确，遮罩模糊背景。"
+    },
+    {
+      "file": "05-pine-light-1280-en.png",
+      "sha256": "b932bb01a2e39f0f91efd2ef4c1b152076b410728408975a705f5f74ee3be124",
+      "bytes": 180711,
+      "actually_viewed_with_view_image": true,
+      "observation": "Pine浅色桌面：浅绿表面、薄荷属性卡片和深绿操作按钮协调；正文与日期区域清楚。"
+    },
+    {
+      "file": "06-pine-dark-390-zh-CN.png",
+      "sha256": "c24ef5550b8ded8a008a72cf0a4ce2c5001eaadd3ae127756cdf1b630bd6f8a5",
+      "bytes": 48247,
+      "actually_viewed_with_view_image": true,
+      "observation": "Pine深色移动端：深绿表面与更深属性区可区分，浅绿操作按钮突出；日期时间未被footer覆盖。"
+    },
+    {
+      "file": "07-berry-light-390-zh-CN.png",
+      "sha256": "3fc9b04c2c50d41a5f9e10fc1052d5c1357afb80ba65fa57fa7118fbf8cdb68e",
+      "bytes": 52027,
+      "actually_viewed_with_view_image": true,
+      "observation": "Berry浅色移动端：粉灰属性区、浅粉输入框和莓色按钮保持统一层次；文字与焦点环清楚。"
+    },
+    {
+      "file": "08-berry-dark-1280-en.png",
+      "sha256": "97fc4a3022e28855c584bd171c0fce7ced26ee871690216b320a597eb1c9e067",
+      "bytes": 158515,
+      "actually_viewed_with_view_image": true,
+      "observation": "Berry深色桌面：深梅色表面和更深输入区区分明确，浅粉保存按钮突出；双栏及遮罩关系清楚。"
+    },
+    {
+      "file": "09-berry-dark-320-empty-date-error.png",
+      "sha256": "4384229af8f2f1cb83ef9c36c9243d60f45e94d817fa8a3550201defc1a92612",
+      "bytes": 33175,
+      "actually_viewed_with_view_image": true,
+      "observation": "320空日期：错误边界和提示完整，日期/时间/错误文案均处于固定操作条上方，取消和添加按钮完整。"
+    },
+    {
+      "file": "10-berry-dark-320-discard-confirmation.png",
+      "sha256": "6b264d12e6588d94f64a4a7d05e9b63bd204b10919837f8931f5f6aad95b77b1",
+      "bytes": 34624,
+      "actually_viewed_with_view_image": true,
+      "observation": "320放弃确认：标题、说明、继续编辑及放弃更改按钮完整可达；原表单和底部操作禁用，层级清楚。"
+    }
+  ],
+  "task_fields_revision_history_exactly_unchanged": true,
+  "actual_downloaded_backup": {
+    "path": "task-tracer_backup_2026-10-25_21-08-17-160.json",
+    "sha256": "e6c7005899da0c02e28f8695352a81ea22bc8b41b102fc8443a9b48614f8b05a",
+    "checksum_valid": true,
+    "tasks_exactly_equal_before": true
+  },
+  "page_errors": [],
+  "console_errors": [],
+  "all10_original_geometry_assertions_retained": true,
+  "runtime5_and_actual_helpers_stable": true,
+  "new_obvious_blockers": [],
+  "verdict": "Accepted within this bounded final-source visual review.",
+  "all_browser_contexts_server_closed": true
+}

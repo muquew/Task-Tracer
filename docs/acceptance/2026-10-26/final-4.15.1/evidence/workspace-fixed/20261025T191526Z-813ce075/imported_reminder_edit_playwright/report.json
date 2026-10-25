@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python",
+    "tools/imported_reminder_edit_playwright.py",
+    "--browser",
+    "firefox",
+    "--case",
+    "all"
+  ],
+  "started_at": "2026-10-25T19:15:26.604739+00:00",
+  "finished_at": "2026-10-25T19:16:23.879774+00:00",
+  "duration_seconds": 57.275,
+  "exit_code": 0,
+  "original_cli": true,
+  "http_csp_scope": "Original local_server StaticHandler; no deployment CSP header added. Separate manual check uses normal deployment headers.",
+  "stdout": "stdout.log",
+  "stderr": "stderr.log"
+}

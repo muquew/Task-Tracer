@@ -1,0 +1,23 @@
+{
+  "recorded_at_utc": "2026-10-25T22:46:13.613840+00:00",
+  "networking_reference": "skill://plugin_connector_1p_c5b7d5df5d7081918f2c4be5a633ed5d/cloud-environment-runtime/references/networking.md",
+  "policy_file_version": 1,
+  "vpn_configured": false,
+  "direct_tcp_domains_configured": false,
+  "existing_https_proxy": {
+    "scheme": "http",
+    "hostname": "proxy",
+    "port": 8080,
+    "userinfo_present": false
+  },
+  "configured_public_node_ca": {
+    "path": "/usr/local/share/ca-certificates/environment-proxy-ca.crt",
+    "sha256": "7fa2d7d439db8bfa7c191457e61af5e3f4eb412314eb148766ac09e93786e4c3"
+  },
+  "ssl_cert_file": "/etc/ssl/certs/ca-certificates.crt",
+  "no_proxy_configured": true,
+  "node_tls_reject_unauthorized_disabled": false,
+  "python_httpsverify_disabled": false,
+  "configuration_or_allowlist_changed": false,
+  "secret_values_recorded": false
+}

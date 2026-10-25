@@ -6,6 +6,7 @@ Current delivery status and artifact identity: [Stable delivery guide](../stable
 
 | Version / 版本 | Record / 记录 |
 | --- | --- |
+| 4.15.1 | [4.15.1](4.15.1.md) — complete / 已完成 |
 | 4.15.0 | [4.15.0](4.15.0.md) |
 | 4.14.0 | [4.14.0](4.14.0.md) |
 | 4.13.2 | [4.13.2](4.13.2.md) |

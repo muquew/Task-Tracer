@@ -1,0 +1,53 @@
+{
+  "created_at_utc": "2026-10-25T19:45:27.315054+00:00",
+  "scope": "Only the listed files in remote-ci-baseline/; parent-stage and future final/production results are not covered.",
+  "excluded": [
+    "manifest.json"
+  ],
+  "source_commit": "54b95cce891d167617d42bc489cdc801317f00c5",
+  "remote_ci_after_parent_budget_change": "not_observed_here",
+  "file_count": 10,
+  "total_bytes": 28145,
+  "files": {
+    "README.md": {
+      "bytes": 2544,
+      "sha256": "32bc22e99daa538f89281805ec54a389d684c8220bba851b8e2050505a64f171"
+    },
+    "evidence/job-121257060787-visible.txt": {
+      "bytes": 3347,
+      "sha256": "4a55b0b9580994b750d470b26263fa1d54110aa22555d87eda9d6f0b80d76b90"
+    },
+    "evidence/job-121257060990-visible.txt": {
+      "bytes": 3417,
+      "sha256": "26d388bf92d8d88bc4a1e76979e579022b0c0728eff6e1c99d151482063e7fae"
+    },
+    "evidence/job-121257061006-visible.txt": {
+      "bytes": 3350,
+      "sha256": "910b1352a40a8790dc99d4838ae63436b4f8498b26b2a1e302d61d4f0a786757"
+    },
+    "evidence/job-121257061009-visible.txt": {
+      "bytes": 3311,
+      "sha256": "6dbbe00bc312f9f4df5f8f61c111234b5612a9349b738447e5086a1ace6145a2"
+    },
+    "evidence/job-121257061430-visible.txt": {
+      "bytes": 2602,
+      "sha256": "0bc2a5f13471f5c0f755e181e3058de207feac5af47842c540accad93db45fd3"
+    },
+    "jobs.json": {
+      "bytes": 4256,
+      "sha256": "bbe7d402215009666b0c25ad591223e86559750c85fd056a04050c7ce64c632e"
+    },
+    "run-annotations-visible.txt": {
+      "bytes": 2616,
+      "sha256": "df5f26014b5c259364747331d7bfd33caaa4b5610752c055963aca994b70cec6"
+    },
+    "run.json": {
+      "bytes": 1430,
+      "sha256": "5c883b6493c0625351a908b3cba8d80871f3072d8f9a7d8e29739c46a93a0591"
+    },
+    "workflow-adjustment.json": {
+      "bytes": 1272,
+      "sha256": "94eff5fc7c4fe6c21627f8ae0a628c22859244a63742d43513e98703f1375ef9"
+    }
+  }
+}

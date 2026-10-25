@@ -1,0 +1,93 @@
+{
+  "recorded_at_utc": "2026-10-25T20:13:59.112594+00:00",
+  "run_id": "40228144776",
+  "run_url": "https://github.com/muquew/Task-Tracer/actions/runs/40228144776",
+  "commit": "2771d561181a4f10afeeacdf2e476dcbb754a49b",
+  "branch": "codex/final-stable-delivery-20261026",
+  "overall_public_conclusion": "Failure",
+  "displayed_duration": "19m 5s",
+  "last_poll_utc": "2026-10-25T20:12:43.525283+00:00",
+  "jobs": [
+    {
+      "name": "checks",
+      "job_id": "121273896279",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40228144776/job/121273896279",
+      "http_status": 200,
+      "html_sha256": "f2f6f34c5f547b016163567d8d0e18b587eb6fcaa6ec7e2690606180855348be",
+      "public_ui_conclusion": "failed",
+      "displayed_duration": "1m 8s",
+      "public_annotations": "1 error, 1 warning, and 1 notice\nValidate static files, dates, and browser workflows\nProcess completed with exit code 1.\nShow more\nShow less\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121273896279-visible.txt"
+    },
+    {
+      "name": "compatibility (firefox)",
+      "job_id": "121273896407",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40228144776/job/121273896407",
+      "http_status": 200,
+      "html_sha256": "bd6b94304491d49e23637cd3af56293520a99d1501c1f8a0c95443a640042c33",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "14m 43s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121273896407-visible.txt"
+    },
+    {
+      "name": "compatibility (chromium)",
+      "job_id": "121273896451",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40228144776/job/121273896451",
+      "http_status": 200,
+      "html_sha256": "85ebb636d31da53d452d2af84fc70d83d7ef0f1622f1f4cad4df88aedb8e1e4d",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "19m 2s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121273896451-visible.txt"
+    },
+    {
+      "name": "compatibility (webkit)",
+      "job_id": "121273896481",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40228144776/job/121273896481",
+      "http_status": 200,
+      "html_sha256": "a3686b67c942ea5272ce67acbca726ed6d128ed8ee435455cfa0af00672fec40",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "17m 38s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121273896481-visible.txt"
+    },
+    {
+      "name": "deployed_site",
+      "job_id": "121273897502",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40228144776/job/121273897502",
+      "http_status": 200,
+      "html_sha256": "d78d4c3be5721ca2668b80c4a3d7ef342c0e4449b82e0b160aa20726fb359f47",
+      "public_ui_conclusion": "skipped",
+      "displayed_duration": null,
+      "public_annotations": null,
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121273897502-visible.txt"
+    }
+  ],
+  "all_three_compatibility_jobs_succeeded": true,
+  "checks_succeeded": false,
+  "deployment_or_main_pass": false,
+  "configured_matrix_registry_programs_per_job": 33,
+  "registry_count_scope": "Registration read from the local Git object for this exact commit. Three remote job success states are visible, but per-program artifacts/logs were not anonymously accessible and are not independently claimed audited.",
+  "workflow_at_commit_sha256": "e08128690ca9e45cdbd54a3125da1dee1974aee89d50658e65b8b80b963de869",
+  "matrix_registry_source_at_commit_sha256": "c4eb2acaf88d2c36805dcce6a6e41ca942d51fabe0ef044f4bbfbb008ca95322",
+  "candidate_index_sha256": "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+  "public_artifact_access": "Standard check-results artifact URL redirected to the public suites URL and returned404. No authenticated/API/internal-header retry.",
+  "known_failure_scope": "checks validation step exit1 at displayed1m8s. Public annotation links step8:103; no assertion body available.",
+  "not_claimed": [
+    "Specific hidden assertion root cause",
+    "Whole workflow green",
+    "Main branch changed/deployed",
+    "Production acceptance passed"
+  ],
+  "monitor_interval_seconds": 60,
+  "polls_recorded": 16,
+  "monitor_process_exit_code": 0,
+  "network_scope": "Only normal public GitHub repo HTTPS GETs; no API, credentials, login bypass or workflow dispatch.",
+  "production_driver_state": "Waiting for parent main/Vercel match signal; no production execution."
+}

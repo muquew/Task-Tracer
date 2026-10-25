@@ -1,0 +1,45 @@
+{
+  "captured_at_beijing": "2026-10-26T04:49:21.201733+08:00",
+  "root": "/tmp/task-tracer-final-stable-v5-20261026",
+  "git_head": "2771d561181a4f10afeeacdf2e476dcbb754a49b",
+  "git_status": [
+    " M .github/workflows/checks.yml",
+    " M index.html",
+    " M tools/quick_add_recovery_playwright.py",
+    " M tools/smoke_playwright.py",
+    " M vercel.json"
+  ],
+  "code_snapshot_sha256": "63f735b263cd4aeee4218af630411969f029df64246744e2ac5e04bce6ab7b3a",
+  "driver_sha256": "17f87e758d12a171d03b09af358ae5c4ae4d94609ac587c231468f2a0659db57",
+  "argv": [
+    "/workspace/design-research/task-tracer-final-delivery-2026-10-26/public-screenshots/final-89b/capture.py",
+    "--expected-index-sha256",
+    "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30"
+  ],
+  "sources": {
+    "index.html": {
+      "sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+      "bytes": 985633
+    },
+    "sw.js": {
+      "sha256": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+      "bytes": 8305
+    },
+    "resources/en.json": {
+      "sha256": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+      "bytes": 57285
+    },
+    "resources/zh-CN.json": {
+      "sha256": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+      "bytes": 55747
+    },
+    "vercel.json": {
+      "sha256": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+      "bytes": 1194
+    },
+    "package.json": {
+      "sha256": "c8f6f5f9dd328dc47b3584e2defa0f767be1193c64dcac4cd86b0ce375fbecda",
+      "bytes": 451
+    }
+  }
+}

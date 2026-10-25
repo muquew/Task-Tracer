@@ -1,0 +1,57 @@
+{
+  "recorded_at": "2026-10-25T18:52:00.322823+00:00",
+  "kind": "environment_dependency_attempt",
+  "uid": 1000,
+  "sudo_available": false,
+  "package": {
+    "path": "/workspace/.cache/browser-libs/libgles2_1.7.0-1+b2_amd64.deb",
+    "name": "libgles2",
+    "version": "1.7.0-1+b2",
+    "architecture": "amd64",
+    "sha256": "e12c18aa77939d122ee1dea520ba0440b97dc19200b7396e03dff03a3ece74c1"
+  },
+  "cached_library_path": "/workspace/.cache/browser-libs/root/usr/lib/x86_64-linux-gnu",
+  "probe_attempts": [
+    {
+      "command": [
+        "python",
+        "tools/browser_matrix.py",
+        "--probe-browser",
+        "webkit"
+      ],
+      "exit_code": 1,
+      "stdout": "webkit.stdout.log",
+      "stderr": "webkit.stderr.log"
+    },
+    {
+      "command": [
+        "python",
+        "tools/browser_matrix.py",
+        "--probe-browser",
+        "webkit"
+      ],
+      "extra_environment": {
+        "LD_LIBRARY_PATH": "/workspace/.cache/browser-libs/root/usr/lib/x86_64-linux-gnu"
+      },
+      "status": "failed_with_original_BrowserType.launch_missing_library_error",
+      "numeric_child_exit_code": "not separately captured by shell; do not infer overall post-read shell code as probe code",
+      "stdout": "webkit-cached-libs.stdout.log",
+      "stderr": "webkit-cached-libs.stderr.log"
+    }
+  ],
+  "installation_attempt": {
+    "command": [
+      "dpkg",
+      "-i",
+      "/workspace/.cache/browser-libs/libgles2_1.7.0-1+b2_amd64.deb"
+    ],
+    "sandbox_permissions": "require_escalated",
+    "exit_code": 2,
+    "stderr": "dpkg: error: requested operation requires superuser privilege\n",
+    "auto_review_rejection": false
+  },
+  "runtime_library_links_already_exist": true,
+  "host_validation_reason": "Original Playwright missingDLOPENLibraries invokes /sbin/ldconfig -p and does not use LD_LIBRARY_PATH for that separate dlopen check. The original browser bundle already links libGLESv2.so.2 to the cached real library.",
+  "project_or_validator_modified": false,
+  "validation_bypassed": false
+}

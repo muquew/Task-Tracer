@@ -1,0 +1,373 @@
+{
+  "recorded_at_utc": "2026-10-25T22:39:38.162348+00:00",
+  "kind": "full_standard_remote_ci_success_source_bound_v6",
+  "run_id": "40238448977",
+  "run_url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977",
+  "commit": "6a3b8e61ba0699cc316fd92a247cc9c917a7521d",
+  "branch": "codex/final-stable-delivery-20261026",
+  "public_created_at_utc": "2026-10-25T22:04:21Z",
+  "first_terminal_observed_at_utc": "2026-10-25T22:37:51.161939+00:00",
+  "overall": "Success",
+  "duration": "33m17s",
+  "jobs": [
+    {
+      "name": "compatibility (chromium)",
+      "job_id": "121304917801",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304917801",
+      "http_status": 200,
+      "html_sha256": "43381bf4007b60e5e308eaf09abfe7df0833a3fb6454df8c63d39d149e604347",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "13m 25s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304917801-visible.txt"
+    },
+    {
+      "name": "compatibility (firefox)",
+      "job_id": "121304917923",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304917923",
+      "http_status": 200,
+      "html_sha256": "2f886202064452269d953d708ca39cdbd8aff8aaca4b048cdb018bba5abc6a9b",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "11m 17s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304917923-visible.txt"
+    },
+    {
+      "name": "compatibility (webkit)",
+      "job_id": "121304917994",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304917994",
+      "http_status": 200,
+      "html_sha256": "a4e1ece57af40f2b415e01ea112d61e5948acfeba0dfbd92caa55d19845e041b",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "18m 41s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304917994-visible.txt"
+    },
+    {
+      "name": "checks",
+      "job_id": "121304918045",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304918045",
+      "http_status": 200,
+      "html_sha256": "4e3a51352851e8ea7861b40a76d5f51e30d324b1e4c77aac7e8233696c9f6ea2",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "33m 13s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304918045-visible.txt"
+    },
+    {
+      "name": "deployed_site",
+      "job_id": "121304919023",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304919023",
+      "http_status": 200,
+      "html_sha256": "704266c16365d81d722f5347360f8bc02e76f74c032cf9c9028fda7355863e49",
+      "public_ui_conclusion": "skipped",
+      "displayed_duration": null,
+      "public_annotations": null,
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304919023-visible.txt"
+    }
+  ],
+  "scope_from_exact_commit": {
+    "normal_check_programs": 73,
+    "static_registry": 7,
+    "matrix_programs_per_engine": 33,
+    "matrix_engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "normal_workflow_not_diagnostic": true,
+    "original_native_cli_and_failure_status_preserved": true,
+    "post_always_metadata_only": true
+  },
+  "freeze_reference": {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-freeze-v6/inputs.json",
+    "sha256": "f2c62095210b338ab126286ba8b7d62adefb05743269d8f3fc84179872a34a22",
+    "source23_sha256": "58b724aff838339caf9c9ba0e2d5cff3ff05d20dae43e5c16fe93984f8734e54",
+    "verification84_sha256": "1d0a6604a369bd42c75045692eb11536ae9636ee6f4320a0d4e07c4a65ca9561"
+  },
+  "registration_scope_note": "Registry/commands read from exact local Git object; public four-job success proves configured standard execution. Raw per-program reports/logs/artifacts were not downloaded or independently audited here.",
+  "native_report_or_protected_log_obtained": false,
+  "public_failed_program_annotations": [],
+  "historical_boundary": "Two6da standard WK failures and separate CFE diagnostic remain unchanged. This success does not identify the old failures root cause or relabel them passed.",
+  "main_or_production_claim": false,
+  "monitor_interval_seconds": 60,
+  "polls": 33,
+  "monitor_exit_code": 0,
+  "repository_runtime_or_verification_edits_by_reviewer": [],
+  "originals": [
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/terminal.json",
+      "archived_path": "terminal.json",
+      "bytes": 5652,
+      "sha256": "5350d5be815588a6625ca89743ef05ffb1752cfd758828d36e97c12ada3576c0"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/run-discovery.json",
+      "archived_path": "run-discovery.json",
+      "bytes": 976,
+      "sha256": "694c4edd0da861b6830c6b808a7d611b354ce0f8f97f3c19568ebeaf27dac031"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/monitor.stdout.log",
+      "archived_path": "monitor.stdout.log",
+      "bytes": 18019,
+      "sha256": "521b5c5f19982ef9b3536b34bbe7c535c0c4ab6c76c269a6852d99ff01bec38f"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/monitor.stderr.log",
+      "archived_path": "monitor.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-033-20261025T223751Z/run-visible.txt",
+      "archived_path": "evidence/run-visible.txt",
+      "bytes": 5650,
+      "sha256": "c2bf0ff672119ec8ef6691aeafde781fe3e708663b3ab95a5fda1f405f93bec8"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-033-20261025T223751Z/job-121304917801-visible.txt",
+      "archived_path": "evidence/job-121304917801-visible.txt",
+      "bytes": 3189,
+      "sha256": "a79aac0aa9d7a14a687faac86c339fd28175c8d90f9abb1073e9527aa000ae18"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-033-20261025T223751Z/job-121304917923-visible.txt",
+      "archived_path": "evidence/job-121304917923-visible.txt",
+      "bytes": 3186,
+      "sha256": "e9c527281f5a77e1e6091104ca6af7d7aa73bded1679219a5eaf9e5d81a9da76"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-033-20261025T223751Z/job-121304917994-visible.txt",
+      "archived_path": "evidence/job-121304917994-visible.txt",
+      "bytes": 3183,
+      "sha256": "723760060cd99266ea1c90097205750f48ce19b898dd9cd8d6dadbf515bff1f1"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-033-20261025T223751Z/job-121304918045-visible.txt",
+      "archived_path": "evidence/job-121304918045-visible.txt",
+      "bytes": 3158,
+      "sha256": "ac452fa9a793ae9a4e38217a3ebee1a9b5fb50ad3b65a0e474c4595b0aae61bf"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-033-20261025T223751Z/job-121304919023-visible.txt",
+      "archived_path": "evidence/job-121304919023-visible.txt",
+      "bytes": 2562,
+      "sha256": "92f028c5710e92135142de5eb6f175ecbeebd9fa596daa45eb8b68bf729fab52"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-001-20261025T220551Z/snapshot.json",
+      "archived_path": "snapshots/poll-001-20261025T220551Z.json",
+      "bytes": 2426,
+      "sha256": "8f456cc7848aacfcaa3abb0408f60aeb3b83955cd01701d5e50c80740d7d8321"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-002-20261025T220651Z/snapshot.json",
+      "archived_path": "snapshots/poll-002-20261025T220651Z.json",
+      "bytes": 2426,
+      "sha256": "d0a628fb9a83bf688225e6de625916eb2002953cb5950694fdb1c34722ee3aeb"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-003-20261025T220751Z/snapshot.json",
+      "archived_path": "snapshots/poll-003-20261025T220751Z.json",
+      "bytes": 2426,
+      "sha256": "1951f85399d216223661e04f97141d3fbb9b30771661d628dc384feab2d3947f"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-004-20261025T220851Z/snapshot.json",
+      "archived_path": "snapshots/poll-004-20261025T220851Z.json",
+      "bytes": 2426,
+      "sha256": "43f13bd7c8a5c334e86f44c8df720ae1f9d681fa86e7dea1abe5545d01cda9bb"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-005-20261025T220951Z/snapshot.json",
+      "archived_path": "snapshots/poll-005-20261025T220951Z.json",
+      "bytes": 2426,
+      "sha256": "844334200978a2ca9e6da1b3e18e73b6939e3dfdfbc260694c4f183bdd3b2de6"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-006-20261025T221051Z/snapshot.json",
+      "archived_path": "snapshots/poll-006-20261025T221051Z.json",
+      "bytes": 2426,
+      "sha256": "9f524ce124e93ac4f8bf9da1f82a1e9cf3be4a9672486fae05a9290eb7bf8f4b"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-007-20261025T221151Z/snapshot.json",
+      "archived_path": "snapshots/poll-007-20261025T221151Z.json",
+      "bytes": 2426,
+      "sha256": "b7f0774d74a3db1be9d9d739362595878566c3529bba91a1424567f3ed5cba2e"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-008-20261025T221251Z/snapshot.json",
+      "archived_path": "snapshots/poll-008-20261025T221251Z.json",
+      "bytes": 2426,
+      "sha256": "6bc1051f7dfa04d570993424e877320955f6ca79e1f9c2d8e7133814c0eeef4e"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-009-20261025T221351Z/snapshot.json",
+      "archived_path": "snapshots/poll-009-20261025T221351Z.json",
+      "bytes": 2426,
+      "sha256": "a2ab6fbfb7667fc75b76bd9c42f45afe0fe95fb0fcd471b5a06b4a2426ebe064"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-010-20261025T221451Z/snapshot.json",
+      "archived_path": "snapshots/poll-010-20261025T221451Z.json",
+      "bytes": 2427,
+      "sha256": "afa58700c3ff66238526e02a47aa4c7f4b9ef63305b500378d7d15cd43f6aa5b"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-011-20261025T221551Z/snapshot.json",
+      "archived_path": "snapshots/poll-011-20261025T221551Z.json",
+      "bytes": 3319,
+      "sha256": "e694c016b46396a50d4195e911f3fa6aee40a2c1da892f58ba4bb3241a345736"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-012-20261025T221651Z/snapshot.json",
+      "archived_path": "snapshots/poll-012-20261025T221651Z.json",
+      "bytes": 3319,
+      "sha256": "eeb73259850ad37c977040adee819f663f57cf337311fcb50072cab7f8c362b2"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-013-20261025T221751Z/snapshot.json",
+      "archived_path": "snapshots/poll-013-20261025T221751Z.json",
+      "bytes": 4213,
+      "sha256": "fb58be0d214864fe86038d96e1c98d3accb20f1f905c85c92c4c20844429d308"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-014-20261025T221851Z/snapshot.json",
+      "archived_path": "snapshots/poll-014-20261025T221851Z.json",
+      "bytes": 4213,
+      "sha256": "430a18f42ad3aad25332db388a149314f63a45d6ac28ff3740f8bcb4208f6e2f"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-015-20261025T221951Z/snapshot.json",
+      "archived_path": "snapshots/poll-015-20261025T221951Z.json",
+      "bytes": 4213,
+      "sha256": "59dc98c36c7dc1b17991413a2de73b9b09129b8eb3c99733c6cad8470b6e04f0"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-016-20261025T222051Z/snapshot.json",
+      "archived_path": "snapshots/poll-016-20261025T222051Z.json",
+      "bytes": 4213,
+      "sha256": "77358acacbd53f1c66cf23d26a3b325e3b2467116ed911c5f3d6847c1054ff46"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-017-20261025T222151Z/snapshot.json",
+      "archived_path": "snapshots/poll-017-20261025T222151Z.json",
+      "bytes": 4213,
+      "sha256": "4da9a884c36a998d393a04241f69aaaa689227c1d41302a3c13c17335992d4dc"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-018-20261025T222251Z/snapshot.json",
+      "archived_path": "snapshots/poll-018-20261025T222251Z.json",
+      "bytes": 4213,
+      "sha256": "46e4b269a938a39eb0b2ef956e0b0f451f7762d8cd13726af35b640260560d31"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-019-20261025T222351Z/snapshot.json",
+      "archived_path": "snapshots/poll-019-20261025T222351Z.json",
+      "bytes": 5104,
+      "sha256": "45e74a0a7cd87c069a67a7012f95e58b315aa1d7f84231f2bc0260734409e7a3"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-020-20261025T222451Z/snapshot.json",
+      "archived_path": "snapshots/poll-020-20261025T222451Z.json",
+      "bytes": 5104,
+      "sha256": "e5c0e91c7397324773ebb9519a0a1630928e3a356052708223341ee9a92975bb"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-021-20261025T222551Z/snapshot.json",
+      "archived_path": "snapshots/poll-021-20261025T222551Z.json",
+      "bytes": 5104,
+      "sha256": "a736e136c198be3271f40849638360feab3672f01bdc717429d46ecf695db512"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-022-20261025T222651Z/snapshot.json",
+      "archived_path": "snapshots/poll-022-20261025T222651Z.json",
+      "bytes": 5104,
+      "sha256": "7444d34439bf2b73fb0d4fd028050bdc271cfd9e66c62ca17e37da33cb2ea998"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-023-20261025T222751Z/snapshot.json",
+      "archived_path": "snapshots/poll-023-20261025T222751Z.json",
+      "bytes": 5104,
+      "sha256": "577694d15f67d3e6296f4c7abca8f3fc719c6989633da2ea469ff6dd1911e9cf"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-024-20261025T222851Z/snapshot.json",
+      "archived_path": "snapshots/poll-024-20261025T222851Z.json",
+      "bytes": 5104,
+      "sha256": "b65ec57f84776bcc47a5745a7b05d718ffc9f29b34d27c0df900731a15d36fb0"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-025-20261025T222951Z/snapshot.json",
+      "archived_path": "snapshots/poll-025-20261025T222951Z.json",
+      "bytes": 5104,
+      "sha256": "2e434b43c04b4f9ef69b3216aa186a28e151616c546a8f52c938d54c72d6233d"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-026-20261025T223051Z/snapshot.json",
+      "archived_path": "snapshots/poll-026-20261025T223051Z.json",
+      "bytes": 5104,
+      "sha256": "bf71bd836d7c6afca93c157a06fbadec5c1f4ab42541f96770965edcb6fdcfc0"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-027-20261025T223151Z/snapshot.json",
+      "archived_path": "snapshots/poll-027-20261025T223151Z.json",
+      "bytes": 5104,
+      "sha256": "da5b1b87987691c4ab3fa0c3b72b01686655a72cbbbbb8f72436b8a397cb46da"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-028-20261025T223251Z/snapshot.json",
+      "archived_path": "snapshots/poll-028-20261025T223251Z.json",
+      "bytes": 5104,
+      "sha256": "4ffb652de2fc50f4db3017c5703f21b6771e527bef966b4d42482a8d85233b88"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-029-20261025T223351Z/snapshot.json",
+      "archived_path": "snapshots/poll-029-20261025T223351Z.json",
+      "bytes": 5104,
+      "sha256": "98be4d371340564f16923cca69470149683e6a6e469202990756358efa9ad8a4"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-030-20261025T223451Z/snapshot.json",
+      "archived_path": "snapshots/poll-030-20261025T223451Z.json",
+      "bytes": 5104,
+      "sha256": "64e06cdb28521201611062676857735000dcb7aa69c62c353cb7864e65c9cfdd"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-031-20261025T223551Z/snapshot.json",
+      "archived_path": "snapshots/poll-031-20261025T223551Z.json",
+      "bytes": 5104,
+      "sha256": "5021b4d5005f9711cc6aafc22047b1fba5b319e0eb52302c0c80f4c5c678b7bc"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-032-20261025T223651Z/snapshot.json",
+      "archived_path": "snapshots/poll-032-20261025T223651Z.json",
+      "bytes": 5104,
+      "sha256": "bc99a9700b1a593685ebfcf9bfd6ceb9c1068971749bc968eff66f98de5491d8"
+    },
+    {
+      "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/github-readonly/candidate-6a3b-v6/poll-033-20261025T223751Z/snapshot.json",
+      "archived_path": "snapshots/poll-033-20261025T223751Z.json",
+      "bytes": 5652,
+      "sha256": "5350d5be815588a6625ca89743ef05ffb1752cfd758828d36e97c12ada3576c0"
+    },
+    {
+      "original_path": "git:6a3b8e61ba0699cc316fd92a247cc9c917a7521d:.github/workflows/checks.yml",
+      "archived_path": "workflow-at-6a3.yml",
+      "bytes": 21062,
+      "sha256": "31faffef9d815ed7e08f43994640a9f5416da9d18c0a91dee0764e33a8b7ff04"
+    }
+  ]
+}

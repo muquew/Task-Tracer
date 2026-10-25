@@ -1,0 +1,75 @@
+{
+  "fetched_at_utc": "2026-10-25T22:22:51.153094+00:00",
+  "run_url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977",
+  "expected_commit": "6a3b8e61ba0699cc316fd92a247cc9c917a7521d",
+  "poll": 18,
+  "public_get_only": true,
+  "api_or_authenticated_log_access": false,
+  "branch_scope": "codex/final-stable-delivery-20261026; standard full workflow, not main deployment",
+  "status": "In progress",
+  "jobs": [
+    {
+      "name": "compatibility (chromium)",
+      "job_id": "121304917801",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304917801",
+      "http_status": 200,
+      "html_sha256": "b69e4b9b690b9f49e84d83c77f08d32a60d1cd73af46753fd7b41a3bbe3242cf",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "13m 25s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304917801-visible.txt"
+    },
+    {
+      "name": "compatibility (firefox)",
+      "job_id": "121304917923",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304917923",
+      "http_status": 200,
+      "html_sha256": "a366075f8d748b7df0bab74b3054ed2ac5b21a7f49f3e0613e9b9bfa329c59c9",
+      "public_ui_conclusion": "succeeded",
+      "displayed_duration": "11m 17s",
+      "public_annotations": "1 warning and 1 notice\nComplete job\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:\nhttps://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\nShow less\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see\nhttps://github.com/actions/runner-images/issues/14748\n\"\nShow more\nShow less",
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304917923-visible.txt"
+    },
+    {
+      "name": "checks",
+      "job_id": "121304918045",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304918045",
+      "http_status": 200,
+      "html_sha256": "82a84438af3eb5f3dabf26b64143b501318836c3cd3600e5953822309c7ba758",
+      "public_ui_conclusion": "started_without_terminal_conclusion",
+      "displayed_duration": null,
+      "public_annotations": null,
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304918045-visible.txt"
+    },
+    {
+      "name": "deployed_site",
+      "job_id": "121304919023",
+      "url": "https://github.com/muquew/Task-Tracer/actions/runs/40238448977/job/121304919023",
+      "http_status": 200,
+      "html_sha256": "242c1f8918667bb656eca1a456d499c03153bd454599c4c8067b23f6bfd9b47b",
+      "public_ui_conclusion": "skipped",
+      "displayed_duration": null,
+      "public_annotations": null,
+      "safe_failed_program_annotations": [],
+      "full_logs_accessible_anonymously": false,
+      "evidence_text": "job-121304919023-visible.txt"
+    },
+    {
+      "name": "compatibility (webkit)",
+      "public_ui_conclusion": "not_individually_visible",
+      "limit": "Public collapsed matrix has no individual link yet; no terminal conclusion inferred."
+    }
+  ],
+  "http_status": 200,
+  "html_sha256": "b0b61d011185ac455a45384279e85f1596d359fc9147a8a322fc025aea903df0",
+  "displayed_total_duration": "–",
+  "public_matrix_completion": "2/3",
+  "new_failed_program_signals": [],
+  "new_failed_jobs": []
+}

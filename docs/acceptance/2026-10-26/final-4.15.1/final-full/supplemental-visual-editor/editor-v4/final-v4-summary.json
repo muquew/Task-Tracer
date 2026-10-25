@@ -1,0 +1,268 @@
+{
+  "created_at": "2026-10-25T20:03:20.816492+00:00",
+  "passed": true,
+  "cases": 20,
+  "sequential": true,
+  "head_observed_after": "2771d561181a4f10afeeacdf2e476dcbb754a49b",
+  "root_declared_fixed_native_head": "2771d561181a4f10afeeacdf2e476dcbb754a49b",
+  "index_sha256": "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+  "source_sha256": "574778e1e805a7a70fcc808d158461140cb1bf7c9264ac08f163e3df63c18e92",
+  "verification_sha256": "dfbbc08ec28deb0e028f8318b592f6cc1b9cb5c3270f99ba1cbc19866d013df7",
+  "source_files": 23,
+  "verification_files": 84,
+  "both_full_input_identities_stable": true,
+  "original_cli_and_default_widths": true,
+  "repository_edits_by_this_task": false,
+  "runs": {
+    "firefox": {
+      "directory": "firefox-e9b0e865-5eb7-47e3-8080-785c4c545d8b",
+      "summary": "firefox-e9b0e865-5eb7-47e3-8080-785c4c545d8b/summary.json",
+      "native_report": "firefox-e9b0e865-5eb7-47e3-8080-785c4c545d8b/native/20261025T195349Z-firefox-04327e97/results.json",
+      "browser_version": "153.0",
+      "native_cases": [
+        {
+          "width": 1280,
+          "case": "date-roundtrip",
+          "status": "passed"
+        },
+        {
+          "width": 1280,
+          "case": "empty-weekdays",
+          "status": "passed"
+        },
+        {
+          "width": 1280,
+          "case": "subtask-delete",
+          "status": "passed"
+        },
+        {
+          "width": 1280,
+          "case": "missing-date",
+          "status": "passed"
+        },
+        {
+          "width": 1280,
+          "case": "empty-custom-interval",
+          "status": "passed"
+        },
+        {
+          "width": 390,
+          "case": "date-roundtrip",
+          "status": "passed"
+        },
+        {
+          "width": 390,
+          "case": "empty-weekdays",
+          "status": "passed"
+        },
+        {
+          "width": 390,
+          "case": "subtask-delete",
+          "status": "passed"
+        },
+        {
+          "width": 390,
+          "case": "missing-date",
+          "status": "passed"
+        },
+        {
+          "width": 390,
+          "case": "empty-custom-interval",
+          "status": "passed"
+        }
+      ],
+      "passed": true,
+      "duration_seconds": 267.74,
+      "normal_csp": true,
+      "normal_motion": true,
+      "original_default_widths": [
+        1280,
+        390
+      ],
+      "stdout_sha256": "b3e2a220a921cfb1f0f7921268fe688a5abd3b8be976298d6e779e1a9117a6e0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0,
+      "events": [
+        {
+          "path": "native/20261025T195349Z-firefox-04327e97/1280-date-roundtrip/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195349Z-firefox-04327e97/1280-empty-custom-interval/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195349Z-firefox-04327e97/1280-empty-weekdays/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195349Z-firefox-04327e97/1280-missing-date/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195349Z-firefox-04327e97/1280-subtask-delete/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195349Z-firefox-04327e97/390-date-roundtrip/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195349Z-firefox-04327e97/390-empty-custom-interval/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195349Z-firefox-04327e97/390-empty-weekdays/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195349Z-firefox-04327e97/390-missing-date/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195349Z-firefox-04327e97/390-subtask-delete/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        }
+      ],
+      "webkit_dependency_environment": null
+    },
+    "webkit": {
+      "directory": "webkit-94dcf394-be7a-45f1-bc34-3d8b7923ba59",
+      "summary": "webkit-94dcf394-be7a-45f1-bc34-3d8b7923ba59/summary.json",
+      "native_report": "webkit-94dcf394-be7a-45f1-bc34-3d8b7923ba59/native/20261025T195831Z-webkit-ab4d7679/results.json",
+      "browser_version": "26.5",
+      "native_cases": [
+        {
+          "width": 1280,
+          "case": "date-roundtrip",
+          "status": "passed"
+        },
+        {
+          "width": 1280,
+          "case": "empty-weekdays",
+          "status": "passed"
+        },
+        {
+          "width": 1280,
+          "case": "subtask-delete",
+          "status": "passed"
+        },
+        {
+          "width": 1280,
+          "case": "missing-date",
+          "status": "passed"
+        },
+        {
+          "width": 1280,
+          "case": "empty-custom-interval",
+          "status": "passed"
+        },
+        {
+          "width": 390,
+          "case": "date-roundtrip",
+          "status": "passed"
+        },
+        {
+          "width": 390,
+          "case": "empty-weekdays",
+          "status": "passed"
+        },
+        {
+          "width": 390,
+          "case": "subtask-delete",
+          "status": "passed"
+        },
+        {
+          "width": 390,
+          "case": "missing-date",
+          "status": "passed"
+        },
+        {
+          "width": 390,
+          "case": "empty-custom-interval",
+          "status": "passed"
+        }
+      ],
+      "passed": true,
+      "duration_seconds": 253.513,
+      "normal_csp": true,
+      "normal_motion": true,
+      "original_default_widths": [
+        1280,
+        390
+      ],
+      "stdout_sha256": "18281e2bf83f2ace770c6f3db94dc24edf771d65a77826e27f86df8a0aa72a28",
+      "stderr_sha256": "ea0146f916162bae0d0a30a859241352eae0019560e9d340e40a04fa2388c0d9",
+      "stderr_bytes": 118,
+      "events": [
+        {
+          "path": "native/20261025T195831Z-webkit-ab4d7679/1280-date-roundtrip/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195831Z-webkit-ab4d7679/1280-empty-custom-interval/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195831Z-webkit-ab4d7679/1280-empty-weekdays/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195831Z-webkit-ab4d7679/1280-missing-date/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195831Z-webkit-ab4d7679/1280-subtask-delete/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195831Z-webkit-ab4d7679/390-date-roundtrip/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195831Z-webkit-ab4d7679/390-empty-custom-interval/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195831Z-webkit-ab4d7679/390-empty-weekdays/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195831Z-webkit-ab4d7679/390-missing-date/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        },
+        {
+          "path": "native/20261025T195831Z-webkit-ab4d7679/390-subtask-delete/browser-events.json",
+          "page_errors": [],
+          "console_error_count": 0
+        }
+      ],
+      "webkit_dependency_environment": {
+        "LD_LIBRARY_PATH": "/workspace/.cache/browser-libs/root/usr/lib/x86_64-linux-gnu",
+        "PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS": "1"
+      }
+    }
+  },
+  "prior_interrupted_run": "firefox-eea52eba-8aec-4d86-bd32-8ac49f5deaad",
+  "prior_interruption_counted_as_pass": false,
+  "theme_review": "../final-theme-review/20261025T192938Z-6f46f346-b8b5-4b2f-a20e-d4090ccd619a/README.md"
+}

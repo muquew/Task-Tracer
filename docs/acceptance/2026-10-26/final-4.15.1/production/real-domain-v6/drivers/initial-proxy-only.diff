@@ -1,0 +1,77 @@
+--- production-final-v5/driver.py
++++ production-final-v6-env/driver.py
+@@ -13,7 +13,7 @@
+ import sys
+ import time
+ import traceback
+-from urllib.parse import urljoin, urlsplit
++from urllib.parse import urljoin, urlsplit, unquote
+ import uuid
+ from zoneinfo import ZoneInfo
+ 
+@@ -275,10 +275,40 @@
+             'physical_device_or_offline_lifecycle_claim': False}
+ 
+ 
++
++def production_transport():
++    """Use the existing managed-session HTTPS proxy; retain ordinary certificate verification."""
++    proxy_url = os.environ.get('HTTPS_PROXY') or os.environ.get('https_proxy')
++    assert proxy_url, 'Production acceptance requires the inherited managed-session HTTPS proxy'
++    parsed = urlsplit(proxy_url)
++    assert parsed.scheme in ('http', 'https') and parsed.hostname and not parsed.query and not parsed.fragment, 'Unsupported inherited proxy configuration'
++    host = f'[{parsed.hostname}]' if ':' in parsed.hostname else parsed.hostname
++    proxy = {'server': f'{parsed.scheme}://{host}' + (f':{parsed.port}' if parsed.port else '')}
++    if parsed.username is not None:
++        proxy['username'] = unquote(parsed.username)
++    if parsed.password is not None:
++        proxy['password'] = unquote(parsed.password)
++    bypass = os.environ.get('NO_PROXY') or os.environ.get('no_proxy')
++    if bypass:
++        proxy['bypass'] = bypass
++    ca = Path(os.environ.get('NODE_EXTRA_CA_CERTS', ''))
++    assert ca.is_file(), 'Production API requests require the configured managed-session public CA bundle'
++    assert os.environ.get('NODE_TLS_REJECT_UNAUTHORIZED') != '0' and os.environ.get('PYTHONHTTPSVERIFY') != '0', 'Normal TLS verification is required'
++    metadata = {'inherited_https_proxy_configured': True, 'proxy_scheme': parsed.scheme,
++                'proxy_hostname': parsed.hostname, 'proxy_port': parsed.port,
++                'proxy_auth_present': parsed.username is not None or parsed.password is not None,
++                'proxy_bypass_configured': bool(bypass), 'configured_node_ca_present': True,
++                'configured_node_ca_sha256': digest(ca.read_bytes()),
++                'ignore_https_errors': False, 'node_tls_reject_unauthorized_disabled': False,
++                'scope': 'Existing managed-session proxy and configured public trust anchor only; no policy, DNS route, or certificate verification bypass.'}
++    return proxy, metadata
++
++
+ def run(args):
+     before = identities()
+     assert before['runtime']['index.html'] == EXPECTED_INDEX, 'Checkout is not the fixed final runtime'
+     mode = args.mode
++    proxy, transport_metadata = production_transport() if mode == 'production' else (None, {'scope': 'Local rehearsal; inherited browser transport unchanged.'})
+     if mode == 'production':
+         assert args.url, '--url is required for explicit production mode'
+         parsed = urlsplit(args.url)
+@@ -299,6 +329,7 @@
+     (frozen / 'driver.py').write_bytes(Path(__file__).read_bytes())
+     report = {'mode': mode, 'started_at': datetime.now(timezone.utc).isoformat(),
+               'output': str(out), 'argv': sys.argv, 'source_before': before,
++              'production_transport': transport_metadata,
+               'normal_motion': True, 'normal_csp': True, 'ignore_https_errors': False,
+               'bypass_csp': False, 'fresh_isolated_context_per_combo': True,
+               'runtime_scope': 'Five runtime inputs and actual transitive helpers/driver; promotional PNG deliberately not locked.',
+@@ -312,12 +343,15 @@
+                 browser = None
+                 try:
+                     options = browser_launch_options() if engine == 'chromium' else {'headless':True}
++                    if mode == 'production':
++                        options['proxy'] = proxy
+                     browser = getattr(playwright, engine).launch(**options)
+                     for width,height in ((1280,900),(390,844)):
+                         folder = out / f'{engine}-{width}'
+                         folder.mkdir()
+                         start = time.monotonic()
+-                        context = browser.new_context(viewport={'width':width,'height':height},locale='zh-CN',timezone_id='Asia/Shanghai',
++                        context_options = {'proxy': proxy} if mode == 'production' else {}
++                        context = browser.new_context(**context_options,viewport={'width':width,'height':height},locale='zh-CN',timezone_id='Asia/Shanghai',
+                             reduced_motion='no-preference',color_scheme='light',accept_downloads=True,ignore_https_errors=False)
+                         page = context.new_page()
+                         page.set_default_timeout(10000)

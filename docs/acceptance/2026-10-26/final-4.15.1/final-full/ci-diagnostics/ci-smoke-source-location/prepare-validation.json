@@ -1,0 +1,9 @@
+{
+  "workflow_parses": true,
+  "embedded_python_compiles": true,
+  "shell_syntax_passes": true,
+  "prior_workflow_exact_when_removing_only_new_step": true,
+  "real_baseline_without_smoke_failure_skips_without_browser_or_output": true,
+  "gate_render_exit_code": 0,
+  "no_source_tool_or_assertion_changes": true
+}

@@ -1,0 +1,21 @@
+{
+  "derived_from": "copy-execution-receipt.json.old_package_before/old_package_after",
+  "before": {
+    "path": "/workspace/Task-Tracer/dist/task-tracer-4.15.0.zip",
+    "bytes": 990442,
+    "sha256": "02cc67c9ac2a454b9ca248c3a122f92060c674677914dfab567cd7de5f6fbca3",
+    "files": 24,
+    "manifest_commit": "93c990012deaf8556517cbc5995dfebfd2a2a952",
+    "manifest_dirty": false
+  },
+  "after": {
+    "path": "/workspace/Task-Tracer/dist/task-tracer-4.15.0.zip",
+    "bytes": 990442,
+    "sha256": "02cc67c9ac2a454b9ca248c3a122f92060c674677914dfab567cd7de5f6fbca3",
+    "files": 24,
+    "manifest_commit": "93c990012deaf8556517cbc5995dfebfd2a2a952",
+    "manifest_dirty": false
+  },
+  "unchanged_in_original_copy_receipt": true,
+  "new_archive_or_package_hashing_run": false
+}

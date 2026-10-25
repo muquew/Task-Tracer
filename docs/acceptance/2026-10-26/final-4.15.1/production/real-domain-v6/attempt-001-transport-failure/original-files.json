@@ -1,0 +1,296 @@
+[
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/before.json",
+    "sha256": "e0100a07afa9428ce54fd2a369bc213d827b18bc8246840b22230346a790d614",
+    "bytes": 1289,
+    "archived": true,
+    "archive_path": "native/before.json"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/chromium-1280/document-initial.json",
+    "sha256": "f35ffb4fa28095c9781b95719d619609618a7455afe318b8fa53d992ffbb68d1",
+    "bytes": 1905,
+    "archived": true,
+    "archive_path": "native/chromium-1280/document-initial.json"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/chromium-1280/failure-dom.html",
+    "sha256": "306b10c9549af651ffbef3bc8da51843e044b901a9ee0e8dbf645cdb22d0ff1b",
+    "bytes": 1007962,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/chromium-1280/failure.png",
+    "sha256": "d04062dcaaa03a98ef7db77c9f7b7d3c8adbcb857184b3671b4747d7ee908150",
+    "bytes": 92013,
+    "archived": true,
+    "archive_path": "native/chromium-1280/failure.png"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/chromium-1280/report.json",
+    "sha256": "ecd8d8b97a63cdb26815103fb824acd6ccce29f1cc24e924b0c223495830a1c2",
+    "bytes": 5656,
+    "archived": true,
+    "archive_path": "native/chromium-1280/report.json"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/chromium-390/document-initial.json",
+    "sha256": "8cdfcfe5bf23c4769267277b134a8773ceada475dad29cc76afb5b620c8db45e",
+    "bytes": 1904,
+    "archived": true,
+    "archive_path": "native/chromium-390/document-initial.json"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/chromium-390/failure-dom.html",
+    "sha256": "135a8c77199e0962b6fbd561c75652a0810a701b7018168c11ec859d6f5ea1cf",
+    "bytes": 1007968,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/chromium-390/failure.png",
+    "sha256": "b8640a080897efa2d3d7b43cb0c6f14c4fb5fdfa576b65d58ef530b7ea539dfc",
+    "bytes": 40603,
+    "archived": true,
+    "archive_path": "native/chromium-390/failure.png"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/chromium-390/report.json",
+    "sha256": "033db835f4ee20b9927b3174561089d503bb925a2f25981bd38e950d136c6610",
+    "bytes": 5655,
+    "archived": true,
+    "archive_path": "native/chromium-390/report.json"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/firefox-1280/failure-dom.html",
+    "sha256": "3ea01716253fb8342d78d1fffed42fe57725a013d3eeb70133b519dfb0ef85cd",
+    "bytes": 836,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/firefox-1280/failure.png",
+    "sha256": "3cf2d1f6f351aeb5124c7d42941d3a11a34f74ac89876c6f0b594e81884a22b2",
+    "bytes": 45656,
+    "archived": true,
+    "archive_path": "native/firefox-1280/failure.png"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/firefox-1280/report.json",
+    "sha256": "459dba000aceba0cff0e98004367102e7395125242156ab1303379f578650a14",
+    "bytes": 5032,
+    "archived": true,
+    "archive_path": "native/firefox-1280/report.json"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/firefox-390/failure-dom.html",
+    "sha256": "3ea01716253fb8342d78d1fffed42fe57725a013d3eeb70133b519dfb0ef85cd",
+    "bytes": 836,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/firefox-390/failure.png",
+    "sha256": "3c768c07190b1891548371c17c9ed8c06ca510dde245195a933100341a257d27",
+    "bytes": 40337,
+    "archived": true,
+    "archive_path": "native/firefox-390/failure.png"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/firefox-390/report.json",
+    "sha256": "5b635e2f146db651309cdd2e9b9cb38a59f2a97a581479b0e347019224451b51",
+    "bytes": 5031,
+    "archived": true,
+    "archive_path": "native/firefox-390/report.json"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/frozen-inputs/driver.py",
+    "sha256": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91",
+    "bytes": 20920,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/frozen-inputs/index.html",
+    "sha256": "89b5081b6fe1610c54cd5bab5f87196aad6ff04ecb02a1f30d8bcf0b67d0bc30",
+    "bytes": 985633,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/frozen-inputs/resources/en.json",
+    "sha256": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+    "bytes": 57285,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/frozen-inputs/resources/zh-CN.json",
+    "sha256": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+    "bytes": 55747,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/frozen-inputs/sw.js",
+    "sha256": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+    "bytes": 8305,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/frozen-inputs/tools/performance_playwright.py",
+    "sha256": "f51eb339856bbacb4922e9b275a509ecedc111efba7d98de1d8194d89c2487a3",
+    "bytes": 13068,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/frozen-inputs/tools/security_playwright.py",
+    "sha256": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+    "bytes": 2979,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/frozen-inputs/tools/security_policy.py",
+    "sha256": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+    "bytes": 2171,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/frozen-inputs/tools/smoke_playwright.py",
+    "sha256": "5d583394bcb8ff1d5db9a352ac7fa374c01e86b49b29a39280191d08ad925cd5",
+    "bytes": 191313,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/frozen-inputs/tools/translation_fallback.py",
+    "sha256": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+    "bytes": 6383,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/frozen-inputs/tools/validate_static.py",
+    "sha256": "a3747fd2cc491d6be33ba2d13bb67a1da802ebed666ba22f52dd2c77bdf56bc3",
+    "bytes": 54341,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/frozen-inputs/vercel.json",
+    "sha256": "d3f4f27f5221360170de111e895bf9c62f19b86cde9859f4a4c9d61ae8318f15",
+    "bytes": 1194,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/report.json",
+    "sha256": "83bdeab2f07682a62df28de6565d6e91a296ee7c4300c37add53f45ff593616c",
+    "bytes": 37578,
+    "archived": true,
+    "archive_path": "native/report.json"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/webkit-1280/document-initial.json",
+    "sha256": "b62bf9d933ccd9f4a9d6c93df5d62f6c313c84a240f0b05b8e951affba2e46fe",
+    "bytes": 1912,
+    "archived": true,
+    "archive_path": "native/webkit-1280/document-initial.json"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/webkit-1280/failure-dom.html",
+    "sha256": "848ae55d4a03c5a01adc6a1d6751037901991321aa50b5eb1ed4799185cab4fe",
+    "bytes": 1007936,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/webkit-1280/failure.png",
+    "sha256": "a5f408722aa98961989fe88cb7a71258d5b5c4f68f95115ffa789956dcd2a3ca",
+    "bytes": 100674,
+    "archived": true,
+    "archive_path": "native/webkit-1280/failure.png"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/webkit-1280/report.json",
+    "sha256": "71ace1465d6c5f8b942f81d4cbd7c282575f85774432ff3422e4bb55ed8224b8",
+    "bytes": 5652,
+    "archived": true,
+    "archive_path": "native/webkit-1280/report.json"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/webkit-390/document-initial.json",
+    "sha256": "b42b7cfa162176549762b33a0c1809557769c086ca0da690633677fcb60cbf24",
+    "bytes": 1912,
+    "archived": true,
+    "archive_path": "native/webkit-390/document-initial.json"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/webkit-390/failure-dom.html",
+    "sha256": "c22cb3aea03cf3547bddb6b626416063bd0a49be8914619394232fbbc87d7e62",
+    "bytes": 1007942,
+    "archived": false,
+    "omission_reason": "Repeated failure DOM / frozen runtime-helper source omitted; exact originals remain external with hashes. No business task action reached."
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/webkit-390/failure.png",
+    "sha256": "0965a46ef005178dd59b9b7068b1647d4bf1710b30f6d1b1f4c97f45b2815299",
+    "bytes": 48528,
+    "archived": true,
+    "archive_path": "native/webkit-390/failure.png"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-20261025T224139Z-aba38fe224/webkit-390/report.json",
+    "sha256": "ce2fb639118f1240822cfed0a8d4dd26cf5ec154c6898a574cd92519e865af29",
+    "bytes": 5652,
+    "archived": true,
+    "archive_path": "native/webkit-390/report.json"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-launch-20261025T224139Z-b93d626f/receipt.json",
+    "sha256": "71fcb0214ec8a6a447db0263952c58f66c96192172c68d06bdf15492041155e8",
+    "bytes": 3267,
+    "archived": true,
+    "archive_path": "launch/receipt.json"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-launch-20261025T224139Z-b93d626f/started.json",
+    "sha256": "6ef7523d7f9dbb522d7206cf93ff958d0342054fc1691738194dcdd544b20fdb",
+    "bytes": 2229,
+    "archived": true,
+    "archive_path": "launch/started.json"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-launch-20261025T224139Z-b93d626f/stderr.log",
+    "sha256": "311d758247ad5a7f633b7b5447fd008f3c664bd4979680875c364a3f29f3e6b2",
+    "bytes": 236,
+    "archived": true,
+    "archive_path": "launch/stderr.log"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/production-launch-20261025T224139Z-b93d626f/stdout.log",
+    "sha256": "4aec40116aab07132cb6673f256c72590d8a45dc4cc2b9f6549f237f573dcdeb",
+    "bytes": 15516,
+    "archived": true,
+    "archive_path": "launch/stdout.log"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/driver.py",
+    "sha256": "b866dd25c6c27efe0f1ed92d8ac46d54bfa12de605baa4bc319696088376ca91",
+    "bytes": 20920,
+    "archived": true,
+    "archive_path": "original-driver-v5.py"
+  },
+  {
+    "original_path": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/production-final-v5/launch_production.py",
+    "sha256": "12d387395239f321108fed947d12d1689fd4ad73f4b63a0a4e8af2e7fb9f0954",
+    "bytes": 4340,
+    "archived": true,
+    "archive_path": "original-launch-production.py"
+  }
+]

@@ -1,0 +1,94 @@
+{
+  "owned_files": [
+    "CONTRIBUTING.md",
+    "docs/browser-compatibility.md",
+    "docs/manual-device-checklist.md",
+    "docs/product-roadmap.md",
+    "docs/commercial-plan.md"
+  ],
+  "after_sha256": {
+    "CONTRIBUTING.md": "e61655b49182c2d65436dd58f976117ea1669709dcb9fbcc6657eebb2594f933",
+    "docs/browser-compatibility.md": "93c2c008ffe7b734ce7c0ba8b80c1d6e0d5b24aa1dc93c7505d8928a1c90883d",
+    "docs/manual-device-checklist.md": "efb9f2272c355db53656e92cdea45621a1565a6ab0e24281cd7adc3aa96d8d22",
+    "docs/product-roadmap.md": "daa383507163b125c4c22048a1129dd84439e72527702653969d6a4187590f3a",
+    "docs/commercial-plan.md": "56e3e11578370fe2ba3a89db39964d4bdbe48677fbd0857f888933a0c130125c"
+  },
+  "relative_file_links_checked": 57,
+  "missing_file_links": [
+    {
+      "file": "CONTRIBUTING.md",
+      "target": "docs/stable-delivery.md"
+    },
+    {
+      "file": "CONTRIBUTING.md",
+      "target": "docs/stable-delivery.md"
+    },
+    {
+      "file": "docs/browser-compatibility.md",
+      "target": "stable-delivery.md"
+    },
+    {
+      "file": "docs/manual-device-checklist.md",
+      "target": "stable-delivery.md"
+    },
+    {
+      "file": "docs/product-roadmap.md",
+      "target": "stable-delivery.md"
+    },
+    {
+      "file": "docs/commercial-plan.md",
+      "target": "stable-delivery.md"
+    },
+    {
+      "file": "docs/commercial-plan.md",
+      "target": "stable-delivery.md"
+    }
+  ],
+  "expected_parent_owned_handoff_links": [
+    {
+      "file": "CONTRIBUTING.md",
+      "target": "docs/stable-delivery.md"
+    },
+    {
+      "file": "CONTRIBUTING.md",
+      "target": "docs/stable-delivery.md"
+    },
+    {
+      "file": "docs/browser-compatibility.md",
+      "target": "stable-delivery.md"
+    },
+    {
+      "file": "docs/manual-device-checklist.md",
+      "target": "stable-delivery.md"
+    },
+    {
+      "file": "docs/product-roadmap.md",
+      "target": "stable-delivery.md"
+    },
+    {
+      "file": "docs/commercial-plan.md",
+      "target": "stable-delivery.md"
+    },
+    {
+      "file": "docs/commercial-plan.md",
+      "target": "stable-delivery.md"
+    }
+  ],
+  "registry": {
+    "static": 7,
+    "full": 73,
+    "matrix": 33,
+    "payload": 23,
+    "archive_with_manifest": 24
+  },
+  "claims": "Status/version centralized at parent-owned stable-delivery; no 4.15.1 publication or final pass claim.",
+  "source_or_tool_edits": false,
+  "commit_or_push": false,
+  "primary_inbound_anchors": [
+    {
+      "from": "SECURITY.md:29",
+      "to": "docs/product-roadmap.md#release-gates",
+      "valid": true
+    }
+  ]
+}

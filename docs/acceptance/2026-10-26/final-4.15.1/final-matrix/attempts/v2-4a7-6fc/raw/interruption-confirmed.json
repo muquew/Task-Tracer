@@ -1,0 +1,37 @@
+{
+  "at": "2026-10-25T19:34:55.304503+00:00",
+  "stage": "withdrawn4a7_6fc_v2_attempt",
+  "reason": "Root revoked verification freeze for exact quick-add wrapper focus helper adaptation; no runtime change requested.",
+  "engines": {
+    "chromium": {
+      "status": "interrupted",
+      "completed": false,
+      "passed": false,
+      "completed_checks": 4,
+      "source_unchanged": true,
+      "verification_unchanged": true,
+      "worker_group_alive": false,
+      "report_sha256": "211cc253ea48b6f8acb53f24e8739f8123fedde4b8dbd552fced02883224f361"
+    },
+    "firefox": {
+      "status": "interrupted",
+      "completed": false,
+      "passed": false,
+      "completed_checks": 2,
+      "source_unchanged": true,
+      "verification_unchanged": true,
+      "worker_group_alive": false,
+      "report_sha256": "ad1cb2590a214cae85daa3c5599036383af0035a8252295d8218dd2bfa87f45d"
+    },
+    "webkit": {
+      "status": "interrupted",
+      "completed": false,
+      "passed": false,
+      "completed_checks": 2,
+      "source_unchanged": true,
+      "verification_unchanged": true,
+      "worker_group_alive": false,
+      "report_sha256": "bc1fe22a0e7dc09d54569ac19f53d492c1440266b05c897880ca4077d4045389"
+    }
+  }
+}

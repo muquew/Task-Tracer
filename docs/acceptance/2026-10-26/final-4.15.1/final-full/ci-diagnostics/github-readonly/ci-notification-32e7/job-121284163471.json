@@ -1,0 +1,9 @@
+{
+  "fetched_at_utc": "2026-10-25T20:39:48.042261+00:00",
+  "job_id": "121284163471",
+  "url": "https://github.com/muquew/Task-Tracer/actions/runs/40231549681/job/121284163471",
+  "http_status": 200,
+  "html_sha256": "c515e3b0cc195d9554507e30fa309d874e42fe517af8c579c28e9f795ec5236c",
+  "public_excerpt": "Release checks\nci: compare native notification capabilities across Chromium modes\n#27\nSign in to view logs\nSign in to view logs\ndeployed_site\nci: compare native notification capabilities across Chromium modes\nci: compare native notification capabilities across Chromium modes\n#27\nUh oh!\nThere was an error while loading.\nPlease reload this page\n.\nJob log options\nDownload log archive\nThis job was skipped\nLoading\nRe-running jobs...\nYou can’t perform that action at this time.",
+  "evidence_text": "job-121284163471-visible.txt"
+}

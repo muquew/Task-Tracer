@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python",
+    "tools/quick_add_date_playwright.py",
+    "--browser",
+    "chromium",
+    "--case",
+    "all"
+  ],
+  "started_at": "2026-10-25T18:58:03.436002+00:00",
+  "finished_at": "2026-10-25T18:58:23.163424+00:00",
+  "duration_seconds": 19.727,
+  "exit_code": 1,
+  "original_cli": true,
+  "http_csp_scope": "Original local_server StaticHandler; no deployment CSP header added. Separate manual check uses normal deployment headers.",
+  "stdout": "stdout.log",
+  "stderr": "stderr.log"
+}

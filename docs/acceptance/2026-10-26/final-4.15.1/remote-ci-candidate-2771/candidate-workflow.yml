@@ -1,0 +1,98 @@
+name: Release checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      verify_site:
+        description: Also verify the already-deployed todo.muquew.com site against this commit
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install accessibility dependency
+        run: npm ci --ignore-scripts
+      - name: Install test dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Install pinned Chromium and system dependencies
+        run: python -m playwright install --with-deps chromium
+      - name: Validate static files, dates, and browser workflows
+        run: python tools/check.py --report dist/check-results.json
+      - name: Retain program outcomes even when a check fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: task-tracer-check-results
+          path: dist/check-results.json
+          if-no-files-found: warn
+      - name: Build verified static distribution
+        run: python tools/build_release.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: task-tracer-static
+          path: dist/
+          if-no-files-found: error
+
+  compatibility:
+    runs-on: ubuntu-latest
+    # Hosted WebKit exceeded 45 minutes; retain its complete workflow registry.
+    timeout-minutes: ${{ matrix.browser == 'webkit' && 90 || 45 }}
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: python -m pip install -r requirements-dev.txt
+      - name: Install target browser
+        run: python -m playwright install --with-deps ${{ matrix.browser }}
+      - name: Validate critical workflows on desktop and mobile layouts
+        run: python tools/browser_matrix.py --browser ${{ matrix.browser }} --keep-going --report dist/browser-matrix-${{ matrix.browser }}.json
+      - name: Retain browser scope, outcomes and original logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: task-tracer-browser-${{ matrix.browser }}
+          path: dist/
+          if-no-files-found: warn
+
+  deployed_site:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_site }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Optional verification after Vercel has deployed this commit
+        run: python tools/verify_deployment.py --url https://todo.muquew.com/

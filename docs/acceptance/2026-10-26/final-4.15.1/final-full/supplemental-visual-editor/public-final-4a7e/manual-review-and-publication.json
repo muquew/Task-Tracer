@@ -1,0 +1,46 @@
+{
+  "reviewed_at_utc": "2026-10-25T19:30:01.358736+00:00",
+  "version": "4.15.1",
+  "source_index_sha256": "4a7e54f7c02f1a6d39e7568a4dd55cdc0ce1407847655069b8c27eb1f15304f4",
+  "capture_driver_sha256": "330acf5344b0bb7b83763207ce1917d9d4a5fdd9cb45d235d8ae000f2398cce4",
+  "review_method": "Actually viewed each of the four original native browser screenshots, then copied bytes directly into the four authorized repository screenshot paths. No image edits.",
+  "normal_production_CSP": true,
+  "bypassCSP": false,
+  "motion": "no-preference; fonts.ready, finite animation.finished and RAF2",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "screenshots": [
+    {
+      "file": "task-list.png",
+      "sha256": "3926304fc880ba7d9bdd68ae172b7ad1e68e93a10c96d2a1b336d567ad6f406f",
+      "reviewed": true
+    },
+    {
+      "file": "task-list-en.png",
+      "sha256": "d9af58179a7cd128a5dd67e7f861035c59649e4af524f39f13f47dd6d15e6f01",
+      "reviewed": true
+    },
+    {
+      "file": "add-task.png",
+      "sha256": "b0f39872b039a10dfc74f3f8a70266e9d81c601c25abfdf1b12eab3dd4983f47",
+      "reviewed": true
+    },
+    {
+      "file": "add-task-en.png",
+      "sha256": "80653a10cfa1eabdb4ed43e39bd38fd0d681ff0ce5aecc8db8623cf9803eb92d",
+      "reviewed": true
+    }
+  ],
+  "findings": "Chinese and English lists and full editor visually accepted. Six tasks per independent context, one completed task and one today-plan task were created through actual controls. Native editor date2026-10-27 and time05:30PM are complete and match17:30 data. No toast, obstructing menus, clipped native date/time or horizontal visual overflow.",
+  "input_count": 107,
+  "actual_changed_files": [
+    "screenshots/add-task-en.png",
+    "screenshots/add-task.png",
+    "screenshots/task-list-en.png",
+    "screenshots/task-list.png"
+  ],
+  "other103_inputs_unchanged": true,
+  "all_browser_contexts_and_server_closed": true
+}

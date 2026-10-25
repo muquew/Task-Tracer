@@ -1,0 +1,36 @@
+32895:         this._executables.push({
+32896:           name: "chromium",
+32897:           browserName: "chromium",
+32898:           directory: chromium.dir,
+32899:           executablePath: () => chromiumExecutable,
+32900:           executablePathOrDie: (sdkLanguage) => executablePathOrDie("chromium", chromiumExecutable, chromium.installByDefault, sdkLanguage),
+32901:           installType: chromium.installByDefault ? "download-by-default" : "download-on-demand",
+32902:           _validateHostRequirements: (sdkLanguage) => this._validateHostRequirements(sdkLanguage, chromium.dir, ["chrome-linux"], [], ["chrome-win"]),
+32903:           downloadURLs: this._downloadURLs(chromium),
+32904:           title: chromium.title,
+32905:           revision: chromium.revision,
+32906:           browserVersion: chromium.browserVersion,
+32907:           _install: (force) => this._downloadExecutable(chromium, force, chromiumExecutable),
+32908:           _dependencyGroup: "chromium",
+32909:           _isHermeticInstallation: true
+32910:         });
+32911:         const chromiumHeadlessShell = descriptors.find((d) => d.name === "chromium-headless-shell");
+32912:         const chromiumHeadlessShellExecutable = findExecutablePath(chromiumHeadlessShell.dir, "chromium-headless-shell");
+32913:         this._executables.push({
+32914:           name: "chromium-headless-shell",
+32915:           browserName: "chromium",
+32916:           directory: chromiumHeadlessShell.dir,
+32917:           executablePath: () => chromiumHeadlessShellExecutable,
+32918:           executablePathOrDie: (sdkLanguage) => executablePathOrDie("chromium", chromiumHeadlessShellExecutable, chromiumHeadlessShell.installByDefault, sdkLanguage),
+32919:           installType: chromiumHeadlessShell.installByDefault ? "download-by-default" : "download-on-demand",
+32920:           _validateHostRequirements: (sdkLanguage) => this._validateHostRequirements(sdkLanguage, chromiumHeadlessShell.dir, ["chrome-linux"], [], ["chrome-win"]),
+32921:           downloadURLs: this._downloadURLs(chromiumHeadlessShell),
+32922:           title: chromiumHeadlessShell.title,
+32923:           revision: chromiumHeadlessShell.revision,
+32924:           browserVersion: chromiumHeadlessShell.browserVersion,
+32925:           _install: (force) => this._downloadExecutable(chromiumHeadlessShell, force, chromiumHeadlessShellExecutable),
+32926:           _dependencyGroup: "chromium",
+32927:           _isHermeticInstallation: true
+32928:         });
+32929:         const chromiumTipOfTreeHeadlessShell = descriptors.find((d) => d.name === "chromium-tip-of-tree-headless-shell");
+32930:         const chromiumTipOfTreeHeadlessShellExecutable = findExecutablePath(chromiumTipOfTreeHeadlessShell.dir, "chromium-tip-of-tree-headless-shell");

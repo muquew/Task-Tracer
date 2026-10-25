@@ -1,0 +1,9 @@
+Settings/navigation chromium: 154.0.8037.57; deployment CSP enforced
+1440px zh-CN: permanent labelled views, collapsed-tools access, settings/back/current-view, scoped state and draft/selection preservation, real backup, dialog focus, appearance and language passed
+1440px en: permanent labelled views, collapsed-tools access, settings/back/current-view, scoped state and draft/selection preservation, real backup, dialog focus, appearance and language passed
+1440px empty backup status: both language directions update the exact backup status through real appearance/data categories without task changes
+390px zh-CN: permanent labelled views, collapsed-tools access, settings/back/current-view, scoped state and draft/selection preservation, real backup, dialog focus, appearance and language passed
+390px en: permanent labelled views, collapsed-tools access, settings/back/current-view, scoped state and draft/selection preservation, real backup, dialog focus, appearance and language passed
+390px empty backup status: both language directions update the exact backup status through real appearance/data categories without task changes
+Unavailable storage: empty Add is disabled; retained raw capture can reopen for copying; settings/help/theme and real retry preserve data
+Language rollback: aborted config write from #languageSelect restores the canonical control and document language

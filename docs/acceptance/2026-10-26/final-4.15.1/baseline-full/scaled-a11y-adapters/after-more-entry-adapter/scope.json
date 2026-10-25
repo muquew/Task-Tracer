@@ -1,0 +1,7 @@
+{
+  "old_sha256": "1ca4e88ffb3a51efb54b1a8fcf6c90e44009b02859ca03dd7da6bb4546a4085c",
+  "new_sha256": "7d8d9f0829a3c36ec81bb0e23d5149c18c65a7963a0c96b64cd2c797cf5a9896",
+  "change": "Only calendar pagination day-entry locator: current more button is the real detail entry on both viewport classes; date-number is desktop add-entry and was an incorrect previous narrow adaptation",
+  "one_selector_reversal_exact_old": true,
+  "all_assertions_budgets_states_retained": true
+}

@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-25T20:51:22.751464+00:00",
+  "kind": "executor_copy_verification_assertion_correction",
+  "original_copy_attempt_exit_code": 1,
+  "original_failed_assertion": "Expected all four copied PNG hashes to differ from their prior source hashes.",
+  "actual_changed_source_inputs": [
+    "screenshots/add-task.png",
+    "screenshots/task-list-en.png",
+    "screenshots/task-list.png"
+  ],
+  "explanation": "All four authorized PNG copy operations and per-copy exact hash checks completed before this overly strict assertion. add-task-en.png was actually freshly captured but byte-identical to its previous PNG; source provenance remains new89b. Correct verification requires all four destinations equal their external captured originals and no change outside the allowed four inputs.",
+  "four_exact_destination_matches_reverified": true,
+  "product_or_browser_failure": false,
+  "unexpected_input_changes": false
+}

@@ -1,0 +1,243 @@
+fix: stabilize search menus and browser validation · muquew/Task-Tracer@6da3c72 · GitHub
+Skip to content
+Navigation Menu
+Sign in
+Appearance settings
+Platform
+AI CODE CREATION
+GitHub Copilot
+Write better code with AI
+GitHub Copilot app
+Direct agents from issue to merge
+MCP Registry
+Integrate external tools
+DEVELOPER WORKFLOWS
+Actions
+Automate any workflow
+Codespaces
+Instant dev environments
+Issues
+Plan and track work
+Code Review
+Manage code changes
+Code Quality
+Enforce quality at merge
+APPLICATION SECURITY
+GitHub Advanced Security
+Find and fix vulnerabilities
+Code security
+Secure your code as you build
+Secret protection
+Stop leaks before they start
+EXPLORE
+Why GitHub
+Documentation
+Blog
+Changelog
+Marketplace
+View all features
+Solutions
+BY COMPANY SIZE
+Enterprises
+Small and medium teams
+Startups
+Nonprofits
+BY USE CASE
+App Modernization
+DevSecOps
+DevOps
+CI/CD
+View all use cases
+BY INDUSTRY
+Healthcare
+Financial services
+Manufacturing
+Government
+See all industries
+View all solutions
+Resources
+EXPLORE BY TOPIC
+AI
+Software Development
+DevOps
+Security
+View all topics
+EXPLORE BY TYPE
+Customer stories
+Events & webinars
+Ebooks & reports
+Business insights
+GitHub Skills
+SUPPORT & SERVICES
+Documentation
+Customer support
+Community forum
+Trust center
+Partners
+View all resources
+Open Source
+COMMUNITY
+GitHub Sponsors
+Fund open source developers
+PROGRAMS
+Security Lab
+Maintainer Community
+GitHub Stars
+Archive Program
+REPOSITORIES
+Topics
+Trending
+Collections
+Enterprise
+ENTERPRISE SOLUTIONS
+Enterprise platform
+AI-powered developer platform
+AVAILABLE ADD-ONS
+GitHub Advanced Security
+Enterprise-grade security features
+Copilot for Business
+Enterprise-grade AI features
+Premium Support
+Enterprise-grade 24/7 support
+Pricing
+Search
+/
+Sign in
+Sign up
+Appearance settings
+You signed in with another tab or window.
+Reload
+to refresh your session.
+You signed out in another tab or window.
+Reload
+to refresh your session.
+You switched accounts on another tab or window.
+Reload
+to refresh your session.
+Dismiss alert
+{{ message }}
+muquew
+Task-Tracer
+Repository navigation
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security and quality
+Insights
+More
+items
+Release checks
+fix: stabilize search menus and browser validation
+#30
+Sign in to view logs
+Sign in to view logs
+Summary
+fix: stabilize search menus and browser validation
+fix: stabilize search menus and browser validation
+#30
+Uh oh!
+There was an error while loading.
+Please reload this page
+.
+Triggered via push
+October 25, 2026 21:24
+muquew
+pushed
+6da3c72
+codex/final-stable-repeat-20261026
+Status
+Failure
+Total duration
+33m 12s
+Artifacts
+5
+checks.yml
+on: push
+checks
+33m 9s
+checks
+deployed_site
+deployed_site
+Matrix: compatibility
+3
+              jobs completed
+Show all jobs
+Oh hello! Nice to see you.
+Made with ❤️ by
+humans.txt
+Fit to window
+Zoom out
+Zoom in
+Annotations
+1 error, 4 warnings, and 4 notices
+compatibility (webkit)
+Process completed with exit code 1.
+Show more
+Show less
+compatibility (firefox)
+Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:
+https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Show more
+Show less
+compatibility (chromium)
+Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:
+https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Show more
+Show less
+compatibility (webkit)
+Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:
+https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Show more
+Show less
+checks
+Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see:
+https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Show more
+Show less
+compatibility (firefox)
+"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see
+https://github.com/actions/runner-images/issues/14748
+"
+Show more
+Show less
+compatibility (chromium)
+"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see
+https://github.com/actions/runner-images/issues/14748
+"
+Show more
+Show less
+compatibility (webkit)
+"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see
+https://github.com/actions/runner-images/issues/14748
+"
+Show more
+Show less
+checks
+"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see
+https://github.com/actions/runner-images/issues/14748
+"
+Show more
+Show less
+Artifacts
+Produced during runtime
+Name
+Size
+Digest
+task-tracer-browser-chromium
+29.4 KB
+sha256:8ea192f3b04cbb695a332f6c2ac9e6df1c12bcc470f15acbebed21212c582ba7
+task-tracer-browser-firefox
+29 KB
+sha256:95b0335020a26493abc296b6cfd856102f59cf6ee0de858396c305a9afdbc6b4
+task-tracer-browser-webkit
+30 KB
+sha256:52b60aa0ebd57d46c692950d654cb6de639238eda912952bc3738b07ae4bb379
+task-tracer-check-results
+6.85 KB
+sha256:19ba3833c3820bac09f75e778564c92d70ea1b23fedee0b942eb70b3f73c96c1
+task-tracer-static
+975 KB
+sha256:c23c7e35fe8eb01b3d482d2fa275802078dfc5dd8038e445fe13602d537cd3f7
+You can’t perform that action at this time.

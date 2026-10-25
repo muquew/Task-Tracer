@@ -1,0 +1,44 @@
+--- repeat_delete_playwright.py.before
++++ repeat_delete_playwright.py.after
+@@ -133,17 +133,14 @@
+         };
+     }""", old)
+     page.locator('#submitBtn').click()
+-    if mode == 'clear':
+-        expect(page.locator('#taskModal')).to_be_visible()
+-        expect(page.locator('#submitBtn')).to_be_enabled()
+-    else:
+-        expect(page.locator('#taskModal')).to_be_hidden()
+     expect(page.locator('#notification')).to_have_class(re.compile(r'\berror\b'))
+     assert page.evaluate('window.repeatDeleteAbortInjected === true'), 'Metadata write did not reach the abort injection'
+     assert stored(page) == before, 'Aborted deletion changed tasks, links, revision, history, config or backup metadata'
+-    if mode == 'clear':
++    if page.locator('#taskModal').is_visible():
++        expect(page.locator('#submitBtn')).to_be_enabled()
+         page.locator('#cancelBtn').click()
+         expect(page.locator('#taskModal')).to_be_hidden()
++    assert stored(page) == before, 'Closing the failed deletion changed persisted state'
+     page.reload()
+     wait_for_app_ready(page)
+     assert stored(page) == before, 'Aborted deletion changed persisted state after reload'
+@@ -171,11 +168,19 @@
+         };
+     })""", remote)
+     remote_state = stored(page)
+-    confirm_delete(page)
++    page.locator('#submitBtn').click()
+     language = page.locator('html').get_attribute('lang')
+     translations = json.loads((Path(__file__).resolve().parents[1] / 'resources' / f'{language}.json').read_text())
+     expect(page.locator('#notificationText')).to_have_text(translations['storage']['conflict'])
+     assert stored(page) == remote_state, 'Stale deletion changed newer remote tasks, links, revision or history'
++    if page.locator('#taskModal').is_visible():
++        expect(page.locator('#submitBtn')).to_be_enabled()
++        page.locator('#cancelBtn').click()
++        expect(page.locator('#taskModal')).to_be_hidden()
++    assert stored(page) == remote_state, 'Closing the stale deletion changed newer persisted state'
++    page.reload()
++    wait_for_app_ready(page)
++    assert stored(page) == remote_state, 'Stale deletion changed newer persisted state after reload'
+ 
+ 
+ def deleted_boundaries(page, url):

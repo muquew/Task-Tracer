@@ -1,0 +1,59 @@
+{
+  "status": "failed",
+  "runtime_asset_files": [
+    "index.html",
+    "resources/en.json",
+    "resources/zh-CN.json",
+    "sw.js",
+    "vercel.json"
+  ],
+  "transitive_local_helpers": [
+    "tools/performance_playwright.py",
+    "tools/project_scope_playwright.py",
+    "tools/quick_add_date_playwright.py",
+    "tools/saved_views_playwright.py",
+    "tools/security_playwright.py",
+    "tools/security_policy.py",
+    "tools/smoke_playwright.py",
+    "tools/views_portability_playwright.py"
+  ],
+  "inputs_unchanged": true,
+  "index_sha256": "d70ce830caa7b35b034b9d213721d884fc207f1fa871124cfcc22517fe9d34c9",
+  "programs": [
+    {
+      "command": [
+        "python",
+        "tools/quick_add_date_playwright.py",
+        "--browser",
+        "chromium",
+        "--case",
+        "all"
+      ],
+      "started_at": "2026-10-25T18:58:03.436002+00:00",
+      "finished_at": "2026-10-25T18:58:23.163424+00:00",
+      "duration_seconds": 19.727,
+      "exit_code": 1,
+      "original_cli": true,
+      "http_csp_scope": "Original local_server StaticHandler; no deployment CSP header added. Separate manual check uses normal deployment headers.",
+      "stdout": "stdout.log",
+      "stderr": "stderr.log"
+    },
+    {
+      "command": [
+        "python",
+        "tools/project_scope_playwright.py",
+        "--browser",
+        "chromium"
+      ],
+      "started_at": "2026-10-25T18:58:03.436487+00:00",
+      "finished_at": "2026-10-25T18:58:22.864423+00:00",
+      "duration_seconds": 19.428,
+      "exit_code": 1,
+      "original_cli": true,
+      "http_csp_scope": "Original local_server StaticHandler; no deployment CSP header added. Separate manual check uses normal deployment headers.",
+      "stdout": "stdout.log",
+      "stderr": "stderr.log"
+    }
+  ],
+  "output_directory": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/workspace-fixed/20261025T185803Z-13ba9b6a"
+}

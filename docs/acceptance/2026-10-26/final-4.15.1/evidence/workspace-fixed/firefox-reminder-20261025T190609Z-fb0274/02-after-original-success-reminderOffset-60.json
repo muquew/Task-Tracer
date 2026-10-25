@@ -1,0 +1,270 @@
+{
+  "viewport": {
+    "w": 1280,
+    "h": 720
+  },
+  "button": {
+    "x": 220,
+    "y": 579.2999877929688,
+    "w": 395,
+    "h": 42,
+    "display": "flex",
+    "visibility": "visible",
+    "overflow": "visible",
+    "visible": true,
+    "scrollTop": 0,
+    "scrollHeight": 40,
+    "clientHeight": 40,
+    "html": "<button type=\"button\" class=\"custom-select-btn\" id=\"reminderOffset-custom-button\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"reminderOffset-custom-button-list\" aria-label=\"提醒设置: 提前 1 小时\"><span class=\"custom-select-value\">提前 1 小时</span><svg class=\"icon icon-sm chevron\" aria-hidden=\"true\" focusable=\"false\"><use href=\"#icon-chevron-down\"></use></svg></button>"
+  },
+  "wrapper": {
+    "x": 220,
+    "y": 579.2999877929688,
+    "w": 395,
+    "h": 42,
+    "display": "block",
+    "visibility": "visible",
+    "overflow": "visible",
+    "visible": true,
+    "scrollTop": 0,
+    "scrollHeight": 42,
+    "clientHeight": 42,
+    "html": "<div class=\"custom-select\"><select id=\"reminderOffset\" class=\"search-input native-select-hidden\" data-custom-select-ready=\"true\" aria-hidden=\"true\" tabindex=\"-1\">\n                                <option value=\"-1\" data-i18n=\"form.reminder.options.none\">不提醒</option>\n                                <option value=\"0\" data-i18n=\"form.reminder.options.atTime\">截止时</option>\n                                <option value=\"15\" selected=\"\" data-i18n=\"form.reminder.options.min15\">提前 15 分钟</option>\n                                <option value=\"60\" data-i18n=\"form.reminder.options.hour1\">提前 1 小时</option>\n                                <option value=\"1440\" data-i18n=\"form.reminder.options.day1\">提前 1 天</option>\n                            <option value=\"7.5\" data-reminder-custom=\"form.reminder.options.customBefore\">提前 7.5 分钟（已保存值）</option></select><button type=\"button\" class=\"custom-select-btn\" id=\"reminderOffset-custom-button\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"reminderOff"
+  },
+  "menu": {
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0,
+    "display": "none",
+    "visibility": "visible",
+    "overflow": "auto",
+    "visible": false,
+    "scrollTop": 0,
+    "scrollHeight": 0,
+    "clientHeight": 0,
+    "html": "<div class=\"custom-select-menu\" id=\"reminderOffset-custom-button-list\" role=\"listbox\" aria-labelledby=\"reminderOffset-custom-button\" data-signature=\"-1:不提醒:false|0:截止时:false|15:提前 15 分钟:false|60:提前 1 小时:false|1440:提前 1 天:false|7.5:提前 7.5 分钟（已保存值）:false\"><button type=\"button\" class=\"custom-select-option\" id=\"reminderOffset-custom-button-list-option-0\" data-value=\"-1\" role=\"option\" aria-selected=\"false\"><span>不提醒</span><svg class=\"icon icon-sm\" aria-hidden=\"true\" focusable=\"false\"><use href=\"#icon-check\"></use></svg></button><button type=\"button\" class=\"custom-select-option\" id=\"reminderOffset-custom-button-list-option-1\" data-value=\"0\" role=\"option\" aria-selected=\"false\"><span>截止时</span><svg class=\"icon icon-sm\" aria-hidden=\"true\" focusable=\"false\"><use href=\"#icon-check\"></use></svg></button><button type=\"button\" class=\"custom-select-option\" id=\"reminderOffset-custom-button-list-option-2\" data-value=\"15\" role=\"option\" aria-selected=\"false\"><span>提前 15 分钟</span><svg class=\"icon icon-sm\""
+  },
+  "option": {
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0,
+    "display": "flex",
+    "visibility": "visible",
+    "overflow": "visible",
+    "visible": false,
+    "scrollTop": 0,
+    "scrollHeight": 0,
+    "clientHeight": 0,
+    "html": "<button type=\"button\" class=\"custom-select-option selected\" id=\"reminderOffset-custom-button-list-option-3\" data-value=\"60\" role=\"option\" aria-selected=\"true\"><span>提前 1 小时</span><svg class=\"icon icon-sm\" aria-hidden=\"true\" focusable=\"false\"><use href=\"#icon-check\"></use></svg></button>"
+  },
+  "active": {
+    "id": "reminderOffset-custom-button",
+    "tag": "BUTTON",
+    "text": "提前 1 小时"
+  },
+  "ariaExpanded": "false",
+  "advanced": true,
+  "form": {
+    "x": 180,
+    "y": 83,
+    "w": 920,
+    "h": 621,
+    "display": "grid",
+    "visibility": "visible",
+    "overflow": "auto",
+    "visible": true,
+    "scrollTop": 31,
+    "scrollHeight": 786,
+    "clientHeight": 621,
+    "html": "<form id=\"taskForm\" class=\"\"><div id=\"confirm-message-text\" class=\"confirm-message\" style=\"display: none;\"><div class=\"confirm-details\" data-import-preview=\"true\" data-pre-import-snapshot-confirmed=\"false\" data-checksum-risk-confirmed=\"false\" data-checksum-status=\"valid\" data-current-count=\"0\"><fieldset class=\"import-mode-options\"><legend class=\"import-mode-title\">选择导入方式</legend><div class=\"confirm-option\"><input type=\"radio\" name=\"taskImportMode\" id=\"mergeImportMode\" value=\"merge\" style=\"\"><label for=\"mergeImportMode\">合并到当前任务<span>新名称会追加；同名任务可选择保留两份、跳过导入或替换本地，请确认后再导入。</span></label></div><div class=\"confirm-option\"><input type=\"radio\" name=\"taskImportMode\" id=\"replaceImportMode\" value=\"replace\" checked=\"\" style=\"\"><label for=\"replaceImportMode\">替换全部当前任务<span id=\"importReplaceHint\">替换模式会用文件中的任务替换当前全部任务。</span></label></div></fieldset><section class=\"import-outcome\" aria-labelledby=\"importOutcomeTitle\"><h3 id=\"importOutcomeTitle\">变更预览</h3><p id=\"importOutcomeSummary\" role=\"status\">当前 0 "
+  },
+  "options": [
+    {
+      "value": "-1",
+      "selected": "false",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0,
+      "display": "flex",
+      "visibility": "visible",
+      "overflow": "visible",
+      "visible": false,
+      "scrollTop": 0,
+      "scrollHeight": 0,
+      "clientHeight": 0,
+      "html": "<button type=\"button\" class=\"custom-select-option\" id=\"reminderOffset-custom-button-list-option-0\" data-value=\"-1\" role=\"option\" aria-selected=\"false\"><span>不提醒</span><svg class=\"icon icon-sm\" aria-hidden=\"true\" focusable=\"false\"><use href=\"#icon-check\"></use></svg></button>"
+    },
+    {
+      "value": "0",
+      "selected": "false",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0,
+      "display": "flex",
+      "visibility": "visible",
+      "overflow": "visible",
+      "visible": false,
+      "scrollTop": 0,
+      "scrollHeight": 0,
+      "clientHeight": 0,
+      "html": "<button type=\"button\" class=\"custom-select-option\" id=\"reminderOffset-custom-button-list-option-1\" data-value=\"0\" role=\"option\" aria-selected=\"false\"><span>截止时</span><svg class=\"icon icon-sm\" aria-hidden=\"true\" focusable=\"false\"><use href=\"#icon-check\"></use></svg></button>"
+    },
+    {
+      "value": "15",
+      "selected": "false",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0,
+      "display": "flex",
+      "visibility": "visible",
+      "overflow": "visible",
+      "visible": false,
+      "scrollTop": 0,
+      "scrollHeight": 0,
+      "clientHeight": 0,
+      "html": "<button type=\"button\" class=\"custom-select-option\" id=\"reminderOffset-custom-button-list-option-2\" data-value=\"15\" role=\"option\" aria-selected=\"false\"><span>提前 15 分钟</span><svg class=\"icon icon-sm\" aria-hidden=\"true\" focusable=\"false\"><use href=\"#icon-check\"></use></svg></button>"
+    },
+    {
+      "value": "60",
+      "selected": "true",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0,
+      "display": "flex",
+      "visibility": "visible",
+      "overflow": "visible",
+      "visible": false,
+      "scrollTop": 0,
+      "scrollHeight": 0,
+      "clientHeight": 0,
+      "html": "<button type=\"button\" class=\"custom-select-option selected\" id=\"reminderOffset-custom-button-list-option-3\" data-value=\"60\" role=\"option\" aria-selected=\"true\"><span>提前 1 小时</span><svg class=\"icon icon-sm\" aria-hidden=\"true\" focusable=\"false\"><use href=\"#icon-check\"></use></svg></button>"
+    },
+    {
+      "value": "1440",
+      "selected": "false",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0,
+      "display": "flex",
+      "visibility": "visible",
+      "overflow": "visible",
+      "visible": false,
+      "scrollTop": 0,
+      "scrollHeight": 0,
+      "clientHeight": 0,
+      "html": "<button type=\"button\" class=\"custom-select-option\" id=\"reminderOffset-custom-button-list-option-4\" data-value=\"1440\" role=\"option\" aria-selected=\"false\"><span>提前 1 天</span><svg class=\"icon icon-sm\" aria-hidden=\"true\" focusable=\"false\"><use href=\"#icon-check\"></use></svg></button>"
+    },
+    {
+      "value": "7.5",
+      "selected": "false",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0,
+      "display": "flex",
+      "visibility": "visible",
+      "overflow": "visible",
+      "visible": false,
+      "scrollTop": 0,
+      "scrollHeight": 0,
+      "clientHeight": 0,
+      "html": "<button type=\"button\" class=\"custom-select-option\" id=\"reminderOffset-custom-button-list-option-5\" data-value=\"7.5\" role=\"option\" aria-selected=\"false\"><span>提前 7.5 分钟（已保存值）</span><svg class=\"icon icon-sm\" aria-hidden=\"true\" focusable=\"false\"><use href=\"#icon-check\"></use></svg></button>"
+    }
+  ],
+  "ancestors": [
+    {
+      "tag": "BUTTON",
+      "id": "reminderOffset-custom-button",
+      "cls": "custom-select-btn",
+      "overflow": "visible"
+    },
+    {
+      "tag": "DIV",
+      "id": "",
+      "cls": "custom-select",
+      "overflow": "visible"
+    },
+    {
+      "tag": "DIV",
+      "id": "",
+      "cls": "form-field",
+      "overflow": "visible"
+    },
+    {
+      "tag": "DIV",
+      "id": "",
+      "cls": "form-field-grid",
+      "overflow": "visible"
+    },
+    {
+      "tag": "DIV",
+      "id": "reminderGroup",
+      "cls": "form-group form-card",
+      "overflow": "visible"
+    },
+    {
+      "tag": "DIV",
+      "id": "",
+      "cls": "task-schedule-fields",
+      "overflow": "visible"
+    },
+    {
+      "tag": "DETAILS",
+      "id": "taskAdvancedDetails",
+      "cls": "task-advanced",
+      "overflow": "visible"
+    },
+    {
+      "tag": "DIV",
+      "id": "taskEditor",
+      "cls": "task-editor-layout",
+      "overflow": "visible"
+    },
+    {
+      "tag": "FORM",
+      "id": "taskForm",
+      "cls": "",
+      "overflow": "auto"
+    },
+    {
+      "tag": "DIV",
+      "id": "",
+      "cls": "modal-body",
+      "overflow": "hidden"
+    },
+    {
+      "tag": "DIV",
+      "id": "",
+      "cls": "modal-content",
+      "overflow": "hidden"
+    },
+    {
+      "tag": "DIV",
+      "id": "taskModal",
+      "cls": "modal",
+      "overflow": "auto"
+    },
+    {
+      "tag": "BODY",
+      "id": "",
+      "cls": "modal-open",
+      "overflow": "hidden"
+    },
+    {
+      "tag": "HTML",
+      "id": "",
+      "cls": "modal-open",
+      "overflow": "hidden"
+    }
+  ],
+  "control": "reminderOffset",
+  "value": "60",
+  "label": "after-original-success"
+}

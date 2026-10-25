@@ -2,7 +2,7 @@
 
 ## Current delivery status
 
-[The stable delivery record](stable-delivery.md) identifies the current version and acceptance status, final tested source, actual engine versions, completed scope, remaining limits and deployed artifact. The 4.15.1 target requires whole-product acceptance. Registration of 73 checker programs or 33 matrix programs per engine is a plan, not a claim that they passed for that target.
+**4.15.1: complete.** The [stable delivery record](stable-delivery.md) and [final evidence](acceptance/2026-10-26/final-4.15.1/final-full/final-delivery.md) identify the application input, actual engine versions, completed scope and limits. Local full-checker result: **passed (73/73)**. Normal remote-CI public result: **passed (checks and Chromium/Firefox/WebKit all succeeded)**. Public remote success and the original local report are separate evidence; remote logs/artifacts requiring login were not downloaded.
 
 Task Tracer is a local-first web application. Its primary task storage uses IndexedDB; offline startup needs a completed initial service-worker cache on HTTPS or a browser-trusted local origin. Chinese/English, four workspace themes and keyboard controls use the same application across browsers. Installation, notifications and persistent-storage permission depend on the browser and platform; unsupported or denied optional capabilities must leave task access and export available.
 
@@ -32,7 +32,7 @@ The [GitHub Actions workflow](../.github/workflows/checks.yml) runs the matrix i
 
 ## Historical results
 
-These records retain their original source, tool, browser and publication identities. They do not supply pass results for the current stable target.
+The current [4.15.1 record](releases/4.15.1.md) is separate from the historical table below. Earlier records retain their original source, tools, browser and publication identities; their passes are not relabeled for a later release.
 
 | Version | Recorded scope and evidence |
 | --- | --- |

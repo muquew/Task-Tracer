@@ -1,0 +1,6 @@
+webkit 26.5: starting 33 registered programs
+Running webkit: compatibility_playwright.py
+webkit: compatibility_playwright.py exited 0 in 51.020s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-matrix-v2/webkit/native-report-logs/b882cfa9-3df3-405d-86e5-5a4d41867a6d/webkit-compatibility_playwright.log)
+Running webkit: appearance_preferences_playwright.py
+webkit: appearance_preferences_playwright.py exited 0 in 91.530s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-matrix-v2/webkit/native-report-logs/b882cfa9-3df3-405d-86e5-5a4d41867a6d/webkit-appearance_preferences_playwright.log)
+Running webkit: settings_navigation_playwright.py

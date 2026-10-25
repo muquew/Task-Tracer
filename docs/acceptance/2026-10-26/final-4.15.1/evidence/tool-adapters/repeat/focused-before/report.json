@@ -1,0 +1,84 @@
+{
+  "before": {
+    "index.html": "b3cfe5642f93a067e6c2ab3c2373fd4b5e8e7944c835b7a78ca8d441bcb5d8eb",
+    "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+    "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+    "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+    "vercel.json": "2857ae24b2f09e200a9a7c3e8256825db2ff5cbf6f65a64ce040469e58707bcc",
+    "tools/repeat_delete_playwright.py": "f92dacb4c081aa43dab0106c653a1f9bd226ec54abde0843586cb05b1edf2627",
+    "tools/repeat_merge_playwright.py": "c9fbae748b1a996ada9a6e161ee00873ce76a93f4f7cfc2d3cf393f506fb9d60",
+    "tools/smoke_playwright.py": "df5a1a8c557a08c075b2e02a22a0ceb93ac404ddead9877f7651366a09ae166a",
+    "tools/recovery_management_playwright.py": "baa278f06c9349880b1e1fabe3f93b9821cbe907223ab89f1c0fee13918b7633",
+    "tools/repeat_lineage_playwright.py": "c00faea8afbe7788de0096fea380245df61756426aa0619adc12992cdd151033",
+    "tools/import_reference_playwright.py": "63f99d8f77668805e7740303cba606097bb6d8139aa9bc4d3b15c2bfa8a0c0a7"
+  },
+  "scope": "Firefox, original native local_server headers; reduced motion; throwaway synthetic data",
+  "cases": [
+    {
+      "case": "single",
+      "page_errors": [],
+      "abort_injection_reached": true,
+      "error_class": "notification error show",
+      "confirmation_visible": true,
+      "retry_enabled": true,
+      "abort_exact_no_write": true,
+      "dialog_text": "删除任务？\n×\n删除任务失败，请重试\n\n删除“Lineage root”？可以撤销此次删除。\n\n取消\n删除任务",
+      "cancel_exact_no_write": true,
+      "reload_exact_no_write": true,
+      "passed": true
+    },
+    {
+      "case": "batch",
+      "page_errors": [],
+      "abort_injection_reached": true,
+      "error_class": "notification error show",
+      "confirmation_visible": false,
+      "retry_enabled": null,
+      "abort_exact_no_write": true,
+      "dialog_text": null,
+      "cancel_exact_no_write": true,
+      "reload_exact_no_write": true,
+      "passed": true
+    },
+    {
+      "case": "clear",
+      "page_errors": [],
+      "abort_injection_reached": true,
+      "error_class": "notification error show",
+      "confirmation_visible": true,
+      "retry_enabled": true,
+      "abort_exact_no_write": true,
+      "dialog_text": "删除已完成\n×\n清除任务时出错\n删除 2 个已完成任务？可撤销此操作。\n取消\n删除 2 个任务",
+      "cancel_exact_no_write": true,
+      "reload_exact_no_write": true,
+      "passed": true
+    },
+    {
+      "case": "skip",
+      "page_errors": [],
+      "submit_disabled": true,
+      "no_import_changes": true,
+      "preview_exact_no_write": true,
+      "dialog_text": "导入预览\n×\n选择导入方式\n合并到当前任务\n新名称会追加；同名任务可选择保留两份、跳过导入或替换本地，请确认后再导入。\n替换全部当前任务\n变更预览\n\n新增 0 项，替换本地 0 项，跳过 1 项；保留 4 项当前任务，完成后共 4 项。\n\n同名冲突处理\n\n以下选项仅在选择合并导入时生效。\n\n所有同名任务的处理方式\n跳过导入\n\n更改此选项会重置全部单独选择，包括尚未显示的任务；之后仍可逐项调整。\n\n已显示 1 个同名任务中的 1 个；所选处理方式也适用于未显示的任务。\n\nUnique merge middle 0\n当前已有 1 个同名任务\n跳过导入\n恢复检查清单\n!\n本地同名项\n发现 1 个与当前任务同名的导入项；合并模式可逐项处理。\n已通过 7 项检查\n文件检查与变更详情\n取消\n没有需要导入的任务",
+      "cancel_exact_no_write": true,
+      "reload_exact_no_write": true,
+      "passed": true
+    }
+  ],
+  "browser": "153.0",
+  "after": {
+    "index.html": "b3cfe5642f93a067e6c2ab3c2373fd4b5e8e7944c835b7a78ca8d441bcb5d8eb",
+    "resources/en.json": "ad5168af3c916eadf225d2ceafbae3e4ba625d0e02844c2123e7673f17593efe",
+    "resources/zh-CN.json": "c29931210654b2cf22442e9292ab0ae84d25c14916228f596f3b4e8980be3728",
+    "sw.js": "186c2eee61a8f56db44c4d59c5f234779e48c00ef9df465b63aa0d6e2f447666",
+    "vercel.json": "2857ae24b2f09e200a9a7c3e8256825db2ff5cbf6f65a64ce040469e58707bcc",
+    "tools/repeat_delete_playwright.py": "f92dacb4c081aa43dab0106c653a1f9bd226ec54abde0843586cb05b1edf2627",
+    "tools/repeat_merge_playwright.py": "c9fbae748b1a996ada9a6e161ee00873ce76a93f4f7cfc2d3cf393f506fb9d60",
+    "tools/smoke_playwright.py": "df5a1a8c557a08c075b2e02a22a0ceb93ac404ddead9877f7651366a09ae166a",
+    "tools/recovery_management_playwright.py": "baa278f06c9349880b1e1fabe3f93b9821cbe907223ab89f1c0fee13918b7633",
+    "tools/repeat_lineage_playwright.py": "c00faea8afbe7788de0096fea380245df61756426aa0619adc12992cdd151033",
+    "tools/import_reference_playwright.py": "63f99d8f77668805e7740303cba606097bb6d8139aa9bc4d3b15c2bfa8a0c0a7"
+  },
+  "source_and_helpers_stable": true,
+  "passed": true
+}

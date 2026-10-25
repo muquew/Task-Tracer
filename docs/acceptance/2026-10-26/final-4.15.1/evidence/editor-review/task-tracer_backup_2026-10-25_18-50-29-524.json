@@ -1,0 +1,142 @@
+{
+  "version": "2.4",
+  "type": "backup",
+  "exportId": "backup-20261025185029-8yezq7wf",
+  "date": "2026-10-25T18:50:29.524Z",
+  "app": "Task Tracer",
+  "schema": {
+    "version": "2.4",
+    "storage": "indexeddb",
+    "includes": [
+      "tasks",
+      "subtasks",
+      "projects",
+      "tags",
+      "localDueDates",
+      "exactDueInstants",
+      "reminders",
+      "repeatRules",
+      "completionDates",
+      "archiveState",
+      "todayPlan"
+    ]
+  },
+  "versionNotes": [
+    "2.4 备份包含完整性校验、导出 ID、本地截止日期、真实提醒时间、任务、子任务、项目、标签、高级重复规则、完成时间、归档状态和今日计划。",
+    "导入器会读取 tasks 数组；旧版导出文件仍可通过兼容规则导入。"
+  ],
+  "tasks": [
+    {
+      "id": 1792954386777,
+      "createdAt": "2026-10-25T18:46:26.664Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "确认边界：空日期不可静默丢规则",
+      "description": "",
+      "project": "Inbox",
+      "tags": [],
+      "subtasks": [],
+      "dueDate": null,
+      "dueAt": null,
+      "dueLocalDate": null,
+      "dueLocalTime": null,
+      "dueTimeZone": null,
+      "reminderOffset": -1,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 10000
+    },
+    {
+      "id": 1792954438050,
+      "createdAt": "2026-10-25T18:49:10.191Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "校对描述与子任务",
+      "description": "交付说明第一段：包含中文、English 与链接 https://example.com/very-long-reference-path-for-review 。\n第二段保留换行与完整编辑内容，不用于装饰。\n最后核对任务、子任务、项目和日期。",
+      "project": "交付",
+      "tags": [
+        "优先"
+      ],
+      "subtasks": [
+        {
+          "id": 1792954284681,
+          "text": "确认B",
+          "completed": false
+        },
+        {
+          "id": 1792954217278,
+          "text": "附件C的未保存修订",
+          "completed": false
+        },
+        {
+          "id": 1792954943542,
+          "text": "最后待输入D",
+          "completed": false
+        }
+      ],
+      "dueDate": "2026-10-27T10:20:00.000Z",
+      "dueAt": "2026-10-27T10:20:00.000Z",
+      "dueLocalDate": "2026-10-27",
+      "dueLocalTime": "18:20",
+      "dueTimeZone": "Asia/Shanghai",
+      "reminderOffset": 15,
+      "reminderRepeat": -1,
+      "repeatType": "none",
+      "repeatInterval": 1,
+      "order": 30000
+    },
+    {
+      "id": 1792954814184,
+      "createdAt": "2026-10-25T18:47:29.301Z",
+      "completed": false,
+      "completedAt": null,
+      "archived": false,
+      "archivedAt": null,
+      "focusDate": null,
+      "snoozedUntil": null,
+      "lastReminderAt": null,
+      "repeatSourceId": null,
+      "repeatCreatedFrom": null,
+      "nextRepeatTaskId": null,
+      "repeatWeekdays": [],
+      "repeatPaused": false,
+      "name": "确认边界：空自定义周期不可默认为每天",
+      "description": "",
+      "project": "Inbox",
+      "tags": [],
+      "subtasks": [],
+      "dueDate": "2026-10-27T15:59:00.000Z",
+      "dueAt": "2026-10-27T15:59:00.000Z",
+      "dueLocalDate": "2026-10-27",
+      "dueLocalTime": "23:59",
+      "dueTimeZone": "Asia/Shanghai",
+      "reminderOffset": 15,
+      "reminderRepeat": -1,
+      "repeatType": "custom",
+      "repeatInterval": 1,
+      "order": 20000
+    }
+  ],
+  "checksum": "fnv1a32:fefdc456"
+}

@@ -22,7 +22,7 @@
 
 Task Tracer is a personal task manager that runs in the browser and keeps task data on the current device/browser profile. It is made for people who want a capable daily workspace without accounts, servers, or cloud sync as a requirement.
 
-Release status, supported environments, verified artifacts and known limitations are collected in the [stable delivery guide](./docs/stable-delivery.md). The current published application is 4.15.0; 4.15.1 is undergoing complete delivery acceptance.
+**4.15.1 delivery status: complete.** Published-site verification: **2026-10-25 22:54:41.404440 UTC**. The [stable delivery guide](./docs/stable-delivery.md) records the release package, completed scope, update/backup instructions and known limits.
 
 ## What It Helps With
 
