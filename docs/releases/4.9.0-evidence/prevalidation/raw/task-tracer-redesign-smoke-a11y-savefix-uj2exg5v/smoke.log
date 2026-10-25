@@ -1,0 +1,21 @@
+Notification pointer access passed: 1280px header menu and toast Undo remain usable
+Notification pointer access passed: 900px header menu and toast Undo remain usable
+Smoke failed: timed out waiting for UI state
+Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#workspaceWeekIndex [data-workspace-week-date]").first
+    - locator resolved to <button type="button" aria-current="date" aria-pressed="false" class="workspace-week-day" data-workspace-week-date="2026-10-25" aria-label="周日25, 2026年10月25日星期日, 0 个任务">…</button>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    58 × waiting for element to be visible, enabled and stable
+       - element is not visible
+     - retrying click action
+       - waiting 500ms
+

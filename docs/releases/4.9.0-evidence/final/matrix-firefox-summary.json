@@ -1,0 +1,74 @@
+{
+  "recorded_at": "2026-10-25T09:45:26.331+00:00",
+  "status": "passed",
+  "engine": "firefox",
+  "browser_version": "153.0",
+  "executed_programs": 32,
+  "passed_programs": 32,
+  "failed_programs": 0,
+  "unexecuted_programs": 0,
+  "input_counts": {
+    "source": 23,
+    "verification": 70,
+    "combined": 93
+  },
+  "source_sha256": "d2091fabb0b0275ca38d651d4992ade8f6a7e118cc4c298cb03898968912dd54",
+  "verification_sha256": "88439604e050b13a2f1b1be7ebb62a827abdb2281f61e79665270bf65fc95cf8",
+  "source_unchanged": true,
+  "verification_unchanged": true,
+  "integrity_errors": [],
+  "checked_log_files": 33,
+  "program_duration_sum_seconds": 1081.659,
+  "matrix_started_at": "2026-10-25T09:26:54.463+00:00",
+  "matrix_finished_at": "2026-10-25T09:44:59.882+00:00",
+  "matrix_report": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox.json",
+  "matrix_report_sha256": "93f43aee75f1834508d8303bb178d39ac2f27f68795f89414d01d7231b9da4fa",
+  "execution_record": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-execution.json",
+  "coverage_exceptions": [
+    {
+      "browser": "firefox",
+      "program": "timezone_playwright.py",
+      "case": "Live device-timezone override",
+      "status": "not_run",
+      "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+    },
+    {
+      "browser": "firefox",
+      "program": "calendar_timezone_playwright.py",
+      "case": "Live device-timezone override",
+      "status": "not_run",
+      "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+    }
+  ],
+  "performance_scope": "Concurrent correctness execution, not an isolated benchmark",
+  "device_scope": "Linux desktop browser engines and synthetic viewports; not real mobile devices or Safari/iOS.",
+  "appearance_case_report": {
+    "path": "/tmp/task-tracer-appearance-firefox-zanu51wu/report.json",
+    "sha256": "8f44e96471c41d57eeb6ffeb2f14dcd4a0fbb3fe29fd52064fe14300ae654c62",
+    "cases": 8
+  },
+  "workspace_failure_cases": {
+    "passed": 9,
+    "log": {
+      "path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-workspace_failure_playwright.log",
+      "relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-workspace_failure_playwright.log",
+      "bytes": 1428,
+      "sha256": "42bf9ac2c8a58517010fbbd7f36e4b81c3a8c992ee73087d6857f5a567fa98c2"
+    },
+    "case_lines": [
+      "Workspace failure passed: edit-task-abort; 200 tasks × 6 subtasks; browser=firefox",
+      "Workspace failure passed: edit-history-abort; 200 tasks × 6 subtasks; browser=firefox",
+      "Workspace failure passed: batch-write-abort; 200 tasks × 6 subtasks; browser=firefox",
+      "Workspace failure passed: batch-delete-revision-abort; 200 tasks × 6 subtasks; browser=firefox",
+      "Workspace failure passed: restore-write-abort; 200 tasks × 6 subtasks; browser=firefox",
+      "Workspace failure passed: form-checkpoint-quota; 200 tasks × 6 subtasks; browser=firefox",
+      "Workspace failure passed: quick-add-queued-quota; 200 tasks × 6 subtasks; browser=firefox",
+      "Workspace failure passed: stale-edit; 200 tasks × 6 subtasks; browser=firefox",
+      "Workspace failure passed: asynchronous-request-error; 200 tasks × 6 subtasks; browser=firefox"
+    ]
+  },
+  "prior_failed_evidence_unchanged": true,
+  "prior_failure_diagnostic_addendum": "/tmp/task-tracer-4.9.0-final2-874zhd4d/prior-firefox-failure-diagnostic-addendum.json",
+  "application_commit": "e7d58e2ce27798253d69b0dd9723cd55dc5c15c2",
+  "repo_mutations_by_this_agent": false
+}

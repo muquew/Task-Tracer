@@ -1,0 +1,90 @@
+{
+  "firefox-1280/02-online-dark.png": {
+    "bytes": 123288,
+    "sha256": "4a88fe278cee2f6ca132ed51f820058b6854ee0478ddacf4456ca846ea2bc0b0"
+  },
+  "firefox-1280/02-online-light.png": {
+    "bytes": 111485,
+    "sha256": "3e5713b0c8cd82df9e7ce049b030dcd08ce119c02e02c95503eb1874a3b0662f"
+  },
+  "firefox-1280/03-online-restored.png": {
+    "bytes": 115928,
+    "sha256": "89589434a16584bcec0848f162bfac0fed3b52a7be638d182489af6f055de974"
+  },
+  "firefox-1280/04-offline-after-delete.png": {
+    "bytes": 112074,
+    "sha256": "c91833328c5d9b0374fc9be800ecdc3e75fd0b94ad1ae1a624e9ebecd46e47bc"
+  },
+  "firefox-1280/download-1.json": {
+    "bytes": 1791,
+    "sha256": "60cfc000d409d576c2573a5c25a81b6b0d4b3b72e26fab77d0ec34e92ff6842e"
+  },
+  "firefox-1280/download-2.json": {
+    "bytes": 1813,
+    "sha256": "a54a864171e20f4b040538ad0bfa2cd19a7f0d191b0d830d6772402ea807f2f5"
+  },
+  "firefox-1280/online-index.html": {
+    "bytes": 746877,
+    "sha256": "c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7"
+  },
+  "firefox-1280/result.json": {
+    "bytes": 29140,
+    "sha256": "963bd3684b4fe3bd9520d3661b2d0953c32db66d099673279cb85ca6db9461db"
+  },
+  "firefox-390/01-narrow-schedule.png": {
+    "bytes": 48973,
+    "sha256": "c548e20bb8cede42d835db0e6734fb9cf817f3918d0059aac3bd43a0c8732c15"
+  },
+  "firefox-390/02-online-dark.png": {
+    "bytes": 62381,
+    "sha256": "2a6e08ad65e3d10f8ca60d581e558dad245ad4df674af98498cd6713f195a890"
+  },
+  "firefox-390/02-online-light.png": {
+    "bytes": 52937,
+    "sha256": "f146c935effefdbc2fb273d83f0f4799e7391ce92cb8c9f4400af8bcd147084a"
+  },
+  "firefox-390/03-online-restored.png": {
+    "bytes": 58291,
+    "sha256": "3a846162fd24c9cec40aa1210c1261fe7daf21836e91c7ca3f6e7a83ce3dfc26"
+  },
+  "firefox-390/04-offline-after-delete.png": {
+    "bytes": 58534,
+    "sha256": "43849161be1c65986a57ca648edea13e9881ec92577b585421c8ef26573d12b2"
+  },
+  "firefox-390/download-1.json": {
+    "bytes": 1790,
+    "sha256": "30f4dff1d27a8b7bd6000c9f2e012158238707bc8e78820c7e9957fb23a0ea34"
+  },
+  "firefox-390/download-2.json": {
+    "bytes": 1812,
+    "sha256": "0f6cc4c329261e9ec9d232f88ea1dbc5b9883db90f05aeea099a334ff17f01d4"
+  },
+  "firefox-390/online-index.html": {
+    "bytes": 746877,
+    "sha256": "c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7"
+  },
+  "firefox-390/result.json": {
+    "bytes": 29410,
+    "sha256": "142db8826fc8b33cdb47f10955d00cb6784064ea88ee93be6efffd5c36f38da7"
+  },
+  "freeze.json": {
+    "bytes": 11395,
+    "sha256": "f5dea27060897a52d01637416b735ea1716b9b1b354b86655aaa4e73f9cf94be"
+  },
+  "production_core_490.py": {
+    "bytes": 24453,
+    "sha256": "2cf488e2b9b70e98897c10cf73643bc800aba44ee6ab938b78e2e7b9693530ad"
+  },
+  "release_490_common.py": {
+    "bytes": 7775,
+    "sha256": "6c0cb959f5dadf71f2295f1e4fb2eab6f6235e7f321f32bafb3aca0c206bb33f"
+  },
+  "release_490_proxy_forwarder.py": {
+    "bytes": 7319,
+    "sha256": "068c4fc3a6335c7abf779bb4794d38126eb9435792dc48730b4a2e61464b1dbf"
+  },
+  "report.json": {
+    "bytes": 22548,
+    "sha256": "d9f4a0c735a6169980cee3450dbdc286b3420a8e5bc81b27c30c353ba92e9c92"
+  }
+}

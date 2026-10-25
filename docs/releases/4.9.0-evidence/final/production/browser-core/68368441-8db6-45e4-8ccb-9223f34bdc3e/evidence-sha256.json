@@ -1,0 +1,90 @@
+{
+  "chromium-1280/02-online-dark.png": {
+    "bytes": 104254,
+    "sha256": "d3ff793c9e8f33af374d9a9d60393ff0ade8686c0e2b4c04ae841feb6f7e69cf"
+  },
+  "chromium-1280/02-online-light.png": {
+    "bytes": 103239,
+    "sha256": "5120002781b1d8ef2132db484c8f4c2247ac4dd791ec2007dd9abf12e15e8999"
+  },
+  "chromium-1280/03-online-restored.png": {
+    "bytes": 97779,
+    "sha256": "7653eb86df1fd1306c5c8df4979eea48543c2a91159fc7f291d89202d64eb18e"
+  },
+  "chromium-1280/04-offline-after-delete.png": {
+    "bytes": 96140,
+    "sha256": "2b6c17d8b8802fecc73531c8809f9c87537d2eb8572dd01f0b8041a8c2346445"
+  },
+  "chromium-1280/download-1.json": {
+    "bytes": 1793,
+    "sha256": "3d63bf10339ddb41590507d26a7a2ad026ffe5a091e6438827a375bd7a7e1ec9"
+  },
+  "chromium-1280/download-2.json": {
+    "bytes": 1815,
+    "sha256": "2b8d1fdaf38d6a87d3ad42a49ed5f6f78174f49d58807a48c50102b004da0f0d"
+  },
+  "chromium-1280/online-index.html": {
+    "bytes": 746877,
+    "sha256": "c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7"
+  },
+  "chromium-1280/result.json": {
+    "bytes": 27386,
+    "sha256": "b8dec1311fc8bad927c605ba898a6a3e4f42f802ef439375bbb29e3c2e718c4f"
+  },
+  "chromium-390/01-narrow-schedule.png": {
+    "bytes": 41206,
+    "sha256": "23a49a7b850e2c2a0f831da4806c5ad4f468a342bbb2ac1a775f9893f704381f"
+  },
+  "chromium-390/02-online-dark.png": {
+    "bytes": 54738,
+    "sha256": "5bff8472f069ac08aea251ae2fea8bec36d667e6ffd6b7946f850ecf50c23e37"
+  },
+  "chromium-390/02-online-light.png": {
+    "bytes": 46399,
+    "sha256": "f62d170bec1693fb9fd686f8adbb7db10ec93f7ad5e8d1cc96283c205e09cef9"
+  },
+  "chromium-390/03-online-restored.png": {
+    "bytes": 50837,
+    "sha256": "e563611aa626664a9ebc073091ceae0549241f3c11a87dbc040eccdaf53d053d"
+  },
+  "chromium-390/04-offline-after-delete.png": {
+    "bytes": 50755,
+    "sha256": "e5b6341d5d49f828d345fbd2bc1bf37596422188b10a3eec6ecc788982176a5b"
+  },
+  "chromium-390/download-1.json": {
+    "bytes": 1792,
+    "sha256": "25ab733f4053472bc8bee2154edb867a5666122b686b8a95062b36e17c66e607"
+  },
+  "chromium-390/download-2.json": {
+    "bytes": 1814,
+    "sha256": "024e8c4eb3760c4b6534bd968f776c7a5a3dd75bc6294e6d96fe6dd542220efb"
+  },
+  "chromium-390/online-index.html": {
+    "bytes": 746877,
+    "sha256": "c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7"
+  },
+  "chromium-390/result.json": {
+    "bytes": 27658,
+    "sha256": "b76baa238a393028e95b8e91ab16e535819638ab3edc5c845cc3bbaa5ad2ab7c"
+  },
+  "freeze.json": {
+    "bytes": 11395,
+    "sha256": "f5dea27060897a52d01637416b735ea1716b9b1b354b86655aaa4e73f9cf94be"
+  },
+  "production_core_490.py": {
+    "bytes": 24453,
+    "sha256": "2cf488e2b9b70e98897c10cf73643bc800aba44ee6ab938b78e2e7b9693530ad"
+  },
+  "release_490_common.py": {
+    "bytes": 7775,
+    "sha256": "6c0cb959f5dadf71f2295f1e4fb2eab6f6235e7f321f32bafb3aca0c206bb33f"
+  },
+  "release_490_proxy_forwarder.py": {
+    "bytes": 7319,
+    "sha256": "068c4fc3a6335c7abf779bb4794d38126eb9435792dc48730b4a2e61464b1dbf"
+  },
+  "report.json": {
+    "bytes": 22554,
+    "sha256": "1a881ef24d2e5a7a0eb5381b0ffffc48e9cea6618b7f58d7668d1a807afaf623"
+  }
+}

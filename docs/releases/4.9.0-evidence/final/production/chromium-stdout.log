@@ -1,0 +1,4 @@
+EVIDENCE_DIRECTORY=/tmp/task-tracer-4.9.0-final2-874zhd4d/production/browser-core/68368441-8db6-45e4-8ccb-9223f34bdc3e
+{"engine": "chromium", "width": 1280, "status": "passed", "result": "/tmp/task-tracer-4.9.0-final2-874zhd4d/production/browser-core/68368441-8db6-45e4-8ccb-9223f34bdc3e/chromium-1280/result.json"}
+{"engine": "chromium", "width": 390, "status": "passed", "result": "/tmp/task-tracer-4.9.0-final2-874zhd4d/production/browser-core/68368441-8db6-45e4-8ccb-9223f34bdc3e/chromium-390/result.json"}
+{"status": "passed", "passed": true, "report": "/tmp/task-tracer-4.9.0-final2-874zhd4d/production/browser-core/68368441-8db6-45e4-8ccb-9223f34bdc3e/report.json"}

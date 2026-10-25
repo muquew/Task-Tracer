@@ -1,0 +1,65 @@
+chromium 154.0.8037.57: starting 32 registered programs
+Running chromium: compatibility_playwright.py
+chromium: compatibility_playwright.py exited 0 in 12.203s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-compatibility_playwright.log)
+Running chromium: appearance_preferences_playwright.py
+chromium: appearance_preferences_playwright.py exited 0 in 69.226s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-appearance_preferences_playwright.log)
+Running chromium: csv_playwright.py
+chromium: csv_playwright.py exited 0 in 10.204s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-csv_playwright.log)
+Running chromium: backup_freshness_playwright.py
+chromium: backup_freshness_playwright.py exited 0 in 33.162s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-backup_freshness_playwright.log)
+Running chromium: backup_reminder_priority_playwright.py
+chromium: backup_reminder_priority_playwright.py exited 0 in 8.247s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-backup_reminder_priority_playwright.log)
+Running chromium: project_scope_playwright.py
+chromium: project_scope_playwright.py exited 0 in 37.893s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-project_scope_playwright.log)
+Running chromium: task_draft_playwright.py
+chromium: task_draft_playwright.py exited 0 in 66.043s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-task_draft_playwright.log)
+Running chromium: quick_add_recovery_playwright.py
+chromium: quick_add_recovery_playwright.py exited 0 in 40.543s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-quick_add_recovery_playwright.log)
+Running chromium: quick_add_date_playwright.py
+chromium: quick_add_date_playwright.py exited 0 in 30.235s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-quick_add_date_playwright.log)
+Running chromium: imported_text_edit_playwright.py
+chromium: imported_text_edit_playwright.py exited 0 in 37.424s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-imported_text_edit_playwright.log)
+Running chromium: imported_reminder_edit_playwright.py
+chromium: imported_reminder_edit_playwright.py exited 0 in 24.240s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-imported_reminder_edit_playwright.log)
+Running chromium: repeat_lineage_playwright.py
+chromium: repeat_lineage_playwright.py exited 0 in 39.292s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-repeat_lineage_playwright.log)
+Running chromium: repeat_delete_playwright.py
+chromium: repeat_delete_playwright.py exited 0 in 65.477s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-repeat_delete_playwright.log)
+Running chromium: repeat_merge_playwright.py
+chromium: repeat_merge_playwright.py exited 0 in 71.424s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-repeat_merge_playwright.log)
+Running chromium: dialog_lifecycle_playwright.py
+chromium: dialog_lifecycle_playwright.py exited 0 in 12.465s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-dialog_lifecycle_playwright.log)
+Running chromium: onboarding_playwright.py
+chromium: onboarding_playwright.py exited 0 in 9.997s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-onboarding_playwright.log)
+Running chromium: help_playwright.py
+chromium: help_playwright.py exited 0 in 8.505s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-help_playwright.log)
+Running chromium: ime_input_playwright.py
+chromium: ime_input_playwright.py exited 0 in 22.521s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-ime_input_playwright.log)
+Running chromium: batch_selection_playwright.py
+chromium: batch_selection_playwright.py exited 0 in 36.735s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-batch_selection_playwright.log)
+Running chromium: workspace_failure_playwright.py
+chromium: workspace_failure_playwright.py exited 1 in 35.253s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-workspace_failure_playwright.log)
+Running chromium: calendar_performance_playwright.py
+chromium: calendar_performance_playwright.py exited 0 in 20.017s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-calendar_performance_playwright.log)
+Running chromium: calendar_navigation_playwright.py
+chromium: calendar_navigation_playwright.py exited 0 in 12.230s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-calendar_navigation_playwright.log)
+Running chromium: calendar_timezone_playwright.py
+chromium: calendar_timezone_playwright.py exited 0 in 17.767s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-calendar_timezone_playwright.log)
+Running chromium: recovery_management_playwright.py
+chromium: recovery_management_playwright.py exited 0 in 23.590s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-recovery_management_playwright.log)
+Running chromium: views_portability_playwright.py
+chromium: views_portability_playwright.py exited 0 in 129.037s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-views_portability_playwright.log)
+Running chromium: views_delete_playwright.py
+chromium: views_delete_playwright.py exited 1 in 20.043s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-views_delete_playwright.log)
+Running chromium: timezone_playwright.py
+chromium: timezone_playwright.py exited 0 in 6.105s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-timezone_playwright.log)
+Running chromium: dst_wall_time_playwright.py
+chromium: dst_wall_time_playwright.py exited 0 in 20.581s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-dst_wall_time_playwright.log)
+Running chromium: foreign_wall_time_playwright.py
+chromium: foreign_wall_time_playwright.py exited 0 in 22.628s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-foreign_wall_time_playwright.log)
+Running chromium: recurrence_timezone_playwright.py
+chromium: recurrence_timezone_playwright.py exited 0 in 40.483s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-recurrence_timezone_playwright.log)
+Running chromium: time_refresh_playwright.py
+chromium: time_refresh_playwright.py exited 0 in 29.663s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-time_refresh_playwright.log)
+Running chromium: stats_scope_playwright.py
+chromium: stats_scope_playwright.py exited 0 in 8.246s (/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium-logs/e9ecdf2a-0dba-4b99-aacd-c9a6a19caf01/chromium-stats_scope_playwright.log)

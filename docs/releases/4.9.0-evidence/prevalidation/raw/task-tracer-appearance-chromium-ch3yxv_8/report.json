@@ -1,0 +1,52 @@
+{
+  "browser_engine": "chromium",
+  "started_at": "2026-10-25T07:39:18.375327+00:00",
+  "source": {
+    "index.html": "38e9a93670e6ca7159f64b8bc4ea5b50db3721f9a284b391cfd9da647ba67fc5",
+    "tools/smoke_playwright.py": "9b5f49f18cb9c6afa60c464aab3630c39f78dd99e59bb7cf051c8c65b0e7da73",
+    "tools/appearance_preferences_playwright.py": "4838cef4888f44b5620a1dd707c007e046e93193d693e8f8c729f2adec751e9c"
+  },
+  "cases": [
+    {
+      "name": "fresh-light",
+      "passed": true,
+      "browser_errors": []
+    },
+    {
+      "name": "fresh-dark",
+      "passed": true,
+      "browser_errors": []
+    },
+    {
+      "name": "legacy-light",
+      "passed": true,
+      "browser_errors": []
+    },
+    {
+      "name": "legacy-dark",
+      "passed": true,
+      "browser_errors": []
+    },
+    {
+      "name": "preferences-desktop",
+      "passed": true,
+      "browser_errors": []
+    },
+    {
+      "name": "preferences-mobile",
+      "passed": true,
+      "browser_errors": []
+    },
+    {
+      "name": "draft-os-change",
+      "passed": false,
+      "browser_errors": [],
+      "error": "Traceback (most recent call last):\n  File \"/workspace/Task-Tracer-redesign/tools/appearance_preferences_playwright.py\", line 467, in main\n    operation(page, url)\n  File \"/workspace/Task-Tracer-redesign/tools/appearance_preferences_playwright.py\", line 310, in draft_os_changes\n    assert_preserved(page, draft, nodes, records)\n  File \"/workspace/Task-Tracer-redesign/tools/appearance_preferences_playwright.py\", line 263, in assert_preserved\n    assert_task_nodes(page, nodes)\n  File \"/workspace/Task-Tracer-redesign/tools/appearance_preferences_playwright.py\", line 193, in assert_task_nodes\n    assert state['sameList'] and state['sameNodes'] and not state['changes'], (\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: ('Appearance change rebuilt or mutated saved task nodes', {'sameList': True, 'sameNodes': False, 'changes': [{'target': 'DIV', 'added': 0, 'removed': 4}, {'target': 'DIV', 'added': 4, 'removed': 0}]})\n"
+    }
+  ],
+  "passed": false,
+  "scope": "Fresh contexts, synthetic tasks, real storage events, emulated browser color schemes; not a physical OS, IME, mobile device, or Safari/iOS test.",
+  "browser_version": "154.0.8037.57",
+  "error": "Traceback (most recent call last):\n  File \"/workspace/Task-Tracer-redesign/tools/appearance_preferences_playwright.py\", line 467, in main\n    operation(page, url)\n  File \"/workspace/Task-Tracer-redesign/tools/appearance_preferences_playwright.py\", line 310, in draft_os_changes\n    assert_preserved(page, draft, nodes, records)\n  File \"/workspace/Task-Tracer-redesign/tools/appearance_preferences_playwright.py\", line 263, in assert_preserved\n    assert_task_nodes(page, nodes)\n  File \"/workspace/Task-Tracer-redesign/tools/appearance_preferences_playwright.py\", line 193, in assert_task_nodes\n    assert state['sameList'] and state['sameNodes'] and not state['changes'], (\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: ('Appearance change rebuilt or mutated saved task nodes', {'sameList': True, 'sameNodes': False, 'changes': [{'target': 'DIV', 'added': 0, 'removed': 4}, {'target': 'DIV', 'added': 4, 'removed': 0}]})\n",
+  "finished_at": "2026-10-25T07:39:50.045454+00:00"
+}

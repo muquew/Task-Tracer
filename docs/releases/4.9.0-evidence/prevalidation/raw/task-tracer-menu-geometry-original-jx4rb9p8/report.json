@@ -1,0 +1,70 @@
+{
+  "phase": "original frozen source geometry diagnostic, not candidate acceptance",
+  "snapshot": "/tmp/task-tracer-redesign-affected-rerun-q1339v85/inputs",
+  "index_sha256": "5ffc00400907898394e838a6ee2743c628a897f0c72b020da0fa98838468c6ed",
+  "observations": [
+    {
+      "menu": "project",
+      "button": {
+        "x": 28,
+        "y": 264,
+        "width": 80.65625,
+        "height": 32
+      },
+      "box": {
+        "x": -81.34375,
+        "y": 302,
+        "width": 190,
+        "height": 130
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/tmp/task-tracer-menu-geometry-original-jx4rb9p8/project-390.png"
+    },
+    {
+      "menu": "status",
+      "button": {
+        "x": 110.65625,
+        "y": 264,
+        "width": 80.671875,
+        "height": 32
+      },
+      "box": {
+        "x": 110.65625,
+        "y": 297,
+        "width": 190,
+        "height": 250
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/tmp/task-tracer-menu-geometry-original-jx4rb9p8/status-390.png"
+    },
+    {
+      "menu": "sort",
+      "button": {
+        "x": 193.328125,
+        "y": 264,
+        "width": 80.671875,
+        "height": 32
+      },
+      "box": {
+        "x": 84,
+        "y": 297,
+        "width": 190,
+        "height": 210
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/tmp/task-tracer-menu-geometry-original-jx4rb9p8/sort-390.png"
+    }
+  ],
+  "browser": "154.0.8037.57",
+  "page_errors": [],
+  "console_errors": []
+}

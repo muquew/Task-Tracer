@@ -1,0 +1,21 @@
+Notification pointer access passed: 1280px header menu and toast Undo remain usable
+Notification pointer access passed: 900px header menu and toast Undo remain usable
+Smoke failed: timed out waiting for UI state
+Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#notificationToggleBtn")
+    - locator resolved to <button title="开启通知" role="menuitem" class="menu-item" aria-label="开启通知" id="notificationToggleBtn">…</button>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    58 × waiting for element to be visible, enabled and stable
+       - element is not visible
+     - retrying click action
+       - waiting 500ms
+

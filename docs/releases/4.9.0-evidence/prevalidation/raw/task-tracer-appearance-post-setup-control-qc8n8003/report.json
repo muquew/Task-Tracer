@@ -1,0 +1,30 @@
+{
+  "source": {
+    "index.html": "38e9a93670e6ca7159f64b8bc4ea5b50db3721f9a284b391cfd9da647ba67fc5",
+    "tools/smoke_playwright.py": "9b5f49f18cb9c6afa60c464aab3630c39f78dd99e59bb7cf051c8c65b0e7da73",
+    "tools/appearance_preferences_playwright.py": "4838cef4888f44b5620a1dd707c007e046e93193d693e8f8c729f2adec751e9c"
+  },
+  "phases": [
+    {
+      "focus": "#taskName",
+      "os": "dark",
+      "all_original_assertions_passed": true
+    },
+    {
+      "focus": "#taskDesc",
+      "os": "light",
+      "all_original_assertions_passed": true
+    },
+    {
+      "focus": "#subtaskListPreview .subtask-edit-input",
+      "os": "dark",
+      "all_original_assertions_passed": true
+    }
+  ],
+  "normal_save_passed": true,
+  "source_final": {
+    "index.html": "38e9a93670e6ca7159f64b8bc4ea5b50db3721f9a284b391cfd9da647ba67fc5",
+    "tools/smoke_playwright.py": "9b5f49f18cb9c6afa60c464aab3630c39f78dd99e59bb7cf051c8c65b0e7da73",
+    "tools/appearance_preferences_playwright.py": "4838cef4888f44b5620a1dd707c007e046e93193d693e8f8c729f2adec751e9c"
+  }
+}

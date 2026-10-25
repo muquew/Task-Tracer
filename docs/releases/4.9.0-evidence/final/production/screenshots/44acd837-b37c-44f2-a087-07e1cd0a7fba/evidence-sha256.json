@@ -1,0 +1,34 @@
+{
+  "assets/add-task-en.png": {
+    "bytes": 172196,
+    "sha256": "bd1379cdf14da4b6565c6bf72176b0162d577c73a8f2961d5ce7ed35726c3426"
+  },
+  "assets/add-task.png": {
+    "bytes": 175801,
+    "sha256": "5dd8a9982d4de34e521479b3508f65372f812b2a2e6f2ce915ada9dd1e371333"
+  },
+  "assets/task-list-en.png": {
+    "bytes": 137359,
+    "sha256": "0bc6918e7381ee0b34b38a73e49dd74eb249a229ec48a9990a8e86c28df3a36e"
+  },
+  "assets/task-list.png": {
+    "bytes": 134801,
+    "sha256": "4b40fe6b9586ca2df7bd2048be9e98a02d8505c67efc55a5e763611ce732a93f"
+  },
+  "freeze.json": {
+    "bytes": 11395,
+    "sha256": "f5dea27060897a52d01637416b735ea1716b9b1b354b86655aaa4e73f9cf94be"
+  },
+  "release_490_common.py": {
+    "bytes": 7775,
+    "sha256": "6c0cb959f5dadf71f2295f1e4fb2eab6f6235e7f321f32bafb3aca0c206bb33f"
+  },
+  "report.json": {
+    "bytes": 31405,
+    "sha256": "277999decc77359f91f97b7cfc3752c014fd5713acfdc4d0418e183656d0477c"
+  },
+  "verify_screenshots_490.py": {
+    "bytes": 6621,
+    "sha256": "1909c6c5820edd563d02b532732a31805563fb50871d9a2911f3efd1299f1fb9"
+  }
+}

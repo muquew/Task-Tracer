@@ -1,0 +1,5 @@
+Onboarding chromium: 154.0.8037.57
+Onboarding passed: fresh/reloaded workspace stays empty; examples are explicit, labeled and duplicate-safe
+Onboarding passed: example addition is undoable and an empty workspace remains empty after reload
+Onboarding passed: stale empty window preserves a task created elsewhere
+Onboarding passed: quota failure rolls back all examples atomically

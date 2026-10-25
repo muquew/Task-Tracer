@@ -1,0 +1,9 @@
+View portability firefox: 153.0
+View portability passed: immediate distinct search saves capture current queries and default names
+View portability passed: latest file intent wins both read orders; cancellation preserves task drafts
+View portability passed: export reads latest views, Unicode/checksum round-trip, task/backup isolation
+View portability passed: reviewed merge, cancellation, snapshot dedupe and ID collision safety
+View portability passed: 12-view capacity skips overflow without evicting existing views
+View portability passed: changed storage rebuilds preview and requires explicit second confirmation
+View portability passed: atomic abort keeps preview/data and a later retry succeeds
+View portability passed: corrupted/wrong-task/invalid-field/oversized files rejected without writes

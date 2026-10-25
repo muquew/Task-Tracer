@@ -1,0 +1,20 @@
+{
+  "classification": "Read-only local synthetic diagnostic, not final candidate acceptance",
+  "source_sha256": "c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7",
+  "http_sha_equals_disk": true,
+  "fixture": {"tasks": 200, "subtasks_per_task": 4, "initial_rendered_limit": 100},
+  "runner": "/tmp/task-tracer-search-menu-diagnostic.py",
+  "evidence_origin": "Exact observed values from runner stdout, recorded after execution without changing repository inputs",
+  "events": [
+    {"phase":"input","time":786.2999999988824,"count":100,"first_row_present":false,"hidden":null,"expanded":null,"focus":"search-input"},
+    {"phase":"after-reveal","time":832.6999999992549,"count":100,"first_row_present":false,"hidden":null,"expanded":null,"focus":"search-input"},
+    {"phase":"mutations","time":1126.7999999988824,"count":1,"first_row_present":true,"hidden":true,"expanded":"false","focus":"search-input"},
+    {"phase":"result-count-one","time":1178,"count":1,"first_row_present":true,"hidden":true,"expanded":"false","focus":"search-input"}
+  ],
+  "more_capture_events": 0,
+  "more_bubble_events": 0,
+  "edit_visible_after_settle": false,
+  "page_errors": [],
+  "conclusion": "The helper returned an edit locator while the target row did not yet exist. Search later created the target row with its menu unopened; this run did not observe a menu closing or a task-menu focus loss.",
+  "limitation": "Plain localhost server rather than formal CSP runner; does not establish behavior for a different already-visible task opened before a search refresh."
+}

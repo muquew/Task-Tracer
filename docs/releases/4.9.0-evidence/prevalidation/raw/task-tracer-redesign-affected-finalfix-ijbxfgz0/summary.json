@@ -1,0 +1,53 @@
+{
+  "purpose": "targeted correctness, not final full release acceptance",
+  "input_snapshot_verified_files": 93,
+  "source_sha256": "22f5828226537e304261f887f6081a7fc06823163de1aa5181832486a9df855f",
+  "verification_sha256": "60469b83118bf6d8fb58b8ffcb5fe20e98290eeeea8c61aa3d3fe8b4cdd339a8",
+  "programs": [
+    {
+      "scope": "core",
+      "status": "passed",
+      "exit_code": 0,
+      "elapsed_seconds": 20.464,
+      "source_unchanged": true,
+      "verification_unchanged": true
+    },
+    {
+      "scope": "smoke",
+      "status": "failed",
+      "exit_code": 1,
+      "elapsed_seconds": 57.341,
+      "source_unchanged": true,
+      "verification_unchanged": true
+    },
+    {
+      "scope": "a11y",
+      "status": "failed",
+      "exit_code": 1,
+      "elapsed_seconds": 122.448,
+      "source_unchanged": true,
+      "verification_unchanged": true
+    },
+    {
+      "scope": "projects",
+      "status": "passed",
+      "exit_code": 0,
+      "elapsed_seconds": 35.861,
+      "source_unchanged": true,
+      "verification_unchanged": true
+    },
+    {
+      "scope": "views",
+      "status": "passed",
+      "exit_code": 0,
+      "elapsed_seconds": 144.864,
+      "source_unchanged": true,
+      "verification_unchanged": true
+    }
+  ],
+  "passed": false,
+  "failures": {
+    "smoke": "real UI: 42px save-view control overflows its 32px grid column by 10px at 700px viewport",
+    "a11y": "test precondition: the prior Cancel correctly focuses the sidebar item; the drawer must close before accessing the header language select"
+  }
+}

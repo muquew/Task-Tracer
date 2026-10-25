@@ -1,0 +1,5 @@
+chromium: Help/diagnostics regression on 154.0.8037.57
+Help passed: en; headings/version, keyboard focus, commands and private explicit-download report
+Help passed: zh-CN; headings/version, keyboard focus, commands and private explicit-download report
+Help passed: cancellation during a delayed storage estimate cannot reopen diagnostics
+Help passed: storage failure retains footer/keyboard/redacted diagnostics; retry restores normal Help and one-download behavior

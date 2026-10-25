@@ -1,0 +1,29 @@
+{
+  "validated_at": "2026-10-25T09:54:24.029+00:00",
+  "purpose": "Complete formal 59-program correctness queue on the final2 committed candidate",
+  "status": "passed",
+  "passed": true,
+  "application_commit": "e7d58e2ce27798253d69b0dd9723cd55dc5c15c2",
+  "working_tree_clean": true,
+  "freeze_sha256": "f5dea27060897a52d01637416b735ea1716b9b1b354b86655aaa4e73f9cf94be",
+  "source_sha256": "d2091fabb0b0275ca38d651d4992ade8f6a7e118cc4c298cb03898968912dd54",
+  "verification_sha256": "88439604e050b13a2f1b1be7ebb62a827abdb2281f61e79665270bf65fc95cf8",
+  "snapshot_and_worktree_verified_files": 93,
+  "planned_count": 59,
+  "completed_count": 59,
+  "passed_count": 59,
+  "failed_checks": [],
+  "exit_code": 0,
+  "elapsed_seconds": 1646.523,
+  "source_unchanged": true,
+  "verification_unchanged": true,
+  "reports": [
+    "check-results.json",
+    "check-output.log",
+    "full-run.json"
+  ],
+  "original_failed_run_preserved_at": "/tmp/task-tracer-4.9.0-final-pu_nzs6d",
+  "workspace_failure": "All nine original failure-injection cases passed on 200 tasks with six subtasks each; unchanged fault/data/focus assertions and original timeouts",
+  "performance_scope": "Original threshold checks passed. All matrix reports ended by 09:48:32 UTC, before stats_scope at 09:49:48 and the later performance checks. This is not an isolated whole-machine benchmark.",
+  "evidence_limits": "Headless Linux browser correctness with synthetic fixtures; this queue alone is not physical mobile, Safari/iOS or production deployment acceptance."
+}

@@ -1,0 +1,29 @@
+{
+  "status": "failed",
+  "started_at": "2026-10-25T08:57:29.133+00:00",
+  "cwd": "/workspace/Task-Tracer-redesign",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "tools/browser_matrix.py",
+    "--browser",
+    "chromium",
+    "--group",
+    "all",
+    "--keep-going",
+    "--report",
+    "/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium.json"
+  ],
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "XDG_CACHE_HOME": "/workspace/.cache",
+    "PLAYWRIGHT_BROWSERS_PATH": "/workspace/.cache/ms-playwright",
+    "TASK_TRACER_BROWSER_EXECUTABLE": "/usr/bin/chromium"
+  },
+  "scope": "Chromium all 32 registered programs; concurrent correctness run, not exclusive performance benchmark",
+  "log": "/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-chromium.log",
+  "exit_code": 1,
+  "finished_at": "2026-10-25T09:14:32.017+00:00",
+  "duration_seconds": 1022.884,
+  "log_sha256": "78ab944936de6ed1741d7bbfbee97a92deab929120eacbab3f4632faa73208bf",
+  "log_bytes": 7885
+}

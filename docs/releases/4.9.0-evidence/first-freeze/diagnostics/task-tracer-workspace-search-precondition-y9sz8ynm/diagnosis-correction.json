@@ -1,0 +1,20 @@
+{
+  "scope": "Correction of earlier static causal hypothesis; original failed matrix and diagnostic reports remain unchanged",
+  "previous_hypothesis": "Already-open More menu was closed by deferred search rendering",
+  "previous_hypothesis_supported": false,
+  "confirmed_observation": "Target FIRST row and More toggle are absent (count=0) before and immediately after the original reveal helper; the helper returns an edit locator without opening a menu; after the search result appears the row exists and the same original helper can open its menu",
+  "implication_for_count_precondition_diagnostic": "The 100-to-1 result-count precondition proved the original abort scenario can complete after results are ready; it did not establish that an already-open menu was closed",
+  "minimal_generic_helper_fix_suggested": "Await expect(task).to_be_visible() before the existing immediate control/toggle sampling; retain the ordinary More click, aria-expanded assertion, original action click and timeouts. No App change inferred by these observations.",
+  "independent_evidence": [
+    {
+      "path": "/tmp/task-tracer-search-menu-diagnostic-observation.json",
+      "sha256": "5ab38740f97290e5447356577e66973e48c2920ee4d6f699270320a3f2356853",
+      "scope": "App observer; 200 tasks x 4 subtasks, local HTTP; not normal-CSP product acceptance"
+    },
+    {
+      "path": "/tmp/task-tracer-4.9.0-final-pu_nzs6d/webkit-search-action-diagnostic-8c519ca9-41ff-46dc-832b-57b5379bce8f/report.json",
+      "sha256": "6015501a2983d9d874a64a300ff71aaf2632b9f7586da5ef8b4970817d428989",
+      "scope": "Independent WebKit diagnostic, actual 200 tasks x 6 subtasks, complete same 93-input freeze unchanged"
+    }
+  ]
+}

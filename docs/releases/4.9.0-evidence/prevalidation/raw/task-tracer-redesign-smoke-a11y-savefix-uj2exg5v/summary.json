@@ -1,0 +1,26 @@
+{
+  "purpose": "targeted correctness; not final full release acceptance",
+  "verified_snapshot_files": 93,
+  "source_sha256": "37d1ae3088d4c6f7d3246d71768f02f5b4f40499f60bf543d4d65a3000ec4911",
+  "verification_sha256": "5429142b809c8d59836b9d97f9e5174e45d87bcbccc885e1364d8214b552f421",
+  "programs": [
+    {
+      "scope": "smoke",
+      "status": "failed",
+      "exit_code": 1,
+      "elapsed_seconds": 77.686,
+      "source_unchanged": true,
+      "verification_unchanged": true
+    },
+    {
+      "scope": "a11y",
+      "status": "passed",
+      "exit_code": 0,
+      "elapsed_seconds": 183.853,
+      "source_unchanged": true,
+      "verification_unchanged": true
+    }
+  ],
+  "passed": false,
+  "smoke_failure": "Test precondition: mobile week strip is intentionally hidden at widths <=1000px; the date helper must explicitly test the mobile schedule entry."
+}

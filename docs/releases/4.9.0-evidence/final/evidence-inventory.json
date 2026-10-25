@@ -1,0 +1,2181 @@
+{
+  "schema_version": 1,
+  "archived_at": "2026-10-25T09:56:23.673384+00:00",
+  "scope": "Complete second-freeze checker, matrices and supplements passed; actual GitHub push matched; production acceptance pending",
+  "application_commit": "e7d58e2ce27798253d69b0dd9723cd55dc5c15c2",
+  "freeze_sha256": "f5dea27060897a52d01637416b735ea1716b9b1b354b86655aaa4e73f9cf94be",
+  "source": {
+    "files": {
+      "LICENSE": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+      "THIRD_PARTY_NOTICES.md": "a49db18583d3f275de394c74e3c5db9142979ab713fdfd1ac69488236c1d9bf9",
+      "docs/distribution.md": "b250086a24ffcc0d195b2dd5a8115e11176946f62d51d11e14fd492be471589f",
+      "docs/distribution_zh_cn.md": "f8df81c7b2201981f16b7a562709ce911dfe5c072ce7750ce7e6388dc7c385af",
+      "fav/android-chrome-192x192.png": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+      "fav/android-chrome-512x512.png": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+      "fav/apple-touch-icon.png": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+      "fav/favicon-16x16.png": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+      "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+      "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+      "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+      "index.html": "c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7",
+      "manifest.json": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718",
+      "resources/en.json": "3234c7a5ade6a6a2da4dc95e878360efde388183da1a60d24b50a8520ecef83f",
+      "resources/zh-CN.json": "8726b7362454ab680dd8af6d133faa6c5d82416a98a347ed9f8a10542daa3f0f",
+      "robots.txt": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+      "screenshots/add-task-en.png": "bd1379cdf14da4b6565c6bf72176b0162d577c73a8f2961d5ce7ed35726c3426",
+      "screenshots/add-task.png": "5dd8a9982d4de34e521479b3508f65372f812b2a2e6f2ce915ada9dd1e371333",
+      "screenshots/task-list-en.png": "0bc6918e7381ee0b34b38a73e49dd74eb249a229ec48a9990a8e86c28df3a36e",
+      "screenshots/task-list.png": "4b40fe6b9586ca2df7bd2048be9e98a02d8505c67efc55a5e763611ce732a93f",
+      "sitemap.xml": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+      "sw.js": "bdfd51270372fb2f620310a5c29928b2529cee4884b23cb34a1b61d32be00a7b",
+      "vercel.json": "c2fa8f32f93565693a7d3d965dc53582d3fae96745f577f1eec256a25e0ae51c"
+    },
+    "sha256": "d2091fabb0b0275ca38d651d4992ade8f6a7e118cc4c298cb03898968912dd54"
+  },
+  "verification": {
+    "files": {
+      ".github/workflows/checks.yml": "75ff88cb2daeb6887bd0a804a46ace7e64dc85a3240166d5714484aa58f1f7cc",
+      "package-lock.json": "5648941e42a206771db639c7098b75445039ffaf6ce599c032bb83b6a39f0e20",
+      "package.json": "b1aa4fe4a670189839536edf17945566be7753e02e30a3b392981a8c28cffbdb",
+      "requirements-dev.txt": "882c62a419989bc6ff175ae700ab509aa70eefacc22070fde17f84031fadb89c",
+      "tools/accessibility_i18n_audit.py": "ab1cb041fe91ceb215e1a225248f0785dfc3e310ccc4d7611fdc74a9fba7935a",
+      "tools/appearance_preferences_playwright.py": "b4835bf3e2dd64fa4e57cc6a5c50c89cfa405559cec2b2bbde2414fc1031f389",
+      "tools/backup_freshness_playwright.py": "ace061c1d57750c389f31022c6e8aeba1d5f349db70806e0c3783922db688fc7",
+      "tools/backup_reminder_priority_playwright.py": "ec9061b9c62d6fff729abdb224ceb449b7932611984dbccca3abe19b6fe942bf",
+      "tools/batch_selection_playwright.py": "7793c1267ce6ff86822d296eb642fe329b3a276a95106381e7e51b5e4e75c4f4",
+      "tools/browser_matrix.py": "67b0cfd31f0d4a27bee0e953df5ce4ce249e9b0dfc684859ca8b62bc444e2d2e",
+      "tools/build_release.py": "d18896e46b7e266e3898befa6eaaf7d0720dac0d3a54bfe796aa69744b07a5e6",
+      "tools/calendar_navigation_playwright.py": "de945d5117db19d4b547e4996f8f89c8fdfc5cc49b05be148da16f0e32e36009",
+      "tools/calendar_performance_playwright.py": "b4f89d99156a90a382ae0e65cc1151c14f6a93d8590f6477f69c1b2bd4f99b32",
+      "tools/calendar_timezone_playwright.py": "aea7d57bfd4a6c9ed7f651dd332537cbb2b054c8bec9234fb50d143803eb9230",
+      "tools/check.py": "97eb6b6cb2ee9ffb82366d29ea289bddea16a015e643ac0fbce08e7367221f18",
+      "tools/check_runner_test.py": "79947bd2b5dc3e1fe4cd09745cbb403f1dcc4c89ac6dfa321f2e5517a852b54d",
+      "tools/compatibility_playwright.py": "36537279d5bc5f6488b87e26f8ddd64b56eed5e49b884db1d1967680120b5935",
+      "tools/csv_playwright.py": "f0cd8d05f88d16200bc0490cc3ca18905a863e3461ca4c15f003e93a28cab273",
+      "tools/date_semantics_test.py": "7a9aec3b94d2a756bfa5682662c76afd6734a48147746a254b626ff9e9bbb97e",
+      "tools/dialog_lifecycle_playwright.py": "418e739adfa38b2270af304d337e0ff60ace4a6b36e459937525ca93cbe84c51",
+      "tools/dst_wall_time_playwright.py": "7c648596409b46cebe2e94003bd1453c50230715c637f17dc85800a36ab6f6c7",
+      "tools/foreign_wall_time_playwright.py": "588880115089dea42c1c3a52c9d37a0f824dfc2b7c1c9da215e40dce3ac30e11",
+      "tools/help_playwright.py": "65a93798188c51b8fbc545472eb3cecadcd1cdd93aa59a1b25f02dba6473a2e7",
+      "tools/ime_input_playwright.py": "e96a627096fe0b10ada1bde69fda633dcf880d9faf32ee08a792e997b013322e",
+      "tools/import_conflicts_playwright.py": "44314147afc41e901616e023810322db8bac47a942470962a3db59da11ad9a26",
+      "tools/import_preview_concurrency_playwright.py": "a6ca1642c18610d5534559846ba14f08248b706649270f02dc5cede6e9644e6e",
+      "tools/import_read_lifecycle_playwright.py": "7479233c250e41eefe74cc19bafbd9be27c02cb56a9a938b8ee30b5364fc1397",
+      "tools/import_reference_playwright.py": "63f99d8f77668805e7740303cba606097bb6d8139aa9bc4d3b15c2bfa8a0c0a7",
+      "tools/imported_reminder_edit_playwright.py": "aee16d7eca31164e05f0d95029903aea73ea85f1138191ee243075c06dd74155",
+      "tools/imported_text_edit_playwright.py": "d8a8a4f70dcb6e4e002c412753a4680ec4e99d7f20062fb346433dbde53a8dc2",
+      "tools/onboarding_playwright.py": "dd0cce183b109129556899075eb8c16a0c4c377565a8ddbf6e786308c260dcbd",
+      "tools/performance_playwright.py": "df2c5f0c3addb0b14e43c7154c4e1b9a3e002ffc9dc2dd581149fbe141938f92",
+      "tools/project_scope_playwright.py": "046a44ec6fc52ac45ec45c5a8265210f70dc71d3a448c1cb8d02f13b24925598",
+      "tools/queued_write_concurrency_playwright.py": "d965fc7d8b57e26bf4f29a20e344467223cc7ada8fdaf3c3c8d4d11043ed4d2d",
+      "tools/quick_add_date_playwright.py": "d21e0b843078e223db7e6ca977964ec9f41c55c6aaeef853acddb9f19c79b069",
+      "tools/quick_add_recovery_playwright.py": "952d75f9d58d5feeefb7c121885784e810b5fab67321e51da425c76717e07cbb",
+      "tools/quick_add_workspace_playwright.py": "9facea44c20a4c2b0170b55431f28cb90b39f4748213bcab0ea7becf1b8cc980",
+      "tools/recovery_management_playwright.py": "0be3415795f8345ccc4610e6b24bb9e2dbcceed264a742e5a1353f026876697f",
+      "tools/recovery_playwright.py": "c3f2dad1f1d23c01bac886ad5ab399b7bf87692f70f115279b0e06c9c5a6c0e7",
+      "tools/recurrence_timezone_playwright.py": "dcfa2c419d6701da99bc58569b6f7d0b91fa6506ea137cd12e6c4238eaabff2c",
+      "tools/release_payload_test.py": "6bdd0e719d0bbf53b3aef7493bea42d56a0f225c828dcfa85f55db675ac15d6f",
+      "tools/release_playwright.py": "fa0309749d98128ffc7334cba8215ee0385ff70ce8979f7824dafa6a1bb121e5",
+      "tools/release_versions_test.py": "33190b5c1ef5fd926ace6e5b782564dc13b1f5c19e8be30fa79295e11fc4c643",
+      "tools/reminder_concurrency_playwright.py": "b896a4d12eb7d73bdd46cd8849a4db4e0649cf64f177fc6f658af52b47a762f5",
+      "tools/repeat_delete_playwright.py": "9b17477debfb120549e22fc0ea4a3fcb639da118e41bfa4a3a7f2ade15f9f50c",
+      "tools/repeat_lineage_playwright.py": "c00faea8afbe7788de0096fea380245df61756426aa0619adc12992cdd151033",
+      "tools/repeat_merge_playwright.py": "5c1f3a8ce8a3892b8317ca9f38a6b565c041a419cb08cfe310aee9ed1674763f",
+      "tools/saved_views_playwright.py": "93520e09b5193f8019c7b18efa4d6b6fc0af137c6f39c7940237b533a8d1c843",
+      "tools/security_playwright.py": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+      "tools/security_policy.py": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+      "tools/service_worker_update_playwright.py": "de5a0730a35d9f65cb3e6ce278406667590f7c491cca5f9c1096a922c10a22fd",
+      "tools/smoke_playwright.py": "a9643b87703baaf0256eb0d5e76353122b0b3aaa8dc5412df943989c6ab8e819",
+      "tools/static_syntax_test.py": "d1cd751dc356db1ce021b10c94689a8ea65d430ca140b9b1ecbcd2585c0ff8d0",
+      "tools/stats_scope_playwright.py": "39cf06d1beda3fda7b0846b2819792622f2c1fb9034d474b27690eb929896060",
+      "tools/storage_health_playwright.py": "7304e6c7aa2f5b0c6c747dfd8c9b96bf06476f4a4467133a509ad8e14b74a203",
+      "tools/storage_lifecycle_playwright.py": "0c7afab6487ad6a99b8e9f26ff7f16ada9d27b3afe013dc6d0086537302ee35b",
+      "tools/task_draft_playwright.py": "bb11d6624c570197519c1f09365b186e89169f32f99b9e6a62d0e40d99114899",
+      "tools/time_refresh_playwright.py": "2702ce1f4549817a15684d18f33b591a864d8475f31e8a6b187d032e3b4fb8e8",
+      "tools/timezone_playwright.py": "9debe614eabe082693e81d43885bdf5d2863d49889ee6d23ce20a8334b682f6b",
+      "tools/translation_fallback.py": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+      "tools/undo_concurrency_playwright.py": "42f938033284a83dd07fd2e6ef8b2345a31fe358ec61fd3ee40f48897b11aaa7",
+      "tools/upgrade_playwright.py": "cc747cec4da12c67700c316eac58f58b8d31d27c7c0a806a1aa909243fe15698",
+      "tools/validate_static.py": "b795eeeb20e2d1db158a3637fd8154218bedec05e0139c2dbf0b00bc971e847d",
+      "tools/verify_deployment.py": "c21aa60543f118b9d6d7d96b94b393816560f69737c53f58891c4ea1bfe43396",
+      "tools/verify_deployment_test.py": "9c1171e97a689523e2080830951aee85c8d13730c78368f6d307a45083ea2cd7",
+      "tools/views_delete_playwright.py": "e361d8c202f78e6683b643874c3572839920f1c4adf89fee242fd91aad6bafc4",
+      "tools/views_portability_playwright.py": "8836c4b3e00f8b7ff3243ffbc7b01a14f2c06359957f6c3a2d49dfa3c6e54f68",
+      "tools/workspace_failure_playwright.py": "7100ce3e390c6109a1115e5dae1bd3241731ebd3950a6020b29d9029a92e0868",
+      "tools/workspace_performance_playwright.py": "b0a1a36d6eb779e3b9c94d7af377c152ed26af9517039dee25f6c03b769d3518",
+      "tools/workspace_roundtrip_playwright.py": "a892508c21a857c795b097bbbaa29274d334468f6fd367cac930a697cfaf2a49"
+    },
+    "sha256": "88439604e050b13a2f1b1be7ebb62a827abdb2281f61e79665270bf65fc95cf8"
+  },
+  "changed_verification_inputs_from_first_freeze": [
+    "tools/smoke_playwright.py"
+  ],
+  "native_input_snapshot_verified_files": 93,
+  "matrix_results": [
+    {
+      "engine": "chromium",
+      "run_id": "1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e",
+      "status": "passed",
+      "completed": true,
+      "passed": true,
+      "programs": 32,
+      "verified_log_pointers": 33,
+      "source_unchanged": true,
+      "verification_unchanged": true,
+      "report_sha256": "cf5790d25e9bb93a7a3cfb78c176122d0cc164fc0ab53556c512aa45bc5eadf5",
+      "coverage_exceptions": [],
+      "regressions": {
+        "workspace_failure_playwright.py": {
+          "cases": 9,
+          "log": {
+            "path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-workspace_failure_playwright.log",
+            "relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-workspace_failure_playwright.log",
+            "bytes": 1438,
+            "sha256": "48654d74ad524ffb3ea525fd49966dc19f03666e124617da1cbdec79d2d4c06f"
+          }
+        },
+        "views_delete_playwright.py": {
+          "cases": 7,
+          "log": {
+            "path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-views_delete_playwright.log",
+            "relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-views_delete_playwright.log",
+            "bytes": 903,
+            "sha256": "a159c7d46e310edc28369e6b864e44ae3734ec9f3d492f64e1a49516efd34b3e"
+          }
+        }
+      }
+    },
+    {
+      "engine": "firefox",
+      "run_id": "a80154a4-0dbe-43ae-b998-03f04e7bac48",
+      "status": "passed",
+      "completed": true,
+      "passed": true,
+      "programs": 32,
+      "verified_log_pointers": 33,
+      "source_unchanged": true,
+      "verification_unchanged": true,
+      "report_sha256": "93f43aee75f1834508d8303bb178d39ac2f27f68795f89414d01d7231b9da4fa",
+      "coverage_exceptions": [
+        {
+          "browser": "firefox",
+          "program": "timezone_playwright.py",
+          "case": "Live device-timezone override",
+          "status": "not_run",
+          "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+        },
+        {
+          "browser": "firefox",
+          "program": "calendar_timezone_playwright.py",
+          "case": "Live device-timezone override",
+          "status": "not_run",
+          "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+        }
+      ],
+      "regressions": {
+        "workspace_failure_playwright.py": {
+          "cases": 9,
+          "log": {
+            "path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-workspace_failure_playwright.log",
+            "relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-workspace_failure_playwright.log",
+            "bytes": 1428,
+            "sha256": "42bf9ac2c8a58517010fbbd7f36e4b81c3a8c992ee73087d6857f5a567fa98c2"
+          }
+        },
+        "views_delete_playwright.py": {
+          "cases": 7,
+          "log": {
+            "path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-views_delete_playwright.log",
+            "relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-views_delete_playwright.log",
+            "bytes": 893,
+            "sha256": "63eed6801df2202995b7ce2175d32733b50438922723196debf51def06d0f1c3"
+          }
+        }
+      }
+    },
+    {
+      "engine": "webkit",
+      "run_id": "a1eb5414-31e5-4e4e-8c0e-aa717a4f294b",
+      "status": "passed",
+      "completed": true,
+      "passed": true,
+      "programs": 32,
+      "verified_log_pointers": 33,
+      "source_unchanged": true,
+      "verification_unchanged": true,
+      "report_sha256": "f06dba2caf7cd59a97482e0ffaab9caeb6c6334752967cb964269d971a0b7781",
+      "coverage_exceptions": [
+        {
+          "browser": "webkit",
+          "program": "timezone_playwright.py",
+          "case": "Live device-timezone override",
+          "status": "not_run",
+          "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+        },
+        {
+          "browser": "webkit",
+          "program": "calendar_timezone_playwright.py",
+          "case": "Live device-timezone override",
+          "status": "not_run",
+          "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+        }
+      ],
+      "regressions": {
+        "workspace_failure_playwright.py": {
+          "cases": 9,
+          "log": {
+            "path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-workspace_failure_playwright.log",
+            "relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-workspace_failure_playwright.log",
+            "bytes": 1536,
+            "sha256": "ee0e47893f7bd4831bfca0645702ae7b58f4226ccb6fcfb8f8f116a5b2a13e43"
+          }
+        },
+        "views_delete_playwright.py": {
+          "cases": 7,
+          "log": {
+            "path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-views_delete_playwright.log",
+            "relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-views_delete_playwright.log",
+            "bytes": 1008,
+            "sha256": "f46805c969d22e2abd999413a88ebe88865203b102cec09fb386d6d44be762c4"
+          }
+        }
+      }
+    }
+  ],
+  "supplement_results": [
+    {
+      "file": "upgrade-archive-4.8.6.json",
+      "status": "passed",
+      "completed": true,
+      "passed": true,
+      "elapsed_seconds": 34.8
+    },
+    {
+      "file": "workspace-10000.json",
+      "status": "passed",
+      "completed": true,
+      "passed": true,
+      "elapsed_seconds": 165.543
+    }
+  ],
+  "complete_checker_result": {
+    "run_id": "300fd138-8102-48b3-b3e7-583cfec1e572",
+    "status": "passed",
+    "completed": true,
+    "passed": true,
+    "programs": 59,
+    "exit_code": 0,
+    "program_duration_sum_seconds": 1645.602,
+    "wrapper_elapsed_seconds": 1646.523,
+    "source_unchanged": true,
+    "verification_unchanged": true,
+    "historical_commit_unchanged": true,
+    "historical_working_tree_clean_final": true,
+    "report_sha256": "b5263d8bfbf90923341ec8ba2b8731f7403a6ae087f6a3e796ad6ff759cfaee3",
+    "output_sha256": "cc9cd7e7bd684ab205b635249bcda7bdc844173c2b8036215be808363083dfeb"
+  },
+  "actual_github_push": {
+    "run_id": "bc951de3-7645-40f2-af61-42689ebb7afe",
+    "status": "github_ref_matched_vercel_pending",
+    "completed": true,
+    "passed": true,
+    "dry_run": false,
+    "push_command_executed": true,
+    "remote_main_after": "e7d58e2ce27798253d69b0dd9723cd55dc5c15c2",
+    "finished_at": "2026-10-25T09:54:46.480+00:00",
+    "verified_prerequisite_files": 116,
+    "report_sha256": "29313d8a6ee56450d72da39e30c098a2d0ae528f2a017741a998d9683ce57067",
+    "vercel_status": "not_checked_pending_domain_verification"
+  },
+  "capture_provenance": {
+    "source_sha256_at_capture": "4f210456bfdca385f81fbd369fea0b72b00dd386cc8d11010bffb17bfe3b5966",
+    "verification_sha256_at_capture": "dac91d688cf6d4bd90e3e9cfe587b6400a975a53c9d5be44dca53161bf0877c1",
+    "verification_sha256_this_freeze": "88439604e050b13a2f1b1be7ebb62a827abdb2281f61e79665270bf65fc95cf8",
+    "capture_is_new_verification_run": false,
+    "source_changes_after_capture": [
+      "screenshots/add-task-en.png",
+      "screenshots/add-task.png",
+      "screenshots/task-list-en.png",
+      "screenshots/task-list.png"
+    ],
+    "verification_changes_after_capture": [
+      "tools/smoke_playwright.py"
+    ]
+  },
+  "raw_evidence_file_count": 266,
+  "raw_evidence_bytes": 10102945,
+  "files": [
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/frozen-inputs.json",
+      "archive_relative_path": "frozen-inputs.json",
+      "bytes": 11395,
+      "sha256": "f5dea27060897a52d01637416b735ea1716b9b1b354b86655aaa4e73f9cf94be",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/build-result.json",
+      "archive_relative_path": "build-result.json",
+      "bytes": 13102,
+      "sha256": "4ac53be1e16181c1c41dec995895eef35d36f0ac82713de4e0e0cefc4e49a334",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/screenshot-provenance.json",
+      "archive_relative_path": "screenshot-provenance.json",
+      "bytes": 11724,
+      "sha256": "e83bf594efa1c42e9c8713044dcfdcaff1d3a5de9fdc2de1938a5fe16391e5c1",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/preparation.json",
+      "archive_relative_path": "preparation.json",
+      "bytes": 554,
+      "sha256": "3390f6c29b2e02a72989e5fb389e5b4e2d5bffda2ae96a72215171e1a8e7bd1b",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/run_full_queue.py",
+      "archive_relative_path": "run_full_queue.py",
+      "bytes": 4223,
+      "sha256": "a6f61fe6458a8924dc6338885b82739be34a4ca4927f40274e8c3d638d92b9d5",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/run-supplement.py",
+      "archive_relative_path": "run-supplement.py",
+      "bytes": 3449,
+      "sha256": "418e3dbb85132a04a27310ac643e35ff7adcb7b443f304dea5b00e3c5a7d882c",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium.json",
+      "archive_relative_path": "matrix-chromium.json",
+      "bytes": 49735,
+      "sha256": "cf5790d25e9bb93a7a3cfb78c176122d0cc164fc0ab53556c512aa45bc5eadf5",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium.log",
+      "archive_relative_path": "matrix-chromium.log",
+      "bytes": 7918,
+      "sha256": "eed2943aec41be2ea467ae0ee0492f73b312cd8eee3d9dedee61c32f88f85ccd",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-preflight.json",
+      "archive_relative_path": "matrix-chromium-preflight.json",
+      "bytes": 10410,
+      "sha256": "d950b62e946e288b95962642efb4acc5ffa1f8f38a3876051bc9d3bf698cacd9",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-execution.json",
+      "archive_relative_path": "matrix-chromium-execution.json",
+      "bytes": 1067,
+      "sha256": "66e7753292eab14a107a3ea613460a4b135fffbeecf2aa26b9c674e5f086b604",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-final-validation.json",
+      "archive_relative_path": "matrix-chromium-final-validation.json",
+      "bytes": 15933,
+      "sha256": "d805e0af809318c4ff33e8574dab1ac306f050e57fd9fc35c6b395c826a71bd9",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox.json",
+      "archive_relative_path": "matrix-firefox.json",
+      "bytes": 49815,
+      "sha256": "93f43aee75f1834508d8303bb178d39ac2f27f68795f89414d01d7231b9da4fa",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox.log",
+      "archive_relative_path": "matrix-firefox.log",
+      "bytes": 7783,
+      "sha256": "c2b5edc32791f1595a93e70aeab4bd3618808884a463d625a96e420e98d39a42",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-execution.json",
+      "archive_relative_path": "matrix-firefox-execution.json",
+      "bytes": 21657,
+      "sha256": "28c90616ddc91b412b7d7a0c28f6add3d16e35bab8b432494b66d8c3f186ffd3",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-summary.json",
+      "archive_relative_path": "matrix-firefox-summary.json",
+      "bytes": 3617,
+      "sha256": "4f4f92662aafea1b303a670008b7bbe01cdafa76a3cfbacd0592e2106ae94a5b",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit.json",
+      "archive_relative_path": "matrix-webkit.json",
+      "bytes": 49581,
+      "sha256": "f06dba2caf7cd59a97482e0ffaab9caeb6c6334752967cb964269d971a0b7781",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit.log",
+      "archive_relative_path": "matrix-webkit.log",
+      "bytes": 7653,
+      "sha256": "f7991838a969e49df51312ca9a429cbf99bc53605f99fa19b04344a9f1fc1a74",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-command.json",
+      "archive_relative_path": "matrix-webkit-command.json",
+      "bytes": 21484,
+      "sha256": "cef1d8368f363c352a778d68874042233afeb34650002c387c3258e2066b098f",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-validation.json",
+      "archive_relative_path": "matrix-webkit-validation.json",
+      "bytes": 19068,
+      "sha256": "9381fd2e9ac55733e86f266399912425b1c69f2a24709d72b6d62a1cfe9814e4",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/prior-firefox-failure-diagnostic-addendum.json",
+      "archive_relative_path": "prior-firefox-failure-diagnostic-addendum.json",
+      "bytes": 1817,
+      "sha256": "4d58cc364350e76c0a68fd6b13a66ca3ca09931884ad2069280961bd2762b335",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/upgrade-archive-4.8.6.json",
+      "archive_relative_path": "upgrade-archive-4.8.6.json",
+      "bytes": 21718,
+      "sha256": "943b698f5412a856a17ac7e2ff6e9e0b36a4d8f3ab23d806f2bb6f20cf60e516",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/upgrade-archive-4.8.6.log",
+      "archive_relative_path": "upgrade-archive-4.8.6.log",
+      "bytes": 377,
+      "sha256": "5df449ed7c534789095239cccc65e4c6d4a03029e3d91b2bc7bdb39a8a437fe6",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/workspace-10000.json",
+      "archive_relative_path": "workspace-10000.json",
+      "bytes": 21622,
+      "sha256": "796fe3be21e30c72bf167ff98135c273502aeec1ce7765f0d2eafc38d7351fe5",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/workspace-10000-program.json",
+      "archive_relative_path": "workspace-10000-program.json",
+      "bytes": 8776,
+      "sha256": "e104e0a53f137486b49d8e4739cbc673e0a11b45eae1d42831389968e9ab82b1",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/workspace-10000.log",
+      "archive_relative_path": "workspace-10000.log",
+      "bytes": 2962,
+      "sha256": "36aa7d2137884d736260702b2174853a1d7225d3b09130dfd04f7c013abb90ff",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/publication-preflight.json",
+      "archive_relative_path": "publication-preflight.json",
+      "bytes": 10689,
+      "sha256": "e7a9b5a865b53430158e7d1309760a4f9726e455c75cff56cd88119f86834b89",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/check-results.json",
+      "archive_relative_path": "check-results.json",
+      "bytes": 29826,
+      "sha256": "b5263d8bfbf90923341ec8ba2b8731f7403a6ae087f6a3e796ad6ff759cfaee3",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/check-output.log",
+      "archive_relative_path": "check-output.log",
+      "bytes": 49695,
+      "sha256": "cc9cd7e7bd684ab205b635249bcda7bdc844173c2b8036215be808363083dfeb",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/full-run.json",
+      "archive_relative_path": "full-run.json",
+      "bytes": 22393,
+      "sha256": "9b2b6c688d36decc5028183e5ecb99054ff7cf712bf33b03d7a6d4d509d481b6",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/full59-final-validation.json",
+      "archive_relative_path": "full59-final-validation.json",
+      "bytes": 1534,
+      "sha256": "5d010a2aa486575c4a5127a47e7dfdc32a3c541f9b20668253ad3e9bce5c3109",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/.github/workflows/checks.yml",
+      "archive_relative_path": "inputs/.github/workflows/checks.yml",
+      "bytes": 3158,
+      "sha256": "75ff88cb2daeb6887bd0a804a46ace7e64dc85a3240166d5714484aa58f1f7cc",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/LICENSE",
+      "archive_relative_path": "inputs/LICENSE",
+      "bytes": 2168,
+      "sha256": "b06068e146547a59044065fc5889159aca7ec996830af2491f2e610876a1ff27",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/THIRD_PARTY_NOTICES.md",
+      "archive_relative_path": "inputs/THIRD_PARTY_NOTICES.md",
+      "bytes": 1694,
+      "sha256": "a49db18583d3f275de394c74e3c5db9142979ab713fdfd1ac69488236c1d9bf9",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/docs/distribution.md",
+      "archive_relative_path": "inputs/docs/distribution.md",
+      "bytes": 12261,
+      "sha256": "b250086a24ffcc0d195b2dd5a8115e11176946f62d51d11e14fd492be471589f",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/docs/distribution_zh_cn.md",
+      "archive_relative_path": "inputs/docs/distribution_zh_cn.md",
+      "bytes": 10991,
+      "sha256": "f8df81c7b2201981f16b7a562709ce911dfe5c072ce7750ce7e6388dc7c385af",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/fav/android-chrome-192x192.png",
+      "archive_relative_path": "inputs/fav/android-chrome-192x192.png",
+      "bytes": 2245,
+      "sha256": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/fav/android-chrome-512x512.png",
+      "archive_relative_path": "inputs/fav/android-chrome-512x512.png",
+      "bytes": 6649,
+      "sha256": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/fav/apple-touch-icon.png",
+      "archive_relative_path": "inputs/fav/apple-touch-icon.png",
+      "bytes": 2109,
+      "sha256": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/fav/favicon-16x16.png",
+      "archive_relative_path": "inputs/fav/favicon-16x16.png",
+      "bytes": 262,
+      "sha256": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/fav/favicon-32x32.png",
+      "archive_relative_path": "inputs/fav/favicon-32x32.png",
+      "bytes": 425,
+      "sha256": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/fav/favicon-48x48.png",
+      "archive_relative_path": "inputs/fav/favicon-48x48.png",
+      "bytes": 597,
+      "sha256": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/fav/favicon.ico",
+      "archive_relative_path": "inputs/fav/favicon.ico",
+      "bytes": 15086,
+      "sha256": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/index.html",
+      "archive_relative_path": "inputs/index.html",
+      "bytes": 746877,
+      "sha256": "c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/manifest.json",
+      "archive_relative_path": "inputs/manifest.json",
+      "bytes": 1607,
+      "sha256": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/package-lock.json",
+      "archive_relative_path": "inputs/package-lock.json",
+      "bytes": 636,
+      "sha256": "5648941e42a206771db639c7098b75445039ffaf6ce599c032bb83b6a39f0e20",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/package.json",
+      "archive_relative_path": "inputs/package.json",
+      "bytes": 450,
+      "sha256": "b1aa4fe4a670189839536edf17945566be7753e02e30a3b392981a8c28cffbdb",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/requirements-dev.txt",
+      "archive_relative_path": "inputs/requirements-dev.txt",
+      "bytes": 153,
+      "sha256": "882c62a419989bc6ff175ae700ab509aa70eefacc22070fde17f84031fadb89c",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/resources/en.json",
+      "archive_relative_path": "inputs/resources/en.json",
+      "bytes": 41715,
+      "sha256": "3234c7a5ade6a6a2da4dc95e878360efde388183da1a60d24b50a8520ecef83f",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/resources/zh-CN.json",
+      "archive_relative_path": "inputs/resources/zh-CN.json",
+      "bytes": 40962,
+      "sha256": "8726b7362454ab680dd8af6d133faa6c5d82416a98a347ed9f8a10542daa3f0f",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/robots.txt",
+      "archive_relative_path": "inputs/robots.txt",
+      "bytes": 69,
+      "sha256": "cebd9c979fc72d919c8ff7fdccf5383fc3e32655fd0d291f770837f3e5519cdb",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/screenshots/add-task-en.png",
+      "archive_relative_path": "inputs/screenshots/add-task-en.png",
+      "bytes": 172196,
+      "sha256": "bd1379cdf14da4b6565c6bf72176b0162d577c73a8f2961d5ce7ed35726c3426",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/screenshots/add-task.png",
+      "archive_relative_path": "inputs/screenshots/add-task.png",
+      "bytes": 175801,
+      "sha256": "5dd8a9982d4de34e521479b3508f65372f812b2a2e6f2ce915ada9dd1e371333",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/screenshots/task-list-en.png",
+      "archive_relative_path": "inputs/screenshots/task-list-en.png",
+      "bytes": 137359,
+      "sha256": "0bc6918e7381ee0b34b38a73e49dd74eb249a229ec48a9990a8e86c28df3a36e",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/screenshots/task-list.png",
+      "archive_relative_path": "inputs/screenshots/task-list.png",
+      "bytes": 134801,
+      "sha256": "4b40fe6b9586ca2df7bd2048be9e98a02d8505c67efc55a5e763611ce732a93f",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/sitemap.xml",
+      "archive_relative_path": "inputs/sitemap.xml",
+      "bytes": 233,
+      "sha256": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/sw.js",
+      "archive_relative_path": "inputs/sw.js",
+      "bytes": 8304,
+      "sha256": "bdfd51270372fb2f620310a5c29928b2529cee4884b23cb34a1b61d32be00a7b",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/accessibility_i18n_audit.py",
+      "archive_relative_path": "inputs/tools/accessibility_i18n_audit.py",
+      "bytes": 29139,
+      "sha256": "ab1cb041fe91ceb215e1a225248f0785dfc3e310ccc4d7611fdc74a9fba7935a",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/appearance_preferences_playwright.py",
+      "archive_relative_path": "inputs/tools/appearance_preferences_playwright.py",
+      "bytes": 24503,
+      "sha256": "b4835bf3e2dd64fa4e57cc6a5c50c89cfa405559cec2b2bbde2414fc1031f389",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/backup_freshness_playwright.py",
+      "archive_relative_path": "inputs/tools/backup_freshness_playwright.py",
+      "bytes": 14300,
+      "sha256": "ace061c1d57750c389f31022c6e8aeba1d5f349db70806e0c3783922db688fc7",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/backup_reminder_priority_playwright.py",
+      "archive_relative_path": "inputs/tools/backup_reminder_priority_playwright.py",
+      "bytes": 10278,
+      "sha256": "ec9061b9c62d6fff729abdb224ceb449b7932611984dbccca3abe19b6fe942bf",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/batch_selection_playwright.py",
+      "archive_relative_path": "inputs/tools/batch_selection_playwright.py",
+      "bytes": 18736,
+      "sha256": "7793c1267ce6ff86822d296eb642fe329b3a276a95106381e7e51b5e4e75c4f4",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/browser_matrix.py",
+      "archive_relative_path": "inputs/tools/browser_matrix.py",
+      "bytes": 14875,
+      "sha256": "67b0cfd31f0d4a27bee0e953df5ce4ce249e9b0dfc684859ca8b62bc444e2d2e",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/build_release.py",
+      "archive_relative_path": "inputs/tools/build_release.py",
+      "bytes": 5569,
+      "sha256": "d18896e46b7e266e3898befa6eaaf7d0720dac0d3a54bfe796aa69744b07a5e6",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/calendar_navigation_playwright.py",
+      "archive_relative_path": "inputs/tools/calendar_navigation_playwright.py",
+      "bytes": 9369,
+      "sha256": "de945d5117db19d4b547e4996f8f89c8fdfc5cc49b05be148da16f0e32e36009",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/calendar_performance_playwright.py",
+      "archive_relative_path": "inputs/tools/calendar_performance_playwright.py",
+      "bytes": 18668,
+      "sha256": "b4f89d99156a90a382ae0e65cc1151c14f6a93d8590f6477f69c1b2bd4f99b32",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/calendar_timezone_playwright.py",
+      "archive_relative_path": "inputs/tools/calendar_timezone_playwright.py",
+      "bytes": 12321,
+      "sha256": "aea7d57bfd4a6c9ed7f651dd332537cbb2b054c8bec9234fb50d143803eb9230",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/check.py",
+      "archive_relative_path": "inputs/tools/check.py",
+      "bytes": 12742,
+      "sha256": "97eb6b6cb2ee9ffb82366d29ea289bddea16a015e643ac0fbce08e7367221f18",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/check_runner_test.py",
+      "archive_relative_path": "inputs/tools/check_runner_test.py",
+      "bytes": 17559,
+      "sha256": "79947bd2b5dc3e1fe4cd09745cbb403f1dcc4c89ac6dfa321f2e5517a852b54d",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/compatibility_playwright.py",
+      "archive_relative_path": "inputs/tools/compatibility_playwright.py",
+      "bytes": 4310,
+      "sha256": "36537279d5bc5f6488b87e26f8ddd64b56eed5e49b884db1d1967680120b5935",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/csv_playwright.py",
+      "archive_relative_path": "inputs/tools/csv_playwright.py",
+      "bytes": 9419,
+      "sha256": "f0cd8d05f88d16200bc0490cc3ca18905a863e3461ca4c15f003e93a28cab273",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/date_semantics_test.py",
+      "archive_relative_path": "inputs/tools/date_semantics_test.py",
+      "bytes": 3835,
+      "sha256": "7a9aec3b94d2a756bfa5682662c76afd6734a48147746a254b626ff9e9bbb97e",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/dialog_lifecycle_playwright.py",
+      "archive_relative_path": "inputs/tools/dialog_lifecycle_playwright.py",
+      "bytes": 9433,
+      "sha256": "418e739adfa38b2270af304d337e0ff60ace4a6b36e459937525ca93cbe84c51",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/dst_wall_time_playwright.py",
+      "archive_relative_path": "inputs/tools/dst_wall_time_playwright.py",
+      "bytes": 4660,
+      "sha256": "7c648596409b46cebe2e94003bd1453c50230715c637f17dc85800a36ab6f6c7",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/foreign_wall_time_playwright.py",
+      "archive_relative_path": "inputs/tools/foreign_wall_time_playwright.py",
+      "bytes": 5079,
+      "sha256": "588880115089dea42c1c3a52c9d37a0f824dfc2b7c1c9da215e40dce3ac30e11",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/help_playwright.py",
+      "archive_relative_path": "inputs/tools/help_playwright.py",
+      "bytes": 12010,
+      "sha256": "65a93798188c51b8fbc545472eb3cecadcd1cdd93aa59a1b25f02dba6473a2e7",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/ime_input_playwright.py",
+      "archive_relative_path": "inputs/tools/ime_input_playwright.py",
+      "bytes": 8006,
+      "sha256": "e96a627096fe0b10ada1bde69fda633dcf880d9faf32ee08a792e997b013322e",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/import_conflicts_playwright.py",
+      "archive_relative_path": "inputs/tools/import_conflicts_playwright.py",
+      "bytes": 6255,
+      "sha256": "44314147afc41e901616e023810322db8bac47a942470962a3db59da11ad9a26",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/import_preview_concurrency_playwright.py",
+      "archive_relative_path": "inputs/tools/import_preview_concurrency_playwright.py",
+      "bytes": 10848,
+      "sha256": "a6ca1642c18610d5534559846ba14f08248b706649270f02dc5cede6e9644e6e",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/import_read_lifecycle_playwright.py",
+      "archive_relative_path": "inputs/tools/import_read_lifecycle_playwright.py",
+      "bytes": 5017,
+      "sha256": "7479233c250e41eefe74cc19bafbd9be27c02cb56a9a938b8ee30b5364fc1397",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/import_reference_playwright.py",
+      "archive_relative_path": "inputs/tools/import_reference_playwright.py",
+      "bytes": 7017,
+      "sha256": "63f99d8f77668805e7740303cba606097bb6d8139aa9bc4d3b15c2bfa8a0c0a7",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/imported_reminder_edit_playwright.py",
+      "archive_relative_path": "inputs/tools/imported_reminder_edit_playwright.py",
+      "bytes": 7990,
+      "sha256": "aee16d7eca31164e05f0d95029903aea73ea85f1138191ee243075c06dd74155",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/imported_text_edit_playwright.py",
+      "archive_relative_path": "inputs/tools/imported_text_edit_playwright.py",
+      "bytes": 12287,
+      "sha256": "d8a8a4f70dcb6e4e002c412753a4680ec4e99d7f20062fb346433dbde53a8dc2",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/onboarding_playwright.py",
+      "archive_relative_path": "inputs/tools/onboarding_playwright.py",
+      "bytes": 4839,
+      "sha256": "dd0cce183b109129556899075eb8c16a0c4c377565a8ddbf6e786308c260dcbd",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/performance_playwright.py",
+      "archive_relative_path": "inputs/tools/performance_playwright.py",
+      "bytes": 13036,
+      "sha256": "df2c5f0c3addb0b14e43c7154c4e1b9a3e002ffc9dc2dd581149fbe141938f92",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/project_scope_playwright.py",
+      "archive_relative_path": "inputs/tools/project_scope_playwright.py",
+      "bytes": 15835,
+      "sha256": "046a44ec6fc52ac45ec45c5a8265210f70dc71d3a448c1cb8d02f13b24925598",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/queued_write_concurrency_playwright.py",
+      "archive_relative_path": "inputs/tools/queued_write_concurrency_playwright.py",
+      "bytes": 5085,
+      "sha256": "d965fc7d8b57e26bf4f29a20e344467223cc7ada8fdaf3c3c8d4d11043ed4d2d",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/quick_add_date_playwright.py",
+      "archive_relative_path": "inputs/tools/quick_add_date_playwright.py",
+      "bytes": 9918,
+      "sha256": "d21e0b843078e223db7e6ca977964ec9f41c55c6aaeef853acddb9f19c79b069",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/quick_add_recovery_playwright.py",
+      "archive_relative_path": "inputs/tools/quick_add_recovery_playwright.py",
+      "bytes": 15616,
+      "sha256": "952d75f9d58d5feeefb7c121885784e810b5fab67321e51da425c76717e07cbb",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/quick_add_workspace_playwright.py",
+      "archive_relative_path": "inputs/tools/quick_add_workspace_playwright.py",
+      "bytes": 14559,
+      "sha256": "9facea44c20a4c2b0170b55431f28cb90b39f4748213bcab0ea7becf1b8cc980",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/recovery_management_playwright.py",
+      "archive_relative_path": "inputs/tools/recovery_management_playwright.py",
+      "bytes": 15951,
+      "sha256": "0be3415795f8345ccc4610e6b24bb9e2dbcceed264a742e5a1353f026876697f",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/recovery_playwright.py",
+      "archive_relative_path": "inputs/tools/recovery_playwright.py",
+      "bytes": 10926,
+      "sha256": "c3f2dad1f1d23c01bac886ad5ab399b7bf87692f70f115279b0e06c9c5a6c0e7",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/recurrence_timezone_playwright.py",
+      "archive_relative_path": "inputs/tools/recurrence_timezone_playwright.py",
+      "bytes": 10263,
+      "sha256": "dcfa2c419d6701da99bc58569b6f7d0b91fa6506ea137cd12e6c4238eaabff2c",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/release_payload_test.py",
+      "archive_relative_path": "inputs/tools/release_payload_test.py",
+      "bytes": 5517,
+      "sha256": "6bdd0e719d0bbf53b3aef7493bea42d56a0f225c828dcfa85f55db675ac15d6f",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/release_playwright.py",
+      "archive_relative_path": "inputs/tools/release_playwright.py",
+      "bytes": 2706,
+      "sha256": "fa0309749d98128ffc7334cba8215ee0385ff70ce8979f7824dafa6a1bb121e5",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/release_versions_test.py",
+      "archive_relative_path": "inputs/tools/release_versions_test.py",
+      "bytes": 8348,
+      "sha256": "33190b5c1ef5fd926ace6e5b782564dc13b1f5c19e8be30fa79295e11fc4c643",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/reminder_concurrency_playwright.py",
+      "archive_relative_path": "inputs/tools/reminder_concurrency_playwright.py",
+      "bytes": 10086,
+      "sha256": "b896a4d12eb7d73bdd46cd8849a4db4e0649cf64f177fc6f658af52b47a762f5",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/repeat_delete_playwright.py",
+      "archive_relative_path": "inputs/tools/repeat_delete_playwright.py",
+      "bytes": 13311,
+      "sha256": "9b17477debfb120549e22fc0ea4a3fcb639da118e41bfa4a3a7f2ade15f9f50c",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/repeat_lineage_playwright.py",
+      "archive_relative_path": "inputs/tools/repeat_lineage_playwright.py",
+      "bytes": 14469,
+      "sha256": "c00faea8afbe7788de0096fea380245df61756426aa0619adc12992cdd151033",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/repeat_merge_playwright.py",
+      "archive_relative_path": "inputs/tools/repeat_merge_playwright.py",
+      "bytes": 17707,
+      "sha256": "5c1f3a8ce8a3892b8317ca9f38a6b565c041a419cb08cfe310aee9ed1674763f",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/saved_views_playwright.py",
+      "archive_relative_path": "inputs/tools/saved_views_playwright.py",
+      "bytes": 12188,
+      "sha256": "93520e09b5193f8019c7b18efa4d6b6fc0af137c6f39c7940237b533a8d1c843",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/security_playwright.py",
+      "archive_relative_path": "inputs/tools/security_playwright.py",
+      "bytes": 2979,
+      "sha256": "b1aa0d32761b5fb9fdd6cdd0f7f400b1609434bd9164d66effce3079f5b8794e",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/security_policy.py",
+      "archive_relative_path": "inputs/tools/security_policy.py",
+      "bytes": 2171,
+      "sha256": "f4fe8ec898b4299796470f745b90560e602fb1a6b8af3ada85b58e4d1169536f",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/service_worker_update_playwright.py",
+      "archive_relative_path": "inputs/tools/service_worker_update_playwright.py",
+      "bytes": 24885,
+      "sha256": "de5a0730a35d9f65cb3e6ce278406667590f7c491cca5f9c1096a922c10a22fd",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/smoke_playwright.py",
+      "archive_relative_path": "inputs/tools/smoke_playwright.py",
+      "bytes": 158107,
+      "sha256": "a9643b87703baaf0256eb0d5e76353122b0b3aaa8dc5412df943989c6ab8e819",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/static_syntax_test.py",
+      "archive_relative_path": "inputs/tools/static_syntax_test.py",
+      "bytes": 6329,
+      "sha256": "d1cd751dc356db1ce021b10c94689a8ea65d430ca140b9b1ecbcd2585c0ff8d0",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/stats_scope_playwright.py",
+      "archive_relative_path": "inputs/tools/stats_scope_playwright.py",
+      "bytes": 6174,
+      "sha256": "39cf06d1beda3fda7b0846b2819792622f2c1fb9034d474b27690eb929896060",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/storage_health_playwright.py",
+      "archive_relative_path": "inputs/tools/storage_health_playwright.py",
+      "bytes": 2956,
+      "sha256": "7304e6c7aa2f5b0c6c747dfd8c9b96bf06476f4a4467133a509ad8e14b74a203",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/storage_lifecycle_playwright.py",
+      "archive_relative_path": "inputs/tools/storage_lifecycle_playwright.py",
+      "bytes": 3395,
+      "sha256": "0c7afab6487ad6a99b8e9f26ff7f16ada9d27b3afe013dc6d0086537302ee35b",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/task_draft_playwright.py",
+      "archive_relative_path": "inputs/tools/task_draft_playwright.py",
+      "bytes": 31000,
+      "sha256": "bb11d6624c570197519c1f09365b186e89169f32f99b9e6a62d0e40d99114899",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/time_refresh_playwright.py",
+      "archive_relative_path": "inputs/tools/time_refresh_playwright.py",
+      "bytes": 17033,
+      "sha256": "2702ce1f4549817a15684d18f33b591a864d8475f31e8a6b187d032e3b4fb8e8",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/timezone_playwright.py",
+      "archive_relative_path": "inputs/tools/timezone_playwright.py",
+      "bytes": 7505,
+      "sha256": "9debe614eabe082693e81d43885bdf5d2863d49889ee6d23ce20a8334b682f6b",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/translation_fallback.py",
+      "archive_relative_path": "inputs/tools/translation_fallback.py",
+      "bytes": 6383,
+      "sha256": "2eff59e46d30b0e30ce28c5c0f52476aeb06d4f4b7e2de7476f5f33356d56bec",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/undo_concurrency_playwright.py",
+      "archive_relative_path": "inputs/tools/undo_concurrency_playwright.py",
+      "bytes": 7601,
+      "sha256": "42f938033284a83dd07fd2e6ef8b2345a31fe358ec61fd3ee40f48897b11aaa7",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/upgrade_playwright.py",
+      "archive_relative_path": "inputs/tools/upgrade_playwright.py",
+      "bytes": 16370,
+      "sha256": "cc747cec4da12c67700c316eac58f58b8d31d27c7c0a806a1aa909243fe15698",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/validate_static.py",
+      "archive_relative_path": "inputs/tools/validate_static.py",
+      "bytes": 53013,
+      "sha256": "b795eeeb20e2d1db158a3637fd8154218bedec05e0139c2dbf0b00bc971e847d",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/verify_deployment.py",
+      "archive_relative_path": "inputs/tools/verify_deployment.py",
+      "bytes": 4300,
+      "sha256": "c21aa60543f118b9d6d7d96b94b393816560f69737c53f58891c4ea1bfe43396",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/verify_deployment_test.py",
+      "archive_relative_path": "inputs/tools/verify_deployment_test.py",
+      "bytes": 5579,
+      "sha256": "9c1171e97a689523e2080830951aee85c8d13730c78368f6d307a45083ea2cd7",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/views_delete_playwright.py",
+      "archive_relative_path": "inputs/tools/views_delete_playwright.py",
+      "bytes": 14352,
+      "sha256": "e361d8c202f78e6683b643874c3572839920f1c4adf89fee242fd91aad6bafc4",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/views_portability_playwright.py",
+      "archive_relative_path": "inputs/tools/views_portability_playwright.py",
+      "bytes": 19460,
+      "sha256": "8836c4b3e00f8b7ff3243ffbc7b01a14f2c06359957f6c3a2d49dfa3c6e54f68",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/workspace_failure_playwright.py",
+      "archive_relative_path": "inputs/tools/workspace_failure_playwright.py",
+      "bytes": 26912,
+      "sha256": "7100ce3e390c6109a1115e5dae1bd3241731ebd3950a6020b29d9029a92e0868",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/workspace_performance_playwright.py",
+      "archive_relative_path": "inputs/tools/workspace_performance_playwright.py",
+      "bytes": 28795,
+      "sha256": "b0a1a36d6eb779e3b9c94d7af377c152ed26af9517039dee25f6c03b769d3518",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/tools/workspace_roundtrip_playwright.py",
+      "archive_relative_path": "inputs/tools/workspace_roundtrip_playwright.py",
+      "bytes": 27872,
+      "sha256": "a892508c21a857c795b097bbbaa29274d334468f6fd367cac930a697cfaf2a49",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/inputs/vercel.json",
+      "archive_relative_path": "inputs/vercel.json",
+      "bytes": 1194,
+      "sha256": "c2fa8f32f93565693a7d3d965dc53582d3fae96745f577f1eec256a25e0ae51c",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/build-one/task-tracer-4.9.0.zip",
+      "archive_relative_path": "build-one/task-tracer-4.9.0.zip",
+      "bytes": 797361,
+      "sha256": "197bc587145d65f986320ce4b69bd0a2937ce8d48ca3ceb3183a49dfc8849b7b",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/build-one/task-tracer-4.9.0.zip.sha256",
+      "archive_relative_path": "build-one/task-tracer-4.9.0.zip.sha256",
+      "bytes": 88,
+      "sha256": "dbeaa4e5abcc01e35bb626d222e8914db3a11d58f6772514145ac65ec39063d6",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/build-two/task-tracer-4.9.0.zip",
+      "archive_relative_path": "build-two/task-tracer-4.9.0.zip",
+      "bytes": 797361,
+      "sha256": "197bc587145d65f986320ce4b69bd0a2937ce8d48ca3ceb3183a49dfc8849b7b",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/build-two/task-tracer-4.9.0.zip.sha256",
+      "archive_relative_path": "build-two/task-tracer-4.9.0.zip.sha256",
+      "bytes": 88,
+      "sha256": "dbeaa4e5abcc01e35bb626d222e8914db3a11d58f6772514145ac65ec39063d6",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-appearance_preferences_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-appearance_preferences_playwright.log",
+      "bytes": 644,
+      "sha256": "62e192463114cb12fcd6426b9d6e47408b5fe9bf97d5ddc916427ac3396bfd5f",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-backup_freshness_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-backup_freshness_playwright.log",
+      "bytes": 751,
+      "sha256": "e62721c6cb3b94acbaba794fa42f07bcd773a4e32ff7d3e82f444518bdd0d869",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-backup_reminder_priority_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-backup_reminder_priority_playwright.log",
+      "bytes": 781,
+      "sha256": "79130fa534f1c6b56a8b55f9c524b5eb9af3d2159c0ff2edd6d5660f026507b8",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-batch_selection_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-batch_selection_playwright.log",
+      "bytes": 566,
+      "sha256": "fabfd50d273ec38c39dc54d7c5e911107b095ff840f07a6cf2da15476e99c8b8",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-calendar_navigation_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-calendar_navigation_playwright.log",
+      "bytes": 591,
+      "sha256": "ea8e092cf014de2dcaf649201908565b036a5142b07a80d35085df591ebffd51",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-calendar_performance_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-calendar_performance_playwright.log",
+      "bytes": 1092,
+      "sha256": "bb41a969c9413b9c07ae9692a46e90ddf99f47d1348a71aee5d35b389b94c76c",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-calendar_timezone_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-calendar_timezone_playwright.log",
+      "bytes": 923,
+      "sha256": "0fc1049018a2b1420915a6b4a2652afacf74e850af157569c4de32897d461c28",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-compatibility_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-compatibility_playwright.log",
+      "bytes": 411,
+      "sha256": "487543b299ad25257e3b435ac0636963955bd3f43dc106c34e63e7422b221e9c",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-csv_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-csv_playwright.log",
+      "bytes": 171,
+      "sha256": "42ccf19950a91b482778f13fe44fe1bd4b73f22e629e254ca62e71ca8fc1e31f",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-dialog_lifecycle_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-dialog_lifecycle_playwright.log",
+      "bytes": 469,
+      "sha256": "4e8ff96884dc1fdaef31b8a273f853dcebb80ad7f799ed0d785ceff0ac875381",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-dst_wall_time_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-dst_wall_time_playwright.log",
+      "bytes": 732,
+      "sha256": "3c057a0e2df2b0f028885c5274d305307d5e1043d328ef6a802a9726de522abd",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-foreign_wall_time_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-foreign_wall_time_playwright.log",
+      "bytes": 717,
+      "sha256": "de9ef4995f9ff849a6c615bf3394bbe6aa6eb8340ca0d9452992d1a266976179",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-help_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-help_playwright.log",
+      "bytes": 466,
+      "sha256": "7efda34f669dc14476f6bd5c3af573990ed71a8efd1e4a0d2d44836c5fa8631d",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-ime_input_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-ime_input_playwright.log",
+      "bytes": 473,
+      "sha256": "b291568ed1ab8eb8376cafb9397501d7fa66bd31bc7b7eec28b4bfe8494a5d6f",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-imported_reminder_edit_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-imported_reminder_edit_playwright.log",
+      "bytes": 769,
+      "sha256": "36606dbcf27f882cd28cd84fdd1d11b229693e625d68100b00eda008a378904a",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-imported_text_edit_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-imported_text_edit_playwright.log",
+      "bytes": 470,
+      "sha256": "708cbf7558ea67bce353d4ae2ca5d814be1d35dd002db082df873dcd0f0de7e1",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-onboarding_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-onboarding_playwright.log",
+      "bytes": 381,
+      "sha256": "9ed095e3f19007edde24e1815035955e5f41462dd62124056aa490fec8fd8476",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-probe.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-probe.log",
+      "bytes": 52,
+      "sha256": "7eaef05f557c5062e470cac0fd92cb23fd8a488785bf3be66618c3eb5375994b",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-project_scope_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-project_scope_playwright.log",
+      "bytes": 759,
+      "sha256": "8bc0d131a244375eea1bdb440f32f5bf797e4973f8baacbd903724b88bb1e3e4",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-quick_add_date_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-quick_add_date_playwright.log",
+      "bytes": 999,
+      "sha256": "befb0f63f8f3dc8334af4aa3cfd50a2c72fc441709566df35d10f4644b5ce15e",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-quick_add_recovery_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-quick_add_recovery_playwright.log",
+      "bytes": 855,
+      "sha256": "cc142171c18c2f836704b880b872a49cca89ea20e391ca33941f277e5159f86c",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-recovery_management_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-recovery_management_playwright.log",
+      "bytes": 554,
+      "sha256": "e3a3095edcf636946106ba65d815e004980a60a13c7c8213d04c6a1db3b45555",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-recurrence_timezone_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-recurrence_timezone_playwright.log",
+      "bytes": 2828,
+      "sha256": "455e8a1b72828133114abbc2ebd1267a23fb1a378f478192eddfa2344c711193",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-repeat_delete_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-repeat_delete_playwright.log",
+      "bytes": 689,
+      "sha256": "32c69896b43141ab55957d08d3dc8fd5ba97a8818b1c20dd209c174b7b57a600",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-repeat_lineage_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-repeat_lineage_playwright.log",
+      "bytes": 560,
+      "sha256": "e19f53622925000fc05e6d6d38b2fc2e5c69ba6c086a4827acea5072ade24258",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-repeat_merge_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-repeat_merge_playwright.log",
+      "bytes": 555,
+      "sha256": "f4e7e632d0e89b43980e5800d010fb3c75873233eac19b819658478ec12bbbd5",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-stats_scope_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-stats_scope_playwright.log",
+      "bytes": 248,
+      "sha256": "999bd841f439f06fe4bb0d750fc668ac02e403b75403c3347c6c9e9266f524a8",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-task_draft_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-task_draft_playwright.log",
+      "bytes": 1031,
+      "sha256": "d3cf1fd63312a8ee0e8b4a4d3c70fd3a8539af0639b8f9f9369813aa539d49cd",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-time_refresh_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-time_refresh_playwright.log",
+      "bytes": 1309,
+      "sha256": "3d062fee2dd52090eaab95b485874c48bdc9891b6fe1163732238fc55d143a35",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-timezone_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-timezone_playwright.log",
+      "bytes": 414,
+      "sha256": "d71cc0213ce96d90ff09595dd2f811eae5b03edc4a347f4f9bdb94e9e78ad435",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-views_delete_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-views_delete_playwright.log",
+      "bytes": 903,
+      "sha256": "a159c7d46e310edc28369e6b864e44ae3734ec9f3d492f64e1a49516efd34b3e",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-views_portability_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-views_portability_playwright.log",
+      "bytes": 813,
+      "sha256": "0523c492d75cb0da590c6c60533f2c541461073e376807165bc13923d6d45249",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-workspace_failure_playwright.log",
+      "archive_relative_path": "matrix-chromium-logs/1fb8489b-602d-4fec-9e9e-8af2dd6a1f8e/chromium-workspace_failure_playwright.log",
+      "bytes": 1438,
+      "sha256": "48654d74ad524ffb3ea525fd49966dc19f03666e124617da1cbdec79d2d4c06f",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-appearance_preferences_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-appearance_preferences_playwright.log",
+      "bytes": 634,
+      "sha256": "df802e7bdb36e735ff8528b9910035548ab892b8dd7c25ad62835d0fce31df08",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-backup_freshness_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-backup_freshness_playwright.log",
+      "bytes": 742,
+      "sha256": "82db308d54e6978a7765db94ec5668fde6509ba49ad8b18933bc70763ffc381b",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-backup_reminder_priority_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-backup_reminder_priority_playwright.log",
+      "bytes": 772,
+      "sha256": "d2b783ba37c3323be5a29ebeff48cbb55064aec610dd721b7e56d99cc7c53b27",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-batch_selection_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-batch_selection_playwright.log",
+      "bytes": 557,
+      "sha256": "31a0f0c06ef1ff0b2ffdb7e7a136f4c79445e26024b9260627514f5b07d3f84d",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-calendar_navigation_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-calendar_navigation_playwright.log",
+      "bytes": 582,
+      "sha256": "2e5130a0c155552a9c194e161cf79302743a229ecdd1d53d4734ca4d5c4af469",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-calendar_performance_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-calendar_performance_playwright.log",
+      "bytes": 1083,
+      "sha256": "244783f57a50c0400512ddca0234cb3f4b6797a4481e7299c039317a80908c5c",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-calendar_timezone_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-calendar_timezone_playwright.log",
+      "bytes": 402,
+      "sha256": "cda5cb824881e874dc75d25c143e60213892f98b2efe0131f751b7795d6c98c7",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-compatibility_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-compatibility_playwright.log",
+      "bytes": 382,
+      "sha256": "6db78ae7af7123c25165538f4f7329d7e9c6e6c5fec61c1a4e82c4823fa9a945",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-csv_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-csv_playwright.log",
+      "bytes": 170,
+      "sha256": "41efc4c5d787cbe0746750a988cf485b4bd32a0a6478c4cf1412a36b15269a3b",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-dialog_lifecycle_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-dialog_lifecycle_playwright.log",
+      "bytes": 468,
+      "sha256": "3886a062921064e4debf230df9384192e7f88b9da7be1d422fb4a734285eafec",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-dst_wall_time_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-dst_wall_time_playwright.log",
+      "bytes": 722,
+      "sha256": "1f8b91f60d78d7b774b0185f24522d77e98c1d84e99c0daba2e385c5d4792436",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-foreign_wall_time_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-foreign_wall_time_playwright.log",
+      "bytes": 708,
+      "sha256": "4b990c9644c6504c2005498781e54f150f5b206d12dbea32d17a0d9bc7519a9c",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-help_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-help_playwright.log",
+      "bytes": 457,
+      "sha256": "48ef6cfafc6ba7de9096610596802b7453e418fbdb2854b22690eed896786f9d",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-ime_input_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-ime_input_playwright.log",
+      "bytes": 464,
+      "sha256": "8476fbb3139c4b98c22c71374426056b42b6815a77e4984763a537374c404905",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-imported_reminder_edit_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-imported_reminder_edit_playwright.log",
+      "bytes": 760,
+      "sha256": "1ee7115da63f02ae095f599c55372094cd038e787b8dc2178ad3487cf50ff269",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-imported_text_edit_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-imported_text_edit_playwright.log",
+      "bytes": 454,
+      "sha256": "5a072bbd377af1ed0825b8c70cb6676f97395710a0d374d0c052c29e45d4ee6d",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-onboarding_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-onboarding_playwright.log",
+      "bytes": 372,
+      "sha256": "a329325056829572df4c1f48355e7557239d9d6b10ae728cd7fdfcc65c8a9181",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-probe.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-probe.log",
+      "bytes": 43,
+      "sha256": "b5247e1b6b1f7474ec4ac4fd18c8b347c6292e54372bf67e6c0f91bf6dfed7f2",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-project_scope_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-project_scope_playwright.log",
+      "bytes": 750,
+      "sha256": "158ee865458909488965adafb0233cf584cd29443d6dd152c0527ca5a75e9cc3",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-quick_add_date_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-quick_add_date_playwright.log",
+      "bytes": 990,
+      "sha256": "f358e158e2570af1515be483cdf03172c442b4db7b3d749e8326ecd621999455",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-quick_add_recovery_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-quick_add_recovery_playwright.log",
+      "bytes": 845,
+      "sha256": "db244947f5a2afcde311ddcafc99c43b9d659d2ef8111548fd8e526081d6b2e8",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-recovery_management_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-recovery_management_playwright.log",
+      "bytes": 553,
+      "sha256": "9c49ae1ac974c14d2ef98a6ba4344fd20bb78cfd939a0adf96986069e8dee882",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-recurrence_timezone_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-recurrence_timezone_playwright.log",
+      "bytes": 2819,
+      "sha256": "521197df4cbf0960b49312d033aeaa8d8e8ab1586428b8c9a21a70fca0914b18",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-repeat_delete_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-repeat_delete_playwright.log",
+      "bytes": 668,
+      "sha256": "f1b707165c603f9892fea8f64db5e540f51f086101e96aa6356cc95e7ab09562",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-repeat_lineage_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-repeat_lineage_playwright.log",
+      "bytes": 542,
+      "sha256": "bf4ce1c3b141ccbd33913fae68d4a9a73d7662400ebd0ec0abd46ed11cf11ecb",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-repeat_merge_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-repeat_merge_playwright.log",
+      "bytes": 535,
+      "sha256": "d3ee7c64c20cd545cf9bc02e72a44563a3f0014e439e14f612686a27c681cf1d",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-stats_scope_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-stats_scope_playwright.log",
+      "bytes": 239,
+      "sha256": "4f2bc6078053b84e54c5814c655a1566777854968f98e9ca18ae6915fbb81106",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-task_draft_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-task_draft_playwright.log",
+      "bytes": 1022,
+      "sha256": "a4a861d0df5909064ca5c3fd3ea7b53acb8d4f2596c771b3d2b7eb0cff1835fc",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-time_refresh_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-time_refresh_playwright.log",
+      "bytes": 1300,
+      "sha256": "fec34fefe0248fd8aed09bb6600d6cda795947300433e3b55cb5b3509c146ace",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-timezone_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-timezone_playwright.log",
+      "bytes": 402,
+      "sha256": "82d404f01de2ed276fba59ad2846dbdc3ebfe35904e86529f27d91ac5ad441f8",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-views_delete_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-views_delete_playwright.log",
+      "bytes": 893,
+      "sha256": "63eed6801df2202995b7ce2175d32733b50438922723196debf51def06d0f1c3",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-views_portability_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-views_portability_playwright.log",
+      "bytes": 804,
+      "sha256": "227dfbeb20b1b0bb3453c3658b3511064a2d0dbe7a400162cca9c22a73d8dd85",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-workspace_failure_playwright.log",
+      "archive_relative_path": "matrix-firefox-logs/a80154a4-0dbe-43ae-b998-03f04e7bac48/firefox-workspace_failure_playwright.log",
+      "bytes": 1428,
+      "sha256": "42bf9ac2c8a58517010fbbd7f36e4b81c3a8c992ee73087d6857f5a567fa98c2",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-appearance_preferences_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-appearance_preferences_playwright.log",
+      "bytes": 742,
+      "sha256": "df1677494553d9431766cd3a184d78e6437ea43ab305a5cdb43afdc32e391cdc",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-backup_freshness_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-backup_freshness_playwright.log",
+      "bytes": 858,
+      "sha256": "9f2890aa79c5932a4629d0774da2a06a71e510b08b644b074fd82b0f1f6175ed",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-backup_reminder_priority_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-backup_reminder_priority_playwright.log",
+      "bytes": 888,
+      "sha256": "f241fd210b939273e166b5d7375c921b09fdbb50f4669a81c007c952eaecc5b8",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-batch_selection_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-batch_selection_playwright.log",
+      "bytes": 673,
+      "sha256": "dcb7f22876a4e46a6aed9bf8272106ffeab48ab51b5035cdb83ce17c294c73de",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-calendar_navigation_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-calendar_navigation_playwright.log",
+      "bytes": 698,
+      "sha256": "247b5d0fbbe018c51328baa9ca97aae85ca1043d90ef23dd8254b7f111284321",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-calendar_performance_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-calendar_performance_playwright.log",
+      "bytes": 1199,
+      "sha256": "5fc5313ce131b7263ad33f90bbd59e3764d1a670d0f9ccc739dfce6bc0c80d35",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-calendar_timezone_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-calendar_timezone_playwright.log",
+      "bytes": 518,
+      "sha256": "78bbf2db90f53be9de27120a8f3b0fbbca5f72c5ffec70b66a86ae68c8dd6f39",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-compatibility_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-compatibility_playwright.log",
+      "bytes": 603,
+      "sha256": "3416a04dc1172d726dda329ce3d79a9a934c28ace2780503396af4bb5b9a9c87",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-csv_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-csv_playwright.log",
+      "bytes": 405,
+      "sha256": "f111bba95a275cde64e16a9c18033846ac69dcc6f0956e9071ad6213eae21953",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-dialog_lifecycle_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-dialog_lifecycle_playwright.log",
+      "bytes": 585,
+      "sha256": "915e80def982edbda24f5d3653bb4868f48c050563e2061b54d29be163f287a0",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-dst_wall_time_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-dst_wall_time_playwright.log",
+      "bytes": 837,
+      "sha256": "66472191a22b8adeee8d332f80e4def9098f08848eb927d531ef06ad71b9b470",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-foreign_wall_time_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-foreign_wall_time_playwright.log",
+      "bytes": 824,
+      "sha256": "bdf55a7660a14d234f7408d006108488169cb7b706900def3bcb20df74c28c85",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-help_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-help_playwright.log",
+      "bytes": 573,
+      "sha256": "034f523816234df83393f16ad54136c0e87cb29a5f7ee81541d7dfcdd489c9fa",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-ime_input_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-ime_input_playwright.log",
+      "bytes": 580,
+      "sha256": "b355f963d1665976a7688b80fb7bbf41f1a958b04bc579172a33c2c36bd77520",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-imported_reminder_edit_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-imported_reminder_edit_playwright.log",
+      "bytes": 876,
+      "sha256": "25a2879ed06eed372b55950a290c89c3dab8e7c7dacb7c69e873a4421f52bf66",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-imported_text_edit_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-imported_text_edit_playwright.log",
+      "bytes": 563,
+      "sha256": "982a915392a739a70cb8cb7b4da7e02092966a117c246768f19458f091bfdd5c",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-onboarding_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-onboarding_playwright.log",
+      "bytes": 488,
+      "sha256": "2b7c26999050fd0255b35cd4128e353dd1fde334e9a5fb02cf7046cf3f307034",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-probe.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-probe.log",
+      "bytes": 159,
+      "sha256": "5dfd915ed3be4dc76a2600b3879e0b42a7365781a67d6e0db7ac4236330bcf75",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-project_scope_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-project_scope_playwright.log",
+      "bytes": 866,
+      "sha256": "d88f71a79dc94431f3512e6170ce8a11d28a9d68afc4cd2b152cd7b9b378bc12",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-quick_add_date_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-quick_add_date_playwright.log",
+      "bytes": 1106,
+      "sha256": "247275604121c2d748ebe0a281db9b8e5f81ad0409103abf92f062eaf9519eae",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-quick_add_recovery_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-quick_add_recovery_playwright.log",
+      "bytes": 960,
+      "sha256": "b33bee429c120cdf956e116ca95c55470417e4e28cbef5b0de7d42c45c7a51e7",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-recovery_management_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-recovery_management_playwright.log",
+      "bytes": 670,
+      "sha256": "e511fd3aebc172436680351c8ef3dd3d0546384b4b8e31a52482e5cc3884efe8",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-recurrence_timezone_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-recurrence_timezone_playwright.log",
+      "bytes": 2935,
+      "sha256": "01a7e26babc14185717620b44acce178f5333cef4c8683b3befb3178ec64bf24",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-repeat_delete_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-repeat_delete_playwright.log",
+      "bytes": 772,
+      "sha256": "60285aa033b118268cd10178cbec17f41cc6685f094d1737604bbea66e538406",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-repeat_lineage_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-repeat_lineage_playwright.log",
+      "bytes": 649,
+      "sha256": "b4f8c7323ff8494871b714b64f8ad5d15e28afe2f844358cc1cef7f7a1439383",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-repeat_merge_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-repeat_merge_playwright.log",
+      "bytes": 640,
+      "sha256": "7c6fce46ddebc8d988a65f0a5884cbc8d3047cce495e0f35bbcad4647e41c1f1",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-stats_scope_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-stats_scope_playwright.log",
+      "bytes": 355,
+      "sha256": "7b43e09c3704a978c80f0774376f265c38501175f7516353ac76922dc804a534",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-task_draft_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-task_draft_playwright.log",
+      "bytes": 1138,
+      "sha256": "b8cb2abef09a428b547ad1db79d9fc19e853ad6eb62964a193b6e27af2d6eb89",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-time_refresh_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-time_refresh_playwright.log",
+      "bytes": 1416,
+      "sha256": "9b6fe2851ddf345dc9cdeac65ea88645a4974550260b7626ea9663d829d924e4",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-timezone_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-timezone_playwright.log",
+      "bytes": 518,
+      "sha256": "c7cdf904ee708f34bf9127d7530b1cb6eb383c4079dff5e783bd7091434c9f7f",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-views_delete_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-views_delete_playwright.log",
+      "bytes": 1008,
+      "sha256": "f46805c969d22e2abd999413a88ebe88865203b102cec09fb386d6d44be762c4",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-views_portability_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-views_portability_playwright.log",
+      "bytes": 920,
+      "sha256": "f67f254005c2abb41df3d8fd7840f37f9d3bad687f13e994992efc1f6b7c88cc",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-workspace_failure_playwright.log",
+      "archive_relative_path": "matrix-webkit-logs/a1eb5414-31e5-4e4e-8c0e-aa717a4f294b/webkit-workspace_failure_playwright.log",
+      "bytes": 1536,
+      "sha256": "ee0e47893f7bd4831bfca0645702ae7b58f4226ccb6fcfb8f8f116a5b2a13e43",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/production/push/bc951de3-7645-40f2-af61-42689ebb7afe/evidence-sha256.json",
+      "archive_relative_path": "production/push/bc951de3-7645-40f2-af61-42689ebb7afe/evidence-sha256.json",
+      "bytes": 1329,
+      "sha256": "da87698d308564684ae8e9be114810bff63ab9440b3186bc6d10eaf13577c48c",
+      "role": "actual-github-push-production-pending"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/production/push/bc951de3-7645-40f2-af61-42689ebb7afe/freeze.json",
+      "archive_relative_path": "production/push/bc951de3-7645-40f2-af61-42689ebb7afe/freeze.json",
+      "bytes": 11395,
+      "sha256": "f5dea27060897a52d01637416b735ea1716b9b1b354b86655aaa4e73f9cf94be",
+      "role": "actual-github-push-production-pending"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/production/push/bc951de3-7645-40f2-af61-42689ebb7afe/push.stderr.log",
+      "archive_relative_path": "production/push/bc951de3-7645-40f2-af61-42689ebb7afe/push.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "role": "actual-github-push-production-pending"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/production/push/bc951de3-7645-40f2-af61-42689ebb7afe/push.stdout.log",
+      "archive_relative_path": "production/push/bc951de3-7645-40f2-af61-42689ebb7afe/push.stdout.log",
+      "bytes": 90,
+      "sha256": "c203d064b0dc7dd7a1061163dc78adfc9e08347b704ab4e041a39767bb2f3f7e",
+      "role": "actual-github-push-production-pending"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/production/push/bc951de3-7645-40f2-af61-42689ebb7afe/push_candidate_490.py",
+      "archive_relative_path": "production/push/bc951de3-7645-40f2-af61-42689ebb7afe/push_candidate_490.py",
+      "bytes": 16352,
+      "sha256": "b2543b05b1823df375d0624763e3d248e6393e4c765f111e03dd7b82b5e3b7fe",
+      "role": "actual-github-push-production-pending"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/production/push/bc951de3-7645-40f2-af61-42689ebb7afe/release_490_common.py",
+      "archive_relative_path": "production/push/bc951de3-7645-40f2-af61-42689ebb7afe/release_490_common.py",
+      "bytes": 7775,
+      "sha256": "6c0cb959f5dadf71f2295f1e4fb2eab6f6235e7f321f32bafb3aca0c206bb33f",
+      "role": "actual-github-push-production-pending"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/production/push/bc951de3-7645-40f2-af61-42689ebb7afe/remote-main-after.stderr.log",
+      "archive_relative_path": "production/push/bc951de3-7645-40f2-af61-42689ebb7afe/remote-main-after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "role": "actual-github-push-production-pending"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/production/push/bc951de3-7645-40f2-af61-42689ebb7afe/remote-main-after.stdout.log",
+      "archive_relative_path": "production/push/bc951de3-7645-40f2-af61-42689ebb7afe/remote-main-after.stdout.log",
+      "bytes": 57,
+      "sha256": "6134b6f9aa4daa68cb14935f1be6cbb76b31112b3cc1533fc6bd594cb7c39587",
+      "role": "actual-github-push-production-pending"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/production/push/bc951de3-7645-40f2-af61-42689ebb7afe/remote-main-before.stderr.log",
+      "archive_relative_path": "production/push/bc951de3-7645-40f2-af61-42689ebb7afe/remote-main-before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "role": "actual-github-push-production-pending"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/production/push/bc951de3-7645-40f2-af61-42689ebb7afe/remote-main-before.stdout.log",
+      "archive_relative_path": "production/push/bc951de3-7645-40f2-af61-42689ebb7afe/remote-main-before.stdout.log",
+      "bytes": 57,
+      "sha256": "205a30876104a47b9a70716ebb7829f5bd960fe1f0425dcecbefa5455ef08678",
+      "role": "actual-github-push-production-pending"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final2-874zhd4d/production/push/bc951de3-7645-40f2-af61-42689ebb7afe/report.json",
+      "archive_relative_path": "production/push/bc951de3-7645-40f2-af61-42689ebb7afe/report.json",
+      "bytes": 51160,
+      "sha256": "29313d8a6ee56450d72da39e30c098a2d0ae528f2a017741a998d9683ce57067",
+      "role": "actual-github-push-production-pending"
+    },
+    {
+      "original_path": "/workspace/Task-Tracer-redesign/dist/task-tracer-4.8.6.zip",
+      "archive_relative_path": "baseline-archives/task-tracer-4.8.6.zip",
+      "bytes": 812059,
+      "sha256": "7a54122aae730cc566ef7e7b4040183842e02b8aa4f27d1b73ddd3bddafff895",
+      "role": "actual-previous-release-archive-used-by-upgrade"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final-pu_nzs6d/first-freeze-7caa99a/additional-design-documents/DESIGN.md",
+      "archive_relative_path": "additional-design-documents/DESIGN.md",
+      "bytes": 15029,
+      "sha256": "d057af528c830b29fa0075b0490467c3d56392a23e2e1f9142b153cd6d9269ae",
+      "role": "unchanged-design-document-from-original-archive"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final-pu_nzs6d/first-freeze-7caa99a/additional-design-documents/.impeccable/design.json",
+      "archive_relative_path": "additional-design-documents/.impeccable/design.json",
+      "bytes": 18285,
+      "sha256": "b0963bd7a0d121718ce58731bccc7ef6fe7dd734b15a910c67b92664764be71f",
+      "role": "unchanged-design-document-from-original-archive"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-final-pu_nzs6d/first-freeze-7caa99a/additional-design-documents/PRODUCT.md",
+      "archive_relative_path": "additional-design-documents/PRODUCT.md",
+      "bytes": 2368,
+      "sha256": "541d086771d3d626a4bbbaa56dec3f1be2e9f6c67d1765250f00a77d2f926182",
+      "role": "unchanged-design-document-from-original-archive"
+    },
+    {
+      "original_path": "/tmp/task-tracer-appearance-chromium-f9xom35l/report.json",
+      "archive_relative_path": "appearance-case-reports/task-tracer-appearance-chromium-f9xom35l/report.json",
+      "bytes": 1845,
+      "sha256": "764fa0c12c35b256fe4a0dfeb04e51d438c858779bbf04b5cc85a72cbb54fef9",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-appearance-chromium-f9xom35l/source-snapshot/index.html",
+      "archive_relative_path": "appearance-case-reports/task-tracer-appearance-chromium-f9xom35l/source-snapshot/index.html",
+      "bytes": 746877,
+      "sha256": "c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-appearance-chromium-f9xom35l/source-snapshot/tools/appearance_preferences_playwright.py",
+      "archive_relative_path": "appearance-case-reports/task-tracer-appearance-chromium-f9xom35l/source-snapshot/tools/appearance_preferences_playwright.py",
+      "bytes": 24503,
+      "sha256": "b4835bf3e2dd64fa4e57cc6a5c50c89cfa405559cec2b2bbde2414fc1031f389",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-appearance-chromium-f9xom35l/source-snapshot/tools/smoke_playwright.py",
+      "archive_relative_path": "appearance-case-reports/task-tracer-appearance-chromium-f9xom35l/source-snapshot/tools/smoke_playwright.py",
+      "bytes": 158107,
+      "sha256": "a9643b87703baaf0256eb0d5e76353122b0b3aaa8dc5412df943989c6ab8e819",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-appearance-firefox-zanu51wu/report.json",
+      "archive_relative_path": "appearance-case-reports/task-tracer-appearance-firefox-zanu51wu/report.json",
+      "bytes": 1836,
+      "sha256": "8f44e96471c41d57eeb6ffeb2f14dcd4a0fbb3fe29fd52064fe14300ae654c62",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-appearance-firefox-zanu51wu/source-snapshot/index.html",
+      "archive_relative_path": "appearance-case-reports/task-tracer-appearance-firefox-zanu51wu/source-snapshot/index.html",
+      "bytes": 746877,
+      "sha256": "c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-appearance-firefox-zanu51wu/source-snapshot/tools/appearance_preferences_playwright.py",
+      "archive_relative_path": "appearance-case-reports/task-tracer-appearance-firefox-zanu51wu/source-snapshot/tools/appearance_preferences_playwright.py",
+      "bytes": 24503,
+      "sha256": "b4835bf3e2dd64fa4e57cc6a5c50c89cfa405559cec2b2bbde2414fc1031f389",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-appearance-firefox-zanu51wu/source-snapshot/tools/smoke_playwright.py",
+      "archive_relative_path": "appearance-case-reports/task-tracer-appearance-firefox-zanu51wu/source-snapshot/tools/smoke_playwright.py",
+      "bytes": 158107,
+      "sha256": "a9643b87703baaf0256eb0d5e76353122b0b3aaa8dc5412df943989c6ab8e819",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-appearance-webkit-ub1nawgz/report.json",
+      "archive_relative_path": "appearance-case-reports/task-tracer-appearance-webkit-ub1nawgz/report.json",
+      "bytes": 1834,
+      "sha256": "2ea20e3da526c2d2f74a44935040f458191cda8cb70b9e958190ea10384d5027",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-appearance-webkit-ub1nawgz/source-snapshot/index.html",
+      "archive_relative_path": "appearance-case-reports/task-tracer-appearance-webkit-ub1nawgz/source-snapshot/index.html",
+      "bytes": 746877,
+      "sha256": "c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-appearance-webkit-ub1nawgz/source-snapshot/tools/appearance_preferences_playwright.py",
+      "archive_relative_path": "appearance-case-reports/task-tracer-appearance-webkit-ub1nawgz/source-snapshot/tools/appearance_preferences_playwright.py",
+      "bytes": 24503,
+      "sha256": "b4835bf3e2dd64fa4e57cc6a5c50c89cfa405559cec2b2bbde2414fc1031f389",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-appearance-webkit-ub1nawgz/source-snapshot/tools/smoke_playwright.py",
+      "archive_relative_path": "appearance-case-reports/task-tracer-appearance-webkit-ub1nawgz/source-snapshot/tools/smoke_playwright.py",
+      "bytes": 158107,
+      "sha256": "a9643b87703baaf0256eb0d5e76353122b0b3aaa8dc5412df943989c6ab8e819",
+      "role": "raw-evidence"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-ui-final/b728fc02-fac8-486a-bed3-5eb855c490d1/01-zh-desktop-light.png",
+      "archive_relative_path": "capture-original/01-zh-desktop-light.png",
+      "bytes": 134801,
+      "sha256": "4b40fe6b9586ca2df7bd2048be9e98a02d8505c67efc55a5e763611ce732a93f",
+      "role": "original-capture-under-old-helper-inputs"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-ui-final/b728fc02-fac8-486a-bed3-5eb855c490d1/02-zh-desktop-dark.png",
+      "archive_relative_path": "capture-original/02-zh-desktop-dark.png",
+      "bytes": 135803,
+      "sha256": "34a6a3e64a03e201e7c52fed3cdae6e762e67f1fd04c7cc77cf034b76bfacad5",
+      "role": "original-capture-under-old-helper-inputs"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-ui-final/b728fc02-fac8-486a-bed3-5eb855c490d1/03-zh-narrow-dark.png",
+      "archive_relative_path": "capture-original/03-zh-narrow-dark.png",
+      "bytes": 57787,
+      "sha256": "0b8664d07aad216bee99e87655552c2b16b5af28f6e5fe061ec2150bcfbc7f83",
+      "role": "original-capture-under-old-helper-inputs"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-ui-final/b728fc02-fac8-486a-bed3-5eb855c490d1/04-zh-narrow-schedule.png",
+      "archive_relative_path": "capture-original/04-zh-narrow-schedule.png",
+      "bytes": 45088,
+      "sha256": "f3a87ab63f2442557f85a14d8ce4f35bf721b1798d15b83a680d3d45ecde1c4e",
+      "role": "original-capture-under-old-helper-inputs"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-ui-final/b728fc02-fac8-486a-bed3-5eb855c490d1/05-zh-narrow-light.png",
+      "archive_relative_path": "capture-original/05-zh-narrow-light.png",
+      "bytes": 57093,
+      "sha256": "ded026c193b6c676b8f5849a5e605d419abce665c2ad404553cff4bbeed2a87a",
+      "role": "original-capture-under-old-helper-inputs"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-ui-final/b728fc02-fac8-486a-bed3-5eb855c490d1/06-zh-new-task.png",
+      "archive_relative_path": "capture-original/06-zh-new-task.png",
+      "bytes": 175801,
+      "sha256": "5dd8a9982d4de34e521479b3508f65372f812b2a2e6f2ce915ada9dd1e371333",
+      "role": "original-capture-under-old-helper-inputs"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-ui-final/b728fc02-fac8-486a-bed3-5eb855c490d1/07-en-desktop-light.png",
+      "archive_relative_path": "capture-original/07-en-desktop-light.png",
+      "bytes": 137359,
+      "sha256": "0bc6918e7381ee0b34b38a73e49dd74eb249a229ec48a9990a8e86c28df3a36e",
+      "role": "original-capture-under-old-helper-inputs"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-ui-final/b728fc02-fac8-486a-bed3-5eb855c490d1/08-en-new-task.png",
+      "archive_relative_path": "capture-original/08-en-new-task.png",
+      "bytes": 172196,
+      "sha256": "bd1379cdf14da4b6565c6bf72176b0162d577c73a8f2961d5ce7ed35726c3426",
+      "role": "original-capture-under-old-helper-inputs"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-ui-final/b728fc02-fac8-486a-bed3-5eb855c490d1/capture.py",
+      "archive_relative_path": "capture-original/capture.py",
+      "bytes": 19986,
+      "sha256": "b8ec1a4160f6f97cf6a865c011d5e1b719342ddfe875cd5df858c0f536d5607c",
+      "role": "original-capture-under-old-helper-inputs"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-ui-final/b728fc02-fac8-486a-bed3-5eb855c490d1/index.input.html",
+      "archive_relative_path": "capture-original/index.input.html",
+      "bytes": 746877,
+      "sha256": "c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7",
+      "role": "original-capture-under-old-helper-inputs"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-ui-final/b728fc02-fac8-486a-bed3-5eb855c490d1/report.json",
+      "archive_relative_path": "capture-original/report.json",
+      "bytes": 40804,
+      "sha256": "246d963b6efc5559906c56848c46381ee4ff9b8a24fccae669bd4e35262ad098",
+      "role": "original-capture-under-old-helper-inputs"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-ui-final/b728fc02-fac8-486a-bed3-5eb855c490d1/visual-review.json",
+      "archive_relative_path": "capture-original/visual-review.json",
+      "bytes": 6336,
+      "sha256": "68dce5b66600f56d93bcd9f1d2cb2393f31e439a61501b099df70b4e74df751c",
+      "role": "original-capture-under-old-helper-inputs"
+    },
+    {
+      "original_path": "/tmp/task-tracer-4.9.0-ui-final/b728fc02-fac8-486a-bed3-5eb855c490d1/visual-review.md",
+      "archive_relative_path": "capture-original/visual-review.md",
+      "bytes": 3315,
+      "sha256": "abbea0d2c1e63bdbddb5b898f25806d10c479881ba827f4d45c86099596a8481",
+      "role": "original-capture-under-old-helper-inputs"
+    }
+  ],
+  "excluded_running_files": [],
+  "pending_publication": {
+    "production_15_responses": null,
+    "production_4_pngs": null,
+    "production_6_browser_combinations": null,
+    "production_27_images": null
+  },
+  "publication_preflight_is_dry_run_only": true,
+  "repository_written": false,
+  "first_failed_run_archive": "/tmp/task-tracer-4.9.0-final-pu_nzs6d/first-freeze-7caa99a"
+}

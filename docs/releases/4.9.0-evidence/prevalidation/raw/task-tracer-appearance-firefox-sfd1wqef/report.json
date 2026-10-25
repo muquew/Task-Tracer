@@ -1,0 +1,62 @@
+{
+  "browser_engine": "firefox",
+  "started_at": "2026-10-25T07:54:40.492520+00:00",
+  "source": {
+    "index.html": "e026d3f530234833143f7734f25ab59fc1361504975c863273975339c94738e5",
+    "tools/smoke_playwright.py": "c6ef0e5efe38ca27dc33d693af09b25623324ffd6897fb0a35e1aac40cd56d38",
+    "tools/appearance_preferences_playwright.py": "b4835bf3e2dd64fa4e57cc6a5c50c89cfa405559cec2b2bbde2414fc1031f389"
+  },
+  "cases": [
+    {
+      "name": "fresh-light",
+      "passed": true,
+      "browser_errors": []
+    },
+    {
+      "name": "fresh-dark",
+      "passed": true,
+      "browser_errors": []
+    },
+    {
+      "name": "legacy-light",
+      "passed": true,
+      "browser_errors": []
+    },
+    {
+      "name": "legacy-dark",
+      "passed": true,
+      "browser_errors": []
+    },
+    {
+      "name": "preferences-desktop",
+      "passed": true,
+      "browser_errors": []
+    },
+    {
+      "name": "preferences-mobile",
+      "passed": true,
+      "browser_errors": []
+    },
+    {
+      "name": "draft-os-change",
+      "passed": true,
+      "browser_errors": []
+    },
+    {
+      "name": "draft-storage-sync",
+      "passed": true,
+      "browser_errors": []
+    }
+  ],
+  "passed": true,
+  "source_snapshot": "source-snapshot",
+  "scope": "Fresh contexts, synthetic tasks, real storage events, emulated browser color schemes; not a physical OS, IME, mobile device, or Safari/iOS test.",
+  "browser_version": "153.0",
+  "source_final": {
+    "index.html": "e026d3f530234833143f7734f25ab59fc1361504975c863273975339c94738e5",
+    "tools/smoke_playwright.py": "c6ef0e5efe38ca27dc33d693af09b25623324ffd6897fb0a35e1aac40cd56d38",
+    "tools/appearance_preferences_playwright.py": "b4835bf3e2dd64fa4e57cc6a5c50c89cfa405559cec2b2bbde2414fc1031f389"
+  },
+  "source_unchanged": true,
+  "finished_at": "2026-10-25T07:55:43.956311+00:00"
+}

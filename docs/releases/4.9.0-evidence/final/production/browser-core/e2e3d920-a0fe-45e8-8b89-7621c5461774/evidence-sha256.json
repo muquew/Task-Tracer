@@ -1,0 +1,90 @@
+{
+  "freeze.json": {
+    "bytes": 11395,
+    "sha256": "f5dea27060897a52d01637416b735ea1716b9b1b354b86655aaa4e73f9cf94be"
+  },
+  "production_core_490.py": {
+    "bytes": 24453,
+    "sha256": "2cf488e2b9b70e98897c10cf73643bc800aba44ee6ab938b78e2e7b9693530ad"
+  },
+  "release_490_common.py": {
+    "bytes": 7775,
+    "sha256": "6c0cb959f5dadf71f2295f1e4fb2eab6f6235e7f321f32bafb3aca0c206bb33f"
+  },
+  "release_490_proxy_forwarder.py": {
+    "bytes": 7319,
+    "sha256": "068c4fc3a6335c7abf779bb4794d38126eb9435792dc48730b4a2e61464b1dbf"
+  },
+  "report.json": {
+    "bytes": 22542,
+    "sha256": "d48335bb180a65beb10ca688e6c26f6b0183c8c784484c1ded614b6d69aab93e"
+  },
+  "webkit-1280/02-online-dark.png": {
+    "bytes": 123871,
+    "sha256": "888f6f547abfdf7409499b4c0ce6c234903d523e0b1b25b9bab5bc5a45512e24"
+  },
+  "webkit-1280/02-online-light.png": {
+    "bytes": 125089,
+    "sha256": "2629fe0a55317b9a0d136e5f3b49db646f3d2c2d1494e3cf1545aa106422542a"
+  },
+  "webkit-1280/03-online-restored.png": {
+    "bytes": 117995,
+    "sha256": "d470a3c7263ee3a88a9a007e415c39d8200f5901e422503573be5911aa022a1a"
+  },
+  "webkit-1280/04-offline-after-delete.png": {
+    "bytes": 117334,
+    "sha256": "d3a298ae4cca0a5159353c5d81a8b2d9263278fb22c665cc79409da58b1ae08c"
+  },
+  "webkit-1280/download-1.json": {
+    "bytes": 1789,
+    "sha256": "ec1ad290e02eb654dae7767381ddb3501548bfc935ca3808ecc14378fc16b94d"
+  },
+  "webkit-1280/download-2.json": {
+    "bytes": 1811,
+    "sha256": "bc454a3f74b1ddb73cc0c3f0ab48ecf1262778c18ae456534cde78c921c1a167"
+  },
+  "webkit-1280/online-index.html": {
+    "bytes": 746877,
+    "sha256": "c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7"
+  },
+  "webkit-1280/result.json": {
+    "bytes": 30379,
+    "sha256": "421ea6ad4c9439475caf68d46604d90e224c0b3f57afe7aca5d9493dda6b01b1"
+  },
+  "webkit-390/01-narrow-schedule.png": {
+    "bytes": 50790,
+    "sha256": "c401ab05206dad5e06f92aceb6c991eafc94113e24eae66519352ea36af55b3e"
+  },
+  "webkit-390/02-online-dark.png": {
+    "bytes": 65216,
+    "sha256": "e436529620ac82efe72c38e7b9060730ddb5b159bcac2b27420762d3642e4f40"
+  },
+  "webkit-390/02-online-light.png": {
+    "bytes": 64656,
+    "sha256": "991ace2c262f5b94d0c5eff3d980cf69c9d72b3ddbafeb051092b599963066e4"
+  },
+  "webkit-390/03-online-restored.png": {
+    "bytes": 60815,
+    "sha256": "e3a67724e2a96e8cb18e30475686f545c0ac45f5aa75562c851db1adcb46db4e"
+  },
+  "webkit-390/04-offline-after-delete.png": {
+    "bytes": 59455,
+    "sha256": "769be8482f3bdd070962fee24e9daefd2298b27d02b77f73c5a2213adce9594c"
+  },
+  "webkit-390/download-1.json": {
+    "bytes": 1788,
+    "sha256": "0ef4ad4c2de6035be771a424cc7d07ccac7bd19f91472e3677f7e911e8d738f8"
+  },
+  "webkit-390/download-2.json": {
+    "bytes": 1810,
+    "sha256": "3d9fb88b66b6fd89c1b99fcec896a945ec788867ed147b736b3170bbd5140045"
+  },
+  "webkit-390/online-index.html": {
+    "bytes": 746877,
+    "sha256": "c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7"
+  },
+  "webkit-390/result.json": {
+    "bytes": 30649,
+    "sha256": "badd9dcfef7ece835c0e3a5dfb7aeb5e9cd63db3094e5daf64c597f0ccb224b5"
+  }
+}

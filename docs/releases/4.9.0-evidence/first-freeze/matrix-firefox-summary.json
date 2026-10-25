@@ -1,0 +1,61 @@
+{
+  "recorded_at": "2026-10-25T09:14:02.104+00:00",
+  "status": "failed",
+  "engine": "firefox",
+  "browser_version": "153.0",
+  "executed_programs": 32,
+  "passed_programs": 31,
+  "failed_programs": 1,
+  "unexecuted_programs": 0,
+  "failed_program": {
+    "program": "workspace_failure_playwright.py",
+    "case": "edit-task-abort",
+    "failure_phase": "Before opening the edit form and before any failure injection is installed",
+    "failure": "Original 30-second edit-menu item click timeout because item remained hidden",
+    "log": {
+      "path": "/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-firefox-logs/f4348c15-f3c9-4301-94b6-3302699a362f/firefox-workspace_failure_playwright.log",
+      "relative_path": "matrix-firefox-logs/f4348c15-f3c9-4301-94b6-3302699a362f/firefox-workspace_failure_playwright.log",
+      "bytes": 4418,
+      "sha256": "451f953079d3ed156e89b21b4cbabd01af6f4449b2f21feaefa5d97ddca87319"
+    },
+    "interpretation": "Possible search-debounce re-render/menu-open timing precondition; no runtime ordering trace yet, not an established data rollback defect"
+  },
+  "input_counts": {
+    "source": 23,
+    "verification": 70,
+    "combined": 93
+  },
+  "source_sha256": "d2091fabb0b0275ca38d651d4992ade8f6a7e118cc4c298cb03898968912dd54",
+  "verification_sha256": "dac91d688cf6d4bd90e3e9cfe587b6400a975a53c9d5be44dca53161bf0877c1",
+  "source_unchanged": true,
+  "verification_unchanged": true,
+  "integrity_errors": [],
+  "checked_log_files": 33,
+  "program_duration_sum_seconds": 960.886,
+  "matrix_started_at": "2026-10-25T08:57:43.101+00:00",
+  "matrix_finished_at": "2026-10-25T09:13:46.425+00:00",
+  "matrix_report": "/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-firefox.json",
+  "matrix_report_sha256": "3de8fcaa5590a470b00bf0b629eae3084cbe2a1a31439d64a57b1e1d3eec6221",
+  "execution_record": "/tmp/task-tracer-4.9.0-final-pu_nzs6d/matrix-firefox-execution.json",
+  "coverage_exceptions": [
+    {
+      "browser": "firefox",
+      "program": "timezone_playwright.py",
+      "case": "Live device-timezone override",
+      "status": "not_run",
+      "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+    },
+    {
+      "browser": "firefox",
+      "program": "calendar_timezone_playwright.py",
+      "case": "Live device-timezone override",
+      "status": "not_run",
+      "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+    }
+  ],
+  "performance_scope": "Concurrent correctness execution, not an isolated benchmark",
+  "device_scope": "Linux desktop browser engines and synthetic viewports; not real mobile devices or Safari/iOS.",
+  "appearance_case_report": "/tmp/task-tracer-appearance-firefox-l1rshq0o/report.json",
+  "application_commit": "7caa99ae9ee9d67f37016935e179de7b625a89ec",
+  "repo_mutations_by_this_agent": false
+}

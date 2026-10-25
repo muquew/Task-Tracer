@@ -1,0 +1,4 @@
+chromium: saved-view deletion on 154.0.8037.57
+View deletion passed: a committed old deletion callback cannot close, refocus or alter a newer task draft
+chromium: saved-view deletion checks passed
+{"diagnostic_status": "passed", "passed": true, "source_unchanged": true, "verification_unchanged": true, "output": "/tmp/task-tracer-view-delete-trial-diagnostic-7whqizhr"}

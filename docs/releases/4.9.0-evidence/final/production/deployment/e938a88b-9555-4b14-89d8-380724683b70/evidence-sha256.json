@@ -1,0 +1,26 @@
+{
+  "attempt-01.stderr.log": {
+    "bytes": 92,
+    "sha256": "94f9081ce200b9ced51bf6921661df4b3268782cd9323949bfd34647acf9c2eb"
+  },
+  "attempt-01.stdout.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "freeze.json": {
+    "bytes": 11395,
+    "sha256": "f5dea27060897a52d01637416b735ea1716b9b1b354b86655aaa4e73f9cf94be"
+  },
+  "release_490_common.py": {
+    "bytes": 7775,
+    "sha256": "6c0cb959f5dadf71f2295f1e4fb2eab6f6235e7f321f32bafb3aca0c206bb33f"
+  },
+  "report.json": {
+    "bytes": 22208,
+    "sha256": "0e35eaa09920f7f6ff1eae0c2db4b41addc24b6b7a8be751767f0aebd921e060"
+  },
+  "verify_deployment_490.py": {
+    "bytes": 7271,
+    "sha256": "52d5161a2c0dd7403c88f160262a2cc35222a85fac2fa7815cb247707eff7a9c"
+  }
+}

@@ -1,0 +1,4 @@
+External precondition: {"action": "edit", "visible_task_rows_before_precondition": 100, "visible_task_rows_after_precondition": 1, "search": "Failure workspace 00000 中文"}
+Workspace failure passed: edit-task-abort; 200 tasks × 6 subtasks; browser=chromium
+{"status": "passed", "browser_engine": "chromium", "tasks": 200, "subtasks_per_task": 6, "source_unchanged": true}
+{"diagnostic_status": "passed", "passed": true, "source_unchanged": true, "verification_unchanged": true, "output": "/tmp/task-tracer-workspace-search-precondition-y9sz8ynm"}

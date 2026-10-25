@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-25T08:53:18Z",
+  "title": "Design System: Task Tracer",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "鸢尾紫"
+      },
+      "dark-primary": {
+        "role": "primary",
+        "displayName": "暗色主题淡紫"
+      },
+      "page": {
+        "role": "neutral",
+        "displayName": "灰蓝工作区底面"
+      },
+      "dark-page": {
+        "role": "neutral",
+        "displayName": "暗色工作区底面"
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "工作区标题",
+        "purpose": "工作区标题；779px 及以下使用 24px。"
+      },
+      "task-title": {
+        "displayName": "任务标题",
+        "purpose": "任务行主体；779px 及以下使用 14px、1.6 行高。"
+      },
+      "metadata": {
+        "displayName": "元信息",
+        "purpose": "标签与次要计数，不替代任务正文。"
+      }
+    },
+    "shadows": [
+      {
+        "name": "workspace-light",
+        "value": "0 4px 18px rgba(40,52,88,.045), 0 1px 3px rgba(40,52,88,.025)",
+        "purpose": "亮色主要任务表面，对应 --workspace-shadow。"
+      },
+      {
+        "name": "workspace-dark",
+        "value": "0 4px 18px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.08)",
+        "purpose": "暗色主要任务表面，对应 --workspace-shadow。"
+      },
+      {
+        "name": "menu",
+        "value": "0 12px 32px var(--shadow-float)",
+        "purpose": "任务操作与筛选菜单；shadow-float 亮色 rgba(33,42,74,.16)，暗色 rgba(0,0,0,.35)。"
+      },
+      {
+        "name": "dialog",
+        "value": "0 24px 90px var(--shadow-heavy)",
+        "purpose": "编辑器、命令面板与日程 dialog；shadow-heavy 亮色 rgba(26,35,69,.23)，暗色 rgba(0,0,0,.45)。"
+      }
+    ],
+    "motion": [
+      {
+        "name": "fast",
+        "value": "150ms ease",
+        "purpose": "--motion-fast；控件颜色、边框与表面反馈。"
+      },
+      {
+        "name": "theme",
+        "value": "180ms ease",
+        "purpose": "--motion-theme-duration 与 --motion-theme-ease；主题颜色反馈。"
+      },
+      {
+        "name": "dialog-appear",
+        "value": "240ms ease",
+        "purpose": "编辑器出现；透明度与 12px 位移、0.985 缩放到静止态。"
+      },
+      {
+        "name": "task-menu-position",
+        "value": "none",
+        "purpose": "菜单首开同步测量定位；transition: none，几何属性不动画。"
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0.01ms",
+        "purpose": "prefers-reduced-motion 下动画与 transition 时长；程序滚动行为为 auto。"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "overview-visible-min",
+        "value": "1180px"
+      },
+      {
+        "name": "overview-single-column-max",
+        "value": "1179px"
+      },
+      {
+        "name": "week-index-hidden-max",
+        "value": "1000px"
+      },
+      {
+        "name": "navigation-drawer-max",
+        "value": "779px"
+      },
+      {
+        "name": "filter-alignment-max",
+        "value": "640px"
+      },
+      {
+        "name": "form-single-column-max",
+        "value": "600px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "主要按钮",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "新增或提交的主要操作；运行时颜色跟随当前主题。",
+      "html": "<button class=\"ds-btn ds-btn-primary\" type=\"button\">添加任务</button>",
+      "css": ".ds-btn{min-height:40px;padding:9px 15px;border:1px solid transparent;border-radius:8px;font-size:13px;font-weight:550;cursor:pointer;transition:background-color var(--motion-fast,150ms ease),border-color var(--motion-fast,150ms ease),color var(--motion-fast,150ms ease),box-shadow var(--motion-fast,150ms ease);font-family:var(--font-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,\"PingFang SC\",\"Hiragino Sans GB\",\"Microsoft YaHei\",\"Noto Sans CJK SC\",sans-serif);}.ds-btn:focus-visible{outline:2px solid var(--color-primary,#5961c6);outline-offset:2px;box-shadow:0 0 0 4px var(--focus-ring,rgba(89,97,198,.20));}.ds-btn:disabled{cursor:not-allowed;opacity:.56;transform:none;box-shadow:none;}.ds-btn-primary{background:var(--color-primary,#5961c6);color:var(--text-on-primary,#fff);box-shadow:0 3px 8px var(--shadow-base,rgba(40,52,88,.055));}.ds-btn-primary:hover{background:var(--color-primary-dark,#4d55b5);box-shadow:0 4px 10px var(--shadow-base,rgba(40,52,88,.055));}.ds-btn-primary:focus-visible{outline:2px solid var(--color-primary,#5961c6);outline-offset:2px;box-shadow:0 0 0 4px var(--focus-ring,rgba(89,97,198,.20));}@media(prefers-reduced-motion:reduce){.ds-btn{transition-duration:.01ms;}}"
+    },
+    {
+      "name": "次要按钮",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "次表面上的常规操作，不使用悬停位移。",
+      "html": "<button class=\"ds-btn ds-btn-secondary\" type=\"button\">取消</button>",
+      "css": ".ds-btn{min-height:40px;padding:9px 15px;border:1px solid transparent;border-radius:8px;font-size:13px;font-weight:550;cursor:pointer;transition:background-color var(--motion-fast,150ms ease),border-color var(--motion-fast,150ms ease),color var(--motion-fast,150ms ease),box-shadow var(--motion-fast,150ms ease);font-family:var(--font-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,\"PingFang SC\",\"Hiragino Sans GB\",\"Microsoft YaHei\",\"Noto Sans CJK SC\",sans-serif);}.ds-btn:focus-visible{outline:2px solid var(--color-primary,#5961c6);outline-offset:2px;box-shadow:0 0 0 4px var(--focus-ring,rgba(89,97,198,.20));}.ds-btn:disabled{cursor:not-allowed;opacity:.56;transform:none;box-shadow:none;}.ds-btn-secondary{background:var(--bg-surface-alt,#f7f8fc);color:var(--text-secondary,#606c84);}.ds-btn-secondary:hover{background:var(--bg-hover,#f0f2fa);border-color:color-mix(in srgb,var(--color-primary,#5961c6) 24%,var(--border-light,#e7eaf2));color:var(--text-main,#263047);}.ds-btn-secondary:focus-visible{outline:2px solid var(--color-primary,#5961c6);outline-offset:2px;box-shadow:0 0 0 4px var(--focus-ring,rgba(89,97,198,.20));}@media(prefers-reduced-motion:reduce){.ds-btn{transition-duration:.01ms;}}"
+    },
+    {
+      "name": "带标签文本字段",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "普通任务字段，保留真实 label、边框及聚焦表面。",
+      "html": "<div class=\"ds-field\"><label for=\"ds-task-name\">任务名称</label><input class=\"ds-input\" id=\"ds-task-name\" type=\"text\" placeholder=\"输入任务名称\"></div>",
+      "css": ".ds-field{display:grid;gap:7px;color:var(--text-main,#263047);font-size:13px;font-weight:500;font-family:var(--font-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,\"PingFang SC\",\"Hiragino Sans GB\",\"Microsoft YaHei\",\"Noto Sans CJK SC\",sans-serif);}.ds-input{width:100%;min-height:42px;padding:9px 12px;border:1px solid var(--border-base,#7a869d);border-radius:8px;background:var(--field-bg,#fff);color:var(--text-main,#263047);font-size:14px;line-height:1.45;box-shadow:inset 0 1px 0 rgba(255,255,255,.58);caret-color:var(--color-primary,#5961c6);transition:background-color 180ms ease,border-color 180ms ease,color 180ms ease,box-shadow 150ms ease;font-family:var(--font-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,\"PingFang SC\",\"Hiragino Sans GB\",\"Microsoft YaHei\",\"Noto Sans CJK SC\",sans-serif);}.ds-input::placeholder{color:var(--text-secondary,#606c84);opacity:1;}.ds-input:focus,.ds-input:focus-visible{outline:none;border-color:var(--color-primary,#5961c6);box-shadow:0 0 0 3px var(--color-info-light,#eef0fc);background:var(--field-bg-focus,#fff);}@media(prefers-reduced-motion:reduce){.ds-input{transition-duration:.01ms;}}"
+    },
+    {
+      "name": "选中侧栏导航",
+      "kind": "nav",
+      "refersTo": "navigation-active",
+      "description": "当前任务范围；计数与选中语义保持可读。",
+      "html": "<button class=\"ds-nav\" type=\"button\" aria-pressed=\"true\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01\"/></svg><span>全部任务</span><span class=\"ds-nav-count\">12</span></button>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:11px;width:100%;min-height:42px;padding:8px 12px;border:0;border-radius:9px;background:transparent;color:var(--text-secondary,#606c84);font-size:14px;text-align:start;cursor:pointer;font-family:var(--font-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,\"PingFang SC\",\"Hiragino Sans GB\",\"Microsoft YaHei\",\"Noto Sans CJK SC\",sans-serif);}.ds-nav>span:first-of-type{flex:1;min-width:0;overflow-wrap:anywhere;}.ds-nav:hover{background:var(--bg-hover,#f0f2fa);color:var(--text-main,#263047);}.ds-nav[aria-pressed=\"true\"]{background:var(--bg-active,#e9ecff);color:var(--color-primary,#5961c6);font-weight:600;}.ds-nav-count{margin-inline-start:auto;font-size:12px;font-weight:400;font-variant-numeric:tabular-nums;}.ds-nav:focus-visible{outline:2px solid var(--color-primary,#5961c6);outline-offset:2px;}"
+    },
+    {
+      "name": "项目标签",
+      "kind": "chip",
+      "refersTo": "project-chip",
+      "description": "静态项目元信息；另有绿、赭两组项目色。",
+      "html": "<span class=\"ds-project-chip\">个人计划</span>",
+      "css": ".ds-project-chip{display:inline-flex;align-items:center;max-width:100%;min-height:22px;padding:1px 6px;border:0;border-radius:4px;background:var(--color-info-light,#eef0fc);color:light-dark(#6d58b3,#c0b0ef);font-size:12px;font-weight:400;line-height:20px;overflow-wrap:anywhere;font-family:var(--font-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,\"PingFang SC\",\"Hiragino Sans GB\",\"Microsoft YaHei\",\"Noto Sans CJK SC\",sans-serif);}"
+    },
+    {
+      "name": "任务表面",
+      "kind": "card",
+      "refersTo": "task-surface",
+      "description": "工具栏、任务行与快速添加共享的连续容器；不逐项添加阴影。",
+      "html": "<section class=\"ds-task-surface\"><div class=\"ds-surface-heading\">全部任务</div><div class=\"ds-surface-content\">任务、日期与项目保留在同一内容表面。</div></section>",
+      "css": ".ds-task-surface{min-width:0;background:var(--bg-surface,#fff);color:var(--text-main,#263047);border-radius:16px;box-shadow:var(--workspace-shadow,0 4px 18px rgba(40,52,88,.045),0 1px 3px rgba(40,52,88,.025));font-family:var(--font-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,\"PingFang SC\",\"Hiragino Sans GB\",\"Microsoft YaHei\",\"Noto Sans CJK SC\",sans-serif);}.ds-surface-heading{padding:12px 16px;border-bottom:1px solid var(--border-light,#e7eaf2);font-size:13px;}.ds-surface-content{padding:12px 18px;color:var(--text-secondary,#606c84);font-size:13px;}@media(max-width:779px){.ds-task-surface{border-radius:12px;}.ds-surface-heading{padding:8px 12px 7px;}.ds-surface-content{padding-inline:12px;}}"
+    },
+    {
+      "name": "任务行",
+      "kind": "custom",
+      "description": "完成按钮、可收缩任务主体与更多入口的三列结构；内容为示例。",
+      "html": "<div class=\"ds-task-row\"><button class=\"ds-completion\" type=\"button\" aria-label=\"完成：整理项目资料\" aria-pressed=\"false\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m5 12 4 4L19 6\"/></svg></button><div class=\"ds-task-main\"><div class=\"ds-task-title\">整理项目资料</div><div class=\"ds-task-meta\"><span>今天 18:00</span><span class=\"ds-row-chip\">个人计划</span></div></div><button class=\"ds-more\" type=\"button\" aria-label=\"任务操作：整理项目资料\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"5\" cy=\"12\" r=\"1\"/><circle cx=\"12\" cy=\"12\" r=\"1\"/><circle cx=\"19\" cy=\"12\" r=\"1\"/></svg></button></div>",
+      "css": ".ds-task-row{display:grid;grid-template-columns:40px minmax(0,1fr) 40px;gap:8px;align-items:start;padding:8px 0 10px;color:var(--text-main,#263047);border-bottom:1px solid var(--border-light,#e7eaf2);font-family:var(--font-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,\"PingFang SC\",\"Hiragino Sans GB\",\"Microsoft YaHei\",\"Noto Sans CJK SC\",sans-serif);}.ds-task-main{min-width:0;}.ds-task-title{display:flex;align-items:center;min-height:40px;font-size:15px;font-weight:600;line-height:1.5;overflow-wrap:anywhere;}.ds-task-meta{display:flex;align-items:center;flex-wrap:wrap;gap:5px 10px;color:var(--text-secondary,#606c84);font-size:13px;font-variant-numeric:tabular-nums;}.ds-row-chip{display:inline-flex;align-items:center;min-height:22px;padding:1px 6px;border-radius:4px;background:var(--color-info-light,#eef0fc);color:light-dark(#6d58b3,#c0b0ef);font-size:12px;line-height:20px;}.ds-completion{display:grid;place-items:center;width:40px;height:40px;padding:10px;border:0;border-radius:8px;background:transparent;color:transparent;cursor:pointer;}.ds-completion::before{content:\"\";grid-area:1/1;width:20px;height:20px;border:1.5px solid var(--control-border,#7a869d);border-radius:6px;background:var(--bg-surface,#fff);}.ds-completion svg{grid-area:1/1;z-index:1;}.ds-completion:hover{background:var(--bg-hover,#f0f2fa);color:var(--text-secondary,#606c84);}.ds-completion[aria-pressed=\"true\"]{color:#fff;}.ds-completion[aria-pressed=\"true\"]::before{background:var(--color-success,#287d64);border-color:var(--color-success,#287d64);}.ds-more{display:flex;align-items:center;justify-content:center;width:40px;height:40px;padding:6px;border:1px solid transparent;border-radius:6px;background:transparent;color:var(--text-secondary,#606c84);cursor:pointer;}.ds-more:hover{background:var(--bg-hover,#f0f2fa);color:var(--color-primary,#5961c6);}.ds-completion:focus-visible,.ds-more:focus-visible{outline:2px solid var(--color-primary,#5961c6);outline-offset:2px;box-shadow:0 0 0 4px var(--focus-ring,rgba(89,97,198,.20));}@media(max-width:779px){.ds-task-row{grid-template-columns:36px minmax(0,1fr) 32px;gap:5px;padding:5px 0 10px;}.ds-task-title{font-size:14px;line-height:1.6;}.ds-completion{width:36px;padding:8px;}.ds-more{width:32px;}}"
+    },
+    {
+      "name": "展开的任务菜单",
+      "kind": "custom",
+      "refersTo": "task-menu",
+      "description": "独立展示展开态样式；实际应用由同步几何测量定位，并可向上展开。",
+      "html": "<div class=\"ds-task-menu\"><button class=\"ds-menu-action\" type=\"button\">编辑任务</button><button class=\"ds-menu-action\" type=\"button\">加入今日计划</button><button class=\"ds-menu-action ds-delete\" type=\"button\">删除任务</button></div>",
+      "css": ".ds-task-menu{min-width:190px;max-width:min(280px,80vw);padding:5px;border-radius:10px;background:var(--bg-surface,#fff);box-shadow:0 12px 32px var(--shadow-float,rgba(33,42,74,.16));transition:none;overflow-anchor:none;overflow-y:auto;overscroll-behavior:contain;}.ds-menu-action{display:flex;align-items:center;justify-content:flex-start;gap:10px;width:100%;min-height:40px;padding:8px 10px;border:0;border-radius:6px;background:transparent;color:var(--text-main,#263047);font-size:13px;cursor:pointer;font-family:var(--font-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,\"PingFang SC\",\"Hiragino Sans GB\",\"Microsoft YaHei\",\"Noto Sans CJK SC\",sans-serif);}.ds-menu-action:hover{background:var(--bg-hover,#f0f2fa);}.ds-menu-action:focus-visible{outline:2px solid var(--color-primary,#5961c6);outline-offset:2px;box-shadow:0 0 0 4px var(--focus-ring,rgba(89,97,198,.20));}.ds-menu-action.ds-delete{color:var(--color-danger-text,#a32d40);}"
+    }
+  ],
+  "narrative": {
+    "northStar": "有层次的任务工作区",
+    "overview": "界面以持续处理真实任务为中心：侧栏确定范围，主区承载筛选与任务，日程提供辅助参照。淡色工作区底面、清晰的内容表面、轻分隔线与少量功能色形成层次；信息密度来自整齐的任务行和紧凑工具，而不是把每项内容独立做成卡片。\n\n亮暗主题共享布局、控件和语义。中英文共享视觉系统，文字按真实长度换行；任务正文、项目名与标签不作为装饰性文案改写。丰富而克制的层次与完整组件细节支持连续操作。",
+    "keyCharacteristics": [
+      "侧栏、任务表面与日程参照各有明确位置。",
+      "任务采用可扫描的行结构，标题、日期、项目、标签和子任务保持关联。",
+      "主色用于主要操作与选中状态，功能色帮助理解期限、完成与项目。",
+      "浮层有明确层级，键盘焦点与窄屏操作属于同一套组件行为。"
+    ],
+    "rules": [
+      {
+        "name": "The Semantic Color Rule",
+        "body": "保留颜色与既有含义的对应关系；日期、状态和项目仍要能通过文字或图标辨认。",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do 使用现有语义颜色及对应暗色值，让主区、侧栏与浮层保持可辨层次。",
+      "Do 保持任务中间列可收缩、长文本可换行，并在批量模式切换真实列结构。",
+      "Do 在中英文、亮暗主题和窄屏中保留焦点、控件名称与相同功能。",
+      "Do 尊重 reduced-motion，并在浮层关闭后把焦点返回有效触发元素。"
+    ],
+    "donts": [
+      "Don't 把逐项任务改成悬浮卡片、给任务行附加位移，或用装饰盖过状态信息。",
+      "Don't 将任务菜单的首次测量和定位加入 transition。",
+      "Don't 用暗色主按钮文字色绘制完成勾号，或仅靠降低整行透明度表达完成。",
+      "Don't 将原型尺寸、在线字体或未实现的色阶当作当前应用的设计事实。"
+    ]
+  }
+}

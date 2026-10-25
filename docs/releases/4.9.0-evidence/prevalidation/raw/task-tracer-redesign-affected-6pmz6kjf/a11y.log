@@ -1,0 +1,64 @@
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer-redesign/tools/accessibility_i18n_audit.py", line 580, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/workspace/Task-Tracer-redesign/tools/accessibility_i18n_audit.py", line 573, in main
+    audit_context(local_url, axe_source)
+  File "/workspace/Task-Tracer-redesign/tools/accessibility_i18n_audit.py", line 496, in audit_context
+    audit_page_state(page, axe_source, "empty task list")
+  File "/workspace/Task-Tracer-redesign/tools/accessibility_i18n_audit.py", line 284, in audit_page_state
+    run_axe(page, axe_source, label)
+  File "/workspace/Task-Tracer-redesign/tools/accessibility_i18n_audit.py", line 72, in run_axe
+    raise AssertionError(f"axe violations during {label}:\n{json.dumps(compact, ensure_ascii=False, indent=2)}")
+AssertionError: axe violations during empty task list:
+[
+  {
+    "id": "label-content-name-mismatch",
+    "impact": "serious",
+    "help": "Elements must have their visible text as part of their accessible name",
+    "nodes": [
+      {
+        "target": [
+          "button[data-workspace-week-date=\"2026-10-25\"]"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      },
+      {
+        "target": [
+          "button[data-workspace-week-date=\"2026-10-26\"]"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      },
+      {
+        "target": [
+          "button[data-workspace-week-date=\"2026-10-27\"]"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      },
+      {
+        "target": [
+          "button[data-workspace-week-date=\"2026-10-28\"]"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      },
+      {
+        "target": [
+          "button[data-workspace-week-date=\"2026-10-29\"]"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      },
+      {
+        "target": [
+          "button[data-workspace-week-date=\"2026-10-30\"]"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      },
+      {
+        "target": [
+          "button[data-workspace-week-date=\"2026-10-31\"]"
+        ],
+        "failure": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+      }
+    ]
+  }
+]

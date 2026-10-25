@@ -1,0 +1,236 @@
+{
+  "scope": "Individual visual review of all eight real Chromium captures for c74e68e5; limited captured states only",
+  "reviewed_at_python_wall_utc": "2026-10-25T08:56:02.222+00:00",
+  "source_index_sha256": "c74e68e59b7705e8c22877e6a0170d5d6d6803405a49ff418549fd2a96ab3af7",
+  "original_report_path": "/tmp/task-tracer-4.9.0-ui-final/b728fc02-fac8-486a-bed3-5eb855c490d1/report.json",
+  "original_report_sha256": "246d963b6efc5559906c56848c46381ee4ff9b8a24fccae669bd4e35262ad098",
+  "all_eight_individually_viewed": true,
+  "P0": [],
+  "P1": [],
+  "release_disposition": "Eligible for root to review and choose the four intended release images; this agent did not copy them",
+  "resolved_visual_observations": [
+    "01/02/07 quick-add plus icon and first placeholder glyph now have visible separation",
+    "03/05 search text and saved-view button fit their toolbar spaces",
+    "06/08 ordinary form fields retain readable padding and stable fixed footer"
+  ],
+  "focus_evidence": {
+    "schedule_closed_to_entry_asserted": true,
+    "after_schedule_close": {
+      "id": "workspaceScheduleToggle",
+      "tag": "BUTTON"
+    },
+    "new_task_fields": [
+      {
+        "name": "06-zh-new-task",
+        "focus": {
+          "id": "taskName",
+          "tag": "INPUT"
+        }
+      },
+      {
+        "name": "08-en-new-task",
+        "focus": {
+          "id": "taskName",
+          "tag": "INPUT"
+        }
+      }
+    ]
+  },
+  "geometries": [
+    {
+      "name": "01-zh-desktop-light",
+      "viewport": {
+        "width": 1440,
+        "height": 1024,
+        "dpr": 1
+      },
+      "first_task_title_bounds": {
+        "x": 308,
+        "y": 359.75,
+        "width": 90.015625,
+        "height": 22.5
+      },
+      "document": {
+        "client_width": 1440,
+        "scroll_width": 1440
+      }
+    },
+    {
+      "name": "02-zh-desktop-dark",
+      "viewport": {
+        "width": 1440,
+        "height": 1024,
+        "dpr": 1
+      },
+      "first_task_title_bounds": {
+        "x": 308,
+        "y": 359.75,
+        "width": 90.015625,
+        "height": 22.5
+      },
+      "document": {
+        "client_width": 1440,
+        "scroll_width": 1440
+      }
+    },
+    {
+      "name": "03-zh-narrow-dark",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "dpr": 1
+      },
+      "first_task_title_bounds": {
+        "x": 69,
+        "y": 333.296875,
+        "width": 84,
+        "height": 22.390625
+      },
+      "document": {
+        "client_width": 390,
+        "scroll_width": 390
+      }
+    },
+    {
+      "name": "04-zh-narrow-schedule",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "dpr": 1
+      },
+      "first_task_title_bounds": {
+        "x": 69,
+        "y": 333.296875,
+        "width": 84,
+        "height": 22.390625
+      },
+      "document": {
+        "client_width": 390,
+        "scroll_width": 390
+      }
+    },
+    {
+      "name": "05-zh-narrow-light",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "dpr": 1
+      },
+      "first_task_title_bounds": {
+        "x": 69,
+        "y": 333.296875,
+        "width": 84,
+        "height": 22.390625
+      },
+      "document": {
+        "client_width": 390,
+        "scroll_width": 390
+      }
+    },
+    {
+      "name": "06-zh-new-task",
+      "viewport": {
+        "width": 1440,
+        "height": 1024,
+        "dpr": 1
+      },
+      "first_task_title_bounds": {
+        "x": 308,
+        "y": 359.75,
+        "width": 90.015625,
+        "height": 22.5
+      },
+      "document": {
+        "client_width": 1440,
+        "scroll_width": 1440
+      }
+    },
+    {
+      "name": "07-en-desktop-light",
+      "viewport": {
+        "width": 1440,
+        "height": 1024,
+        "dpr": 1
+      },
+      "first_task_title_bounds": {
+        "x": 308,
+        "y": 359.75,
+        "width": 107.5625,
+        "height": 22.5
+      },
+      "document": {
+        "client_width": 1440,
+        "scroll_width": 1440
+      }
+    },
+    {
+      "name": "08-en-new-task",
+      "viewport": {
+        "width": 1440,
+        "height": 1024,
+        "dpr": 1
+      },
+      "first_task_title_bounds": {
+        "x": 308,
+        "y": 359.75,
+        "width": 107.5625,
+        "height": 22.5
+      },
+      "document": {
+        "client_width": 1440,
+        "scroll_width": 1440
+      }
+    }
+  ],
+  "identity_input_counts": {
+    "distribution_source_files": 23,
+    "verification_files": 70,
+    "combined_release_inputs": 93
+  },
+  "source_unchanged": true,
+  "verification_unchanged": true,
+  "synthetic_data": {
+    "enabled": true,
+    "origin": "Four explicitly provided design fixtures, entered through real app UI",
+    "anchor_date": "2026-10-25",
+    "contains_real_user_data": false
+  },
+  "controlled_browser_clock": {
+    "enabled": true,
+    "api": "page.clock.install(time=...)",
+    "baseline_utc": "2026-10-25T07:00:00+00:00",
+    "baseline_asia_shanghai": "2026-10-25T15:00:00+08:00",
+    "behavior": "Installed immediately before every explicit page.goto; clock continues ticking with real elapsed time",
+    "pause_used": false,
+    "fixed_time_used": false,
+    "manual_time_advance_used": false,
+    "installations": [
+      {
+        "context": "zh",
+        "before_navigation_url": "http://127.0.0.1:38567/",
+        "baseline_utc": "2026-10-25T07:00:00+00:00",
+        "python_wall_time_utc": "2026-10-25T08:53:20.129+00:00",
+        "continues_ticking": true
+      },
+      {
+        "context": "en",
+        "before_navigation_url": "http://127.0.0.1:38567/",
+        "baseline_utc": "2026-10-25T07:00:00+00:00",
+        "python_wall_time_utc": "2026-10-25T08:53:23.702+00:00",
+        "continues_ticking": true
+      }
+    ]
+  },
+  "python_wall_clock": {
+    "provider": "Actual Python datetime.now(timezone.utc)",
+    "started_at_utc": "2026-10-25T08:53:19.469+00:00",
+    "finished_at_utc": "2026-10-25T08:53:26.183+00:00"
+  },
+  "limitations": [
+    "Command palette and long search query are not screenshot states in this eight-image matrix; root performed their separate geometry checks",
+    "New-task form content scrolls internally; lower subtask fields are below the photographed fold",
+    "No performance, real-device, full accessibility, or production-deployment conclusion"
+  ],
+  "repository_modified": false,
+  "release_images_copied": false
+}
