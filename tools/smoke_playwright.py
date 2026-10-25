@@ -206,7 +206,7 @@ def reveal_workspace_control(page: Page, selector: str | Locator) -> Locator:
     assert not control.evaluate(
         "node => Boolean(node.closest('[inert], [hidden], [aria-hidden=\"true\"]'))"
     ), f'{selector} remains inside hidden or inert navigation'
-    control.scroll_into_view_if_needed()
+    control.click(trial=True)
     expect(control).to_be_in_viewport()
     return control
 
@@ -246,6 +246,7 @@ def select_theme_preference(page: Page, preference: str) -> str:
 
 def reveal_task_action(task: Locator, action: str) -> Locator:
     """Expose a secondary action through its row menu, including negative checks."""
+    expect(task).to_be_visible()
     control = task.locator(f'[data-action={json.dumps(action)}]')
     if control.is_visible():
         return control
