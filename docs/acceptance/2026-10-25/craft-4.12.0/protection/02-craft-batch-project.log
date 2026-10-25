@@ -1,5 +1,0 @@
-Craft batch project: chromium 154.0.8037.57
-Batch project move passed: blank guard, free-text normalization, existing project, one atomic commit, selected fields only and exact Undo
-Batch project rollback passed: second queued put abort leaves tasks/revision/history unchanged, retains input and retries exactly once
-Batch project stale review passed: a real remote edit survives old-dialog submission with exact tasks/revision/history preserved
-Archive parity passed: single unfinished and batch mixed-status records change only archive fields and both Undo exactly

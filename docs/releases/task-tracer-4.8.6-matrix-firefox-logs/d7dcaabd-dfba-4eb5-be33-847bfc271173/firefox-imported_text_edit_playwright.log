@@ -1,9 +1,0 @@
-Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
-Imported text edit passed: long; browser=firefox
-Imported text edit passed: comma-tags; browser=firefox
-Imported text edit passed: quoted-tags; browser=firefox
-Imported text edit passed: formatting; browser=firefox
-Imported text edit passed: normalization; browser=firefox
-Imported text edit passed: recovery; browser=firefox
-Imported text edit passed: stale; browser=firefox
-{"browser_engine": "firefox", "browser": "153.0", "cases": 7, "passed": true}

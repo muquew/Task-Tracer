@@ -1,6 +1,0 @@
-firefox 153.0: starting 33 registered programs
-Running firefox: compatibility_playwright.py
-firefox: compatibility_playwright.py exited 0 in 44.382s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-matrix-v2/firefox/native-report-logs/52214476-43b8-407b-b2bd-9f6ef8b70949/firefox-compatibility_playwright.log)
-Running firefox: appearance_preferences_playwright.py
-firefox: appearance_preferences_playwright.py exited 0 in 87.376s (/workspace/design-research/task-tracer-final-delivery-2026-10-26/final-matrix-v2/firefox/native-report-logs/52214476-43b8-407b-b2bd-9f6ef8b70949/firefox-appearance_preferences_playwright.log)
-Running firefox: settings_navigation_playwright.py

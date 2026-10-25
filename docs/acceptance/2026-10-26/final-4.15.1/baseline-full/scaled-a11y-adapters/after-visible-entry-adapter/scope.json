@@ -1,7 +1,0 @@
-{
-  "old_sha256": "7d8d9f0829a3c36ec81bb0e23d5149c18c65a7963a0c96b64cd2c797cf5a9896",
-  "new_sha256": "8d13b408d5b41541b4210d1a74fc762dd3965c57e60d486f56412aebcae4b333",
-  "change": "Only select the single actually visible day-details entry; explicit count1+visible asserts added before ordinary click; original 100-row/axe/data/focus assertions unchanged",
-  "no_first_force_or_budget_changes": true,
-  "exact_entry_block_reversal": true
-}

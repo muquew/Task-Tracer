@@ -1,7 +1,0 @@
-Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
-Dialog lifecycle passed: cancelled storage status read cannot cover a later task draft
-Dialog lifecycle passed: cancelled recovery read cannot cover a later task draft
-Dialog lifecycle passed: an older status read cannot replace a repeated newer request
-Dialog lifecycle passed: completed old confirmation cannot close a later task draft
-Dialog lifecycle passed: old false-result confirmation cannot unlock a newer reading gate
-firefox: dialog lifecycle checks passed

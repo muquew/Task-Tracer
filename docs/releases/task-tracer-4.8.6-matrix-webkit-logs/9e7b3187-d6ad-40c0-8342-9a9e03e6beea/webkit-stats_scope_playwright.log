@@ -1,3 +1,0 @@
-Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
-webkit 26.5: one ongoing overdue + nine completed dated tasks gives 100%
-Ongoing denominator, future/archived/undated/empty cases, project and search intersections, unchanged completion metrics and full IndexedDB read-only checks passed

@@ -1,9 +1,0 @@
-Bundled translation fallback matches resource files and version
-Static validation passed
-Deployment CSP hashes match application scripts
-Built and verified /tmp/task-tracer-release-xtjtcd38/one/task-tracer-4.13.1.zip (24 files, SHA-256 9d789a016b194560982c504638593c457bc3b3f0aba05bd7b7980ea261d9a21c)
-Bundled translation fallback matches resource files and version
-Static validation passed
-Deployment CSP hashes match application scripts
-Built and verified /tmp/task-tracer-release-xtjtcd38/two/task-tracer-4.13.1.zip (24 files, SHA-256 9d789a016b194560982c504638593c457bc3b3f0aba05bd7b7980ea261d9a21c)
-Release passed: reproducible bytes, verified manifest, safe file set, extracted PWA persistence and offline reload

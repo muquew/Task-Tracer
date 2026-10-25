@@ -1,7 +1,0 @@
-{
-  "index.html": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5",
-  "resources/en.json": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd",
-  "resources/zh-CN.json": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9",
-  "sw.js": "3e3f2e67832911ec52168691412baa3193b03766632120934c1c679ff2a70f1b",
-  "vercel.json": "f755f54a513ebe8db4ed910564971d9f1fb0053c405882f9e1db1981f9fcd729"
-}

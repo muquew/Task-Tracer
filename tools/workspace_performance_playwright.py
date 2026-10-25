@@ -426,7 +426,7 @@ def run(args):
             'calendar_scope': 'Clock fixed to January 2039; transition includes visible month, exact dated preview count and bounded undated-card readiness, without month-navigation setup.',
             'measurement_type': 'smoke' if args.smoke else 'controlled synthetic cloud run',
             'host_platform': platform.platform(),
-            'budgets': {'reference': 'tools/performance_playwright.py; docs/performance.md',
+            'budgets': {'reference': 'tools/performance_playwright.py; CONTRIBUTING.md',
                         'ceilings_ms': BUDGETS,
                         'scope': 'Existing generous list load/search ceilings applied unchanged to this heavier controlled workload. Other operations are baseline-only.'},
             'limitations': [

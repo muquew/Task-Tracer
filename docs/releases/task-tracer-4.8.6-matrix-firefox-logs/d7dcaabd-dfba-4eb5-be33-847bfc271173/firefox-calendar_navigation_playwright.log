@@ -1,6 +1,0 @@
-Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
-Calendar navigation passed: after a real edit removes the day More button, closing details focuses that date button
-Calendar navigation passed: unique cross-month search reveals its task; manual month navigation and clearing search retain the chosen month
-Calendar navigation passed: a query with a visible date retains its month, and returning through no results restarts the same-query search
-Calendar navigation passed: absent and undated-only searches preserve the month and all IndexedDB records
-{"browser_engine": "firefox", "browser": "153.0", "case": "all", "passed": true}

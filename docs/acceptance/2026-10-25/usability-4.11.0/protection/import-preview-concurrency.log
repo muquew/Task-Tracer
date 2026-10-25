@@ -1,5 +1,0 @@
-Import preview concurrency passed: stale replace approval preserves remote changes after background refresh
-Import preview concurrency passed: stale merge approval preserves remote changes after background refresh
-Destructive confirmation passed: stale clear preserves remote changes after background refresh
-Destructive confirmation passed: stale archive preserves remote changes after background refresh
-Destructive confirmation passed: stale recovery preserves remote changes after background refresh

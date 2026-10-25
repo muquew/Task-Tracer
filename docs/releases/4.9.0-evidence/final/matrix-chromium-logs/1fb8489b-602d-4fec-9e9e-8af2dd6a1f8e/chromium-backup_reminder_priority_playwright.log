@@ -1,8 +1,0 @@
-Backup reminder priority chromium: 154.0.8037.57
-Reminder after invalid file with modal: {"class": "notification error show", "text": "这不是有效且校验通过的 Task Tracer 视图文件（版本 1.0 或 1.1）。任务备份请使用导入功能。"}
-Backup reminder passed: invalid-file error and active transfer dialog stay intact without writes
-Backup reminder passed: active task form suppresses the optional reminder
-Backup reminder passed: visible error remains unchanged after the dialog closes
-Backup reminder passed: task-form started during the real status read remains intact
-Backup reminder passed: invalid-file-error started during the real status read remains intact
-Backup reminder passed: idle page still shows the due reminder and keeps backup menu status

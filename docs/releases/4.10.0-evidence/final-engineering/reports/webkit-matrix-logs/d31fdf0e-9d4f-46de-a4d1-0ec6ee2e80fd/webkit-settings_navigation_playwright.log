@@ -1,9 +1,0 @@
-Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
-Settings/navigation webkit: 26.5; deployment CSP enforced
-1440px zh-CN: permanent labelled views, collapsed-tools access, settings/back/current-view, scoped state and draft/selection preservation, real backup, dialog focus, appearance and language passed
-1440px en: permanent labelled views, collapsed-tools access, settings/back/current-view, scoped state and draft/selection preservation, real backup, dialog focus, appearance and language passed
-390px zh-CN: permanent labelled views, collapsed-tools access, settings/back/current-view, scoped state and draft/selection preservation, real backup, dialog focus, appearance and language passed
-390px en: permanent labelled views, collapsed-tools access, settings/back/current-view, scoped state and draft/selection preservation, real backup, dialog focus, appearance and language passed
-Unavailable storage: settings/help/theme remain accessible, data actions stay guarded, and real retry recovers safely
-Language rollback: aborted config write from #languageSelect restores both controls and document language
-Language rollback: aborted config write from #settingsLanguageSelect restores both controls and document language

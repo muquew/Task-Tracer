@@ -1,9 +1,0 @@
-Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
-firefox: quick-add recovery on 153.0
-Quick-add recovery passed: exact raw text, selectable read-only fallback, same-document Retry and one task per normal submission
-Quick-add recovery passed: quick-add and full-form drafts coexist and recover without overwriting one another
-Quick-add recovery passed: failed Retry retains raw text and a later successful Retry still saves exactly once
-Quick-add recovery passed: actual native refresh cancellation preserves editable and unavailable read-only drafts; saved text no longer warns
-Quick-add recovery passed: cleared URL parameters cannot erase retained capture description/URL metadata, and reload cannot duplicate the saved task
-Quick-add recovery passed: empty unavailable input stays disabled and keeps the established no-draft Retry path
-firefox: all selected quick-add recovery checks passed

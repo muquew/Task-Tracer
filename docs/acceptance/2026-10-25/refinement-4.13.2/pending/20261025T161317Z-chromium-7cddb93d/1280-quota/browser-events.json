@@ -1,9 +1,0 @@
-{
-  "pageerrors": [],
-  "console": [
-    {
-      "type": "error",
-      "text": "保存任务失败: QuotaExceededError: Injected synthetic quota failure"
-    }
-  ]
-}

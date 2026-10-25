@@ -1,3 +1,0 @@
-Accent round trip passed: all four values, refresh, native settings-only control and independent theme preferences preserve IndexedDB
-Accent cross-tab passed: trusted events/removal/clear, theme independence, exact draft fields/focus/selection and a subsequent real save
-Accent fallback passed: invalid saved values and genuine browser Storage errors leave the app usable without data changes

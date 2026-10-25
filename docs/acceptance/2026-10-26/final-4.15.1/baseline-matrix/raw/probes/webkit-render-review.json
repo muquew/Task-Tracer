@@ -1,8 +1,0 @@
-{
-  "source_report": "webkit-actual-render.json",
-  "source_report_sha256": "91dd9af2071733da064ef19361ca4365a366a51835ff082034a6c7a89a74ef99",
-  "screenshot": "webkit-actual-render.png",
-  "screenshot_sha256": "35616b09596734760cd7d0540a1498a5b6061e603f348c28f70c208b3855e461",
-  "actually_opened_and_accepted": true,
-  "scope": "WebKit actual launch/render/form-save readiness only, not matrix success or a product UX audit."
-}

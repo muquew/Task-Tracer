@@ -1,8 +1,0 @@
-Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
-Project scope webkit: 26.5
-Project scope passed: all, __none__, encoded-looking and ordinary project names remain distinct from both sentinels
-Project scope passed: command palette selects the same literal project scopes
-Project scope passed: exact scopes survive save, reload, 1.1 export and reviewed reimport
-Project scope passed: legacy config and 1.0 files retain sentinel semantics and treat encoded-looking names literally
-Project scope passed: a saved project with no current tasks stays empty without expanding to all projects
-Project scope passed: malformed 1.1 scope objects rejected without changing saved views or tasks

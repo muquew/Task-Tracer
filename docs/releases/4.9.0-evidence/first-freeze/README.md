@@ -1,7 +1,0 @@
-# First freeze: consistent failed run
-
-Commit `7caa99ae9ee9d67f37016935e179de7b625a89ec`, freeze da74449f…, used runtime source d2091fab… and verification dac91d68…. Its [complete checker](check-results.json) finished all 59 programs with 58 passes and one workspace-helper failure. Its [Chromium](matrix-chromium.json), [Firefox](matrix-firefox.json) and [WebKit](matrix-webkit.json) matrices completed with 30/32, 31/32 and 30/32 passes respectively. All original reports remain failed, with unchanged original inputs and terminal checks.
-
-[The inventory](evidence-inventory.json) binds 246 original files / 4,906,624 bytes, including all native reports, full output, 99 matrix logs, 93 input files, diagnostics and the exact first-candidate ZIPs. The runtime map matches the later release; verification changed only for the two diagnosed shared helper preconditions. Later passing runs have separate IDs and a new verification map.
-
-Runtime observation corrected an early causal hypothesis: the helper returned while the searched task and More toggle did not exist; the menu had never opened. The original workspace failure occurred before fault injection and did not establish a rollback regression or nine-case pass. A separate view-deletion diagnosis identified an ElementHandle detached during explicit scrolling. External single-case diagnostics preserved assertions but did not retroactively pass these original programs. See the [4.9.0 release](../../4.9.0.md) for the complete rerun and production results.

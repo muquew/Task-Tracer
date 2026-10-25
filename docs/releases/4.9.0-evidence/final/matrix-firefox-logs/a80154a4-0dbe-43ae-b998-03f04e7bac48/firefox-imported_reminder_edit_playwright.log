@@ -1,8 +1,0 @@
-Imported reminders passed: fractional; full fields/reload/download or explicit UI boundary verified
-Imported reminders passed: after-due; full fields/reload/download or explicit UI boundary verified
-Imported reminders passed: off; full fields/reload/download or explicit UI boundary verified
-Imported reminders passed: undated; full fields/reload/download or explicit UI boundary verified
-Imported reminders passed: change; full fields/reload/download or explicit UI boundary verified
-Imported reminders passed: recovery; full fields/reload/download or explicit UI boundary verified
-Imported reminders passed: labels; full fields/reload/download or explicit UI boundary verified
-{"browser_engine": "firefox", "browser": "153.0", "case": "all", "passed": true}

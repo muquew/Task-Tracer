@@ -1,8 +1,0 @@
-Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
-Foreign wall time passed: New York foreign spring gap; exact search, timeline, edit, reload and download
-Foreign wall time passed: Berlin foreign spring gap; exact search, timeline, edit, reload and download
-Foreign wall time passed: Lord Howe foreign half-hour gap; exact search, timeline, edit, reload and download
-Foreign wall time passed: Apia foreign skipped date; exact search, timeline, edit, reload and download
-Foreign wall time passed: New York foreign autumn fold; exact search, timeline, edit, reload and download
-Foreign wall time passed: Kathmandu ordinary control; exact search, timeline, edit, reload and download
-{"browser_engine": "firefox", "browser": "153.0", "cases": 6, "passed": true}

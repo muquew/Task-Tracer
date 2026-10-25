@@ -1,5 +1,0 @@
-Calendar passed: independent bounded sections, full counts and focus on newly loaded tasks
-Calendar passed: final partial pages reach editable tasks, and reopening a date resets its page
-Calendar passed: far-end dated and undated search covers all tasks and resets display limits
-Calendar passed: view/month/project/filter navigation resets bounds without stale details
-{"page_errors": [], "remaining_undated_nodes": 100, "remaining_detail_nodes": 0}

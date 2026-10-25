@@ -1,9 +1,0 @@
-Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
-Calendar passed: independent bounded sections, full counts and focus on newly loaded tasks
-Calendar passed: final partial pages reach editable tasks, and reopening a date resets its page
-Calendar passed: far-end dated and undated search covers all tasks and resets display limits
-Calendar passed: view/month/project/filter navigation resets bounds without stale details
-Calendar batch manual passed: bounded independent pages, full matching selection/counts, checkbox/button focus and exit behavior
-Calendar batch smart passed: bounded independent pages, full matching selection/counts, checkbox/button focus and exit behavior
-Calendar passed: manual-order behavior is retained and all rendering operations leave IndexedDB unchanged
-{"browser_engine": "webkit", "browser": "26.5", "dated_tasks": 251, "undated_tasks": 251, "coverage": "full pagination and navigation", "calendar_initial_ms": 610.6, "initial_undated_nodes": 100, "batch_manual_undated_nodes": 100, "batch_manual_detail_nodes": 100, "batch_smart_undated_nodes": 100, "batch_smart_detail_nodes": 100, "passed": true}

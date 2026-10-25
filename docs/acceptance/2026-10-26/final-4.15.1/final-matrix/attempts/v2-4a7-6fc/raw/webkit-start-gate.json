@@ -1,7 +1,0 @@
-{
-  "queued_at": "2026-10-25T19:30:53.866327+00:00",
-  "released_at": "2026-10-25T19:30:53.868165+00:00",
-  "old_webkit_summary": "/workspace/design-research/task-tracer-final-delivery-2026-10-26/baseline-matrix/webkit/run-summary.json",
-  "old_webkit_summary_sha256": "3a2f2a8110fcad78fa98505deffaef14f7f6fafc32cfca36fe0383a5adbacb6f",
-  "rule": "At most three actual matrix engine workers across old and final runs."
-}

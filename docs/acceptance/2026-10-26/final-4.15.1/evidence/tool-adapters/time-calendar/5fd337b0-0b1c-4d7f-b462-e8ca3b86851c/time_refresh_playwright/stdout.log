@@ -1,4 +1,0 @@
-Time refresh passed: a due task enters an initially empty overdue view without user navigation or writes
-Time refresh passed: due:today follows the new local day without another search edit
-Time refresh passed: Today Plan follows the local day while retaining original task focus dates
-{"case": "stats", "clock": "2026-10-23T23:59:37.235Z", "visible_tasks": [], "pageerrors": []}

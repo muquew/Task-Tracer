@@ -1,6 +1,0 @@
-Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
-Batch/Undo regression: firefox 153.0
-Undo batch passed: refuses post-commit remote changes without writes; a fresh action still undoes only itself
-Undo single passed: refuses post-commit remote changes without writes; a fresh action still undoes only itself
-Undo delayed snapshot passed: native read completion remains pending; a later remote write is preserved by a refused transaction
-Batch scope passed: 100/200/partial pages, full matching selection/writes across hidden pages, checkbox focus, exact Undo, scope pruning and preserved manual-order slots

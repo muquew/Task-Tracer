@@ -1,4 +1,0 @@
-Craft plan/statistics: chromium 154.0.8037.57
-Planned recurrence passed: single and batch completion keep the denominator, create unplanned successors, and Undo restores exact tasks
-Statistics passed: archived completions retain today/7-day/streak history, inventory uses its own denominator, and three actionable counts match exact scoped task sets without writes
-Statistics return passed: visible return survives completion/archive/empty-result Undo, recalculates latest data, preserves new sort, and real scope changes prevent stale restoration

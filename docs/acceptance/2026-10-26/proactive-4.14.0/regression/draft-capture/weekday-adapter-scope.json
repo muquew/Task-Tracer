@@ -1,8 +1,0 @@
-{
-  "changed_module_nodes": [
-    "check_weekday_recovery"
-  ],
-  "original_tool_sha256": "b5ef7084e54955b9fbe949964c049e353c5872788d96caa2e9914046a03d0eff",
-  "proposed_tool_sha256": "9bacf835d7850da3a5b8acfd9bff8f4d92cee01372252444d92ade5356ee5464",
-  "scope": "Native explicit-weekday validation branches before the existing quota, raw download, same-document retry/recovery and single-commit checks; archived default-weekday branch retained."
-}

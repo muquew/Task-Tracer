@@ -1,117 +1,81 @@
-# Contributing to Task Tracer
+# Contributing
 
-Task Tracer is a static, local-first PWA. Python serves the files and runs the checks; there is no application build or backend. Read [the internal code guide](docs/internal-code-guide.md) before changing storage, imports, recurrence, or service worker behavior.
-
-The [personal non-commercial license](LICENSE) applies to contributions and evaluation. This guide does not grant commercial distribution rights.
+Task Tracer is a static, local-first PWA. It needs no application build or backend.
 
 ## Development
 
-Use Python 3.12 or newer and Node.js 22 or newer for the pinned accessibility checker. The application itself still needs only a static server. From the repository root:
+- Use Python 3.12+ and Node.js 22+; npm dependencies are development-only.
+- Test with disposable profiles and synthetic tasks, especially imports and recovery.
 
 ```bash
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r requirements-dev.txt
 npm ci --ignore-scripts
-python -m playwright install chromium
+python -m playwright install chromium firefox webkit
 python -m http.server 8080 --bind 127.0.0.1
 ```
 
-The application is available on port 8080. The browser checks start their own temporary static server unless `TASK_TRACER_URL` selects an existing one. Use disposable browser profiles for testing imports and recovery; do not test destructive flows against your personal task data.
-
-## Current delivery
-
-The [4.15.1 delivery record](docs/stable-delivery.md) records **complete**, the exact artifact and completed scope. [Final evidence](docs/acceptance/2026-10-26/final-4.15.1/final-full/final-delivery.md) separates the original local 73-program report from public remote-CI outcomes and production verification. [GOAL.md](GOAL.md) records closure; earlier releases retain their own source and scope.
+- Open `http://127.0.0.1:8080`. Browser tests normally start their own temporary server.
+- Linux may need Playwright's official system dependencies: `python -m playwright install --with-deps`.
+- A system Chromium can be selected with `TASK_TRACER_BROWSER_EXECUTABLE=/usr/bin/chromium`; record its actual version.
 
 ## Validation
 
 ```bash
 python tools/check.py --static-only
 python tools/check.py --keep-going --report dist/check-results.json
+python tools/browser_matrix.py --list
+python tools/browser_matrix.py --browser all --keep-going --report dist/browser-matrix.json
 ```
 
-The static command runs seven programs for consistency, date semantics, deployment CSP hashes, release payload/version contracts, runner lifecycle and syntax guards. The full registry currently contains **73 programs**: those seven plus 66 browser and deployment-fixture programs. The report's `planned_checks` is the authoritative list for the selected revision. It covers capture/editing, recovery/import/concurrency, recurrence/timezones, views/batching, storage failures, updates/offline execution, performance, accessibility and packaging. Install the pinned Python and npm dependencies first.
+- Static checks run 7 programs; the full registry currently has 73. The selected report's `planned_checks` defines the actual scope.
+- The matrix registers 33 programs per engine. Only core repeats 1280×800 and 390×844; other programs define their own viewports.
+- Firefox/WebKit live-CDP timezone cases are explicitly unexecuted. Linux engines and simulated sizes do not prove Safari/iPhone, native input methods, screen readers or OS notifications.
+- Require successful exits, complete/passed reports and unchanged source/tool fingerprints. Keep failed attempts; `--keep-going` does not turn failures into passes.
+- Use a new report filename when retaining a previous attempt. Preserve each matrix report with its run-ID log directory.
+- For interface changes, also inspect real screenshots and use the keyboard: long text, empty/error states, focus, dialogs and narrow screens.
 
-Each command must exit successfully. `--keep-going` collects later outcomes after a failure but does not turn that failure into a pass. The atomic schema-2 report records a fresh run ID, commands, durations, completion state and source/verification identities. `completed: false`, `passed: false`, interrupted runs or input drift do not satisfy release acceptance. Keep native failures and interrupted attempts beside fresh reruns, with their original identities and logs.
-
-CI installs the Playwright-managed Chromium for the pinned dependency and uses its full headless channel so notification permissions are exercised in the complete browser. To select a system browser explicitly, use `TASK_TRACER_BROWSER_EXECUTABLE=/usr/bin/chromium python tools/check.py --report dist/check-results.json` and record its actual version. A running development server or an old release's successful report does not validate a new candidate.
-
-The CI job summary lists executed programs, exit codes and durations, and failed programs receive an annotation. Missing, interrupted or incomplete reports retain that state; unexecuted programs are not counted as passes.
-
-Changes to interaction structure, focus, colors or translations also need the [accessibility/i18n audit](docs/accessibility-i18n-audit.md) and real keyboard/visual review. Keep checked-state glyph visibility, readable errors and fixed action bars in the inspected screenshots; semantic state or a clean axe scan alone is insufficient. Record unexecuted screen-reader or physical-device checks instead of inferring complete accessibility compliance.
-
-## Change boundaries
-
-
-- Keep new UI strings in both `resources/en.json` and `resources/zh-CN.json`.
-- Update `CONFIG.I18N.RESOURCE_VERSION` and the language resource queries in `sw.js` together. After changing translations, configured languages or their resource version, run `python3 tools/translation_fallback.py --write` and then `python3 tools/security_policy.py --write`. Review both generated changes. The first synchronizes the non-executable JSON fallback embedded in the same HTML; static validation rejects a mismatch with the external resource files. This maintenance command does not add an application build requirement.
-- After modifying inline scripts, run `python3 tools/security_policy.py --write` and review `vercel.json`; the readonly check fails if hashes are stale.
-- Bump `CONFIG.APP.VERSION` and the `CACHE_NAME` suffix together when runtime code or cached assets change. Keep SoftwareApplication metadata consistent.
-- Keep new workspaces empty until the user adds tasks or explicitly chooses examples. Keep Help and diagnostic preview/download usable in storage protection; diagnostic payloads must exclude user content, saved views, app settings, URLs and raw error messages, and must never upload automatically.
-- Preserve task JSON version 2.4 compatibility and stored data. Saved-view migration exports a separate version 1.1 file and imports 1.0 or 1.1; validate its checksum, schema, size and capacity before writing, and preserve existing views. Use typed project scopes (`all`, `unassigned`, or `project` with an exact name) for new views, retain legacy string semantics when reading older views, and never expand a missing named project to all projects. Cover migrations, malformed imports, transaction aborts and recovery behavior when changing persistence.
-- Capture task revisions when a write is invoked and when a destructive confirmation opens. A background refresh must not make an old write or approval current. Import previews must reset safety approvals when rebuilt, and canceled or superseded file reads must not reopen over a newer draft.
-- Keep existing due instants when a task edit leaves its date/time unchanged, including ambiguous DST clock times. Keep current-zone lookup live while bounding explicit-zone formatter caches, and permit valid past deadlines for backfill and overdue edits.
-- Resolve new wall times with gap-forward/first-fold semantics and derive canonical saved date/time fields from the chosen instant. Perform recurring date arithmetic using UTC date-only calendar fields, then resolve in the task's stored timezone; the device zone must not alter the next occurrence or a legacy weekday fallback.
-- Keep task civil date/time strings intact across a device-zone gap or skipped date. Fill edited deadline controls from the task's date key and wall-time string; do not reconstruct them through a device-local `Date`. Exact-date search compares keys, while timeline/calendar date-only arithmetic and labels use a neutral UTC carrier without changing the task's saved timezone or instant.
-- Read application/i18n metadata from the selected main runtime IIFE and its CONFIG blocks, not the first matching version-like text anywhere in HTML. Translation/help content can legitimately contain such text. Keep `package.json`, `package-lock.json` and its `packages['']` version aligned to the app version (two-component app X.Y maps to npm X.Y.0).
-- Match JavaScript UTF-16 code-unit iteration when verifying the existing task/view checksum in Python. Cover astral emoji, ZWJ sequences and long Unicode fields with actual downloaded files and import/CSV parsing; a Python code-point mismatch does not by itself establish corrupt runtime exports.
-- Keep time-driven view refresh read-only and boundary-aware. Defer disruptive rebuilds during drafts, selected task text, drags and selected batch work; retain pagination/focus, and cover actual minute/visibility events without inferring reliable background execution.
-- Preserve untouched imported text/project/tag fields using the original task snapshot and the actual form baseline. Apply normalizers only to fields the user changes; retained quota drafts and stale-edit protection must keep those baselines. Full-form tags quote comma/quote-bearing values, preserving the JSON tag-array schema and quick-add syntax.
-- Preserve finite imported reminder values, including fractions and inactive values, through form display/save, draft recovery and downloaded JSON. A select without a predefined option needs a temporary saved-value option; it must not turn a valid value into NaN/null or silently truncate it.
-- Test quick-add month/day tokens against civil-date validation, including leap centuries, the supported year limit and submission across midnight. Recurrence duplicate guards must use explicit links/root evidence; deletion reconnection must be atomic and reject ambiguous/stale cases rather than guess from dates or creation order.
-- Keep detailed explanations in documentation; the published `index.html` and `sw.js` follow the repository's comment-free runtime convention, which static validation checks.
-- Keep changes focused. Explain the user-visible result, compatibility impact, and validation in a pull request. Do not commit browser profiles, exported personal task data, caches, or credentials.
-
-See [the product and release roadmap](docs/product-roadmap.md) for release gates and planned work, and [SECURITY.md](SECURITY.md) for responsible vulnerability reporting.
-
-## Browser matrix and large workspaces
-
-Install the engines you intend to exercise, then inspect and run the declared scope:
+Large-workspace checks are separate from the routine registry; run the scope required by the change:
 
 ```bash
-python -m playwright install chromium firefox webkit
-python3 tools/browser_matrix.py --list
-python3 tools/browser_matrix.py --browser all --keep-going --report dist/browser-matrix.json
+python tools/workspace_roundtrip_playwright.py --size 10000 --subtasks 6 --full-views --output dist/workspace.json
+python tools/workspace_failure_playwright.py --size 10000 --subtasks 6 --output dist/storage-failures.json
+python tools/performance_playwright.py --size 10000 --output dist/performance.json
 ```
 
-The current matrix registry contains **33 programs per selected engine**. `--browser firefox` selects one engine; `--group core` selects the critical workflow at 1280×800 and 390×844. Specialized programs retain their own viewports and conditions. Preserve the report together with its relative run-ID log directory. Missing engines fail rather than count as a skip/pass, and source/tool drift invalidates the overall result. [Browser compatibility](docs/browser-compatibility.md) explains capability limits and historical evidence; a configured CI job is not evidence that its remote execution passed.
+- Compare complete task/config/revision/history data, not only visible cards. Injected faults differ from real quota exhaustion or eviction.
+- Performance reports must state dataset, viewport, CPU conditions and repetitions; shared-load timings are not controlled benchmarks.
 
-For a focused core run, use `python3 tools/compatibility_playwright.py --browser firefox` (or `webkit`). For explicit large-workspace work:
+## Change rules
+
+- Preserve DB2, task JSON2.4 and view JSON1.1 with 1.0 import compatibility. Task and view backups remain separate.
+- Match JavaScript UTF-16 checksum semantics when validating task/view files, including emoji.
+- Keep writes atomic, confirmations revision-aware and concurrent newer work protected. Retain drafts when validation or saving fails.
+- Preserve untouched imported text/reminders and existing deadline instants. New clock gaps move forward and folds use the first occurrence; recurrence uses the task's stored timezone and explicit lineage.
+- Keep new workspaces empty until the user adds tasks or chooses examples. Diagnostics stay previewed, allowlisted and manually downloaded.
+- Add interface text to both language files; update the resource version and service-worker resource queries together.
+- After translation changes, run `python tools/translation_fallback.py --write`, then `python tools/security_policy.py --write` and review the generated changes.
+- After inline-script changes, regenerate CSP hashes with `python tools/security_policy.py --write`. Keep runtime HTML/scripts comment-free for the static checks.
+- When runtime or cached assets change, align app/cache versions, SoftwareApplication metadata, `package.json` and both lockfile version fields.
+- Never commit browser profiles, private exports, caches or credentials. Report vulnerabilities through [SECURITY.md](SECURITY.md).
+
+## Build and publish
 
 ```bash
-python3 tools/performance_playwright.py --size 10000 --output /tmp/task-tracer-performance.json
-python3 tools/workspace_failure_playwright.py --size 10000 --subtasks 6 --output /tmp/task-tracer-workspace-failure.json
+python tools/build_release.py
+python tools/release_playwright.py
+python tools/upgrade_playwright.py --baseline-archive downloads/task-tracer-4.15.1.zip
+python tools/verify_deployment.py --url https://todo.muquew.com/
 ```
 
-Keep full task/config/revision/history comparisons, not just visible card counts. Injected quota/abort failures are distinct from actual browser eviction or native quota enforcement. Controlled measurements must state dataset, viewport, CPU conditions, repetitions, operation boundaries and budgets; CDP heap is not peak process memory. [Performance evidence](docs/performance.md) keeps prior measurements and their limits. Routine-size checker programs do not replace an explicitly required large run.
+- Packaging uses 23 explicit source files plus generated `integrity.json`: 24 archive entries. Preserve the allowlist; never recursively include whole directories.
+- The builder writes a ZIP and `.sha256` under ignored `dist/`; it does not publish. Use the actual generated checksum and manifest commit/dirty state.
+- Published 4.15.1 ZIP `0540eca3…` is frozen to clean commit `6a3b8e61ba0699cc316fd92a247cc9c917a7521d`. A later build must not inherit that checksum or overwrite the published file.
+- Verify repeated builds, extracted persistence/offline use, and upgrade/rollback/re-upgrade using the actual retained previous ZIP. Never rebuild an old version from new source.
+- Close old app windows before upgrading or downgrading; export tasks and views first. Default upgrade fixtures do not replace an actual previous-archive check.
+- After GitHub → Vercel publication, verify exact HTTPS assets/headers, then exercise the real site and inspect an actual downloaded backup.
+- In a managed proxy environment, explicitly pass its proxy to Playwright launch/context requests. Node's extra CA does not configure Firefox's NSS store; use only the provided public CA in fresh temporary profiles, keep TLS/CSP checks enabled, then delete profiles.
+- Historical acceptance and detailed environment examples remain in [the frozen evidence](https://github.com/muquew/Task-Tracer/tree/bafbf1663c4d36836774a6a5319fbcef20c8cbfc/docs/acceptance).
 
-## Packaging and upgrades
-
-```bash
-python3 tools/build_release.py
-python3 tools/release_playwright.py
-python3 tools/upgrade_playwright.py --baseline-archive dist/task-tracer-4.15.0.zip
-python3 tools/service_worker_update_playwright.py
-```
-
-The builder writes a verified ZIP and checksum under ignored `dist/`; it does not publish. `DISTRIBUTION_SOURCES` currently maps **23 required sources** to 23 entries, plus generated `integrity.json` for a **24-file archive**. Add intended assets deliberately; never replace the mapping with recursive directory inclusion. Mapped source paths must be local regular files/directories without symlinks. The payload test rejects unsafe/missing inputs and unrelated-file inclusion; the release program verifies independent byte-for-byte builds and executes the extracted PWA for persistence/offline checks.
-
-To reproduce the 4.15.1 canonical ZIP checksum `0540eca3d0d83a140c3695f575e24e6c73252afe08e5ae2f4f3457cef4691aca`, use a separate clean checkout of `6a3b8e61ba0699cc316fd92a247cc9c917a7521d` before running `PYTHONDONTWRITEBYTECODE=1 python3 tools/build_release.py --output-dir /tmp/task-tracer-4.15.1-repro`, with output outside that checkout. A later release-artifact/acceptance-documentation HEAD has a different VCS identity even if the same 23 payload files are unchanged; retain the named canonical archive rather than assigning its checksum to a new build.
-
-For release acceptance, retain and verify the actual previous archive before using `--baseline-archive`; the example above targets the published 4.15.0 artifact when validating 4.15.1. Do not rebuild old version numbers from new code. The default git-baseline regression instead uses `1c3bacb0ca8015fb5840c6b5d1d5efa0937e6e28`, or `TASK_TRACER_UPGRADE_BASE`; keep the required history available (`git fetch --unshallow` for a shallow checkout). Record which method ran. Same-schema task compatibility does not establish compatibility for a future database migration or all older configuration formats.
-
-Close or refresh older clients before editing typed project scopes. Keep a view-file 1.1 export before downgrading; interfaces before 4.7 cannot safely interpret those scopes, despite DB2/task-JSON2.4 compatibility. The service-worker update program uses self-contained interrupted-update fixtures; `--legacy-archive` can additionally select an actual verified earlier bundle. Synthetic and real-archive results remain separate.
-
-## Production verification
-
-The owner's existing flow publishes GitHub `main` and Vercel serves `https://todo.muquew.com/`. Local checks run independently of that domain. Once the intended version has deployed:
-
-```bash
-python3 tools/verify_deployment.py --url https://todo.muquew.com/
-```
-
-This read-only verifier compares actual response bodies and configured security headers, including exact precache URLs and versioned language queries. HTTP errors and stale HTTP 200 bodies fail. Its local fixture program does not verify the live site. The verifier does not open personal browser profiles or change tasks. GitHub Actions also exposes it through the optional `verify_site` dispatch input.
-
-Complete a fresh real-domain browser workflow and actual backup download as complementary acceptance. Record whether offline behavior used the browser offline API or an unavailable origin; neither method proves physical-device installation or OS background delivery. Vercel serves the static directory without the development-only npm build or Python archive step. Preserve `vercel.json`, deploy files together and verify the response headers on the chosen host.
-
-The [4.15.1 release record](docs/releases/4.15.1.md) and [stable delivery guide](docs/stable-delivery.md) hold current outcomes. Historical [4.15.0](docs/releases/4.15.0.md) and earlier records retain their original failed, partial and completed attempts; they are not results for a later application input.
+Contributions follow the [personal non-commercial license](LICENSE); separate commercial rights require the owner's agreement.

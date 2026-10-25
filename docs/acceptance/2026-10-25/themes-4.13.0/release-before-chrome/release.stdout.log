@@ -1,9 +1,0 @@
-Bundled translation fallback matches resource files and version
-Static validation passed
-Deployment CSP hashes match application scripts
-Built and verified /tmp/task-tracer-release-vulvaw6w/one/task-tracer-4.13.0.zip (24 files, SHA-256 5b89456c4dbb263d2047aa08d3db26ff1cb543efcc597e585635014b1b6a3e3e)
-Bundled translation fallback matches resource files and version
-Static validation passed
-Deployment CSP hashes match application scripts
-Built and verified /tmp/task-tracer-release-vulvaw6w/two/task-tracer-4.13.0.zip (24 files, SHA-256 5b89456c4dbb263d2047aa08d3db26ff1cb543efcc597e585635014b1b6a3e3e)
-Release passed: reproducible bytes, verified manifest, safe file set, extracted PWA persistence and offline reload
