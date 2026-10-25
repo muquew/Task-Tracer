@@ -90,8 +90,8 @@
     "selectTask": "Select task: {taskName}",
     "noneSelected": "Select tasks first",
     "nothingToComplete": "No selected tasks can be marked complete",
-    "confirmDelete": "Permanently delete {count} selected tasks?",
-    "confirmDeleteOne": "Permanently delete {count} selected task?",
+    "confirmDelete": "Delete {count} selected tasks? You can undo this deletion.",
+    "confirmDeleteOne": "Delete {count} selected task? You can undo this deletion.",
     "error": "Batch action failed. Please try again",
     "success": {
       "focus": "{count} tasks added to today’s plan",
@@ -573,8 +573,8 @@
     },
     "clearCompleted": {
       "none": "There are no completed tasks to clear",
-      "confirm": "Permanently delete {count} completed tasks?",
-      "confirmOne": "Permanently delete {count} completed task?",
+      "confirm": "Delete {count} completed tasks? You can undo this deletion.",
+      "confirmOne": "Delete {count} completed task? You can undo this deletion.",
       "success": "Deleted {count} completed tasks",
       "successOne": "Deleted {count} completed task",
       "error": "Error while clearing tasks"
@@ -1036,7 +1036,9 @@
     "requiresDate": "Set a due date to use reminders and repeat.",
     "setDate": "Set a date",
     "weekdayRequired": "Choose at least one repeat day.",
-    "chooseDate": "Choose"
+    "chooseDate": "Choose",
+    "dateRequired": "Choose a due date, or select No deadline.",
+    "intervalRequired": "Enter a whole number from 1 to 365 days."
   },
   "settingsRefinement": {
     "storageTitle": "Browser storage protection",

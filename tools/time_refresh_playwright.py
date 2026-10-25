@@ -92,11 +92,14 @@ def verify_midnight_stats(page, url):
     task_locator(page, 'Completed before midnight').locator('[data-action="toggle"]').click()
     expect(task_locator(page, 'Completed before midnight')).to_have_count(0)
     select_view(page, 'stats')
-    today = page.locator('.stats-mini').nth(4).locator('strong')
-    expect(today).to_have_text('1')
+    review = page.locator('.stats-review')
+    today = review.locator('.stats-review-meta')
+    expect(today).to_be_visible()
+    expect(today).to_have_text(re.compile(r'^(?:1 completed today|今天完成 1 项) · '))
     before = read_workspace(page)
     after_minutes(page)
-    expect(today).to_have_text('0')
+    expect(today).to_be_visible()
+    expect(today).to_have_text(re.compile(r'^(?:0 completed today|今天完成 0 项) · '))
     trend = page.locator('.stats-trend-bar').evaluate_all('bars=>bars.map(bar=>Number(bar.dataset.trendCount))')
     assert trend[-2:] == [1,0], f'Completion trend did not follow midnight: {trend}'
     assert read_workspace(page) == before, 'Midnight statistics refresh wrote tasks/config'

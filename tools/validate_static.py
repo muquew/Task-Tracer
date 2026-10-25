@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import re
+import struct
 import sys
 from pathlib import Path
 from typing import Any
@@ -465,8 +466,8 @@ def validate_seo(index_html: str, errors: list[str]) -> None:
         '<meta property="og:site_name" content="Task Tracer">',
         f'<meta property="og:url" content="{SEO_URL}">',
         '<meta property="og:image" content="https://todo.muquew.com/screenshots/task-list-en.png">',
-        '<meta property="og:image:width" content="1440">',
-        '<meta property="og:image:height" content="1024">',
+        f'<meta property="og:image:width" content="{struct.unpack(">II", (REPO_ROOT / "screenshots/task-list-en.png").read_bytes()[16:24])[0]}">',
+        f'<meta property="og:image:height" content="{struct.unpack(">II", (REPO_ROOT / "screenshots/task-list-en.png").read_bytes()[16:24])[1]}">',
         '<meta property="og:locale" content="en_US">',
         '<meta property="og:locale:alternate" content="zh_CN">',
         '<meta name="twitter:card" content="summary_large_image">',

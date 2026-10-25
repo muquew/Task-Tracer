@@ -159,6 +159,24 @@ def assert_focus_visible(page: Page, selector: str, label: str) -> None:
                         && Number.parseFloat(paint.outlineWidth || '0') > 0 && paint.outlineStyle !== 'none';
                 });
             }
+            if (el.id === 'quickAddInput') {
+                const wrapper = el.closest('.quick-add-input-wrap');
+                if (!wrapper || document.activeElement !== el || !wrapper.matches(':focus-within')) return false;
+                const paint = getComputedStyle(wrapper);
+                const box = wrapper.getBoundingClientRect();
+                if (wrapper.closest('[hidden],[inert],[aria-hidden="true"]')
+                    || !wrapper.checkVisibility({opacityProperty: true, visibilityProperty: true})
+                    || paint.display === 'none' || paint.visibility === 'hidden' || Number(paint.opacity) <= 0
+                    || box.width <= 0 || box.height <= 0) return false;
+                const canvas = document.createElement('canvas');
+                canvas.width = canvas.height = 1;
+                const context = canvas.getContext('2d');
+                context.fillStyle = paint.outlineColor;
+                context.fillRect(0, 0, 1, 1);
+                const opaque = context.getImageData(0, 0, 1, 1).data[3] > 0;
+                return Number.parseFloat(paint.outlineWidth || '0') > 0
+                    && !['none', 'hidden'].includes(paint.outlineStyle) && opaque;
+            }
             const outline = Number.parseFloat(style.outlineWidth || '0');
             const boxShadow = style.boxShadow && style.boxShadow !== 'none';
             return outline > 0 || boxShadow;
@@ -610,7 +628,10 @@ def audit_scaled_surfaces(browser, url: str, axe_source: str, viewport: dict) ->
             expect(page.locator('[data-calendar-action="undated-more"]')).to_be_visible()
             audit_page_state(page, axe_source, f'{label} calendar pagination')
             assert_focus_visible(page, '[data-calendar-action="undated-more"]', label)
-            page.locator(f'[data-calendar-detail-date="{day}"]').click()
+            day_entry = page.locator(f'[data-calendar-detail-date="{day}"]').filter(visible=True)
+            expect(day_entry).to_have_count(1)
+            expect(day_entry).to_be_visible()
+            day_entry.click()
             expect(page.locator('#calendarDayTasks .calendar-detail-task')).to_have_count(100)
             audit_page_state(page, axe_source, f'{label} calendar day pagination')
             assert_focus_visible(page, '[data-calendar-action="detail-more"]', label)

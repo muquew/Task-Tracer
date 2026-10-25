@@ -1,12 +1,17 @@
 # Local-first commercial offering
 
-The owner has confirmed that they are muquew. The public personal non-commercial license can remain in place while the owner grants separate commercial rights. This document is an internal product proposal, not an issued commercial license or a published purchase offer. The [4.8.5 engineering-candidate launch and manual-delivery draft](commercial-launch-draft.md) provides concrete Chinese product copy, candidate-artifact references and the small set of owner decisions still needed before an actual offer.
+Muquew has confirmed copyright ownership. The public [personal non-commercial license](../LICENSE) can remain while the owner grants separate written commercial rights. This document is an internal proposal, not an issued commercial license, published purchase offer or entitlement check.
 
-The owner has left the launch price, payment channel and private support channel undecided. These items remain pending, and sales remain inactive. All five engineering acceptance queues are complete for the locally validated [4.8.5 candidate](releases/4.8.5.md): 58/58 Chromium programs in a summed 1301.444 seconds, 31 programs in each of three engines, the complete-view 10,000×6 round trip, nine same-scale failure cases and 87 controlled observations passed. Independent builds match, extracted persistence/offline and actual previous-archive upgrade/rollback/re-upgrade passed. The [91-input provenance record](releases/inputs-4.8.5.json) binds the verified 23-file/812,056-byte artifact and 314 original evidence files. Earlier successful, failed and interrupted attempts retain their own identities, including the unexplained first Firefox reload timeout followed by an unchanged complete rerun passing. The [4.8.4 local pass](releases/4.8.4.md), reports and archive remain historical. This draft is not a live paid listing or a basis for accepting payment or granting commercial rights. Actual deployment verification and paid launch remain separate records.
+Engineering delivery is tracked separately in [the stable delivery record](stable-delivery.md), which identifies the actual version, acceptance status and artifact. The published [4.15.0 record](releases/4.15.0.md) and older releases keep their own evidence. Completion of an engineering release does not activate sales or complete paid delivery.
 
-The completed [4.8.5 engineering acceptance](releases/4.8.5.md) includes atomic merge-recurrence repair, correct asynchronous transaction-error delivery and bounded batch rendering with full-match selection. This completes the current GOAL engineering scope. Real-device, remote CI, hosted deployment and formal commercial terms retain their separately recorded status; this document does not run work in the background.
+## Owner decisions still pending
 
-## Initial offer
+The launch price, payment channel, private support contact and formal commercial terms remain undecided. These decisions are tracked separately from engineering acceptance. Sales remain inactive until the owner publishes the actual terms and delivery channel.
+
+Before accepting payment, the owner must publish the actual buyer/use scope, price/currency/payment/refund process, licensed version/update entitlement, support terms and privacy/purchase terms. Do not invent those values or embed private payment/signing secrets in the static app. A task/export/archive checksum is an integrity value, not proof of purchase.
+
+## Proposed initial offer
+
 
 Sell a standalone local-first application or commercial-use rights with a one-time purchase. Keep task ownership, export, recovery, and offline access independent of any purchase server. Start with explicit order-based delivery; do not add an account service or embed payment/signing secrets in the static application.
 
@@ -27,4 +32,8 @@ CSV reporting and JSON restoration are now part of the available core. Validate 
 
 ## Launch evidence
 
-Require the automated quality and browser checks, a verified static artifact, real HTTPS/update/rollback checks, realistic workspace performance, mobile/keyboard checks, and a tested restoration path. Record actual browser/OS versions. CI configuration alone is not evidence that a browser passed. See [the roadmap](product-roadmap.md) and release notes for current evidence and missing checks.
+Require the automated quality and browser checks, a verified static artifact, real HTTPS/update/rollback checks, realistic workspace performance, mobile/keyboard checks, and a tested restoration path. Record actual browser/OS versions. CI configuration alone is not evidence that a browser passed. See [the stable delivery record](stable-delivery.md), [roadmap](product-roadmap.md) and release notes for actual evidence and missing scopes. Physical-device and OS capabilities retain their separately recorded limits.
+
+## Historical proposal
+
+The [4.8.5 launch and manual-delivery draft](commercial-launch-draft.md) preserves earlier Chinese product copy and that candidate’s artifact references. It is a historical proposal, not the current stable archive or an active offer. The [4.8.5 engineering record](releases/4.8.5.md) retains its original completed queues and failed attempts; those outcomes are not relabeled as current validation.

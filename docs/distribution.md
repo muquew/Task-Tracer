@@ -1,4 +1,4 @@
-# Task Tracer 4.14.0 — static distribution
+# Task Tracer — static distribution
 
 This archive contains the browser application, deployment headers, icons, translations, third-party notices and an SHA-256 integrity manifest. It does not contain an account service, cloud sync or a payment service.
 

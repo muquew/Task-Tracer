@@ -22,25 +22,7 @@
 
 Task Tracer is a personal task manager that runs in the browser and keeps task data on the current device/browser profile. It is made for people who want a capable daily workspace without accounts, servers, or cloud sync as a requirement.
 
-The continuing development goal, acceptance criteria and current work queue are recorded in [GOAL.md](./GOAL.md).
-
-The current published release, **[4.15.0](./docs/releases/4.15.0.md)**, refines content surfaces, fields, button feedback, navigation and overlay depth across the four workspace themes. Hands-on review, affected checks, release/upgrade validation and live-site verification are complete. The [material brief](./MATERIAL_BRIEF.md) records its scope.
-
-The published **[4.14.0 baseline](./docs/releases/4.14.0.md)** reorganizes task editing, preserves unfinished scheduling and subtask edits, exposes selection actions, and clarifies settings, imports and recovery. Its review, validation and publication retain their original scope.
-
-The published **[4.13.2 baseline](./docs/releases/4.13.2.md)** refines subtask saving, calendar return, task feedback and sidebar navigation while reducing repeated interface copy. Its local review, affected checks, release/upgrade validation and live-site verification retain their original scope.
-
-The published **[4.13.1 baseline](./docs/releases/4.13.1.md)** provides one-click full task entry, an explicit in-app update check and workflow fixes. Its targeted checks, real 4.13.0 archive upgrade, publication and live-site review are complete; those results retain their original scope.
-
-The published **[4.13.0 baseline](./docs/releases/4.13.0.md)** provides four complete workspace themes and revised surfaces and component materials. The [theme brief](./THEME_BRIEF.md) records the direction. Its hands-on visual review, targeted protection, packaging, real 4.12 upgrade and live-site verification are complete; the release record identifies each scope.
-
-The published [4.12.0 baseline](./docs/releases/4.12.0.md) retains its functional changes and original [product review](./docs/product-review-4.12.0.md). The 4.13.0 release has its own acceptance record.
-
-**[4.11.1](./docs/releases/4.11.1.md)** reorganizes capture, task editing, mobile views, settings and data tools after a hands-on whole-site review. See the [before-and-after review](./docs/acceptance/2026-10-25/usability-4.11.0/README.md).
-
-The [4.10.0 baseline](./docs/releases/4.10.0.md) preserves its full engineering results, the single test-navigation recheck and the production language issue repaired by 4.10.1. Earlier [4.9.0](./docs/releases/4.9.0.md) results keep their original identity.
-
-PWA means Progressive Web App: when the browser supports it, Task Tracer can be installed, opened from the operating system like an app, and loaded offline after the app shell has been cached.
+Release status, supported environments, verified artifacts and known limitations are collected in the [stable delivery guide](./docs/stable-delivery.md). The current published application is 4.15.0; 4.15.1 is undergoing complete delivery acceptance.
 
 ## What It Helps With
 
@@ -67,7 +49,7 @@ The desktop sidebar keeps the brand and **List**, **Calendar**, **Timeline** and
 
 Workspace themes are saved in this browser profile and keep the existing four preference choices when upgrading. They remain independent of task data and task backups; database 2, task JSON 2.4 and saved-view 1.1/1.0 import compatibility are unchanged. The themes are part of the local application and retain the offline-use boundaries described below.
 
-The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.15.0 release record](./docs/releases/4.15.0.md) documents this round’s changes, acceptance and publication; earlier release records retain their own results.
+The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [stable delivery guide](./docs/stable-delivery.md) records current acceptance and publication; [release history](./docs/releases/README.md) retains earlier results.
 
 ## Getting Started
 
@@ -95,7 +77,7 @@ Open the **Quick capture** arrow beside **Add task** in the top bar. It turns co
 tomorrow 20:00 Review English #study /Personal
 ```
 
-This creates a task named `Review English`, due tomorrow at 20:00, tagged `study`, and assigned to the `Personal` project.
+This creates a task named `Review English`, due tomorrow at 20:00, tagged `study`, and assigned to the `Personal` project. Relative dates also include `yesterday`; Chinese input recognizes 昨天／昨日 and 前天. Check the date preview before saving historical work.
 
 New full-form and Quick capture tasks inherit the selected project. In the scope for tasks without a project, they remain unassigned; in **All projects**, the default is `Inbox`. An explicit `/project` in Quick capture takes priority.
 
@@ -283,27 +265,9 @@ http://127.0.0.1:8080/
 
 ## Development and Release
 
-The application needs no build step. For pinned browser-test dependencies, validation commands, and contribution rules, see [CONTRIBUTING.md](./CONTRIBUTING.md).
+Run `python tools/check.py --static-only` for consistency checks, or `python tools/check.py --keep-going --report /tmp/task-tracer-checks.json` for the full registered suite. The [contribution guide](./CONTRIBUTING.md) covers pinned dependencies, all three browser engines, data boundaries and reproducible release commands.
 
-```bash
-python3 tools/check.py --static-only
-```
-
-Acceptance and publication for the current release are documented in the [4.15.0 record](./docs/releases/4.15.0.md). The following completed records belong to their named historical releases.
-
-The [4.9.0 release](./docs/releases/4.9.0.md) delivers the redesigned workspace, direct language selection, Light/Dark/System preferences and revised bilingual copy. Clean application commit `e7d58e2` freezes 23 source and 70 verification inputs. The full 59-program checker passed, with program durations totaling 1645.602 seconds; Chromium 154.0.8037.57, Firefox 153.0 and WebKit 26.5 each passed all 32 registered matrix programs. Two independent builds produced the same 797,361-byte, 24-file ZIP, SHA-256 `197bc587145d65f986320ce4b69bd0a2937ce8d48ca3ceb3183a49dfc8849b7b`, with `working_tree_dirty=false`. Actual 4.8.6-archive upgrade/rollback/re-upgrade and an additional 10,000-task/six-subtask full-workspace correctness exercise passed. The [input and artifact record](./docs/releases/inputs-4.9.0.json) binds these results to the frozen candidate; program viewport scopes and live-CDP exclusions remain explicit.
-
-The application commit was pushed to GitHub `main`. [Production acceptance](./docs/acceptance/2026-10-25/publication-4.9.0.json) confirmed exact bytes for 15 HTTPS responses, five configured security headers and CSP, plus four separately fetched PNG assets. All six real-domain core combinations—three engines at desktop and narrow viewports—passed with zero recorded errors and twelve actual JSON downloads. Independent SHA-bound reviews inspected all 27 workflow images; the four published PNG assets were also opened and reviewed. Original automated reports and their false manual-inspection flags remain unchanged. Chromium and Firefox used the normal offline API; WebKit used a fully stopped, validated opaque proxy relay and returned the page from the service worker while `navigator.onLine` stayed true. This does not claim WebKit's offline API passed.
-
-These are Linux browser-engine and simulated-viewport results, not physical-device or Safari/iOS acceptance. Remote CI and Vercel backend deployment metadata were not checked. The first complete run and matrix failures, and the initial deployment attempt's environment permission error before any HTTP observation, remain preserved. The four documentation PNGs came from the same application HTML before the final smoke-helper change; their older verification identity is retained rather than described as a new capture on all 93 final inputs. Database/task/view formats remain compatible, and commercial price, payment and support terms remain undecided.
-
-The [published 4.8.6 corrective release](./docs/releases/4.8.6.md) repairs poor light-theme checked-subtask contrast found during real-domain inspection. Targeted checks passed all six engine/viewport combinations and 36 automated states, with twelve representative images inspected; seven static programs, the new three-engine 31-program matrix and actual 4.8.5-archive upgrade/rollback/re-upgrade also passed. The new frozen full 58-program checker also passed in a summed 1427.981 seconds; independent ZIP builds matched and extracted persistence/offline passed. The [new 91-input provenance](./docs/releases/inputs-4.8.6.json) binds the artifact and 166 original evidence files. Application commit `f13d7e1` was pushed to GitHub `main`, and [production static matching](./docs/acceptance/2026-10-25/deployment-4.8.6/4960beeb-6e70-4e15-bd62-b4223711b771/summary.md) passed at 14:14:33 Beijing with all 14 responses and security headers matching. [Real-domain browser acceptance](./docs/acceptance/2026-10-25/publication-4.8.6.json) also passed: four Firefox/WebKit core combinations, plus separate Chromium visibility checks at two viewports covering twelve automated states and four inspected representatives. That published version uses app/cache/package 4.8.6 and resources 4.36. Engineering, static-deployment matching and the declared real-domain browser acceptance are complete. The two Chromium visibility contexts are not counted as another identical full-core program; real-device and remote-CI results remain separate. The [dated 4.8.5 publication/browser report](./docs/acceptance/2026-10-25/README.md) retains the already-published state and the discovered defect.
-
-The completed [4.8.5 engineering baseline](./docs/releases/4.8.5.md) completed the five [4.8.5 GOAL engineering baseline queues](./GOAL.md). It passed 58/58 Chromium programs in a summed 1301.444 seconds, the 10,000-task/six-subtask complete-view round trip, all nine same-scale failure cases, [31 programs in each of three engines](./docs/browser-compatibility.md) and all 87 [controlled performance observations](./docs/performance.md). Two independent builds match byte for byte; extracted persistence/offline and actual 4.8.4 archive upgrade/rollback/re-upgrade passed. The [91-input provenance record](./docs/releases/inputs-4.8.5.json) binds the 23-file/812,056-byte artifact and 314 original evidence files. That baseline used app/cache/package 4.8.5 and resources 4.36. Original failures and interruptions stay retained; real-device, remote CI, production deployment and commercial terms remain separate records.
-
-After installing the development dependencies and Chromium as documented there, run `python tools/check.py` for the current registered checks. The preceding locally validated [4.8.4 candidate](./docs/releases/4.8.4.md) passed 56/56 programs in Chromium, including reproducible builds, extracted persistence/offline and the 1,000-task/six-subtask JSON replacement/recovery round trip. Its [schema-2 machine report](./docs/releases/check-results-4.8.4.json) and [87-input provenance record](./docs/releases/inputs-4.8.4.json) bind the completed run to unchanged source/verification inputs. The five new browser-focused suites passed in Firefox/WebKit too; this does not mean all 56 programs ran in every engine. That 4.8.4 record did not include real-device, remote-CI or hosted-deployment checks; the separate 4.8.5 production results are recorded above. Real-device and remote-CI acceptance remain separately unverified.
-
-The historical [4.8.2 notes](./docs/releases/4.8.2.md) preserve its successful final run and failed first run separately. [4.8.1](./docs/releases/4.8.1.md), [4.8](./docs/releases/4.8.md), [4.7](./docs/releases/4.7.md) and [4.6](./docs/releases/4.6.md) retain their historical results. The [product roadmap](./docs/product-roadmap.md) describes the local-first professional-edition direction; planned capabilities are not existing features. For vulnerability reporting, see [SECURITY.md](./SECURITY.md).
+Use the [stable delivery guide](./docs/stable-delivery.md) for current acceptance, artifact identity and upgrade/rollback instructions. [Release history](./docs/releases/README.md) retains each version’s actual results and original failures. Report security issues through [SECURITY.md](./SECURITY.md); the [product roadmap](./docs/product-roadmap.md) distinguishes shipped capabilities from commercial decisions.
 
 ## License
 

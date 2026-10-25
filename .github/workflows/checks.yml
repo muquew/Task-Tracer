@@ -59,7 +59,8 @@ jobs:
 
   compatibility:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    # Hosted WebKit exceeded 45 minutes; retain its complete workflow registry.
+    timeout-minutes: ${{ matrix.browser == 'webkit' && 90 || 45 }}
     strategy:
       fail-fast: false
       matrix:

@@ -109,11 +109,13 @@ def exercise_batch_calendar(page, per_section, metrics, sort_mode):
     assert_summary(page, '.calendar-day-detail', 200, per_section)
 
     select_sort(page, 'smart' if sort_mode == 'manual' else 'manual')
+    open_day(page)
     expect(page.locator('.date-view-undated .task-item')).to_have_count(100)
     expect(page.locator('.calendar-detail-task')).to_have_count(100)
     expect(page.locator('.task-select-checkbox:checked')).to_have_count(100)
     expect(page.locator('#batchSelectionSummary')).to_contain_text(count_pattern)
     select_sort(page, sort_mode)
+    open_day(page)
     page.locator('#exitBatchModeBtn').click()
     expect(page.locator('.task-select-checkbox')).to_have_count(0)
     expected = per_section if sort_mode == 'manual' else 100

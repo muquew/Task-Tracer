@@ -73,6 +73,7 @@ def change_settings(page, url, template):
     baseline = import_fixture(page, url, template, fixture_overrides())
     open_edit(page)
     page.locator('#dueDate').fill('')
+    page.locator('#noDeadline').check()
     expected = {**baseline[0], **{key: None for key in ('dueAt', 'dueDate', 'dueLocalDate', 'dueLocalTime', 'dueTimeZone')},
                 'reminderOffset': -1, 'reminderRepeat': -1, 'snoozedUntil': None, 'lastReminderAt': None}
     save_and_assert(page, [expected])

@@ -6,6 +6,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import tempfile
+import uuid
 from pathlib import Path
 import threading
 import time
@@ -208,7 +210,7 @@ def recovery_consent(page, out):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--output", type=Path, default=Path(tempfile.gettempdir()) / "task-tracer-settings-flow" / uuid.uuid4().hex)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     before = fingerprint()

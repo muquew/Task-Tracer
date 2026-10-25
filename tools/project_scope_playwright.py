@@ -9,7 +9,7 @@ import re
 
 from playwright.sync_api import expect, sync_playwright
 from saved_views_playwright import save_view, stored_views
-from smoke_playwright import click_task_action, reveal_workspace_control, select_filter, select_language, task_locator
+from smoke_playwright import click_task_action, reveal_filters, reveal_workspace_control, select_filter, select_language, task_locator
 from smoke_playwright import (
     add_task, browser_launch_options, clear_app_data, get_task_records, local_server,
     visible_task_names, wait_for_app_ready,
@@ -37,6 +37,7 @@ def assert_visible(page, expected):
 
 
 def select_literal_project(page, name):
+    reveal_filters(page)
     page.locator('#projectFilterBtn').click()
     menu = page.locator('#projectFilterMenu')
     expect(menu).to_be_visible()
@@ -51,8 +52,17 @@ def select_literal_project(page, name):
 
 
 def select_sentinel(page, index):
+    reveal_filters(page)
     page.locator('#projectFilterBtn').click()
     page.locator('#projectFilterMenu .dropdown-option').nth(index).click()
+
+
+def add_unassigned_task(page, name):
+    add_task(page, name, no_deadline=True)
+    click_task_action(task_locator(page, name), 'edit')
+    page.locator('#taskProject').fill('')
+    page.locator('#submitBtn').click()
+    expect(page.locator('#taskModal')).to_be_hidden()
 
 
 def apply_view(page, name, expected):
@@ -66,7 +76,7 @@ def apply_view(page, name, expected):
 def assert_language_grouping(page):
     add_task(page, 'Named English unassigned', project=UNASSIGNED_LABELS['en'], no_deadline=True)
     add_task(page, 'Named Chinese unassigned', project=UNASSIGNED_LABELS['zh-CN'], no_deadline=True)
-    add_task(page, 'Actually unassigned', no_deadline=True)
+    add_unassigned_task(page, 'Actually unassigned')
     before = get_task_records(page)
     for language in ('en', 'zh-CN'):
         if language != 'en':
@@ -159,7 +169,7 @@ def run(engine, grouping_only=False):
                 return
             for index, project in enumerate(PROJECTS):
                 add_task(page, f'Literal project task {index}', project=project, no_deadline=True)
-            add_task(page, 'Unassigned scope task', no_deadline=True)
+            add_unassigned_task(page, 'Unassigned scope task')
             task_records = get_task_records(page)
             all_names = {task['name'] for task in task_records}
             expected_views = {}

@@ -90,8 +90,8 @@
     "selectTask": "选择任务：{taskName}",
     "noneSelected": "请先选择任务",
     "nothingToComplete": "所选任务中没有可标记完成的任务",
-    "confirmDelete": "确定永久删除 {count} 个选中任务吗？",
-    "confirmDeleteOne": "确定永久删除 {count} 个选中任务吗？",
+    "confirmDelete": "删除 {count} 个选中任务？可撤销此操作。",
+    "confirmDeleteOne": "删除 {count} 个选中任务？可撤销此操作。",
     "error": "批量操作失败，请重试",
     "success": {
       "focus": "{count} 个任务已加入今日计划",
@@ -573,8 +573,8 @@
     },
     "clearCompleted": {
       "none": "没有已完成的任务可清除",
-      "confirm": "确定永久删除 {count} 个已完成的任务吗？",
-      "confirmOne": "确定永久删除 {count} 个已完成的任务吗？",
+      "confirm": "删除 {count} 个已完成任务？可撤销此操作。",
+      "confirmOne": "删除 {count} 个已完成任务？可撤销此操作。",
       "success": "已删除 {count} 个已完成任务",
       "successOne": "已删除 {count} 个已完成任务",
       "error": "清除任务时出错"
@@ -1036,7 +1036,9 @@
     "requiresDate": "设置截止日期后可使用提醒与重复。",
     "setDate": "设置日期",
     "weekdayRequired": "请至少选择一个重复星期。",
-    "chooseDate": "选择"
+    "chooseDate": "选择",
+    "dateRequired": "请选择截止日期，或勾选“无截止日期”。",
+    "intervalRequired": "请输入1至365之间的整数天数。"
   },
   "settingsRefinement": {
     "storageTitle": "浏览器存储保护",

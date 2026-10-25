@@ -436,7 +436,11 @@ def reveal_batch_action(page: Page, action: str) -> Locator:
     control = page.locator(selector)
     more = control.locator('xpath=ancestor::details')
     if more.count() and more.get_attribute('open') is None:
-        more.locator(':scope > summary').click()
+        summary = more.locator(':scope > summary')
+        summary.scroll_into_view_if_needed()
+        page.evaluate('() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))')
+        summary.click()
+        page.evaluate('() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))')
     expect(control).to_be_visible()
     return control
 
@@ -1555,6 +1559,10 @@ def select_project(page: Page, value: str) -> None:
 
 def select_sort(page: Page, value: str) -> None:
     return_to_task_workspace(page)
+    previous_view = page.locator('body').get_attribute('data-task-view')
+    restore_view = previous_view in ('calendar', 'stats') and page.locator('#sortDropdown').is_hidden()
+    if restore_view:
+        select_view(page, 'list')
     reveal_filters(page)
     sort_btn = page.locator("#sortBtn")
     selected_option = page.locator(f'#sortDropdown .dropdown-option[data-sort="{value}"]')
@@ -1567,6 +1575,8 @@ def select_sort(page: Page, value: str) -> None:
     expect(selected_option).to_have_class(
         re.compile(r"(^|\s)selected(\s|$)")
     )
+    if restore_view:
+        select_view(page, previous_view)
 
 
 def select_view(page: Page, value: str) -> None:
