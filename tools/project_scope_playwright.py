@@ -129,7 +129,7 @@ def assert_sidebar_project_exits_today_plan(page, url):
     button = page.locator(f'#workspaceProjects [data-workspace-project={json.dumps(encoded, ensure_ascii=False)}]')
     reveal_workspace_control(page, button).click()
     expect(page.locator('#focusModeToggleBtn')).to_have_attribute('aria-pressed', 'false')
-    expect(button).to_have_attribute('aria-current', 'page')
+    expect(button).to_have_attribute('aria-pressed', 'true')
     assert_visible(page, {'Sidebar planned task', 'Sidebar unplanned task'})
     assert_global_summary()
     assert get_task_records(page) == before, 'Sidebar or combined project navigation rewrote task/focus data'

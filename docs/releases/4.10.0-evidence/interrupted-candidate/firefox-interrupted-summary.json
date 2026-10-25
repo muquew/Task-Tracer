@@ -1,0 +1,289 @@
+{
+  "status": "interrupted",
+  "runner_exit_code": 130,
+  "native_signal": "SIGINT",
+  "runner_pid": 302134,
+  "runner_pid_exists": false,
+  "browser": {
+    "firefox": {
+      "status": "passed",
+      "version": "153.0",
+      "version_source": "Actual probe using the same Playwright launcher and options as the registered programs",
+      "exit_code": 0,
+      "started_at": "2026-10-25T10:46:15.092+00:00",
+      "finished_at": "2026-10-25T10:46:16.402+00:00",
+      "duration_seconds": 1.31,
+      "log": {
+        "path": "/tmp/task-tracer-4.10.0-kzcrgag4/reports/firefox-matrix-logs/4114f0e7-e979-4f0d-938b-9f196196376c/firefox-probe.log",
+        "relative_path": "firefox-matrix-logs/4114f0e7-e979-4f0d-938b-9f196196376c/firefox-probe.log",
+        "bytes": 43,
+        "sha256": "b5247e1b6b1f7474ec4ac4fd18c8b347c6292e54372bf67e6c0f91bf6dfed7f2"
+      }
+    }
+  },
+  "scope": {
+    "browsers": [
+      "firefox"
+    ],
+    "programs": [
+      "compatibility_playwright.py",
+      "appearance_preferences_playwright.py",
+      "settings_navigation_playwright.py",
+      "csv_playwright.py",
+      "backup_freshness_playwright.py",
+      "backup_reminder_priority_playwright.py",
+      "project_scope_playwright.py",
+      "task_draft_playwright.py",
+      "quick_add_recovery_playwright.py",
+      "quick_add_date_playwright.py",
+      "imported_text_edit_playwright.py",
+      "imported_reminder_edit_playwright.py",
+      "repeat_lineage_playwright.py",
+      "repeat_delete_playwright.py",
+      "repeat_merge_playwright.py",
+      "dialog_lifecycle_playwright.py",
+      "onboarding_playwright.py",
+      "help_playwright.py",
+      "ime_input_playwright.py",
+      "batch_selection_playwright.py",
+      "workspace_failure_playwright.py",
+      "calendar_performance_playwright.py",
+      "calendar_navigation_playwright.py",
+      "calendar_timezone_playwright.py",
+      "recovery_management_playwright.py",
+      "views_portability_playwright.py",
+      "views_delete_playwright.py",
+      "timezone_playwright.py",
+      "dst_wall_time_playwright.py",
+      "foreign_wall_time_playwright.py",
+      "recurrence_timezone_playwright.py",
+      "time_refresh_playwright.py",
+      "stats_scope_playwright.py"
+    ],
+    "registry_program_count": 33,
+    "all_registered_programs": true,
+    "all_engines": false,
+    "core_program": "compatibility_playwright.py",
+    "core_viewports": [
+      {
+        "width": 1280,
+        "height": 800
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "other_program_viewports": "Defined by each program; not all special-purpose programs exercise both core viewports.",
+    "device_scope": "Linux desktop browser engines and synthetic viewports; not real mobile devices or Safari/iOS.",
+    "coverage_exceptions": [
+      {
+        "browser": "firefox",
+        "program": "timezone_playwright.py",
+        "case": "Live device-timezone override",
+        "status": "not_run",
+        "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+      },
+      {
+        "browser": "firefox",
+        "program": "calendar_timezone_playwright.py",
+        "case": "Live device-timezone override",
+        "status": "not_run",
+        "reason": "Requires Chromium CDP; this engine runs the program's fixed-zone cases."
+      }
+    ]
+  },
+  "registered": 33,
+  "completed_checks": 10,
+  "passed_checks": 8,
+  "failed_checks": 2,
+  "unexecuted_checks": [
+    {
+      "browser": "firefox",
+      "program": "imported_text_edit_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "imported_reminder_edit_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "repeat_lineage_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "repeat_delete_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "repeat_merge_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "dialog_lifecycle_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "onboarding_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "help_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "ime_input_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "batch_selection_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "workspace_failure_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "calendar_performance_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "calendar_navigation_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "calendar_timezone_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "recovery_management_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "views_portability_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "views_delete_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "timezone_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "dst_wall_time_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "foreign_wall_time_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "recurrence_timezone_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "time_refresh_playwright.py"
+    },
+    {
+      "browser": "firefox",
+      "program": "stats_scope_playwright.py"
+    }
+  ],
+  "interrupted_check": {
+    "browser": "firefox",
+    "program": "imported_text_edit_playwright.py",
+    "kind": "program",
+    "started_at": "2026-10-25T10:51:15.590+00:00",
+    "log": "/tmp/task-tracer-4.10.0-kzcrgag4/reports/firefox-matrix-logs/4114f0e7-e979-4f0d-938b-9f196196376c/firefox-imported_text_edit_playwright.log"
+  },
+  "source_start_and_final_match_freeze": true,
+  "verification_start_and_final_match_freeze": true,
+  "source_unchanged": true,
+  "verification_unchanged": true,
+  "source_sha256": "3834441d03cf47185531eb4cb7cbc65632a2aa894e281dec82848ee48770ff04",
+  "verification_sha256": "199c29dcafa0c49157b05e6b71ea4dcf08f34500c199202c362192c97789329e",
+  "source_file_count": 23,
+  "verification_file_count": 71,
+  "freeze_sha256": "c7a294214c1d5986f047816a1631c9ce32c4dc804ffd9724bc31fb7b0a06bab1",
+  "matrix_report": "/tmp/task-tracer-4.10.0-kzcrgag4/reports/firefox-matrix.json",
+  "matrix_report_sha256": "beff2cf72450b81d57a4a0f54d61409b866273b02d88873c4aec1a2ddd3070c6",
+  "outer_log": "/tmp/task-tracer-4.10.0-kzcrgag4/logs/firefox-matrix.log",
+  "outer_log_sha256": "bd90f420249a4cb3f5ab05e5e2223e50e54bbf2baf08d6c836a5bfc174012345",
+  "integrity_errors": [],
+  "remaining_firefox_engine_or_runner_processes": [],
+  "checks": [
+    {
+      "program": "compatibility_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "log": "/tmp/task-tracer-4.10.0-kzcrgag4/reports/firefox-matrix-logs/4114f0e7-e979-4f0d-938b-9f196196376c/firefox-compatibility_playwright.log",
+      "sha256": "6db78ae7af7123c25165538f4f7329d7e9c6e6c5fec61c1a4e82c4823fa9a945"
+    },
+    {
+      "program": "appearance_preferences_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "log": "/tmp/task-tracer-4.10.0-kzcrgag4/reports/firefox-matrix-logs/4114f0e7-e979-4f0d-938b-9f196196376c/firefox-appearance_preferences_playwright.log",
+      "sha256": "0ca66ed439ef6432bad42d38f1ab13df52b2bc0667e48b4440a4242ee5e57158"
+    },
+    {
+      "program": "settings_navigation_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "log": "/tmp/task-tracer-4.10.0-kzcrgag4/reports/firefox-matrix-logs/4114f0e7-e979-4f0d-938b-9f196196376c/firefox-settings_navigation_playwright.log",
+      "sha256": "c36800af6025c0715fce12500aa51575503d773c0bd46a4127a4d9a1b2dd635e"
+    },
+    {
+      "program": "csv_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "log": "/tmp/task-tracer-4.10.0-kzcrgag4/reports/firefox-matrix-logs/4114f0e7-e979-4f0d-938b-9f196196376c/firefox-csv_playwright.log",
+      "sha256": "41efc4c5d787cbe0746750a988cf485b4bd32a0a6478c4cf1412a36b15269a3b"
+    },
+    {
+      "program": "backup_freshness_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "log": "/tmp/task-tracer-4.10.0-kzcrgag4/reports/firefox-matrix-logs/4114f0e7-e979-4f0d-938b-9f196196376c/firefox-backup_freshness_playwright.log",
+      "sha256": "82db308d54e6978a7765db94ec5668fde6509ba49ad8b18933bc70763ffc381b"
+    },
+    {
+      "program": "backup_reminder_priority_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "log": "/tmp/task-tracer-4.10.0-kzcrgag4/reports/firefox-matrix-logs/4114f0e7-e979-4f0d-938b-9f196196376c/firefox-backup_reminder_priority_playwright.log",
+      "sha256": "d2b783ba37c3323be5a29ebeff48cbb55064aec610dd721b7e56d99cc7c53b27"
+    },
+    {
+      "program": "project_scope_playwright.py",
+      "status": "failed",
+      "exit_code": 1,
+      "log": "/tmp/task-tracer-4.10.0-kzcrgag4/reports/firefox-matrix-logs/4114f0e7-e979-4f0d-938b-9f196196376c/firefox-project_scope_playwright.log",
+      "sha256": "f4d23e1b2942853cf6aa529d7b0ec9b37244d95192876fa0afb5842886a4d1d0"
+    },
+    {
+      "program": "task_draft_playwright.py",
+      "status": "failed",
+      "exit_code": 1,
+      "log": "/tmp/task-tracer-4.10.0-kzcrgag4/reports/firefox-matrix-logs/4114f0e7-e979-4f0d-938b-9f196196376c/firefox-task_draft_playwright.log",
+      "sha256": "d76f5aebb2c041a94a882ece5517454084cb1fb3799e05b7fee98c107c08426a"
+    },
+    {
+      "program": "quick_add_recovery_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "log": "/tmp/task-tracer-4.10.0-kzcrgag4/reports/firefox-matrix-logs/4114f0e7-e979-4f0d-938b-9f196196376c/firefox-quick_add_recovery_playwright.log",
+      "sha256": "db244947f5a2afcde311ddcafc99c43b9d659d2ef8111548fd8e526081d6b2e8"
+    },
+    {
+      "program": "quick_add_date_playwright.py",
+      "status": "passed",
+      "exit_code": 0,
+      "log": "/tmp/task-tracer-4.10.0-kzcrgag4/reports/firefox-matrix-logs/4114f0e7-e979-4f0d-938b-9f196196376c/firefox-quick_add_date_playwright.log",
+      "sha256": "f358e158e2570af1515be483cdf03172c442b4db7b3d749e8326ecd621999455"
+    }
+  ],
+  "limits": "Interrupted diagnostic run on Linux desktop Firefox 153.0 with synthetic viewports; not a passing full matrix, not real devices, no CDP live-timezone override; no repository edits or reruns."
+}

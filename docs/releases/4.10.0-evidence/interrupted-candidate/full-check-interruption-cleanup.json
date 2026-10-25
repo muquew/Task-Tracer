@@ -1,0 +1,217 @@
+{
+  "signal": "SIGINT",
+  "runner_pid": 301854,
+  "tracked_processes": [
+    {
+      "pid": 301854,
+      "ppid": 301851,
+      "pgrp": 301851,
+      "state": "S",
+      "comm": "python3"
+    },
+    {
+      "pid": 315760,
+      "ppid": 301854,
+      "pgrp": 315760,
+      "state": "S",
+      "comm": "python3"
+    },
+    {
+      "pid": 315764,
+      "ppid": 315760,
+      "pgrp": 315760,
+      "state": "S",
+      "comm": "MainThread"
+    },
+    {
+      "pid": 315782,
+      "ppid": 315764,
+      "pgrp": 315782,
+      "state": "S",
+      "comm": "chromium"
+    },
+    {
+      "pid": 315804,
+      "ppid": 315782,
+      "pgrp": 315782,
+      "state": "S",
+      "comm": "chromium"
+    },
+    {
+      "pid": 315806,
+      "ppid": 315782,
+      "pgrp": 315782,
+      "state": "S",
+      "comm": "chromium"
+    },
+    {
+      "pid": 315846,
+      "ppid": 315804,
+      "pgrp": 315782,
+      "state": "S",
+      "comm": "chromium"
+    },
+    {
+      "pid": 315850,
+      "ppid": 315782,
+      "pgrp": 315782,
+      "state": "S",
+      "comm": "chromium"
+    },
+    {
+      "pid": 315879,
+      "ppid": 315806,
+      "pgrp": 315782,
+      "state": "S",
+      "comm": "chromium"
+    },
+    {
+      "pid": 316383,
+      "ppid": 315806,
+      "pgrp": 315782,
+      "state": "S",
+      "comm": "chromium"
+    },
+    {
+      "pid": 316390,
+      "ppid": 315806,
+      "pgrp": 315782,
+      "state": "S",
+      "comm": "chromium"
+    },
+    {
+      "pid": 316394,
+      "ppid": 315806,
+      "pgrp": 315782,
+      "state": "S",
+      "comm": "chromium"
+    },
+    {
+      "pid": 316475,
+      "ppid": 315806,
+      "pgrp": 315782,
+      "state": "S",
+      "comm": "chromium"
+    }
+  ],
+  "listeners_before": [
+    {
+      "table": "tcp",
+      "local_address": "0100007F:CA15",
+      "inode": "1040489"
+    }
+  ],
+  "sent_at": 1792925498.3492842,
+  "checked_at": 1792925509.2586112,
+  "processes_remaining": [
+    {
+      "pid": 315764,
+      "state": "Z",
+      "comm": "MainThread",
+      "kernel_status": {
+        "State": "Z (zombie)",
+        "FDSize": "0"
+      }
+    },
+    {
+      "pid": 315804,
+      "state": "Z",
+      "comm": "chromium",
+      "kernel_status": {
+        "State": "Z (zombie)",
+        "FDSize": "0"
+      }
+    },
+    {
+      "pid": 315806,
+      "state": "Z",
+      "comm": "chromium",
+      "kernel_status": {
+        "State": "Z (zombie)",
+        "FDSize": "0"
+      }
+    },
+    {
+      "pid": 315846,
+      "state": "Z",
+      "comm": "chromium",
+      "kernel_status": {
+        "State": "Z (zombie)",
+        "FDSize": "0"
+      }
+    },
+    {
+      "pid": 315850,
+      "state": "Z",
+      "comm": "chromium",
+      "kernel_status": {
+        "State": "Z (zombie)",
+        "FDSize": "0"
+      }
+    },
+    {
+      "pid": 315879,
+      "state": "Z",
+      "comm": "chromium",
+      "kernel_status": {
+        "State": "Z (zombie)",
+        "FDSize": "0"
+      }
+    },
+    {
+      "pid": 316383,
+      "state": "Z",
+      "comm": "chromium",
+      "kernel_status": {
+        "State": "Z (zombie)",
+        "FDSize": "0"
+      }
+    },
+    {
+      "pid": 316390,
+      "state": "Z",
+      "comm": "chromium",
+      "kernel_status": {
+        "State": "Z (zombie)",
+        "FDSize": "0"
+      }
+    },
+    {
+      "pid": 316394,
+      "state": "Z",
+      "comm": "chromium",
+      "kernel_status": {
+        "State": "Z (zombie)",
+        "FDSize": "0"
+      }
+    }
+  ],
+  "listeners_remaining": [],
+  "active_processes_remaining": [],
+  "native_report": {
+    "status": "interrupted",
+    "completed": false,
+    "passed": false,
+    "source_unchanged": true,
+    "verification_unchanged": true,
+    "integrity_errors": [],
+    "error": "Interrupted by SIGINT",
+    "current_check": {
+      "program": "batch_selection_playwright.py",
+      "started_at": "2026-10-25T10:51:22.309+00:00"
+    }
+  },
+  "completed_program_count": 14,
+  "planned_program_count": 60,
+  "failures": [],
+  "fresh_connection_checks": [
+    {
+      "port": 51733,
+      "connection_refused": true,
+      "errno": 111,
+      "error": "[Errno 111] Connection refused"
+    }
+  ],
+  "confirmed_at": 1792925546.862534,
+  "resources_released": true
+}

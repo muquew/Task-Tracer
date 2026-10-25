@@ -1,0 +1,246 @@
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+Task draft regression: webkit 26.5
+New forms: all four close paths, full draft retention, prompt focus, explicit discard, and reverted changes passed
+Description, project, tags, deadline, reminder, repeat, and unsubmitted subtask changes independently trigger protection
+Existing unchanged edits close directly; subtask-only and stale drafts remain protected without changing committed data
+A genuine aborted write preserves the draft and unlocks editing; explicit retry commits once and closes normally
+Real committed transaction delay: saving freezes input and close paths; late completion preserves both a later draft and a disabled import gate
+Traceback (most recent call last):
+  File "/workspace/Task-Tracer-settings/tools/task_draft_playwright.py", line 630, in <module>
+    run(arguments.browser, arguments.case)
+  File "/workspace/Task-Tracer-settings/tools/task_draft_playwright.py", line 616, in run
+    check_quota_recovery(page, url)
+  File "/workspace/Task-Tracer-settings/tools/task_draft_playwright.py", line 560, in check_quota_recovery
+    expect(page.locator('#subtaskListPreview .subtask-edit-input')).to_have_value('  In-progress inline subtask text  ')
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 22638, in to_have_value
+    self._sync(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 568, in to_have_value
+    await self._expect_impl(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 128, in _expect_impl
+    _record_soft_or_raise(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 60, in _record_soft_or_raise
+    raise error
+AssertionError: Locator expected to have Value '  In-progress inline subtask text  '
+Actual value: None
+Error: element(s) not found 
+Call log:
+  - Expect "to_have_value" with timeout 5000ms
+  - waiting for locator("#subtaskListPreview .subtask-edit-input")
+
+Aria snapshot:
+- complementary "导航":
+  - link "Task Tracer":
+    - /url: ./
+  - navigation "视图切换":
+    - button "列表"
+    - button "日历"
+    - button "时间线"
+    - button "统计"
+  - navigation "导航":
+    - button "全部任务 7" [pressed]
+    - button "打开今日计划": 今日计划
+  - heading "项目" [level=2]
+  - navigation "项目":
+    - button "Unsaved private project 1"
+    - button "未分配项目 6"
+  - button "全部项目"
+  - region "保存的视图":
+    - text: 保存的视图
+    - paragraph: 在任务区使用“保存视图”，保留常用的搜索与筛选。
+  - button "设置与数据"
+  - text: 数据保存在此浏览器
+- banner:
+  - text: 数据保存在此浏览器
+  - strong: 列表
+  - button "撤销：新增任务"
+  - text: 外观
+  - combobox "外观":
+    - option "浅色"
+    - option "深色"
+    - option "跟随系统" [selected]
+  - text: 语言
+  - combobox "语言":
+    - option "简体中文" [selected]
+    - option "English"
+  - button "设置与数据"
+- main:
+  - region "全部任务":
+    - heading "全部任务" [level=1]
+    - paragraph: 7 个任务
+    - group "未来7天":
+      - strong: 10月
+      - text: 未来7天
+      - button "周日25, 2026年10月25日星期日, 4 个任务": 周日 25
+      - button "周一26, 2026年10月26日星期一, 0 个任务": 周一 26
+      - button "周二27, 2026年10月27日星期二, 0 个任务": 周二 27
+      - button "周三28, 2026年10月28日星期三, 0 个任务": 周三 28
+      - button "周四29, 2026年10月29日星期四, 0 个任务": 周四 29
+      - button "周五30, 2026年10月30日星期五, 0 个任务": 周五 30
+      - button "周六31, 2026年10月31日星期六, 0 个任务": 周六 31
+    - button "添加任务"
+    - region "筛选与排序":
+      - button "收起筛选与排序" [expanded]
+      - button "取消固定筛选与排序" [pressed]
+      - toolbar "任务工具":
+        - text: 搜索任务…
+        - textbox "搜索任务…"
+        - text: 支持限定搜索：project:项目、tag:标签、status:状态、due:日期。
+        - button "保存视图"
+        - button "选择任务进行批量操作"
+        - 'button "按项目筛选: 全部项目"': 全部项目
+        - button "进行中"
+        - button "智能排序"
+    - region "列表":
+      - heading "未分配项目 · 6 个任务" [level=2]
+      - article "Retry after failed write":
+        - button "标记为已完成"
+        - text: Retry after failed write
+        - img "提醒已设置"
+        - text: "截止: 2026年10月25日 23:59 (13小时 8分钟) Retried and committed"
+        - 'button "任务操作: Retry after failed write"'
+      - article "Save completing behind a later import gate":
+        - button "标记为已完成"
+        - text: Save completing behind a later import gate
+        - img "提醒已设置"
+        - text: "截止: 2026年10月25日 23:59 (13小时 8分钟)"
+        - 'button "任务操作: Save completing behind a later import gate"'
+      - article "Older save that finishes later":
+        - button "标记为已完成"
+        - text: Older save that finishes later
+        - img "提醒已设置"
+        - text: "截止: 2026年10月25日 23:59 (13小时 8分钟)"
+        - 'button "任务操作: Older save that finishes later"'
+      - article "Committed while saving indicator waits":
+        - button "标记为已完成"
+        - text: Committed while saving indicator waits
+        - img "提醒已设置"
+        - text: "截止: 2026年10月25日 23:59 (13小时 8分钟) Immutable submitted snapshot"
+        - 'button "任务操作: Committed while saving indicator waits"'
+      - article "Newer remote task":
+        - button "标记为已完成"
+        - text: Newer remote task 无截止日期 Updated by Playwright smoke test.
+        - button "0/1 子任务"
+        - 'button "任务操作: Newer remote task"'
+      - article "Quota newer remote record":
+        - button "标记为已完成"
+        - text: Quota newer remote record 无截止日期 Updated by Playwright smoke test.
+        - button "0/1 子任务"
+        - 'button "任务操作: Quota newer remote record"'
+      - heading "Unsaved private project · 1 个任务" [level=2]
+      - article "Quota interrupted unsaved draft":
+        - button "标记为已完成"
+        - text: Quota interrupted unsaved draft
+        - img "提醒已设置"
+        - text: "Unsaved private project #draft #retain 每 9 天重复 截止: 2032年5月6日 16:35 (2020天 5小时 44分钟) This draft is not in any committed task backup"
+        - button "0/2 子任务"
+        - 'button "任务操作: Quota interrupted unsaved draft"'
+    - form "快速添加":
+      - text: 快速添加
+      - textbox "快速添加":
+        - /placeholder: "明天 20:00 复习英语 #学习 /个人"
+      - button "添加"
+      - paragraph: 可输入日期、时间、#标签或 /项目。未指定 /项目的任务会进入 Inbox。
+    - text: 全工作区（不含归档） 0/7 个任务已完成
+    - complementary "概览":
+      - heading "2026年10月" [level=2]
+      - button "上个月"
+      - button "下个月"
+      - button "2026年9月28日星期一, 0 个任务": "28"
+      - button "2026年9月29日星期二, 0 个任务": "29"
+      - button "2026年9月30日星期三, 0 个任务": "30"
+      - button "2026年10月1日星期四, 0 个任务": "1"
+      - button "2026年10月2日星期五, 0 个任务": "2"
+      - button "2026年10月3日星期六, 0 个任务": "3"
+      - button "2026年10月4日星期日, 0 个任务": "4"
+      - button "2026年10月5日星期一, 0 个任务": "5"
+      - button "2026年10月6日星期二, 0 个任务": "6"
+      - button "2026年10月7日星期三, 0 个任务": "7"
+      - button "2026年10月8日星期四, 0 个任务": "8"
+      - button "2026年10月9日星期五, 0 个任务": "9"
+      - button "2026年10月10日星期六, 0 个任务": "10"
+      - button "2026年10月11日星期日, 0 个任务": "11"
+      - button "2026年10月12日星期一, 0 个任务": "12"
+      - button "2026年10月13日星期二, 0 个任务": "13"
+      - button "2026年10月14日星期三, 0 个任务": "14"
+      - button "2026年10月15日星期四, 0 个任务": "15"
+      - button "2026年10月16日星期五, 0 个任务": "16"
+      - button "2026年10月17日星期六, 0 个任务": "17"
+      - button "2026年10月18日星期日, 0 个任务": "18"
+      - button "2026年10月19日星期一, 0 个任务": "19"
+      - button "2026年10月20日星期二, 0 个任务": "20"
+      - button "2026年10月21日星期三, 0 个任务": "21"
+      - button "2026年10月22日星期四, 0 个任务": "22"
+      - button "2026年10月23日星期五, 0 个任务": "23"
+      - button "2026年10月24日星期六, 0 个任务": "24"
+      - button "2026年10月25日星期日, 4 个任务": "25"
+      - button "2026年10月26日星期一, 0 个任务": "26"
+      - button "2026年10月27日星期二, 0 个任务": "27"
+      - button "2026年10月28日星期三, 0 个任务": "28"
+      - button "2026年10月29日星期四, 0 个任务": "29"
+      - button "2026年10月30日星期五, 0 个任务": "30"
+      - button "2026年10月31日星期六, 0 个任务": "31"
+      - button "2026年11月1日星期日, 0 个任务": "1"
+      - button "2026年11月2日星期一, 0 个任务": "2"
+      - button "2026年11月3日星期二, 0 个任务": "3"
+      - button "2026年11月4日星期三, 0 个任务": "4"
+      - button "2026年11月5日星期四, 0 个任务": "5"
+      - button "2026年11月6日星期五, 0 个任务": "6"
+      - button "2026年11月7日星期六, 0 个任务": "7"
+      - button "2026年11月8日星期日, 0 个任务": "8"
+      - button "日历"
+      - heading "即将到期" [level=2]
+      - button "10月 25 Retry after failed write 2026年10月25日 23:59":
+        - text: 10月
+        - strong: "25"
+        - strong: Retry after failed write
+        - text: 2026年10月25日 23:59
+      - button "10月 25 Save completing behind a later import gate 2026年10月25日 23:59":
+        - text: 10月
+        - strong: "25"
+        - strong: Save completing behind a later import gate
+        - text: 2026年10月25日 23:59
+      - button "10月 25 Older save that finishes later 2026年10月25日 23:59":
+        - text: 10月
+        - strong: "25"
+        - strong: Older save that finishes later
+        - text: 2026年10月25日 23:59
+- dialog "编辑任务":
+  - heading "编辑任务" [level=2]
+  - button "取消": ×
+  - text: 任务名称 *
+  - textbox "任务名称 *":
+    - /placeholder: 输入任务名称
+    - text: Quota newer remote record
+  - text: 描述（可选）
+  - textbox "描述（可选）":
+    - /placeholder: 输入任务描述
+    - text: Updated by Playwright smoke test.
+  - text: 项目（可选）
+  - textbox "项目（可选）":
+    - /placeholder: 例如：工作 / 个人
+  - text: 标签（可选）
+  - textbox "标签（可选）":
+    - /placeholder: 用逗号分隔标签
+  - paragraph: 用逗号分隔标签；含逗号的标签用双引号包裹，标签内的双引号写成两个。标签可用于搜索。
+  - text: 截止日期
+  - checkbox "无截止日期" [checked]
+  - text: 无截止日期
+  - paragraph: 新设置的截止时间遇时钟跳变时，不存在的时间向后顺延，重复的时间使用第一次；请核对任务显示的实际时间。
+  - text: 子任务（可选）
+  - textbox "子任务（可选）":
+    - /placeholder: 输入子任务…
+  - button "添加子任务"
+  - list:
+    - listitem:
+      - button "编辑子任务：In-progress inline subtask text": In-progress inline subtask text
+      - button "删除子任务：In-progress inline subtask text"
+  - button "取消"
+  - button "保存更改"
+- contentinfo:
+  - link "GitHub":
+    - /url: https://github.com/muquew/Task-Tracer
+  - button "使用帮助与支持"
+  - text: © 2025 muquew · Personal Non-Commercial License

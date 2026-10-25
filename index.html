@@ -7917,14 +7917,14 @@
             syncDeadlineDependentSections();
             syncReminderRepeatControl();
             syncRepeatControls();
-            renderSubtaskPreview();
             DOM.inputs.repeatWeekdayInputs.forEach((input, index) => { input.checked = draft.form.values.weekdays[index]; });
             state.taskFormSession.baseline = draft.baseline;
             state.taskFormSession.recoveryId = draft.id;
             state.recoverableTaskDrafts.shift();
             syncAllCustomSelects(DOM.modal);
             syncTaskDraftRecoveryUI();
-            DOM.inputs.name.focus();
+            renderSubtaskPreview();
+            if (!DOM.subtaskListPreview.querySelector('.subtask-edit-input')) DOM.inputs.name.focus();
         }
         function discardRecoverableTaskDraft() {
             if (!state.recoverableTaskDrafts.length || (state.taskFormSession && state.modalMode === 'form' && isTaskDialogOpen())) return;

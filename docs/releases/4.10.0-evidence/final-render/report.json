@@ -2,7 +2,7 @@
   "schema_version": 1,
   "phase": "local",
   "version": "4.10.0",
-  "started_at": "2026-10-25T10:42:23.537+00:00",
+  "started_at": "2026-10-25T10:53:28.063+00:00",
   "status": "completed",
   "completed": true,
   "passed": true,
@@ -19,7 +19,7 @@
       "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
       "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
       "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
-      "index.html": "719eee29405141df608594d4b1134210fc794991fa421480aa95abae8f42d4da",
+      "index.html": "71396c1d3507219780775a336872d4d413603ac446d0b975c1c0ff2ae0a358bd",
       "manifest.json": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718",
       "resources/en.json": "2cbf43b8b077ad394dd96d4e2812d2eef36d90cde70656bdc038a2d6fa9799e2",
       "resources/zh-CN.json": "55990ecb046da9bcb3c1cd9a66290e9f939ad705220d613dcd5fc9b6513bf356",
@@ -30,9 +30,9 @@
       "screenshots/task-list.png": "dd8f988fb6cb6e75770491b91ee37ebf1d225ab5cf2b0d816433e225c5608d6b",
       "sitemap.xml": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
       "sw.js": "ee49c58cc6e3e5de997abf6386aad93240ae6ec31bd45026231865fae3de6534",
-      "vercel.json": "55532a4b95c5adb8dfbbc57005b5c971ce1d5b3197b09253a2964e834b9b2242"
+      "vercel.json": "65719b61be2fdc1e2583ea05058741ec361d3b8616a93009f54be403ace9e851"
     },
-    "sha256": "3834441d03cf47185531eb4cb7cbc65632a2aa894e281dec82848ee48770ff04"
+    "sha256": "4a9cd3c8e5836adb3e518758bc573cdbdf074286dfd25161a7786d7967021ca8"
   },
   "verification": {
     "files": {
@@ -68,7 +68,7 @@
       "tools/imported_text_edit_playwright.py": "5f0f194bb531e16096fe6287ebbddbe72f6bb196c7e518e8d153d491d03ec509",
       "tools/onboarding_playwright.py": "dd0cce183b109129556899075eb8c16a0c4c377565a8ddbf6e786308c260dcbd",
       "tools/performance_playwright.py": "df2c5f0c3addb0b14e43c7154c4e1b9a3e002ffc9dc2dd581149fbe141938f92",
-      "tools/project_scope_playwright.py": "046a44ec6fc52ac45ec45c5a8265210f70dc71d3a448c1cb8d02f13b24925598",
+      "tools/project_scope_playwright.py": "481497a0658d57b9a62cbeb1e0579228373370cd2a755f19907136b4950ec744",
       "tools/queued_write_concurrency_playwright.py": "d965fc7d8b57e26bf4f29a20e344467223cc7ada8fdaf3c3c8d4d11043ed4d2d",
       "tools/quick_add_date_playwright.py": "d21e0b843078e223db7e6ca977964ec9f41c55c6aaeef853acddb9f19c79b069",
       "tools/quick_add_recovery_playwright.py": "952d75f9d58d5feeefb7c121885784e810b5fab67321e51da425c76717e07cbb",
@@ -108,16 +108,16 @@
       "tools/workspace_performance_playwright.py": "136f08c564c4d39d85b25b07607c3532838ae2e1d607bb79fffb6634b78f25d8",
       "tools/workspace_roundtrip_playwright.py": "57130f52c1cc4e024e49f4d923137e473608de7dcba38e8f6227c5bbc6228ea1"
     },
-    "sha256": "199c29dcafa0c49157b05e6b71ea4dcf08f34500c199202c362192c97789329e"
+    "sha256": "f716121b10dae7ab537ee8cec63a63ce4d983c77aa32124c829db3331cf3b0a7"
   },
-  "expected_index_sha256": "719eee29405141df608594d4b1134210fc794991fa421480aa95abae8f42d4da",
+  "expected_index_sha256": "71396c1d3507219780775a336872d4d413603ac446d0b975c1c0ff2ae0a358bd",
   "scope": "Fresh synthetic browser-profile data, real pointer controls, ordinary CA validation and configured CSP; Linux Chromium and synthetic viewports.",
   "screenshots": [
     {
       "filename": "01-task-list.png",
       "meaning": "Chinese desktop task workspace and permanent primary navigation",
-      "bytes": 134240,
-      "sha256": "883aeeb853d1739704234fccf6797afbd695689e41712e9cef5bae77677a1412",
+      "bytes": 134237,
+      "sha256": "c7020f35ae1252523f4f822ed59ca35be24f065d312d102b925556b4c4948eab",
       "viewport": {
         "width": 1440,
         "height": 1000
@@ -129,8 +129,8 @@
     {
       "filename": "02-settings-desktop.png",
       "meaning": "Independent settings workspace; appearance and data sections",
-      "bytes": 135512,
-      "sha256": "beef2fddfd8c278ccd8a47bf97f0b11b515e688ab6281ec96db065da9f4e6143",
+      "bytes": 135539,
+      "sha256": "201e2fd591a2b609ea4adef1704fe5da4cd5a52e751121844435102c41ed351c",
       "viewport": {
         "width": 1440,
         "height": 1000
@@ -142,8 +142,8 @@
     {
       "filename": "03-calendar.png",
       "meaning": "Chinese desktop calendar, navigation independent of collapsed filters",
-      "bytes": 74900,
-      "sha256": "70b789c32f38b089f38b7bfc5e15dbb5e63489fead585a4ba7a1eff198d5c565",
+      "bytes": 74908,
+      "sha256": "4254d1a3b442f0e260fba4fab2e1f2f08e455f167f09d80d09c5ad4e918b7258",
       "viewport": {
         "width": 1440,
         "height": 1000
@@ -155,8 +155,8 @@
     {
       "filename": "03-timeline.png",
       "meaning": "Chinese desktop timeline, navigation independent of collapsed filters",
-      "bytes": 109467,
-      "sha256": "2d9c3c930b2113b5164b8519d3bdefe7d6bada429887ec0327d798e88be00ae8",
+      "bytes": 109496,
+      "sha256": "79d186ed149a86ac3bfeb0a80946e74f581b886a09c696f70a7653fa79159c7a",
       "viewport": {
         "width": 1440,
         "height": 1000
@@ -194,8 +194,8 @@
     {
       "filename": "05-batch-desktop.png",
       "meaning": "Batch selection with consistent dangerous action styling",
-      "bytes": 145994,
-      "sha256": "d7230b8d9029df4cfe70d164646e2e62602251778d00836bf46293e7433374e5",
+      "bytes": 157942,
+      "sha256": "0cd704c3f9f015a7443c1016cc7d1c788d8fdfc3ccc4b3c00545ecaecf86f35d",
       "viewport": {
         "width": 1440,
         "height": 1000
@@ -246,8 +246,8 @@
     {
       "filename": "09-task-list-en.png",
       "meaning": "English desktop task workspace",
-      "bytes": 130989,
-      "sha256": "ccc123018005eca0231a669078175dcf777db3e873bd1bbffcb4f716f42d6e19",
+      "bytes": 130919,
+      "sha256": "e6205684d5e7d7c8efe97e62c9424e15297edd274b751e040ef632c484374225",
       "viewport": {
         "width": 1440,
         "height": 1000
@@ -285,8 +285,8 @@
     {
       "filename": "12-mobile-list.png",
       "meaning": "Chinese mobile workspace with persistent labeled bottom navigation",
-      "bytes": 58696,
-      "sha256": "df53158eb9b915a92628b4f638288532a1e81de9c4bb02d96e95cd76d52cac53",
+      "bytes": 58703,
+      "sha256": "6dfda65a7fabe5f2b11b62ba2869b871701e43a633f2076c7837b96bc652f8e3",
       "viewport": {
         "width": 390,
         "height": 844
@@ -325,7 +325,7 @@
   "checks": [
     {
       "name": "Four primary navigation labels visible",
-      "at": "2026-10-25T10:42:25.896+00:00",
+      "at": "2026-10-25T10:53:29.998+00:00",
       "labels": [
         "列表",
         "日历",
@@ -339,24 +339,24 @@
     },
     {
       "name": "Settings screen retains unsubmitted quick-add draft and current view without task writes",
-      "at": "2026-10-25T10:42:27.336+00:00"
+      "at": "2026-10-25T10:53:30.425+00:00"
     },
     {
       "name": "All four primary views and actual edit persist across reload",
-      "at": "2026-10-25T10:42:29.631+00:00"
+      "at": "2026-10-25T10:53:33.288+00:00"
     },
     {
       "name": "Real task backup downloaded and verified without leaving settings",
-      "at": "2026-10-25T10:42:30.473+00:00",
+      "at": "2026-10-25T10:53:35.001+00:00",
       "tasks": 3
     },
     {
       "name": "Settings data/help dialogs return focus to the actual initiating button",
-      "at": "2026-10-25T10:42:31.199+00:00"
+      "at": "2026-10-25T10:53:35.968+00:00"
     },
     {
       "name": "Mobile primary view labels remain visible",
-      "at": "2026-10-25T10:42:33.194+00:00",
+      "at": "2026-10-25T10:53:38.850+00:00",
       "labels": [
         "列表",
         "日历",
@@ -370,32 +370,32 @@
     },
     {
       "name": "Real task backup downloaded and verified without leaving settings",
-      "at": "2026-10-25T10:42:33.631+00:00",
+      "at": "2026-10-25T10:53:39.434+00:00",
       "tasks": 3
     },
     {
       "name": "Mobile navigation changes views even after filter collapse and while settings is active",
-      "at": "2026-10-25T10:42:34.141+00:00"
+      "at": "2026-10-25T10:53:40.262+00:00"
     },
     {
       "name": "Actual task deletion confirmed; synthetic edited task removed",
-      "at": "2026-10-25T10:42:34.439+00:00"
+      "at": "2026-10-25T10:53:40.717+00:00"
     }
   ],
   "downloads": [
     {
       "filename": "backup-1.json",
-      "suggested_filename": "task-tracer_backup_2026-10-25_10-42-30-433.json",
+      "suggested_filename": "task-tracer_backup_2026-10-25_10-53-34-950.json",
       "bytes": 3790,
-      "sha256": "656d868d602ccc2284a929d76391622451bada9ff64a5a65de2b47c71e01c24e",
+      "sha256": "1bcf413b8aa820aa3261097e74bb49de40f9a659674629bf32e09a163a86f78a",
       "tasks": 3,
       "schema": "2.4"
     },
     {
       "filename": "backup-2.json",
-      "suggested_filename": "task-tracer_backup_2026-10-25_10-42-33-597.json",
+      "suggested_filename": "task-tracer_backup_2026-10-25_10-53-39-389.json",
       "bytes": 3790,
-      "sha256": "6f75f3dd7ecc0ee9e94731815c16ccf51043011684d6caf27fcdb08d4a850883",
+      "sha256": "7fd4163b5c5f4fc226e9a5f6902dd842541db529a60191b0ddfa41d04772fd52",
       "tasks": 3,
       "schema": "2.4"
     }
@@ -411,15 +411,15 @@
     "thread_stopped": true
   },
   "error": null,
-  "url": "http://127.0.0.1:36547/",
+  "url": "http://127.0.0.1:44799/",
   "browser_version": "154.0.8037.57",
   "response": {
     "status": 200,
-    "sha256": "719eee29405141df608594d4b1134210fc794991fa421480aa95abae8f42d4da",
-    "bytes": 781090,
+    "sha256": "71396c1d3507219780775a336872d4d413603ac446d0b975c1c0ff2ae0a358bd",
+    "bytes": 781156,
     "from_service_worker": false,
     "headers": {
-      "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'sha256-HhAqgyLp5xLNnRLgS/sbW6lTzHMYKFEYWPyDTg1sVjE=' 'sha256-hUzMMqDB82o00PqfrQc3UtjIT5cRVcuP14z5BTqe31k=' 'sha256-wmPh8NXFmEC9/COOON3p/jqzz/DiK3mEsNaly+DrpqQ=' 'sha256-UGw9N5nUAp8yxilBe5bjLpv9Z2nXYmoeOBUUM0cszjQ='; script-src-attr 'none'",
+      "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data: blob:; media-src 'self' data:; manifest-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'sha256-HhAqgyLp5xLNnRLgS/sbW6lTzHMYKFEYWPyDTg1sVjE=' 'sha256-hUzMMqDB82o00PqfrQc3UtjIT5cRVcuP14z5BTqe31k=' 'sha256-wmPh8NXFmEC9/COOON3p/jqzz/DiK3mEsNaly+DrpqQ=' 'sha256-rkroZ4Hm49QWwhqIht8MZkyagviYDhdQGcTjr+iF98s='; script-src-attr 'none'",
       "referrer-policy": "strict-origin-when-cross-origin",
       "x-content-type-options": "nosniff",
       "x-frame-options": "DENY",
@@ -439,7 +439,7 @@
       "fav/favicon-32x32.png": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f",
       "fav/favicon-48x48.png": "d63d0eeeeab785620790f8bf49bc14841a7e532a3e522193620d12bf9d94ec0c",
       "fav/favicon.ico": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011",
-      "index.html": "719eee29405141df608594d4b1134210fc794991fa421480aa95abae8f42d4da",
+      "index.html": "71396c1d3507219780775a336872d4d413603ac446d0b975c1c0ff2ae0a358bd",
       "manifest.json": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718",
       "resources/en.json": "2cbf43b8b077ad394dd96d4e2812d2eef36d90cde70656bdc038a2d6fa9799e2",
       "resources/zh-CN.json": "55990ecb046da9bcb3c1cd9a66290e9f939ad705220d613dcd5fc9b6513bf356",
@@ -450,9 +450,9 @@
       "screenshots/task-list.png": "dd8f988fb6cb6e75770491b91ee37ebf1d225ab5cf2b0d816433e225c5608d6b",
       "sitemap.xml": "b7bf1c449bc43606b621bb9c5d907147a1b537b51b7eb6fa5e45815c5782b29d",
       "sw.js": "ee49c58cc6e3e5de997abf6386aad93240ae6ec31bd45026231865fae3de6534",
-      "vercel.json": "55532a4b95c5adb8dfbbc57005b5c971ce1d5b3197b09253a2964e834b9b2242"
+      "vercel.json": "65719b61be2fdc1e2583ea05058741ec361d3b8616a93009f54be403ace9e851"
     },
-    "sha256": "3834441d03cf47185531eb4cb7cbc65632a2aa894e281dec82848ee48770ff04"
+    "sha256": "4a9cd3c8e5836adb3e518758bc573cdbdf074286dfd25161a7786d7967021ca8"
   },
   "verification_final": {
     "files": {
@@ -488,7 +488,7 @@
       "tools/imported_text_edit_playwright.py": "5f0f194bb531e16096fe6287ebbddbe72f6bb196c7e518e8d153d491d03ec509",
       "tools/onboarding_playwright.py": "dd0cce183b109129556899075eb8c16a0c4c377565a8ddbf6e786308c260dcbd",
       "tools/performance_playwright.py": "df2c5f0c3addb0b14e43c7154c4e1b9a3e002ffc9dc2dd581149fbe141938f92",
-      "tools/project_scope_playwright.py": "046a44ec6fc52ac45ec45c5a8265210f70dc71d3a448c1cb8d02f13b24925598",
+      "tools/project_scope_playwright.py": "481497a0658d57b9a62cbeb1e0579228373370cd2a755f19907136b4950ec744",
       "tools/queued_write_concurrency_playwright.py": "d965fc7d8b57e26bf4f29a20e344467223cc7ada8fdaf3c3c8d4d11043ed4d2d",
       "tools/quick_add_date_playwright.py": "d21e0b843078e223db7e6ca977964ec9f41c55c6aaeef853acddb9f19c79b069",
       "tools/quick_add_recovery_playwright.py": "952d75f9d58d5feeefb7c121885784e810b5fab67321e51da425c76717e07cbb",
@@ -528,9 +528,9 @@
       "tools/workspace_performance_playwright.py": "136f08c564c4d39d85b25b07607c3532838ae2e1d607bb79fffb6634b78f25d8",
       "tools/workspace_roundtrip_playwright.py": "57130f52c1cc4e024e49f4d923137e473608de7dcba38e8f6227c5bbc6228ea1"
     },
-    "sha256": "199c29dcafa0c49157b05e6b71ea4dcf08f34500c199202c362192c97789329e"
+    "sha256": "f716121b10dae7ab537ee8cec63a63ce4d983c77aa32124c829db3331cf3b0a7"
   },
   "source_unchanged": true,
   "verification_unchanged": true,
-  "finished_at": "2026-10-25T10:42:34.834+00:00"
+  "finished_at": "2026-10-25T10:53:41.191+00:00"
 }
