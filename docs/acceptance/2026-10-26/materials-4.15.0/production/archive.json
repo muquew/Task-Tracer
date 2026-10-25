@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "archived_at": "2026-10-25T18:38:14.402717+00:00",
+  "original_directory": "/tmp/task-tracer-4.15.0-production",
+  "scope": "Byte-exact final bfb native deployment logs/reports, observed 21 actual response bodies/hashes, frozen inputs/artifact bindings and wrapper. Original CLI assertions preserved. No production browser claims.",
+  "files": {
+    "attempts/01.stderr.log": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/attempts/01.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "attempts/01.stdout.log": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/attempts/01.stdout.log",
+      "bytes": 501,
+      "sha256": "87a42b3638caf8e9ef4e5481d9424ea52f113c040ec47531c4a0244030c5604c"
+    },
+    "files.json": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/files.json",
+      "bytes": 3650,
+      "sha256": "8d6b6f7f66d82e19c1d7bba73c15c3db56e44234c0b66efe5234d2eb7ccc235d"
+    },
+    "responses/01-8a5edab28263.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/01-8a5edab28263.bin",
+      "bytes": 977388,
+      "sha256": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5"
+    },
+    "responses/02-d448b8e7fefe.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/02-d448b8e7fefe.bin",
+      "bytes": 1694,
+      "sha256": "a49db18583d3f275de394c74e3c5db9142979ab713fdfd1ac69488236c1d9bf9"
+    },
+    "responses/03-1a036df5bcd2.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/03-1a036df5bcd2.bin",
+      "bytes": 2245,
+      "sha256": "77da1222221000707b36c987fcaaf64d05d22a7e8aae83d86c9d37d9f2c82584"
+    },
+    "responses/04-481e8bdcea89.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/04-481e8bdcea89.bin",
+      "bytes": 6649,
+      "sha256": "563dc23c74e77d441db9202170c065f07ae5264c5fcb396f1e72595aceab0d6e"
+    },
+    "responses/05-cdd685bc119a.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/05-cdd685bc119a.bin",
+      "bytes": 2109,
+      "sha256": "ac48a1fad65caf4b92283bfe0aa2f31dc69449e2f8485b3d68d34cd1a766f9a7"
+    },
+    "responses/06-bc734a9d0e9b.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/06-bc734a9d0e9b.bin",
+      "bytes": 262,
+      "sha256": "1ef54cfdabf5b13c7a40eea5d490024bf08a08a4cf57639f4ed5f411400768f4"
+    },
+    "responses/07-31adffa96047.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/07-31adffa96047.bin",
+      "bytes": 425,
+      "sha256": "111e8be312ed2d61baeb1eb7ccabea14c80aa5208c5ea37d76dd0f5a7593437f"
+    },
+    "responses/08-13d33433a032.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/08-13d33433a032.bin",
+      "bytes": 15086,
+      "sha256": "03d8d324f86f5068f861a95705b2e542ebbbb631f8b7286fb5402e2898353011"
+    },
+    "responses/09-0eb547304658.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/09-0eb547304658.bin",
+      "bytes": 977388,
+      "sha256": "bfb0a142fb4c813e17af52267062c6faa63a7a56bd5e41feb335728c1999e9c5"
+    },
+    "responses/10-ffa5b716b5a5.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/10-ffa5b716b5a5.bin",
+      "bytes": 1607,
+      "sha256": "cd843506427f82bdf1f8fde3117619d201caa19a7a68f7f0b2dc2384c1042718"
+    },
+    "responses/11-2e818c8891a0.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/11-2e818c8891a0.bin",
+      "bytes": 57088,
+      "sha256": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd"
+    },
+    "responses/12-f1c5fb986559.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/12-f1c5fb986559.bin",
+      "bytes": 55580,
+      "sha256": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9"
+    },
+    "responses/13-dccdcddfc75c.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/13-dccdcddfc75c.bin",
+      "bytes": 57088,
+      "sha256": "e8bd753937abc0c5cc489c53632554b62bc92ad303fdcf2a6bb442014fac70bd"
+    },
+    "responses/14-5ca59d44d3c5.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/14-5ca59d44d3c5.bin",
+      "bytes": 55580,
+      "sha256": "3fe25694a9c5b5011d8e2e8c1b00f8ed22baf74939f2259c23b884ee6f1dabc9"
+    },
+    "responses/15-4bf19ba58dc8.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/15-4bf19ba58dc8.bin",
+      "bytes": 8305,
+      "sha256": "3e3f2e67832911ec52168691412baa3193b03766632120934c1c679ff2a70f1b"
+    },
+    "responses/16-86dea713d539.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/16-86dea713d539.bin",
+      "bytes": 215488,
+      "sha256": "59b27cd46a77594cb0441d1b64afdec784bf96120386744ce4dfc07471b3206b"
+    },
+    "responses/17-0b34dde57f6d.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/17-0b34dde57f6d.bin",
+      "bytes": 214589,
+      "sha256": "7a885f47ca4ada16e1f0440ea8c548b2a26bf3aa557ffbd1d372a11fd716ad72"
+    },
+    "responses/18-41eac98b93b6.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/18-41eac98b93b6.bin",
+      "bytes": 161889,
+      "sha256": "27d0e2de8ca7112b96cb900e68fa2e8f970e6f331b5a51603e73e07ecaf91550"
+    },
+    "responses/19-07d48d0e9880.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/19-07d48d0e9880.bin",
+      "bytes": 162862,
+      "sha256": "3f888a3f473a7c15a380c189daddd7392b72deb61c7fae302b64f3bc3ef4d92c"
+    },
+    "responses/20-3d35e181f417.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/20-3d35e181f417.bin",
+      "bytes": 19588,
+      "sha256": "7879df983dce7836914d6e8e871a5c6d52177187900f76335e5abc354e89d15f"
+    },
+    "responses/21-2b2b25c3f677.bin": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/responses/21-2b2b25c3f677.bin",
+      "bytes": 17218,
+      "sha256": "90c6ea687f214b88fb412c57477e73d0e91212899788b0a9842d5bb798a03fcc"
+    },
+    "retained-files.json": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/retained-files.json",
+      "bytes": 3898,
+      "sha256": "5ea86fbe0ade86c65f3c57630e957cd3e56dba9f991641f63283e1d336ea4bba"
+    },
+    "runner.py": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/runner.py",
+      "bytes": 9729,
+      "sha256": "167f8a53720377bbe916c98d70192e53b0b23093eddd6ca4bfdea4bb801576b9"
+    },
+    "summary.json": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/summary.json",
+      "bytes": 1839,
+      "sha256": "a8939c3aab201bd1071b3a51f02018f0d7128852db310fb0bbc2fbcf2a189e3b"
+    },
+    "verification.json": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/verification.json",
+      "bytes": 63943,
+      "sha256": "0f3a44b2d58752ca1b138f6875251511a2b789fda9ce3f1e3249b6dd60db4304"
+    },
+    "verification.log": {
+      "original_path": "/tmp/task-tracer-4.15.0-production/verification.log",
+      "bytes": 1884,
+      "sha256": "f11c12d0f29f57cf9b441934ad9a7fb3b171c5a1f60bd8d9c8345b21c116b0bb"
+    }
+  }
+}

@@ -1,0 +1,301 @@
+{
+  "kind": "byte-copy provenance map",
+  "count": 42,
+  "note": "root-verification.json is the operator-derived verification copied unchanged, not an independent native browser observation.",
+  "files": [
+    {
+      "path": "01-empty-desktop.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/01-empty-desktop.json",
+      "bytes": 24248,
+      "sha256": "3007f181b4a7ce19ce79881dff9afdd40914c1483822371d991d6360d09ea0b4",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "02-live-editor.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/02-live-editor.json",
+      "bytes": 25599,
+      "sha256": "734eabe887b7234bcf8a90e990e89cf897ce5d5ab22be80b17d0cabb189b4540",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "03-task-title.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/03-task-title.json",
+      "bytes": 25671,
+      "sha256": "8d909a34d1c5918c5c8135fa3fd6d26617a65f6599caba97996bee42839cb3c9",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "04-task-description.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/04-task-description.json",
+      "bytes": 25708,
+      "sha256": "211540733200eb05bfeec1442f284af0a9d0ee47ee00add6e21560606f94a54b",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "05-tomorrow.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/05-tomorrow.json",
+      "bytes": 26288,
+      "sha256": "b7225d010fd87b17a2ad80e7529009baa8ee494dc66f17ffae6ea346e06ca7ed",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "06-native-time.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/06-native-time.json",
+      "bytes": 26305,
+      "sha256": "fcfdcb1d9542c294b0ca9dab4877ef86a0fc29fe69e2f6d88f14e9470e033691",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "07-project.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/07-project.json",
+      "bytes": 26218,
+      "sha256": "fe19dc0e902697536d38177569b57bf2cc6319bc3f55668b7a9e91d431c792c8",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "08-native-time-and-child.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/08-native-time-and-child.json",
+      "bytes": 26362,
+      "sha256": "1aafde7d57adbcc6563322c5921b592e37e7829fae858f1b1c4ad2fadbfa54e6",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "09-task-saved.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/09-task-saved.json",
+      "bytes": 24999,
+      "sha256": "9993296c62dd2c6b71b01724c5eb37f8cce3e69918bb4f078faae5616f8051fb",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "10-quick-capture.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/10-quick-capture.json",
+      "bytes": 25342,
+      "sha256": "c2eb614f2ef938473daad1f40174d6719f51ec9c05f0159fd4a8dc799f4f6e1a",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "11-second-task.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/11-second-task.json",
+      "bytes": 25347,
+      "sha256": "6fb4648f0fb0cb248ac9a507ac6e1f357842477b7d0669b31f4e4841ce6d1c9b",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "12-two-real-tasks.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/12-two-real-tasks.json",
+      "bytes": 25043,
+      "sha256": "734c5ca579dd0b95d686844c8ef4ffd7a96e74f3ff283305ab1f81e212030e90",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "13-opaque-action-menu.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/13-opaque-action-menu.json",
+      "bytes": 25083,
+      "sha256": "cd7b6dfcda9d4e77634138aa7ca84ae0eb2402f66897726fa51c9a9a5663861c",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "14-menu-closed.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/14-menu-closed.json",
+      "bytes": 25088,
+      "sha256": "6ae30b8e4440e30c6335f84e16da1427fb083a8d0f6814b9817832d492e8012b",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "15-appearance.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/15-appearance.json",
+      "bytes": 20083,
+      "sha256": "55a14353e81342d5eba57c02750e4e731055370adf2afbc718dfd91d2a1e1bfb",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "16-english.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/16-english.json",
+      "bytes": 19749,
+      "sha256": "5c2eea408b77095496e08d47e4532a1f0bc33615ead1e63f125c17d67e87c03f",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "17-dark.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/17-dark.json",
+      "bytes": 19435,
+      "sha256": "0e1de2c6d6cd2bb7fc5117678a61b1fe4e72fd8265ba9aa5b915b7e145cdfdac",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "18-ocean-theme.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/18-ocean-theme.json",
+      "bytes": 19448,
+      "sha256": "5e2b3d07a63656550309cdf5ce9205298f1169862050eb638cbf953f4514ae0c",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "19-dark-ocean-list.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/19-dark-ocean-list.json",
+      "bytes": 24491,
+      "sha256": "8d53a9a3d32293353fb395684d0ceff573a9c3206a7dd2f426776ccd40b3a74d",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "20-mobile-list.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/20-mobile-list.json",
+      "bytes": 19064,
+      "sha256": "65034b8ccbf19c84aaef3d53f3cc3c0a6dc7b08882dbb00da77cf2861f41fe78",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "21-mobile-editor.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/21-mobile-editor.json",
+      "bytes": 20519,
+      "sha256": "89894dac3b4d9b191ab59110210d9d4c83cab4c350d60c6fc4ed9ac66249d972",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "22-small-mobile-editor.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/22-small-mobile-editor.json",
+      "bytes": 20526,
+      "sha256": "2a861108c9d8b090d81c8a46ada4399834207620ff691839c5ce8c01a983c85e",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "23-mobile-list-return.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/23-mobile-list-return.json",
+      "bytes": 18980,
+      "sha256": "8c623100544a2986072613dc9d7696f4a603e41aa5a109a275329e567c682999",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "24-mobile-settings.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/24-mobile-settings.json",
+      "bytes": 18663,
+      "sha256": "88035fc53a1cd1c2a3ce36165d35f46f712fb27dd07ef48d5a88f7ae1c51e545",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "25-backups.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/25-backups.json",
+      "bytes": 19129,
+      "sha256": "10ba79e256dad911367ca2a6d4adfcc1c2ad0a2fb89856e5b8cf5e0a8db9222e",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "26-actual-backup.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/26-actual-backup.json",
+      "bytes": 19292,
+      "sha256": "ce83ace855a998209ecc962dd947f42410d9c5732886c6f7daef01e1e3afd8aa",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "27-native-preferences.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/27-native-preferences.json",
+      "bytes": 18812,
+      "sha256": "7a5d51e20d88418a45199cefc2ae140ddc29aa22b97fb98dff4b4a63114af6bc",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "28-system-native-arrows.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/28-system-native-arrows.json",
+      "bytes": 17109,
+      "sha256": "9c4624404e72651503e80320fdf7e7953a69e0636626686af584e2cdaee521d0",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "29-theme-arrows-restored.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/29-theme-arrows-restored.json",
+      "bytes": 18812,
+      "sha256": "7a5d51e20d88418a45199cefc2ae140ddc29aa22b97fb98dff4b4a63114af6bc",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "root-verification.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/root-verification.json",
+      "bytes": 1410,
+      "sha256": "5d7b35eba84570ff3a4180c768bce0a6a17d8d46cb88bc3f6b6f1388b2320015",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "session.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/session.json",
+      "bytes": 172,
+      "sha256": "572bb35962886c4a30dce24181ec6a55cc473e106d152e422c46b70422e9d688",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "source.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/source.json",
+      "bytes": 1686,
+      "sha256": "3879b15692874b21ac2ee9b5bd573d01add1fd123ba53dbbcd6b5aff52d1e7c7",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "task-tracer_backup_2026-10-25_18-39-11-667.json",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/task-tracer_backup_2026-10-25_18-39-11-667.json",
+      "bytes": 2853,
+      "sha256": "5989001268bb980cc87d36299259b900cdea5874c220e4a5cab36fa41ad61f38",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "driver.py",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser.py",
+      "bytes": 8224,
+      "sha256": "82cd3095262d9c272ef1233c413e7fd8a228420ef943c739b99f9c9264f92d90",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "02-live-editor.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/02-live-editor.png",
+      "bytes": 156559,
+      "sha256": "f53f6538d6051c85e44eb314f630832aa6247f618554e6d59a5106821bf9a261",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "08-native-time-and-child.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/08-native-time-and-child.png",
+      "bytes": 167575,
+      "sha256": "b61c2ebe074cd13a4f08389e0c0a76ebaa29ec1ad8f55d47dae5ad15f499f0de",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "13-opaque-action-menu.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/13-opaque-action-menu.png",
+      "bytes": 145270,
+      "sha256": "66a6e697ffabd82a094cacf34bea9f77d3c0c6bdc1e40412e6373bc83024faf8",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "19-dark-ocean-list.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/19-dark-ocean-list.png",
+      "bytes": 127021,
+      "sha256": "e1903bf811fa0eaf0b679030ba4f52ce35df5764f3ac41be65bfc9fa291c7999",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "22-small-mobile-editor.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/22-small-mobile-editor.png",
+      "bytes": 35418,
+      "sha256": "6f14fa11bf4104fe6450c2d0c13e6f6513e54dd184290de54dbb0790acccbd3c",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "26-actual-backup.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/26-actual-backup.png",
+      "bytes": 47651,
+      "sha256": "db5767cdecaf10dc5ade465fe03dddb8bb012be87258a434a3da4010165d31e7",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "28-system-native-arrows.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/28-system-native-arrows.png",
+      "bytes": 26778,
+      "sha256": "0bc6db64d799b2854e1567b064b5763f2ec836e5405a55a0176e80f412d63ea9",
+      "kind": "original_byte_copy"
+    },
+    {
+      "path": "29-theme-arrows-restored.png",
+      "source": "/workspace/design-research/task-tracer-materials-2026-10-26/production-browser/29-theme-arrows-restored.png",
+      "bytes": 40523,
+      "sha256": "f4f211d6acb1d2f3bc3ce8907dd3c84afff20739a8b39a55fb3aebbcbff1208d",
+      "kind": "original_byte_copy"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "archived_at": "2026-10-25T18:37:10.184922+00:00",
+  "original_directory": "/tmp/task-tracer-4.15.0-release/canonical-125c9257-14af-49c2-88be-53cfacf1e616",
+  "scope": "Byte-exact final bfb canonical comparison/build logs, original runner, clean artifact manifest and checksum. Evidence copied after clean build does not change artifact Git metadata.",
+  "files": {
+    "artifact.integrity.json": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/canonical-125c9257-14af-49c2-88be-53cfacf1e616/artifact.integrity.json",
+      "bytes": 2318,
+      "sha256": "ba35208f6c8181bda56ce7fc1706fd6c0110ae3470d7221e544903987e781ae7"
+    },
+    "artifact.zip.sha256": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/canonical-125c9257-14af-49c2-88be-53cfacf1e616/artifact.zip.sha256",
+      "bytes": 89,
+      "sha256": "eb72e835e5f8a4064b1e6dcdf317ec67a5dd675a754b44be05a0522918a79ae2"
+    },
+    "build.stderr.log": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/canonical-125c9257-14af-49c2-88be-53cfacf1e616/build.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build.stdout.log": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/canonical-125c9257-14af-49c2-88be-53cfacf1e616/build.stdout.log",
+      "bytes": 292,
+      "sha256": "47f0581c11a889d6b063bff070f38e4820a3e1b3a427a8a49e85e91e76957ceb"
+    },
+    "comparison.json": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/canonical-125c9257-14af-49c2-88be-53cfacf1e616/comparison.json",
+      "bytes": 32705,
+      "sha256": "b9c31dc4b468bb5923af393a9ea483b2139a76c146f7948f0fec51cd8f5e03e7"
+    },
+    "files.json": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/canonical-125c9257-14af-49c2-88be-53cfacf1e616/files.json",
+      "bytes": 508,
+      "sha256": "d0e11c5284e2d419e196db26122547ccccb88f308405c936a1868c03acb3233e"
+    },
+    "retained-files.json": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/canonical-125c9257-14af-49c2-88be-53cfacf1e616/retained-files.json",
+      "bytes": 896,
+      "sha256": "1ac06940f9b48b5173584de2d698dbe40e8c964ca75ecf5751c8d57a0eae8dcf"
+    },
+    "runner.py": {
+      "original_path": "/tmp/task-tracer-4.15.0-release/canonical-125c9257-14af-49c2-88be-53cfacf1e616/runner.py",
+      "bytes": 5746,
+      "sha256": "b058df99f607e7a689b3409e224142769791c63eb61ef0fd8fccd455fb6e55ed"
+    }
+  }
+}
