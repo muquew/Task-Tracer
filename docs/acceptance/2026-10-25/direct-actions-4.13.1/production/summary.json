@@ -1,0 +1,38 @@
+{
+  "status": "passed_scoped_4.13.1_production_verification",
+  "captured_at": "2026-10-25T15:36:35.254912+00:00",
+  "first_native_pass_at_beijing": "2026-10-25T23:36:15.211691+08:00",
+  "first_native_pass_at": "2026-10-25T15:36:15.211691+00:00",
+  "pushed_commit": "7a1ad3b19587ef258d29373d62967481510bbbf5",
+  "app_version": "4.13.1",
+  "resource_version": "4.42",
+  "native_original_cli_attempts": 1,
+  "native_original_cli_exit": 0,
+  "core_response_paths": 15,
+  "global_headers_checked": 5,
+  "csp_included_in_header_count": true,
+  "extra_response_paths": 6,
+  "extra_screenshots": 4,
+  "extra_distribution_docs": 2,
+  "all_observed_requests_http200_and_identical": true,
+  "source_inputs": 23,
+  "verification_inputs": 78,
+  "source_sha256": "3aa20a2db09db17a61455d2204ba651271450797744ce5ed19ce9ad19e9a5432",
+  "verification_sha256": "32f2968a75c0e765c77d5753d5ab37bbc87afe9f37c552356c9d837ccdf4e038",
+  "source_verification_unchanged": true,
+  "distribution_archive": {
+    "path": "/workspace/Task-Tracer/dist/task-tracer-4.13.1.zip",
+    "bytes": 1018640,
+    "sha256": "f00df0ecb9bef7a4467f087a972aeee7c6356db473b1aed36311530d4a40a4cd",
+    "scope": "Identity only; no local build or test rerun."
+  },
+  "canonical_manifest_commit": "7a1ad3b19587ef258d29373d62967481510bbbf5",
+  "canonical_manifest_working_tree_dirty": false,
+  "verification_report_sha256": "326356b54890129635cba91bc1705a0057744183555dfdfba3ee540b8187c3a7",
+  "verification_log_sha256": "4b0d516061c6d0492f75c7c2bfe7f07f57a1d66f24836c785038f272b3024314",
+  "limits": [
+    "Static files and security response headers match the pushed candidate; Vercel backend Git provenance and remote CI were not queried",
+    "No browser, real-device or local test suite was run by this production producer",
+    "No user data, repository edits or Git operations"
+  ]
+}

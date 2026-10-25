@@ -1,0 +1,4 @@
+Bundled translation fallback matches resource files and version
+Static validation passed
+Deployment CSP hashes match application scripts
+Built and verified /workspace/Task-Tracer/dist/task-tracer-4.13.1.zip (24 files, SHA-256 f00df0ecb9bef7a4467f087a972aeee7c6356db473b1aed36311530d4a40a4cd)

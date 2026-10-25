@@ -24,7 +24,7 @@ Task Tracer is a personal task manager that runs in the browser and keeps task d
 
 The continuing development goal, acceptance criteria and current work queue are recorded in [GOAL.md](./GOAL.md).
 
-The current candidate is **[4.13.1](./docs/releases/4.13.1.md)**: one-click full task entry and an explicit in-app update check. Final acceptance and publication are pending; the following 4.13.0 results retain their original scope.
+The current release is **[4.13.1](./docs/releases/4.13.1.md)**: one-click full task entry, an explicit in-app update check, and fixes found through hands-on workflow review. Targeted checks, real 4.13.0 archive upgrade, publication and live-site review are complete. The following 4.13.0 results retain their original scope.
 
 The published **[4.13.0 baseline](./docs/releases/4.13.0.md)** provides four complete workspace themes and revised surfaces and component materials. The [theme brief](./THEME_BRIEF.md) records the direction. Its hands-on visual review, targeted protection, packaging, real 4.12 upgrade and live-site verification are complete; the release record identifies each scope.
 
@@ -61,7 +61,7 @@ The workspace keeps projects and saved views in the sidebar, with a focused task
 
 Workspace themes are saved in this browser profile and keep the existing four preference choices when upgrading. They remain independent of task data and task backups; database 2, task JSON 2.4 and saved-view 1.1/1.0 import compatibility are unchanged. The themes are part of the local application and retain the offline-use boundaries described below.
 
-The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.13.1 record](./docs/releases/4.13.1.md) tracks this candidate’s changes, acceptance and publication status.
+The [design rules](./DESIGN.md) describe the workspace structure and component principles. The [4.13.1 record](./docs/releases/4.13.1.md) documents the current release’s changes and completed acceptance.
 
 ## Getting Started
 
@@ -273,7 +273,7 @@ The application needs no build step. For pinned browser-test dependencies, valid
 python3 tools/check.py --static-only
 ```
 
-Current-candidate acceptance and publication status are tracked in the [4.13.1 record](./docs/releases/4.13.1.md). The following completed records belong to their named historical releases.
+Current-release acceptance and publication are documented in the [4.13.1 record](./docs/releases/4.13.1.md). The following completed records belong to their named historical releases.
 
 The [4.9.0 release](./docs/releases/4.9.0.md) delivers the redesigned workspace, direct language selection, Light/Dark/System preferences and revised bilingual copy. Clean application commit `e7d58e2` freezes 23 source and 70 verification inputs. The full 59-program checker passed, with program durations totaling 1645.602 seconds; Chromium 154.0.8037.57, Firefox 153.0 and WebKit 26.5 each passed all 32 registered matrix programs. Two independent builds produced the same 797,361-byte, 24-file ZIP, SHA-256 `197bc587145d65f986320ce4b69bd0a2937ce8d48ca3ceb3183a49dfc8849b7b`, with `working_tree_dirty=false`. Actual 4.8.6-archive upgrade/rollback/re-upgrade and an additional 10,000-task/six-subtask full-workspace correctness exercise passed. The [input and artifact record](./docs/releases/inputs-4.9.0.json) binds these results to the frozen candidate; program viewport scopes and live-CDP exclusions remain explicit.
 

@@ -1,0 +1,273 @@
+{
+  "viewport": {
+    "w": 390,
+    "h": 844
+  },
+  "scrollY": 0,
+  "docHeight": 844,
+  "docWidth": 390,
+  "updateStatus": {
+    "state": "latest",
+    "text": "You’re up to date (4.13.1)."
+  },
+  "title": "Task Tracer",
+  "themeColor": "#292536",
+  "skin": {
+    "accent": "iris",
+    "theme": "dark",
+    "chromeSolid": "#292536"
+  },
+  "headings": [
+    "Today’s plan"
+  ],
+  "surfaces": [
+    {
+      "selector": "#openModalBtn",
+      "visible": true,
+      "text": "Add task",
+      "x": 192,
+      "y": 10,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "selector": "#quickAddForm",
+      "visible": 0,
+      "text": "\n                    \n                        \n                        Quick cap",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#quickAddInput",
+      "visible": 0,
+      "text": "",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#toolsDrawer",
+      "visible": true,
+      "text": "Search tasks…\nSupports scoped search: project:name, tag:name, status:value, and ",
+      "x": 14,
+      "y": 192,
+      "w": 362,
+      "h": 103
+    },
+    {
+      "selector": "#workspaceOverview",
+      "visible": 0,
+      "text": "\n            October 2026MonTueWedThuFriSatSun2829301234567891011121314151617181",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceWeekIndex",
+      "visible": 0,
+      "text": "OctNext 7 daysSun25Mon26Tue27Wed28Thu29Fri30Sat31",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#taskList",
+      "visible": true,
+      "text": "产品检查 · 1 task\n复核移动端操作\n产品检查\n#备注\nDue: Oct 26, 2026, 02:00 PM\n(14 hours 22 minutes)",
+      "x": 26,
+      "y": 397,
+      "w": 338,
+      "h": 275
+    },
+    {
+      "selector": "#workspaceTitle",
+      "visible": true,
+      "text": "Today’s plan",
+      "x": 14,
+      "y": 76,
+      "w": 344,
+      "h": 30
+    },
+    {
+      "selector": "#settingsWorkspace",
+      "visible": 0,
+      "text": "\n            Settings & dataManage appearance, reminders and local data.\n       ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    }
+  ],
+  "buttons": [
+    {
+      "id": "workspaceNavToggle",
+      "text": "Open navigation",
+      "x": 14,
+      "y": 10,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "undoBtn",
+      "text": "Undo",
+      "x": 121,
+      "y": 10,
+      "w": 67,
+      "h": 40
+    },
+    {
+      "id": "openModalBtn",
+      "text": "Add task",
+      "x": 192,
+      "y": 10,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "id": "quickCaptureBtn",
+      "text": "Quick capture",
+      "x": 295,
+      "y": 10,
+      "w": 36,
+      "h": 40
+    },
+    {
+      "id": "openMenuBtn",
+      "text": "Settings & data",
+      "x": 336,
+      "y": 10,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "workspaceScheduleToggle",
+      "text": "Show schedule",
+      "x": 262,
+      "y": 131,
+      "w": 100,
+      "h": 36
+    },
+    {
+      "id": "saveSmartViewBtn",
+      "text": "Save view",
+      "x": 269,
+      "y": 247,
+      "w": 95,
+      "h": 36
+    },
+    {
+      "id": "toolsDrawerToggleBtn",
+      "text": "Filters\nAll",
+      "x": 26,
+      "y": 247,
+      "w": 109,
+      "h": 36
+    },
+    {
+      "id": "exitFocusModeBtn",
+      "text": "Leave today’s plan",
+      "x": 134,
+      "y": 326,
+      "w": 224,
+      "h": 40
+    },
+    {
+      "id": "",
+      "text": "Mark as complete",
+      "x": 26,
+      "y": 440,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Task actions: 复核移动端操作",
+      "x": 332,
+      "y": 440,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Mark as complete",
+      "x": 26,
+      "y": 602,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "",
+      "text": "Task actions: 今日补充体验审查",
+      "x": 332,
+      "y": 602,
+      "w": 40,
+      "h": 44
+    },
+    {
+      "id": "notificationUndoBtn",
+      "text": "Undo",
+      "x": 129,
+      "y": 725,
+      "w": 51,
+      "h": 30
+    },
+    {
+      "id": "workspaceNotificationClose",
+      "text": "Close",
+      "x": 334,
+      "y": 724,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "viewTab-list",
+      "text": "List",
+      "x": 10,
+      "y": 785,
+      "w": 90,
+      "h": 54
+    },
+    {
+      "id": "viewTab-calendar",
+      "text": "Calendar",
+      "x": 104,
+      "y": 785,
+      "w": 90,
+      "h": 54
+    },
+    {
+      "id": "viewTab-timeline",
+      "text": "Timeline",
+      "x": 197,
+      "y": 785,
+      "w": 90,
+      "h": 54
+    },
+    {
+      "id": "viewTab-stats",
+      "text": "Stats",
+      "x": 291,
+      "y": 785,
+      "w": 90,
+      "h": 54
+    }
+  ],
+  "fields": [
+    {
+      "id": "searchInput",
+      "type": "text",
+      "value": "",
+      "placeholder": "Search tasks…",
+      "x": 26,
+      "y": 203,
+      "w": 338,
+      "h": 36
+    }
+  ],
+  "pageErrors": []
+}

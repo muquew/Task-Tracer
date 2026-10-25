@@ -1,0 +1,279 @@
+{
+  "viewport": {
+    "w": 320,
+    "h": 844
+  },
+  "scrollY": 0,
+  "docHeight": 1479,
+  "docWidth": 320,
+  "updateStatus": {
+    "state": "latest",
+    "text": "You’re up to date (4.13.1)."
+  },
+  "title": "Task Tracer",
+  "themeColor": "#292536",
+  "skin": {
+    "accent": "iris",
+    "theme": "dark",
+    "chromeSolid": "#292536"
+  },
+  "headings": [
+    "Settings & data",
+    "Backups & transfer"
+  ],
+  "surfaces": [
+    {
+      "selector": "#openModalBtn",
+      "visible": true,
+      "text": "Add task",
+      "x": 167,
+      "y": 10,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "selector": "#quickAddForm",
+      "visible": 0,
+      "text": "\n                    \n                        \n                        Quick cap",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#quickAddInput",
+      "visible": 0,
+      "text": "",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#toolsDrawer",
+      "visible": 0,
+      "text": "\n            \n                    \n                        \n                    ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceOverview",
+      "visible": 0,
+      "text": "\n            October 2026MonTueWedThuFriSatSun2829301234567891011121314151617181",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceWeekIndex",
+      "visible": 0,
+      "text": "OctNext 7 daysSun25Mon26Tue27Wed28Thu29Fri30Sat31",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#taskList",
+      "visible": 0,
+      "text": "产品检查 · 1 task\n        \n        \n            复核移动端操作\n            产品检查#备注Due: Oct ",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#workspaceTitle",
+      "visible": 0,
+      "text": "Today’s plan",
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "selector": "#settingsWorkspace",
+      "visible": true,
+      "text": "Settings & data\n\nManage appearance, reminders and local data.\n\nAppearance & lang",
+      "x": 14,
+      "y": 76,
+      "w": 292,
+      "h": 1319
+    }
+  ],
+  "buttons": [
+    {
+      "id": "workspaceNavToggle",
+      "text": "Open navigation",
+      "x": 14,
+      "y": 10,
+      "w": 40,
+      "h": 40
+    },
+    {
+      "id": "settingsBackBtn",
+      "text": "Back to tasks",
+      "x": 85,
+      "y": 10,
+      "w": 38,
+      "h": 40
+    },
+    {
+      "id": "undoBtn",
+      "text": "Undo: add task",
+      "x": 128,
+      "y": 10,
+      "w": 34,
+      "h": 40
+    },
+    {
+      "id": "openModalBtn",
+      "text": "Add task",
+      "x": 167,
+      "y": 10,
+      "w": 102,
+      "h": 40
+    },
+    {
+      "id": "quickCaptureBtn",
+      "text": "Quick capture",
+      "x": 270,
+      "y": 10,
+      "w": 36,
+      "h": 40
+    },
+    {
+      "id": "tab-settingsAppearance",
+      "text": "Appearance & language",
+      "x": -18,
+      "y": 151,
+      "w": 149,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsData",
+      "text": "Backups & transfer",
+      "x": 135,
+      "y": 151,
+      "w": 130,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsExperience",
+      "text": "Reminders & installation",
+      "x": 269,
+      "y": 151,
+      "w": 149,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsCleanup",
+      "text": "Task maintenance",
+      "x": 422,
+      "y": 151,
+      "w": 117,
+      "h": 42
+    },
+    {
+      "id": "tab-settingsHelp",
+      "text": "Help & about",
+      "x": 543,
+      "y": 151,
+      "w": 89,
+      "h": 42
+    },
+    {
+      "id": "backupBtn",
+      "text": "Download backup",
+      "x": 30,
+      "y": 470,
+      "w": 168,
+      "h": 44
+    },
+    {
+      "id": "importBtn",
+      "text": "Choose backup file",
+      "x": 30,
+      "y": 632,
+      "w": 176,
+      "h": 44
+    },
+    {
+      "id": "recoveryBtn",
+      "text": "Recovery history",
+      "x": 30,
+      "y": 792,
+      "w": 163,
+      "h": 44
+    },
+    {
+      "id": "exportCsvBtn",
+      "text": "Export all tasks as CSV",
+      "x": 30,
+      "y": 994,
+      "w": 202,
+      "h": 44
+    },
+    {
+      "id": "savedViewsTransferBtn",
+      "text": "Transfer saved views",
+      "x": 30,
+      "y": 1174,
+      "w": 188,
+      "h": 44
+    },
+    {
+      "id": "storageHealthBtn",
+      "text": "Data safety",
+      "x": 30,
+      "y": 1335,
+      "w": 126,
+      "h": 44
+    },
+    {
+      "id": "workspaceNotificationClose",
+      "text": "Close",
+      "x": 264,
+      "y": 721,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "viewTab-list",
+      "text": "List",
+      "x": 10,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    },
+    {
+      "id": "viewTab-calendar",
+      "text": "Calendar",
+      "x": 86,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    },
+    {
+      "id": "viewTab-timeline",
+      "text": "Timeline",
+      "x": 162,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    },
+    {
+      "id": "viewTab-stats",
+      "text": "Stats",
+      "x": 238,
+      "y": 785,
+      "w": 72,
+      "h": 54
+    }
+  ],
+  "fields": [],
+  "pageErrors": []
+}

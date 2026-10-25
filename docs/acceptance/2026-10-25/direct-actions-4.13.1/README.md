@@ -27,4 +27,8 @@
 
 最初沙箱启动失败、新测试fixture名称被自然日期解析、更新测试自身请求范围/Retry路径错误及旧静态入口假设均保留原报告，没有覆盖成最终通过。早期无障碍检查还发现空的按钮说明引用，已修后复核。
 
-发行、本轮回归和域名终态见[4.13.1发布记录](../../../releases/4.13.1.md)。浏览器模拟尺寸、DOM输入事件与本地worker fixture都有明确范围，不代填真实设备、完整跨引擎或规模矩阵。
+[相关原流程回归](regression-summary.json)、[发行/真实旧包升级](release/summary.json)及[干净工件比较](canonical/comparison.json)已完成。2026-10-25 23:36:15（北京时间）[域名静态响应匹配](production/summary.json)通过，随后[线上实际使用](production-browser/summary.json)完成39份观测和7张代表图审读、4任务真实备份核对。
+
+可直接查看线上[当前项目默认值](production-browser/07-live-project-default.png)、[今日计划无匹配](production-browser/14-live-today-no-match.png)、[检查更新按钮](production-browser/18-live-check-latest.png)、[英语窄屏更新](production-browser/24-live-mobile-latest.png)及[320px一键表单](production-browser/38-live-320-one-click.png)。
+
+完整终态见[4.13.1发布记录](../../../releases/4.13.1.md)。浏览器模拟尺寸、DOM输入事件与本地worker fixture都有明确范围，不代填真实设备、完整跨引擎或规模矩阵。
