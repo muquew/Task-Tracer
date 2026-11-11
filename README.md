@@ -2,7 +2,7 @@
 
 A local-first task workspace for capturing work, planning your day and reviewing progress. No account required.
 
-[Open app](https://todo.muquew.com/) · [Download](https://todo.muquew.com/downloads/task-tracer-4.16.0.zip) · [Releases](https://github.com/muquew/Task-Tracer/releases) · [简体中文](README_zh_cn.md)
+[Open app](https://todo.muquew.com/) · [Download](https://todo.muquew.com/downloads/task-tracer-4.17.0.zip) · [Releases](https://github.com/muquew/Task-Tracer/releases) · [简体中文](README_zh_cn.md)
 
 | Workspace | Task editor |
 | --- | --- |
@@ -67,6 +67,7 @@ python -m playwright install --with-deps chromium firefox webkit
 python tools/check.py --static-only
 ```
 
+- After editing `styles/workspace.css`, run `npm run styles`; use `npm run styles:check` before committing the generated stylesheet.
 - Run the full checks with `python tools/check.py --keep-going --report dist/check-results.json`; use `python tools/browser_matrix.py --browser all --keep-going --report dist/browser-matrix.json` for changes requiring all engines.
 - Review interface changes in Chinese and English, with keyboard navigation and a narrow screen. Test imports and recovery using disposable profiles and synthetic data.
 - After inline-script changes, regenerate CSP with `python tools/security_policy.py --write`. After translation changes, run `python tools/translation_fallback.py --write` before regenerating CSP.

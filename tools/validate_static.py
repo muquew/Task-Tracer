@@ -7,8 +7,10 @@ import json
 import re
 import struct
 import sys
-from pathlib import Path
+from html.parser import HTMLParser
+from pathlib import Path, PurePosixPath
 from typing import Any
+from urllib.parse import unquote, urlsplit
 
 from translation_fallback import check as check_translation_fallback, main_script
 
@@ -102,6 +104,54 @@ def contains_in_order(source: str, fragments: tuple[str, ...]) -> bool:
 
 def tag_blocks(source: str, tag: str) -> list[str]:
     return re.findall(rf"<{tag}\b[^>]*>(.*?)</{tag}>", source, re.DOTALL | re.IGNORECASE)
+
+
+def stylesheet_assets(index_html: str) -> dict[str, Path]:
+    class StylesheetLinks(HTMLParser):
+        def __init__(self) -> None:
+            super().__init__()
+            self.hrefs: list[str] = []
+
+        def handle_starttag(self, tag: str, attributes: list[tuple[str, str | None]]) -> None:
+            values = dict(attributes)
+            if tag == 'link' and 'stylesheet' in (values.get('rel') or '').lower().split():
+                href = values.get('href')
+                if not href:
+                    raise AssertionError('Stylesheet links must declare a local href')
+                self.hrefs.append(href)
+
+    parser = StylesheetLinks()
+    parser.feed(index_html)
+    assets: dict[str, Path] = {}
+    root = REPO_ROOT.resolve()
+    for href in parser.hrefs:
+        parsed = urlsplit(href)
+        name = unquote(parsed.path).removeprefix('./')
+        path = PurePosixPath(name)
+        if (parsed.scheme or parsed.netloc or parsed.fragment or not name or path.is_absolute()
+                or '..' in path.parts or path.as_posix() != name
+                or any(character in name for character in ('\\', '\x00', ':'))):
+            raise AssertionError(f'Stylesheets must use safe local paths: {href!r}')
+        source = REPO_ROOT / name
+        current = REPO_ROOT
+        for part in path.parts:
+            current = current / part
+            if current.is_symlink():
+                raise AssertionError(f'Stylesheet sources must not be symbolic links: {name}')
+        if not source.is_file() or not source.resolve().is_relative_to(root):
+            raise AssertionError(f'Missing or unsafe stylesheet source: {name}')
+        assets[href] = source
+    return assets
+
+
+def loaded_stylesheet_source(index_html: str) -> str:
+    blocks = tag_blocks(index_html, 'style')
+    for href, source in stylesheet_assets(index_html).items():
+        try:
+            blocks.append(read_text(source))
+        except (OSError, UnicodeError) as error:
+            raise AssertionError(f'Could not read linked stylesheet {href!r}: {error}') from error
+    return '\n'.join(blocks)
 
 
 def contains_js_comment(source: str) -> bool:
@@ -274,7 +324,7 @@ def validate_due_date_semantics(index_html: str, errors: list[str]) -> None:
         errors.append(str(error))
 
 
-def contains_css_comment(source: str) -> bool:
+def contains_css_comment(source: str, *, allow_license: bool = False) -> bool:
     state = "normal"
     escape = False
     i = 0
@@ -283,6 +333,11 @@ def contains_css_comment(source: str) -> bool:
         next_char = source[i + 1] if i + 1 < len(source) else ""
         if state == "normal":
             if char == "/" and next_char == "*":
+                if allow_license and source.startswith('/*!', i):
+                    end = source.find('*/', i + 3)
+                    if end != -1:
+                        i = end + 2
+                        continue
                 return True
             if char in {"'", '"'}:
                 state = char
@@ -388,6 +443,11 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
             errors.append("manifest.json must not force a screen orientation")
 
         required_assets = {"./", "./index.html", "./manifest.json"}
+        stylesheets = stylesheet_assets(index_html)
+        expected_stylesheet = f'./resources/workspace.css?v={runtime_version}'
+        if expected_stylesheet not in stylesheets:
+            errors.append('index.html must link resources/workspace.css with the current app version')
+        required_assets.update(stylesheets)
         required_assets.update(f"./resources/{code}.json?v={version}" for code in languages)
         for icon_path in manifest_icon_paths(manifest):
             icon_file = REPO_ROOT / icon_path
@@ -526,6 +586,12 @@ def validate_loaded_code_is_comment_free(index_html: str, errors: list[str]) -> 
         errors.append("Loaded index.html must not contain HTML comments")
     if any(contains_css_comment(block) for block in tag_blocks(index_html, "style")):
         errors.append("Loaded index.html style blocks must not contain CSS comments")
+    try:
+        for href, source in stylesheet_assets(index_html).items():
+            if contains_css_comment(read_text(source), allow_license=True):
+                errors.append(f'Linked stylesheet {href!r} must contain only preserved /*! license/compiler */ comments')
+    except (AssertionError, OSError, UnicodeError) as error:
+        errors.append(str(error))
     if any(contains_js_comment(block) for block in tag_blocks(index_html, "script")):
         errors.append("Loaded index.html script blocks must not contain JavaScript comments")
     if contains_js_comment(sw_source):
@@ -533,6 +599,11 @@ def validate_loaded_code_is_comment_free(index_html: str, errors: list[str]) -> 
 
 
 def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
+    try:
+        css_source = loaded_stylesheet_source(index_html)
+    except AssertionError as error:
+        errors.append(str(error))
+        css_source = ''
     try:
         status_block = first_match(
             r"STATUS:\s*{(.*?)}\s*,\s*THEME:",
@@ -543,14 +614,14 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
         active_statuses = status_classes - {"status-completed"}
 
         for status_class in sorted(active_statuses):
-            if f".task-item.{status_class}" not in index_html:
+            if f".task-item.{status_class}" not in css_source:
                 errors.append(f"Missing task status CSS selector for {status_class}")
 
         if "completed-task" not in index_html:
             errors.append("Completed tasks must render the completed-task class")
         if not re.search(
             r"\.completed-task\s+\.task-name\s*{[^}]*text-decoration-line:\s*line-through",
-            index_html,
+            css_source,
             re.DOTALL,
         ):
             errors.append("Completed task names must be struck through with text-decoration-line: line-through")
@@ -686,9 +757,14 @@ def validate_native_language_control(index_html: str, errors: list[str]) -> None
 
 
 def validate_accessibility_styles(index_html: str, errors: list[str]) -> None:
-    if ":focus-visible" not in index_html or "--focus-ring" not in index_html:
+    try:
+        css_source = loaded_stylesheet_source(index_html)
+    except AssertionError as error:
+        errors.append(str(error))
+        css_source = ''
+    if ":focus-visible" not in css_source or "--focus-ring" not in css_source:
         errors.append("Interactive controls must expose a visible keyboard focus style")
-    if "@media (prefers-reduced-motion: reduce)" not in index_html:
+    if not re.search(r'@media\s*\(\s*prefers-reduced-motion\s*:\s*reduce\s*\)', css_source):
         errors.append("CSS must respect prefers-reduced-motion")
     if "getMotionAwareScrollBehavior" not in index_html or "prefersReducedMotion()" not in index_html:
         errors.append("JavaScript scrolling must respect prefers-reduced-motion")

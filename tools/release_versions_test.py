@@ -34,7 +34,7 @@ def assert_archive(path: Path, version: str) -> None:
     with zipfile.ZipFile(path) as archive:
         names = archive.namelist()
         expected = expected_distribution_files()
-        assert len(names) == 24 and len(names) == len(expected) and set(names) == expected
+        assert len(names) == len(expected) and set(names) == expected
         metadata = json.loads(archive.read('integrity.json'))
         assert metadata['version'] == version
         assert set(metadata['files']) == expected - {'integrity.json'}
@@ -94,7 +94,7 @@ def run() -> None:
         actual_version = app_version(original['index.html'].decode())
         actual_resources = resource_version(original['index.html'].decode())
         build(root, base / 'normal', actual_version)
-        print(f'Release versions passed: current {actual_version} metadata builds exactly 24 files')
+        print(f'Release versions passed: current {actual_version} metadata builds exactly {len(expected_distribution_files())} files')
 
         drift = '9.9.9' if actual_version != '9.9.9' else '8.8.8'
         stale = '4.7.0' if json.loads(original['package.json'])['version'] != '4.7.0' else '4.6.0'
@@ -126,10 +126,15 @@ def run() -> None:
         assert updated != runtime.group('content')
         source = source[:runtime.start('content')] + updated + source[runtime.end('content'):]
         source = re.sub(r'("softwareVersion":\s*")[^"]+(")', lambda match: match[1] + '12.34' + match[2], source, count=1)
+        old_stylesheet = f'./resources/workspace.css?v={actual_version}'
+        assert source.count(old_stylesheet) == 1
+        source = source.replace(old_stylesheet, './resources/workspace.css?v=12.34', 1)
         (root / 'index.html').write_text(source)
         worker = (root / 'sw.js').read_text()
         worker = re.sub(r"(const CACHE_NAME = ['\"])[^'\"]+(['\"])",
                         lambda match: match[1] + 'task-tracer-v12.34' + match[2], worker, count=1)
+        assert worker.count(old_stylesheet) == 1
+        worker = worker.replace(old_stylesheet, './resources/workspace.css?v=12.34', 1)
         (root / 'sw.js').write_text(worker)
         write_package(lambda package, lock: (package.update(version='12.34.0'), lock.update(version='12.34.0'),
                                              lock['packages'][''].update(version='12.34.0')))

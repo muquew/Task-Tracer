@@ -77,8 +77,18 @@ def exercise_diagnostics(page, downloads, expected_error=None):
     assert len(downloads) == count_before, 'Diagnostics downloaded before explicit confirmation'
     assert snapshot(page) == before, 'Previewing diagnostics changed stored data'
     assert_focus_trap(page)
-    with page.expect_download() as result:
-        page.locator('#submitBtn').click()
+    activation_errors = []
+    def observe_activation(message):
+        if message.type == 'error':
+            activation_errors.append(message.text)
+    page.on('console', observe_activation)
+    try:
+        with page.expect_download() as result:
+            page.locator('#submitBtn').click()
+        expect(page.locator('#taskModal')).to_be_hidden()
+    finally:
+        page.remove_listener('console', observe_activation)
+    assert not activation_errors, f'Diagnostics confirmation triggered a native form submission or console error: {activation_errors}'
     download = result.value
     actual = json.loads(download.path().read_text())
     assert_private_report(actual)

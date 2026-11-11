@@ -19,7 +19,7 @@ from appearance_preferences_playwright import (
 )
 from recovery_management_playwright import stored
 from smoke_playwright import (
-    assert_theme_chrome, browser_launch_options, clear_app_data, close_workspace_navigation,
+    add_task, assert_theme_chrome, browser_launch_options, clear_app_data, close_workspace_navigation,
     enter_batch_mode, get_task_records, local_server, open_settings, open_task_editor,
     reveal_task_field, select_filter, select_view, task_locator,
     return_to_task_workspace, select_accent_preference, select_theme_preference,
@@ -263,6 +263,84 @@ def control_contrast(page, url):
     print('Workspace controls passed: actual subtask/batch/task checked state and marker contrast across all eight skins; real completion Undo preserves task records', flush=True)
 
 
+def maintenance_button_paint(control):
+    return control.evaluate('''element => {
+        const pixel = color => {
+            const canvas=document.createElement('canvas'); canvas.width=canvas.height=1;
+            const context=canvas.getContext('2d'); context.fillStyle=color; context.fillRect(0,0,1,1);
+            return [...context.getImageData(0,0,1,1).data];
+        };
+        const style=getComputedStyle(element),label=element.querySelector('span'),icon=element.querySelector('svg');
+        const labelStyle=getComputedStyle(label),iconStyle=getComputedStyle(icon),box=icon.getBoundingClientRect();
+        let opacity=1;
+        for (let node=element;node;node=node.parentElement) opacity*=Number(getComputedStyle(node).opacity);
+        return {background:pixel(style.backgroundColor),text:pixel(labelStyle.color),icon:pixel(iconStyle.color),
+            opacity,textOpacity:Number(labelStyle.opacity),iconOpacity:Number(iconStyle.opacity),
+            textVisible:label.checkVisibility({opacityProperty:true,visibilityProperty:true}) && Boolean(label.textContent.trim()),
+            iconVisible:icon.checkVisibility({opacityProperty:true,visibilityProperty:true}),
+            iconWidth:box.width,iconHeight:box.height,symbol:icon.querySelector('use')?.getAttribute('href'),
+            focusVisible:element.matches(':focus-visible'),outlineWidth:Number.parseFloat(style.outlineWidth),
+            outlineStyle:style.outlineStyle,outline:pixel(style.outlineColor)};
+    }''')
+
+
+def maintenance_contrast(page, url):
+    clear_app_data(page, url)
+    name = 'Maintenance contrast completed task'
+    add_task(page, name, no_deadline=True)
+    select_filter(page, 'all')
+    completion = task_locator(page, name).locator('[data-action="toggle"]')
+    completion.click()
+    expect(completion).to_have_attribute('aria-pressed', 'true')
+    open_settings(page, 'cleanup')
+    control = page.locator('#clearCompletedBtn')
+    expect(control).to_be_enabled()
+    before = stored(page)
+    assert any(task['completed'] for task in before['tasks']), 'Maintenance fixture has no completed task'
+    axe_source = find_axe_source().read_text()
+    for accent in ACCENTS:
+        select_accent_preference(page, accent)
+        for theme in ('light', 'dark'):
+            select_theme_preference(page, theme)
+            open_settings(page, 'cleanup')
+            expect(control).to_be_visible()
+            expect(control).to_be_enabled()
+            control.scroll_into_view_if_needed()
+            for interaction in ('resting', 'hover', 'keyboard-focus'):
+                if interaction == 'resting':
+                    page.locator('#settingsBackBtn').focus()
+                    page.mouse.move(0, 0)
+                elif interaction == 'hover':
+                    control.hover()
+                else:
+                    page.mouse.move(0, 0)
+                    control.focus()
+                    control.press('Tab')
+                    page.keyboard.press('Shift+Tab')
+                    expect(control).to_be_focused()
+                label = f'{accent}/{theme} maintenance deletion {interaction}'
+                settle_animations(page, label)
+                paint = maintenance_button_paint(control)
+                observation = {'label':label, 'paint':paint,
+                               'text_contrast':color_contrast(paint['text'], paint['background']),
+                               'icon_contrast':color_contrast(paint['icon'], paint['background'])}
+                print('Maintenance control paint: ' + json.dumps(observation, ensure_ascii=False), flush=True)
+                assert paint['background'][3] == paint['text'][3] == paint['icon'][3] == 255, observation
+                assert paint['opacity'] == paint['textOpacity'] == paint['iconOpacity'] == 1, observation
+                assert paint['textVisible'] and paint['iconVisible'], observation
+                assert paint['iconWidth'] > 0 and paint['iconHeight'] > 0 and paint['symbol'] == '#icon-trash-lines', observation
+                assert observation['text_contrast'] >= 4.5, observation
+                assert observation['icon_contrast'] >= 3, observation
+                if interaction == 'keyboard-focus':
+                    assert paint['focusVisible'] and paint['outlineWidth'] > 0, observation
+                    assert paint['outlineStyle'] not in ('none', 'hidden') and paint['outline'][3] > 0, observation
+                    assert_focus_visible(page, '#clearCompletedBtn', label)
+                assert stored(page) == before, 'Auditing maintenance appearance changed stored tasks or configuration'
+            run_axe(page, axe_source, f'{accent}/{theme} enabled maintenance deletion')
+            assert stored(page) == before, 'Auditing maintenance with axe changed stored tasks or configuration'
+    print('Maintenance controls passed: 24 real enabled deletion states across eight skins, text/icon contrast, keyboard focus and eight axe audits preserve stored data', flush=True)
+
+
 def observe_accent_storage(page):
     return page.evaluate_handle('''() => {
         const watch = {events: []};
@@ -422,6 +500,7 @@ def chrome_sync(page, url):
 
 
 CASES = {'roundtrip': round_trip, 'keyboard': keyboard_gallery, 'controls': control_contrast,
+         'maintenance': maintenance_contrast,
          'sync-draft': cross_tab_draft, 'fallback': invalid_and_unavailable_storage, 'chrome': chrome_sync}
 
 

@@ -1,12 +1,13 @@
 const CACHE_PREFIX = 'task-tracer-';
-const CACHE_NAME = 'task-tracer-v4.16.0';
+const CACHE_NAME = 'task-tracer-v4.17.0';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './manifest.json',
+    './resources/workspace.css?v=4.17.0',
     './THIRD_PARTY_NOTICES.md',
-    './resources/en.json?v=4.46',
-    './resources/zh-CN.json?v=4.46',
+    './resources/en.json?v=4.47',
+    './resources/zh-CN.json?v=4.47',
     './fav/favicon-16x16.png',
     './fav/favicon-32x32.png',
     './fav/favicon.ico',
@@ -45,7 +46,7 @@ async function validateInstalledBundle(cache) {
     for (const asset of ASSETS_TO_CACHE) {
         if (!await cache.match(new URL(asset, self.registration.scope).href)) throw new Error('Incomplete installed bundle');
     }
-    const resourceVersions = new Set(ASSETS_TO_CACHE.filter(asset => asset.startsWith('./resources/')).map(asset => new URL(asset, self.registration.scope).searchParams.get('v')));
+    const resourceVersions = new Set(ASSETS_TO_CACHE.filter(asset => new URL(asset, self.registration.scope).pathname.endsWith('.json') && asset.startsWith('./resources/')).map(asset => new URL(asset, self.registration.scope).searchParams.get('v')));
     if (resourceVersions.size !== 1 || resourceVersions.has(null)) throw new Error('Invalid bundle resource version');
     const resourceVersion = [...resourceVersions][0];
     const appVersion = CACHE_NAME.slice(CACHE_PREFIX.length + 1);

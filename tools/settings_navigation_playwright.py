@@ -43,16 +43,26 @@ def production_server():
 
 
 def assert_view_destinations(page, current):
-    expect(page.locator('#viewSwitcher')).to_be_visible()
+    task_modes_visible = current is not None or page.viewport_size['width'] <= 779
+    if task_modes_visible:
+        expect(page.locator('#viewSwitcher')).to_be_visible()
+    else:
+        expect(page.locator('#viewSwitcher')).to_be_hidden()
+        expect(page.locator('#settingsBackBtn')).to_be_visible()
+        expect(page.locator('#settingsBackBtn')).to_be_enabled()
     expect(page.locator('#viewSwitcher [role="tab"]')).to_have_count(0)
     for view in VIEWS:
         button = page.locator(f'#viewTab-{view}')
-        expect(button).to_be_visible()
+        if task_modes_visible:
+            expect(button).to_be_visible()
+        else:
+            expect(button).to_be_hidden()
         expect(button).to_be_enabled()
         expect(button).to_have_role('button')
         expect(button).to_have_attribute('tabindex', '0')
         label = button.locator('span')
-        expect(label).to_be_visible()
+        if task_modes_visible:
+            expect(label).to_be_visible()
         assert (label.inner_text()).strip(), f'{view} has no persistent visible label'
         if view == current:
             expect(button).to_have_attribute('aria-current', 'page')
@@ -136,9 +146,11 @@ def exercise_workspace(browser, url, width, language):
             'Cleanup scope explanation leaked into primary task navigation'
         if width > 779:
             host = page.locator('#workspaceViewNavHost').bounding_box()
-            for view in VIEWS:
-                box = page.locator(f'#viewTab-{view}').bounding_box()
-                assert host and box and box['width'] >= host['width'] - 4, ('Desktop navigation does not fill its sidebar', box, host)
+            boxes = [page.locator(f'#viewTab-{view}').bounding_box() for view in VIEWS]
+            assert host and all(box and box['width'] >= 44 and box['height'] >= 40 for box in boxes), ('Undersized view controls', boxes)
+            assert all(host['x'] <= box['x'] and box['x'] + box['width'] <= host['x'] + host['width'] + 1 for box in boxes), ('View controls escape the workspace viewbar', host, boxes)
+            assert all(abs(box['y'] - boxes[0]['y']) <= 1 for box in boxes), ('Desktop view controls are not in one row', boxes)
+            assert all(boxes[i]['x'] + boxes[i]['width'] <= boxes[i+1]['x'] + 1 for i in range(len(boxes)-1)), ('View controls overlap or have the wrong order', boxes)
         open_settings(page)
         expect(page.locator('#settingsWorkspace')).not_to_have_role('dialog')
         expect(page.locator('#settingsWorkspace [role="menuitem"]')).to_have_count(0)
@@ -229,8 +241,12 @@ def exercise_workspace(browser, url, width, language):
             assert_view_destinations(page, page.locator('#viewSwitcher [aria-current="page"]').get_attribute('data-view'))
             select_view(page, view)
             open_settings(page)
-            # Selecting the already active view must still leave settings.
-            page.locator(f'#viewTab-{view}').click()
+            if width <= 779:
+                # The mobile dock remains a global route out of settings.
+                page.locator(f'#viewTab-{view}').click()
+            else:
+                # Desktop view modes belong to the task workspace; Back restores it.
+                page.locator('#settingsBackBtn').click()
             expect(page.locator('#settingsWorkspace')).to_be_hidden()
             expect(page.locator('#tasksWorkspace')).to_be_visible()
             assert_view_destinations(page, view)

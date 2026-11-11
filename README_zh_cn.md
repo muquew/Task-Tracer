@@ -2,7 +2,7 @@
 
 一个本地优先的个人任务工作台，用来记录、安排和回顾日常工作，无需账号。
 
-[打开应用](https://todo.muquew.com/) · [下载发行包](https://todo.muquew.com/downloads/task-tracer-4.16.0.zip) · [版本发布](https://github.com/muquew/Task-Tracer/releases) · [English](README.md)
+[打开应用](https://todo.muquew.com/) · [下载发行包](https://todo.muquew.com/downloads/task-tracer-4.17.0.zip) · [版本发布](https://github.com/muquew/Task-Tracer/releases) · [English](README.md)
 
 | 工作区 | 任务面板 |
 | --- | --- |
@@ -67,6 +67,7 @@ python -m playwright install --with-deps chromium firefox webkit
 python tools/check.py --static-only
 ```
 
+- 修改 `styles/workspace.css` 后运行 `npm run styles`，提交前用 `npm run styles:check` 核对编译后的样式。
 - 完整检查使用 `python tools/check.py --keep-going --report dist/check-results.json`；需要多浏览器验证时，运行 `python tools/browser_matrix.py --browser all --keep-going --report dist/browser-matrix.json`。
 - 界面修改同时检查中英文、键盘操作和窄屏；导入与恢复使用独立测试配置和示例数据。
 - 修改内联脚本后运行 `python tools/security_policy.py --write` 更新 CSP；修改翻译后先运行 `python tools/translation_fallback.py --write`，再更新 CSP。

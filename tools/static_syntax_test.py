@@ -3,10 +3,14 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
 import re
+import tempfile
+from unittest.mock import patch
 
 from translation_fallback import main_script
-from validate_static import contains_js_comment, validate_due_date_semantics
+import validate_static as validation
+from validate_static import contains_css_comment, contains_js_comment, validate_due_date_semantics
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -68,6 +72,83 @@ def check_comments() -> None:
     print(f'Static syntax passed: {len(COMMENT_FREE)} legal JavaScript samples and explicit comment rejection')
 
 
+def check_stylesheet_guards() -> None:
+    license_comment = '/*! tailwindcss | MIT License */'
+    assert contains_css_comment(license_comment), 'Inline CSS must continue rejecting license comments'
+    assert not contains_css_comment(license_comment, allow_license=True), 'External compiler/license comments must be preserved'
+    assert contains_css_comment(license_comment + '\n/* ordinary comment */', allow_license=True)
+    assert contains_css_comment('/*! unterminated license comment', allow_license=True)
+    assert not contains_css_comment('a::after { content: "/* literal text */"; }')
+
+    source = (ROOT / 'index.html').read_text(encoding='utf-8')
+    delivered = (ROOT / 'resources/workspace.css').read_text(encoding='utf-8')
+    href = f'./resources/workspace.css?v={validation.app_version(source)}'
+    assert f'href="{href}"' in source, 'The app must link its versioned delivered stylesheet'
+    with tempfile.TemporaryDirectory(prefix='task-tracer-stylesheet-guards-') as folder:
+        root = Path(folder)
+        css = root / 'resources/workspace.css'
+        css.parent.mkdir()
+        css.write_text(delivered, encoding='utf-8')
+        with patch.object(validation, 'REPO_ROOT', root):
+            assets = validation.stylesheet_assets(source)
+            assert assets[href] == css
+            assert validation.loaded_stylesheet_source(source).endswith(delivered)
+
+            def errors_for(validator, html=source):
+                errors = []
+                validator(html, errors)
+                return errors
+
+            for validator in (validation.validate_task_state_styles, validation.validate_accessibility_styles,
+                              validation.validate_loaded_code_is_comment_free):
+                assert not errors_for(validator), errors_for(validator)
+
+            decoy = source.replace('</head>', '<script type="application/json">' + json.dumps(delivered) + '</script></head>', 1)
+            mutations = (
+                ('task status selector', delivered.replace('.task-item.status-safe', '.task-item.missing-status'),
+                 validation.validate_task_state_styles, 'Missing task status CSS selector for status-safe'),
+                ('completed task decoration', re.sub(r'text-decoration-line:\s*line-through', 'text-decoration-line:none', delivered),
+                 validation.validate_task_state_styles, 'Completed task names must be struck through'),
+                ('keyboard focus selector', delivered.replace(':focus-visible', ':hover'),
+                 validation.validate_accessibility_styles, 'Interactive controls must expose a visible keyboard focus style'),
+                ('keyboard focus token', delivered.replace('--focus-ring', '--missing-ring'),
+                 validation.validate_accessibility_styles, 'Interactive controls must expose a visible keyboard focus style'),
+                ('reduced motion', delivered.replace('prefers-reduced-motion', 'removed-reduced-motion'),
+                 validation.validate_accessibility_styles, 'CSS must respect prefers-reduced-motion'),
+            )
+            for label, changed, validator, expected in mutations:
+                assert changed != delivered, f'Missing stylesheet regression fixture target: {label}'
+                css.write_text(changed, encoding='utf-8')
+                errors = errors_for(validator, decoy)
+                assert any(expected in error for error in errors), f'Linked stylesheet guard accepted {label}: {errors}'
+            css.write_text(delivered + '\n' + license_comment, encoding='utf-8')
+            assert not errors_for(validation.validate_loaded_code_is_comment_free)
+            css.write_text(delivered + '\n/* ordinary external comment */', encoding='utf-8')
+            assert any('Linked stylesheet' in error for error in errors_for(validation.validate_loaded_code_is_comment_free))
+            css.write_text(delivered, encoding='utf-8')
+            inline = source.replace('</head>', '<style>' + license_comment + '</style></head>', 1)
+            assert any('style blocks' in error for error in errors_for(validation.validate_loaded_code_is_comment_free, inline))
+
+            for href in ('https://outside.invalid/style.css', '//outside.invalid/style.css', '../outside.css',
+                         './%2e%2e/outside.css', './resources/../outside.css', './resources\\outside.css',
+                         '/absolute.css', './resources/missing.css'):
+                try:
+                    validation.stylesheet_assets(f'<link rel="stylesheet" href="{href}">')
+                except AssertionError:
+                    pass
+                else:
+                    raise AssertionError(f'Unsafe or missing stylesheet source was accepted: {href}')
+            css.unlink()
+            css.symlink_to(ROOT / 'resources/workspace.css')
+            try:
+                validation.stylesheet_assets(source)
+            except AssertionError:
+                pass
+            else:
+                raise AssertionError('Linked stylesheet source symbolic link was accepted')
+    print('Static syntax passed: preserved CSS licenses, linked-asset safety, and five real stylesheet regression mutations')
+
+
 def date_errors(source: str) -> list[str]:
     errors: list[str] = []
     validate_due_date_semantics(source, errors)
@@ -106,6 +187,7 @@ def check_due_date_guard() -> None:
 
 def run() -> None:
     check_comments()
+    check_stylesheet_guards()
     check_due_date_guard()
 
 

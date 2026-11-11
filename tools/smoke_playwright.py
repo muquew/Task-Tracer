@@ -1586,6 +1586,7 @@ def select_sort(page: Page, value: str) -> None:
 
 
 def select_view(page: Page, value: str) -> None:
+    return_to_task_workspace(page)
     tab = page.locator(f'#viewSwitcher .view-tab[data-view="{value}"]')
     tab.click()
     if page.locator('#settingsWorkspace').count():
@@ -1883,36 +1884,26 @@ def exercise_workspace_date_focus(page: Page, *, zero_matches: bool = False) -> 
         assert before == [], 'The empty-workspace calendar case requires no stored tasks'
     expect(page.locator('.task-item')).to_have_count(0)
     try:
-        wide_week = page.evaluate("matchMedia('(min-width: 1001px)').matches")
-        if wide_week:
-            expect(page.locator('#workspaceWeekIndex')).to_be_visible()
-        else:
-            expect(page.locator('#workspaceWeekIndex')).to_be_hidden()
-        for entry in (('week', 'mini') if wide_week else ('mini',)):
-            select_view(page, 'list')
-            if entry == 'week':
-                target = page.locator('#workspaceWeekIndex [data-workspace-week-date]').first
-            else:
-                target = page.locator('#workspaceCalendarGrid [data-workspace-date][aria-current="date"]')
-                if not target.is_visible():
-                    page.locator('#workspaceScheduleToggle').click()
-                    expect(page.locator('#workspaceScheduleDialog')).to_be_visible()
-            target.click()
-            expect(page.locator('#viewTab-calendar')).to_have_attribute("aria-current", "page")
-            expect(page.locator('#taskList')).to_be_visible()
-            expect(page.locator('#workspaceScheduleDialog')).to_be_hidden()
-            page.wait_for_function("""() => {
-                const element = document.activeElement;
-                if (!element || element === document.body || element === document.documentElement
-                    || element.closest('[inert], [hidden], [aria-hidden="true"]')) return false;
-                if (element.id !== 'viewTab-calendar' && !document.getElementById('taskList').contains(element)) return false;
-                const box = element.getBoundingClientRect();
-                const style = getComputedStyle(element);
-                return box.width > 0 && box.height > 0 && style.visibility !== 'hidden'
-                    && box.left >= -1 && box.right <= innerWidth + 1
-                    && box.top >= -1 && box.bottom <= innerHeight + 1;
-            }""", polling=50, timeout=5000)
-            assert get_task_records(page) == before, f'{entry} date navigation modified stored tasks'
+        target = page.locator('#workspaceCalendarGrid [data-workspace-date][aria-current="date"]')
+        if not target.is_visible():
+            page.locator('#workspaceScheduleToggle').click()
+            expect(page.locator('#workspaceScheduleDialog')).to_be_visible()
+        target.click()
+        expect(page.locator('#viewTab-calendar')).to_have_attribute("aria-current", "page")
+        expect(page.locator('#taskList')).to_be_visible()
+        expect(page.locator('#workspaceScheduleDialog')).to_be_hidden()
+        page.wait_for_function("""() => {
+            const element = document.activeElement;
+            if (!element || element === document.body || element === document.documentElement
+                || element.closest('[inert], [hidden], [aria-hidden="true"]')) return false;
+            if (element.id !== 'viewTab-calendar' && !document.getElementById('taskList').contains(element)) return false;
+            const box = element.getBoundingClientRect();
+            const style = getComputedStyle(element);
+            return box.width > 0 && box.height > 0 && style.visibility !== 'hidden'
+                && box.left >= -1 && box.right <= innerWidth + 1
+                && box.top >= -1 && box.bottom <= innerHeight + 1;
+        }""", polling=50, timeout=5000)
+        assert get_task_records(page) == before, 'Schedule date navigation modified stored tasks'
     finally:
         page.locator('#searchInput').fill(original_search)
         select_view(page, 'list')
@@ -2892,10 +2883,12 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         assert metadata['sourceInfo']['version'] == '2.4'
         assert metadata['duplicateIds'] == [91002]
         assert metadata['importCount'] == 3 and len(metadata['conflicts']) == 1
-        rows = page.locator(".confirm-row").all_inner_texts()
-        if not any(re.search(r"(文件内重复|Repeated inside file)[\s\S]*1", row, re.I) for row in rows):
-            raise AssertionError(f"Import preview did not report file duplicates: {rows}")
+        duplicate_heading = page.locator('.confirm-list-title').filter(
+            has_text=re.compile(r'(文件内重复|Repeated inside file)', re.I))
+        expect(duplicate_heading).to_be_visible()
+        expect(duplicate_heading).to_have_text(re.compile(r'(文件内重复|Repeated inside file)\s*\(1\)', re.I))
         expect(page.locator(".confirm-list")).to_have_count(1)
+        expect(page.locator('.confirm-list li')).to_have_text(['Preview Duplicate'])
         expect(page.locator('.import-diff-item').nth(1)).to_contain_text(existing_name)
         expect(page.locator('.import-diff-item').nth(1).locator('.import-diff-count')).to_have_text('1')
         expect(page.locator(".import-conflict-select")).to_have_count(0)
@@ -3672,6 +3665,18 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                     expect(control).to_be_enabled()
                     control.scroll_into_view_if_needed()
                     expect(control).to_be_in_viewport()
+                    notification_covers_control = control.evaluate("""node => {
+                        const r = node.getBoundingClientRect();
+                        const hit = document.elementFromPoint((r.left+r.right)/2, (r.top+r.bottom)/2);
+                        return Boolean(hit?.closest('#notification'));
+                    }""")
+                    if notification_covers_control:
+                        dismiss = visual_page.locator('#workspaceNotificationClose')
+                        expect(dismiss).to_be_visible()
+                        expect(dismiss).to_be_enabled()
+                        dismiss.click()
+                        expect(visual_page.locator('#notification')).not_to_have_class(re.compile(r'\bshow\b'))
+                        control.scroll_into_view_if_needed()
                     assert control.evaluate("""node => {
                         const r = node.getBoundingClientRect();
                         const hit = document.elementFromPoint((r.left+r.right)/2, (r.top+r.bottom)/2);

@@ -20,7 +20,8 @@ def assert_archive(path: Path) -> bytes:
     with zipfile.ZipFile(path) as archive:
         names = archive.namelist()
         expected = release.expected_distribution_files()
-        assert len(names) == 24 and len(names) == len(expected) and set(names) == expected
+        assert len(names) == len(expected) and set(names) == expected
+        assert archive.read('resources/workspace.css') == (release.ROOT / 'resources/workspace.css').read_bytes()
         assert 'THIRD_PARTY_NOTICES.md' in names
         assert archive.read('THIRD_PARTY_NOTICES.md') == (release.ROOT / 'THIRD_PARTY_NOTICES.md').read_bytes()
         for name in ('README.md', 'README_zh_cn.md'):
@@ -82,17 +83,18 @@ def run() -> None:
             print('Release payload passed: three unrelated synthetic files are excluded; exact manifest and repeated bytes match')
 
             rejected_output = base / 'must-not-be-created'
-            required = root / 'fav/favicon-48x48.png'
-            content = required.read_bytes()
-            required.unlink()
-            try:
-                rejects('missing required asset', lambda: release.build(rejected_output))
-            finally:
-                required.write_bytes(content)
+            for name in ('fav/favicon-48x48.png', 'resources/workspace.css'):
+                required = root / name
+                content = required.read_bytes()
+                required.unlink()
+                try:
+                    rejects(f'missing required asset {name}', lambda: release.build(rejected_output))
+                finally:
+                    required.write_bytes(content)
 
             outside = base / 'outside-source.txt'
             outside.write_text('SYNTHETIC_OUTSIDE_SOURCE\n')
-            for name in ('index.html', 'README.md', 'README_zh_cn.md'):
+            for name in ('index.html', 'README.md', 'README_zh_cn.md', 'resources/workspace.css'):
                 source = root / name
                 content = source.read_bytes()
                 source.unlink()

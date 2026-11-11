@@ -33,6 +33,7 @@ DISTRIBUTION_SOURCES = {
     'fav/favicon.ico': 'fav/favicon.ico',
     'resources/en.json': 'resources/en.json',
     'resources/zh-CN.json': 'resources/zh-CN.json',
+    'resources/workspace.css': 'resources/workspace.css',
     'screenshots/add-task-en.png': 'screenshots/add-task-en.png',
     'screenshots/add-task.png': 'screenshots/add-task.png',
     'screenshots/task-list-en.png': 'screenshots/task-list-en.png',

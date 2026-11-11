@@ -269,7 +269,33 @@ def late_completion(page, url):
     print('View deletion passed: a committed old deletion callback cannot close, refocus or alter a newer task draft',flush=True)
 
 
+def mobile_overlay(page, url):
+    page.set_viewport_size({'width':390,'height':844})
+    prepare(page, url)
+    view = save_named(page, 'Mobile navigation saved view', 'tag:mobile-delete')
+    before = stored(page)
+    open_delete(page, view)
+    expect(page.locator('#workspaceNavToggle')).to_have_attribute('aria-expanded', 'true')
+    hit = page.locator('#cancelBtn').evaluate('''node => {
+        const rect = node.getBoundingClientRect();
+        const target = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
+        return target === node || node.contains(target);
+    }''')
+    assert hit, 'Mobile navigation covers the saved-view deletion confirmation'
+    page.locator('#cancelBtn').click()
+    expect(page.locator('#taskModal')).to_be_hidden()
+    expect(delete_button(page, view)).to_be_focused()
+    expect(delete_button(page, view)).to_be_in_viewport()
+    assert stored(page) == before, 'Cancelling from mobile navigation changed stored data'
+    open_delete(page, view)
+    page.locator('#submitBtn').click()
+    expect(page.locator('#taskModal')).to_be_hidden()
+    assert_only_selected_removed(page, before, view)
+    print('Mobile view deletion passed: real pointer targets escape navigation, Cancel restores focus and all data, confirmation removes only the selected view', flush=True)
+
+
 CASES = {'cancel':cancellation,'confirm':confirmed_delete,'debounce':deferred_search_focus,'duplicates':duplicate_names,
+         'mobile':mobile_overlay,
          'concurrent':concurrent_views,'abort':aborted_delete,'session':late_completion}
 
 
