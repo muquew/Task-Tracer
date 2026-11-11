@@ -15,6 +15,7 @@ import threading
 import zipfile
 
 from playwright.sync_api import expect, sync_playwright
+from saved_views_playwright import save_view
 from smoke_playwright import (
     ThreadingHTTPServer, add_task, browser_launch_options, clear_app_data, delete_task,
     edit_task, get_task_records, local_server, wait_for_app_ready,
@@ -162,11 +163,17 @@ def assert_nonbackup_exports(page):
     assert csv_info.value.suggested_filename.endswith('.csv')
     assert stored_state(page) == before, 'CSV export was recorded as a task backup'
     assert_health(page, due=True, message_key='changed')
+    view_name = 'Backup coverage export fixture'
+    save_view(page, view_name, '')
+    assert stored_state(page) == before, 'Saving a view changed tasks, task revision or task-backup coverage'
     open_menu(page)
     page.locator('#savedViewsTransferBtn').click()
+    expect(page.locator('#savedViewsExportBtn')).to_be_enabled()
     with page.expect_download() as views_info:
         page.locator('#savedViewsExportBtn').click()
-    assert json.loads(views_info.value.path().read_text())['type'] == 'saved-views'
+    exported_views = json.loads(views_info.value.path().read_text())
+    assert exported_views['type'] == 'saved-views'
+    assert any(view['name'] == view_name for view in exported_views['savedViews']), 'The saved-view fixture was not exported'
     if page.locator('#settingsWorkspace').count():
         expect(page.locator('#cancelBtn')).to_be_hidden()
         page.locator('#submitBtn').click()

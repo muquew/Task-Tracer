@@ -102,7 +102,11 @@ def preview_and_export(page, url, browser):
     downloads = []
     page.on('download', lambda download: downloads.append(download))
     open_recovery(page)
-    expect(page.locator('#recoveryPrivacy')).to_be_visible()
+    expect(page.locator('#recoveryPrivacy')).to_have_count(0)
+    expect(page.locator('#recoveryImpact')).to_be_visible()
+    expect(page.locator('#recoveryConfirm')).not_to_be_checked()
+    expect(page.locator('#submitBtn')).to_be_disabled()
+    assert stored(page) == before, 'Opening recovery preview changed stored data'
     preview_details = page.locator('#recoveryPreviewDetails')
     if preview_details.count() and not preview_details.evaluate('element => element.open'):
         preview_details.locator(':scope > summary').click()

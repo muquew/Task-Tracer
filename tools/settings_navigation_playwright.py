@@ -153,6 +153,9 @@ def exercise_workspace(browser, url, width, language):
             else:
                 expect(panel).to_be_hidden()
         expect(page.locator('#settingsWorkspace [data-settings-section][aria-selected="true"]')).to_have_count(1)
+        selected_section = page.locator('#settingsWorkspace [data-settings-section][aria-selected="true"]')
+        expect(page.locator('#settingsTitle')).to_have_text(selected_section.inner_text())
+        expect(page.locator('#settingsData')).to_have_attribute('aria-labelledby', selected_section.get_attribute('id'))
         expect(page.locator('#languageSelect')).to_have_count(1)
         expect(page.locator('#themeToggleBtn')).to_have_count(1)
         expect(page.locator('#settingsLanguageSelect, #settingsThemeSelect')).to_have_count(0)
@@ -192,6 +195,8 @@ def exercise_workspace(browser, url, width, language):
             expect(page.locator('#backupHealthText')).to_have_text(
                 target_health['ok'].replace('{age}', target_health['today']))
             expect(page.locator('#settingsWorkspace')).to_be_visible()
+            current_tab = page.locator('#settingsWorkspace [data-settings-section][aria-selected="true"]')
+            expect(page.locator('#settingsTitle')).to_have_text(current_tab.inner_text())
         assert_accessibility_baseline(page, f'{width}px {language} settings')
         if width <= 779:
             assert_mobile_targets(page)

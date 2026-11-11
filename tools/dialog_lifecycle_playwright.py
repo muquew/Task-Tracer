@@ -115,7 +115,7 @@ def repeated_storage_read_keeps_latest(page, url):
     expect(page.locator('#submitBtn')).to_be_disabled()
     page.evaluate('window.storageReadCompletions[1](false)')
     expect(page.locator('#storageUsage')).to_be_visible()
-    expect(page.locator('#storagePersistenceStatus')).to_contain_text('尽力')
+    expect(page.locator('#storagePersistenceStatus')).to_contain_text('尚未启用持久存储')
     expect(page.locator('#submitBtn')).to_be_enabled()
     page.locator('#cancelBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()

@@ -45,7 +45,8 @@ def assert_stats(page, before, percent, overdue, denominator, completion=None):
     card=inventory.locator('.stat-card').filter(has=page.locator('.stat-label').filter(has_text=resources['stats']['overdueRate']))
     expect(card.locator('.stat-value')).to_have_text(percent)
     if denominator:
-        expect(card.locator('.stat-detail')).to_contain_text(f'{overdue}/{denominator}')
+        detail_key='overdueDetailOne' if denominator==1 else 'overdueDetail'
+        expect(card.locator('.stat-detail')).to_have_text(resources['stats'][detail_key].format(overdue=overdue,total=denominator))
     else:
         expect(card.locator('.stat-detail')).to_have_text(resources['statsInsights']['noScheduled'])
         expect(card.locator('[role="meter"]')).to_have_count(0)

@@ -88,14 +88,17 @@ def settings_order_and_names(page):
     assert geometry["preferences"]["bottom"] <= geometry["gallery"]["top"], geometry
     assert 0 <= geometry["language"]["top"] < geometry["language"]["bottom"] <= geometry["viewport"], geometry
     open_settings(page, "cleanup")
-    assert page.locator("#settingsCleanupTitle").evaluate("""heading => Boolean(
-      heading.compareDocumentPosition(document.querySelector('#maintenanceStatus')) & Node.DOCUMENT_POSITION_FOLLOWING
-    )"""), "Maintenance status precedes its heading"
+    labels = json.loads((REPO / "resources/en.json").read_text())
+    expect(page.locator("#settingsTitle")).to_have_text(labels["settings"]["maintenanceTitle"])
+    expect(page.locator("#settingsCleanup")).to_have_attribute("aria-labelledby", "tab-settingsCleanup")
+    expect(page.locator("#maintenanceStatus")).to_be_visible()
+    for action in ("#archiveCompletedBtn", "#clearCompletedBtn"):
+        expect(page.locator(action)).to_have_attribute("aria-describedby", "maintenanceStatus")
     expect(page.locator("#archiveCompletedBtn")).to_be_disabled()
     expect(page.locator("#clearCompletedBtn")).to_be_disabled()
     open_settings(page, "data")
     label = json.loads((REPO / "resources/en.json").read_text())["settingsRefinement"]["storageTitle"]
-    expect(page.locator('[data-i18n="settingsRefinement.storageTitle"]')).to_have_text(label)
+    expect(page.locator("#storageHealthBtn")).to_have_accessible_name(labels["settingsRefinement"]["storageAction"])
     page.locator("#storageHealthBtn").click()
     expect(page.locator("#storagePersistenceStatus")).to_be_visible()
     expect(page.locator("#modalTitle")).to_have_text(label)
@@ -135,12 +138,12 @@ def import_modes(page, out):
     expect(replace).not_to_be_checked()
     expect(page.locator("#importOutcomeSummary")).to_have_text(merged)
     expect(page.locator("#importConflictDefaultAction")).to_be_enabled()
-    expect(page.locator("#importReplaceHint")).to_be_hidden()
+    expect(merge).to_have_accessible_name(t["messages"]["import"]["mergeMode"])
     replace.check()
     expect(merge).not_to_be_checked()
     expect(page.locator("#importOutcomeSummary")).to_have_text(replacement)
     expect(page.locator("#importConflictDefaultAction")).to_be_disabled()
-    expect(page.locator("#importReplaceHint")).to_be_visible()
+    expect(replace).to_have_accessible_name(t["settingsRefinement"]["importReplaceTitle"])
     expect(page.locator("#submitBtn")).to_have_text(t["messages"]["import"]["downloadSnapshot"])
     merge.check()
     expect(page.locator("#importOutcomeSummary")).to_have_text(merged)

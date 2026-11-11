@@ -1234,12 +1234,15 @@ def exercise_project_tags(page: Page, alpha_name: str, beta_name: str) -> None:
 
 
 def exercise_command_palette(page: Page, alpha_name: str, beta_name: str) -> None:
+    language = page.locator('html').get_attribute('lang') or 'zh-CN'
+    commands = json.loads((REPO_ROOT / 'resources' / f'{language}.json').read_text())['commandPalette']['commands']
     page.keyboard.press("Control+P")
     expect(page.locator("#commandPalette")).to_be_visible()
     page.locator("#commandPaletteInput").fill("calendar")
     page.keyboard.press("Enter")
     expect(page.locator("#commandPalette")).to_be_hidden()
     expect(page.locator('#viewTab-calendar')).to_have_attribute("aria-current", "page")
+    expect(page.locator('#viewTab-calendar')).to_be_focused()
 
     page.keyboard.press("Control+P")
     page.locator("#commandPaletteInput").fill("Smoke Work")
@@ -1249,14 +1252,14 @@ def exercise_command_palette(page: Page, alpha_name: str, beta_name: str) -> Non
     expect(task_locator(page, beta_name)).to_have_count(0)
 
     page.keyboard.press("Control+P")
-    page.locator("#commandPaletteInput").fill("新建任务")
+    page.locator("#commandPaletteInput").fill(commands["newTask"])
     page.keyboard.press("Enter")
     expect(page.locator("#taskModal")).to_be_visible()
     page.locator("#cancelBtn").click()
 
     page.keyboard.press("Control+P")
     page.locator("#commandPaletteInput").fill("backup")
-    expect(page.locator("#commandPaletteList .command-item").first).to_contain_text(re.compile("导出/备份|Export/Backup", re.I))
+    expect(page.locator("#commandPaletteList .command-item").first).to_contain_text(commands["exportBackup"])
     page.keyboard.press("Escape")
     expect(page.locator("#commandPalette")).to_be_hidden()
 
@@ -1563,7 +1566,7 @@ def select_project(page: Page, value: str) -> None:
 def select_sort(page: Page, value: str) -> None:
     return_to_task_workspace(page)
     previous_view = page.locator('body').get_attribute('data-task-view')
-    restore_view = previous_view in ('calendar', 'stats') and page.locator('#sortDropdown').is_hidden()
+    restore_view = previous_view in ('calendar', 'timeline', 'stats') and page.locator('#sortDropdown').is_hidden()
     if restore_view:
         select_view(page, 'list')
     reveal_filters(page)
@@ -2551,16 +2554,30 @@ def exercise_manual_reorder(page: Page, first_name: str, second_name: str, third
 
 
 def drag_task_before(page: Page, source_name: str, target_name: str) -> None:
-    task_locator(page, source_name).scroll_into_view_if_needed()
-    task_locator(page, target_name).scroll_into_view_if_needed()
-    handle_box = task_locator(page, source_name).locator(".drag-handle").bounding_box()
-    target_box = task_locator(page, target_name).bounding_box()
-    if not handle_box or not target_box:
-        raise AssertionError("Could not resolve task drag geometry")
-    page.mouse.move(handle_box["x"] + handle_box["width"] / 2, handle_box["y"] + handle_box["height"] / 2)
+    source = task_locator(page, source_name)
+    handle = source.locator(".drag-handle")
+    handle.hover(position={"x": 14, "y": 20})
+    box = handle.bounding_box()
+    if not box:
+        raise AssertionError("Could not resolve the visible task drag handle")
+    start = {"x": box["x"] + 14, "y": box["y"] + 20}
+    assert handle.evaluate("(node, point) => node.contains(document.elementFromPoint(point.x, point.y))", start), 'Pointer does not hit the task drag handle'
     page.mouse.down()
-    page.mouse.move(target_box["x"] + 20, target_box["y"] + 5, steps=12)
-    page.mouse.up()
+    try:
+        page.mouse.move(start["x"] + 8, start["y"], steps=3)
+        expect(source).to_have_class(re.compile(r"(^|\s)dragging(\s|$)"))
+        target = task_locator(page, target_name).locator(".task-header")
+        target.scroll_into_view_if_needed()
+        target_box = target.bounding_box()
+        if not target_box:
+            raise AssertionError("Could not resolve the visible task drop target")
+        x = target_box["x"] + target_box["width"] / 2
+        y = target_box["y"] + min(10, target_box["height"] / 2)
+        assert page.evaluate("point => point.x >= 0 && point.x < innerWidth && point.y >= 0 && point.y < innerHeight", {"x": x, "y": y}), 'Task drop target is outside the viewport'
+        page.mouse.move(x, y, steps=12)
+        page.mouse.move(x, y + 1, steps=2)
+    finally:
+        page.mouse.up()
 
 
 def exercise_filtered_manual_reorder_guard(page: Page, completed_name: str, first_active: str, second_active: str) -> None:
@@ -2851,6 +2868,7 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         temp_path = temp_file.name
 
     try:
+        before_import = get_task_records(page)
         open_settings(page)
         with page.expect_file_chooser() as chooser_info:
             page.locator("#importBtn").click()
@@ -2859,31 +2877,33 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         expect(page.locator("#modalTitle")).to_have_text(re.compile("导入预览|Import Preview", re.I))
         expect(page.locator("#mergeImportMode")).not_to_be_checked()
         expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("合并到当前任务|Merge into current tasks", re.I))
-        expect(page.locator(".restore-checklist")).to_be_visible()
-        expect(page.locator(".restore-check-item")).to_have_count(8)
+        expect(page.locator('[data-import-preview]')).to_have_attribute('data-checksum-status', 'invalid')
+        expect(page.locator('#importOutcomeSummary')).to_be_visible()
+        assert get_task_records(page) == before_import, 'Import preview changed tasks before approval'
         if page.locator('.import-reference').count():
             reference = page.locator('.import-reference')
             if not reference.evaluate('element => element.open'):
                 reference.locator(':scope > summary').click()
             expect(reference).to_have_js_property('open', True)
         expect(page.locator(".import-diff-preview")).to_be_visible()
-        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("恢复检查清单|Restore Checklist", re.I))
-        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("导入差异|Import Difference", re.I))
-        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("备份文件|backup file", re.I))
-        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("完整性校验失败|Integrity check failed", re.I))
-        expect(page.locator("#confirm-message-text")).to_contain_text("2.4")
+        expect(page.locator('[data-import-safety-gate]')).to_be_visible()
+        expect(page.locator('[data-import-safety-detail]')).to_contain_text(re.compile("文件校验失败|Integrity check failed", re.I))
+        metadata = page.locator('[data-import-preview]').evaluate('node => node.importPreviewData')
+        assert metadata['sourceInfo']['version'] == '2.4'
+        assert metadata['duplicateIds'] == [91002]
+        assert metadata['importCount'] == 3 and len(metadata['conflicts']) == 1
         rows = page.locator(".confirm-row").all_inner_texts()
         if not any(re.search(r"(文件内重复|Repeated inside file)[\s\S]*1", row, re.I) for row in rows):
             raise AssertionError(f"Import preview did not report file duplicates: {rows}")
-        if not any(re.search(r"(重复任务 ID|Repeated task IDs)[\s\S]*1", row, re.I) for row in rows):
-            raise AssertionError(f"Import preview did not report duplicate IDs: {rows}")
-        if not any(re.search(r"(匹配当前任务|Matches current tasks)[\s\S]*1", row, re.I) for row in rows):
-            raise AssertionError(f"Import preview did not report current task matches: {rows}")
-        expect(page.locator(".confirm-list")).to_have_count(3)
+        expect(page.locator(".confirm-list")).to_have_count(1)
+        expect(page.locator('.import-diff-item').nth(1)).to_contain_text(existing_name)
+        expect(page.locator('.import-diff-item').nth(1).locator('.import-diff-count')).to_have_text('1')
         expect(page.locator(".import-conflict-select")).to_have_count(0)
         page.locator("#mergeImportMode").check()
         expect(page.locator(".import-conflict-select")).to_have_count(1)
         expect(page.locator(".import-conflict-select")).to_have_value("keep")
+        expect(page.locator('[data-import-safety-gate]')).to_be_visible()
+        expect(page.locator('[data-import-safety-detail]')).to_contain_text(re.compile("文件校验失败|Integrity check failed", re.I))
         if page.locator("#mergeImportMode").get_attribute("type") == "radio":
             page.locator("#replaceImportMode").check()
         else:
@@ -2892,10 +2912,11 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         expect(page.locator("#confirm-message-text")).to_contain_text(existing_name)
         expect(page.locator("#submitBtn")).to_have_text(re.compile("确认完整性风险|Confirm Integrity Risk", re.I))
         page.locator("#submitBtn").click()
-        wait_for_notification(page, re.compile("完整性校验失败|Integrity check failed", re.I))
+        expect(page.locator("[data-import-safety-detail]")).to_contain_text(re.compile("文件风险已确认|File risk confirmed", re.I))
         expect(page.locator("#taskModal")).to_be_visible()
-        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("下一次确认会先下载|next confirmation downloads", re.I))
-        expect(page.locator("#submitBtn")).to_have_text(re.compile("下载导入前快照|Download Pre-import Snapshot", re.I))
+        expect(page.locator('[data-import-preview]')).to_have_attribute('data-checksum-risk-confirmed', 'true')
+        assert get_task_records(page) == before_import, 'Acknowledging checksum risk changed tasks'
+        expect(page.locator("#submitBtn")).to_have_text(re.compile("下载当前任务备份|Download current backup", re.I))
         with page.expect_download() as snapshot_info:
             page.locator("#submitBtn").click()
         snapshot_path = snapshot_info.value.path()
@@ -2903,8 +2924,8 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
             raise AssertionError("Invalid-checksum replace import did not download a pre-import snapshot")
         snapshot = json.loads(Path(snapshot_path).read_text(encoding="utf-8"))
         assert_backup_payload_integrity(snapshot, "pre-import-backup")
-        if not isinstance(snapshot.get("tasks"), list) or len(snapshot["tasks"]) == 0:
-            raise AssertionError(f"Invalid-checksum snapshot did not include current tasks: {snapshot}")
+        assert snapshot['tasks'] == before_import, 'Pre-import snapshot differs from current task data'
+        assert get_task_records(page) == before_import, 'Downloading snapshot prematurely imported tasks'
         if page.locator('#workspaceSidebarScroll').count():
             language = page.locator('html').get_attribute('lang') or 'zh-CN'
             translations = json.loads((REPO_ROOT / 'resources' / f'{language}.json').read_text())
@@ -2918,6 +2939,9 @@ def exercise_import_preview_details(page: Page, existing_name: str) -> None:
         select_filter(page, "all")
         expect(page.locator(".task-item")).to_have_count(3)
         expect(task_locator(page, existing_name)).to_have_count(1)
+        imported = get_task_records(page)
+        assert len({task['id'] for task in imported}) == 3, 'Duplicate input IDs were not remapped uniquely'
+        assert sum(task['name'] == 'Preview Duplicate' for task in imported) == 2, 'ID remapping dropped a duplicate-named task'
     finally:
         Path(temp_path).unlink(missing_ok=True)
 
@@ -2940,33 +2964,39 @@ def exercise_restore_compatibility_previews(page: Page) -> None:
             {"id": 92002, "name": "Old Backup Restore", "createdAt": "2025-05-10T00:00:00.000Z"}
         ],
     }
-    assert_import_preview_text(page, legacy_payload, [r"传统任务数组|legacy task array", r"传统任务数组没有完整性校验|Legacy task arrays do not include an integrity check"])
-    assert_import_preview_text(page, old_backup_payload, [r"2\.1", r"2\.4", r"兼容规则|compatibility rules", r"没有校验值|no checksum"])
+    assert_import_preview_text(page, legacy_payload, 'legacy-array')
+    assert_import_preview_text(page, old_backup_payload, '2.1')
 
 
-def assert_import_preview_text(page: Page, payload: Any, patterns: list[str]) -> None:
+def assert_import_preview_text(page: Page, payload: Any, source_version: str) -> None:
     with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
         json.dump(payload, temp_file)
         temp_path = temp_file.name
 
     try:
+        before = get_task_records(page)
         open_settings(page)
         with page.expect_file_chooser() as chooser_info:
             page.locator("#importBtn").click()
         chooser_info.value.set_files(temp_path)
         expect(page.locator("#taskModal")).to_be_visible()
-        expect(page.locator(".restore-checklist")).to_be_visible()
-        expect(page.locator(".restore-check-item")).to_have_count(8)
+        expect(page.locator('#importOutcomeSummary')).to_be_visible()
+        metadata = page.locator('[data-import-preview]').evaluate('node => node.importPreviewData')
+        assert metadata['sourceInfo']['compatibilitySteps'] == [{'from': source_version, 'to': '2.4'}]
+        assert metadata['importCount'] == len(payload if isinstance(payload, list) else payload['tasks'])
         if page.locator('.import-reference').count():
             reference = page.locator('.import-reference')
             if not reference.evaluate('element => element.open'):
                 reference.locator(':scope > summary').click()
             expect(reference).to_have_js_property('open', True)
         expect(page.locator(".import-diff-preview")).to_be_visible()
-        for pattern in patterns:
-            expect(page.locator("#confirm-message-text")).to_contain_text(re.compile(pattern, re.I))
+        expected_tasks = payload if isinstance(payload, list) else payload['tasks']
+        for task in expected_tasks:
+            expect(page.locator('.import-diff-preview')).to_contain_text(task['name'])
+        assert get_task_records(page) == before, 'Reading a compatible file prematurely imported it'
         page.locator("#cancelBtn").click()
         expect(page.locator("#taskModal")).to_be_hidden()
+        assert get_task_records(page) == before, 'Cancelling a compatible import changed task data'
     finally:
         Path(temp_path).unlink(missing_ok=True)
 
@@ -3076,16 +3106,33 @@ def exercise_import(page: Page, imported_name: str) -> None:
         temp_path = temp_file.name
 
     try:
+        before_import = get_task_records(page)
         open_settings(page)
         with page.expect_file_chooser() as chooser_info:
             page.locator("#importBtn").click()
         chooser_info.value.set_files(temp_path)
         expect(page.locator("#taskModal")).to_be_visible()
         expect(page.locator("#modalTitle")).to_have_text(re.compile("导入预览|Import Preview", re.I))
-        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("1"))
-        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("替换|replace", re.I))
-        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("文件内重复|Repeated inside file", re.I))
-        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("匹配当前任务|Matches current tasks", re.I))
+        expect(page.locator("#replaceImportMode")).to_be_checked()
+        metadata = page.locator('[data-import-preview]').evaluate('node => node.importPreviewData')
+        expected_matches = [imported_name] if any(
+            task['name'].strip().lower() == imported_name.strip().lower() for task in before_import) else []
+        assert metadata['currentCount'] == len(before_import) and metadata['importCount'] == 1
+        assert metadata['fileDuplicateNames'] == [] and metadata['duplicateIds'] == []
+        assert metadata['existingDuplicateNames'] == expected_matches
+        language = page.locator('html').get_attribute('lang') or 'zh-CN'
+        translations = json.loads((REPO_ROOT / 'resources' / f'{language}.json').read_text())
+        expect(page.locator('#importOutcomeSummary')).to_have_text(
+            translations['dataReview']['replaceSummary'].format(current=len(before_import), incoming=1, after=1))
+        reference = page.locator('.import-reference')
+        if not reference.evaluate('element => element.open'):
+            reference.locator(':scope > summary').click()
+        expect(page.locator('.import-diff-preview')).to_be_visible()
+        expect(page.locator('.import-diff-preview')).to_contain_text(imported_name)
+        counts = page.locator('.import-diff-count').all_inner_texts()
+        assert counts == [str(0 if expected_matches else 1), str(len(expected_matches)), str(len(before_import))], counts
+        expect(page.locator('.confirm-row')).to_have_count(0)
+        assert get_task_records(page) == before_import, 'Reviewing import counts and tasks changed current data'
         with page.expect_download() as snapshot_info:
             page.locator("#submitBtn").click()
         snapshot_path = snapshot_info.value.path()
@@ -3095,6 +3142,9 @@ def exercise_import(page: Page, imported_name: str) -> None:
         assert_backup_payload_integrity(snapshot, "pre-import-backup")
         if not isinstance(snapshot.get("tasks"), list) or len(snapshot["tasks"]) == 0:
             raise AssertionError(f"Pre-import snapshot did not include current tasks: {snapshot}")
+        assert snapshot['tasks'] == before_import, 'Pre-import snapshot differs from current task records'
+        assert get_task_records(page) == before_import, 'Snapshot download prematurely replaced current tasks'
+        expect(page.locator('[data-import-preview]')).to_have_attribute('data-pre-import-snapshot-confirmed', 'true')
         expect(page.locator("#taskModal")).to_be_visible()
         if page.locator('#workspaceSidebarScroll').count():
             language = page.locator('html').get_attribute('lang') or 'zh-CN'

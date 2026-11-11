@@ -76,10 +76,9 @@ def assert_unicode_json_roundtrip(page, url, launcher, options, errors):
                                     'mimeType': 'application/json', 'buffer': raw})
             expect(target.locator('#mergeImportMode')).to_be_visible()
             expect(target.locator('[data-import-preview]')).to_have_attribute('data-checksum-status', 'valid')
-            language = target.locator('html').get_attribute('lang')
-            translations = json.loads((Path(__file__).resolve().parents[1] / 'resources' / f'{language}.json').read_text())
-            expect(target.locator('.restore-checklist')).to_contain_text(
-                translations['messages']['import']['restoreIntegrityOk'])
+            expect(target.locator('#importOutcomeSummary')).to_be_visible()
+            assert get_task_records(target) == [], 'Import preview wrote tasks before confirmation'
+            assert target.locator('[data-import-preview]').evaluate('node => node.importPreviewData.importCount') == len(before)
             target.locator('#submitBtn').click()
             expect(target.locator('#taskModal')).to_be_hidden()
             assert get_task_records(target) == before, 'Unicode JSON transfer changed task fields'

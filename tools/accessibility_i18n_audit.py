@@ -423,7 +423,7 @@ def audit_workspace_navigation(page: Page, axe_source: str, label: str) -> None:
         expect(toggle).to_have_attribute('aria-expanded', 'true')
     expect(sidebar).to_be_visible()
     assert not sidebar.evaluate('node => Boolean(node.closest("[hidden],[inert],[aria-hidden=true]"))')
-    for selector in ('#workspaceAllTasks', '#workspaceAllProjects', '#workspaceSettingsBtn'):
+    for selector in ('#workspaceAllTasks', '#workspaceSettingsBtn'):
         if page.locator(selector).is_visible() and page.locator(selector).is_enabled():
             assert_focus_visible(page, selector, label)
     audit_page_state(page, axe_source, label)

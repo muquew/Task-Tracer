@@ -67,18 +67,30 @@ def exercise_diagnostics(page, downloads, expected_error=None):
     count_before = len(downloads)
     page.locator('#helpDiagnosticsBtn').click()
     expect(page.locator('#diagnosticPreview')).to_be_visible()
-    preview = json.loads(page.locator('#diagnosticPreview').inner_text())
-    assert_private_report(preview)
-    assert preview['storage']['error'] == expected_error
-    assert preview['storage']['available'] == (expected_error is None)
+    language = page.locator('html').get_attribute('lang')
+    translations = json.loads((ROOT / 'resources' / f'{language}.json').read_text())['help']
+    expect(page.locator('#diagnosticPreview dt')).to_have_text([
+        translations[key] for key in ('diagnosticVersion', 'diagnosticBrowser', 'diagnosticConnection', 'diagnosticStorage')])
+    values = page.locator('#diagnosticPreview dd').all_inner_texts()
+    assert len(values) == 4 and all(values), 'Diagnostic summary contains missing or empty data'
+    assert values[0] == app_version((ROOT / 'index.html').read_text())
     assert len(downloads) == count_before, 'Diagnostics downloaded before explicit confirmation'
+    assert snapshot(page) == before, 'Previewing diagnostics changed stored data'
     assert_focus_trap(page)
     with page.expect_download() as result:
         page.locator('#submitBtn').click()
     download = result.value
-    assert download.suggested_filename == f'task-tracer-diagnostics-{preview["appVersion"]}.json'
     actual = json.loads(download.path().read_text())
-    assert actual == preview, 'Downloaded report differs from the report reviewed by the user'
+    assert_private_report(actual)
+    assert actual['storage']['error'] == expected_error
+    assert actual['storage']['available'] == (expected_error is None)
+    assert download.suggested_filename == f'task-tracer-diagnostics-{actual["appVersion"]}.json'
+    assert values[0] == actual['appVersion'], 'Downloaded version differs from the reviewed summary'
+    assert values[2] == translations['diagnosticOnline' if actual['browser']['online'] else 'diagnosticOffline']
+    assert values[3] == translations['diagnosticAvailable' if actual['storage']['available'] else 'diagnosticUnavailable']
+    assert actual['browser']['userAgent'] == page.evaluate('navigator.userAgent')
+    browser = re.fullmatch(r'(.+) ([\d.]+)', values[1])
+    assert browser and browser[2] in actual['browser']['userAgent'], 'Browser summary differs from the downloaded report'
     assert len(downloads) == count_before + 1
     expect(page.locator('#taskModal')).to_be_hidden()
     assert snapshot(page) == before, 'Help/diagnostics changed tasks, settings or browser storage'
@@ -122,17 +134,17 @@ def run(engine='chromium'):
                 expect(page.locator('#helpMenuBtn')).to_be_visible()
                 page.locator('#helpMenuBtn').click()
                 expect(page.get_by_role('dialog', name=translations['menu'], exact=True)).to_be_visible()
-                for section in ('capture', 'find', 'dates', 'backup', 'offline', 'privacy'):
-                    topic = page.locator('.help-guide details.help-reference').filter(
-                        has=page.get_by_text(translations[f'{section}Title'], exact=True))
-                    summary = topic.locator('summary')
-                    expect(summary).to_be_visible()
-                    summary.click()
-                    expect(topic.locator('p')).to_have_text(translations[f'{section}Body'])
-                    expect(topic.locator('p')).to_be_visible()
-                    summary.click()
+                expect(page.locator('.help-guide details.help-reference')).to_have_count(0)
+                guide = page.get_by_role('link', name=translations['userGuide'], exact=True)
+                expect(guide).to_be_visible()
+                readme = 'README_zh_cn.md' if language == 'zh-CN' else 'README.md'
+                expect(guide).to_have_attribute('href', f'https://github.com/muquew/Task-Tracer/blob/main/{readme}')
+                expect(guide).to_have_attribute('target', '_blank')
+                expect(guide).to_have_attribute('rel', re.compile(r'noopener'))
+                expect(page.locator('.help-guide dl dt')).to_have_count(5)
+                for action in ('newTask', 'search', 'commands', 'settings', 'undo'):
+                    expect(page.locator('.help-guide dl')).to_contain_text(translations[action])
                 version = app_version((ROOT / 'index.html').read_text())
-                expect(page.locator('.help-guide')).to_contain_text('Task Tracer ' + version)
                 assert_focus_trap(page)
                 page.keyboard.press('Escape')
                 expect(page.locator('#taskModal')).to_be_hidden()
@@ -149,7 +161,7 @@ def run(engine='chromium'):
                 expect(page.locator('#commandPaletteInput')).to_be_focused()
                 page.keyboard.press('Escape')
                 expect(page.locator('#commandPalette')).to_be_hidden()
-                print(f'Help passed: {language}; headings/version, keyboard focus, commands and private explicit-download report', flush=True)
+                print(f'Help passed: {language}; guide/shortcuts, keyboard focus, commands and private explicit-download report', flush=True)
 
             before_cancel = snapshot(page)
             download_count = len(downloads)
