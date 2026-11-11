@@ -23,7 +23,7 @@ from security_playwright import ProductionHeaderHandler
 from smoke_playwright import (
     browser_launch_options, click_task_action, ensure_capture, enter_batch_mode,
     get_task_records, open_task_editor, select_project, ThreadingHTTPServer,
-    select_view, task_locator, wait_for_app_ready,
+    select_view, task_locator, wait_for_app_ready, return_to_task_workspace,
 )
 
 
@@ -429,6 +429,7 @@ def main():
                 try:
                     page.goto(url)
                     wait_for_app_ready(page)
+                    return_to_task_workspace(page)
                     assert get_task_records(page) == [], 'Regression context did not start with an empty task database'
                     detail = CASES[name](page, args.output_dir)
                     assert not errors, errors

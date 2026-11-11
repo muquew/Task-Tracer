@@ -106,11 +106,15 @@ def exercise_timeline(page, size, metrics):
     if size > 100:
         page.locator('#loadMoreTasksBtn').click()
         expect(page.locator('.timeline-view .task-item')).to_have_count(min(200, size), timeout=20000)
+    timeline_before_review = page.locator('.timeline-view .task-item').evaluate_all('items => items.map(item => item.dataset.taskId)')
+    assert len(timeline_before_review) == min(200, size)
     select_view(page, 'stats')
     select_view(page, 'timeline')
-    expect(page.locator('.timeline-view .task-item')).to_have_count(min(100, size), timeout=20000)
-    if size > 100:
+    expect(page.locator('.timeline-view .task-item')).to_have_count(len(timeline_before_review), timeout=20000)
+    assert page.locator('.timeline-view .task-item').evaluate_all('items => items.map(item => item.dataset.taskId)') == timeline_before_review, 'Returning from Review did not restore the exact Timeline page'
+    if size > len(timeline_before_review):
         page.locator('#loadMoreTasksBtn').click()
+        expect(page.locator('.timeline-view .task-item')).to_have_count(min(len(timeline_before_review) + 100, size), timeout=20000)
     select_view(page, 'list')
     expect(page.locator('.task-item')).to_have_count(min(100, size), timeout=20000)
     if size > 100:

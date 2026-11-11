@@ -69,7 +69,10 @@ def snapshot_geometry(page):
             documentWidth:document.documentElement.scrollWidth,
             sidebar:box('#workspaceSidebar'), pane:box('#workspaceSidebarScroll'),
             settings:box('#workspaceSettingsBtn'), footer:box('.workspace-sidebar-footer'),
-            brand:box('.workspace-brand'), viewHost:box('#workspaceViewNavHost')};
+            brand:box('.workspace-brand'), viewHost:box('#workspaceViewNavHost'),
+            primary:document.querySelector('#workspaceTodayBtn') ? Object.fromEntries(
+                ['#workspaceTodayBtn','#workspaceAllTasks','#workspaceProjectsBtn','#viewTab-stats']
+                    .map(selector => [selector,box(selector)])) : null};
     }""")
 
 
@@ -78,6 +81,10 @@ def assert_fixed(before, after, *, mobile):
         for edge in ('top', 'bottom', 'left', 'right'):
             assert abs(before[name][edge] - after[name][edge]) <= 1, \
                 f'{name} moved while the sidebar content scrolled: {before[name]} -> {after[name]}'
+    for selector, bounds in (before.get('primary') or {}).items():
+        for edge in ('top', 'bottom', 'left', 'right'):
+            assert abs(bounds[edge] - after['primary'][selector][edge]) <= 1, \
+                f'{selector} moved while the sidebar content scrolled: {bounds} -> {after["primary"][selector]}'
     assert after['windowY'] == before['windowY'], 'Sidebar scrolling also moved the main page'
     assert after['windowX'] == before['windowX'], 'Sidebar scrolling moved the page horizontally'
     assert after['sidebar']['scrollTop'] == 0, 'The entire sidebar scrolled instead of its middle pane'
@@ -174,13 +181,16 @@ def check_scroll_and_reachability(page, entry):
     expect(pane).to_have_count(1)
     assert page.locator('#workspaceSettingsBtn').evaluate("node => Boolean(node.closest('.workspace-sidebar-footer'))")
     assert not page.locator('#workspaceSettingsBtn').evaluate("node => Boolean(node.closest('#workspaceSidebarScroll'))")
-    assert pane.locator('#workspaceAllTasks').count() == 1
     if is_workbench_v5(page):
-        for selector in ('#workspaceTodayBtn', '#workspaceProjectsBtn', '#viewTab-stats'):
-            assert pane.locator(selector).count() == 1, f'Primary workbench destination missing from the scroll pane: {selector}'
+        primary = page.locator('#workspaceSidebar > .workspace-scope-navigation')
+        expect(primary).to_have_count(1)
+        for selector in ('#workspaceTodayBtn', '#workspaceAllTasks', '#workspaceProjectsBtn', '#viewTab-stats'):
+            assert primary.locator(selector).count() == 1, f'Primary workbench destination missing from fixed navigation: {selector}'
+            assert pane.locator(selector).count() == 0, f'Primary workbench destination scrolls with project content: {selector}'
         assert pane.locator('#focusModeToggleBtn').count() == 0
         assert page.locator('#toolsDrawerContent #focusModeToggleBtn').count() == 1
     else:
+        assert pane.locator('#workspaceAllTasks').count() == 1
         assert pane.locator('#focusModeToggleBtn').count() == 1
     assert pane.locator('#workspaceProjects').count() == 1 and pane.locator('#savedViewsList').count() == 1
     expect(pane.locator('#workspaceProjects [data-workspace-project]')).to_have_count(40)
@@ -365,7 +375,11 @@ def check_notice_does_not_cover_settings(page, output):
     return_to_task_workspace(page)
     open_navigation(page)
     all_tasks = page.locator('#workspaceAllTasks')
-    assert_reachable(page, all_tasks)
+    if is_workbench_v5(page):
+        expect(all_tasks).to_be_in_viewport(ratio=1)
+        all_tasks.click(trial=True)
+    else:
+        assert_reachable(page, all_tasks)
     all_tasks.click()
     page.locator('#searchInput').fill('')
     expect(page.locator('.task-item .task-name')).to_have_count(40)
