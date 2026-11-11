@@ -155,6 +155,47 @@ def date_errors(source: str) -> list[str]:
     return errors
 
 
+def check_script_guards() -> None:
+    with tempfile.TemporaryDirectory(prefix='task-tracer-script-guards-') as folder:
+        root = Path(folder)
+        script = root / 'resources/workbench.js'
+        script.parent.mkdir()
+        script.write_text('window.syntheticWorkbench = true;\n', encoding='utf-8')
+        reference = './resources/workbench.js?v=5.0.0'
+        tag = f'<script src="{reference}"></script>'
+        with patch.object(validation, 'REPO_ROOT', root):
+            assert validation.script_assets(tag) == {reference: script}
+            broken = [
+                '<script src=""></script>',
+                '<script src="./resources/workbench.js" src="./resources/workbench.js"></script>',
+                tag.replace('<script ', '<script type="module" type="text/javascript" ', 1),
+                tag + tag,
+                *[tag.replace('<script ', f'<script {attribute} ', 1) for attribute in ('async', 'defer', 'nomodule', 'type="module"')],
+                *[f'<script src="{source}"></script>' for source in (
+                    'https://outside.invalid/workbench.js', '//outside.invalid/workbench.js',
+                    '../outside.js', './%2e%2e/outside.js', './resources/../outside.js',
+                    './resources\\outside.js', '/absolute.js', './resources/missing.js',
+                    './resources/workbench.js#fragment', 'data:text/javascript,alert(1)',
+                )],
+            ]
+            for html in broken:
+                try:
+                    validation.script_assets(html)
+                except AssertionError:
+                    pass
+                else:
+                    raise AssertionError(f'Unsafe, repeated or unordered linked script was accepted: {html!r}')
+            script.unlink()
+            script.symlink_to(ROOT / 'index.html')
+            try:
+                validation.script_assets(tag)
+            except AssertionError:
+                pass
+            else:
+                raise AssertionError('A linked script source symbolic link was accepted')
+    print('Static syntax passed: ordered classic workbench and linked-script source safety guards')
+
+
 def check_due_date_guard() -> None:
     source = (ROOT / 'index.html').read_text(encoding='utf-8')
     runtime = main_script(source).group('content')
@@ -188,6 +229,7 @@ def check_due_date_guard() -> None:
 def run() -> None:
     check_comments()
     check_stylesheet_guards()
+    check_script_guards()
     check_due_date_guard()
 
 

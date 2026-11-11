@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Refresh time-sensitive views after real timer/visibility events without task writes."""
 from __future__ import annotations
+from smoke_playwright import return_to_task_workspace
 
 from smoke_playwright import enter_batch_mode
 
@@ -226,6 +227,7 @@ def verify_stability_and_paging(page, url):
     page.reload()
     wait_for_app_ready(page)
     expect(page.locator('.task-item')).to_have_count(100)
+    return_to_task_workspace(page)
     page.locator('#loadMoreTasksBtn').click()
     expect(page.locator('.task-item')).to_have_count(200)
     active = page.evaluate("({taskId:document.activeElement.closest('.task-item')?.dataset.taskId,action:document.activeElement.dataset.action})")

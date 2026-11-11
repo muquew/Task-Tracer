@@ -29,6 +29,7 @@ def run() -> None:
             assets = deployment.deployment_assets()
             query = next(path for path in assets if path.startswith('resources/') and '.json?' in path)
             stylesheet = next(path for path in assets if path.startswith('resources/workspace.css?'))
+            workbench = next(path for path in assets if path.startswith('resources/workbench.js?'))
             icon = next(path for path in assets if path.startswith('fav/'))
             configured = json.loads((root / 'vercel.json').read_text())
             headers = [header for route in configured['headers'] if route['source'] == '/(.*)' for header in route['headers']]
@@ -69,6 +70,7 @@ def run() -> None:
                 assert set(assets).issubset(result['checked']), 'A declared precache URL was not verified'
                 assert f'/{query}' in requested, 'The versioned language URL was not actually requested'
                 assert f'/{stylesheet}' in requested, 'The linked versioned stylesheet was not actually requested'
+                assert f'/{workbench}' in requested, 'The linked versioned workbench was not actually requested'
                 assert f'/{icon}' in requested, 'The required icon URL was not actually requested'
                 assert 'resources/en.json' in result['checked'] and 'resources/zh-CN.json' in result['checked']
                 print('Deployment verification passed: healthy exact-query precache assets, HTML and configured headers')
@@ -78,6 +80,8 @@ def run() -> None:
                     ('versioned language stale HTTP 200', query, 200),
                     ('versioned stylesheet HTTP 503', stylesheet, 503),
                     ('versioned stylesheet stale HTTP 200', stylesheet, 200),
+                    ('versioned workbench HTTP 503', workbench, 503),
+                    ('versioned workbench stale HTTP 200', workbench, 200),
                     ('required icon HTTP 503', icon, 503),
                     ('required icon stale HTTP 200', icon, 200),
                 ):

@@ -96,6 +96,30 @@ def run() -> None:
         build(root, base / 'normal', actual_version)
         print(f'Release versions passed: current {actual_version} metadata builds exactly {len(expected_distribution_files())} files')
 
+        workbench_reference = f'./resources/workbench.js?v={actual_version}'
+        workbench_tag = re.search(r'<script\b[^>]*\bsrc=[\'"]' + re.escape(workbench_reference) + r'[\'"][^>]*>\s*</script>',
+                                  original['index.html'].decode())
+        assert workbench_tag, 'Expected one current workbench loader in the source fixture'
+        asset_cases = {
+            'stale workbench URL': lambda source: source.replace(workbench_reference, './resources/workbench.js?v=0.0.0', 1),
+            'missing workbench loader': lambda source: source.replace(workbench_tag.group(), '', 1),
+            'deferred workbench loader': lambda source: source.replace(workbench_tag.group(), workbench_tag.group().replace('<script ', '<script defer ', 1), 1),
+            'late workbench loader': lambda source: source.replace(workbench_tag.group(), '', 1).replace('</body>', workbench_tag.group() + '\n</body>', 1),
+        }
+        for index, (label, change) in enumerate(asset_cases.items()):
+            restore()
+            source = original['index.html'].decode()
+            changed = change(source)
+            assert changed != source, label
+            (root / 'index.html').write_text(changed)
+            output = base / f'rejected-workbench-{index}'
+            for arguments in (('tools/validate_static.py',), ('tools/build_release.py', '--output-dir', str(output))):
+                result = command(root, *arguments)
+                assert result.returncode != 0 and 'workbench' in (result.stdout + result.stderr).lower(), (label, result.stdout, result.stderr)
+            assert not output.exists(), label
+            print(f'Release asset rejection passed: {label}')
+        restore()
+
         drift = '9.9.9' if actual_version != '9.9.9' else '8.8.8'
         stale = '4.7.0' if json.loads(original['package.json'])['version'] != '4.7.0' else '4.6.0'
         cases = {
@@ -126,15 +150,18 @@ def run() -> None:
         assert updated != runtime.group('content')
         source = source[:runtime.start('content')] + updated + source[runtime.end('content'):]
         source = re.sub(r'("softwareVersion":\s*")[^"]+(")', lambda match: match[1] + '12.34' + match[2], source, count=1)
-        old_stylesheet = f'./resources/workspace.css?v={actual_version}'
-        assert source.count(old_stylesheet) == 1
-        source = source.replace(old_stylesheet, './resources/workspace.css?v=12.34', 1)
+        for asset in ('workspace.css', 'workbench.js'):
+            previous = f'./resources/{asset}?v={actual_version}'
+            assert source.count(previous) == 1
+            source = source.replace(previous, f'./resources/{asset}?v=12.34', 1)
         (root / 'index.html').write_text(source)
         worker = (root / 'sw.js').read_text()
         worker = re.sub(r"(const CACHE_NAME = ['\"])[^'\"]+(['\"])",
                         lambda match: match[1] + 'task-tracer-v12.34' + match[2], worker, count=1)
-        assert worker.count(old_stylesheet) == 1
-        worker = worker.replace(old_stylesheet, './resources/workspace.css?v=12.34', 1)
+        for asset in ('workspace.css', 'workbench.js'):
+            previous = f'./resources/{asset}?v={actual_version}'
+            assert worker.count(previous) == 1
+            worker = worker.replace(previous, f'./resources/{asset}?v=12.34', 1)
         (root / 'sw.js').write_text(worker)
         write_package(lambda package, lock: (package.update(version='12.34.0'), lock.update(version='12.34.0'),
                                              lock['packages'][''].update(version='12.34.0')))

@@ -2,7 +2,7 @@
 """Preserve raw quick-add text and capture metadata through storage failures."""
 from __future__ import annotations
 
-from smoke_playwright import open_task_editor, ensure_capture
+from smoke_playwright import open_task_editor, ensure_capture, reveal_task_field
 
 import argparse
 from pathlib import Path
@@ -130,7 +130,7 @@ def coexist_with_form(page, url):
     page.locator('#taskName').fill('Coexisting full form 保留')
     page.locator('#taskDesc').fill('  Keep this separate raw form text  ')
     page.locator('#noDeadline').check()
-    page.locator('#subtaskInput').fill('Unsubmitted partial subtask')
+    reveal_task_field(page, '#subtaskInput').fill('Unsubmitted partial subtask')
     inject_quota_failure(page)
     page.locator('#submitBtn').click()
     expect(page.locator('#storageUnavailableBanner')).to_be_visible()

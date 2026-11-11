@@ -10,6 +10,7 @@ from pathlib import Path
 
 from playwright.sync_api import Error, Page, expect, sync_playwright
 
+from calendar_timezone_playwright import open_day_task_form
 from smoke_playwright import click_task_action
 from smoke_playwright import (
     add_task,
@@ -18,6 +19,7 @@ from smoke_playwright import (
     edit_task,
     get_task_records,
     local_server,
+    select_view,
     task_locator,
     wait_for_app_ready,
 )
@@ -67,7 +69,7 @@ def check_close_paths(page: Page) -> None:
         reveal_task_field(page, '#repeatType').select_option('weekly-days')
         reveal_task_field(page, '#repeatWeekday2').check()
         reveal_task_field(page, '#repeatPaused').check()
-        page.locator('#subtaskInput').fill('First draft subtask')
+        reveal_task_field(page, '#subtaskInput').fill('First draft subtask')
         page.locator('#addSubtaskBtn').click()
         page.locator('#subtaskInput').fill('Unsubmitted subtask text')
         page.locator('#taskDesc').focus()
@@ -125,6 +127,24 @@ def check_close_paths(page: Page) -> None:
     print('New forms: all four close paths, full draft retention, prompt focus, explicit discard, and reverted changes passed')
 
 
+def open_clean_dated_form(page: Page) -> None:
+    """Choose a calendar date before editing, preserving a clean dated baseline."""
+    before = get_task_records(page)
+    if page.locator('#captureShelf').count() and page.locator('#captureShelf').is_visible():
+        page.locator('#captureCloseBtn').click()
+    select_view(page, 'calendar')
+    day = page.locator('.calendar-day:not(.outside-month) .calendar-date-number').first
+    expect(day).to_be_visible()
+    day_key = day.get_attribute('data-calendar-add-date') or day.get_attribute('data-calendar-detail-date')
+    open_day_task_form(page, day)
+    expect(page.locator('#noDeadline')).not_to_be_checked()
+    expect(page.locator('#dueDate')).to_be_enabled()
+    expect(page.locator('#dueDate')).to_have_value(day_key)
+    expect(page.locator('#dueTime')).to_be_enabled()
+    assert not unload_is_guarded(page), 'Calendar creation context must be a clean initial form'
+    assert get_task_records(page) == before, 'Opening a dated form changed persisted task data'
+
+
 def check_single_field_changes(page: Page) -> None:
     changes = (
         ('#taskDesc', 'Only description'),
@@ -135,21 +155,24 @@ def check_single_field_changes(page: Page) -> None:
         ('#subtaskInput', 'Only unsubmitted subtask'),
     )
     for selector, value in changes:
-        open_task_editor(page, independent=True)
+        open_clean_dated_form(page)
         reveal_task_field(page, selector).fill(value)
         assert unload_is_guarded(page), selector
         discard(page)
     for selector, value in (('#reminderOffset', '60'), ('#repeatType', 'custom')):
-        open_task_editor(page, independent=True)
+        open_clean_dated_form(page)
         reveal_task_field(page, selector).select_option(value)
         if selector == '#repeatType':
             reveal_task_field(page, '#repeatInterval').fill('7')
         assert unload_is_guarded(page), selector
         discard(page)
-    open_task_editor(page, independent=True)
+    open_clean_dated_form(page)
     page.locator('#noDeadline').check()
     assert unload_is_guarded(page)
     discard(page)
+    if page.locator('#captureShelf').count() and page.locator('#captureShelf').is_visible():
+        page.locator('#captureCloseBtn').click()
+    select_view(page, 'list')
     print('Description, project, tags, deadline, reminder, repeat, and unsubmitted subtask changes independently trigger protection')
 
 
@@ -160,7 +183,7 @@ def check_capture_handoff(page: Page) -> None:
     ensure_capture(page).fill('')
     open_task_editor(page)
     expect(page.locator('#taskName')).to_have_value('')
-    expect(page.locator('#taskProject')).to_have_value('Inbox')
+    expect(page.locator('#taskProject')).to_have_value('')
     expect(page.locator('#noDeadline')).to_be_checked()
     expect(page.locator('#dueDate')).to_be_disabled()
     page.locator('#cancelBtn').click()
@@ -478,7 +501,7 @@ def check_quota_recovery(page: Page, url: str) -> None:
     page.locator('#dueTime').fill('16:35')
     reveal_task_field(page, '#repeatType').select_option('custom')
     reveal_task_field(page, '#repeatInterval').fill('9')
-    page.locator('#subtaskInput').fill('Retain this subtask')
+    reveal_task_field(page, '#subtaskInput').fill('Retain this subtask')
     page.locator('#addSubtaskBtn').click()
     page.locator('#subtaskInput').fill('Also retain unsubmitted subtask text')
     inject_quota_failure(page)

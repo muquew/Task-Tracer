@@ -227,6 +227,7 @@ def open_unsaved_draft(page: Page) -> None:
     page.locator('#taskProject').fill('Unsaved project')
     reveal_task_field(page, '#taskTags').fill('draft, appearance')
     page.locator('#noDeadline').check()
+    reveal_task_field(page, '#subtaskInput')
     for text in ('Draft child to edit', 'Second unsaved child'):
         page.locator('#subtaskInput').fill(text)
         page.locator('#addSubtaskBtn').click()

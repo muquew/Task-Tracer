@@ -20,11 +20,18 @@ from smoke_playwright import (
     ThreadingHTTPServer, add_task, assert_accessibility_baseline,
     browser_launch_options, clear_app_data, get_task_records, open_settings,
     return_to_task_workspace, select_filter, select_language, select_project,
-    select_view, task_locator,
+    select_view, task_locator, is_workbench_v5, navigate_workbench, reveal_workspace_control,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
 VIEWS = ('list', 'calendar', 'timeline', 'stats')
+TASK_VIEWS = ('list', 'calendar', 'timeline')
+
+
+def primary_entries(page):
+    mobile = page.viewport_size['width'] <= 779
+    return ('#mobileTodayBtn', '#mobileTasksBtn', '#mobileProjectsBtn', '#mobileReviewBtn') if mobile else (
+        '#workspaceTodayBtn', '#workspaceAllTasks', '#workspaceProjectsBtn', '#viewTab-stats')
 
 
 @contextlib.contextmanager
@@ -43,6 +50,50 @@ def production_server():
 
 
 def assert_view_destinations(page, current):
+    if is_workbench_v5(page):
+        expected_screen = 'settings' if current is None else 'review' if current == 'stats' else 'tasks'
+        expect(page.locator('body')).to_have_attribute('data-workspace-screen', expected_screen)
+        selected = {'tasks': 1, 'review': 3}.get(expected_screen)
+        for index, selector in enumerate(primary_entries(page)):
+            button = page.locator(selector)
+            expect(button).to_be_visible()
+            expect(button).to_be_enabled()
+            expect(button).to_have_role('button')
+            assert button.evaluate('node => node.tabIndex') == 0
+            expect(button.locator('span')).to_be_visible()
+            assert button.locator('span').inner_text().strip()
+            if index == selected:
+                expect(button).to_have_attribute('aria-current', 'page')
+            else:
+                assert button.get_attribute('aria-current') is None, f'{selector} falsely announces the current page'
+        task_modes_visible = expected_screen == 'tasks'
+        if task_modes_visible:
+            expect(page.locator('#viewSwitcher')).to_be_visible()
+        else:
+            expect(page.locator('#viewSwitcher')).to_be_hidden()
+        expect(page.locator('#viewSwitcher .view-tab')).to_have_count(3)
+        expect(page.locator('#viewSwitcher [role="tab"]')).to_have_count(0)
+        for view in TASK_VIEWS:
+            button = page.locator(f'#viewTab-{view}')
+            expect(button).to_have_role('button')
+            expect(button).to_be_enabled()
+            assert button.evaluate('node => node.tabIndex') == 0
+            if task_modes_visible:
+                expect(button).to_be_visible()
+                expect(button.locator('span')).to_be_visible()
+            else:
+                expect(button).to_be_hidden()
+            if current == view:
+                expect(button).to_have_attribute('aria-current', 'page')
+            else:
+                assert button.get_attribute('aria-current') is None
+        if current:
+            expect(page.locator('#taskList')).to_have_role('region')
+            expect(page.locator('#taskList')).to_have_attribute('aria-labelledby', 'workspaceTitle' if current == 'stats' else f'viewTab-{current}')
+        else:
+            expect(page.locator('#settingsBackBtn')).to_be_visible()
+            expect(page.locator('#settingsBackBtn')).to_be_enabled()
+        return
     task_modes_visible = current is not None or page.viewport_size['width'] <= 779
     if task_modes_visible:
         expect(page.locator('#viewSwitcher')).to_be_visible()
@@ -75,16 +126,18 @@ def assert_view_destinations(page, current):
 
 def assert_mobile_targets(page):
     """Verify four usable equal dock columns and hit-test their actual pointer targets."""
-    dock = page.locator('#viewSwitcher').bounding_box()
+    modern = is_workbench_v5(page)
+    selectors = primary_entries(page) if modern else tuple(f'#viewTab-{view}' for view in VIEWS)
+    dock = page.locator('#workspaceMobileDock' if modern else '#viewSwitcher').bounding_box()
     viewport = page.viewport_size
     assert dock and viewport and dock['width'] >= viewport['width'] - 32, ('Dock does not fill its viewport', dock)
-    boxes = [page.locator(f'#viewTab-{view}').bounding_box() for view in VIEWS]
+    boxes = [page.locator(selector).bounding_box() for selector in selectors]
     assert all(box and box['width'] >= 44 and box['height'] >= 44 for box in boxes), ('Undersized dock targets', boxes)
     assert max(box['width'] for box in boxes) - min(box['width'] for box in boxes) <= 2, ('Unequal dock columns', boxes)
     assert boxes[0]['x'] < boxes[1]['x'] < boxes[2]['x'] < boxes[3]['x'], ('Wrong dock order', boxes)
     assert boxes[-1]['x'] + boxes[-1]['width'] - boxes[0]['x'] >= dock['width'] - 32, ('Dock columns leave unused width', boxes)
-    for view in VIEWS:
-        button = page.locator(f'#viewTab-{view}')
+    for selector in selectors:
+        button = page.locator(selector)
         geometry = button.evaluate('''node => {
             const rect = node.getBoundingClientRect();
             const target = document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2);
@@ -92,9 +145,13 @@ def assert_mobile_targets(page):
                 viewportWidth:innerWidth, viewportHeight:innerHeight,
                 hit:target?.closest('button')?.id === node.id};
         }''')
-        assert geometry['hit'], f'Dock target is covered: {view}: {geometry}'
+        assert geometry['hit'], f'Dock target is covered: {selector}: {geometry}'
         assert 0 <= geometry['left'] and geometry['right'] <= geometry['viewportWidth'] + 1, geometry
         assert geometry['top'] >= 0 and geometry['bottom'] <= geometry['viewportHeight'] + 1, geometry
+    page.locator(selectors[0]).focus()
+    for selector in selectors[1:]:
+        page.keyboard.press('Tab')
+        expect(page.locator(selector)).to_be_focused()
 
 
 def assert_dialog_return(page, action, content):
@@ -140,13 +197,14 @@ def exercise_workspace(browser, url, width, language):
         assert_view_destinations(page, 'list')
         translations = json.loads((ROOT / 'resources' / f'{language}.json').read_text())
         scope = page.locator('#workspaceAllTasks [data-i18n]')
-        expect(scope).to_have_text(translations['settings']['allTasksScope'])
+        expect(scope).to_have_text(translations['v5.nav.tasks'] if is_workbench_v5(page) else translations['settings']['allTasksScope'])
         assert len(scope.inner_text()) <= 40, 'Primary scope label is a paragraph rather than a short destination'
         assert translations['settings']['scopeAll'] not in page.locator('#workspaceAllTasks').inner_text(), \
             'Cleanup scope explanation leaked into primary task navigation'
         if width > 779:
             host = page.locator('#workspaceViewNavHost').bounding_box()
-            boxes = [page.locator(f'#viewTab-{view}').bounding_box() for view in VIEWS]
+            task_views = TASK_VIEWS if is_workbench_v5(page) else VIEWS
+            boxes = [page.locator(f'#viewTab-{view}').bounding_box() for view in task_views]
             assert host and all(box and box['width'] >= 44 and box['height'] >= 40 for box in boxes), ('Undersized view controls', boxes)
             assert all(host['x'] <= box['x'] and box['x'] + box['width'] <= host['x'] + host['width'] + 1 for box in boxes), ('View controls escape the workspace viewbar', host, boxes)
             assert all(abs(box['y'] - boxes[0]['y']) <= 1 for box in boxes), ('Desktop view controls are not in one row', boxes)
@@ -215,7 +273,7 @@ def exercise_workspace(browser, url, width, language):
             open_settings(page, 'help')
             page.locator('#helpMenuBtn').click(trial=True)
             action_box = page.locator('#helpMenuBtn').bounding_box()
-            dock_box = page.locator('#viewSwitcher').bounding_box()
+            dock_box = page.locator('#workspaceMobileDock' if is_workbench_v5(page) else '#viewSwitcher').bounding_box()
             assert action_box and dock_box and action_box['y'] + action_box['height'] <= dock_box['y'] + 1, \
                 'The final settings action is obscured by the mobile dock'
         return_to_task_workspace(page)
@@ -238,12 +296,16 @@ def exercise_workspace(browser, url, width, language):
             toggle.click()
         expect(page.locator('#toolsDrawerContent')).to_be_hidden()
         for view in VIEWS:
-            assert_view_destinations(page, page.locator('#viewSwitcher [aria-current="page"]').get_attribute('data-view'))
+            current_view = 'stats' if is_workbench_v5(page) and page.locator('body').get_attribute('data-workspace-screen') == 'review' else page.locator('#viewSwitcher [aria-current="page"]').get_attribute('data-view')
+            assert_view_destinations(page, current_view)
             select_view(page, view)
             open_settings(page)
             if width <= 779:
                 # The mobile dock remains a global route out of settings.
-                page.locator(f'#viewTab-{view}').click()
+                if is_workbench_v5(page):
+                    navigate_workbench(page, 'review' if view == 'stats' else 'tasks')
+                else:
+                    page.locator(f'#viewTab-{view}').click()
             else:
                 # Desktop view modes belong to the task workspace; Back restores it.
                 page.locator('#settingsBackBtn').click()
@@ -309,7 +371,8 @@ def exercise_unavailable_storage(browser, url):
         page.goto(url, wait_until='domcontentloaded')
         expect(page.locator('#storageUnavailableBanner')).to_be_visible()
         expect(page.locator('#openModalBtn')).to_be_disabled()
-        expect(page.locator('#openMenuBtn')).to_be_enabled()
+        settings_entry = reveal_workspace_control(page, '#workspaceSettingsBtn') if is_workbench_v5(page) else page.locator('#openMenuBtn')
+        expect(settings_entry).to_be_enabled()
         open_settings(page, 'help')
         for action in ('backupBtn', 'importBtn', 'recoveryBtn', 'notificationToggleBtn',
                        'archiveCompletedBtn', 'clearCompletedBtn'):

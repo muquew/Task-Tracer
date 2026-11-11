@@ -6,7 +6,7 @@ import argparse
 from playwright.sync_api import expect, sync_playwright
 from smoke_playwright import (
     add_task, browser_launch_options, get_task_records, local_server,
-    wait_for_app_ready,
+    wait_for_app_ready, return_to_task_workspace,
 )
 
 
@@ -15,6 +15,7 @@ def fresh_page(browser, url):
     page = context.new_page()
     page.goto(url)
     wait_for_app_ready(page)
+    return_to_task_workspace(page)
     return context, page
 
 
@@ -31,6 +32,7 @@ def run(engine='chromium'):
         page.reload()
         wait_for_app_ready(page)
         assert get_task_records(page) == [], 'Reload populated an intentionally empty workspace'
+        return_to_task_workspace(page)
         page.locator('#addExampleTasksBtn').evaluate('(button) => { button.click(); button.click(); }')
         expect(page.locator('.task-item')).to_have_count(3)
         records = get_task_records(page)
@@ -51,6 +53,7 @@ def run(engine='chromium'):
         page.reload()
         wait_for_app_ready(page)
         assert get_task_records(page) == [], 'Undo was followed by automatic reseeding'
+        return_to_task_workspace(page)
         page.locator('#addExampleTasksBtn').click()
         expect(page.locator('.task-item')).to_have_count(3)
         context.close()
@@ -69,6 +72,7 @@ def run(engine='chromium'):
         wait_for_app_ready(page)
         expect(page.locator('#addExampleTasksBtn')).to_have_count(0)
         assert get_task_records(page) == expected
+        return_to_task_workspace(page)
         page.locator('#searchInput').fill('No matching example report')
         expect(page.locator('.task-item')).to_have_count(0)
         expect(page.locator('#taskList .empty-state')).to_be_visible()

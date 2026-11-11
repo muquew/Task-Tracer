@@ -154,6 +154,49 @@ def loaded_stylesheet_source(index_html: str) -> str:
     return '\n'.join(blocks)
 
 
+def script_assets(index_html: str) -> dict[str, Path]:
+    class ScriptLinks(HTMLParser):
+        def __init__(self) -> None:
+            super().__init__()
+            self.sources: list[str] = []
+
+        def handle_starttag(self, tag: str, attributes: list[tuple[str, str | None]]) -> None:
+            if tag != 'script' or not any(key == 'src' for key, _ in attributes):
+                return
+            values = dict(attributes)
+            source = values.get('src')
+            if not source or len(values) != len(attributes):
+                raise AssertionError('Linked scripts must declare unique attributes and one nonempty local src')
+            if any(key in values for key in ('async', 'defer', 'nomodule')) or (values.get('type') or '').lower() not in ('', 'text/javascript', 'application/javascript'):
+                raise AssertionError('The workbench must load as an ordered classic script')
+            self.sources.append(source)
+
+    parser = ScriptLinks()
+    parser.feed(index_html)
+    assets: dict[str, Path] = {}
+    root = REPO_ROOT.resolve()
+    for reference in parser.sources:
+        parsed = urlsplit(reference)
+        name = unquote(parsed.path).removeprefix('./')
+        path = PurePosixPath(name)
+        if (parsed.scheme or parsed.netloc or parsed.fragment or not name or path.is_absolute()
+                or '..' in path.parts or path.as_posix() != name or path.suffix != '.js'
+                or any(character in name for character in ('\\', '\x00', ':'))):
+            raise AssertionError(f'Scripts must use safe local JavaScript paths: {reference!r}')
+        source = REPO_ROOT / name
+        current = REPO_ROOT
+        for part in path.parts:
+            current = current / part
+            if current.is_symlink():
+                raise AssertionError(f'Script sources must not be symbolic links: {name}')
+        if not source.is_file() or not source.resolve().is_relative_to(root):
+            raise AssertionError(f'Missing or unsafe script source: {name}')
+        if reference in assets:
+            raise AssertionError(f'Linked scripts must not load more than once: {reference}')
+        assets[reference] = source
+    return assets
+
+
 def contains_js_comment(source: str) -> bool:
     expression_start = True
     previous = ''
@@ -387,9 +430,14 @@ def validate_translations(index_html: str, errors: list[str]) -> None:
                     f"missing={missing[:8]} extra={extra[:8]}"
                 )
 
-        unknown_refs = sorted(translation_references(index_html) - base_keys)
+        references = translation_references(index_html)
+        for source in script_assets(index_html).values():
+            linked = read_text(source)
+            references.update(translation_references(linked))
+            references.update(re.findall(r'[\'"](v5(?:\.[A-Za-z0-9_-]+)+)[\'"]', linked))
+        unknown_refs = sorted(references - base_keys)
         if unknown_refs:
-            errors.append(f"Unknown i18n references in index.html: {unknown_refs[:12]}")
+            errors.append(f"Unknown i18n references in index.html or linked scripts: {unknown_refs[:12]}")
         if "app.subtitle" in base_keys or 'data-i18n="app.subtitle"' in index_html:
             errors.append("The header subtitle must remain removed; app.subtitle should not be used")
     except AssertionError as error:
@@ -448,6 +496,14 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
         if expected_stylesheet not in stylesheets:
             errors.append('index.html must link resources/workspace.css with the current app version')
         required_assets.update(stylesheets)
+        scripts = script_assets(index_html)
+        expected_script = f'./resources/workbench.js?v={runtime_version}'
+        if set(scripts) != {expected_script}:
+            errors.append('index.html must load only resources/workbench.js with the current app version')
+        linked_tags = list(re.finditer(r'<script\b[^>]*\bsrc\s*=\s*([\'"])[^\'"]+\1[^>]*>', index_html, re.I))
+        if len(linked_tags) != 1 or linked_tags[0].start() >= main_script(index_html).start():
+            errors.append('The workbench script must load exactly once before the main application')
+        required_assets.update(scripts)
         required_assets.update(f"./resources/{code}.json?v={version}" for code in languages)
         for icon_path in manifest_icon_paths(manifest):
             icon_file = REPO_ROOT / icon_path
@@ -480,7 +536,7 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
 
         capture_fragments = [
             "CAPTURE:",
-            "INBOX_PROJECT: 'Inbox'",
+            "INBOX_PROJECT: ''",
             "MAX_TEXT_LENGTH: 300",
             "quickAddCaptureDraft: null",
             "await handleLaunchCapture();",

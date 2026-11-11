@@ -18,7 +18,7 @@ sys.path.insert(0, str(REPOSITORY / 'tools'))
 
 from playwright.sync_api import expect, sync_playwright
 from quick_add_recovery_playwright import RAW_NAME, RAW_TEXT, assert_retained_readonly, assert_same_document, mark_document
-from smoke_playwright import add_task, browser_launch_options, clear_app_data, exercise_export_backup, get_task_records, local_server, select_view, task_locator, wait_for_app_ready
+from smoke_playwright import add_task, browser_launch_options, clear_app_data, exercise_export_backup, get_task_records, local_server, select_view, task_locator, wait_for_app_ready, return_to_task_workspace
 from task_draft_playwright import inject_quota_failure, unload_is_guarded
 from validate_static import app_version, resource_version
 from workspace_roundtrip_playwright import fingerprint
@@ -216,6 +216,7 @@ def run(output: Path, expected_app: str | None = None, expected_resource: str | 
             page.reload()
             wait_for_app_ready(page)
             expect(page.locator('.task-item')).to_have_count(100)
+            return_to_task_workspace(page)
             page.locator('#searchInput').fill('Workspace task 00000 中文')
             first = task_locator(page, 'Workspace task 00000 中文')
             first.locator('[data-action="toggle"]').click()

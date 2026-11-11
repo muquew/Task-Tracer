@@ -2,18 +2,19 @@
 
 A local-first task workspace for capturing work, planning your day and reviewing progress. No account required.
 
-[Open app](https://todo.muquew.com/) · [Download](https://todo.muquew.com/downloads/task-tracer-4.17.0.zip) · [Releases](https://github.com/muquew/Task-Tracer/releases) · [简体中文](README_zh_cn.md)
+[Open app](https://todo.muquew.com/) · [Download](https://todo.muquew.com/downloads/task-tracer-5.0.0.zip) · [Releases](https://github.com/muquew/Task-Tracer/releases) · [简体中文](README_zh_cn.md)
 
 | Workspace | Task editor |
 | --- | --- |
-| ![Task list](screenshots/task-list-en.png) | ![Task editor](screenshots/add-task-en.png) |
+| ![Today workspace](screenshots/task-list-en.png) | ![Task editor](screenshots/add-task-en.png) |
 
 ## Features
 
-- **Capture:** quick text entry, descriptions, subtasks and due dates.
-- **Organize:** projects, tags, search, saved views, batch actions and archives.
-- **Plan:** today's plan, recurring tasks, reminders and snooze.
-- **Review:** list, calendar, timeline and seven-day completion statistics.
+- **Today:** choose a daily plan, finish tasks and review urgent work waiting to be scheduled.
+- **Tasks:** list, calendar and timeline with search, tags, saved views, batch actions and archives.
+- **Projects:** real workloads, completed and archived counts, project search and upcoming tasks.
+- **Review:** completion, overdue work and seven-day activity, with direct links to the relevant tasks.
+- **Capture:** quick text entry, descriptions, subtasks, due dates, reminders and recurring tasks.
 - **Back up:** JSON export, import previews, merge, recovery history and CSV reports.
 - **Personalize:** four themes, light/dark appearance, Chinese and English, keyboard controls and responsive layouts.
 - **Work offline:** browser-local storage and optional PWA installation.
@@ -21,8 +22,8 @@ A local-first task workspace for capturing work, planning your day and reviewing
 ## Get started
 
 1. Choose **Add task** in the top bar. The adjacent arrow opens Quick capture, for example `tomorrow 20:00 Read #study /Personal`.
-2. Organize with projects and tags, switch views, or choose tasks for **Today's plan**.
-3. Open **Settings & data** for appearance, language, backups, reminders and installation.
+2. Plan in **Today**, organize in **Tasks** and **Projects**, and check progress in **Review**.
+3. Open **Settings & data** at the bottom of the sidebar for appearance, backups, reminders, installation and updates.
 
 ## Back up and restore
 

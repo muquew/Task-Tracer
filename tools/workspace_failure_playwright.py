@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Check full-workspace rollback and explicit recovery after injected write failures."""
 from __future__ import annotations
+from smoke_playwright import return_to_task_workspace
 
 from smoke_playwright import enter_batch_mode
 
@@ -103,6 +104,7 @@ def prepare(page, url, size, subtasks):
     })""", {'size': size, 'subtasks': subtasks})
     page.reload()
     wait_for_app_ready(page)
+    return_to_task_workspace(page)
     expect(page.locator('.task-item')).to_have_count(min(size, 100))
     baseline = stored(page)
     assert len(baseline['tasks']) == size
@@ -248,7 +250,7 @@ def quota_form(page, before):
     page.locator('#taskProject').fill('Recovery')
     reveal_task_field(page, '#taskTags').fill('retained, workspace')
     page.locator('#noDeadline').check()
-    page.locator('#subtaskInput').fill('Saved draft child 中文')
+    reveal_task_field(page, '#subtaskInput').fill('Saved draft child 中文')
     page.locator('#addSubtaskBtn').click()
     page.locator('#subtaskInput').fill('Unsubmitted draft child 中文')
     inject(page, 'put', 'config', 'recoveryHistory', quota=True, queued=False)
@@ -317,6 +319,7 @@ def stale_edit(page, before, url):
         other.goto(url)
         wait_for_app_ready(other)
         expect(other.locator('.task-item')).to_have_count(min(len(before['tasks']), 100))
+        return_to_task_workspace(other)
         other.locator('#searchInput').fill(FIRST)
         click_task_action(task_locator(other, FIRST), 'edit')
         other.locator('#taskDesc').fill('A newer second-window committed edit')

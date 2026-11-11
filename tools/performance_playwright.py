@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Measure a synthetic large workspace and verify that search never loses tasks."""
 from __future__ import annotations
+from smoke_playwright import return_to_task_workspace
 
 from smoke_playwright import enter_batch_mode
 
@@ -51,6 +52,7 @@ def exercise_timeline(page, size, metrics):
     })""")
     page.reload()
     wait_for_app_ready(page)
+    return_to_task_workspace(page)
     before = read_workspace(page)
     by_id = {str(task['id']): task for task in before['tasks']}
     group_counts = {}
@@ -190,6 +192,7 @@ def run(size: int, output: str | None, bounded: bool) -> None:
         start = time.perf_counter()
         page.reload()
         wait_for_app_ready(page)
+        return_to_task_workspace(page)
         expect(page.locator('.task-item').first).to_be_visible(timeout=20000)
         load_ms = (time.perf_counter() - start) * 1000
         initial_nodes = page.locator('.task-item').count()

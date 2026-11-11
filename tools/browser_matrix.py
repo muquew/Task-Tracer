@@ -22,6 +22,7 @@ from check import (
 BROWSERS = ('chromium', 'firefox', 'webkit')
 PROGRAMS = (
     'compatibility_playwright.py',
+    'workbench_navigation_playwright.py',
     'appearance_preferences_playwright.py',
     'settings_navigation_playwright.py',
     'csv_playwright.py',
@@ -57,6 +58,7 @@ PROGRAMS = (
 )
 GROUPS = {
     'core': ('compatibility_playwright.py',),
+    'workbench': ('workbench_navigation_playwright.py',),
     'appearance': ('appearance_preferences_playwright.py', 'settings_navigation_playwright.py'),
     'capture': (
         'task_draft_playwright.py', 'quick_add_recovery_playwright.py',

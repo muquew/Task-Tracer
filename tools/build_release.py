@@ -34,6 +34,7 @@ DISTRIBUTION_SOURCES = {
     'resources/en.json': 'resources/en.json',
     'resources/zh-CN.json': 'resources/zh-CN.json',
     'resources/workspace.css': 'resources/workspace.css',
+    'resources/workbench.js': 'resources/workbench.js',
     'screenshots/add-task-en.png': 'screenshots/add-task-en.png',
     'screenshots/add-task.png': 'screenshots/add-task.png',
     'screenshots/task-list-en.png': 'screenshots/task-list-en.png',

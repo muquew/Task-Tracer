@@ -5,7 +5,7 @@ These are browser DOM composition/event regressions, not a native OS IME test.
 """
 from __future__ import annotations
 
-from smoke_playwright import ensure_capture, open_task_editor
+from smoke_playwright import ensure_capture, open_task_editor, reveal_task_field
 
 import argparse
 
@@ -63,7 +63,7 @@ def subtasks(page, mode):
     open_task_editor(page)
     page.locator('#taskName').fill('Composition task 中文')
     page.locator('#noDeadline').check()
-    field = page.locator('#subtaskInput')
+    field = reveal_task_field(page, '#subtaskInput')
     field.fill('第一项中文组词')
     if mode == 'tracked':
         compose(field, True)

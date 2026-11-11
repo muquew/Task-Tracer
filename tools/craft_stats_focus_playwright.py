@@ -176,6 +176,8 @@ def statistics_history_and_actions(page, url):
     page.locator('#searchInput').fill(query)
     select_view(page, 'stats')
     expect(page.locator('#focusModeToggleBtn')).to_have_attribute('aria-pressed', 'false')
+    select_project(page, 'Work')
+    page.locator('#searchInput').fill(query)
     before = stored(page)
 
     def phrase(section, key, count, **values):
@@ -218,6 +220,8 @@ def statistics_history_and_actions(page, url):
     assert stored(page) == before, 'Reading statistics mutated task records, recovery history, revision or settings'
 
     select_view(page, 'list')
+    expect(page.locator('#focusModeToggleBtn')).to_have_attribute('aria-pressed', 'true')
+    reveal_workspace_control(page, '#focusModeToggleBtn').click()
     select_filter(page, 'completed')
     target = task_locator(page, 'Review finished today')
     click_task_action(target, 'archive')
@@ -241,8 +245,9 @@ def statistics_history_and_actions(page, url):
         ('undated', 'none', {205}),
     )
     for action, due_term, expected_ids in expected_actions:
-        page.locator('#searchInput').fill(query)
         select_view(page, 'stats')
+        select_project(page, 'Work')
+        page.locator('#searchInput').fill(query)
         card = page.locator(f'button.stats-action-card[data-stats-action="{action}"]')
         expect(card.locator('.stats-action-value')).to_have_text(str(len(expected_ids)))
         expect(card).to_be_enabled()
@@ -263,6 +268,10 @@ def statistics_history_and_actions(page, url):
 
     page.locator('#searchInput').fill('tag:no-such-craft-tag')
     select_view(page, 'stats')
+    expect(page.locator('#searchInput')).to_have_value(query)
+    assert_review()
+    assert_inventory(9, 4, 3, '44%')
+    page.locator('#searchInput').fill('tag:no-such-craft-tag')
     for action, _, _ in expected_actions:
         card = page.locator(f'button.stats-action-card[data-stats-action="{action}"]')
         expect(card.locator('.stats-action-value')).to_have_text('0')
@@ -273,6 +282,10 @@ def statistics_history_and_actions(page, url):
     expect(details.locator('.stat-card .stat-value')).to_have_text(['—', '—'])
     expect(details.locator('[role="meter"]')).to_have_count(0)
     assert stored(page) == after_archive, 'Empty statistics scope wrote stored data'
+    select_view(page, 'list')
+    expect(page.locator('#searchInput')).to_have_value('tag:no-such-craft-tag')
+    expect(page.locator('.task-item')).to_have_count(0)
+    assert stored(page) == after_archive, 'Restoring the independent empty task scope wrote stored data'
     print('Statistics passed: archived completions retain today/7-day/streak history, inventory uses its own denominator, and three actionable counts match exact scoped task sets without writes', flush=True)
 
 
@@ -282,18 +295,20 @@ def statistics_drilldown_return(page, url):
     add_task(page, 'Statistics return fixture template', no_deadline=True)
     baseline = seed_statistics(page)
     original_query = '  tag:review  '
-    original_scope = {'query': original_query, 'project': {'kind': 'project', 'name': 'Work'},
-                      'filter': 'completed'}
+    original_scope = {'query': original_query, 'project': {'kind': 'project', 'name': 'Work'}}
+    original_task_scope = {**original_scope, 'filter': 'completed'}
+    origin_ui = {}
 
     def scope():
         project = page.locator('#projectDropdown .dropdown-option[aria-selected="true"]').get_attribute('data-project')
-        status = page.locator('#filterDropdown .dropdown-option[aria-selected="true"]').get_attribute('data-filter')
-        return {'query': page.locator('#searchInput').input_value(),
-                'project': json.loads(project), 'filter': status}
+        actual = {'query': page.locator('#searchInput').input_value(), 'project': json.loads(project)}
+        if page.locator('body').get_attribute('data-workspace-screen') == 'tasks':
+            actual['filter'] = page.locator('#filterDropdown .dropdown-option[aria-selected="true"]').get_attribute('data-filter')
+        return actual
 
     def assert_scope(expected):
         expect(page.locator('#searchInput')).to_have_value(expected['query'])
-        assert scope() == expected, 'Returning to statistics changed the wrong visible search/project/status scope'
+        assert scope() == expected, 'Returning changed the wrong visible page search/project/status scope'
 
     def assert_ids(expected):
         expect(page.locator('.task-item')).to_have_count(len(expected))
@@ -317,9 +332,13 @@ def statistics_drilldown_return(page, url):
     def begin_origin():
         select_view(page, 'list')
         select_project(page, 'Work')
-        select_filter(page, original_scope['filter'])
+        select_filter(page, original_task_scope['filter'])
         page.locator('#searchInput').fill(original_query)
+        assert_scope(original_task_scope)
+        assert_ids({100, 101, 102, 104, 105})
         select_view(page, 'stats')
+        select_project(page, 'Work')
+        page.locator('#searchInput').fill(original_query)
         assert_scope(original_scope)
         expect(page.locator('#statsReturnBtn')).to_be_hidden()
         assert_counts()
@@ -332,7 +351,16 @@ def statistics_drilldown_return(page, url):
     def drill(action, expected):
         card = page.locator(f'.stats-action-card[data-stats-action="{action}"]')
         expect(card.locator('.stats-action-value')).to_have_text(str(len(expected)))
+        card.evaluate("node => node.scrollIntoView({block:'center', behavior:'instant'})")
+        expect(card).to_be_in_viewport(ratio=1)
+        card.evaluate("""node => {
+            window.__craftReviewOrigin = null;
+            node.addEventListener('click', () => {
+                window.__craftReviewOrigin = {scroll:scrollY, rect:node.getBoundingClientRect().toJSON()};
+            }, {once:true});
+        }""")
         card.click()
+        origin_ui.update(selector=f'.stats-action-card[data-stats-action="{action}"]', **page.evaluate('() => window.__craftReviewOrigin'))
         assert_return_visible()
         assert_ids(expected)
         target = scope()
@@ -350,6 +378,11 @@ def statistics_drilldown_return(page, url):
         expect(page.locator('#statsReturnBtn')).to_be_hidden()
         assert_scope(original_scope)
         assert_counts(**counts)
+        if not navigation:
+            expect(page.locator(origin_ui['selector'])).to_be_focused()
+            expect(page.locator(origin_ui['selector'])).to_be_in_viewport(ratio=1)
+            actual_scroll = page.evaluate('() => scrollY')
+            assert abs(actual_scroll - origin_ui['scroll']) <= 1, f'Returning to Review did not restore the source control scroll position: expected={origin_ui}, actual_scroll={actual_scroll}, actual_rect={page.locator(origin_ui["selector"]).bounding_box()}'
         assert stored(page) == before_return, 'Returning to statistics wrote tasks, revision, recovery history or settings'
 
     select_project(page, 'Work')
@@ -378,7 +411,15 @@ def statistics_drilldown_return(page, url):
         expected = {**task, 'completed': True, 'completedAt': completed[201]['completedAt']} if identity == 201 else task
         assert completed[identity] == expected, 'Completing a drilled task changed unrelated fields'
     return_to_origin(overdue=1, week=5, completed_today=2)
+    before_sort_navigation = stored(page)
+    select_view(page, 'list')
+    assert_scope(target)
+    assert_ids({202})
     expect(page.locator('#sortDropdown .dropdown-option[data-sort="created-desc"]')).to_have_attribute('aria-selected', 'true')
+    select_view(page, 'stats')
+    assert_scope(original_scope)
+    assert_counts(overdue=1, week=5, completed_today=2)
+    assert stored(page) == before_sort_navigation, 'Checking the retained task-library sort changed stored data'
     undo(page)
     assert_counts()
     assert get_task_records(page) == baseline, 'Completion Undo after returning did not restore the original task records'
@@ -440,10 +481,19 @@ def statistics_drilldown_return(page, url):
         before_navigation = stored(page)
         select_view(page, 'stats')
         expect(page.locator('#statsReturnBtn')).to_be_hidden()
-        assert_scope(changed_scope)
+        assert_scope(original_scope)
+        assert_counts()
+        project = changed_scope['project']
+        select_project(page, project['name'] if project['kind'] == 'project' else '__none__' if project['kind'] == 'unassigned' else 'all')
+        page.locator('#searchInput').fill(changed_scope['query'])
+        assert_scope({key: value for key, value in changed_scope.items() if key != 'filter'})
         for action, count in expected_counts.items():
             expect(page.locator(f'.stats-action-card[data-stats-action="{action}"] .stats-action-value')).to_have_text(str(count))
         assert stored(page) == before_navigation, 'Statistics navigation wrote data after a real scope change'
+        select_view(page, 'list')
+        assert_scope(changed_scope)
+        assert_ids(expected_ids)
+        assert stored(page) == before_navigation, 'Returning to changed task scope wrote data'
     assert get_task_records(page) == baseline, 'Drilldown scope navigation changed task records'
     print('Statistics return passed: visible return survives completion/archive/empty-result Undo, recalculates latest data, preserves new sort, and real scope changes prevent stale restoration', flush=True)
 

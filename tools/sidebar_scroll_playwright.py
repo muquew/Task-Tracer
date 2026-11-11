@@ -23,7 +23,7 @@ from saved_views_playwright import save_view, stored_views
 from smoke_playwright import (
     REPO_ROOT, browser_launch_options, clear_app_data, close_workspace_navigation,
     ensure_capture, get_task_records, local_server, return_to_task_workspace,
-    task_locator, visible_task_names,
+    task_locator, visible_task_names, select_view, is_workbench_v5,
 )
 
 
@@ -174,7 +174,14 @@ def check_scroll_and_reachability(page, entry):
     expect(pane).to_have_count(1)
     assert page.locator('#workspaceSettingsBtn').evaluate("node => Boolean(node.closest('.workspace-sidebar-footer'))")
     assert not page.locator('#workspaceSettingsBtn').evaluate("node => Boolean(node.closest('#workspaceSidebarScroll'))")
-    assert pane.locator('#workspaceAllTasks').count() == 1 and pane.locator('#focusModeToggleBtn').count() == 1
+    assert pane.locator('#workspaceAllTasks').count() == 1
+    if is_workbench_v5(page):
+        for selector in ('#workspaceTodayBtn', '#workspaceProjectsBtn', '#viewTab-stats'):
+            assert pane.locator(selector).count() == 1, f'Primary workbench destination missing from the scroll pane: {selector}'
+        assert pane.locator('#focusModeToggleBtn').count() == 0
+        assert page.locator('#toolsDrawerContent #focusModeToggleBtn').count() == 1
+    else:
+        assert pane.locator('#focusModeToggleBtn').count() == 1
     assert pane.locator('#workspaceProjects').count() == 1 and pane.locator('#savedViewsList').count() == 1
     expect(pane.locator('#workspaceProjects [data-workspace-project]')).to_have_count(40)
     before = snapshot_geometry(page)
@@ -260,9 +267,12 @@ def check_views_and_settings(page):
     mobile = page.viewport_size['width'] < 780
     close_workspace_navigation(page)
     for view in ('calendar', 'timeline', 'stats', 'list'):
-        button = page.locator(f'#viewTab-{view}')
+        if is_workbench_v5(page):
+            select_view(page, view)
+        button = page.locator('#mobileReviewBtn' if is_workbench_v5(page) and mobile and view == 'stats' else f'#viewTab-{view}')
         expect(button).to_be_in_viewport(ratio=1)
-        button.click()
+        if not is_workbench_v5(page):
+            button.click()
         expect(button).to_have_attribute('aria-current', 'page')
     open_navigation(page)
     settings = page.locator('#workspaceSettingsBtn')
@@ -279,10 +289,21 @@ def check_mobile_reopen(page):
     open_navigation(page)
     selected = project_control(page, LONG_PROJECT)
     expect(selected).to_have_attribute('aria-pressed', 'true')
-    expect(selected).to_be_focused()
+    modern = is_workbench_v5(page)
+
+    def reach_selected():
+        if modern:
+            expect(page.locator('#workspaceAllTasks')).to_be_focused()
+            for _ in range(len(PROJECTS) + 12):
+                if selected.evaluate('node => node === document.activeElement'):
+                    break
+                page.keyboard.press('Tab')
+        expect(project_control(page, LONG_PROJECT)).to_be_focused()
+
+    reach_selected()
     assert_focus_visible(page)
     scroll_before = page.locator('#workspaceSidebarScroll').evaluate('node => node.scrollTop')
-    assert scroll_before > 0, 'Reopening the last project did not reveal its position in the scroll pane'
+    assert scroll_before > 0, 'The selected last project was not revealed by the real navigation keyboard path'
     page.keyboard.press('Escape')
     toggle = page.locator('#workspaceNavToggle')
     expect(toggle).to_have_attribute('aria-expanded', 'false')
@@ -290,12 +311,13 @@ def check_mobile_reopen(page):
     toggle.click()
     expect(toggle).to_have_attribute('aria-expanded', 'true')
     settle(page)
-    expect(project_control(page, LONG_PROJECT)).to_be_focused()
+    reach_selected()
     assert_focus_visible(page)
     page.locator('#workspaceNavBackdrop').click(position={'x':page.viewport_size['width'] - 4, 'y':100})
     expect(toggle).to_have_attribute('aria-expanded', 'false')
     expect(toggle).to_be_focused()
-    return {'selected_scope_focused_on_open':True, 'selected_scroll_top':scroll_before,
+    return {'selected_scope_focused_on_open':not modern, 'current_page_focused_on_open':modern,
+            'selected_scope_keyboard_reachable':True, 'selected_scroll_top':scroll_before,
             'escape_and_backdrop_restore_toggle_focus':True}
 
 
@@ -389,7 +411,7 @@ def run(args):
                              lambda:entry.update(keyboard=check_keyboard(page))),
                             ('four task views and bottom Settings remain actionable',
                              lambda:check_views_and_settings(page)),
-                            ('mobile reopen focuses selected project; Escape and backdrop restore toggle focus',
+                            ('mobile reopen focuses the current destination, selected project stays reachable; Escape and backdrop restore toggle focus',
                              lambda:entry.update(mobile_reopen=check_mobile_reopen(page))),
                             ('active saved-view success notice leaves fixed Settings directly pointer actionable',
                              lambda:entry.update(notice_overlay=check_notice_does_not_cover_settings(page, args.output))),

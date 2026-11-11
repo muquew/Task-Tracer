@@ -1,13 +1,14 @@
 const CACHE_PREFIX = 'task-tracer-';
-const CACHE_NAME = 'task-tracer-v4.17.0';
+const CACHE_NAME = 'task-tracer-v5.0.0';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './manifest.json',
-    './resources/workspace.css?v=4.17.0',
+    './resources/workspace.css?v=5.0.0',
+    './resources/workbench.js?v=5.0.0',
     './THIRD_PARTY_NOTICES.md',
-    './resources/en.json?v=4.47',
-    './resources/zh-CN.json?v=4.47',
+    './resources/en.json?v=5.0',
+    './resources/zh-CN.json?v=5.0',
     './fav/favicon-16x16.png',
     './fav/favicon-32x32.png',
     './fav/favicon.ico',
@@ -55,7 +56,20 @@ async function validateInstalledBundle(cache) {
         const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script\s*>/gi)];
         const main = scripts.filter(script => /^\s*\(function\s*\(\s*\)\s*\{\s*const\s+CONFIG\s*=/.test(script[1]));
         const bundled = scripts.filter(script => /\bid=["']bundledTranslations["']/.test(script[0].slice(0, script[0].indexOf('>'))));
+        const linked = scripts.filter(script => /\bsrc\s*=/.test(script[0].slice(0, script[0].indexOf('>'))));
         if (main.length !== 1 || bundled.length !== 1) throw new Error('Missing bundle metadata');
+        const workbenchURL = new URL(`./resources/workbench.js?v=${appVersion}`, self.registration.scope).href;
+        const stylesheetURL = new URL(`./resources/workspace.css?v=${appVersion}`, self.registration.scope).href;
+        const linkedTag = linked.length === 1 ? linked[0][0].slice(0, linked[0][0].indexOf('>')) : '';
+        const linkedSource = linkedTag.match(/\bsrc\s*=\s*["']([^"']+)["']/)?.[1];
+        const linkedType = linkedTag.match(/\btype\s*=\s*["']([^"']*)["']/i)?.[1].toLowerCase();
+        if (!linkedSource || new URL(linkedSource, self.registration.scope).href !== workbenchURL
+            || /\b(?:async|defer|nomodule)(?:\s|=|$)/i.test(linkedTag)
+            || (linkedType && !['text/javascript', 'application/javascript'].includes(linkedType))
+            || linked[0].index >= main[0].index || !ASSET_URLS.has(workbenchURL) || !ASSET_URLS.has(stylesheetURL)
+            || !html.includes(`href="./resources/workspace.css?v=${appVersion}"`)) {
+            throw new Error('Inconsistent installed application assets');
+        }
         const declaredAppVersion = main[0][1].match(/\bAPP\s*:\s*\{\s*VERSION\s*:\s*["']([^"']+)["']/)?.[1];
         const declaredResourceVersion = main[0][1].match(/\bRESOURCE_VERSION\s*:\s*["']([^"']+)["']/)?.[1];
         if (declaredAppVersion !== appVersion || declaredResourceVersion !== resourceVersion || JSON.parse(bundled[0][1]).resourceVersion !== resourceVersion) {

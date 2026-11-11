@@ -52,7 +52,8 @@ def run(engine: str) -> None:
                     expect(task_locator(page, 'Portable task edited')).to_have_count(1)
                     for view in ('calendar', 'timeline', 'stats', 'list'):
                         select_view(page, view)
-                        expect(page.locator('#taskList')).to_have_attribute('aria-labelledby', f'viewTab-{view}')
+                        label = 'workspaceTitle' if view == 'stats' and page.locator('#workspaceTodayBtn').count() else f'viewTab-{view}'
+                        expect(page.locator('#taskList')).to_have_attribute('aria-labelledby', label)
                     complete_task(page, 'Portable task edited')
                     print(f'{engine}: CRUD and views passed', flush=True)
                     backup = exercise_export_backup(page)

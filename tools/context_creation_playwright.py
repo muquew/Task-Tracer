@@ -17,7 +17,7 @@ from playwright.sync_api import expect, sync_playwright
 from direct_capture_playwright import cancel_empty, direct_editor, records_unchanged
 from smoke_playwright import (
     REPO_ROOT, browser_launch_options, clear_app_data, ensure_capture,
-    get_task_records, local_server, reveal_workspace_control, select_filter,
+    get_task_records, local_server, return_to_task_workspace, reveal_workspace_control, select_filter,
     select_project, task_locator,
 )
 from task_draft_playwright import downloaded_drafts, inject_quota_failure
@@ -62,12 +62,13 @@ def save_quick(page, name, project, focus_date=None, *, explicit_project=None):
 
 
 def seed_projects(page):
-    save_form(page, 'Outside Today: assigned baseline', 'Inbox', override_project=PROJECT)
-    save_form(page, 'Outside Today: unassigned baseline', 'Inbox', override_project='')
+    return_to_task_workspace(page)
+    save_form(page, 'Outside Today: assigned baseline', '', override_project=PROJECT)
+    save_form(page, 'Outside Today: unassigned baseline', '', override_project='')
 
 
 def check_project_scopes(page):
-    for scope, expected, label in (('all', 'Inbox', 'All'), (PROJECT, PROJECT, 'Project'), ('__none__', '', 'Unassigned')):
+    for scope, expected, label in (('all', '', 'All'), (PROJECT, PROJECT, 'Project'), ('__none__', '', 'Unassigned')):
         select_project(page, scope)
         before = get_task_records(page)
         direct_editor(page)
@@ -132,9 +133,9 @@ def check_today_creation(page):
     direct_editor(page)
     cancel_empty(page)
     records_unchanged(page, before, 'Today empty cancellation')
-    save_form(page, 'Today all-project form creation', 'Inbox', today)
+    save_form(page, 'Today all-project form creation', '', today)
     expect(task_locator(page, 'Today all-project form creation')).to_be_visible()
-    save_quick(page, 'Planned all-project quick creation', 'Inbox', today)
+    save_quick(page, 'Planned all-project quick creation', '', today)
     expect(task_locator(page, 'Planned all-project quick creation')).to_be_visible()
     select_project(page, PROJECT)
     save_form(page, 'Today project form creation', PROJECT, today)

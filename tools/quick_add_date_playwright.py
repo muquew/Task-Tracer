@@ -46,7 +46,7 @@ def assert_task_ui(page, record):
     assert read_workspace(page)==before,'Inspecting/cancelling a quick-added task changed database data'
 
 
-def quick(page,raw,name,expected_date,expected_time,expected_zone='UTC',project='Inbox',tags=None):
+def quick(page,raw,name,expected_date,expected_time,expected_zone='UTC',project='',tags=None):
     before=read_workspace(page)
     ensure_capture(page)
     page.locator('#quickAddInput').fill(raw)

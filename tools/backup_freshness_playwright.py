@@ -19,6 +19,7 @@ from saved_views_playwright import save_view
 from smoke_playwright import (
     ThreadingHTTPServer, add_task, browser_launch_options, clear_app_data, delete_task,
     edit_task, get_task_records, local_server, wait_for_app_ready,
+    is_workbench_v5, reveal_workspace_control,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -292,7 +293,16 @@ def assert_metadata_failure(page, mode):
     assert stored_state(page) == before, 'Failed metadata transaction left a timestamp, revision or partial task change'
     if page.locator('#storageUnavailableBanner').is_visible():
         if page.locator('#settingsWorkspace').count():
-            expect(page.locator('#openMenuBtn')).to_be_enabled()
+            if is_workbench_v5(page):
+                settings = reveal_workspace_control(page, '#workspaceSettingsBtn')
+                expect(settings).to_be_visible()
+                expect(settings).to_be_enabled()
+                settings.click()
+                expect(page.locator('#settingsWorkspace')).to_be_visible()
+                expect(page.locator('#backupBtn')).to_be_visible()
+                assert stored_state(page) == before, 'Opening available Settings after failed backup metadata wrote task or configuration data'
+            else:
+                expect(page.locator('#openMenuBtn')).to_be_enabled()
             expect(page.locator('#backupBtn')).to_be_disabled()
         else:
             expect(page.locator('#openMenuBtn')).to_be_disabled()

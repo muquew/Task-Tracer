@@ -68,7 +68,7 @@ def fill_schedule(page: Page, name: str, repeat_type: str) -> None:
     else:
         reveal_task_field(page, '#repeatInterval').fill('9')
     reveal_task_field(page, '#repeatPaused').check()
-    page.locator('#subtaskInput').fill('已经加入的子任务')
+    reveal_task_field(page, '#subtaskInput').fill('已经加入的子任务')
     page.locator('#addSubtaskBtn').click()
     page.locator('#subtaskInput').fill('  仍在输入框中的子任务  ')
 

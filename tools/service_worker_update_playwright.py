@@ -16,7 +16,7 @@ from playwright.sync_api import expect, sync_playwright
 from smoke_playwright import (StaticHandler, ThreadingHTTPServer, add_task,
                               browser_launch_options, clear_app_data,
                               task_locator, wait_for_app_ready)
-from validate_static import app_version as configured_app_version, resource_version
+from validate_static import app_version as configured_app_version, resource_version, service_worker_assets
 
 ROOT = Path(__file__).resolve().parents[1]
 TASK_NAME = 'Preserved through interrupted update'
@@ -166,9 +166,11 @@ def bundle(files: dict[str, bytes]) -> Bundle:
 
 
 def current_bundle() -> Bundle:
-    paths = ['index.html', 'sw.js', 'manifest.json', 'resources/en.json', 'resources/zh-CN.json']
-    paths.extend(str(path.relative_to(ROOT)) for path in (ROOT / 'fav').glob('*') if path.is_file())
-    return bundle({path: (ROOT / path).read_bytes() for path in paths})
+    paths = {'index.html', 'sw.js', 'manifest.json', 'resources/en.json', 'resources/zh-CN.json'}
+    for asset in service_worker_assets((ROOT / 'sw.js').read_text(encoding='utf-8')):
+        paths.add(urlsplit(asset).path.removeprefix('./') or 'index.html')
+    paths.update(str(path.relative_to(ROOT)) for path in (ROOT / 'fav').glob('*') if path.is_file())
+    return bundle({path: (ROOT / path).read_bytes() for path in sorted(paths)})
 
 
 def next_number(version: str) -> str:
@@ -184,6 +186,10 @@ def next_bundle(previous: Bundle) -> Bundle:
     html = html.replace(f'"softwareVersion": "{previous.version}"', f'"softwareVersion": "{version}"')
     html = html.replace(f"VERSION: '{previous.version}'", f"VERSION: '{version}'")
     html = html.replace(f"RESOURCE_VERSION: '{previous.resources}'", f"RESOURCE_VERSION: '{resources}'")
+    for asset in ('workspace.css', 'workbench.js'):
+        old_reference = f'./resources/{asset}?v={previous.version}'
+        assert html.count(old_reference) == 1, f'Missing synthetic app asset: {old_reference}'
+        html = html.replace(old_reference, f'./resources/{asset}?v={version}', 1)
     languages = {}
     for language in ('en', 'zh-CN'):
         data = json.loads(files[f'resources/{language}.json'])
@@ -196,7 +202,12 @@ def next_bundle(previous: Bundle) -> Bundle:
     html = fallback.sub(lambda match: match.group(1) + payload + match.group(2), html)
     files['index.html'] = html.encode()
     worker = files['sw.js'].decode().replace(previous.cache, f'task-tracer-v{version}')
-    worker = worker.replace(f'?v={previous.resources}', f'?v={resources}')
+    for language in ('en', 'zh-CN'):
+        worker = worker.replace(f'./resources/{language}.json?v={previous.resources}', f'./resources/{language}.json?v={resources}')
+    for asset in ('workspace.css', 'workbench.js'):
+        old_reference = f'./resources/{asset}?v={previous.version}'
+        assert worker.count(old_reference) == 1, f'Missing synthetic cached app asset: {old_reference}'
+        worker = worker.replace(old_reference, f'./resources/{asset}?v={version}', 1)
     files['sw.js'] = worker.encode()
     return bundle(files)
 
@@ -317,15 +328,23 @@ def assert_workspace(page, expected, version):
 
 
 def installed_bundle(page, release):
-    return page.evaluate("""async ({name, resources}) => {
+    paths = sorted(service_worker_assets(release.files['sw.js'].decode()))
+    assert paths, 'An installed bundle must declare its precache assets'
+    result = page.evaluate("""async ({name, paths}) => {
         const cache = await caches.open(name);
         const result = {};
-        for (const path of ['./', './index.html', `./resources/en.json?v=${resources}`, `./resources/zh-CN.json?v=${resources}`]) {
+        for (const path of paths) {
             const response = await cache.match(path);
-            result[path] = response ? await response.text() : null;
+            if (!response) { result[path] = null; continue; }
+            const hash = await crypto.subtle.digest('SHA-256', await response.arrayBuffer());
+            result[path] = Array.from(new Uint8Array(hash), value => value.toString(16).padStart(2, '0')).join('');
         }
         return result;
-    }""", {'name': release.cache, 'resources': release.resources})
+    }""", {'name': release.cache, 'paths': paths})
+    for path, actual in result.items():
+        source = urlsplit(path).path.removeprefix('./') or 'index.html'
+        assert actual == hashlib.sha256(release.files[source]).hexdigest(), f'Installed bundle asset missing or stale: {path}'
+    return result
 
 
 def start_update(page):

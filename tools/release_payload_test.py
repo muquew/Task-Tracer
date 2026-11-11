@@ -22,6 +22,7 @@ def assert_archive(path: Path) -> bytes:
         expected = release.expected_distribution_files()
         assert len(names) == len(expected) and set(names) == expected
         assert archive.read('resources/workspace.css') == (release.ROOT / 'resources/workspace.css').read_bytes()
+        assert archive.read('resources/workbench.js') == (release.ROOT / 'resources/workbench.js').read_bytes()
         assert 'THIRD_PARTY_NOTICES.md' in names
         assert archive.read('THIRD_PARTY_NOTICES.md') == (release.ROOT / 'THIRD_PARTY_NOTICES.md').read_bytes()
         for name in ('README.md', 'README_zh_cn.md'):
@@ -83,7 +84,7 @@ def run() -> None:
             print('Release payload passed: three unrelated synthetic files are excluded; exact manifest and repeated bytes match')
 
             rejected_output = base / 'must-not-be-created'
-            for name in ('fav/favicon-48x48.png', 'resources/workspace.css'):
+            for name in ('fav/favicon-48x48.png', 'resources/workspace.css', 'resources/workbench.js'):
                 required = root / name
                 content = required.read_bytes()
                 required.unlink()
@@ -94,7 +95,7 @@ def run() -> None:
 
             outside = base / 'outside-source.txt'
             outside.write_text('SYNTHETIC_OUTSIDE_SOURCE\n')
-            for name in ('index.html', 'README.md', 'README_zh_cn.md', 'resources/workspace.css'):
+            for name in ('index.html', 'README.md', 'README_zh_cn.md', 'resources/workspace.css', 'resources/workbench.js'):
                 source = root / name
                 content = source.read_bytes()
                 source.unlink()

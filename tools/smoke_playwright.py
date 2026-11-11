@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Browser smoke test for the Task Tracer single-file PWA.
+"""Browser smoke test for the local-first Task Tracer PWA.
 
 Run with:
     python3 tools/smoke_playwright.py
@@ -196,14 +196,70 @@ def task_locator(page: Page, task_name: str):
     return page.locator(".task-item").filter(has=exact_name)
 
 
+def is_workbench_v5(page: Page) -> bool:
+    """Identify the real five-page shell without changing its initial route."""
+    return bool(page.locator('#workspaceTodayBtn').count())
+
+
+def workbench_screen(page: Page) -> str | None:
+    if is_workbench_v5(page):
+        return page.locator('body').get_attribute('data-workspace-screen')
+    return None
+
+
+def navigate_workbench(page: Page, screen: str) -> None:
+    """Use a visible first-level destination; preserve an already active page."""
+    assert screen in {'today', 'tasks', 'projects', 'review', 'settings'}, screen
+    assert is_workbench_v5(page), 'The five-page workbench is not present'
+    if screen != 'settings':
+        close_workspace_navigation(page)
+    if workbench_screen(page) != screen:
+        if screen == 'settings':
+            control = reveal_workspace_control(page, '#workspaceSettingsBtn')
+        else:
+            desktop, mobile = {
+                'today': ('#workspaceTodayBtn', '#mobileTodayBtn'),
+                'tasks': ('#workspaceAllTasks', '#mobileTasksBtn'),
+                'projects': ('#workspaceProjectsBtn', '#mobileProjectsBtn'),
+                'review': ('#viewTab-stats', '#mobileReviewBtn'),
+            }[screen]
+            mobile_control = page.locator(mobile)
+            control = mobile_control if mobile_control.is_visible() else reveal_workspace_control(page, desktop)
+        expect(control).to_be_visible()
+        expect(control).to_be_enabled()
+        control.click()
+    expect(page.locator('body')).to_have_attribute('data-workspace-screen', screen)
+    tasks = page.locator('#tasksWorkspace')
+    if screen in {'tasks', 'review'}:
+        expect(tasks).to_be_visible()
+        expect(tasks).to_have_js_property('inert', False)
+    else:
+        expect(tasks).to_be_hidden()
+        expect(tasks).to_have_js_property('inert', True)
+
+
+def ensure_task_control_workspace(page: Page) -> None:
+    """Keep Review's own scope when operating its shared task/filter controls."""
+    if workbench_screen(page) in {'tasks', 'review'}:
+        close_workspace_navigation(page)
+    else:
+        return_to_task_workspace(page)
+
+
 def open_settings(page: Page, section: str | None = 'data') -> None:
     """Use settings navigation; old archived applications retain their real menu."""
     workspace = page.locator('#settingsWorkspace')
     if workspace.count():
+        if is_workbench_v5(page) and workspace.is_visible():
+            close_workspace_navigation(page)
         if not workspace.is_visible():
-            if page.locator('#captureShelf').count():
+            if is_workbench_v5(page):
+                navigate_workbench(page, 'settings')
+            elif page.locator('#captureShelf').count():
                 close_workspace_navigation(page)
-            page.locator('#openMenuBtn').click()
+                page.locator('#openMenuBtn').click()
+            else:
+                page.locator('#openMenuBtn').click()
         expect(workspace).to_be_visible()
         expect(page.locator('#tasksWorkspace')).to_be_hidden()
         expect(page.locator('#tasksWorkspace')).to_have_js_property('inert', True)
@@ -242,9 +298,10 @@ def ensure_capture(page: Page) -> Locator:
     return field
 
 
-def open_task_editor(page: Page, *, independent: bool = False) -> None:
+def open_task_editor(page: Page, *, independent: bool = False, preserve_context: bool = False) -> None:
     """Use the direct Add task action, with the real archived entry as fallback."""
-    return_to_task_workspace(page)
+    if not preserve_context or not is_workbench_v5(page):
+        return_to_task_workspace(page)
     if independent and page.locator('#captureShelf').count():
         page.keyboard.press('Control+i')
     elif page.locator('#quickCaptureBtn').count():
@@ -303,25 +360,32 @@ def select_visible_option(page: Page, selector: str, value: str) -> None:
     expect(field).to_have_value(value)
 
 
-def _preference_origin(page: Page) -> tuple[bool, str | None]:
+def _preference_origin(page: Page) -> tuple[bool, str | None, str | None]:
     workspace = page.locator('#settingsWorkspace')
     was_settings = bool(workspace.count() and workspace.is_visible())
     selected = workspace.locator('[data-settings-section][aria-selected="true"]')
     section = selected.get_attribute('data-settings-section') if selected.count() else None
-    return was_settings, section
+    return was_settings, section, workbench_screen(page)
 
 
-def _return_from_preference(page: Page, origin: tuple[bool, str | None]) -> None:
-    was_settings, section = origin
+def _return_from_preference(page: Page, origin: tuple[bool, str | None, str | None]) -> None:
+    was_settings, section, screen = origin
     if was_settings:
         if section:
             open_settings(page, section)
+    elif screen is not None:
+        expect(page.locator('#settingsBackBtn')).to_be_visible()
+        page.locator('#settingsBackBtn').click()
+        expect(page.locator('body')).to_have_attribute('data-workspace-screen', screen)
     else:
         return_to_task_workspace(page)
 
 
 def return_to_task_workspace(page: Page) -> None:
-    """Use the real back navigation without changing the active task view or filters."""
+    """Select the task library, retaining its own active view and scope."""
+    if is_workbench_v5(page):
+        navigate_workbench(page, 'tasks')
+        return
     workspace = page.locator('#settingsWorkspace')
     if workspace.count() and workspace.is_visible():
         page.locator('#settingsBackBtn').click()
@@ -336,7 +400,12 @@ def reveal_workspace_control(page: Page, selector: str | Locator) -> Locator:
     """Reach a global control through the actual mobile navigation when needed."""
     control = page.locator(selector) if isinstance(selector, str) else selector
     if control.count() and control.evaluate("node => Boolean(node.closest('#tasksWorkspace'))"):
-        return_to_task_workspace(page)
+        if is_workbench_v5(page) and control.get_attribute('id') in {'focusModeToggleBtn', 'exitFocusModeBtn'}:
+            return_to_task_workspace(page)
+        else:
+            ensure_task_control_workspace(page)
+        if control.evaluate("node => Boolean(node.closest('#toolsDrawerContent'))"):
+            reveal_filters(page)
     if control.count() and control.evaluate("node => Boolean(node.closest('#workspaceSidebar'))"):
         hidden = not control.is_visible() or control.evaluate(
             "node => Boolean(node.closest('[inert], [hidden], [aria-hidden=\"true\"]'))"
@@ -502,9 +571,12 @@ def exercise_workspace_navigation(page: Page) -> None:
     expect(sidebar).to_have_attribute('aria-hidden', 'false')
     expect(sidebar).to_have_js_property('inert', False)
     if page.locator('#workspaceSidebarScroll').count():
-        current = (sidebar.locator('.workspace-sidebar-footer #workspaceSettingsBtn')
-                   if page.locator('#settingsWorkspace').is_visible()
-                   else sidebar.locator('.workspace-nav-button[aria-pressed="true"]'))
+        if is_workbench_v5(page):
+            current = sidebar.locator('.workspace-nav-button[aria-current="page"]')
+        else:
+            current = (sidebar.locator('.workspace-sidebar-footer #workspaceSettingsBtn')
+                       if page.locator('#settingsWorkspace').is_visible()
+                       else sidebar.locator('.workspace-nav-button[aria-pressed="true"]'))
         expect(current).to_have_count(1)
         expect(current).to_be_focused()
         expect(current).to_be_in_viewport()
@@ -520,7 +592,10 @@ def exercise_workspace_navigation(page: Page) -> None:
 def wait_for_app_ready(page: Page) -> None:
     expect(page.locator("#openModalBtn")).to_be_visible()
     page.locator("#taskList .loading-state").wait_for(state="detached", timeout=10_000)
-    page.locator("#taskList").wait_for(state="visible")
+    if is_workbench_v5(page):
+        page.wait_for_function("() => ['today','tasks','projects','review','settings'].includes(document.body.dataset.workspaceScreen)")
+    else:
+        page.locator("#taskList").wait_for(state="visible")
 
 
 def wait_for_notification(page: Page, pattern: str | re.Pattern[str]) -> None:
@@ -582,6 +657,7 @@ def clear_app_data(page: Page, url: str) -> None:
 
 
 def assert_empty_task_list(page: Page) -> None:
+    return_to_task_workspace(page)
     expect(page.locator(".task-item")).to_have_count(0)
     expect(page.locator("#taskList .empty-state")).to_be_visible()
 
@@ -823,12 +899,22 @@ def exercise_keyboard_navigation_patterns(page: Page) -> None:
     expect(page.locator("#viewTab-timeline")).to_be_focused()
     page.keyboard.press("Space")
     expect(page.locator("#viewTab-timeline")).to_have_attribute("aria-current", "page")
-    page.keyboard.press("Tab")
-    expect(page.locator("#viewTab-stats")).to_be_focused()
+    if is_workbench_v5(page):
+        primary = ('#mobileTodayBtn', '#mobileTasksBtn', '#mobileProjectsBtn', '#mobileReviewBtn') if page.locator('#mobileTodayBtn').is_visible() else ('#workspaceTodayBtn', '#workspaceAllTasks', '#workspaceProjectsBtn', '#viewTab-stats')
+        page.locator(primary[0]).focus()
+        for selector in primary[1:]:
+            page.keyboard.press('Tab')
+            expect(page.locator(selector)).to_be_focused()
+        review_entry = page.locator(primary[-1])
+    else:
+        page.keyboard.press('Tab')
+        review_entry = page.locator('#viewTab-stats')
+        expect(review_entry).to_be_focused()
     page.keyboard.press("Enter")
-    expect(page.locator("#viewTab-stats")).to_have_attribute("aria-current", "page")
+    expect(review_entry).to_have_attribute('aria-current', 'page')
     select_view(page, 'list')
 
+    reveal_filters(page)
     page.locator("#sortBtn").focus()
     page.keyboard.press("ArrowDown")
     wait_for_class(page, "#sortDropdown", "show")
@@ -847,7 +933,8 @@ def exercise_keyboard_navigation_patterns(page: Page) -> None:
     expect(page.locator("#filterBtn")).to_be_focused()
     expect(page.locator("#filterBtn")).to_have_attribute("aria-expanded", "false")
 
-    page.locator("#openMenuBtn").focus()
+    settings_entry = reveal_workspace_control(page, '#workspaceSettingsBtn') if is_workbench_v5(page) else page.locator('#openMenuBtn')
+    settings_entry.focus()
     page.keyboard.press("Enter")
     expect(page.locator('#settingsWorkspace')).to_be_visible()
     expect(page.locator('#settingsBackBtn')).to_be_visible()
@@ -860,7 +947,10 @@ def exercise_keyboard_navigation_patterns(page: Page) -> None:
     page.locator('#settingsBackBtn').focus()
     page.keyboard.press("Escape")
     expect(page.locator('#settingsWorkspace')).to_be_hidden()
-    expect(page.locator("#openMenuBtn")).to_be_focused()
+    if is_workbench_v5(page):
+        expect(settings_entry if settings_entry.is_visible() else page.locator('#workspaceTitle')).to_be_focused()
+    else:
+        expect(page.locator('#openMenuBtn')).to_be_focused()
     open_settings(page, 'appearance')
     language_select = reveal_workspace_control(page, '#languageSelect')
     language_select.focus()
@@ -870,8 +960,14 @@ def exercise_keyboard_navigation_patterns(page: Page) -> None:
 
 
 def exercise_custom_select_escape_keeps_modal_open(page: Page) -> None:
+    before = get_task_records(page)
     open_task_editor(page, independent=True)
     expect(page.locator("#taskModal")).to_be_visible()
+    if is_workbench_v5(page):
+        # New tasks are undated in 5.0. This dropdown scenario explicitly
+        # opts into a deadline, where reminders are available to the user.
+        page.locator('#noDeadline').uncheck()
+        page.locator('#dueDate').fill(future_date(1))
     reveal_task_field(page, '#reminderOffset')
     expect(page.locator("#reminderOffset-custom-button")).to_have_attribute("aria-label", re.compile("提醒设置.*15|Reminder.*15", re.I))
     page.locator("#reminderOffset-custom-button").click()
@@ -887,7 +983,10 @@ def exercise_custom_select_escape_keeps_modal_open(page: Page) -> None:
     if select_is_open:
         raise AssertionError("Custom select stayed open after Escape")
     page.keyboard.press("Escape")
+    if is_workbench_v5(page):
+        discard_task_draft(page)
     expect(page.locator("#taskModal")).to_be_hidden()
+    assert get_task_records(page) == before, 'Escaping the reminder dropdown and discarding its dated draft changed stored tasks'
 
 
 def exercise_modal_focus_trap(page: Page) -> None:
@@ -958,7 +1057,7 @@ def exercise_subtask_draft_editor(page: Page) -> None:
     before = get_task_records(page)
     open_task_editor(page)
     expect(page.locator("#taskModal")).to_be_visible()
-    page.locator("#subtaskInput").fill("Draft subtask")
+    reveal_task_field(page, '#subtaskInput').fill('Draft subtask')
     page.locator("#addSubtaskBtn").click()
     page.locator("#subtaskInput").fill("Subtask to delete")
     page.locator("#addSubtaskBtn").click()
@@ -1044,7 +1143,7 @@ def add_task(
                 reveal_task_field(page, "#repeatPaused").check()
 
     for index, subtask in enumerate(subtasks or [], start=1):
-        page.locator("#subtaskInput").fill(subtask)
+        reveal_task_field(page, '#subtaskInput').fill(subtask)
         page.locator("#addSubtaskBtn").click()
         expect(page.locator("#subtaskListPreview .subtask-preview-item")).to_have_count(index)
 
@@ -1056,6 +1155,7 @@ def add_task(
 
 
 def exercise_quick_add(page: Page, task_name: str) -> None:
+    return_to_task_workspace(page)
     ensure_capture(page)
     page.locator("#quickAddInput").fill(f"tomorrow 20:00 {task_name} #quick /SmokeQuick")
     ensure_capture(page)
@@ -1121,10 +1221,12 @@ def exercise_quick_capture_entries(page: Page, base_url: str, prefix: str) -> No
     auto_name = f"{prefix} Auto Save"
     page.goto(urljoin(base_url, "?" + urlencode({"add": auto_name, "save": "1"})), wait_until="domcontentloaded")
     wait_for_app_ready(page)
+    return_to_task_workspace(page)
     expect(task_locator(page, auto_name)).to_have_count(1)
     records = [task for task in get_task_records(page) if task.get("name") == auto_name]
-    if len(records) != 1 or records[0].get("project") != "Inbox":
-        raise AssertionError(f"Auto capture should create one Inbox task: {records}")
+    default_project = "" if is_workbench_v5(page) else "Inbox"
+    if len(records) != 1 or records[0].get("project") != default_project:
+        raise AssertionError(f"Auto capture should create one task in its default project {default_project!r}: {records}")
     if page.evaluate("location.search") != "":
         raise AssertionError("Auto-save capture URL parameters were not cleared")
     page.reload(wait_until="domcontentloaded")
@@ -1150,13 +1252,14 @@ def exercise_quick_capture_entries(page: Page, base_url: str, prefix: str) -> No
         raise AssertionError("Share target URL parameters were not cleared")
     ensure_capture(page)
     page.locator("#quickAddInput").press("Enter")
+    return_to_task_workspace(page)
     expect(task_locator(page, shared_title)).to_have_count(1)
     shared_records = [task for task in get_task_records(page) if task.get("name") == shared_title]
     if len(shared_records) != 1:
         raise AssertionError(f"Share target capture should create one task: {shared_records}")
     shared_record = shared_records[0]
-    if shared_record.get("project") != "Inbox":
-        raise AssertionError(f"Share target capture should land in Inbox: {shared_record}")
+    if shared_record.get("project") != default_project:
+        raise AssertionError(f"Share target capture should retain the default project {default_project!r}: {shared_record}")
     shared_description = shared_record.get("description") or ""
     if "Shared body" not in shared_description or shared_url not in shared_description:
         raise AssertionError(f"Share target capture did not preserve text/url in description: {shared_record}")
@@ -1181,6 +1284,7 @@ def exercise_quick_capture_entries(page: Page, base_url: str, prefix: str) -> No
     page.locator("#quickAddInput").fill(replacement_name)
     ensure_capture(page)
     page.locator("#quickAddInput").press("Enter")
+    return_to_task_workspace(page)
     expect(task_locator(page, replacement_name)).to_have_count(1)
     replacement_records = [task for task in get_task_records(page) if task.get("name") == replacement_name]
     if len(replacement_records) != 1 or replacement_records[0].get("description"):
@@ -1528,7 +1632,7 @@ def reveal_filters(page: Page) -> None:
 
 
 def select_filter(page: Page, value: str) -> None:
-    return_to_task_workspace(page)
+    ensure_task_control_workspace(page)
     reveal_filters(page)
     filter_btn = page.locator("#filterBtn")
     selected_option = page.locator(f'#filterDropdown .dropdown-option[data-filter="{value}"]')
@@ -1544,7 +1648,7 @@ def select_filter(page: Page, value: str) -> None:
 
 
 def select_project(page: Page, value: str) -> None:
-    return_to_task_workspace(page)
+    ensure_task_control_workspace(page)
     reveal_filters(page)
     project_btn = page.locator("#projectFilterBtn")
     scope = {'kind': 'all'} if value == 'all' else {'kind': 'unassigned'} if value == '__none__' else {'kind': 'project', 'name': value}
@@ -1564,6 +1668,8 @@ def select_project(page: Page, value: str) -> None:
 
 
 def select_sort(page: Page, value: str) -> None:
+    """Sort the task library, returning to Review when that was the origin."""
+    origin_screen = workbench_screen(page)
     return_to_task_workspace(page)
     previous_view = page.locator('body').get_attribute('data-task-view')
     restore_view = previous_view in ('calendar', 'timeline', 'stats') and page.locator('#sortDropdown').is_hidden()
@@ -1583,9 +1689,18 @@ def select_sort(page: Page, value: str) -> None:
     )
     if restore_view:
         select_view(page, previous_view)
+    if origin_screen == 'review':
+        navigate_workbench(page, 'review')
 
 
 def select_view(page: Page, value: str) -> None:
+    if is_workbench_v5(page) and value == 'stats':
+        navigate_workbench(page, 'review')
+        mobile = page.locator('#mobileReviewBtn')
+        current = mobile if mobile.is_visible() else page.locator('#viewTab-stats')
+        expect(current).to_have_attribute('aria-current', 'page')
+        expect(page.locator('.stats-view')).to_be_visible()
+        return
     return_to_task_workspace(page)
     tab = page.locator(f'#viewSwitcher .view-tab[data-view="{value}"]')
     tab.click()
@@ -1810,8 +1925,15 @@ def exercise_theme_fallback_transition(page: Page) -> None:
         assert page.evaluate("localStorage.getItem('theme')") == target
         return_to_task_workspace(page)
         if modern_settings:
-            expect(page.locator('#openMenuBtn')).to_be_visible()
-            expect(page.locator('#openMenuBtn')).to_be_focused()
+            if is_workbench_v5(page):
+                expect(page.locator('body')).to_have_attribute('data-workspace-screen', 'tasks')
+                focused = page.locator(':focus')
+                expect(focused).to_be_visible()
+                expect(focused).to_be_in_viewport()
+                assert focused.evaluate("node => node !== document.body && !node.closest('[hidden],[inert],[aria-hidden=true]')"), 'Theme fallback left focus outside usable navigation'
+            else:
+                expect(page.locator('#openMenuBtn')).to_be_visible()
+                expect(page.locator('#openMenuBtn')).to_be_focused()
             assert get_task_records(page) == before_tasks, 'Changing theme without View Transitions changed stored tasks'
     finally:
         page.evaluate("""() => {
@@ -1884,11 +2006,40 @@ def exercise_workspace_date_focus(page: Page, *, zero_matches: bool = False) -> 
         assert before == [], 'The empty-workspace calendar case requires no stored tasks'
     expect(page.locator('.task-item')).to_have_count(0)
     try:
-        target = page.locator('#workspaceCalendarGrid [data-workspace-date][aria-current="date"]')
-        if not target.is_visible():
-            page.locator('#workspaceScheduleToggle').click()
-            expect(page.locator('#workspaceScheduleDialog')).to_be_visible()
-        target.click()
+        if is_workbench_v5(page):
+            # 5.0 exposes the full calendar in Tasks instead of the retired
+            # sidebar mini-calendar. Exercise its actual month/Today controls
+            # with the same empty/zero-match scope and no record writes.
+            select_view(page, 'calendar')
+            if zero_matches:
+                # A retained query with no matches uses the same empty-result
+                # state in every task view; it must not clear that scope merely
+                # to display a calendar. The visible Calendar tab is the entry.
+                expect(page.locator('#searchInput')).to_have_value('_no_matching_workspace_date_probe_')
+                expect(page.locator('#taskList .empty-state')).to_be_visible()
+                expect(page.locator('.task-item')).to_have_count(0)
+            else:
+                month_title = page.locator('.calendar-title').inner_text()
+                for action, returns_to_original in (('next', False), ('prev', True),
+                                                    ('prev-year', False), ('next-year', True),
+                                                    ('today', True)):
+                    button = page.locator(f'[data-calendar-action="{action}"]')
+                    button.click()
+                    if returns_to_original:
+                        expect(page.locator('.calendar-title')).to_have_text(month_title)
+                    else:
+                        expect(page.locator('.calendar-title')).not_to_have_text(month_title)
+                    # Each calendar render replaces its controls. Keyboard users
+                    # must retain the same actual action, rather than land on body.
+                    expect(button).to_be_focused()
+                    expect(button).to_be_in_viewport(ratio=1)
+                    assert get_task_records(page) == before, f'Calendar {action} navigation modified stored tasks'
+        else:
+            target = page.locator('#workspaceCalendarGrid [data-workspace-date][aria-current="date"]')
+            if not target.is_visible():
+                page.locator('#workspaceScheduleToggle').click()
+                expect(page.locator('#workspaceScheduleDialog')).to_be_visible()
+            target.click()
         expect(page.locator('#viewTab-calendar')).to_have_attribute("aria-current", "page")
         expect(page.locator('#taskList')).to_be_visible()
         expect(page.locator('#workspaceScheduleDialog')).to_be_hidden()
@@ -2709,6 +2860,7 @@ def exercise_one_time_reminder_persists_across_reload(page: Page) -> None:
     page.wait_for_timeout(1200)
     second_count = page.evaluate("() => (window.__taskTracerNotificationEvents || []).length")
     second_last_reminder = get_task_record_by_name(page, task_name).get("lastReminderAt")
+    return_to_task_workspace(page)
     reminder_color = task_locator(page, task_name).locator(".task-reminder-icon").evaluate("(el) => el.style.color")
     if second_count != 0:
         raise AssertionError("One-time reminder was delivered again after session reload")
@@ -3490,11 +3642,17 @@ def assert_storage_unavailable_mode(browser: Browser, base_url: str) -> None:
     try:
         page.goto(base_url, wait_until="domcontentloaded")
         expect(page.locator("#storageUnavailableBanner")).to_be_visible()
-        expect(page.locator("#taskList .storage-empty-state")).to_be_visible()
+        if is_workbench_v5(page):
+            expect(page.locator('body')).to_have_attribute('data-workspace-screen', 'today')
+            language = page.locator('html').get_attribute('lang') or 'zh-CN'
+            unavailable = json.loads((REPO_ROOT / 'resources' / f'{language}.json').read_text())['v5.common.storageUnavailable']
+            expect(page.locator('#todayWorkspace .workbench-empty-title:visible')).to_have_text(unavailable)
+        else:
+            expect(page.locator('#taskList .storage-empty-state')).to_be_visible()
         expect(page.locator("#openModalBtn")).to_be_disabled()
         expect(page.locator("#quickAddInput")).to_be_disabled()
         expect(page.locator("#notificationToggleBtn")).to_be_disabled()
-        expect(page.locator("#openMenuBtn")).to_be_enabled()
+        expect(page.locator('#workspaceSettingsBtn') if is_workbench_v5(page) else page.locator('#openMenuBtn')).to_be_enabled()
         expect(page.locator("#viewTab-list")).to_be_disabled()
         expect(page.locator("#retryStorageBtn")).to_be_enabled()
         open_settings(page, 'help')
@@ -3533,7 +3691,7 @@ def assert_runtime_storage_fallback_preserves_snapshot(browser: Browser, base_ur
         expect(page.locator("#storageUnavailableBanner")).to_be_visible()
         expect(page.locator("#taskList .storage-empty-state")).to_contain_text(re.compile("1"))
         expect(page.locator("#emergencyBackupBtn")).to_be_visible()
-        expect(page.locator("#openMenuBtn")).to_be_enabled()
+        expect(page.locator('#workspaceSettingsBtn') if is_workbench_v5(page) else page.locator('#openMenuBtn')).to_be_enabled()
         for shortcut in ["p", "i", "k", "m", "z"]:
             press_control_shortcut(page, shortcut)
             expect(page.locator("#commandPalette")).to_be_hidden()
@@ -3574,9 +3732,11 @@ def assert_notification_does_not_cover_header(browser: Browser, base_url: str) -
             expect(page.locator("#notification")).to_have_class(re.compile(r"\bsuccess\b.*\bshow\b"))
             expect(page.locator("#notificationUndoBtn")).to_be_visible()
             before = get_task_records(page)
-            menu_box = page.locator("#openMenuBtn").bounding_box()
+            entry = page.locator('#workspaceSettingsBtn') if is_workbench_v5(page) else page.locator('#openMenuBtn')
+            expect(entry).to_be_visible()
+            menu_box = entry.bounding_box()
             if not menu_box:
-                raise AssertionError("Main menu has no clickable bounds")
+                raise AssertionError('Settings entry has no clickable bounds')
             # Coordinate clicks expose overlap instead of waiting for a covering toast to disappear.
             page.mouse.click(menu_box["x"] + menu_box["width"] / 2, menu_box["y"] + menu_box["height"] / 2)
             expect(page.locator('#settingsWorkspace')).to_be_visible()
@@ -3647,15 +3807,21 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                 expect(visual_page.locator('.task-item')).to_have_count(3)
             # Main navigation has its own sidebar/dock container, independent of
             # the auxiliary toolbar. Check usable labels/targets at every width.
-            for view in ('list', 'calendar', 'timeline', 'stats'):
-                destination = visual_page.locator(f'#viewTab-{view}')
+            if is_workbench_v5(visual_page):
+                mobile = visual_page.locator('#mobileTodayBtn').is_visible()
+                destinations = [f'#viewTab-{view}' for view in ('list', 'calendar', 'timeline')]
+                destinations += ['#mobileTodayBtn', '#mobileTasksBtn', '#mobileProjectsBtn', '#mobileReviewBtn'] if mobile else ['#workspaceTodayBtn', '#workspaceAllTasks', '#workspaceProjectsBtn', '#viewTab-stats']
+            else:
+                destinations = [f'#viewTab-{view}' for view in ('list', 'calendar', 'timeline', 'stats')]
+            for selector in destinations:
+                destination = visual_page.locator(selector)
                 expect(destination).to_be_visible()
                 expect(destination.locator('span')).to_be_visible()
                 destination.click(trial=True)
                 expect(destination).to_be_in_viewport()
                 destination_box = destination.bounding_box()
                 if not destination_box or destination_box['width'] < 44 or destination_box['height'] < 44:
-                    raise AssertionError(f'{label} main navigation target is undersized: {view}: {destination_box}')
+                    raise AssertionError(f'{label} navigation target is undersized: {selector}: {destination_box}')
             if visual_page.locator('#workspaceSidebarScroll').count():
                 expect(visual_page.locator('#toolsDrawerToggleBtn')).to_have_attribute('aria-expanded', 'true')
                 for selector in ('#searchInput', '#saveSmartViewBtn', '#toolsDrawerToggleBtn', '#batchModeBtn',

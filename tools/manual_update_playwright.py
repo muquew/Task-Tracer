@@ -40,7 +40,7 @@ class Report:
         self.directory.mkdir(parents=True, exist_ok=True)
         snapshot = self.directory / 'source-snapshot'
         snapshot.mkdir(exist_ok=True)
-        sources = ('index.html', 'sw.js', 'resources/en.json', 'resources/zh-CN.json')
+        sources = tuple(sorted(release.files))
         for name in sources:
             destination = snapshot / name
             destination.parent.mkdir(parents=True, exist_ok=True)
@@ -106,6 +106,7 @@ def seed_workspace(page, server, release):
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
     expect(task_locator(page, TASK_NAME)).to_have_count(1)
+    return_to_task_workspace(page)
     page.locator('#searchInput').fill('manual update')
     page.locator('#saveSmartViewBtn').click()
     page.locator('#savedViewNameInput').fill(VIEW_NAME)

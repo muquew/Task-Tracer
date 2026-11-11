@@ -134,6 +134,7 @@ def run(engine):
             })""")
             page.reload()
             wait_for_app_ready(page)
+            return_to_task_workspace(page)
             before = get_task_records(page)
             stamp = backup_stamp(page)
             page.locator('#searchInput').fill('No matching CSV report rows')

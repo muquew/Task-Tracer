@@ -197,7 +197,7 @@ def run(engine, grouping_only=False):
             print('Project scope passed: all, __none__, encoded-looking and ordinary project names remain distinct from both sentinels', flush=True)
 
             for index, project in enumerate(PROJECTS[:3]):
-                page.locator('#openMenuBtn').focus()
+                page.locator('#openModalBtn').focus()
                 page.keyboard.press('Control+p')
                 page.locator('#commandPaletteInput').fill(f'Switch project: {project}')
                 page.locator('#commandPalette .command-item').filter(

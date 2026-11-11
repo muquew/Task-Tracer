@@ -112,6 +112,7 @@ def fill_pending_form(page: Page, name: str) -> None:
     page.locator('#taskProject').fill('评审项目')
     page.locator('#noDeadline').check()
     reveal_task_field(page, '#taskTags').fill('review, "quoted, tag"')
+    reveal_task_field(page, '#subtaskInput')
 
 
 def create_pending(page: Page, evidence: Path) -> None:
@@ -139,7 +140,7 @@ def explicit_and_whitespace(page: Page, evidence: Path) -> None:
     open_task_editor(page)
     page.locator('#taskName').fill('显式添加与空白输入不重复')
     page.locator('#noDeadline').check()
-    page.locator('#subtaskInput').fill('通过加号加入')
+    reveal_task_field(page, '#subtaskInput').fill('通过加号加入')
     page.locator('#addSubtaskBtn').click()
     expect(page.locator('#subtaskListPreview .subtask-preview-item')).to_have_count(1)
     expect(page.locator('#subtaskInput')).to_have_value('')
@@ -155,7 +156,7 @@ def explicit_and_whitespace(page: Page, evidence: Path) -> None:
     open_task_editor(page)
     page.locator('#taskName').fill('只有空白子任务')
     page.locator('#noDeadline').check()
-    page.locator('#subtaskInput').fill('   ')
+    reveal_task_field(page, '#subtaskInput').fill('   ')
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
     only_added(page, before, '只有空白子任务', [])
@@ -212,7 +213,7 @@ def validation_retry(page: Page, evidence: Path) -> None:
     before = stored(page)
     open_task_editor(page)
     raw = '  名称校验失败后仍保留的子任务  '
-    page.locator('#subtaskInput').fill(raw)
+    reveal_task_field(page, '#subtaskInput').fill(raw)
     page.locator('#submitBtn').click()
     assert page.locator('#taskName').evaluate('input => input.validity.valueMissing'), 'Missing task name bypassed native validation'
     expect(page.locator('#taskModal')).to_be_visible()
@@ -340,7 +341,7 @@ def composition(page: Page, evidence: Path) -> None:
     open_task_editor(page)
     page.locator('#taskName').fill('组合输入结束后再保存')
     page.locator('#noDeadline').check()
-    field = page.locator('#subtaskInput')
+    field = reveal_task_field(page, '#subtaskInput')
     field.fill('仍在中文组词的子任务')
     for selector in ('#subtaskInput', '#taskName'):
         active = page.locator(selector)
