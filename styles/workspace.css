@@ -980,6 +980,7 @@ body.modal-open::before { position: fixed; inset: 0; z-index: var(--z-scrim); co
 #taskForm.is-confirm #taskEditor { display: none; }
 #taskForm.is-confirm #confirm-message-text { flex: 1 1 auto; min-height: 0; min-width: 0; overflow: auto; overscroll-behavior: contain; padding: 24px; }
 #taskForm.is-confirm .form-actions { position: static; }
+#taskForm.is-confirm:has(#taskImportReadStatus) #submitBtn { display: none; }
 #draftDiscardPrompt { display: grid; grid-template-columns: minmax(0,1fr) auto auto; gap: 12px; margin: 20px 24px 0; padding: 18px; border: 1px solid var(--border-light); border-radius: 14px; background: var(--bg-surface-alt); }
 #draftDiscardPrompt > :is(h3,p) { grid-column: 1/-1; }
 #draftDiscardPrompt h3 { font-size: 16px; font-weight: 600; }

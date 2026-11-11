@@ -10422,10 +10422,10 @@
             const status = document.createElement('p');
             status.id = 'taskImportReadStatus';
             status.setAttribute('role', 'status');
-            status.textContent = t['messages.import.reading'];
-            utils.confirm(t['messages.import.readingTitle'], status, () => {});
+            status.textContent = utils.translate('dialogs.loading');
+            utils.confirm(t['actions.import'], status, () => {});
             DOM.submitBtn.disabled = true;
-            DOM.submitBtn.textContent = t['messages.import.reading'];
+            DOM.submitBtn.textContent = t['actions.confirm'];
             state.elementToFocusOnClose = { type: 'id', id: 'importBtn' };
             state.pendingTaskImportReader = reader;
             reader.onload = e => {
