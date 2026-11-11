@@ -187,7 +187,7 @@ html[data-theme="dark"][data-accent="ocean"] {
 html[data-theme="dark"][data-accent="pine"] {
   --page-bg: #1c2719; --sidebar-bg: #14200f; --theme-header: #273621;
   --bg-surface: #2b3d26; --bg-surface-alt: #24341f; --bg-surface-raised: #374d30;
-  --bg-hover: #405936; --bg-active: #49663d; --field-bg: #21331b; --field-bg-focus: #30462a;
+  --bg-hover: #405936; --bg-active: #465f38; --field-bg: #21331b; --field-bg-focus: #30462a;
   --text-main: #f5f9e9; --text-secondary: #d3dfc2; --text-tertiary: #c5d6b0;
   --color-primary: #ccdf9f; --color-primary-dark: #e1edc4; --text-on-primary: #2a3e18; --color-accent: #b0d68b;
   --border-light: #526b43; --border-base: #9ab383; --control-border: #9ab383;

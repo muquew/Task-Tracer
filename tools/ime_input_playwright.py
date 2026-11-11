@@ -5,7 +5,7 @@ These are browser DOM composition/event regressions, not a native OS IME test.
 """
 from __future__ import annotations
 
-from smoke_playwright import ensure_capture, open_task_editor, reveal_task_field
+from smoke_playwright import ensure_capture, open_task_editor, reveal_task_field, return_to_task_workspace
 
 import argparse
 
@@ -115,6 +115,7 @@ def escape(page, mode):
 
 
 def search(page, mode):
+    return_to_task_workspace(page)
     if page.locator('#searchInput').is_hidden():
         page.locator('#toolsDrawerToggleBtn').click()
     field = page.locator('#searchInput')

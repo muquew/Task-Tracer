@@ -95,14 +95,18 @@ def check_capture_draft(page, output, width):
     expect(page.locator('#quickAddInput')).to_be_focused()
     records_unchanged(page, before, 'Cancelling a continued capture')
 
-    # The existing keyboard shortcut intentionally creates an independent form.
+    # The keyboard shortcut continues the same capture as the primary Add action.
     page.keyboard.press('Control+i')
-    expect(page.locator('#taskName')).to_have_value('')
+    expect(page.locator('#taskName')).to_have_value('核对发布说明')
+    expect(page.locator('#taskProject')).to_have_value('个人')
+    expect(page.locator('#taskTags')).to_have_value('待办')
+    expect(page.locator('#dueDate')).to_have_value(tomorrow)
+    expect(page.locator('#dueTime')).to_have_value('20:00')
     expect(page.locator('#quickAddInput')).to_have_value(raw)
     page.locator('#cancelBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
     expect(page.locator('#quickAddInput')).to_have_value(raw)
-    records_unchanged(page, before, 'Cancelling the independent keyboard form')
+    records_unchanged(page, before, 'Cancelling the keyboard capture handoff')
 
     direct_editor(page)
     page.locator('#taskName').fill('An unsaved edit of the parsed task')
@@ -264,7 +268,7 @@ def run(args):
                     expect(page.locator('#quickCaptureBtn')).to_be_visible()
                     for name, check in (
                         ('direct entry and cancel retain all four views and settings', lambda: check_views(page, args.output, width)),
-                        ('parsed quick draft, cancel/discard, independent shortcut, explicit save', lambda: check_capture_draft(page, args.output, width)),
+                        ('parsed quick draft, cancel/discard, consistent keyboard handoff, explicit save', lambda: check_capture_draft(page, args.output, width)),
                         ('calendar draft retains date; cancelled/saved date never leaks', lambda: check_calendar_context(page)),
                         ('quick and full forms preserve active composition then save once', lambda: check_composition(page)),
                         ('failed storage reopens selectable text; Retry retains; explicit save once', lambda: check_failed_storage(page)),

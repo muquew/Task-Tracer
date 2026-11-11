@@ -604,7 +604,8 @@ def wait_for_app_ready(page: Page) -> None:
         if (!visible(document.getElementById('openModalBtn')) || !tasks
             || tasks.querySelector('.loading-state')) return false;
         if (document.getElementById('workspaceTodayBtn')) {
-            return ['today','tasks','projects','review','settings'].includes(document.body?.dataset.workspaceScreen);
+            return document.getElementById('workspaceSidebar')?.hasAttribute('aria-hidden')
+                && ['today','tasks','projects','review','settings'].includes(document.body?.dataset.workspaceScreen);
         }
         return visible(tasks);
     }""", timeout=10_000)

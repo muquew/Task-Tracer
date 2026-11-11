@@ -119,18 +119,23 @@ def quick_add_only(page, url):
 
 def coexist_with_form(page, url):
     before = prepare(page,url)
-    ensure_capture(page)
-    page.locator('#quickAddInput').fill(RAW_TEXT)
-    if page.locator('#captureShelf').count():
-        # Ctrl+I starts an independent form; More options continues this capture.
-        page.keyboard.press('Control+i')
-        expect(page.locator('#taskModal')).to_be_visible()
-    else:
-        open_task_editor(page)
+    open_task_editor(page)
     page.locator('#taskName').fill('Coexisting full form 保留')
     page.locator('#taskDesc').fill('  Keep this separate raw form text  ')
     page.locator('#noDeadline').check()
     reveal_task_field(page, '#subtaskInput').fill('Unsubmitted partial subtask')
+    # Retain an independent form before starting a separate quick capture.
+    inject_quota_failure(page)
+    page.locator('#submitBtn').click()
+    expect(page.locator('#storageUnavailableBanner')).to_be_visible()
+    expect(page.locator('#taskDraftRecoveryBanner')).to_be_visible()
+    expect(page.locator('#quickAddInput')).to_have_value('')
+    assert stored(page) == before
+    assert unload_is_guarded(page)
+    retry(page,before,raw='')
+    ensure_capture(page).fill(RAW_TEXT)
+    page.locator('#taskDraftRecoveryRestoreBtn').click()
+    expect(page.locator('#taskModal')).to_be_visible()
     inject_quota_failure(page)
     page.locator('#submitBtn').click()
     expect(page.locator('#storageUnavailableBanner')).to_be_visible()
