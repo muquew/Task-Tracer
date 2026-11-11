@@ -4430,7 +4430,17 @@
             shelf.inert = !open;
             document.getElementById('quickCaptureBtn').setAttribute('aria-expanded', String(Boolean(open)));
             syncCapturePreview();
-            if (open && focus) requestAnimationFrame(() => DOM.quickAddInput.focus({ preventScroll: true }));
+            if (open && focus) {
+                const origin = document.activeElement;
+                requestAnimationFrame(() => {
+                    if (!workspaceUI.captureOpen || isDialogOpen()
+                        || !isFocusableReturnElement(DOM.quickAddInput)) return;
+                    const active = document.activeElement;
+                    if (active !== origin
+                        && !(active === document.body && !isFocusableReturnElement(origin))) return;
+                    DOM.quickAddInput.focus({ preventScroll: true });
+                });
+            }
             if (!open && restoreFocus) document.getElementById('quickCaptureBtn').focus({ preventScroll: true });
             return true;
         }
