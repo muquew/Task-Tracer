@@ -247,7 +247,13 @@ def check_filter_targets(page):
         reached.append(PROJECTS[index])
         if page.viewport_size['width'] < 780:
             expect(page.locator('#workspaceNavToggle')).to_have_attribute('aria-expanded', 'false')
-            expect(page.locator('#workspaceNavToggle')).to_be_focused()
+            if is_workbench_v5(page):
+                heading = page.locator('#workspaceTitle')
+                expect(heading).to_be_focused()
+                expect(heading).to_be_in_viewport(ratio=1)
+                heading.click(trial=True)
+            else:
+                expect(page.locator('#workspaceNavToggle')).to_be_focused()
     return reached
 
 
