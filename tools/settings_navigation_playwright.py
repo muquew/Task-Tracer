@@ -60,8 +60,8 @@ def assert_view_destinations(page, current):
             expect(button).to_be_enabled()
             expect(button).to_have_role('button')
             assert button.evaluate('node => node.tabIndex') == 0
-            expect(button.locator('span')).to_be_visible()
-            assert button.locator('span').inner_text().strip()
+            expect(button.locator(':scope > span[data-i18n]')).to_be_visible()
+            assert button.locator(':scope > span[data-i18n]').inner_text().strip()
             if index == selected:
                 expect(button).to_have_attribute('aria-current', 'page')
             else:

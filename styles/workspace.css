@@ -387,7 +387,7 @@ body[data-workspace-screen="review"] .tools-drawer { border: 1px solid var(--bor
 .tools-drawer { position: relative; min-width: 0; border-bottom: 1px solid var(--border-light); border-radius: var(--radius-surface) var(--radius-surface) 0 0; background: var(--bg-surface); }
 .tools-drawer-content { min-width: 0; }
 .tools-drawer-handle { display: none; }
-.controls-bar { position: relative; z-index: var(--z-toolbar); display: flex; flex-direction: column; min-width: 0; background: transparent; }
+.controls-bar { position: relative; display: flex; flex-direction: column; min-width: 0; background: transparent; }
 .toolbar-main-row { display: flex; align-items: center; gap: 8px; min-width: 0; padding: 16px 20px 10px; }
 .toolbar-main-row > * { flex-shrink: 0; }
 .toolbar-main-row .search-box { flex: 1 1 auto; min-width: 0; }
@@ -1483,7 +1483,7 @@ body[data-workspace-screen="review"] #focusModeToggleBtn { display: none; }
 @keyframes menuAppear { from { opacity: .6; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
 @keyframes feedbackAppear { from { opacity: .9; transform: translateY(5px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
-  *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  *,*::before,*::after { animation: none !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   :is(.btn,.icon-btn,.action-btn,.view-tab,.workspace-nav-button,.workspace-primary-link,.project-card,.custom-select-btn):is(:hover,:active) { transform: none; }
 }
 @media (prefers-reduced-transparency: reduce) {

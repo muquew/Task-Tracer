@@ -55,7 +55,7 @@ def check_views(page, output, width):
         select_view(page, view)
         direct_editor(page)
         expect(page.locator('#taskName')).to_have_value('')
-        expect(page.locator('#taskProject')).to_have_value('Inbox')
+        expect(page.locator('#taskProject')).to_have_value('')
         expect(page.locator('#noDeadline')).to_be_checked()
         if view == 'list':
             page.screenshot(path=str(output / f'{width}-direct-editor.png'))

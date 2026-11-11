@@ -113,7 +113,7 @@ def quick_add_only(page, url):
     next_before = stored(page)
     ensure_capture(page)
     page.locator('#quickAddInput').fill('Another recovered quick-add task')
-    submit_and_check(page,next_before,name='Another recovered quick-add task',project='Inbox',tags=[])
+    submit_and_check(page,next_before,name='Another recovered quick-add task',project='',tags=[])
     print('Quick-add recovery passed: exact raw text, selectable read-only fallback, same-document Retry and one task per normal submission',flush=True)
 
 
@@ -250,7 +250,7 @@ def capture_metadata(page, url):
     assert_retained_readonly(page,raw)
     assert stored(page) == before
     retry(page,before,raw)
-    submit_and_check(page,before,name=title,description=body+'\n'+shared_url,project='Inbox',tags=[])
+    submit_and_check(page,before,name=title,description=body+'\n'+shared_url,project='',tags=[])
     assert page.evaluate('location.search') == ''
     page.reload(wait_until='domcontentloaded')
     smoke.wait_for_app_ready(page)

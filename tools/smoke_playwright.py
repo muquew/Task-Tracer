@@ -590,12 +590,24 @@ def exercise_workspace_navigation(page: Page) -> None:
 
 
 def wait_for_app_ready(page: Page) -> None:
-    expect(page.locator("#openModalBtn")).to_be_visible()
-    page.locator("#taskList .loading-state").wait_for(state="detached", timeout=10_000)
-    if is_workbench_v5(page):
-        page.wait_for_function("() => ['today','tasks','projects','review','settings'].includes(document.body.dataset.workspaceScreen)")
-    else:
-        page.locator("#taskList").wait_for(state="visible")
+    # Read the shell, route and loader in one browser sample. A reload between
+    # separate locator calls must not select the archived-app branch for 5.0.
+    page.wait_for_function("""() => {
+        const visible = element => {
+            if (!element) return false;
+            const style = getComputedStyle(element);
+            const box = element.getBoundingClientRect();
+            return box.width > 0 && box.height > 0 && style.visibility !== 'hidden'
+                && style.display !== 'none';
+        };
+        const tasks = document.getElementById('taskList');
+        if (!visible(document.getElementById('openModalBtn')) || !tasks
+            || tasks.querySelector('.loading-state')) return false;
+        if (document.getElementById('workspaceTodayBtn')) {
+            return ['today','tasks','projects','review','settings'].includes(document.body?.dataset.workspaceScreen);
+        }
+        return visible(tasks);
+    }""", timeout=10_000)
 
 
 def wait_for_notification(page: Page, pattern: str | re.Pattern[str]) -> None:
@@ -1293,6 +1305,7 @@ def exercise_quick_capture_entries(page: Page, base_url: str, prefix: str) -> No
 
 
 def exercise_project_tags(page: Page, alpha_name: str, beta_name: str) -> None:
+    return_to_task_workspace(page)
     alpha = task_locator(page, alpha_name)
     if page.locator('#workspaceSidebarScroll').count() and not alpha.locator('.project-chip').count():
         expect(page.locator('#viewTab-list')).to_have_attribute('aria-current', 'page')
@@ -2237,11 +2250,11 @@ def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_nam
 def exercise_stats_view(page: Page, completed_name: str) -> None:
     modern_stats = bool(page.locator('#workspaceSidebarScroll').count())
     before = get_task_records(page) if modern_stats else None
+    select_view(page, "stats")
     if modern_stats:
         origin_query = page.locator('#searchInput').input_value()
         origin_filter = page.locator('#filterDropdown .dropdown-option[aria-selected="true"]').get_attribute('data-filter')
         origin_project = page.locator('#projectDropdown .dropdown-option[aria-selected="true"]').get_attribute('data-project')
-    select_view(page, "stats")
     expect(page.locator(".stats-view")).to_be_visible()
     if modern_stats:
         inventory = page.locator('.stats-inventory')
@@ -2295,6 +2308,7 @@ def exercise_stats_view(page: Page, completed_name: str) -> None:
         expect(page.locator('#statsReturnBar')).to_be_hidden()
         assert get_task_records(page) == before, 'Returning from the completed-task drilldown changed stored task records'
         select_view(page, 'list')
+        clear_search(page)
     else:
         expect(page.locator("#filterBtn")).to_be_focused()
 
@@ -2656,6 +2670,8 @@ def archive_and_restore_task(page: Page, completed_name: str) -> None:
     page.locator("#searchInput").fill("status:no-deadline")
     expect(task_locator(page, completed_name)).to_have_count(0)
     select_view(page, "stats")
+    if is_workbench_v5(page):
+        page.locator('#searchInput').fill('status:no-deadline')
     expect(page.locator('.stats-mini[data-stats-filter="archived"] strong')).to_have_text("0")
     page.locator("#searchInput").fill("status:archived")
     expect(page.locator('.stats-mini[data-stats-filter="archived"] strong')).to_have_text("1")
@@ -3816,7 +3832,7 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
             for selector in destinations:
                 destination = visual_page.locator(selector)
                 expect(destination).to_be_visible()
-                expect(destination.locator('span')).to_be_visible()
+                expect(destination.locator('span[data-i18n]')).to_be_visible()
                 destination.click(trial=True)
                 expect(destination).to_be_in_viewport()
                 destination_box = destination.bounding_box()

@@ -1002,7 +1002,7 @@
             eventsBound: false
         };
         const DOM = {};
-        const workspaceUI = { statsDrilldown: null, captureOpen: false, captureDateKey: '', captureFormText: null, settingsSection: 'settingsAppearance', screen: 'today', lastScreen: 'today', pageScopes: { tasks: null, review: null }, pageScroll: {}, pageFocus: {}, workbench: null, moduleWarningShown: false, taskScrollY: 0, taskReturnFocus: null, viewportHeight: 0, navigationOpen: false, scheduleOpen: false, month: getCalendarTodayDate(), selectedDate: '', calendarSignature: '', projectSignature: '', upcomingSignature: '', scheduleOpener: null, themeBound: false, pluralRules: new Map() };
+        const workspaceUI = { statsDrilldown: null, captureOpen: false, captureDateKey: '', captureFormText: null, settingsSection: 'settingsAppearance', screen: 'today', lastScreen: 'today', settingsReturnFocus: null, pageScopes: { tasks: null, review: null }, pageScroll: {}, pageFocus: {}, workbench: null, moduleWarningShown: false, taskScrollY: 0, taskReturnFocus: null, viewportHeight: 0, navigationOpen: false, scheduleOpen: false, month: getCalendarTodayDate(), selectedDate: '', calendarSignature: '', projectSignature: '', upcomingSignature: '', scheduleOpener: null, themeBound: false, pluralRules: new Map() };
         function normalizedAccentPreference(value) {
             return ['iris', 'ocean', 'pine', 'berry'].includes(value) ? value : 'iris';
         }
@@ -1102,11 +1102,15 @@
             if (['today', 'projects'].includes(screen) && typeof window.createTaskTracerWorkbench !== 'function') screen = 'tasks';
             const previous = workspaceUI.screen;
             const changed = previous !== screen;
+            const returningFromSettings = previous === 'settings' && screen === workspaceUI.lastScreen;
             if (changed) {
                 workspaceUI.pageScroll[previous] = window.scrollY;
                 if (workspacePageElement(previous)?.contains(document.activeElement)) workspaceUI.pageFocus[previous] = captureFocusReturnTarget();
                 if (['tasks', 'review'].includes(previous)) workspaceUI.pageScopes[previous] = captureWorkspaceScope();
-                if (screen === 'settings') workspaceUI.lastScreen = previous;
+                if (screen === 'settings') {
+                    workspaceUI.lastScreen = previous;
+                    workspaceUI.settingsReturnFocus = captureFocusReturnTarget();
+                }
                 closeAllDropdowns();
                 closeAllCustomSelects();
                 closeTaskActionMenus(false);
@@ -1116,16 +1120,21 @@
             workspaceUI.screen = screen;
             syncWorkspaceScreen();
             if (screen === 'settings') syncSettingsStatus();
-            if (changed && render) renderTaskList();
+            if (changed && render) {
+                if (screen === 'today' || screen === 'projects') syncWorkbenchPages();
+                else if (screen !== 'settings' && !returningFromSettings) renderTaskList();
+            }
             if (changed) window.scrollTo({ top: workspaceUI.pageScroll[screen] || 0, behavior: 'instant' });
             if (focus || restoreFocus) {
                 const headings = { today: 'todayTitle', projects: 'projectsTitle', settings: 'settingsTitle', tasks: 'workspaceTitle', review: 'workspaceTitle' };
+                const opener = previous === 'settings' && restoreFocus
+                    ? resolveFocusReturnElement(workspaceUI.settingsReturnFocus) : null;
                 const remembered = resolveFocusReturnElement(workspaceUI.pageFocus[screen]);
                 const heading = document.getElementById(headings[screen]);
                 const navigation = Array.from(document.querySelectorAll('[data-workbench-screen]')).find(button =>
                     button.dataset.workbenchScreen === screen && isWorkspaceFocusReachable(button));
                 const fallback = screen === 'settings' ? document.getElementById('workspaceSettingsBtn') : navigation || DOM.openModalBtn;
-                const target = [remembered, heading, fallback, DOM.openModalBtn].find(isWorkspaceFocusReachable);
+                const target = [opener, remembered, heading, fallback, DOM.openModalBtn].find(isWorkspaceFocusReachable);
                 target?.focus({ preventScroll: true });
             }
             return true;
@@ -1249,7 +1258,6 @@
             const host = document.getElementById('workspaceViewNavHost');
             if (DOM.viewSwitcher.parentElement !== host) host.append(DOM.viewSwitcher);
             host.hidden = workspaceUI.screen !== 'tasks';
-            DOM.viewSwitcher.setAttribute('aria-orientation', 'horizontal');
         }
         function syncWorkspaceKeyboard() {
             const viewport = window.visualViewport;
