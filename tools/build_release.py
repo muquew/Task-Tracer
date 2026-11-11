@@ -22,8 +22,8 @@ DISTRIBUTION_SOURCES = {
     'vercel.json': 'vercel.json',
     'LICENSE': 'LICENSE',
     'THIRD_PARTY_NOTICES.md': 'THIRD_PARTY_NOTICES.md',
-    'README.md': 'docs/distribution.md',
-    'README_zh_cn.md': 'docs/distribution_zh_cn.md',
+    'README.md': 'README.md',
+    'README_zh_cn.md': 'README_zh_cn.md',
     'fav/android-chrome-192x192.png': 'fav/android-chrome-192x192.png',
     'fav/android-chrome-512x512.png': 'fav/android-chrome-512x512.png',
     'fav/apple-touch-icon.png': 'fav/apple-touch-icon.png',
@@ -83,8 +83,6 @@ def build(output_dir: Path) -> Path:
     payload: dict[str, bytes] = {}
     for target, source in sorted(DISTRIBUTION_SOURCES.items()):
         data = validated_source(ROOT, source).read_bytes()
-        if target in ('README.md', 'README_zh_cn.md'):
-            data = data.replace(b'](../LICENSE)', b'](LICENSE)')
         payload[target] = data
     version = app_version(payload['index.html'].decode('utf-8'))
     manifest = {'app': 'Task Tracer', 'version': version,

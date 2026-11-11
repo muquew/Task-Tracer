@@ -5,10 +5,12 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import tempfile
 from unittest.mock import patch
+from urllib.parse import unquote, urlsplit
 import zipfile
 
 import build_release as release
@@ -21,6 +23,14 @@ def assert_archive(path: Path) -> bytes:
         assert len(names) == 24 and len(names) == len(expected) and set(names) == expected
         assert 'THIRD_PARTY_NOTICES.md' in names
         assert archive.read('THIRD_PARTY_NOTICES.md') == (release.ROOT / 'THIRD_PARTY_NOTICES.md').read_bytes()
+        for name in ('README.md', 'README_zh_cn.md'):
+            content = archive.read(name)
+            assert content == (release.ROOT / name).read_bytes(), f'{name} differs from the shared project documentation'
+            for link in re.findall(r'!?\[[^\]]*\]\(([^\s)]+)\)', content.decode('utf-8')):
+                target = urlsplit(link)
+                if target.scheme or target.netloc or not target.path:
+                    continue
+                assert unquote(target.path) in expected, f'{name} links to an unpackaged file: {link}'
         manifest = json.loads(archive.read('integrity.json'))
         assert set(manifest['files']) == expected - {'integrity.json'}
         for name, digest in manifest['files'].items():
@@ -82,7 +92,7 @@ def run() -> None:
 
             outside = base / 'outside-source.txt'
             outside.write_text('SYNTHETIC_OUTSIDE_SOURCE\n')
-            for name in ('index.html', 'docs/distribution.md', 'docs/distribution_zh_cn.md'):
+            for name in ('index.html', 'README.md', 'README_zh_cn.md'):
                 source = root / name
                 content = source.read_bytes()
                 source.unlink()

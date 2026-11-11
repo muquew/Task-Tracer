@@ -8,4 +8,4 @@ List the checks actually run and their results. Explain checks not run. Use synt
 
 ## Compatibility and remaining risks
 
-Describe effects on stored tasks, imports, recurrence, offline use or upgrades when relevant. For other changes, write “No data-format change.” See [CONTRIBUTING.md](../CONTRIBUTING.md) for the required version, translation and CSP updates.
+Describe effects on stored tasks, imports, recurrence, offline use or upgrades when relevant. For other changes, write “No data-format change.” See [Development](../README.md#development-and-contributions) for setup and checks. Keep app/cache versions and translations aligned; regenerate CSP hashes after inline-script changes.
