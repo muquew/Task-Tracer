@@ -253,7 +253,7 @@ def late_completion(page, url):
         };
     }""")
     page.locator('#submitBtn').click()
-    page.wait_for_function('typeof window.finishViewDeletion === "function"')
+    page.wait_for_function('() => typeof window.finishViewDeletion === "function"')
     page.locator('#cancelBtn').click()
     open_task_editor(page)
     page.locator('#taskName').fill('A later unsaved task draft')
