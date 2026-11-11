@@ -708,6 +708,7 @@ button.stats-mini:hover .stats-mini-action { color: var(--color-primary); opacit
 .stats-project-remainder { border: 0; background: transparent; color: var(--color-primary); padding: 13px 0 0; text-align: start; cursor: pointer; font: inherit; font-size: 12px; }
 .stats-inventory .stats-mini:disabled { cursor: default; }
 .stats-return-bar > .btn { display: inline-flex; align-items: center; gap: 6px; }
+#savedViewDeleteConfirm { overflow-wrap: anywhere; }
 .stats-action-hint { color: var(--text-secondary); font-size: 12px; line-height: 1.65; grid-column: 1; }
 .stats-action-link { color: var(--color-primary); font-size: 12px; margin-top: 3px; grid-column: 1; }
 .stats-review .stats-trend { padding: 0; margin: 0; border: 0; border-radius: 0; box-shadow: none; background: transparent; padding-top: 8px; }
