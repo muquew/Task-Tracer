@@ -2,7 +2,7 @@
 
 A local-first task workspace for capturing work, planning your day and reviewing progress. No account required.
 
-[Open app](https://todo.muquew.com/) · [Download](https://todo.muquew.com/downloads/task-tracer-5.0.0.zip) · [Releases](https://github.com/muquew/Task-Tracer/releases) · [简体中文](README_zh_cn.md)
+[Open app](https://todo.muquew.com/) · [Download](https://todo.muquew.com/downloads/task-tracer-5.0.1.zip) · [Releases](https://github.com/muquew/Task-Tracer/releases) · [简体中文](README_zh_cn.md)
 
 | Workspace | Task editor |
 | --- | --- |

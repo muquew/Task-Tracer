@@ -1,6 +1,6 @@
 {
   "name": "task-tracer-quality-tools",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "private": true,
   "description": "Development tools and checked-in static assets for the local-first Task Tracer PWA.",
   "scripts": {

@@ -44,6 +44,9 @@ jobs:
         run: python -m playwright install --with-deps chromium
       - name: Validate static files, dates, and browser workflows
         run: python tools/check.py --report dist/check-results.json
+      - name: Build verified static distribution
+        id: build_distribution
+        run: python tools/build_release.py
       - name: Summarize check program outcomes
         if: always()
         run: |
@@ -96,20 +99,69 @@ jobs:
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as summary:
               summary.write('\n'.join(lines) + '\n')
           PY
+      - name: Upload verified static distribution
+        id: distribution_artifact
+        timeout-minutes: 2
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: task-tracer-static
+          path: dist/
+          if-no-files-found: error
+      - name: Retry verified distribution upload
+        id: distribution_artifact_retry
+        if: ${{ !cancelled() && steps.distribution_artifact.outcome == 'failure' }}
+        timeout-minutes: 2
+        uses: actions/upload-artifact@v4
+        with:
+          name: task-tracer-static
+          path: dist/
+          if-no-files-found: error
+          overwrite: true
       - name: Retain program outcomes even when a check fails
+        id: check_results_artifact
         if: always()
+        timeout-minutes: 2
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: task-tracer-check-results
           path: dist/check-results.json
           if-no-files-found: warn
-      - name: Build verified static distribution
-        run: python tools/build_release.py
-      - uses: actions/upload-artifact@v4
-        with:
-          name: task-tracer-static
-          path: dist/
-          if-no-files-found: error
+      - name: Summarize artifact delivery
+        if: always()
+        env:
+          BUILD_OUTCOME: ${{ steps.build_distribution.outcome }}
+          DISTRIBUTION_OUTCOME: ${{ steps.distribution_artifact.outcome }}
+          DISTRIBUTION_RETRY_OUTCOME: ${{ steps.distribution_artifact_retry.outcome }}
+          DIAGNOSTIC_OUTCOME: ${{ steps.check_results_artifact.outcome }}
+        run: |
+          python - <<'PY'
+          import os
+
+          def outcome(name):
+              value = os.environ.get(name, '')
+              return value if value in ('success', 'failure', 'cancelled', 'skipped') else 'not_run'
+
+          build = outcome('BUILD_OUTCOME')
+          initial = outcome('DISTRIBUTION_OUTCOME')
+          retry = outcome('DISTRIBUTION_RETRY_OUTCOME')
+          diagnostic = outcome('DIAGNOSTIC_OUTCOME')
+          delivered = initial == 'success' or retry == 'success'
+          if diagnostic in ('failure', 'cancelled'):
+              print('::warning::Diagnostic artifact upload failed; check outcomes remain in the job summary and original logs.')
+          if initial == 'failure' and retry == 'success':
+              print('::notice::Verified distribution upload recovered on its single retry.')
+          if build == 'success' and not delivered:
+              print('::error::Verified distribution artifact was not delivered.')
+          lines = ['## Artifact delivery', '', '| Step | Outcome |', '| --- | --- |',
+                   f'| Verified build | {build} |', f'| Distribution upload | {initial} |',
+                   f'| Distribution retry | {retry} |', f'| Diagnostic upload | {diagnostic} |']
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as summary:
+              summary.write('\n'.join(lines) + '\n')
+          if build == 'success' and not delivered:
+              raise SystemExit(1)
+          PY
 
   compatibility:
     runs-on: ubuntu-latest
@@ -372,12 +424,33 @@ jobs:
               print('::error::browser_matrix.py status=invalid_report')
           PY
       - name: Retain browser scope, outcomes and original logs
+        id: browser_artifact
         if: always()
+        timeout-minutes: 2
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: task-tracer-browser-${{ matrix.browser }}
           path: dist/
           if-no-files-found: warn
+      - name: Summarize browser artifact delivery
+        if: always()
+        env:
+          ARTIFACT_OUTCOME: ${{ steps.browser_artifact.outcome }}
+          BROWSER_ENGINE: ${{ matrix.browser }}
+        run: |
+          python - <<'PY'
+          import os
+
+          outcome = os.environ.get('ARTIFACT_OUTCOME', '')
+          outcome = outcome if outcome in ('success', 'failure', 'cancelled', 'skipped') else 'not_run'
+          engine = os.environ.get('BROWSER_ENGINE', '')
+          engine = engine if engine in ('chromium', 'firefox', 'webkit') else 'unknown'
+          if outcome in ('failure', 'cancelled'):
+              print('::warning::Browser diagnostic artifact upload failed; full program outcomes remain in the job summary and original logs.')
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as summary:
+              summary.write(f'\n## Browser artifact delivery\n\nBrowser: {engine}. Diagnostic upload: {outcome}.\n')
+          PY
 
   deployed_site:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_site }}

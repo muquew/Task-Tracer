@@ -1,11 +1,11 @@
 const CACHE_PREFIX = 'task-tracer-';
-const CACHE_NAME = 'task-tracer-v5.0.0';
+const CACHE_NAME = 'task-tracer-v5.0.1';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './manifest.json',
-    './resources/workspace.css?v=5.0.0',
-    './resources/workbench.js?v=5.0.0',
+    './resources/workspace.css?v=5.0.1',
+    './resources/workbench.js?v=5.0.1',
     './THIRD_PARTY_NOTICES.md',
     './resources/en.json?v=5.0',
     './resources/zh-CN.json?v=5.0',

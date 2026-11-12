@@ -2,7 +2,7 @@
 
 一个本地优先的个人任务工作台，用来记录、安排和回顾日常工作，无需账号。
 
-[打开应用](https://todo.muquew.com/) · [下载发行包](https://todo.muquew.com/downloads/task-tracer-5.0.0.zip) · [版本发布](https://github.com/muquew/Task-Tracer/releases) · [English](README.md)
+[打开应用](https://todo.muquew.com/) · [下载发行包](https://todo.muquew.com/downloads/task-tracer-5.0.1.zip) · [版本发布](https://github.com/muquew/Task-Tracer/releases) · [English](README.md)
 
 | 工作区 | 任务面板 |
 | --- | --- |

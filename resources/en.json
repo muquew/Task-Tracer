@@ -835,7 +835,8 @@
     "noUpcoming": "No upcoming deadlines",
     "nextSevenDays": "Next 7 days",
     "taskActions": "Task actions",
-    "progressScope": "Entire workspace (excluding archived)"
+    "progressScope": "Entire workspace (excluding archived)",
+    "skipToContent": "Skip to content"
   },
   "settings": {
     "title": "Settings & data",

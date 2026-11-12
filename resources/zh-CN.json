@@ -835,7 +835,8 @@
     "noUpcoming": "暂无即将截止的任务",
     "nextSevenDays": "未来7天",
     "taskActions": "任务操作",
-    "progressScope": "全工作区（不含归档）"
+    "progressScope": "全工作区（不含归档）",
+    "skipToContent": "跳至内容"
   },
   "settings": {
     "title": "设置与数据",
