@@ -95,6 +95,9 @@
         const safeTasks = () => Array.isArray(latest?.tasks) ? latest.tasks.filter(task => task && typeof task === 'object' && task.id !== undefined) : [];
         const isAvailable = () => latest?.storageAvailable !== false;
         const isPlanned = task => !task.archived && task.focusDate === latest.today;
+        const isCarryover = task => !task.completed && !task.archived
+            && typeof task.focusDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(task.focusDate)
+            && task.focusDate < latest.today;
         const orderOf = task => Number.isFinite(Number(task.order)) ? Number(task.order) : 0;
         const compareTaskOrder = (a, b) => orderOf(a) - orderOf(b) || collator.compare(taskKey(a), taskKey(b));
         const deadlineOrder = task => {
@@ -133,7 +136,7 @@
             const count = node('span', 'workbench-count');
             headingRow.append(heading, count);
             element.append(headingRow);
-            return { element, heading, count };
+            return { element, headingRow, heading, count };
         }
 
         function emptyState(symbol) {
@@ -153,6 +156,10 @@
         progress.append(progressLabel, progressBar);
         const pendingList = node('div', 'workbench-task-list');
         const planEmpty = emptyState('check');
+        const planActions = node('div', 'workbench-section-actions');
+        planEmpty.action.classList.add('workbench-choose-tasks');
+        planActions.append(plan.count, planEmpty.action);
+        plan.headingRow.append(planActions);
         const pendingMore = button('workbench-more', 'more-pending');
         const completedHeading = node('h3', 'workbench-completed-heading');
         const completedList = node('div', 'workbench-task-list workbench-completed-list');
@@ -204,8 +211,9 @@
             const meta = node('div', 'workbench-task-meta');
             meta.id = `workbench-task-meta-${++sequence}`;
             const project = node('span', 'workbench-task-project');
+            const carryover = node('span', 'workbench-task-carryover');
             const due = node('span', 'workbench-task-due');
-            meta.append(project, due);
+            meta.append(project, carryover, due);
             copy.append(name, meta);
             const planAction = button(candidate ? 'workbench-plan-add' : 'workbench-task-plan', 'plan');
             if (!candidate) planAction.append(icon('minus'));
@@ -215,7 +223,7 @@
             }
             if (toggle) element.append(toggle);
             element.append(copy, planAction);
-            return { element, toggle, name, meta, project, due, planAction };
+            return { element, toggle, name, meta, project, carryover, due, planAction };
         }
 
         function renderRow(task, candidate = false) {
@@ -229,6 +237,8 @@
             row.element.classList.toggle('is-overdue', !task.completed && api.isOverdue(task));
             row.name.textContent = name;
             row.project.textContent = projectName(task) || text('v5.projects.unassigned');
+            row.carryover.hidden = !candidate || !isCarryover(task);
+            row.carryover.textContent = text('v5.today.carryover');
             const due = api.formatDue(task);
             row.due.textContent = due;
             row.due.hidden = !due;
@@ -270,9 +280,10 @@
                 const right = Date.parse(b.completedAt || '') || 0;
                 return right - left || compareTaskOrder(a, b);
             });
-            const urgent = tasks.filter(task => !task.completed && !task.archived && !isPlanned(task)
-                && (api.isOverdue(task) || api.dueKey(task) === latest.today));
-            urgent.sort((a, b) => Number(api.isOverdue(b)) - Number(api.isOverdue(a))
+            const needsPlanning = tasks.filter(task => !task.completed && !task.archived && !isPlanned(task)
+                && (isCarryover(task) || api.isOverdue(task) || api.dueKey(task) === latest.today));
+            needsPlanning.sort((a, b) => Number(api.isOverdue(b)) - Number(api.isOverdue(a))
+                || Number(isCarryover(b)) - Number(isCarryover(a))
                 || deadlineOrder(a) - deadlineOrder(b) || compareTaskOrder(a, b));
 
             plan.heading.textContent = text('v5.today.plan');
@@ -287,7 +298,8 @@
             planEmpty.heading.textContent = text(!isAvailable() ? 'v5.common.storageUnavailable'
                 : completed.length ? 'v5.today.planDone' : 'v5.today.planEmpty');
             planEmpty.action.textContent = text('v5.today.chooseTasks');
-            planEmpty.action.hidden = !isAvailable() || planned.length > 0 || !tasks.some(task => !task.completed && !task.archived);
+            planEmpty.action.hidden = false;
+            planEmpty.action.disabled = !isAvailable();
             reconcile(pendingList, pending.slice(0, pendingLimit).map(task => renderRow(task)));
             setMore(pendingMore, pendingLimit, pending.length, 50);
             completedHeading.hidden = completed.length === 0;
@@ -296,14 +308,14 @@
             setMore(completedMore, completedLimit, completed.length, 10);
 
             candidates.heading.textContent = text('v5.today.candidates');
-            candidates.element.hidden = !isAvailable() && urgent.length === 0;
-            candidates.count.textContent = countText('v5.common.taskCount', urgent.length);
-            candidateEmpty.element.hidden = urgent.length !== 0;
+            candidates.element.hidden = !isAvailable() && needsPlanning.length === 0;
+            candidates.count.textContent = countText('v5.common.taskCount', needsPlanning.length);
+            candidateEmpty.element.hidden = needsPlanning.length !== 0;
             candidateEmpty.heading.textContent = text(isAvailable() ? 'v5.today.candidatesEmpty' : 'v5.common.storageUnavailable');
-            reconcile(candidateList, urgent.slice(0, candidateLimit).map(task => renderRow(task, true)));
-            setMore(candidateMore, candidateLimit, urgent.length, 8);
+            reconcile(candidateList, needsPlanning.slice(0, candidateLimit).map(task => renderRow(task, true)));
+            setMore(candidateMore, candidateLimit, needsPlanning.length, 8);
             const used = new Set([...pending.slice(0, pendingLimit), ...completed.slice(0, completedLimit)].map(task => `plan:${taskKey(task)}`));
-            urgent.slice(0, candidateLimit).forEach(task => used.add(`candidate:${taskKey(task)}`));
+            needsPlanning.slice(0, candidateLimit).forEach(task => used.add(`candidate:${taskKey(task)}`));
             for (const key of rows.keys()) if (!used.has(key)) rows.delete(key);
         }
 

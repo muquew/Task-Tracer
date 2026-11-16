@@ -96,12 +96,16 @@ def ensure_conda_library_path() -> None:
         os.environ["LD_LIBRARY_PATH"] = ":".join([lib_path, *paths])
 
 
-def browser_launch_options() -> dict[str, Any]:
+def browser_launch_options(browser: str = 'chromium') -> dict[str, Any]:
+    if browser not in {'chromium', 'firefox', 'webkit'}:
+        raise ValueError(f'Unsupported browser engine: {browser}')
     options: dict[str, Any] = {"headless": True}
-    executable = os.environ.get("TASK_TRACER_BROWSER_EXECUTABLE")
+    executable = os.environ.get(f'TASK_TRACER_{browser.upper()}_EXECUTABLE')
+    if browser == 'chromium' and not executable:
+        executable = os.environ.get('TASK_TRACER_BROWSER_EXECUTABLE')
     if executable:
         options["executable_path"] = executable
-    else:
+    elif browser == 'chromium':
         # Full Chromium keeps real notification permission coverage in headless CI.
         options["channel"] = "chromium"
     return options
@@ -209,6 +213,7 @@ def workbench_screen(page: Page) -> str | None:
 
 def navigate_workbench(page: Page, screen: str) -> None:
     """Use a visible first-level destination; preserve an already active page."""
+    close_mobile_filters(page)
     assert screen in {'today', 'tasks', 'projects', 'review', 'settings'}, screen
     assert is_workbench_v5(page), 'The five-page workbench is not present'
     if screen != 'settings':
@@ -383,6 +388,7 @@ def _return_from_preference(page: Page, origin: tuple[bool, str | None, str | No
 
 def return_to_task_workspace(page: Page) -> None:
     """Select the task library, retaining its own active view and scope."""
+    close_mobile_filters(page)
     if is_workbench_v5(page):
         navigate_workbench(page, 'tasks')
         return
@@ -491,6 +497,7 @@ def enter_batch_mode(page: Page) -> None:
     """Enter selection mode after exposing the actual filter toolbar."""
     return_to_task_workspace(page)
     reveal_filters(page)
+    close_mobile_filters(page)
     button = page.locator('#batchModeBtn')
     if button.get_attribute('aria-pressed') != 'true':
         button.click()
@@ -1638,6 +1645,13 @@ def cancel_delete_task(page: Page, task_name: str) -> None:
     expect(task_locator(page, task_name)).to_have_count(1)
 
 
+def close_mobile_filters(page: Page) -> None:
+    dialog = page.locator('#mobileFiltersDialog')
+    if dialog.count() and dialog.is_visible():
+        page.locator('#mobileFiltersDoneBtn').click()
+        expect(dialog).to_be_hidden()
+
+
 def reveal_filters(page: Page) -> None:
     content = page.locator('#toolsDrawerContent')
     if content.count() and not content.is_visible():
@@ -1659,6 +1673,7 @@ def select_filter(page: Page, value: str) -> None:
     expect(selected_option).to_have_class(
         re.compile(r"(^|\s)selected(\s|$)")
     )
+    close_mobile_filters(page)
 
 
 def select_project(page: Page, value: str) -> None:
@@ -1679,6 +1694,7 @@ def select_project(page: Page, value: str) -> None:
     )
     selected_text = selected_option.locator("span").first.text_content() or ""
     expect(project_btn).to_have_attribute("aria-label", re.compile(re.escape(selected_text.strip())))
+    close_mobile_filters(page)
 
 
 def select_sort(page: Page, value: str) -> None:
@@ -1701,6 +1717,7 @@ def select_sort(page: Page, value: str) -> None:
     expect(selected_option).to_have_class(
         re.compile(r"(^|\s)selected(\s|$)")
     )
+    close_mobile_filters(page)
     if restore_view:
         select_view(page, previous_view)
     if origin_screen == 'review':
@@ -3840,9 +3857,17 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                 if not destination_box or destination_box['width'] < 44 or destination_box['height'] < 44:
                     raise AssertionError(f'{label} navigation target is undersized: {selector}: {destination_box}')
             if visual_page.locator('#workspaceSidebarScroll').count():
-                expect(visual_page.locator('#toolsDrawerToggleBtn')).to_have_attribute('aria-expanded', 'true')
-                for selector in ('#searchInput', '#saveSmartViewBtn', '#toolsDrawerToggleBtn', '#batchModeBtn',
-                                 '#projectFilterBtn', '#filterBtn', '#sortBtn'):
+                mobile_sheet = viewport['width'] <= 779 and visual_page.locator('#mobileFiltersDialog').count()
+                if not mobile_sheet:
+                    reveal_filters(visual_page)
+                expect(visual_page.locator('#toolsDrawerToggleBtn')).to_have_attribute('aria-expanded', 'false' if mobile_sheet else 'true')
+                control_selectors = ['#searchInput', '#saveSmartViewBtn', '#toolsDrawerToggleBtn', '#batchModeBtn',
+                                     '#projectFilterBtn', '#filterBtn', '#sortBtn']
+                for selector in control_selectors:
+                    if mobile_sheet and selector == '#projectFilterBtn':
+                        reveal_filters(visual_page)
+                        expect(visual_page.locator('#mobileFiltersDialog')).to_be_visible()
+                        expect(visual_page.locator('#mobileFiltersBody #toolsDrawerContent')).to_have_count(1)
                     control = visual_page.locator(selector)
                     expect(control).to_be_visible()
                     expect(control).to_be_enabled()
@@ -3865,6 +3890,8 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                         const hit = document.elementFromPoint((r.left+r.right)/2, (r.top+r.bottom)/2);
                         return hit === node || node.contains(hit);
                     }"""), f'{label} toolbar control is obscured: {selector}'
+                if mobile_sheet:
+                    close_mobile_filters(visual_page)
             visual_page.locator(".task-item").first.scroll_into_view_if_needed()
 
             metrics = visual_page.evaluate(
@@ -3873,8 +3900,10 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                     const doc = document.documentElement;
                     const selectors = ['header', '.controls-bar', '.task-item', '.task-actions'];
                     const modernToolbar = Boolean(document.querySelector('#workspaceSidebarScroll'));
+                    const mobileFilterSheet = Boolean(document.querySelector('#mobileFiltersDialog')) && viewportWidth <= 779;
                     const controlSelectors = modernToolbar
-                        ? ['.search-box', '#saveSmartViewBtn', '#toolsDrawerToggleBtn', '#projectDropdown', '#filterDropdown', '#sortDropdown', '#batchModeBtn']
+                        ? ['.search-box', '#saveSmartViewBtn', '#toolsDrawerToggleBtn', '#batchModeBtn',
+                           ...(!mobileFilterSheet ? ['#projectDropdown', '#filterDropdown', '#sortDropdown'] : [])]
                         : ['.search-box', '#projectDropdown', '#filterDropdown', '#sortDropdown', '#saveSmartViewBtn'];
                     const controlBar = document.querySelector('.controls-bar');
                     const controlRect = controlBar.getBoundingClientRect();
@@ -3936,7 +3965,7 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                     if (modernToolbar) {
                         const groups = [
                             ['.toolbar-main-row', ['.search-box', '#saveSmartViewBtn', '#toolsDrawerToggleBtn', '#batchModeBtn']],
-                            ['#toolsDrawerContent .toolbar-filter-row', ['#projectDropdown', '#filterDropdown', '#sortDropdown']]
+                            ...(!mobileFilterSheet ? [['#toolsDrawerContent .toolbar-filter-row', ['#projectDropdown', '#filterDropdown', '#sortDropdown']]] : [])
                         ];
                         const groupRects = [];
                         for (const [selector, children] of groups) {
@@ -3975,6 +4004,7 @@ def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[st
                         controlOverlaps,
                         controlOutside,
                         modernToolbar,
+                        mobileFilterSheet,
                         structureIssues,
                         hasTaskName: Boolean(document.querySelector('.task-name')?.textContent.trim()),
                         hasVisibleActions: [...document.querySelectorAll('.task-actions button, .task-header [data-action="toggle"]')]
@@ -4048,7 +4078,7 @@ def smoke(url: str) -> None:
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(**browser_launch_options())
-        context = browser.new_context(accept_downloads=True)
+        context = browser.new_context(accept_downloads=True, timezone_id='UTC')
         context.grant_permissions(["notifications"], origin=get_origin(url))
         page = context.new_page()
         page.on("pageerror", lambda error: errors.append(str(error)))

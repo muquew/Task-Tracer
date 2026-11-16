@@ -31,7 +31,7 @@ def controlled_server():
 def run(engine: str) -> None:
     with sync_playwright() as p:
         launcher = getattr(p, engine)
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         options['timeout'] = 30000
         for viewport in ({'width': 1280, 'height': 800}, {'width': 390, 'height': 844}):
             print(f'{engine} {viewport["width"]}px: starting', flush=True)
