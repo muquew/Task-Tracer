@@ -24,8 +24,11 @@ PROGRAMS = (
     'compatibility_playwright.py',
     'workbench_navigation_playwright.py',
     'today_carryover_playwright.py',
+    'today_planning_playwright.py',
     'today_selection_playwright.py',
+    'today_review_playwright.py',
     'review_history_playwright.py',
+    'project_rename_playwright.py',
     'mobile_filters_playwright.py',
     'task_input_names_playwright.py',
     'task_open_playwright.py',
@@ -67,7 +70,7 @@ PROGRAMS = (
 GROUPS = {
     'core': ('compatibility_playwright.py',),
     'workbench': ('workbench_navigation_playwright.py', 'inclusive_navigation_playwright.py',
-                  'today_carryover_playwright.py', 'today_selection_playwright.py', 'review_history_playwright.py', 'mobile_filters_playwright.py'),
+                  'today_carryover_playwright.py', 'today_planning_playwright.py', 'today_selection_playwright.py', 'today_review_playwright.py', 'review_history_playwright.py', 'project_rename_playwright.py', 'mobile_filters_playwright.py'),
     'appearance': ('appearance_preferences_playwright.py', 'settings_navigation_playwright.py'),
     'capture': (
         'task_draft_playwright.py', 'quick_add_recovery_playwright.py',

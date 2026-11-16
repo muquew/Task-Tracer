@@ -2,7 +2,7 @@
 
 一个本地优先的个人任务工作台，用来记录、安排和回顾日常工作，无需账号。
 
-[打开应用](https://todo.muquew.com/) · [下载发行包](https://todo.muquew.com/downloads/task-tracer-5.0.1.zip) · [版本发布](https://github.com/muquew/Task-Tracer/releases) · [English](README.md)
+[打开应用](https://todo.muquew.com/) · [下载已发布版 5.0.1](https://todo.muquew.com/downloads/task-tracer-5.0.1.zip) · [版本发布](https://github.com/muquew/Task-Tracer/releases) · [English](README.md)
 
 | 工作区 | 任务面板 |
 | --- | --- |
@@ -10,10 +10,10 @@
 
 ## 功能
 
-- **今天：** 安排今日计划，完成任务，查看此前计划中未完成的任务和尚未安排的紧急待办。
+- **今天：** 从已有任务中选择、加入或移出今日计划，再回到今天完成工作；此前计划中未完成的任务仍可继续安排。
 - **任务：** 列表、日历、时间线，以及搜索、已有标签复用、保存视图、批量操作与归档；点击标题即可编辑。
-- **项目：** 查看真实工作量、完成与归档数量，搜索项目并进入相关任务。
-- **回顾：** 查看完成、逾期和近七天进展；点击完成总数或每日柱状图查看对应任务，再返回原来的回顾位置。
+- **项目：** 浏览工作量和即将到期的任务、搜索项目；支持重命名与撤销。
+- **回顾：** 优先查看近七天的完成活动；点击总数或每日柱状图查看对应任务，再返回原来的回顾位置。
 - **快速记录：** 文本输入、描述、子任务、截止日期、提醒和重复任务。
 - **备份数据：** JSON 导出、导入预览、合并、恢复历史和 CSV 报表。
 - **选择外观：** 四套主题、浅色／深色模式、中英文界面、键盘操作与响应式布局。
@@ -61,6 +61,8 @@ python3 -m http.server 8080 --bind 127.0.0.1
 
 ## 开发与贡献
 
+当前源码为 5.1.0 候选版本，顶部下载仍指向已发布的 5.0.1。
+
 在 **源码仓库** 中使用 Python 3.12+、Node.js 22+；下载的应用发行包不包含开发工具。以下命令在仓库根目录的 POSIX shell 中运行：
 
 ```bash
@@ -75,6 +77,8 @@ npm run check
 - Windows PowerShell 中先运行 `py -3 -m venv .venv`，再用 `.venv\Scripts\Activate.ps1` 激活，然后执行其余安装命令。npm 脚本使用 `python3`；若此命令不可用，可参照 `package.json` 中对应命令，用已激活环境中的 `python` 直接执行，例如 `python tools/check.py --static-only`。
 - 使用 `npm run dev` 或 `npm run preview`，打开 [localhost:8080](http://127.0.0.1:8080/)。两者都直接提供当前应用文件，不含编译或热更新。修改后刷新页面；若 service worker 仍提供旧副本，可在浏览器开发者工具中注销此本地网站的 service worker，再重新加载。测试数据与个人任务分开保存。
 - 修改 `styles/workspace.css` 后运行 `npm run styles`，提交 `resources/workspace.css` 前用 `npm run styles:check` 核对编译结果。
+- 原创品牌源文件为 `fav/task-tracer.svg`，修改后在已安装 Chromium 的环境中运行 `npm run icons`。`npm run icons:check` 只核对源文件与产物哈希、PNG 尺寸和 ICO 帧，不启动浏览器，也不重新渲染比较。
+- 各主题共用中性色表面、排版和间距变量，强调色用于操作与状态；Header 与安装图标沿用统一的原创 SVG 源文件。
 
 | 命令 | 范围与输出 |
 | --- | --- |
@@ -86,7 +90,7 @@ npm run check
 
 - 运行全部浏览器前，先用 `python -m playwright install --with-deps chromium firefox webkit` 安装。按需缩小范围，例如 `npm run test:browsers -- --browser chromium --group capture --report dist/capture-chromium.json`；追加 `--list` 可只查看范围而不启动浏览器。
 - 本地 Chromium 检查可先运行 `export TASK_TRACER_BROWSER_EXECUTABLE=/absolute/path/to/chromium` 指定已安装的浏览器（PowerShell：`$env:TASK_TRACER_BROWSER_EXECUTABLE = 'C:\path\to\chrome.exe'`），再执行检查命令。此设置仅影响 Chromium；CI 安装 Playwright 固定的浏览器版本。模拟手机视口不能代替真机或 Safari/iOS 验证。
-- 兼容性检查，以及 Today 的历史计划与任务选择、手机筛选、输入名称、直接打开任务、标签候选和回顾历史专项，还可通过 `TASK_TRACER_CHROMIUM_EXECUTABLE`、`TASK_TRACER_FIREFOX_EXECUTABLE` 或 `TASK_TRACER_WEBKIT_EXECUTABLE` 指定所选引擎的程序。Chromium 专属值优先于旧的 `TASK_TRACER_BROWSER_EXECUTABLE` 别名；自定义程序需要的原生库路径由外部测试进程环境提供。
+- 兼容性检查，以及 Today 的历史计划、选择、规划与回顾、手机筛选、输入名称、直接打开任务、标签候选、回顾历史和项目重命名专项，还可通过 `TASK_TRACER_CHROMIUM_EXECUTABLE`、`TASK_TRACER_FIREFOX_EXECUTABLE` 或 `TASK_TRACER_WEBKIT_EXECUTABLE` 指定所选引擎的程序。Chromium 专属值优先于旧的 `TASK_TRACER_BROWSER_EXECUTABLE` 别名；自定义程序需要的原生库路径由外部测试进程环境提供。
 - 界面修改同时检查中英文、键盘操作和窄屏；导入与恢复使用独立测试配置和示例数据。
 - 修改内联脚本后运行 `python tools/security_policy.py --write` 更新 CSP；修改翻译后先运行 `python tools/translation_fallback.py --write`，再更新 CSP。
 - 使用 `npm run build` 打包；ZIP、其中的完整性清单和 SHA-256 校验文件位于 `dist/`。打包会检查静态文件和 CSP，不执行浏览器测试，也不会发布或部署。打包前完成相关检查，保留已发布下载包及其校验值。

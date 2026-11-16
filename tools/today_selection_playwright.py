@@ -36,7 +36,7 @@ def chooser(page):
     expect(control).to_be_visible()
     expect(control).to_be_enabled()
     expect(control.locator('xpath=ancestor::*[contains(@class,"workbench-section-actions")]')).to_have_count(1)
-    expect(page.locator('.today-plan .workbench-empty .workbench-link')).to_have_count(0)
+    expect(page.locator('.today-plan .workbench-empty .workbench-choose-tasks')).to_have_count(0)
     return control
 
 

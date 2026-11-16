@@ -200,7 +200,7 @@ def check_projects_and_independent_scopes(page, output, checks):
     baseline = stored(page)
     navigate_workbench(page, 'projects')
     projects = page.locator('#projectsWorkspace')
-    studio = projects.get_by_role('button', name=re.compile('Studio'))
+    studio = projects.locator('button[data-workbench-action="open-project"]').filter(has_text='Studio')
     expect(studio).to_have_count(1)
     studio.click()
     assert_active_page(page, 'tasks')

@@ -7,6 +7,9 @@
         check: ['M5 12l4 4L19 6'],
         plus: ['M12 5v14', 'M5 12h14'],
         minus: ['M5 12h14'],
+        target: ['M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0',
+            'M17 12a5 5 0 1 1-10 0 5 5 0 0 1 10 0',
+            'M13 12a1 1 0 1 1-2 0 1 1 0 0 1 2 0'],
         arrow: ['M5 12h14', 'M13 6l6 6-6 6'],
         calendar: ['M8 3v4m8-4v4', 'M4 10h16', 'M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1z'],
         folder: ['M3 7h6l2 2h10v10H3z', 'M3 7V5h6l2 2h8v2']
@@ -67,6 +70,7 @@
         let projectQuery = '';
         let projectSort = 'pending';
         let projectLimit = 24;
+        let projectRevealName = '';
         let pendingLimit = 50;
         let completedLimit = 10;
         let candidateLimit = 8;
@@ -156,6 +160,9 @@
         progress.append(progressLabel, progressBar);
         const pendingList = node('div', 'workbench-task-list');
         const planEmpty = emptyState('check');
+        const reviewActivity = button('workbench-link workbench-review-link', 'open-review');
+        reviewActivity.hidden = true;
+        planEmpty.element.append(reviewActivity);
         const planActions = node('div', 'workbench-section-actions');
         planEmpty.action.classList.add('workbench-choose-tasks');
         planActions.append(plan.count, planEmpty.action);
@@ -216,7 +223,7 @@
             meta.append(project, carryover, due);
             copy.append(name, meta);
             const planAction = button(candidate ? 'workbench-plan-add' : 'workbench-task-plan', 'plan');
-            if (!candidate) planAction.append(icon('minus'));
+            if (!candidate) planAction.append(icon('target'));
             for (const control of [toggle, name, planAction].filter(Boolean)) {
                 control.dataset.workbenchTaskKey = key;
                 control.setAttribute('aria-describedby', meta.id);
@@ -295,8 +302,13 @@
             progressBar.value = completed.length;
             progressBar.setAttribute('aria-label', progressText);
             planEmpty.element.hidden = pending.length !== 0;
+            const isComplete = planned.length > 0 && pending.length === 0;
+            planEmpty.element.classList.toggle('is-complete', isComplete);
             planEmpty.heading.textContent = text(!isAvailable() ? 'v5.common.storageUnavailable'
                 : completed.length ? 'v5.today.planDone' : 'v5.today.planEmpty');
+            reviewActivity.hidden = !isComplete;
+            reviewActivity.disabled = !isAvailable();
+            reviewActivity.textContent = text('v5.today.reviewActivity');
             planEmpty.action.textContent = text('v5.today.chooseTasks');
             planEmpty.action.hidden = false;
             planEmpty.action.disabled = !isAvailable();
@@ -308,7 +320,7 @@
             setMore(completedMore, completedLimit, completed.length, 10);
 
             candidates.heading.textContent = text('v5.today.candidates');
-            candidates.element.hidden = !isAvailable() && needsPlanning.length === 0;
+            candidates.element.hidden = needsPlanning.length === 0;
             candidates.count.textContent = countText('v5.common.taskCount', needsPlanning.length);
             candidateEmpty.element.hidden = needsPlanning.length !== 0;
             candidateEmpty.heading.textContent = text(isAvailable() ? 'v5.today.candidatesEmpty' : 'v5.common.storageUnavailable');
@@ -343,12 +355,15 @@
         }
 
         function newCard(key) {
-            const element = button('project-card', 'open-project');
-            element.dataset.workbenchProjectKey = key;
+            const element = node('article', 'project-card');
+            const open = button('project-card-open', 'open-project');
+            open.dataset.workbenchProjectKey = key;
             const top = node('span', 'project-card-top');
             const mark = node('span', 'project-card-mark');
             mark.append(icon('folder'));
             const name = node('strong', 'project-card-name');
+            name.id = `workbench-project-name-${++sequence}`;
+            element.setAttribute('aria-labelledby', name.id);
             const arrow = node('span', 'project-card-arrow');
             arrow.append(icon('arrow'));
             top.append(mark, name, arrow);
@@ -372,8 +387,14 @@
             const nextDate = node('span', 'project-card-next-date');
             next.append(nextLabel, nextName, nextDate);
             const overdue = node('span', 'project-card-overdue');
-            element.append(top, counts, bar, next, overdue);
-            return { element, name, metrics, bar, next, nextLabel, nextName, nextDate, overdue };
+            open.append(top, counts, bar, next, overdue);
+            open.setAttribute('aria-describedby', `${counts.id} ${next.id}`);
+            const actions = node('div', 'project-card-actions');
+            const rename = button('workbench-link project-card-rename', 'rename-project');
+            rename.dataset.workbenchProjectKey = key;
+            actions.append(rename);
+            element.append(open, actions);
+            return { element, open, rename, name, metrics, bar, next, nextLabel, nextName, nextDate, overdue };
         }
 
         function renderCard(group) {
@@ -381,7 +402,12 @@
             if (!card) { card = newCard(group.key); cards.set(group.key, card); }
             const name = group.name || text('v5.projects.unassigned');
             card.name.textContent = name;
-            card.element.disabled = !isAvailable();
+            card.open.disabled = !isAvailable();
+            card.open.setAttribute('aria-label', text('v5.projects.openProject', { name }));
+            card.rename.hidden = !group.name;
+            card.rename.disabled = !isAvailable();
+            card.rename.textContent = text('v5.projects.rename');
+            card.rename.setAttribute('aria-label', text('v5.projects.renameLabel', { name }));
             for (const kind of ['pending', 'completed', 'archived']) {
                 card.metrics[kind].value.textContent = String(group[kind]);
                 card.metrics[kind].label.textContent = text(`v5.projects.${kind}`);
@@ -410,6 +436,11 @@
                 if (!a.name || !b.name) return a.name ? -1 : b.name ? 1 : 0;
                 return collator.compare(a.name, b.name);
             });
+            if (projectRevealName) {
+                const index = filtered.findIndex(group => group.name === projectRevealName);
+                if (index >= projectLimit) projectLimit = Math.ceil((index + 1) / 24) * 24;
+                projectRevealName = '';
+            }
             projectsEmpty.element.hidden = filtered.length !== 0;
             projectsEmpty.heading.textContent = text(!isAvailable() ? 'v5.common.storageUnavailable'
                 : projectGroups.length === 0 ? 'v5.projects.empty' : 'v5.projects.noResults');
@@ -581,7 +612,13 @@
                     group.pending === 0 && group.completed === 0 && group.archived > 0 ? 'archived' : 'all');
                 return;
             }
-            if (action === 'open-tasks') { api.openTasks('active'); return; }
+            if (action === 'rename-project') {
+                const group = projectByKey.get(control.dataset.workbenchProjectKey);
+                if (group?.name && isAvailable()) api.renameProject(group.name, control);
+                return;
+            }
+            if (action === 'open-tasks') { api.openTasks('active', { planning: true }); return; }
+            if (action === 'open-review') { api.openReview(); return; }
             if (action === 'more-pending') pendingLimit += 50;
             else if (action === 'more-completed') completedLimit += 10;
             else if (action === 'more-candidates') candidateLimit += 8;
@@ -607,6 +644,29 @@
             preserveFocus(projectsMount, renderProjectGrid);
         });
 
-        return { render };
+        function projectRenamed(previous, next) {
+            const previousKey = `project:${previous}`;
+            const nextKey = `project:${next}`;
+            const card = cards.get(previousKey);
+            if (card) {
+                cards.delete(previousKey);
+                cards.set(nextKey, card);
+                card.open.dataset.workbenchProjectKey = nextKey;
+                card.rename.dataset.workbenchProjectKey = nextKey;
+            }
+            const query = projectQuery.normalize('NFKC').toLocaleLowerCase(latest.language).trim();
+            if (query && !next.normalize('NFKC').toLocaleLowerCase(latest.language).includes(query)) projectQuery = next;
+            projectRevealName = next;
+        }
+
+        function focusProject(name) {
+            const control = cards.get(`project:${name}`)?.rename;
+            if (!control || control.hidden || control.disabled || !control.getClientRects().length) return false;
+            control.focus({ preventScroll: true });
+            revealFocusedControl(projectsMount, control);
+            return true;
+        }
+
+        return { render, projectRenamed, focusProject };
     };
 })();

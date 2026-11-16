@@ -60,7 +60,7 @@ def assert_completed_today(page, count):
     language=page.locator('html').get_attribute('lang')
     resources=json.loads((Path(__file__).resolve().parents[1]/'resources'/f'{language}.json').read_text())['statsInsights']
     key='todayReviewOne' if count==1 else 'todayReview'
-    expect(page.locator('.stats-review-meta')).to_contain_text(resources[key].format(count=count))
+    expect(page.locator('#workspaceSummary')).to_contain_text(resources[key].format(count=count))
 
 
 def run(browser_name):

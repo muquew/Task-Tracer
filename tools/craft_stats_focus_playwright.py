@@ -188,7 +188,7 @@ def statistics_history_and_actions(page, url):
     def assert_review():
         expect(page.locator('.stats-review-total')).to_have_text(
             phrase('statsInsights', 'reviewCompleted', 4))
-        expect(page.locator('.stats-review-meta')).to_contain_text(
+        expect(page.locator('#workspaceSummary')).to_contain_text(
             phrase('statsInsights', 'todayReview', 1))
         expect(page.locator('.stats-review-meta')).to_contain_text(
             phrase('stats', 'streakDetail', 3))
@@ -326,7 +326,7 @@ def statistics_drilldown_return(page, url):
         today_key = 'todayReviewOne' if completed_today == 1 else 'todayReview'
         expect(page.locator('.stats-review-total')).to_have_text(
             labels['statsInsights'][week_key].format(count=week))
-        expect(page.locator('.stats-review-meta')).to_contain_text(
+        expect(page.locator('#workspaceSummary')).to_contain_text(
             labels['statsInsights'][today_key].format(count=completed_today))
 
     def begin_origin():

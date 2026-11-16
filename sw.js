@@ -1,20 +1,22 @@
 const CACHE_PREFIX = 'task-tracer-';
-const CACHE_NAME = 'task-tracer-v5.0.1';
+const CACHE_NAME = 'task-tracer-v5.1.0';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './manifest.json',
-    './resources/workspace.css?v=5.0.1',
-    './resources/workbench.js?v=5.0.1',
+    './resources/workspace.css?v=5.1.0',
+    './resources/workbench.js?v=5.1.0',
     './THIRD_PARTY_NOTICES.md',
-    './resources/en.json?v=5.0',
-    './resources/zh-CN.json?v=5.0',
+    './resources/en.json?v=5.1',
+    './resources/zh-CN.json?v=5.1',
+    './fav/task-tracer.svg',
     './fav/favicon-16x16.png',
     './fav/favicon-32x32.png',
     './fav/favicon.ico',
     './fav/apple-touch-icon.png',
     './fav/android-chrome-192x192.png',
-    './fav/android-chrome-512x512.png'
+    './fav/android-chrome-512x512.png',
+    './fav/android-chrome-maskable-512x512.png'
 ];
 const SCOPE_URL = new URL('./', self.registration.scope);
 const INDEX_URL = new URL('./index.html', self.registration.scope);

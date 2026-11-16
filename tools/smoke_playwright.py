@@ -2295,7 +2295,8 @@ def exercise_stats_view(page: Page, completed_name: str) -> None:
         review_today = translations['statsInsights']['todayReviewOne'].replace('{count}', '1')
         review_streak = translations['stats']['streakDetailOne'].replace('{count}', '1')
         expect(page.locator('.stats-review-total')).to_have_text(review_total)
-        expect(page.locator('.stats-review-meta')).to_have_text(f'{review_today} · {review_streak}')
+        expect(page.locator('#workspaceSummary')).to_contain_text(review_today)
+        expect(page.locator('.stats-review-meta')).to_have_text(review_streak)
     else:
         expect(page.locator(".stat-card").nth(0).locator(".stat-value")).to_have_text("33%")
         expect(page.locator(".stat-card").nth(1).locator(".stat-value")).to_have_text("50%")
