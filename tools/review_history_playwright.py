@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import argparse
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 from pathlib import Path
 import traceback
@@ -219,6 +219,45 @@ def verify_capture_literal(page):
     assert task['project'] == 'Work' and not task['completed'] and not task['completedAt']
 
 
+def verify_pending_search_return(page, output):
+    fixtures = [
+        (301, 'Completed today', '2026-11-17T01:00:00.000Z', False, 'Work', 'review', True),
+        (302, 'Archived recent completion', '2026-11-16T01:00:00.000Z', True, 'Work', 'review', True),
+        (303, 'Completed earlier this week', '2026-11-12T01:00:00.000Z', False, 'Work', 'review', True),
+    ]
+    seed(page, fixtures)
+    navigate_workbench(page, 'review')
+    select_project(page, 'Work')
+    page.locator('#searchInput').fill(QUERY)
+    page.clock.run_for(350)
+    week = 'button.stats-review-total[data-stats-action="review-week"]'
+    expect(page.locator(week)).to_have_text('3 tasks completed')
+    pause = datetime.fromtimestamp(page.evaluate('Date.now()') / 1000 + 1, tz=timezone.utc)
+    page.clock.pause_at(pause)
+    before = stored(page)
+    page.locator('#searchInput').fill('project:Work tag:review completed:"week"')
+    expect(page.locator(week)).to_have_text('3 tasks completed')
+    origin = open_history(page, week, {301, 302, 303}, 'completed:week', before)
+    page.locator('#statsReturnBtn').click()
+    page.clock.run_for(20)
+    expect(page.locator('body')).to_have_attribute('data-workspace-screen', 'review')
+    expect(page.locator(week)).to_be_focused()
+    source = page.locator(week).evaluate_handle('node => node')
+    page.clock.fast_forward(350)
+    assert source.evaluate('node => node.isConnected && node === document.activeElement'), \
+        'An already consumed search timer replaced the restored Review focus target'
+    expect(page.locator(week)).to_be_focused()
+    assert scope(page) == origin['scope']
+    assert page.evaluate('''original => Math.abs(scrollY - Math.min(original,
+        Math.max(0, document.scrollingElement.scrollHeight - document.scrollingElement.clientHeight))) <= 1''', origin['clicked_scroll'])
+    assert stored(page) == before, 'A pending search or Review return changed task/configuration data'
+    capture(page, output, '07-return-after-pending-search')
+    page.locator('#searchInput').fill('tag:no-matching-review-tag')
+    page.clock.run_for(350)
+    expect(page.locator(week)).to_have_text('0 tasks completed')
+    assert stored(page) == before
+
+
 def run(args):
     output = args.output / uuid.uuid4().hex[:8]
     output.mkdir(parents=True)
@@ -265,6 +304,17 @@ def run(args):
                     wait_for_app_ready(page)
                     verify_midnight(page, output)
                     report['midnight_passed'] = True
+                finally:
+                    context.close()
+                context = browser.new_context(viewport={'width': 1440, 'height': 960}, timezone_id=ZONE,
+                                              locale='en-US', reduced_motion='reduce')
+                try:
+                    page = context.new_page()
+                    page.clock.install(time=datetime.fromisoformat('2026-11-17T12:00:00+08:00'))
+                    page.goto(url, wait_until='domcontentloaded')
+                    wait_for_app_ready(page)
+                    verify_pending_search_return(page, output)
+                    report['pending_search_focus_passed'] = True
                 finally:
                     context.close()
             finally:

@@ -3032,6 +3032,7 @@
                 renderTaskList();
                 announceTaskViewSummary();
             }, 300);
+            workspaceUI.cancelSearchRender = renderSearch.cancel;
             DOM.inputs.search.addEventListener('input', () => {
                 clearStatsDrilldown();
                 state.searchQuery = normalizeSearchQuery(DOM.inputs.search.value);
@@ -6718,6 +6719,7 @@
             if (el) el.textContent = `(${count})`;
         }
         function renderTaskList() {
+            workspaceUI.cancelSearchRender?.();
             const t = state.translations[state.currentLanguage];
             if (!t) return;
             state.searchTexts = new WeakMap();
@@ -9370,7 +9372,12 @@
             }),
             debounce: (func, delay = 300) => {
                 let id;
-                return (...args) => { clearTimeout(id); id = setTimeout(() => func(...args), delay); };
+                const debounced = (...args) => {
+                    clearTimeout(id);
+                    id = setTimeout(() => { id = undefined; func(...args); }, delay);
+                };
+                debounced.cancel = () => { clearTimeout(id); id = undefined; };
+                return debounced;
             },
             notify: (msg, type = 'success', options = {}) => {
                 syncDialogFeedbackPlacement();
