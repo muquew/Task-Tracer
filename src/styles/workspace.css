@@ -707,7 +707,8 @@ input[type="checkbox"].task-select-checkbox { flex: 0 0 24px; width: 24px; heigh
 .batch-toolbar:has(.batch-more-actions[open]) { z-index: var(--z-dropdown); }
 .batch-more-actions[open] { flex: 0 0 auto; order: initial; padding-top: 0; border-top: 0; }
 .batch-more-actions.opens-up .batch-more-panel { top: auto; bottom: calc(100% + 6px); }
-.batch-more-panel { display: grid; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 9px; position: absolute; inset-inline-end: 0; top: calc(100% + 6px); z-index: 1; grid-template-columns: minmax(0,1fr); width: min(260px, calc(100vw - 28px)); max-height: 264px; overflow-y: auto; overscroll-behavior: contain; margin: 0; padding: 6px; background: var(--bg-surface-raised); border: 1px solid var(--border-light); border-radius: var(--radius-surface); box-shadow: var(--menu-shadow); }
+.batch-more-actions[open] .batch-more-panel { display: grid; }
+.batch-more-panel { display: none; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 9px; position: absolute; inset-inline-end: 0; top: calc(100% + 6px); z-index: 1; grid-template-columns: minmax(0,1fr); width: min(260px, calc(100vw - 28px)); max-height: 264px; overflow-y: auto; overscroll-behavior: contain; margin: 0; padding: 6px; background: var(--bg-surface-raised); border: 1px solid var(--border-light); border-radius: var(--radius-surface); box-shadow: var(--menu-shadow); }
 .task-item.status-danger .task-date { font-weight: 500; color: var(--color-warning-text); }
 .task-item.status-warning .task-date { color: var(--text-secondary); }
 @media (max-width: 779px) {

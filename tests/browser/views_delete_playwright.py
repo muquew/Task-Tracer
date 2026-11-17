@@ -133,11 +133,17 @@ def confirmed_delete(page, url):
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
     assert_only_selected_removed(page,last_before,remaining)
-    expect(page.locator('#saveSmartViewBtn')).to_be_focused()
+    expect(page.locator('#workspaceNavClose')).to_be_focused()
+    expect(page.locator('#workspaceNavToggle')).to_have_attribute('aria-expanded', 'true')
+    assert page.locator('.workspace-stage').evaluate('node => node.inert')
+    page.keyboard.press('Enter')
+    expect(page.locator('#workspaceNavToggle')).to_have_attribute('aria-expanded', 'false')
+    expect(page.locator('#workspaceNavToggle')).to_be_focused()
+    assert not page.locator('.workspace-stage').evaluate('node => node.inert')
     page.reload()
     wait_for_app_ready(page)
     assert config(stored(page))['savedViews'] == []
-    print('View deletion passed: explicit confirmation removes exactly one view, preserves tasks/metadata and focuses the next view or Save view',flush=True)
+    print('View deletion passed: exact removal preserves tasks/metadata and focuses the next view or drawer close; keyboard close returns to navigation',flush=True)
 
 
 def deferred_search_focus(page, url):

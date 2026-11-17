@@ -3992,8 +3992,10 @@
                 element.focus();
                 return;
             }
-            const fallback = workspaceUI.screen === 'settings' ? document.getElementById('settingsTitle') : DOM.openModalBtn;
-            fallback.focus();
+            const fallback = [workspaceUI.navigationOpen ? document.getElementById('workspaceNavClose') : null,
+                workspaceUI.screen === 'settings' ? document.getElementById('settingsTitle') : null,
+                DOM.openModalBtn].find(isFocusableReturnElement);
+            fallback?.focus();
         }
         function resolveFocusReturnElement(target) {
             if (!target) return null;
@@ -7365,7 +7367,8 @@
                 creationFocusDate: session.creationFocusDate,
                 captureText: workspaceUI.captureFormText,
                 advancedOpen: document.getElementById('taskAdvancedDetails').open,
-                subtasksOpen: document.getElementById('taskSubtasksDetails').open
+                subtasksOpen: document.getElementById('taskSubtasksDetails').open,
+                propertyPanelsOpen: Object.fromEntries(Array.from(DOM.form.querySelectorAll('.editor-property-row'), details => [details.id, details.open]))
             };
             const existing = state.recoverableTaskDrafts.findIndex(item => item.id === id);
             if (existing === -1) state.recoverableTaskDrafts.push(draft);
@@ -7431,6 +7434,9 @@
             syncAllCustomSelects(DOM.modal);
             syncTaskDraftRecoveryUI();
             renderSubtaskPreview();
+            DOM.form.querySelectorAll('.editor-property-row').forEach(details => {
+                details.open = draft.propertyPanelsOpen?.[details.id] === true;
+            });
             syncTaskPropertySummaries();
             syncContextualEditor();
             if (!DOM.subtaskListPreview.querySelector('.subtask-edit-input')) DOM.inputs.name.focus();

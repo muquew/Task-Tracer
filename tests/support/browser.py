@@ -307,6 +307,8 @@ def select_language(page: Page, language: str) -> None:
 def close_workspace_navigation(page: Page) -> None:
     """Return to the main workspace through the navigation drawer's Escape path."""
     toggle = page.locator('#workspaceNavToggle')
+    if not toggle.count():
+        return
     if toggle.get_attribute('aria-expanded') == 'true':
         page.keyboard.press('Escape')
         expect(toggle).to_have_attribute('aria-expanded', 'false')

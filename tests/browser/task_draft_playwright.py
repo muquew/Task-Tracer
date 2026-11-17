@@ -575,21 +575,39 @@ def check_quota_recovery(page: Page, url: str) -> None:
     click_task_action(task_locator(page, 'Quota newer remote record'), 'edit')
     page.locator('#subtaskListPreview .subtask-preview-text').click()
     page.locator('#subtaskListPreview .subtask-edit-input').fill('  In-progress inline subtask text  ')
-    page.evaluate("""() => {
-        const original = IDBObjectStore.prototype.put;
-        IDBObjectStore.prototype.put = function(record, ...rest) {
-            if (this.name === 'config' && record.key === 'language') {
-                IDBObjectStore.prototype.put = original;
-                throw new DOMException('Synthetic settings quota interrupts an inline edit', 'QuotaExceededError');
-            }
-            return original.call(this, record, ...rest);
+    language_before = page.locator('html').get_attribute('lang')
+    interruption = page.evaluate("""() => new Promise((resolve, reject) => {
+        const current = indexedDB.open('TaskTrackerDB');
+        current.onerror = () => reject(current.error);
+        current.onsuccess = () => {
+            const version = current.result.version;
+            current.result.close();
+            let upgrading = false;
+            const upgrade = indexedDB.open('TaskTrackerDB', version + 1);
+            upgrade.onupgradeneeded = () => {
+                upgrading = true;
+                upgrade.transaction.abort();
+            };
+            upgrade.onblocked = () => reject(new Error('The app did not close its connection after versionchange'));
+            upgrade.onsuccess = () => { upgrade.result.close(); reject(new Error('The synthetic upgrade unexpectedly committed')); };
+            upgrade.onerror = event => {
+                event.preventDefault();
+                if (!upgrading || upgrade.error?.name !== 'AbortError') { reject(upgrade.error); return; }
+                const check = indexedDB.open('TaskTrackerDB');
+                check.onerror = () => reject(check.error);
+                check.onsuccess = () => {
+                    const actual = check.result.version;
+                    check.result.close();
+                    resolve({before:version, after:actual, error:upgrade.error.name});
+                };
+            };
         };
-    }""")
-    page.locator('#languageSelect').evaluate("""select => {
-        select.value = 'en';
-        select.dispatchEvent(new Event('change', {bubbles: true}));
-    }""")
+    })""")
+    assert interruption['before'] > 0 and interruption['after'] == interruption['before'], interruption
+    assert interruption['error'] == 'AbortError', interruption
+    assert page.locator('html').get_attribute('lang') == language_before
     expect(page.locator('#storageUnavailableBanner')).to_be_visible()
+    expect(page.locator('#storageUnavailableMessage')).to_have_attribute('data-i18n', 'storage.versionChanged')
     expect(page.locator('#languageSelect')).to_have_value(page.locator('html').get_attribute('lang'))
     inline = downloaded_drafts(page)[0]
     assert inline['editingSubtaskIndex'] == 0
