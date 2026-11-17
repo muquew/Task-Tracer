@@ -278,7 +278,7 @@ def run(args):
     server = contextlib.nullcontext(url_override) if url_override else local_server()
     try:
         with server as url, sync_playwright() as playwright:
-            options = browser_launch_options() if args.browser == 'chromium' else {'headless': True}
+            options = browser_launch_options(args.browser)
             if args.executable:
                 options['executable_path'] = args.executable
             browser = getattr(playwright, args.browser).launch(**options)

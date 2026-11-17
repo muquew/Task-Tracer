@@ -269,7 +269,7 @@ def run(engine, selected):
     cases = {'move': move_and_undo, 'atomic': atomic_abort_and_retry,
              'stale': stale_move_refuses, 'archive': archive_parity}
     with local_server() as url, sync_playwright() as playwright:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(playwright, engine).launch(**options)
         try:
             print(f'Craft batch project: {engine} {browser.version}', flush=True)

@@ -148,7 +148,7 @@ def diagnostics(page):
 def run(engine, case):
     expect.set_options(timeout=10000)
     with local_server() as url, sync_playwright() as p:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(p, engine).launch(**options)
         context = browser.new_context(locale='en-US', timezone_id='UTC', reduced_motion='reduce')
         page = context.new_page()

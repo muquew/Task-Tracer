@@ -336,7 +336,7 @@ def check_batch_scope(browser, url):
 
 def main(browser_name, case='all'):
     with local_server() as url, sync_playwright() as p:
-        options = browser_launch_options() if browser_name == 'chromium' else {'headless':True}
+        options = browser_launch_options(browser_name)
         browser = getattr(p, browser_name).launch(**options)
         try:
             print(f'Batch/Undo regression: {browser_name} {browser.version}', flush=True)

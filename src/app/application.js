@@ -654,6 +654,7 @@
                 if (document.getElementById('workspaceSidebarScroll').contains(target)) target.scrollIntoView({ block: 'nearest', inline: 'nearest' });
             });
             else if (restoreFocus || sidebar.contains(document.activeElement)) button.focus({ preventScroll: true });
+            syncWorkspaceFeedbackClearance();
         }
 
         function syncWorkspaceOverviewVisibility() {
@@ -3313,6 +3314,18 @@
                 }
             }
             if (host && DOM.notification.el.parentElement !== host) host.appendChild(DOM.notification.el);
+            syncWorkspaceFeedbackClearance();
+        }
+        function syncWorkspaceFeedbackClearance() {
+            const notification = DOM.notification?.el;
+            const style = notification ? getComputedStyle(notification) : null;
+            const visible = notification?.closest('.workspace-feedback') && notification.classList.contains('show')
+                && style.visibility === 'visible' && style.position === 'fixed';
+            const rect = visible ? notification.getBoundingClientRect() : null;
+            const viewport = window.visualViewport;
+            const bottom = Math.min(innerHeight, (viewport?.offsetTop || 0) + (viewport?.height || innerHeight));
+            const clearance = rect?.height && rect.top < bottom ? Math.max(0, Math.ceil(bottom - rect.top + 12)) : 0;
+            document.documentElement.style.setProperty('--workspace-feedback-clearance', `${clearance}px`);
         }
         function syncPageModalOpenState() {
             const open = Boolean(isDialogOpen() && (!isFloatingTaskEditor() || state.taskFormSession?.prompt || state.taskFormSession?.saving));
@@ -3323,6 +3336,11 @@
             syncDialogFeedbackPlacement();
         }
         function bindNotificationEvents() {
+            new MutationObserver(syncWorkspaceFeedbackClearance).observe(DOM.notification.el, { attributes: true, attributeFilter: ['class'] });
+            if ('ResizeObserver' in window) new ResizeObserver(syncWorkspaceFeedbackClearance).observe(DOM.notification.el);
+            window.addEventListener('resize', syncWorkspaceFeedbackClearance);
+            window.visualViewport?.addEventListener('resize', syncWorkspaceFeedbackClearance);
+            syncWorkspaceFeedbackClearance();
             if (DOM.notificationToggleBtn) {
                 DOM.notificationToggleBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -3349,10 +3367,12 @@
             const bounds = prompt.getBoundingClientRect();
             if (prompt.hidden || !bounds.height) {
                 document.documentElement.style.removeProperty('--workspace-update-clearance');
+                syncWorkspaceFeedbackClearance();
                 return;
             }
             const clearance = Math.max(0, Math.ceil(window.innerHeight - bounds.top) + 12);
             document.documentElement.style.setProperty('--workspace-update-clearance', `${clearance}px`);
+            syncWorkspaceFeedbackClearance();
         }
         function initInstallPrompt() {
             window.addEventListener('beforeinstallprompt', (e) => {

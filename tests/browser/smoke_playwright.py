@@ -643,6 +643,7 @@ def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name
         expect(page.locator('#savedViewsEmptyHint')).to_be_visible()
     expect(page.locator('#savedViewsList .saved-view-chip')).to_have_count(0)
 
+    close_workspace_navigation(page)
     page.locator("#searchInput").fill("tag:deadline")
     expect(task_locator(page, beta_name)).to_have_count(1)
     expect(task_locator(page, alpha_name)).to_have_count(0)

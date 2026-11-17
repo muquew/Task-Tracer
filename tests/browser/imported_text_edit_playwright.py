@@ -200,7 +200,7 @@ CASES = {'long': long_text, 'comma-tags': comma_tags, 'quoted-tags': quoted_tags
 
 def run(engine, case):
     with local_server() as url, sync_playwright() as p:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(p, engine).launch(**options)
         try:
             context = browser.new_context(accept_downloads=True, reduced_motion='reduce')

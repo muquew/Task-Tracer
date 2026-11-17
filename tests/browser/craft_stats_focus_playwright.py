@@ -523,7 +523,7 @@ def run(engine, selected):
     cases = {'focus': planned_recurrence, 'stats': statistics_history_and_actions,
              'return': statistics_drilldown_return}
     with local_server() as url, sync_playwright() as playwright:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(playwright, engine).launch(**options)
         try:
             print(f'Craft plan/statistics: {engine} {browser.version}', flush=True)

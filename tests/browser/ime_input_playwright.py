@@ -159,7 +159,7 @@ CASES = {'palette': palette, 'subtasks': subtasks, 'escape': escape, 'search': s
 
 def run(engine, selected):
     with local_server() as url, sync_playwright() as p:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(p, engine).launch(timeout=30000, **options)
         print(f'Composition {engine}: {browser.version}', flush=True)
         for name, check in CASES.items():

@@ -329,7 +329,7 @@ def assert_metadata_failure(page, mode):
 
 def run(engine, baseline_archive=None):
     with candidate_server(baseline_archive) as url, sync_playwright() as p:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(p, engine).launch(timeout=30000, **options)
         print(f'Backup freshness {engine}: {browser.version}', flush=True)
         context = browser.new_context(accept_downloads=True, reduced_motion='reduce')

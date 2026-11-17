@@ -262,7 +262,7 @@ def main():
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     with local_server() as url, sync_playwright() as playwright:
-        options = browser_launch_options() if args.browser == 'chromium' else {'headless': True}
+        options = browser_launch_options(args.browser)
         browser = getattr(playwright, args.browser).launch(**options)
         passed = []
         try:

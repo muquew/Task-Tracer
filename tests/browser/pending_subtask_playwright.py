@@ -365,7 +365,7 @@ def run(engine: str, selected: str, widths: list[int], report_root: Path) -> Non
     results = []
     print(f'Pending subtask evidence: {report}', flush=True)
     with deployment_server() as url, sync_playwright() as playwright:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(playwright, engine).launch(timeout=30000, **options)
         root = REPO_ROOT
         source_files = [*application_input_names(), 'vercel.json', 'sw.js', 'resources/en.json',

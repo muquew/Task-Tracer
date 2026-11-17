@@ -109,7 +109,7 @@ def reject_view_file(page):
 
 def run(engine):
     with local_server() as url, sync_playwright() as p:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(p, engine).launch(timeout=30000, **options)
         print(f'Backup reminder priority {engine}: {browser.version}', flush=True)
         context = browser.new_context(accept_downloads=True, reduced_motion='reduce')

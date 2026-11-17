@@ -280,7 +280,7 @@ def run(args):
     server = contextlib.nullcontext(args.url) if args.url else local_server()
     try:
         with server as url, sync_playwright() as p:
-            options = browser_launch_options() if args.browser == 'chromium' else {'headless': True}
+            options = browser_launch_options(args.browser)
             browser = getattr(p, args.browser).launch(**options)
             report['browser_version'] = browser.version
             try:

@@ -421,7 +421,7 @@ def run(engine: str, selected: str, widths: list[int], report_root: Path, expect
                 'production_csp': True, 'results': results}
     print(f'Editor safety evidence: {report}', flush=True)
     with deployment_server() as url, sync_playwright() as playwright:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(playwright, engine).launch(timeout=30000, **options)
         metadata.update({'browser': engine, 'native_browser_version': browser.version})
         try:

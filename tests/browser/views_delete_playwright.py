@@ -339,7 +339,7 @@ def main():
     args = parser.parse_args()
     expect.set_options(timeout=15000)
     with local_server() as url,sync_playwright() as p:
-        options = browser_launch_options() if args.browser == 'chromium' else {'headless':True}
+        options = browser_launch_options(args.browser)
         browser = getattr(p,args.browser).launch(**options)
         print(f'{args.browser}: saved-view deletion on {browser.version}',flush=True)
         try:

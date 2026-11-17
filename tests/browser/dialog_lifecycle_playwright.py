@@ -209,7 +209,7 @@ def main():
             site_root = root
         url = stack.enter_context(local_server(site_root))
         playwright = stack.enter_context(sync_playwright())
-        options = smoke.browser_launch_options() if args.browser == 'chromium' else {'headless': True}
+        options = smoke.browser_launch_options(args.browser)
         browser = getattr(playwright, args.browser).launch(**options)
         stack.callback(browser.close)
         selected = CASES.items() if args.case == 'all' else [(args.case, CASES[args.case])]

@@ -34,7 +34,7 @@ CASES = [
 
 def run(engine):
     with local_server() as url, sync_playwright() as p:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(p, engine).launch(**options)
         try:
             for name, host, day, time in CASES:

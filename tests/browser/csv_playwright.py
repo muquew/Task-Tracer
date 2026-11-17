@@ -99,7 +99,7 @@ def assert_unicode_json_roundtrip(page, url, launcher, options, errors):
 def run(engine):
     with local_server() as url, sync_playwright() as p, tempfile.TemporaryDirectory() as profile:
         launcher = getattr(p, engine)
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         context = launcher.launch_persistent_context(profile, accept_downloads=True, timeout=30000, **options)
         try:
             page = context.pages[0]

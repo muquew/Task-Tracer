@@ -124,7 +124,7 @@ def exercise_diagnostics(page, downloads, expected_error=None):
 
 def run(engine='chromium'):
     with local_server() as url, sync_playwright() as p:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         options['timeout'] = 30000
         browser = getattr(p, engine).launch(**options)
         print(f'{engine}: Help/diagnostics regression on {browser.version}', flush=True)

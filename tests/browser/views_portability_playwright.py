@@ -144,7 +144,7 @@ def assert_pending_view_reads(page):
 
 def run(engine):
     with local_server() as url, sync_playwright() as p:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(p, engine).launch(timeout=30000, **options)
         print(f'View portability {engine}: {browser.version}', flush=True)
         context = browser.new_context(accept_downloads=True, locale='en-US', reduced_motion='reduce')

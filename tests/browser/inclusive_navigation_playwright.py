@@ -332,7 +332,7 @@ def main():
     expect.set_options(timeout=10000)
     identity = source_identity()
     with production_server() as url, sync_playwright() as playwright:
-        browser = getattr(playwright, args.browser).launch(**(browser_launch_options() if args.browser == 'chromium' else {'headless': True}))
+        browser = getattr(playwright, args.browser).launch(**(browser_launch_options(args.browser)))
         try:
             print(f'Inclusive navigation on {args.browser} {browser.version}; source={identity["sha256"]}; forced-colors is browser emulation only', flush=True)
             for width, language in ((1280, 'en'), (390, 'zh-CN')):

@@ -344,7 +344,7 @@ def main():
         report['source'] = source_identity()
         publish()
         with local_server() as url, sync_playwright() as playwright:
-            options = browser_launch_options() if args.browser == 'chromium' else {'headless': True}
+            options = browser_launch_options(args.browser)
             browser = getattr(playwright, args.browser).launch(**options)
             report['browser_version'] = browser.version
             try:

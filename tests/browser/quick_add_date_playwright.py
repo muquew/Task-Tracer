@@ -204,7 +204,7 @@ def run(engine,selected):
            ('midnight','UTC',lambda page,url:relative(page,url,'2024-02-28T23:59:40+00:00','2024-02-29','2024-02-29','2024-03-01')),
            ('yearend','UTC',lambda page,url:relative(page,url,'2026-12-31T23:59:40+00:00','2027-01-01','2027-01-01','2027-01-02'))]
     with local_server() as url,sync_playwright() as p:
-        options=browser_launch_options() if engine=='chromium' else {'headless':True}
+        options=browser_launch_options(engine)
         browser=getattr(p,engine).launch(**options)
         try:
             for name,zone,check in cases:

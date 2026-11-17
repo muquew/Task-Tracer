@@ -671,7 +671,7 @@ def check_weekday_recovery(page: Page) -> None:
 
 def run(browser_name: str, case: str) -> None:
     with local_server() as url, sync_playwright() as playwright:
-        options = browser_launch_options() if browser_name == 'chromium' else {'headless': True}
+        options = browser_launch_options(browser_name)
         browser = getattr(playwright, browser_name).launch(**options)
         context = browser.new_context(reduced_motion='reduce')
         try:

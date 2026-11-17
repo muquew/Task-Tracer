@@ -295,7 +295,7 @@ def run(engine, case):
            'warning':lambda page,url:verify_status_boundary(page,url,'warning','2026-10-30')}
     selected=cases if case=='all' else {case:cases[case]}
     with local_server() as url,sync_playwright() as p:
-        options=browser_launch_options() if engine=='chromium' else {'headless':True}
+        options=browser_launch_options(engine)
         browser=getattr(p,engine).launch(**options)
         try:
             for name,check in selected.items():

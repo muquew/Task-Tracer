@@ -125,7 +125,7 @@ def labels_and_reset(page, url, template):
 
 def run(engine, case):
     with local_server() as url, sync_playwright() as p:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(p, engine).launch(**options)
         context = browser.new_context(timezone_id='UTC', accept_downloads=True, reduced_motion='reduce')
         try:

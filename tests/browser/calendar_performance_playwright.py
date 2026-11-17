@@ -254,7 +254,7 @@ def exercise_scale_boundaries(page, per_section, metrics):
 def run(engine, per_section, output, scale_only=False):
     expect.set_options(timeout=20000)
     with local_server() as url, sync_playwright() as p:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(p, engine).launch(**options)
         context = browser.new_context(locale='en-US', timezone_id='UTC', reduced_motion='reduce')
         try:

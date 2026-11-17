@@ -309,7 +309,7 @@ def main():
     args = parser.parse_args()
     expect.set_options(timeout=10000)
     with local_server() as url, sync_playwright() as p:
-        options = browser_launch_options() if args.browser == 'chromium' else {'headless':True}
+        options = browser_launch_options(args.browser)
         browser = getattr(p,args.browser).launch(**options)
         try:
             selected = CASES.items() if args.case == 'all' else [(args.case,CASES[args.case])]

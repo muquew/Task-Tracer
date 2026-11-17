@@ -327,7 +327,7 @@ def main():
         assert (candidate/'index.html').is_file()
     expect.set_options(timeout=15000)
     with local_server(candidate) as url, sync_playwright() as playwright:
-        options = smoke.browser_launch_options() if args.browser == 'chromium' else {'headless':True}
+        options = smoke.browser_launch_options(args.browser)
         browser = getattr(playwright,args.browser).launch(**options)
         print(f'{args.browser}: quick-add recovery on {browser.version}',flush=True)
         try:
