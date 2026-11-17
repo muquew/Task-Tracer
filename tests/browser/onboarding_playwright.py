@@ -25,7 +25,7 @@ def fresh_page(browser, url):
 
 def run(engine='chromium'):
     with local_server() as url, sync_playwright() as p:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(p, engine).launch(timeout=30000, **options)
         print(f'Onboarding {engine}: {browser.version}', flush=True)
         context, page = fresh_page(browser, url)
