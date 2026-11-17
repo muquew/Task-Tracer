@@ -2,11 +2,11 @@
 
 A local-first task workspace for capturing work, planning your day and reviewing progress. No account required.
 
-[Open app](https://todo.muquew.com/) · [Download published 5.0.1](https://todo.muquew.com/downloads/task-tracer-5.0.1.zip) · [Releases](https://github.com/muquew/Task-Tracer/releases) · [简体中文](README_zh_cn.md)
+[Open app](https://todo.muquew.com/) · [Download](https://todo.muquew.com/downloads/task-tracer-5.2.0.zip) · [Releases](https://github.com/muquew/Task-Tracer/releases) · [简体中文](README_zh_cn.md)
 
 | Workspace | Task editor |
 | --- | --- |
-| ![Today workspace](screenshots/task-list-en.png) | ![Task editor](screenshots/add-task-en.png) |
+| ![Today workspace](https://todo.muquew.com/screenshots/task-list-en.png) | ![Task editor](https://todo.muquew.com/screenshots/add-task-en.png) |
 
 ## Features
 
@@ -47,7 +47,7 @@ Search completed work with `completed:week` for the last seven local calendar da
 
 ## Run locally or deploy
 
-Download and extract the complete archive, or open a source checkout. Run this command **inside the extracted app or repository directory**. No Node.js packages, build or backend are needed to use the app:
+Download and extract the complete archive. Run this command **inside the extracted app directory**. The portable app needs no Node.js packages, build or backend:
 
 ```bash
 python3 -m http.server 8080 --bind 127.0.0.1
@@ -59,41 +59,11 @@ Open [localhost:8080](http://127.0.0.1:8080/). Serve through HTTP rather than op
 - Keep the service worker, language files and icons together. A different domain or port has separate browser storage; transfer tasks with JSON backups.
 - For downloaded releases, compare the ZIP against its accompanying SHA-256 file before use.
 
-## Development and contributions
+## Source layout and development
 
-This checkout is the 5.1.0 candidate; the download above remains the published 5.0.1 release.
+Application source is in `src/`, public assets in `public/`, development tools in `scripts/`, and verification in `tests/`. The deployable site is generated into `dist/site`; serve that directory rather than the repository root.
 
-Use Python 3.12+ and Node.js 22+ in a **source checkout**. Development tools are not included in the downloadable app. Run the following from the repository root in a POSIX shell:
-
-```bash
-python3 -m venv .venv
-. .venv/bin/activate
-python -m pip install -r requirements-dev.txt
-npm ci --ignore-scripts
-python -m playwright install --with-deps chromium
-npm run check
-```
-
-- In Windows PowerShell, create the environment with `py -3 -m venv .venv` and activate it with `.venv\Scripts\Activate.ps1`, then run the remaining setup commands. The npm wrappers expect `python3`; if that command is unavailable, run the underlying command from `package.json` with the activated environment's `python`, for example `python tools/check.py --static-only`.
-- Run `npm run dev` or `npm run preview` and open [localhost:8080](http://127.0.0.1:8080/). Both serve the current app files without compilation or hot reload. After editing, refresh the page; if a service worker still serves an earlier copy, use the browser's development tools to unregister it for this local origin and reload. Keep test data separate from personal tasks.
-- After editing `styles/workspace.css`, run `npm run styles`; use `npm run styles:check` before committing `resources/workspace.css`.
-- The original brand source is `fav/task-tracer.svg`. After changing it, run `npm run icons` with Chromium installed. `npm run icons:check` verifies source/output hashes, PNG dimensions and ICO frames without launching a browser; it does not render a fresh comparison.
-- Themes share neutral surfaces, typography and spacing tokens; use accents for actions and status. Keep the header and install icons derived from the same original SVG.
-
-| Command | Scope and output |
-| --- | --- |
-| `npm run check` | Static consistency, release/security contracts, syntax and date semantics; no browser launch. |
-| `npm test` | Full registered checks, including Chromium workflows; stops after a failure. |
-| `npm run test:report` | Full registered checks, continues after failures and writes `dist/check-results.json`; failures still return a nonzero exit code. |
-| `npm run test:browsers` | Registered Chromium, Firefox and WebKit workflows; writes `dist/browser-matrix.json` and per-program logs. |
-| `npm run test:a11y` | Dedicated accessibility and language audit using Chromium and the local axe-core dependency. |
-
-- Before running all engines, install them with `python -m playwright install --with-deps chromium firefox webkit`. For a targeted run, use `npm run test:browsers -- --browser chromium --group capture --report dist/capture-chromium.json`; list the selected scope without launching browsers by adding `--list`.
-- For local Chromium checks, select an installed executable with `export TASK_TRACER_BROWSER_EXECUTABLE=/absolute/path/to/chromium` (PowerShell: `$env:TASK_TRACER_BROWSER_EXECUTABLE = 'C:\path\to\chrome.exe'`), then run the checks. This affects Chromium only; CI installs the browsers pinned by Playwright. Synthetic browser viewports do not replace testing on real phones or Safari/iOS.
-- Compatibility checks and the Today carryover/selection/planning/review, mobile filters, input names, direct task opening, tag suggestions, review-history and project-renaming checks also accept `TASK_TRACER_CHROMIUM_EXECUTABLE`, `TASK_TRACER_FIREFOX_EXECUTABLE` or `TASK_TRACER_WEBKIT_EXECUTABLE` for their selected engine. The Chromium-specific value takes precedence over the older `TASK_TRACER_BROWSER_EXECUTABLE` alias. Supply any native-library paths required by a custom executable in the test process environment.
-- Review interface changes in Chinese and English, with keyboard navigation and a narrow screen. Test imports and recovery using disposable profiles and synthetic data.
-- After inline-script changes, regenerate CSP with `python tools/security_policy.py --write`. After translation changes, run `python tools/translation_fallback.py --write` before regenerating CSP.
-- Build a distribution with `npm run build`; the ZIP and SHA-256 checksum go to `dist/`, with `integrity.json` inside the ZIP. The build checks static files and CSP; it does not run the browser suite, publish or deploy. Run the relevant checks before packaging and preserve published downloads and their checksums.
+For a source checkout, run `npm run dev` with Node.js 22+ and Python 3.12+. See the [development guide](https://github.com/muquew/Task-Tracer/blob/main/CONTRIBUTING.md) for setup and commands, and [architecture](https://github.com/muquew/Task-Tracer/blob/main/docs/architecture.md) for module responsibilities and deployment boundaries.
 
 ## Feedback and license
 

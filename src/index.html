@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title data-i18n="app.title">Task Tracer - Local-first Task Manager</title>
+    <meta name="description" content="Task Tracer is a local-first PWA for tasks, routines, reminders, calendar planning, statistics, import/export backups, and offline use.">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="muquew">
+    <meta name="icon-license" content="Original Task Tracer brand mark; Tabler UI icons, MIT; see ./THIRD_PARTY_NOTICES.md">
+    <meta name="creator" content="muquew">
+    <meta name="publisher" content="muquew">
+    <meta name="color-scheme" content="light dark">
+    <link rel="canonical" href="https://todo.muquew.com/">
+    <link rel="manifest" id="manifestLink" href="./manifest.json">
+    <meta name="theme-color" content="#f7f8f6">
+    <meta name="application-name" content="Task Tracer">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Task Tracer">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="msapplication-TileColor" content="#315f50">
+    <link rel="icon" type="image/png" sizes="16x16" href="./fav/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./fav/favicon-32x32.png">
+    <link rel="shortcut icon" href="./fav/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="./fav/apple-touch-icon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Task Tracer">
+    <meta property="og:title" content="Task Tracer - Local-first Task Manager">
+    <meta property="og:description" content="A local-first PWA for tasks, routines, reminders, calendar planning, statistics, import/export backups, and offline use.">
+    <meta property="og:url" content="https://todo.muquew.com/">
+    <meta property="og:image" content="https://todo.muquew.com/screenshots/task-list-en.png">
+    <meta property="og:image:secure_url" content="https://todo.muquew.com/screenshots/task-list-en.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1440">
+    <meta property="og:image:height" content="960">
+    <meta property="og:image:alt" content="Task Tracer Today workspace">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Task Tracer - Local-first Task Manager">
+    <meta name="twitter:description" content="A local-first PWA for tasks, routines, reminders, calendar planning, statistics, import/export backups, and offline use.">
+    <meta name="twitter:image" content="https://todo.muquew.com/screenshots/task-list-en.png">
+    <meta name="twitter:image:alt" content="Task Tracer Today workspace">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Task Tracer",
+            "alternateName": "Task Tracer 任务跟踪器",
+            "applicationCategory": "ProductivityApplication",
+            "operatingSystem": "Any",
+            "url": "https://todo.muquew.com/",
+            "image": "https://todo.muquew.com/screenshots/task-list-en.png",
+            "description": "Task Tracer is a local-first PWA for tasks, routines, reminders, calendar planning, statistics, import/export backups, and offline use.",
+            "inLanguage": ["en", "zh-CN"],
+            "softwareVersion": "5.2.0",
+            "author": {
+                "@type": "Person",
+                "name": "muquew"
+            },
+            "publisher": {
+                "@type": "Person",
+                "name": "muquew"
+            },
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock"
+            },
+            "featureList": [
+                "Local-first task management",
+                "Quick add parsing for date, time, project, and tags",
+                "List, calendar, timeline, and statistics views",
+                "Recurring tasks and browser reminders",
+                "Import, export, backup, checksum, and emergency backup",
+                "Installable offline PWA",
+                "Keyboard and screen-reader friendly interface"
+            ]
+        }
+    </script>
+    <link rel="stylesheet" href="./resources/workspace.css?v=5.2.0">
+    <script>
+        (function() {
+            const THEME_CHROME = { light: '#f7f8f6', dark: '#181c19' };
+            function updateThemeChrome(theme) {
+                const chromeColor = getComputedStyle(document.documentElement).getPropertyValue('--chrome-solid').trim();
+                document.querySelector('meta[name="theme-color"]')?.setAttribute('content', chromeColor || THEME_CHROME[theme] || THEME_CHROME.light);
+            }
+            let savedTheme = null;
+            try {
+                savedTheme = localStorage.getItem('theme');
+            } catch (error) {
+                savedTheme = null;
+            }
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const preference = ['light', 'dark', 'system'].includes(savedTheme) ? savedTheme : 'system';
+            const currentTheme = preference === 'dark' || (preference === 'system' && systemPrefersDark) ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme-preference', preference);
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            let accent = 'iris';
+            try { accent = localStorage.getItem('accent') || 'iris'; } catch (error) {}
+            document.documentElement.setAttribute('data-accent', ['iris', 'ocean', 'pine', 'berry'].includes(accent) ? accent : 'iris');
+            window.__TASK_TRACER_SET_THEME_CHROME__ = updateThemeChrome;
+            updateThemeChrome(currentTheme);
+        })();
+    </script>
+</head>
+<body data-workspace-screen="today">
+<svg style="display: none;">
+    <symbol id="icon-alert-triangle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 22 21H2Z"/><path d="M12 9v4M12 17h.01"/></symbol>
+    <symbol id="icon-circle-error" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/></symbol>
+    <symbol id="icon-circle-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22"/></symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5V19M5 12H19"/></symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24" fill="currentColor"><path d="M4 12C4 11.4477 4.44772 11 5 11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H5C4.44772 13 4 12.5523 4 12Z"/><path d="M4 6C4 5.44772 4.44772 5 5 5H19C19.5523 5 20 5.44772 20 6C20 6.55228 19.5523 7 19 7H5C4.44772 7 4 6.55228 4 6Z"/><path d="M4 18C4 17.4477 4.44772 17 5 17H19C19.5523 17 20 17.4477 20 18C20 18.5523 19.5523 19 19 19H5C4.44772 19 4 18.5523 4 18Z"/></symbol>
+    <symbol id="icon-import" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5V16"/><path d="M8 12L12 16L16 12"/><path d="M5 20H19"/></symbol>
+    <symbol id="icon-backup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5V15C5 16.66 8.13 18 12 18C15.87 18 19 16.66 19 15V5"/><path d="M5 10C5 11.66 8.13 13 12 13C15.87 13 19 11.66 19 10"/><path d="M9 20L11 22L15 18"/></symbol>
+    <symbol id="icon-install" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4H19A2 2 0 0 1 21 6V18A2 2 0 0 1 19 20H5A2 2 0 0 1 3 18V6A2 2 0 0 1 5 4Z"/><path d="M12 7V15"/><path d="M8.5 11.5L12 15L15.5 11.5"/><path d="M9 18H15"/></symbol>
+    <symbol id="icon-trash-lines" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.75 5.75C5.75 4.7835 6.5335 4 7.5 4H16.5C17.4665 4 18.25 4.7835 18.25 5.75V8.25H5.75V5.75Z"/><path d="M4 8.25H20"/><path d="M17.5 8.25V17.5C17.5 18.8807 16.3807 20 15 20H9C7.61929 20 6.5 18.8807 6.5 17.5V8.25"/><path d="M9.5 11.25V16.25"/><path d="M14.5 11.25V16.25"/></symbol>
+    <symbol id="icon-archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V8"/><path d="M1 3H23V8H1Z"/><path d="M10 12H14"/></symbol>
+    <symbol id="icon-archive-restore" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V8"/><path d="M1 3H23V8H1Z"/><path d="M12 12V18"/><path d="M9 15L12 12L15 15"/></symbol>
+    <symbol id="icon-globe-language" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z"/><path d="M2 12H22"/><path d="M12 2C14.7614 2 17 6.48 17 12C17 17.52 14.7614 22 12 22C9.23858 22 7 17.52 7 12C7 6.48 9.23858 2 12 2Z"/></symbol>
+    <symbol id="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18L15 12L9 6"/></symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="icon-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></symbol>
+    <symbol id="icon-sort" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"/><path d="M7 9l5-5 5 5"/></symbol>
+    <symbol id="icon-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6H21"/><path d="M8 12H21"/><path d="M8 18H21"/><path d="M3 6H3.01"/><path d="M3 12H3.01"/><path d="M3 18H3.01"/></symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2V6"/><path d="M16 2V6"/><path d="M3 10H21"/><path d="M5 4H19A2 2 0 0 1 21 6V20A2 2 0 0 1 19 22H5A2 2 0 0 1 3 20V6A2 2 0 0 1 5 4Z"/></symbol>
+    <symbol id="icon-timeline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3V21"/><path d="M5 6H16A3 3 0 0 1 16 12H5"/><path d="M5 14H18A3 3 0 0 1 18 20H5"/></symbol>
+    <symbol id="icon-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19H20"/><path d="M8 16V11"/><path d="M12 16V8"/><path d="M16 16V13"/></symbol>
+    <symbol id="icon-chevrons-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 6L13 12L7 18"/><path d="M13 6L19 12L13 18"/></symbol>
+    <symbol id="icon-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></symbol>
+    <symbol id="icon-github" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.727-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757 -1.09-.745.083-.729.083-.729 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.775.418-1.305.76-1.606-2.665-.305-5.466-1.334-5.466-5.932 0-1.31.47-2.382 1.236-3.22-.125-.303-.535-1.523.115-3.176 0 0 1.008-.322 3.3 1.23a11.49 11.49 0 013.004-.404 c1.02.005 2.045.138 3.003.404 2.292-1.552 3.3-1.23 3.3-1.23.65 1.653.24 2.873.12 3.176.77.838 1.236 1.91 1.236 3.22 0 4.61-2.804 5.624-5.475 5.922.43.372.81 1.102.81 2.222 0 1.606-.015 2.896-.015 3.286 0 .32.216.694.825.576C20.565 21.796 24 17.3 24 12 24 5.373 18.627 0 12 0z"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17L4 12"/></symbol>
+    <symbol id="icon-undo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9L9 4"/><path d="M4 9H15C18.3 9 21 11.7 21 15C21 18.3 18.3 21 15 21H12"/></symbol>
+    <symbol id="icon-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13"/><path d="M18.5 2.5C18.8978 2.10217 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10217 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10217 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z"/></symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7L18.1327 19.1425C18.0579 20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7M4 7H20"/></symbol>
+    <symbol id="icon-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></symbol>
+    <symbol id="icon-bell-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"></path><path d="M18.63 13A17.89 17.89 0 0 1 18 8"></path><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"></path><path d="M18 8a6 6 0 0 0-9.33-5"></path><line x1="1" y1="1" x2="23" y2="23"></line></symbol>
+    <symbol id="icon-bell-ring" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path><path d="M2 8C1 8 1 8 1 8"></path><path d="M22 8C23 8 23 8 23 8"></path></symbol>
+    <symbol id="icon-bell-snooze" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 9A5 5 0 0 0 5 9C5 15 3 17 3 17H17S15 15 15 9"/><path d="M11.7 21A2 2 0 0 1 8.3 21"/><path d="M17 3H21L17 7H21"/><path d="M18 11H22L18 15H22"/></symbol>
+    <symbol id="icon-repeat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1L21 5L17 9"/><path d="M3 11V9A4 4 0 0 1 7 5H21"/><path d="M7 23L3 19L7 15"/><path d="M21 13V15A4 4 0 0 1 17 19H3"/></symbol>
+    <symbol id="icon-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4H18A1 1 0 0 1 19 5V21L12 17L5 21V5A1 1 0 0 1 6 4Z"/></symbol>
+    <symbol id="icon-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3.5L20.5 9.5"/><path d="M9 14L4 19"/><path d="M7.5 11.5L12.5 6.5L17.5 11.5L12.5 16.5Z"/><path d="M12.5 16.5L15.5 19.5"/></symbol>
+    <symbol id="icon-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2V5"/><path d="M12 19V22"/><path d="M2 12H5"/><path d="M19 12H22"/></symbol>
+    <symbol id="icon-check-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11L12 14L22 4"/><path d="M21 12V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H16"/></symbol>
+    <symbol id="icon-subtask-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></symbol>
+    <symbol id="icon-subtask-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></symbol>
+    <symbol id="icon-empty-tasks" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15"/><path d="M12 12H15"/><path d="M12 16H15"/><path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"/><path d="M9 12H9.01"/><path d="M9 16H9.01"/></symbol>
+    <symbol id="icon-empty-search" viewBox="0 0 24 24" fill="currentColor"><path d="M9.172 16.242L12 13.414L14.828 16.242L16.242 14.828L13.414 12L16.242 9.172L14.828 7.758L12 10.586L9.172 7.758L7.758 9.172L10.586 12L7.758 14.828L9.172 16.242Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22ZM12 20C16.418 20 20 16.418 20 12C20 7.582 16.418 4 12 4C7.582 4 4 7.582 4 12C4 16.418 7.582 20 12 20Z"/></symbol>
+    <symbol id="icon-drag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></symbol>
+    <symbol id="workspace-icon-list-check"
+
+
+
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3.5 5.5l1.5 1.5l2.5 -2.5" />
+  <path d="M3.5 11.5l1.5 1.5l2.5 -2.5" />
+  <path d="M3.5 17.5l1.5 1.5l2.5 -2.5" />
+  <path d="M11 6l9 0" />
+  <path d="M11 12l9 0" />
+  <path d="M11 18l9 0" />
+</symbol>
+    <symbol id="workspace-icon-sun"
+
+
+
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+  <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
+</symbol>
+    <symbol id="workspace-icon-menu-2"
+
+
+
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 6l16 0" />
+  <path d="M4 12l16 0" />
+  <path d="M4 18l16 0" />
+</symbol>
+    <symbol id="workspace-icon-lock"
+
+
+
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6" />
+  <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+  <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+</symbol>
+    <symbol id="workspace-icon-chevron-right"
+
+
+
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9 6l6 6l-6 6" />
+</symbol>
+    <symbol id="workspace-icon-chevron-left"
+
+
+
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 6l-6 6l6 6" />
+</symbol>
+    <symbol id="workspace-icon-calendar"
+
+
+
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12" />
+  <path d="M16 3v4" />
+  <path d="M8 3v4" />
+  <path d="M4 11h16" />
+  <path d="M11 15h1" />
+  <path d="M12 15v3" />
+</symbol>
+    <symbol id="workspace-icon-dots"
+
+
+
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+  <path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+  <path d="M18 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+</symbol>
+    <symbol id="workspace-icon-plus"
+
+
+
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 5l0 14" />
+  <path d="M5 12l14 0" />
+</symbol>
+    <symbol id="workspace-icon-search"
+
+
+
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+  <path d="M21 21l-6 -6" />
+</symbol>
+<symbol id="icon-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v9H3Z"/></symbol>
+<symbol id="workspace-icon-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"/></symbol>
+</svg>
+<div class="container">
+    <a class="workspace-skip-link" href="#mainContent" data-i18n="workspace.skipToContent">跳至内容</a>
+    <button type="button" id="workspaceNavBackdrop" class="workspace-nav-backdrop" data-i18n-aria-label="workspace.closeNavigation" aria-label="关闭导航" hidden></button>
+    <aside class="workspace-sidebar" id="workspaceSidebar" data-i18n-aria-label="workspace.navigation" aria-label="导航">
+        <a class="workspace-brand" href="./" aria-label="Task Tracer"><span class="workspace-brand-symbol"><img class="workspace-brand-mark" src="./fav/task-tracer.svg" width="32" height="32" alt="" aria-hidden="true"></span><span>Task Tracer</span></a>
+        <nav class="workspace-navigation workspace-scope-navigation" data-i18n-aria-label="workspace.navigation" aria-label="导航">
+            <button type="button" id="workspaceTodayBtn" class="workspace-nav-button" data-workbench-screen="today" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#workspace-icon-sun"></use></svg><span data-i18n="v5.nav.today">今天</span></button>
+            <button type="button" id="workspaceAllTasks" class="workspace-nav-button" data-workbench-screen="tasks" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#workspace-icon-list-check"></use></svg><span data-i18n="v5.nav.tasks">任务</span><span id="workspaceAllCount" class="workspace-nav-count">0</span></button>
+            <button type="button" id="workspaceProjectsBtn" class="workspace-nav-button" data-workbench-screen="projects"><svg class="icon" aria-hidden="true"><use href="#icon-folder"></use></svg><span data-i18n="v5.nav.projects">项目</span></button>
+            <button type="button" id="viewTab-stats" class="workspace-nav-button" data-workbench-screen="review" data-view="stats"><svg class="icon" aria-hidden="true"><use href="#icon-chart"></use></svg><span data-i18n="v5.nav.review">回顾</span></button>
+        </nav>
+        <div class="workspace-sidebar-scroll" id="workspaceSidebarScroll"><section class="workspace-sidebar-section"><h2 data-i18n="workspace.projects">项目</h2><nav id="workspaceProjects" class="workspace-navigation" data-i18n-aria-label="workspace.projects" aria-label="项目"></nav></section>
+        <section class="saved-views-bar" id="savedViewsBar" aria-label="保存的智能视图" data-i18n-aria-label="savedViews.label">
+            <div class="saved-views-heading">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-bookmark"></use></svg>
+                <span data-i18n="savedViews.label">智能视图</span>
+            </div>
+            <div class="saved-views-list" id="savedViewsList"></div>
+        </section>
+        </div><div class="workspace-sidebar-footer"><button type="button" id="workspaceSettingsBtn" class="workspace-nav-button workspace-settings-entry" aria-controls="settingsWorkspace"><svg class="icon" aria-hidden="true"><use href="#workspace-icon-settings"></use></svg><span data-i18n="settings.title">设置与数据</span></button>
+    </div></aside>
+    <div class="workspace-stage">
+    <header class="workspace-topbar">
+        <div class="workspace-breadcrumbs">
+            <button type="button" id="workspaceNavToggle" class="icon-btn workspace-mobile-only" data-i18n-aria-label="workspace.openNavigation" aria-label="打开导航" aria-controls="workspaceSidebar" aria-expanded="false"><svg class="icon" aria-hidden="true"><use href="#workspace-icon-menu-2"></use></svg></button>
+        </div>
+        <div class="header-actions">
+<button type="button" id="settingsBackBtn" class="btn btn-secondary" data-i18n-aria-label="settings.backToTasks" aria-label="返回任务" hidden><svg class="icon icon-sm" aria-hidden="true"><use href="#workspace-icon-chevron-left"></use></svg><span data-i18n="settings.backToTasks">返回任务</span></button>
+
+            <button class="icon-btn undo-btn" id="undoBtn" hidden aria-label="没有可撤销操作" data-i18n-aria-label="undo.unavailableTitle" data-i18n-title="undo.unavailableTitle" title="没有可撤销操作" disabled>
+                <svg class="icon"><use href="#icon-undo"></use></svg><span data-i18n="undo.action">撤销</span>
+            </button>
+<div class="workspace-add-actions"><button class="btn btn-primary workspace-add-task" id="openModalBtn" type="button" aria-haspopup="dialog" aria-controls="taskModal" aria-label="添加新任务" data-i18n-aria-label="modal.addTitle">
+                <svg class="icon"><use href="#icon-plus"></use></svg>
+            <span data-i18n="actions.addTask">添加任务</span></button><button class="btn btn-primary workspace-quick-capture" id="quickCaptureBtn" type="button" aria-expanded="false" aria-controls="captureShelf" data-i18n-aria-label="usability.quickCapture" data-i18n-title="usability.quickCapture" aria-label="快速记录" title="快速记录"><svg class="icon icon-sm" aria-hidden="true"><use href="#icon-chevron-down"></use></svg></button></div>
+            <button class="icon-btn" id="openMenuBtn" type="button" aria-label="设置与数据" data-i18n-aria-label="settings.title" aria-controls="settingsWorkspace" data-i18n-title="tooltips.menu" title="设置与数据 (Ctrl+M)" hidden>
+                <svg class="icon" aria-hidden="true"><use href="#workspace-icon-settings"></use></svg>
+            </button>
+        </div>
+        <input accept=".json" class="file-input" id="importFile" type="file">
+        <input accept=".json" class="file-input" id="savedViewsImportFile" type="file">
+    </header>
+    <section id="captureShelf" class="capture-shelf" aria-labelledby="captureShelfTitle" hidden inert>
+        <div class="capture-shelf-inner"><div class="capture-shelf-heading"><h2 id="captureShelfTitle" data-i18n="quickAdd.label">快速记录</h2><button type="button" id="captureCloseBtn" class="icon-btn" data-i18n-aria-label="usability.captureClose" aria-label="收起添加"><svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg></button></div>
+        <form class="quick-add-bar" id="quickAddForm" aria-label="快速添加任务" data-i18n-aria-label="quickAdd.label">
+                    <div class="quick-add-input-wrap">
+                        <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-plus"></use></svg>
+                        <label for="quickAddInput" class="sr-only" data-i18n="quickAdd.label">快速添加任务</label>
+                        <input id="quickAddInput" class="quick-add-input" data-i18n-placeholder="usability.capturePlaceholder" placeholder="明天 20:00 复习英语 #学习 /个人" autocomplete="off" type="text">
+                    </div>
+                    <button class="btn btn-primary quick-add-submit" data-i18n="quickAdd.submit" type="submit">添加</button>
+                </form>
+        <div class="capture-shelf-meta"><p id="capturePreview" class="capture-preview" aria-live="polite"></p><button type="button" id="captureDetailsBtn" class="capture-details-btn" data-i18n="usability.captureDetails">更多选项</button></div></div>
+    </section>
+    <div class="storage-warning" id="storageUnavailableBanner" role="alert" aria-live="assertive" hidden>
+        <div class="storage-warning-icon" aria-hidden="true">
+            <svg class="icon"><use href="#icon-backup"></use></svg>
+        </div>
+        <div class="storage-warning-copy">
+            <strong class="storage-warning-title" data-i18n="storage.unavailable.title">本地存储不可用</strong>
+            <p id="storageUnavailableMessage" data-i18n="storage.unavailable.message">当前浏览器阻止了本地数据库，任务无法读取或保存。请调整隐私设置后重试；存储恢复后可使用已有导出/备份文件恢复数据。</p>
+            <p id="quickAddRetainedMessage" data-i18n="drafts.quickAddRetained" hidden>快速添加中的文字仅保留在当前页面，可先选择复制；重试会在原页面恢复，刷新、关闭或崩溃可能丢失这些文字。</p>
+        </div>
+        <div class="storage-warning-actions">
+            <button class="btn btn-primary" id="emergencyBackupBtn" type="button" data-i18n="storage.unavailable.emergencyBackup" data-i18n-title="storage.unavailable.emergencyBackupTitle" title="下载当前内存快照" hidden>紧急备份</button>
+            <button class="btn btn-secondary" id="clearRecoveryBtn" type="button" data-i18n="storage.clearRecovery" hidden>清空恢复历史</button>
+            <button class="btn btn-secondary" id="retryStorageBtn" type="button" data-i18n="storage.unavailable.retry">重试</button>
+        </div>
+    </div>
+    <div class="storage-warning" id="taskDraftRecoveryBanner" role="alert" hidden>
+        <div class="storage-warning-icon" aria-hidden="true">
+            <svg class="icon"><use href="#icon-backup"></use></svg>
+        </div>
+        <div class="storage-warning-copy">
+            <strong class="storage-warning-title" data-i18n="drafts.recoveryTitle">已保留未保存的任务草稿</strong>
+            <p id="taskDraftRecoveryDescription"></p>
+            <p id="taskDraftRecoveryStatus"></p>
+        </div>
+        <div class="storage-warning-actions">
+            <button class="btn btn-primary" id="taskDraftRecoveryDownloadBtn" type="button" data-i18n="drafts.recoveryDownload">下载未保存草稿</button>
+            <button class="btn btn-secondary" id="taskDraftRecoveryRestoreBtn" type="button" data-i18n="drafts.recoveryRestore">恢复编辑</button>
+            <button class="btn btn-secondary" id="taskDraftRecoveryDiscardBtn" type="button" data-i18n="drafts.recoveryDiscard">放弃下一份草稿</button>
+        </div>
+    </div>
+    <main class="main-content" id="mainContent" tabindex="-1">
+        <section id="todayWorkspace" class="workbench-page" data-i18n-aria-label="v5.nav.today" aria-label="今天"></section>
+        <section id="projectsWorkspace" class="workbench-page" data-i18n-aria-label="v5.nav.projects" aria-label="项目" hidden inert></section>
+        <section id="tasksWorkspace" hidden inert>
+        <div id="statsReturnBar" class="stats-return-bar" hidden><button type="button" id="statsReturnBtn" class="btn btn-secondary"><svg class="icon icon-sm" aria-hidden="true"><use href="#workspace-icon-chevron-left"></use></svg><span data-i18n="craft.returnToStats">返回统计</span></button></div>
+        <div class="workspace-page-header"><div><h1 id="workspaceTitle" tabindex="-1" data-i18n="workspace.allTasks">全部任务</h1><p id="workspaceSummary" class="workspace-page-subtitle"></p></div><button type="button" id="planningDoneBtn" class="btn btn-primary task-planning-done" data-i18n="v5.planning.done" hidden>完成选择</button><section class="workspace-day-strip" id="workspaceDayStrip"><div class="workspace-day-mark"><svg class="icon" aria-hidden="true"><use href="#workspace-icon-calendar"></use></svg><time id="workspaceDate"></time></div><div class="workspace-day-copy"><span data-i18n="workspace.dueToday">今天截止</span><strong id="workspaceDueTodayCount">0</strong></div><button type="button" class="btn btn-secondary workspace-schedule-toggle" id="workspaceScheduleToggle" aria-controls="workspaceOverview" aria-expanded="false" data-i18n="workspace.openSchedule">查看日程</button></section></div>
+        <div id="workspaceViewNavHost" class="workspace-viewbar"><nav class="view-switcher workspace-view-navigation" id="viewSwitcher" aria-label="视图切换" data-i18n-aria-label="views.label">
+                            <button class="view-tab selected" aria-current="page" id="viewTab-list" type="button" aria-controls="taskList" aria-label="列表" data-i18n-aria-label="views.list" data-view="list">
+                                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-list"></use></svg>
+                                <span data-i18n="views.list">列表</span>
+                            </button>
+                            <button class="view-tab" id="viewTab-calendar" type="button" aria-controls="taskList" aria-label="日历" data-i18n-aria-label="views.calendar" data-view="calendar">
+                                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-calendar"></use></svg>
+                                <span data-i18n="views.calendar">日历</span>
+                            </button>
+                            <button class="view-tab" id="viewTab-timeline" type="button" aria-controls="taskList" aria-label="时间线" data-i18n-aria-label="views.timeline" data-view="timeline">
+                                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-timeline"></use></svg>
+                                <span data-i18n="views.timeline">时间线</span>
+                            </button>
+                        </nav></div>
+
+        <div class="workspace-content-grid"><div class="workspace-main-column"><div class="workspace-task-surface">
+        <section class="tools-drawer" id="toolsDrawer" aria-label="任务工具栏" data-i18n-aria-label="app.toolbar">
+            <div class="controls-bar" role="toolbar" aria-label="任务工具栏" data-i18n-aria-label="app.toolbar">
+                    <div class="toolbar-main-row">
+                        <div class="search-box">
+                            <label for="searchInput" class="sr-only" data-i18n="search.placeholder">搜索任务...</label>
+                            <input class="search-input" data-i18n-placeholder="search.placeholder" id="searchInput" placeholder="搜索任务、项目或标签…" type="text">
+                            <button type="button" class="search-clear-btn" id="clearSearchBtn" data-i18n-aria-label="search.clear" data-i18n-title="search.clear" aria-label="清空搜索" title="清空搜索" hidden>
+                                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-x"></use></svg>
+                            </button>
+                            <div class="shortcut-hint" aria-hidden="true"><kbd id="searchShortcutKey" class="shortcut-kbd" data-i18n-title="tooltips.searchShortcut" title="搜索快捷键：Ctrl/Cmd + K">Ctrl K</kbd></div>
+                        </div>
+                        <button class="btn btn-secondary filter-toggle" id="toolsDrawerToggleBtn" type="button" aria-expanded="true" aria-controls="toolsDrawerContent"><svg class="icon icon-sm" aria-hidden="true"><use href="#icon-filter"></use></svg><span data-i18n="usability.filters">筛选</span> <span id="filterCurrentSummary" class="filter-current-summary"></span></button>
+                        <button class="btn btn-secondary batch-mode-btn" id="batchModeBtn" type="button" aria-label="进入批量操作" data-i18n-aria-label="batch.menuTitle" data-i18n-title="batch.menuTitle" aria-pressed="false" title="进入批量操作">
+                            <svg class="icon" aria-hidden="true"><use href="#icon-check-square"></use></svg>
+                            <span data-i18n="batch.selectTasks">选择</span>
+                        </button>
+                        <button class="btn btn-secondary saved-view-save-btn" id="saveSmartViewBtn" type="button" aria-label="保存视图" data-i18n-aria-label="savedViews.saveCurrent" data-i18n-title="savedViews.saveCurrentTitle" title="保存当前搜索、筛选和视图">
+                            <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-bookmark"></use></svg>
+                            <span data-i18n="savedViews.saveCurrent">保存视图</span>
+                        </button>
+                </div><span id="toolsDrawerInlineAnchor" hidden></span><div id="toolsDrawerContent" class="tools-drawer-content"><div class="toolbar-filter-row">
+                        <button type="button" class="btn btn-secondary focus-mode-toggle" id="focusModeToggleBtn" aria-pressed="false" data-i18n-aria-label="focus.openTitle"><svg class="icon icon-sm" aria-hidden="true"><use href="#icon-target"></use></svg><span id="focusModeToggleText" data-i18n="focus.openShort">今日计划</span></button>
+                        <div class="dropdown-container project-filter" id="projectDropdown">
+                            <button class="dropdown-btn" id="projectFilterBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="projectFilterMenu" aria-label="项目视图" data-i18n-aria-label="projects.filterLabel">
+                                <span id="currentProjectLabel" data-i18n="projects.all">全部项目</span>
+                                <svg class="icon icon-sm chevron"><use href="#icon-chevron-down"></use></svg>
+                            </button>
+                            <div class="dropdown-menu-content" id="projectFilterMenu" role="listbox" aria-labelledby="projectFilterBtn"></div>
+                        </div>
+                        <div class="dropdown-container" id="filterDropdown">
+                            <button class="dropdown-btn" id="filterBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="filterMenu">
+                                <svg class="icon icon-sm" style="opacity: 0.7;"><use href="#icon-filter"></use></svg>
+                                <span id="currentFilterLabel" data-i18n="filters.active">进行中</span>
+                                <svg class="icon icon-sm chevron"><use href="#icon-chevron-down"></use></svg>
+                            </button>
+                            <div class="dropdown-menu-content" id="filterMenu" role="listbox" aria-labelledby="filterBtn">
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="all"><span data-i18n="filters.all">全部</span><span class="filter-count" id="count-all">(0)</span></button>
+                                <button type="button" class="dropdown-option selected" role="option" aria-selected="true" data-filter="active"><span data-i18n="filters.active">进行中</span><span class="filter-count" id="count-active">(0)</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="completed"><span data-i18n="filters.completed">已完成</span><span class="filter-count" id="count-completed">(0)</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="archived"><span data-i18n="filters.archived">已归档</span><span class="filter-count" id="count-archived">(0)</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="overdue"><span data-i18n="filters.overdue">已过期</span><span class="filter-count" id="count-overdue">(0)</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-filter="no-deadline"><span data-i18n="filters.noDeadline">无截止日期</span><span class="filter-count" id="count-no-deadline">(0)</span></button>
+                            </div>
+                        </div>
+                        <div class="dropdown-container" id="sortDropdown">
+                            <button class="dropdown-btn" id="sortBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="sortMenu">
+                                <svg class="icon icon-sm" style="opacity: 0.7;"><use href="#icon-sort"></use></svg>
+                                <span id="currentSortLabel" data-i18n="sort.smart">智能排序</span>
+                                <svg class="icon icon-sm chevron"><use href="#icon-chevron-down"></use></svg>
+                            </button>
+                            <div class="dropdown-menu-content" id="sortMenu" role="listbox" aria-labelledby="sortBtn">
+                                <button type="button" class="dropdown-option selected" role="option" aria-selected="true" data-sort="smart"><span data-i18n="sort.smart">智能排序</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="created-desc"><span data-i18n="sort.created">新创建</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="due-asc"><span data-i18n="sort.due">截止日期</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="alpha-asc"><span data-i18n="sort.alpha">A-Z</span></button>
+                                <button type="button" class="dropdown-option" role="option" aria-selected="false" data-sort="manual"><span data-i18n="sort.manual">自定义排序 (拖拽)</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="focus-mode-bar" id="focusModeBar" aria-live="polite" hidden>
+            <div class="focus-mode-copy">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-target"></use></svg>
+                <div>
+                    <strong data-i18n="focus.title">今日计划</strong>
+                    <span id="focusModeSummary">0 个任务</span>
+                </div>
+            </div>
+            <button class="btn btn-secondary" id="exitFocusModeBtn" type="button" data-i18n="focus.exit">退出专注</button>
+        </section>
+        <section class="batch-toolbar" id="batchToolbar" aria-live="polite" hidden>
+            <div class="batch-toolbar-summary">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-check-square"></use></svg>
+                <strong id="batchSelectionSummary">已选择 0 个任务</strong>
+            </div>
+            <div class="batch-toolbar-actions">
+                <button class="btn btn-secondary" id="batchSelectVisibleBtn" type="button" data-i18n="batch.selectVisible">全选匹配项</button>
+                <button class="btn btn-secondary" id="batchClearSelectionBtn" type="button" data-i18n="batch.clearSelection">清空选择</button>
+                <button class="btn btn-primary" id="batchCompleteBtn" type="button" data-i18n="batch.complete">标记完成</button>
+                <details id="batchMoreActions" class="batch-more-actions"><summary class="btn btn-secondary" data-i18n="craft.batchMore">更多操作</summary><div class="batch-more-panel">
+                    <button class="btn btn-secondary" id="batchMoveProjectBtn" type="button" data-i18n="craft.batchMoveProject">移动到项目</button>
+                    <button class="btn btn-secondary" id="batchFocusBtn" type="button" data-i18n="batch.addToFocus">加入今日</button>
+                    <button class="btn btn-secondary" id="batchArchiveBtn" type="button" data-i18n="batch.archive">归档</button>
+                    <button class="btn btn-secondary batch-danger" id="batchDeleteBtn" type="button" data-i18n="batch.delete">删除</button>
+                </div></details>
+                <button class="btn btn-secondary" id="exitBatchModeBtn" type="button" data-i18n="batch.exit">退出</button>
+            </div>
+        </section>
+        <div class="tasks-section">
+            <div id="taskList" role="region" aria-labelledby="viewTab-list">
+                <div class="loading-state" id="initial-loader">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+            <div class="task-pagination" id="taskPagination" hidden>
+                <p id="taskPaginationSummary" role="status" aria-live="polite"></p>
+                <button class="btn btn-secondary" id="loadMoreTasksBtn" type="button" aria-controls="taskList" data-i18n="pagination.more">显示更多任务</button>
+            </div>
+        </div>
+
+        </div><div class="workspace-list-footer"><span data-i18n="workspace.progressScope">全工作区（不含归档）</span><span id="workspaceCompletionSummary"></span></div></div>
+        <aside class="workspace-overview" id="workspaceOverview" data-i18n-aria-label="workspace.overview" aria-label="概览">
+            <section class="workspace-mini-calendar"><div class="workspace-mini-calendar-header"><h2 id="workspaceCalendarHeading"></h2><div><button type="button" class="icon-btn" id="workspacePreviousMonth" data-i18n-aria-label="calendar.previous" aria-label="上个月"><svg class="icon icon-sm" aria-hidden="true"><use href="#workspace-icon-chevron-left"></use></svg></button><button type="button" class="icon-btn" id="workspaceNextMonth" data-i18n-aria-label="calendar.next" aria-label="下个月"><svg class="icon icon-sm" aria-hidden="true"><use href="#workspace-icon-chevron-right"></use></svg></button></div></div><div class="workspace-mini-weekdays" id="workspaceCalendarWeekdays" aria-hidden="true"></div><div class="workspace-mini-grid" id="workspaceCalendarGrid"></div><button type="button" class="workspace-calendar-link" id="workspaceOpenCalendar" data-i18n="views.calendar">日历</button></section>
+            <section class="workspace-upcoming"><h2 data-i18n="workspace.upcoming">即将截止</h2><div id="workspaceUpcomingList"></div></section>
+        </aside>
+        </div>
+        </section>
+        <section id="settingsWorkspace" class="settings-workspace settings-workbench" aria-labelledby="settingsTitle" hidden inert>
+            <div class="workspace-page-header settings-page-header"><h1 id="settingsTitle" tabindex="-1" data-i18n="settings.appearanceTitle">外观与语言</h1></div>
+            <div class="settings-layout">
+                <nav role="tablist" class="settings-section-navigation settings-category-navigation" data-i18n-aria-label="settings.navigation" aria-label="设置分类">
+                    <button type="button" role="tab" id="tab-settingsAppearance" aria-controls="settingsAppearance" aria-selected="false" data-settings-section="settingsAppearance" data-i18n="settings.appearanceTitle">外观与语言</button>
+                    <button type="button" role="tab" id="tab-settingsData" aria-controls="settingsData" aria-selected="false" data-settings-section="settingsData" data-i18n="settings.dataTitle">备份与恢复</button>
+                    <button type="button" role="tab" id="tab-settingsExperience" aria-controls="settingsExperience" aria-selected="false" data-settings-section="settingsExperience" data-i18n="settings.notificationsTitle">提醒与安装</button>
+                    <button type="button" role="tab" id="tab-settingsCleanup" aria-controls="settingsCleanup" aria-selected="false" data-settings-section="settingsCleanup" data-i18n="settings.maintenanceTitle">任务清理</button>
+                    <button type="button" role="tab" id="tab-settingsHelp" aria-controls="settingsHelp" aria-selected="false" data-settings-section="settingsHelp" data-i18n="settings.helpTitle">帮助与应用信息</button>
+                </nav>
+                <div id="menu" class="settings-content">
+                    <section id="settingsAppearance" role="tabpanel" class="settings-section settings-panel-appearance" aria-labelledby="tab-settingsAppearance">
+
+                        <div class="settings-surface settings-preferences">
+                            <div class="settings-row"><div class="settings-row-copy"><label for="themeToggleBtn" data-i18n="workspace.appearance">外观</label></div><select id="themeToggleBtn" class="settings-select" data-native-select><option value="light" data-i18n="workspace.themeLight">浅色</option><option value="dark" data-i18n="workspace.themeDark">深色</option><option value="system" data-i18n="workspace.themeSystem">跟随系统</option></select></div>
+                            <div class="settings-row"><div class="settings-row-copy"><label for="languageSelect" data-i18n="workspace.language">语言</label></div><select id="languageSelect" class="settings-select" data-native-select></select></div>
+                        </div>
+                        <fieldset id="workspaceThemeChoices" class="workspace-theme-picker" aria-labelledby="workspaceThemeLabel">
+                            <legend id="workspaceThemeLabel" data-i18n="craft.accentLabel">工作区主题</legend>
+                            <div class="workspace-theme-grid">
+                                <label class="workspace-theme-option" data-theme-preview="iris">
+                                    <input type="radio" name="workspaceTheme" id="workspaceTheme-iris" value="iris" checked>
+                                    <span class="workspace-theme-preview" aria-hidden="true"><span class="theme-preview-rail"></span><span class="theme-preview-header"></span><span class="theme-preview-sheet"></span></span>
+                                    <span class="workspace-theme-title"><span data-i18n="craft.accentIris">雾紫</span><span class="workspace-theme-mark" aria-hidden="true"></span></span>
+
+                                </label>
+                                <label class="workspace-theme-option" data-theme-preview="ocean">
+                                    <input type="radio" name="workspaceTheme" id="workspaceTheme-ocean" value="ocean">
+                                    <span class="workspace-theme-preview" aria-hidden="true"><span class="theme-preview-rail"></span><span class="theme-preview-header"></span><span class="theme-preview-sheet"></span></span>
+                                    <span class="workspace-theme-title"><span data-i18n="craft.accentOcean">海湾</span><span class="workspace-theme-mark" aria-hidden="true"></span></span>
+
+                                </label>
+                                <label class="workspace-theme-option" data-theme-preview="pine">
+                                    <input type="radio" name="workspaceTheme" id="workspaceTheme-pine" value="pine">
+                                    <span class="workspace-theme-preview" aria-hidden="true"><span class="theme-preview-rail"></span><span class="theme-preview-header"></span><span class="theme-preview-sheet"></span></span>
+                                    <span class="workspace-theme-title"><span data-i18n="craft.accentPine">松林</span><span class="workspace-theme-mark" aria-hidden="true"></span></span>
+
+                                </label>
+                                <label class="workspace-theme-option" data-theme-preview="berry">
+                                    <input type="radio" name="workspaceTheme" id="workspaceTheme-berry" value="berry">
+                                    <span class="workspace-theme-preview" aria-hidden="true"><span class="theme-preview-rail"></span><span class="theme-preview-header"></span><span class="theme-preview-sheet"></span></span>
+                                    <span class="workspace-theme-title"><span data-i18n="craft.accentBerry">莓暮</span><span class="workspace-theme-mark" aria-hidden="true"></span></span>
+
+                                </label>
+                            </div>
+                        </fieldset>
+                        <select id="accentSelect" data-native-select hidden tabindex="-1" aria-hidden="true"><option value="iris" data-i18n="craft.accentIris">雾紫</option><option value="ocean" data-i18n="craft.accentOcean">海湾</option><option value="pine" data-i18n="craft.accentPine">松林</option><option value="berry" data-i18n="craft.accentBerry">莓暮</option></select>
+                    </section>
+                    <section id="settingsData" role="tabpanel" class="settings-section settings-panel-data" aria-labelledby="tab-settingsData">
+                        <div class="settings-surface settings-backup-block settings-data-primary">
+                            <div class="settings-backup-status"><div class="menu-status" id="backupHealth"><svg class="icon" aria-hidden="true"><use href="#icon-backup"></use></svg><span id="backupHealthText" role="status" aria-live="polite"></span></div></div>
+                            <div class="settings-backup-actions">
+                                <button type="button" class="btn btn-primary settings-action" id="backupBtn"><svg class="icon" aria-hidden="true"><use href="#icon-backup"></use></svg><span data-i18n="actions.exportBackup">下载任务备份</span></button>
+                                <button type="button" class="btn btn-secondary settings-action" id="importBtn"><svg class="icon" aria-hidden="true"><use href="#icon-import"></use></svg><span data-i18n="actions.import">导入任务备份</span></button>
+                            </div>
+                        </div>
+                        <div class="settings-surface settings-action-list settings-secondary-actions settings-data-tools">
+                            <button type="button" class="settings-command" id="recoveryBtn"><svg class="icon" aria-hidden="true"><use href="#icon-undo"></use></svg><span data-i18n="recovery.menu">恢复历史</span><svg class="icon icon-sm settings-command-arrow" aria-hidden="true"><use href="#workspace-icon-chevron-right"></use></svg></button>
+                            <button type="button" class="settings-command" id="savedViewsTransferBtn"><svg class="icon" aria-hidden="true"><use href="#icon-bookmark"></use></svg><span data-i18n="viewsTransfer.menu">迁移保存的视图</span><svg class="icon icon-sm settings-command-arrow" aria-hidden="true"><use href="#workspace-icon-chevron-right"></use></svg></button>
+                            <button type="button" class="settings-command" id="exportCsvBtn"><svg class="icon" aria-hidden="true"><use href="#icon-list"></use></svg><span data-i18n="csv.menu">导出全部任务 CSV</span></button>
+                            <button type="button" class="settings-command" id="storageHealthBtn"><svg class="icon" aria-hidden="true"><use href="#icon-backup"></use></svg><span data-i18n="settingsRefinement.storageAction">查看存储状态</span><svg class="icon icon-sm settings-command-arrow" aria-hidden="true"><use href="#workspace-icon-chevron-right"></use></svg></button>
+                        </div>
+                    </section>
+                    <section id="settingsExperience" role="tabpanel" class="settings-section settings-panel-experience" aria-labelledby="tab-settingsExperience">
+                        <div class="settings-surface settings-notifications-surface">
+                            <div class="settings-row settings-notification-row"><div class="settings-row-copy"><h2 data-i18n="settings.notificationTaskTitle">任务通知</h2><p id="settingsNotificationStatus" class="settings-inline-status" role="status"></p></div><button type="button" class="btn btn-secondary settings-action" id="notificationToggleBtn"><svg class="icon" aria-hidden="true"><use href="#icon-bell-off"></use></svg><span id="notificationToggleText">提醒</span></button></div>
+                        </div>
+                        <div class="settings-surface settings-install-surface">
+                            <div class="settings-row settings-install-row">
+                                <button type="button" class="btn btn-secondary settings-action" id="installAppBtn"><svg class="icon" aria-hidden="true"><use href="#icon-install"></use></svg><span data-i18n="pwa.install.menu">安装应用</span></button>
+                                <p id="settingsInstallStatus" class="settings-inline-status" role="status"></p>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="settingsCleanup" role="tabpanel" class="settings-section settings-panel-cleanup" aria-labelledby="tab-settingsCleanup">
+                        <div class="settings-surface settings-maintenance-action">
+                            <div class="settings-maintenance-summary"><p id="maintenanceStatus" class="settings-inline-status" role="status" aria-live="polite"></p></div>
+                            <button type="button" class="btn btn-secondary settings-action" id="archiveCompletedBtn"><svg class="icon" aria-hidden="true"><use href="#icon-archive"></use></svg><span data-i18n="actions.archiveCompleted">归档已完成</span></button>
+                        </div>
+                        <div class="settings-surface settings-danger-zone">
+                            <button type="button" class="btn btn-danger settings-action" id="clearCompletedBtn"><svg class="icon" aria-hidden="true"><use href="#icon-trash-lines"></use></svg><span data-i18n="actions.clearCompleted">删除已完成</span></button>
+                        </div>
+                    </section>
+                    <section id="settingsHelp" role="tabpanel" class="settings-section settings-panel-help" aria-labelledby="tab-settingsHelp">
+                        <div class="settings-surface settings-help-surface">
+                            <div class="settings-app-summary"><div class="settings-update-header"><div class="settings-about-heading"><strong>Task Tracer</strong><span id="settingsVersion" class="settings-version"></span></div><div class="settings-update-actions"><button type="button" class="btn btn-secondary settings-action" id="checkUpdateBtn" data-i18n="pwa.update.check">检查更新</button><button type="button" class="btn btn-primary settings-action" id="settingsUpdateNowBtn" data-i18n="pwa.update.reload" hidden>刷新更新</button></div></div><p id="updateCheckStatus" role="status" aria-live="polite" aria-atomic="true" data-state="idle"></p></div>
+                            <div class="settings-action-list settings-secondary-actions">
+<button type="button" class="settings-command" id="helpMenuBtn"><svg class="icon" aria-hidden="true"><use href="#icon-list"></use></svg><span data-i18n="help.menu">使用帮助</span><svg class="icon icon-sm settings-command-arrow" aria-hidden="true"><use href="#workspace-icon-chevron-right"></use></svg></button>
+<button type="button" class="settings-command" id="settingsDiagnosticsBtn"><svg class="icon" aria-hidden="true"><use href="#icon-circle-info"></use></svg><span data-i18n="help.diagnostics">查看诊断信息</span><svg class="icon icon-sm settings-command-arrow" aria-hidden="true"><use href="#workspace-icon-chevron-right"></use></svg></button>
+                            </div>
+                            <div class="settings-about-links"><a href="https://github.com/muquew/Task-Tracer" target="_blank" rel="noopener noreferrer" class="footer-link"><svg class="icon icon-fill" aria-hidden="true"><use href="#icon-github"></use></svg>GitHub</a><a href="https://github.com/muquew/Task-Tracer/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="footer-link" data-i18n="v5.settings.license">许可</a><span class="footer-copyright">© 2025 muquew</span></div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+        <div class="workspace-feedback"><div class="notification" id="notification" role="group">
+    <svg class="icon" aria-hidden="true"><use href="#icon-check"></use></svg>
+    <span id="notificationText" aria-live="polite" aria-atomic="true"></span>
+    <div class="notification-actions"><button type="button" class="notification-action" id="notificationOpenTaskBtn" data-i18n="usability.openSavedTask" hidden>打开任务</button>
+    <button type="button" class="notification-action" id="notificationUndoBtn" data-i18n="undo.action" hidden>撤销</button></div>
+<button type="button" class="notification-dismiss" id="workspaceNotificationClose" data-i18n-aria-label="viewsTransfer.close" aria-label="关闭"><svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg></button></div></div>
+    </main>
+    <nav id="workspaceMobileDock" class="workspace-mobile-dock workspace-primary-nav" data-i18n-aria-label="v5.nav.label" aria-label="工作台">
+        <button type="button" id="mobileTodayBtn" class="workspace-primary-link" data-workbench-screen="today" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#workspace-icon-sun"></use></svg><span data-i18n="v5.nav.today">今天</span></button>
+        <button type="button" id="mobileTasksBtn" class="workspace-primary-link" data-workbench-screen="tasks"><svg class="icon" aria-hidden="true"><use href="#workspace-icon-list-check"></use></svg><span data-i18n="v5.nav.tasks">任务</span></button>
+        <button type="button" id="mobileProjectsBtn" class="workspace-primary-link" data-workbench-screen="projects"><svg class="icon" aria-hidden="true"><use href="#icon-folder"></use></svg><span data-i18n="v5.nav.projects">项目</span></button>
+        <button type="button" id="mobileReviewBtn" class="workspace-primary-link" data-workbench-screen="review"><svg class="icon" aria-hidden="true"><use href="#icon-chart"></use></svg><span data-i18n="v5.nav.review">回顾</span></button>
+    </nav>
+    </div>
+</div>
+<button id="backToTopBtn" class="back-to-top" aria-label="回到顶部" data-i18n-aria-label="tooltips.backToTop" data-i18n-title="tooltips.backToTop" title="回到顶部 (Alt + T)">
+    <svg class="icon" width="24" height="24" ><use href="#icon-arrow-up"></use></svg>
+</button>
+<dialog id="workspaceScheduleDialog" aria-labelledby="workspaceScheduleTitle"><div class="workspace-schedule-header"><h2 id="workspaceScheduleTitle" data-i18n="views.calendar">日历</h2><button type="button" id="workspaceScheduleClose" class="icon-btn" data-i18n-aria-label="viewsTransfer.close" aria-label="关闭"><svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg></button></div><div id="workspaceScheduleCalendarHost"></div></dialog>
+<dialog id="mobileFiltersDialog" class="mobile-filters-dialog" aria-modal="true" aria-labelledby="mobileFiltersTitle">
+    <header class="mobile-filters-header"><h2 id="mobileFiltersTitle" tabindex="-1" data-i18n="tools.label">筛选与排序</h2><button type="button" id="mobileFiltersCloseBtn" class="icon-btn" data-i18n-aria-label="viewsTransfer.close" aria-label="关闭"><svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg></button></header>
+    <div id="mobileFiltersBody" class="mobile-filters-body"></div>
+    <footer class="mobile-filters-footer"><button type="button" id="mobileFiltersDoneBtn" class="btn btn-primary" data-i18n="tools.done">完成</button></footer>
+</dialog>
+<div class="modal app-dialog" id="taskModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" data-dialog-mode="editor">
+    <div class="modal-content app-dialog-panel">
+        <div class="modal-header app-dialog-header">
+            <h2 class="modal-title" data-i18n="modal.addTitle" id="modalTitle">添加新任务</h2>
+            <button class="close-btn" id="closeModalBtn" type="button" aria-label="取消" data-i18n-aria-label="actions.cancel"><svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg></button>
+        </div>
+        <div class="modal-body app-dialog-body">
+            <form id="taskForm">
+                <div id="taskEditor" class="task-editor-layout editor-composer">
+                    <section class="form-panel form-panel-primary task-editor-content">
+                        <div class="form-group span-full">
+                        <label class="sr-only" data-i18n="form.taskName.label" for="taskName">任务名称 *</label>
+                        <input data-i18n-placeholder="form.taskName.placeholder" id="taskName" name="taskName" placeholder="输入任务名称" required type="text">
+                        </div>
+                        <div class="form-group span-full editor-description">
+                            <label class="sr-only" data-i18n="form.description.label" for="taskDesc">任务描述</label>
+                            <textarea data-i18n-placeholder="v5.editor.descriptionPlaceholder" id="taskDesc" placeholder="添加描述…" rows="3"></textarea>
+                        </div>
+                    </section>
+                    <section class="form-panel form-panel-secondary task-editor-properties" data-i18n-aria-label="editor.properties" aria-label="任务属性"><div class="form-group editor-property-project">
+                        <label data-i18n="form.project.label" for="taskProject">项目</label>
+                        <input data-i18n-placeholder="form.project.placeholder" id="taskProject" name="taskProject" placeholder="例如：工作 / 个人" type="text" autocomplete="off" list="taskProjectOptions">
+                    <datalist id="taskProjectOptions"></datalist></div>
+<div class="form-group editor-property-tags">
+                        <div class="form-label-row">
+                            <label data-i18n="form.tags.label" for="taskTags">标签</label>
+                        </div>
+                        <input data-i18n-placeholder="form.tags.placeholder" id="taskTags" name="taskTags" placeholder="工作, 个人" type="text" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="taskTagSuggestions">
+                        <div id="taskTagSuggestions" class="task-tag-suggestions" hidden></div>
+                    </div><div class="form-group form-card editor-property-deadline">
+                    <div class="form-section-header">
+                        <label data-i18n="form.dueDate.label" for="dueDate">截止日期</label>
+                        <div class="checkbox-group">
+                            <input id="noDeadline" type="checkbox">
+                            <label data-i18n="form.noDeadline" for="noDeadline">无截止日期</label>
+                        </div>
+                    </div>
+                    <div class="editor-date-presets" role="group" data-i18n-aria-label="editor.datePresets" aria-label="快捷安排"><button type="button" data-task-date-preset="0" aria-pressed="false" data-i18n="editor.today">今天</button><button type="button" data-task-date-preset="1" aria-pressed="false" data-i18n="editor.tomorrow">明天</button><button type="button" data-task-date-preset="pick" data-i18n="editor.chooseDate" data-i18n-aria-label="editor.pickDate" aria-label="选择日期">选择</button></div>
+<div class="datetime-group" id="deadlineFields">
+                        <input class="date-input" id="dueDate" type="date">
+                        <label for="dueTime" class="sr-only" data-i18n="form.dueTime.label">截止时间</label>
+                        <input class="time-input" id="dueTime" type="time" value="23:59">
+                    </div>
+                    <p id="dueDateError" class="editor-validation" role="alert" hidden data-i18n="editor.dateRequired">请选择截止日期，或勾选“无截止日期”。</p>
+                </div>
+                    </section>
+                    <details id="taskSubtasksDetails" class="form-group task-editor-subtasks editor-disclosure">
+                        <summary class="editor-disclosure-summary"><span data-i18n="form.subtasks.label">子任务</span><span id="taskSubtaskCount" class="editor-count" hidden></span></summary>
+                        <div class="editor-disclosure-content">
+                            <label class="sr-only" data-i18n="form.subtasks.label" for="subtaskInput">子任务</label>
+                            <div class="subtask-input-wrapper">
+                                <input type="text" id="subtaskInput" data-i18n-placeholder="form.subtasks.placeholder" placeholder="添加子任务..." autocomplete="off">
+                                <button type="button" id="addSubtaskBtn" class="btn-icon-small" aria-label="添加子任务" data-i18n-aria-label="form.subtasks.add" data-i18n-title="form.subtasks.add" title="添加子任务"><svg class="icon icon-sm" aria-hidden="true"><use href="#icon-plus"></use></svg></button>
+                            </div>
+                            <ul id="subtaskListPreview" class="subtask-preview-list"></ul>
+                        </div>
+                    </details>
+                    <details id="taskAdvancedDetails" class="task-advanced editor-disclosure"><summary class="editor-disclosure-summary" data-i18n="editor.scheduling">提醒与重复</summary><div class="task-schedule-fields editor-disclosure-content"><div id="taskScheduleUnavailable" class="editor-schedule-unavailable"><button type="button" class="btn btn-secondary" data-task-date-preset="pick" data-i18n="editor.setDate">设置日期</button></div><div class="form-group form-card" id="reminderGroup">
+                    <div class="form-field-grid">
+                        <div class="form-field">
+                            <label data-i18n="form.reminder.label" for="reminderOffset">提醒设置</label>
+                            <select id="reminderOffset" class="search-input">
+                                <option value="-1" data-i18n="form.reminder.options.none">不提醒</option>
+                                <option value="0" data-i18n="form.reminder.options.atTime">截止时</option>
+                                <option value="15" selected data-i18n="form.reminder.options.min15">提前 15 分钟</option>
+                                <option value="60" data-i18n="form.reminder.options.hour1">提前 1 小时</option>
+                                <option value="1440" data-i18n="form.reminder.options.day1">提前 1 天</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label data-i18n="form.reminderRepeat.label" for="reminderRepeat">重复提醒</label>
+                            <select id="reminderRepeat" class="search-input">
+                                <option value="-1" selected data-i18n="form.reminderRepeat.options.none">不重复</option>
+                                <option value="15" data-i18n="form.reminderRepeat.options.min15">每 15 分钟</option>
+                                <option value="60" data-i18n="form.reminderRepeat.options.hour1">每 1 小时</option>
+                                <option value="1440" data-i18n="form.reminderRepeat.options.day1">每天</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+<div class="form-group form-card" id="repeatGroup">
+                    <div class="form-field">
+                        <div class="form-label-row">
+                            <label data-i18n="form.repeat.label" for="repeatType">重复任务</label>
+
+                        </div>
+                        <select id="repeatType" class="search-input">
+                            <option value="none" selected data-i18n="form.repeat.options.none">不重复</option>
+                            <option value="daily" data-i18n="form.repeat.options.daily">每天</option>
+                            <option value="weekly" data-i18n="form.repeat.options.weekly">每周</option>
+                            <option value="weekly-days" data-i18n="form.repeat.options.weeklyDays">每周指定星期</option>
+                            <option value="monthly" data-i18n="form.repeat.options.monthly">每月</option>
+                            <option value="monthly-last" data-i18n="form.repeat.options.monthlyLast">每月最后一天</option>
+                            <option value="custom" data-i18n="form.repeat.options.custom">自定义周期</option>
+                        </select>
+                    </div>
+                    <div class="repeat-weekdays-row" id="repeatWeekdaysRow" hidden>
+                        <p class="repeat-weekdays-label" data-i18n="form.repeat.weekdaysLabel">重复星期</p>
+                        <div class="repeat-weekdays" role="group" aria-label="重复星期" data-i18n-aria-label="form.repeat.weekdaysLabel">
+                            <label class="repeat-weekday-option" for="repeatWeekday1"><input id="repeatWeekday1" class="repeat-weekday-input" type="checkbox" value="1"><span data-i18n="form.repeat.weekdays.mon">一</span></label>
+                            <label class="repeat-weekday-option" for="repeatWeekday2"><input id="repeatWeekday2" class="repeat-weekday-input" type="checkbox" value="2"><span data-i18n="form.repeat.weekdays.tue">二</span></label>
+                            <label class="repeat-weekday-option" for="repeatWeekday3"><input id="repeatWeekday3" class="repeat-weekday-input" type="checkbox" value="3"><span data-i18n="form.repeat.weekdays.wed">三</span></label>
+                            <label class="repeat-weekday-option" for="repeatWeekday4"><input id="repeatWeekday4" class="repeat-weekday-input" type="checkbox" value="4"><span data-i18n="form.repeat.weekdays.thu">四</span></label>
+                            <label class="repeat-weekday-option" for="repeatWeekday5"><input id="repeatWeekday5" class="repeat-weekday-input" type="checkbox" value="5"><span data-i18n="form.repeat.weekdays.fri">五</span></label>
+                            <label class="repeat-weekday-option" for="repeatWeekday6"><input id="repeatWeekday6" class="repeat-weekday-input" type="checkbox" value="6"><span data-i18n="form.repeat.weekdays.sat">六</span></label>
+                            <label class="repeat-weekday-option" for="repeatWeekday0"><input id="repeatWeekday0" class="repeat-weekday-input" type="checkbox" value="0"><span data-i18n="form.repeat.weekdays.sun">日</span></label>
+                        </div>
+                    <p id="repeatWeekdaysError" class="editor-validation" role="alert" hidden data-i18n="editor.weekdayRequired">请至少选择一个重复星期。</p>
+</div>
+
+<div class="repeat-custom-row" id="repeatCustomRow" hidden>
+                        <label data-i18n="form.repeat.customDays" for="repeatInterval">间隔天数</label>
+                        <input id="repeatInterval" type="number" min="1" max="365" step="1" value="1" inputmode="numeric">
+                        <p id="repeatIntervalError" class="editor-validation" role="alert" hidden data-i18n="editor.intervalRequired">请输入1至365之间的整数天数。</p>
+                    </div>
+                    <div class="checkbox-group repeat-pause-row" id="repeatPauseRow" hidden>
+                        <input id="repeatPaused" type="checkbox">
+                        <label data-i18n="form.repeat.pause" for="repeatPaused">暂停重复任务</label>
+                    </div>
+                </div></div></details></div><div class="form-actions dialog-actions">
+                    <button class="btn btn-secondary" data-i18n="actions.cancel" id="cancelBtn" type="button">取消</button>
+                    <button class="btn btn-primary" data-i18n="actions.addTask" id="submitBtn" type="submit">添加任务</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="command-palette" id="commandPalette" role="dialog" aria-modal="true" aria-labelledby="commandPaletteTitle" hidden>
+    <div class="command-palette-panel">
+        <div class="command-palette-header">
+            <h2 class="command-palette-title" id="commandPaletteTitle">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-menu"></use></svg>
+                <span data-i18n="commandPalette.title">命令面板</span>
+            </h2>
+            <button class="close-btn" id="closeCommandPaletteBtn" aria-label="关闭命令面板" data-i18n-aria-label="commandPalette.close">&times;</button>
+        </div>
+        <div class="command-palette-body">
+            <div class="command-palette-search">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-filter"></use></svg>
+                <label for="commandPaletteInput" class="sr-only" data-i18n="commandPalette.searchLabel">搜索命令</label>
+                <input id="commandPaletteInput" class="command-palette-input" data-i18n-placeholder="commandPalette.placeholder" placeholder="搜索命令、视图或项目" aria-controls="commandPaletteList" aria-describedby="commandPaletteHint" autocomplete="off" type="text">
+            </div>
+            <p id="commandPaletteHint" class="sr-only" data-i18n="commandPalette.hint">使用上下方向键选择命令，按回车执行。</p>
+            <div class="command-palette-list" id="commandPaletteList" aria-label="可用命令" data-i18n-aria-label="commandPalette.listLabel"></div>
+        </div>
+    </div>
+</div>
+
+<div class="update-prompt" id="updatePrompt" role="region" aria-live="polite" aria-atomic="true" aria-label="应用更新" data-i18n-aria-label="pwa.update.label" hidden>
+    <div class="update-prompt-message">
+        <svg class="icon" aria-hidden="true"><use href="#icon-repeat"></use></svg>
+        <span id="updatePromptText" data-i18n="pwa.update.message">新版本已准备好，刷新后即可使用最新功能。</span>
+    </div>
+    <div class="update-prompt-actions">
+        <button type="button" class="btn btn-primary" id="updateNowBtn" data-i18n="pwa.update.reload">刷新更新</button>
+        <button type="button" class="btn btn-secondary update-dismiss-btn" id="dismissUpdateBtn" aria-label="暂不更新" data-i18n-aria-label="pwa.update.dismiss">
+            <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-x"></use></svg>
+        </button>
+    </div>
+</div>
+<div id="srStatus" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<template id="task-template">
+    <div class="task-item"><div class="task-item-right"><div class="task-card-grid">
+        <button class="action-btn task-completion complete-btn" data-action="toggle" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#icon-check"></use></svg></button>
+        <div class="task-main">
+            <div class="task-header"><div class="task-title"><button type="button" class="task-name task-open" data-task-open aria-haspopup="dialog"></button><svg class="icon icon-sm task-reminder-icon" role="img" aria-label="提醒已设置" style="display:none;"><use href="#icon-bell"></use></svg></div><button type="button" class="task-plan-toggle" data-task-plan aria-pressed="false" hidden><svg class="icon icon-sm" aria-hidden="true"><use href="#icon-target"></use></svg><span data-task-plan-label></span></button></div>
+            <div class="task-desc"></div>
+            <div class="task-meta-line"><span class="task-plan-badge" hidden><svg class="icon icon-sm" aria-hidden="true"><use href="#icon-target"></use></svg><span data-i18n="focus.title">今日计划</span></span><div class="task-meta"></div><div class="task-date"></div><div class="status-indicator"><div class="status-dot" aria-hidden="true"></div><span class="status-text"></span><span class="status-time-left"></span></div></div>
+        </div>
+        <div class="task-actions"><button type="button" class="task-more-toggle icon-btn" aria-haspopup="menu" aria-expanded="false"><svg class="icon" aria-hidden="true"><use href="#workspace-icon-dots"></use></svg></button><div class="task-action-menu" role="menu" hidden><button role="menuitem" class="action-btn focus-btn" data-action="focus" title="加入今日计划">
+                                <svg class="icon"><use href="#icon-target"></use></svg>
+                            <span data-action-label="focus"></span></button><button role="menuitem" class="action-btn snooze-btn" data-action="snooze" title="稍后提醒" hidden>
+                                <svg class="icon"><use href="#icon-bell-snooze"></use></svg>
+                            <span data-action-label="snooze"></span></button><button role="menuitem" class="action-btn skip-repeat-btn" data-action="skip-repeat" title="跳过本次" hidden>
+                                <svg class="icon"><use href="#icon-repeat"></use></svg>
+                            <span data-action-label="skip-repeat"></span></button><button role="menuitem" class="action-btn archive-btn" data-action="archive" title="归档" hidden>
+                                <svg class="icon"><use href="#icon-archive"></use></svg>
+                            <span data-action-label="archive"></span></button><button role="menuitem" class="action-btn edit-btn" data-action="edit" title="编辑">
+                                <svg class="icon"><use href="#icon-edit"></use></svg>
+                            <span data-action-label="edit"></span></button><button role="menuitem" class="action-btn delete-btn" data-action="delete" title="删除">
+                                <svg class="icon"><use href="#icon-trash"></use></svg>
+                            <span data-action-label="delete"></span></button></div></div>
+    </div></div></div>
+</template>
+
+<script type="application/json" id="bundledTranslations">{"resourceVersion":"5.2","languages":{"zh-CN":{"app":{"language":"简体中文","title":"任务跟踪器","toolbar":"任务工具"},"actions":{"exportBackup":"下载任务备份","exportBackupTitle":"下载可恢复的 JSON 任务备份，不含保存的视图和应用偏好","import":"导入任务备份","importTitle":"选择 JSON 任务备份，预览后合并或替换","addTask":"添加任务","openMenu":"打开设置与数据","confirm":"确认","cancel":"取消","updateTask":"保存更改","archiveCompletedTitle":"归档全工作区已完成且未归档的任务","archiveCompleted":"归档已完成","clearCompletedTitle":"删除全工作区已完成且未归档的任务","clearCompleted":"删除已完成"},"search":{"placeholder":"搜索任务、项目或标签…","clear":"清空搜索","syntaxTitle":"支持 project:工作、tag:学习、status:completed、due:today 和 #标签","syntaxHint":"支持限定搜索：project:项目、tag:标签、status:状态、due:日期。"},"quickAdd":{"label":"快速记录","placeholder":"例如：周三 14:00 讨论方案 #工作 /项目","submit":"添加","hint":"日期、时间、#标签、/项目请用空格分隔。默认沿用当前项目范围（全部项目为 Inbox）。","captureReady":"请检查文字，按 Enter 添加任务。"},"tools":{"label":"筛选与排序","done":"完成","collapse":"收起筛选与排序","expand":"展开筛选与排序","pin":"固定筛选与排序","unpin":"取消固定筛选与排序"},"savedViews":{"label":"保存的视图","saveCurrent":"保存视图","saveCurrentTitle":"保存当前搜索、筛选和视图","saveTitle":"保存视图","nameLabel":"视图名称","namePlaceholder":"例如：本周学习任务","defaultName":"保存的视图 {index}","nameFromSearch":"搜索：{query}","saved":"视图已保存","deleted":"已删除视图：{name}","applied":"已打开视图：{name}","applyLabel":"打开保存的视图：{name}","deleteLabel":"删除保存的视图：{name}","updateError":"未能更改保存的视图，原有视图已保留。","limitReached":"已保存 12 个视图，请先删除一个再添加新视图；名称草稿已保留。","deleteConfirmTitle":"删除保存的视图？","deleteConfirmMessage":"删除“{name}”？只会移除此视图，任务数据不变。此操作无法撤销。","deleteConfirmAction":"删除视图","emptyHint":"在任务区使用“保存视图”，保留常用的搜索与筛选。"},"focus":{"openTitle":"打开今日计划","activeTitle":"退出今日计划","openShort":"今日计划","activeShort":"今日计划","title":"今日计划","summary":"{completed}/{total} 个任务已完成","summaryOne":"{completed}/{total} 个任务已完成","exit":"退出今日计划","added":"已加入今日计划","removed":"已移出今日计划","emptyTitle":"今日计划还没有任务","emptyDescription":"在任务操作中选择“加入今日计划”，也可以批量添加。"},"batch":{"menu":"选择任务","menuTitle":"选择任务进行批量操作","activeTitle":"退出任务选择","selected":"已选择 {count} 个任务","selectedOne":"已选择 {count} 个任务","selectVisible":"全选匹配任务","clearSelection":"取消选择","addToFocus":"加入今日计划","complete":"标记完成","archive":"归档","delete":"删除","exit":"退出","selectTask":"选择任务：{taskName}","noneSelected":"请先选择任务","nothingToComplete":"所选任务中没有可标记完成的任务","confirmDelete":"删除 {count} 个选中任务？可撤销此操作。","confirmDeleteOne":"删除 {count} 个选中任务？可撤销此操作。","error":"批量操作失败，请重试","success":{"focus":"{count} 个任务已加入今日计划","focusOne":"{count} 个任务已加入今日计划","complete":"{count} 个任务已标记完成","completeOne":"{count} 个任务已标记完成","archive":"{count} 个任务已归档","archiveOne":"{count} 个任务已归档","delete":"{count} 个任务已删除","deleteOne":"{count} 个任务已删除"},"undo":{"focus":"批量加入今日计划","complete":"批量完成","archive":"批量归档","delete":"批量删除"},"selectTasks":"选择"},"undo":{"menu":"撤销上一步","menuTitle":"撤销最近一次任务操作","availableTitle":"撤销：{action}","unavailableTitle":"没有可撤销操作","action":"撤销","restored":"已撤销：{action}","error":"撤销失败，请重试","labels":{"add":"新增任务","edit":"编辑任务","delete":"删除任务","complete":"更新完成状态","skipRepeat":"跳过重复任务","clearCompleted":"删除已完成任务","archiveCompleted":"归档已完成","archive":"更新归档状态","focus":"更新今日计划","snooze":"稍后提醒","import":"导入任务"}},"commandPalette":{"title":"命令面板","close":"关闭命令面板","searchLabel":"搜索命令","placeholder":"搜索命令、视图或项目","hint":"使用上下方向键选择命令，按回车执行。","listLabel":"可用命令","empty":"没有匹配的命令","groups":{"tasks":"任务","views":"视图","data":"数据","projects":"项目","savedViews":"保存的视图"},"commands":{"newTask":"添加任务","quickAdd":"打开快速记录","search":"搜索任务","focusMode":"打开今日计划","batchMode":"选择任务","undo":"撤销上一步","exportBackup":"下载任务备份","project":"切换项目：{project}","savedView":"打开保存的视图：{name}","view":{"list":"切换到列表视图","calendar":"切换到日历视图","timeline":"切换到时间线视图","stats":"切换到统计视图"}}},"pwa":{"install":{"menu":"安装应用","menuTitle":"安装应用或查看安装方式","title":"安装 Task Tracer","installed":"应用已安装","accepted":"已开始安装应用","manualIntro":"如果浏览器没有自动弹出安装窗口，可以按下面方式安装：","desktop":"Chrome 或 Edge 桌面端：点击地址栏右侧的安装图标，或在浏览器菜单中选择安装应用。","android":"打开浏览器菜单，选择“安装应用”或“添加到主屏幕”。","ios":"iPhone 或 iPad Safari：点击分享按钮，然后选择“添加到主屏幕”。","macSafari":"在 Safari 的“文件”菜单中选择“添加到程序坞”。","unavailable":"此浏览器没有桌面安装入口。请使用 Chrome 或 Edge 打开当前应用后安装。"},"update":{"label":"应用更新","message":"新版本已准备好，刷新后即可使用最新功能。","reload":"刷新更新","dismiss":"暂不更新","check":"检查更新","checking":"正在检查更新…","latest":"已是最新版本（{version}）。","ready":"新版本已准备好，可以刷新更新。","offline":"当前离线，联网后再检查更新。","error":"暂时无法检查或准备更新，请稍后重试。","unsupported":"当前浏览器不支持应用内检查更新。","description":"主动检查新版本；刷新更新前请先保存正在编辑的内容。","saveFirst":"请先保存或处理未完成的输入与草稿，再刷新更新。","busy":"正在保存，请稍后再更新。"}},"projects":{"filterLabel":"按项目筛选","all":"全部项目","none":"未分配项目","groupTitle":"{project} · {count} 个任务","groupTitleOne":"{project} · {count} 个任务"},"views":{"label":"视图切换","list":"列表","calendar":"日历","timeline":"时间线","stats":"回顾"},"calendar":{"previousYear":"上一年","previous":"上个月","next":"下个月","nextYear":"下一年","today":"今天","addTaskOnDate":"在 {date} 添加任务","showDayTasks":"查看 {date} 的全部 {count} 个任务","showDayTasksOne":"查看 {date} 的全部 {count} 个任务","closeDayTasks":"关闭当日任务","more":"另有 {count} 个","taskCount":"{count} 个任务","taskCountOne":"{count} 个任务","noDeadline":"无截止日期"},"stats":{"title":"任务概览","completionRate":"完成率","overdueRate":"逾期率","streakDays":"连续完成","daysValue":"{count} 天","daysValueOne":"{count} 天","completedDetail":"{completed} / {total} 项未归档任务","completedDetailOne":"{completed} / {total} 项未归档任务","overdueDetail":"{overdue} / {total} 项有截止日期的待办","overdueDetailOne":"{overdue} / {total} 项有截止日期的待办","streakDetail":"最近连续 {count} 天有完成记录","streakDetailOne":"最近连续 {count} 天有完成记录","totalTasks":"任务总数","completedTasks":"已完成","overdueTasks":"逾期未完成","archivedTasks":"已归档","todayCompleted":"今日完成","openFilter":"查看 {label}：{count} 个","completionTrend":"最近 7 天完成趋势","trendCount":"{date} 完成 {count} 个"},"filters":{"all":"全部","active":"进行中","completed":"已完成","archived":"已归档","overdue":"逾期","noDeadline":"无截止日期"},"modal":{"addTitle":"添加任务","editTitle":"编辑任务"},"tooltips":{"addTask":"添加任务 (Ctrl+I)","menu":"设置与数据 (Ctrl+M)","theme":"切换外观","backToTop":"回到顶部 (Alt + T)","searchShortcut":"搜索快捷键：Ctrl/Cmd + K"},"form":{"taskName":{"label":"任务名称","placeholder":"要完成什么？"},"description":{"label":"描述","placeholder":"补充背景、链接或执行要点"},"project":{"label":"项目","placeholder":"例如：工作 / 个人"},"tags":{"label":"标签","formatLabel":"标签格式","placeholder":"工作, 个人","hint":"用逗号分隔标签；含逗号的标签用双引号包裹，标签内的双引号写成两个。标签可用于搜索。"},"dueDate":{"label":"截止日期"},"noDeadline":"无截止日期","reminder":{"label":"提醒设置","options":{"none":"不提醒","atTime":"截止时","min15":"提前 15 分钟","hour1":"提前 1 小时","day1":"提前 1 天","customBefore":"提前 {minutes} 分钟","customBeforeOne":"提前 {minutes} 分钟","customAfter":"截止后 {minutes} 分钟","customAfterOne":"截止后 {minutes} 分钟"}},"reminderRepeat":{"label":"重复提醒","backgroundLimit":"浏览器只会在应用打开或被唤醒时检查提醒；系统级后台提醒不能保证。","options":{"none":"不重复","min15":"每 15 分钟","hour1":"每 1 小时","day1":"每天","custom":"每 {minutes} 分钟","customOne":"每 {minutes} 分钟"}},"repeat":{"label":"重复任务","helpLabel":"重复规则说明","hint":"完成后自动创建下一期。","customDays":"重复间隔（天）","options":{"none":"不重复","daily":"每天","weekly":"每周","weeklyDays":"每周指定星期","monthly":"每月","monthlyLast":"每月最后一天","custom":"自定义周期"},"weekdaysLabel":"重复星期","weekdays":{"mon":"一","tue":"二","wed":"三","thu":"四","fri":"五","sat":"六","sun":"日"},"pause":"暂停重复任务"},"subtasks":{"label":"子任务","placeholder":"下一步要做什么？","add":"添加子任务","edit":"编辑子任务：{text}","editInput":"编辑子任务文本","delete":"删除子任务：{text}"},"dueTime":{"label":"截止时间","clockChangeHint":"新设置的截止时间遇时钟跳变时，不存在的时间向后顺延，重复的时间使用第一次；请核对任务显示的实际时间。"}},"task":{"subtasks":"子任务","deadline":"截止","noDeadline":"无截止日期","actions":{"markComplete":"标记为已完成","markIncomplete":"标记为未完成","snooze":"10 分钟后再提醒","skipRepeat":"跳过本次重复","addFocus":"加入今日计划","removeFocus":"移出今日计划","archive":"归档任务","restoreArchive":"从归档恢复","edit":"编辑任务","delete":"删除任务","reorder":"移动任务：{taskName}。使用上下方向键调整顺序"},"importedFallback":"导入任务 {index}","repeat":{"daily":"每天重复","weekly":"每周重复","weeklyDays":"每周 {days} 重复","monthly":"每月重复","monthly-last":"每月最后一天重复","custom":"每 {days} 天重复","customOne":"每 {days} 天重复","paused":"已暂停","weekdaySeparator":"、"}},"empty":{"noTasks":{"title":"还没有任务","description":"从顶部“添加任务”开始，记下第一件待办。"},"noMatches":{"title":"没有匹配的任务","description":"当前搜索或筛选下没有任务。可清除条件重新查看。"}},"storage":{"unavailable":{"title":"本地存储不可用","message":"无法读取或保存任务。请检查浏览器存储权限后重试。","emptyDescription":"请检查浏览器存储权限后重试。","snapshotDescription":"当前保留 {count} 个任务，请先下载紧急备份。","snapshotDescriptionOne":"当前保留 {count} 个任务，请先下载紧急备份。","retry":"重试","retrying":"正在重试…","retryFailed":"本地存储仍不可用","short":"本地存储不可用，已暂停任务操作","actionsDisabled":"本地存储不可用，任务操作已暂停","emergencyBackup":"紧急备份","emergencyBackupTitle":"下载可用的任务数据","emergencyBackupSuccess":"已开始下载 {count} 个任务的紧急备份，请确认文件已保存。","emergencyBackupSuccessOne":"已开始下载 {count} 个任务的紧急备份，请确认文件已保存。","noSnapshot":"暂无可下载的任务数据"},"conflict":"任务已有更新，正在刷新。请检查最新数据后重试。","editConflict":"此任务已被修改或删除。草稿仍在，请复制需要保留的内容，取消编辑后重新打开最新任务。","upgradeBlocked":"其他应用窗口正在阻止存储升级。请关闭旧版任务跟踪器标签页和已安装的应用窗口，再点击重试；已有数据未被替换。","versionChanged":"其他窗口已升级或移除本地存储。为保护数据，已暂停编辑。若有紧急备份按钮，请先下载备份，再重新打开最新版应用。","health":{"menu":"数据安全","description":"任务和恢复历史保存在当前浏览器。持久存储可降低浏览器自动清理数据的风险，但无法防止设备丢失或手动清除网站数据，请定期导出独立备份。","persistent":"已启用持久存储","bestEffort":"尚未启用持久存储","usage":"已用 {used} MiB / 配额 {quota} MiB","estimateUnavailable":"暂时无法获取存储用量","request":"申请持久存储","enabled":"已启用持久存储","unsupported":"不支持申请持久存储","granted":"已启用持久存储，仍请定期导出独立备份。","notGranted":"浏览器未授予持久存储权限。已有数据未改变，请继续保留独立备份。","requestError":"未能申请持久存储，仍可使用导出备份。"},"quotaExceeded":"浏览器存储空间不足。请先下载紧急备份；可以清空恢复历史来释放空间，此操作不会删除当前任务，随后会自动重试。","clearRecovery":"清空恢复历史","clearRecoveryConfirm":"此操作将永久删除全部本地恢复点以释放空间，但保留当前任务、设置和已下载的备份。继续前请先下载紧急备份。","clearRecoveryError":"未能清空恢复历史，请保留紧急备份，并释放浏览器存储空间后重试。","staleConfirmation":"确认期间任务已发生变化，请检查最新任务后重新发起操作。"},"status":{"completed":"已完成","archived":"已归档","safe":"安全","warning":"警告","danger":"紧急","overdue":"已逾期","noDeadline":"无截止日期"},"messages":{"task":{"confirmDelete":"删除这个任务？","added":"任务已添加","updated":"任务已更新","deleted":"任务已删除","markedComplete":"任务已标记完成","markedIncomplete":"任务已标记未完成","repeatCreated":"任务已完成，下一期已创建","repeatSkipped":"已跳过本次，任务已移到下一期","repeatAlreadyScheduled":"本期已有后续任务，请在该任务中继续；已有修改已保留。","nameRequired":"请输入任务名称","snoozed":"已设为 {minutes} 分钟后提醒","snoozedOne":"已设为 {minutes} 分钟后提醒","saveError":"保存任务失败，请重试","deleteError":"删除任务失败，请重试","updateError":"更新任务状态失败，请重试"},"backup":{"success":"备份下载已开始，请确认文件已保存。","error":"导出/备份失败，请重试","reminder":"建议下载一份最近备份，避免浏览器数据被清理后丢失任务。"},"import":{"success":"已导入 {count} 个任务","successOne":"已导入 {count} 个任务","successMerged":"已合并 {count} 个任务","successMergedOne":"已合并 {count} 个任务","confirm":"即将导入 {count} 个任务。是否替换当前数据？","confirmOne":"即将导入 {count} 个任务。是否替换当前数据？","previewTitle":"导入预览","previewTasks":"导入任务","previewReplace":"替换影响","previewReplaceValue":"当前 {current} 个任务会被替换，含 {completed} 个已完成、{archived} 个已归档","previewReplaceValueOne":"当前 {current} 个任务会被替换，含 {completed} 个已完成、{archived} 个已归档","previewDuplicates":"同名重复项","previewFileDuplicates":"文件内重复","previewDuplicateIds":"重复任务 ID","previewExistingMatches":"匹配当前任务","restoreCheckTitle":"恢复检查清单","restoreCheckSummary":"{warnings}/{total} 项需要注意","restoreStatusPass":"通过","restoreStatusWarn":"注意","restoreStatusRisk":"高影响","restoreUnknownVersion":"未知版本","restoreSourceLabel":"文件来源","restoreSourceTemplate":"Task Tracer {type}，版本 {version}","restoreSourceLegacy":"传统任务数组或未版本化 JSON；导入前会按当前格式规范化。","restoreSchemaLabel":"备份模板版本","restoreSchemaOk":"与当前恢复模板 {version} 匹配。","restoreSchemaWarn":"文件版本为 {version}，当前模板为 {current}；将尝试兼容导入。","restoreSchemaCompatible":"将按兼容规则读取 {from} 文件，并按当前模板 {to} 导入。","restoreIntegrityLabel":"文件完整性","restoreIntegrityOk":"完整性校验通过，文件内容与校验值匹配。","restoreIntegrityMissing":"文件没有校验值；仍可按任务内容兼容导入。","restoreIntegrityInvalid":"文件校验失败，内容可能已被修改。","restoreIntegrityLegacy":"传统任务数组没有完整性校验；导入前会重新规范化。","restoreTasksLabel":"任务内容","restoreTasksOk":"文件中包含 {count} 个可导入任务。","restoreTasksOkOne":"文件中包含 {count} 个可导入任务。","restoreTasksEmpty":"文件中没有可导入任务；替换模式会清空当前列表。","restoreIdsLabel":"任务 ID","restoreIdsOk":"未发现重复任务 ID。","restoreIdsWarn":"发现 {count} 个重复任务 ID；导入时会重新生成并清理模糊引用。","restoreIdsWarnOne":"发现 {count} 个重复任务 ID；导入时会重新生成并清理模糊引用。","restoreNamesLabel":"本地同名项","restoreNamesOk":"未发现与当前任务同名的导入项。","restoreNamesWarn":"发现 {count} 个与当前任务同名的导入项；合并模式可逐项处理。","restoreNamesWarnOne":"发现 {count} 个与当前任务同名的导入项；合并模式可逐项处理。","restoreImpactLabel":"当前数据影响","restoreImpactOk":"当前没有本地任务，替换不会覆盖已有数据。","restoreImpactWarn":"默认替换会覆盖当前 {count} 个任务；如需保留，请勾选合并模式。","restoreImpactWarnOne":"默认替换会覆盖当前 {count} 个任务；如需保留，请勾选合并模式。","restoreSnapshotLabel":"替换前快照","restoreSnapshotAuto":"替换前会先下载当前 {count} 个任务的恢复快照，并要求再次确认。","restoreSnapshotAutoOne":"替换前会先下载当前 {count} 个任务的恢复快照，并要求再次确认。","restoreSnapshotEmpty":"当前没有本地任务，不需要额外恢复快照。","importSafetyTitle":"替换导入保护","importSafetyReplace":"首次确认会先下载当前 {count} 个任务的导入前快照；再次确认才会替换。","importSafetyReplaceOne":"首次确认会先下载当前 {count} 个任务的导入前快照；再次确认才会替换。","importSafetySnapshotReady":"当前任务备份已开始下载。确认保存后再替换。","importSafetyChecksumRisk":"文件校验失败，内容可能已被修改。","importSafetyChecksumSnapshot":"文件风险已确认，下一步备份当前 {count} 个任务。","importSafetyChecksumSnapshotOne":"文件风险已确认，下一步备份当前 {count} 个任务。","importSafetyChecksumConfirmed":"文件风险已确认。","importSafetyClean":"当前没有本地任务，替换不会覆盖现有数据。","snapshotDownloaded":"导入前快照已触发下载，请确认文件已保存后再次确认替换。","integrityReplaceConfirm":"完整性校验失败；请切换到合并模式，或再次确认风险后继续替换。","confirmChecksumRisk":"确认完整性风险","downloadSnapshot":"下载当前任务备份","continueReplace":"继续替换导入","diffTitle":"任务预览","diffNew":"新增任务","diffConflicts":"同名冲突","diffReplace":"当前任务","diffNone":"无","diffMore":"{names}，另有 {count} 项","diffSeparator":"、","sourceType":{"backup":"备份文件","emergency-backup":"紧急备份","pre-import-backup":"导入前快照","legacy-array":"传统任务数组","unknown":"{type}"},"mergeMode":"合并到当前任务","mergeModeHint":"新名称会追加；同名任务可选择保留两份、跳过导入或替换本地，请确认后再导入。","conflictTitle":"同名冲突处理","conflictHint":"以下选项仅在选择合并导入时生效。","conflictExistingCount":"当前已有 {count} 个同名任务","conflictExistingCountOne":"当前已有 {count} 个同名任务","conflictActionLabel":"选择“{name}”的导入处理方式","conflictKeep":"保留两份","conflictSkip":"跳过导入","conflictReplace":"替换本地","formatError":"导入失败：文件格式不正确","readError":"导入失败：文件读取错误","stalePreview":"预览期间任务已发生变化，请检查新的预览并再次确认；此前的安全确认已重置。","reading":"正在读取任务文件，可在预览出现前取消。","readingTitle":"正在读取任务导入文件","conflictDefaultLabel":"所有同名任务的处理方式","conflictDefaultHint":"更改此选项会重置全部单独选择，包括尚未显示的任务；之后仍可逐项调整。","conflictMore":"再显示 {count} 个同名任务","conflictMoreOne":"再显示 {count} 个同名任务","conflictShowing":"已显示 {shown}/{total} 个同名任务","conflictShowingOne":"已显示 {shown}/{total} 个同名任务"},"clearCompleted":{"none":"没有已完成的任务可清除","confirm":"删除 {count} 个已完成任务？可撤销此操作。","confirmOne":"删除 {count} 个已完成任务？可撤销此操作。","success":"已删除 {count} 个已完成任务","successOne":"已删除 {count} 个已完成任务","error":"清除任务时出错"},"archive":{"none":"没有可归档的已完成任务","confirm":"归档 {count} 个已完成任务吗？","confirmOne":"归档 {count} 个已完成任务吗？","success":"{count} 个已完成任务已归档","successOne":"{count} 个已完成任务已归档","taskArchived":"任务已归档","taskRestored":"任务已从归档恢复","error":"更新归档状态失败"},"sampleTasks":{"added":"示例任务已添加"},"reorder":{"moved":"{taskName} 已移动到第 {position} 位，共 {total} 位","first":"{taskName} 已经在第一位","last":"{taskName} 已经在最后一位"},"view":{"summary":"{view}已更新，当前范围 {count} 个任务","summaryOne":"{view}已更新，当前范围 {count} 个任务"},"initDBError":"数据库初始化失败，请刷新页面重试"},"time":{"minutesAgo":"{minutes}分钟前","minutesAgoOne":"{minutes}分钟前","hoursAgo":"{hours}小时前","hoursAgoOne":"{hours}小时前","daysAgo":"{days}天前","daysAgoOne":"{days}天前","minutesLeft":"{minutes}分钟","minutesLeftOne":"{minutes}分钟","hoursLeft":"{hours}小时","hoursLeftOne":"{hours}小时","daysLeft":"{days}天","daysLeftOne":"{days}天"},"samples":{"task1":{"name":"完成项目报告","description":"编写并提交季度项目总结报告","project":"工作","tag":"报告"},"task2":{"name":"团队会议准备","description":"准备下周团队会议的演示材料","project":"工作","tag":"会议"},"task3":{"name":"学习计划制定","description":"制定下个月的个人学习计划","project":"个人","tag":"学习"}},"sort":{"smart":"智能排序","created":"最新创建","due":"截止日期","alpha":"名称（A–Z）","manual":"手动排序"},"notifications":{"enable":"开启通知","disable":"关闭通知","permissionDenied":"通知权限被拒绝，请在浏览器设置中开启","notSupported":"此浏览器不支持桌面通知","error":"申请通知权限出错","taskDue":"任务即将到期：{taskName}","missedReminder":"错过的提醒：{taskName}","backgroundLimit":"已开启通知。浏览器只会在应用打开或被唤醒时检查提醒，后台提醒不能完全保证。","reminderSet":"提醒已设置"},"backup":{"health":{"empty":"暂无任务数据需要备份","never":"尚未备份，建议导出/备份","ok":"当前任务已导出 · {age}","due":"建议备份 · {age}","today":"今天导出","yesterday":"昨天导出","daysAgo":"{days} 天前导出","daysAgoOne":"{days} 天前导出","changed":"上次导出后任务已有更改 · {age}，请重新备份","coverageUnknown":"无法确认上次导出是否覆盖当前任务 · {age}，请重新备份"},"versionNotes":{"schema":"2.4 备份包含完整性校验、导出 ID、本地截止日期、真实提醒时间、任务、子任务、项目、标签、高级重复规则、完成时间、归档状态和今日计划。","compatibility":"导入器会读取 tasks 数组；旧版导出文件仍可通过兼容规则导入。","emergency":"此文件来自存储不可用保护模式下的内存快照，请尽快修复浏览器存储后导入恢复。"}},"recovery":{"menu":"恢复历史","title":"恢复本地历史记录","description":"在当前浏览器中保留最近 10 个恢复点。日常修改每隔五分钟最多保留一次，删除、导入、撤销或恢复前额外保留一次。清除网站数据会同时删除恢复点，请导出备份以防设备丢失。","empty":"暂无恢复记录。","choose":"选择恢复点","point":"{date} · {count} 个任务","pointOne":"{date} · {count} 个任务","confirm":"确认替换当前全部任务","confirmRequired":"请先勾选确认替换，再恢复。","restored":"已恢复任务。恢复前的状态可以在“恢复历史”中找到。","error":"未能完成恢复。请检查当前任务和恢复历史后重试。","privacy":"删除的任务仍可能保留在本地恢复点中。可按需导出所选恢复点，或清空恢复历史。","previewTitle":"所选恢复点","previewSummary":"显示 {shown}/{count} 个任务 · 已完成 {completed} · 已归档 {archived}","previewSummaryOne":"显示 {shown}/{count} 个任务 · 已完成 {completed} · 已归档 {archived}","previewEmpty":"此恢复点不含任务。","exportPoint":"导出此恢复点","exported":"已发起此恢复点 {count} 个任务的下载，请检查文件；当前任务备份状态未改变。","exportedOne":"已发起此恢复点 {count} 个任务的下载，请检查文件；当前任务备份状态未改变。","exportError":"未能导出此恢复点。","clearHistory":"清空恢复历史","clearTitle":"清空全部本地恢复点？","clearConfirm":"永久清空全部本地恢复点？当前任务不会删除；此操作无法撤销。","cleared":"已清空恢复历史，当前任务未改变。","clearError":"未能清空恢复历史，原有恢复点已保留。","historyChanged":"恢复历史已在其他操作或窗口改变，请检查更新后的恢复点，再次确认。"},"pagination":{"more":"显示更多任务","summary":"已显示 {total} 个匹配任务中的 {shown} 个；搜索会涵盖全部任务。","summaryOne":"已显示 {total} 个匹配任务中的 {shown} 个；搜索会涵盖全部任务。"},"csv":{"menu":"导出全部任务 CSV","title":"导出含归档任务的表格报表；完整恢复请使用 JSON 导出/备份。","success":"已导出 {count} 个任务的 CSV 报表。可恢复的备份请使用 JSON 导出/备份。","successOne":"已导出 {count} 个任务的 CSV 报表。可恢复的备份请使用 JSON 导出/备份。","error":"未能导出 CSV 报表。"},"help":{"menu":"使用帮助与支持","intro":"Task Tracer {version} · 任务保存在当前浏览器配置中。先添加一个任务，再按需要整理。","captureTitle":"记录与计划","captureBody":"点击顶部“添加任务”打开完整表单，有未完成的草稿时继续编辑；点击旁边的箭头可展开“快速记录”。可输入日期、时间、#标签和 /项目，用空格分隔，例如：周三 14:00 讨论方案 #工作 /项目。添加前核对预览；需要描述、子任务、提醒或重复规则时，打开“完整表单”接着编辑。在任务的“任务操作”中可选择“加入今日计划”，也可以批量添加。","findTitle":"查找任务","findBody":"通过左侧导航切换列表、日历、时间线和统计；手机上使用底部导航。搜索支持 project:工作、tag:学习、status:completed、due:today 和 #标签，可组合条件。使用“保存视图”保留常用搜索、筛选和布局；没有结果时可直接清除条件。","backupTitle":"保护与迁移任务","backupBody":"在“设置与数据”的“备份与迁移”中下载备份或选择备份文件。JSON 备份包含全部任务，可在另一浏览器或设备恢复；不包含保存的视图、应用偏好和恢复历史。CSV 仅用于报表。恢复历史与当前任务共用浏览器存储，清理网站数据或更换设备前请另存一份备份。保存的视图通过单独文件迁移。","offlineTitle":"离线使用与提醒","offlineBody":"首次使用请联网打开应用，完成缓存后再离线访问。可在“设置与数据”中安装应用或查看浏览器的安装方式。通知也在这里开启；如权限已被阻止，请先到浏览器的网站设置中允许通知。提醒受浏览器、操作系统和应用生命周期限制；关闭应用后不能保证送达，不应替代可靠的闹钟。","privacyTitle":"支持与隐私","privacyBody":"问题反馈会跳转至应用之外的 GitHub。请使用示例任务，发布前检查文件和截图，勿在公开问题中上传个人任务备份。安全漏洞请按仓库 SECURITY.md 的方式报告。 通过网址链接捕获的文本可能出现在浏览器历史或托管请求日志中。","shortcuts":"键盘快捷键","newTask":"添加任务","search":"定位搜索框","commands":"命令面板","undo":"撤销上一步","close":"关闭","diagnostics":"查看诊断信息","diagnosticEntryDescription":"预览报告后自行下载；不会自动发送。","diagnosticDescription":"下载或分享前请检查此报告。内容包括应用和浏览器版本、功能支持和存储状态，不包含任务内容、保存的视图、偏好设置、页面地址或错误详情；不会自动发送。","downloadDiagnostics":"下载报告","diagnosticError":"未能准备诊断报告，请重试。","support":"反馈问题","datesTitle":"日期与时钟跳变","datesBody":"日期、时间、#标签和 /项目之间请用空格分隔。“周三”取最近一次星期三（含今天）；“本周三”指周一开始的本周，允许过去的日期；“下周三”指下一个周一所在周的星期三。省略年份的月日取今天或之后最近的有效日期，2 月 29 日会跳过非闰年。“今天／明天”按提交时的本地日期解释。设备时区变化后，已有截止时间仍保留任务时区；时钟跳变中不存在的时间向后顺延，重复时间使用第一次。只改其他字段会保留原截止时间点，重复任务从上期保存的本地日期和时间推进。","settings":"打开设置与数据","appearanceBody":"在“设置与数据”的“外观与语言”中切换浅色、深色、跟随系统和中英文。界面语言不会改写任务、项目或标签。","quickStartDescription":"先找到你要做的事，再按需要展开说明。","userGuide":"使用说明","diagnosticVersion":"应用版本","diagnosticBrowser":"浏览器","diagnosticConnection":"网络","diagnosticStorage":"本地存储","diagnosticOnline":"在线","diagnosticOffline":"离线","diagnosticAvailable":"可用","diagnosticUnavailable":"不可用"},"onboarding":{"examplesAction":"添加 3 个示例任务","examplesHint":"示例是可编辑、可删除的普通任务。","examplePrefix":"示例：{name}","examplesAdded":"已添加 3 个示例任务，可像自己的任务一样编辑或删除。","examplesError":"未能添加示例任务，已有任务已保留。","examplesUndo":"添加示例任务"},"viewsTransfer":{"menu":"迁移保存的视图","title":"迁移保存的视图","description":"使用单独的 JSON 文件迁移保存的搜索、筛选和布局。任务数据请使用导出/备份；应用偏好保留在当前设备。","privacy":"视图文件可能包含私密搜索词、项目名和标签，分享前请检查。","export":"导出视图 JSON","import":"导入视图 JSON","exported":"已导出 {count} 个保存的视图。","exportedOne":"已导出 {count} 个保存的视图。","invalid":"这不是有效且校验通过的 Task Tracer 视图文件（版本 1.0 或 1.1）。任务备份请使用导入功能。","fileTooLarge":"视图文件不能超过 1 MiB。","error":"未能迁移保存的视图，原有数据已保留。","previewTitle":"预览视图导入","previewSummary":"文件 {incoming} 个视图 · 添加 {add} · 重复跳过 {duplicate} · 容量不足 {capacity}","confirm":"添加 {count} 个视图","confirmOne":"添加 {count} 个视图","changed":"另一窗口已更改保存的视图，请检查更新后的预览并再次确认。","imported":"已添加 {count} 个保存的视图，任务数据和应用偏好保持不变。","importedOne":"已添加 {count} 个保存的视图，任务数据和应用偏好保持不变。","close":"关闭"},"drafts":{"title":"放弃未保存的更改？","description":"未保存的更改将丢失。","keepEditing":"继续编辑","discard":"放弃更改","saving":"正在保存…","recoveryTitle":"已保留未保存的任务草稿","recoveryDescription":"{count} 份草稿尚未保存，离开前请下载。","recoveryDescriptionOne":"{count} 份草稿尚未保存，离开前请下载。","recoveryDownload":"下载未保存草稿","recoveryRestore":"恢复编辑","recoveryWaiting":"请先恢复浏览器存储，再恢复编辑。","recoveryBlocked":"请先完成或放弃当前任务表单，再恢复另一份草稿。","recoveryReady":"存储已恢复，可以继续编辑未保存的草稿。","recoveryDiscard":"放弃下一份草稿","recoveryDiscardTitle":"放弃这份已保留草稿？","recoveryDiscardDescription":"这份草稿将被删除，已保存的任务不受影响。","quickAddReady":"文字已保留，可以继续添加。","quickAddRetained":"文字已保留，离开前请复制。"},"dialogs":{"loading":"正在读取本地信息…"},"workspace":{"allTasks":"全部任务","navigation":"导航","projects":"项目","views":"视图","savedViews":"保存的视图","noSavedViews":"还没有保存的视图","localStorage":"数据保存在此浏览器","language":"界面语言","appearance":"外观","themeLight":"浅色","themeDark":"深色","themeSystem":"跟随系统","openNavigation":"打开导航","closeNavigation":"关闭导航","taskCount":"{count} 个任务","taskCountOne":"{count} 个任务","selectionLabel":"任务选择","upcoming":"即将到期","overview":"概览","settings":"设置","dueToday":"今天截止","openSchedule":"查看日程","closeSchedule":"收起日程","noUpcoming":"暂无即将截止的任务","nextSevenDays":"未来7天","taskActions":"任务操作","progressScope":"全工作区（不含归档）","skipToContent":"跳至内容"},"settings":{"title":"设置与数据","subtitle":"管理外观、提醒与本地数据。","backToTasks":"返回任务","open":"打开设置","navigation":"设置分类","appearanceTitle":"外观与语言","appearanceDescription":"设置外观和界面语言。","themeLabel":"外观","themeDescription":"选择浅色、深色，或跟随系统。","languageLabel":"界面语言","languageDescription":"任务、项目和标签会保留你输入的文字。","dataTitle":"备份与迁移","dataDescription":"先备份，再按需要恢复或迁移。","backupTitle":"任务备份","backupDescription":"下载可恢复的全部任务备份，包含归档任务；不包含保存的视图、偏好和恢复历史。","csvTitle":"表格导出","csvDescription":"下载全部任务的 CSV 报表，包含归档任务；报表不能用于恢复。","importTitle":"从备份恢复","importDescription":"选择 JSON 任务备份，预览后再决定合并或替换。","viewsTitle":"迁移保存的视图","viewsTransferDescription":"单独导出或导入保存的搜索、筛选和布局，任务数据不变。","downloadReminder":"发起下载后，请检查文件是否已保存，并妥善保管。","storageTitle":"存储与恢复","storageDescription":"查看用量与保存状态，了解浏览器能提供的存储保护。","recoveryTitle":"本地恢复历史","recoveryDescription":"查看此浏览器的恢复点，预览后选择导出或恢复。","recoveryCaution":"恢复历史与当前任务共用本地存储。请另外保留一份 JSON 备份。","notificationsTitle":"提醒与安装","notificationsDescription":"管理浏览器通知与应用安装。","notificationEnabled":"通知已开启","notificationDisabled":"通知未开启","notificationBlocked":"浏览器已阻止通知","notificationUnsupported":"此浏览器不支持通知","notificationBlockedHelp":"请在浏览器的网站设置中允许通知，再回到这里开启。","installTitle":"安装应用","installDescription":"安装到设备上，或查看当前浏览器的安装方式。","maintenanceTitle":"任务维护","maintenanceDescription":"集中整理全工作区的已完成任务。","archiveTitle":"归档已完成任务","archiveDescription":"将全工作区已完成且未归档的任务移入归档，之后可在“已归档”中查看。","clearTitle":"删除已完成任务","deleteDescription":"删除全工作区已完成且未归档的任务。执行前会请你确认。","scopeAll":"作用于全工作区，不受当前搜索、项目或状态筛选影响。","helpTitle":"帮助与关于","guideTitle":"使用指南","helpDescription":"查看常用操作，或准备诊断信息以便反馈。","aboutDescription":"Task Tracer 是本地优先的个人任务工作区，无需账号即可使用。","versionLabel":"版本","privacyDescription":"任务保存在当前浏览器中。清理网站数据、更换浏览器或设备前，请另存 JSON 备份。","offlineDescription":"首次使用请联网打开应用，完成离线缓存。提醒仍受浏览器和应用状态限制。","allTasksScope":"全部任务","notificationTaskTitle":"任务通知"},"usability":{"captureTitle":"添加任务","quickCapture":"快速记录","capturePlaceholder":"例如：周三 14:00 讨论方案 #工作 /项目","captureDetails":"完整表单","captureClose":"收起添加","capturePreview":"添加前确认","captureNoDate":"无截止日期","captureOverdue":"截止时间已过","filters":"筛选","advanced":"更多设置","timingHelp":"日期与时区说明","reminderDetails":"提醒与重复","resetFilters":"清除搜索与筛选","clearSearch":"清除搜索","emptyHint":"从顶部“添加任务”开始，记下第一件待办。","examplesAction":"添加示例任务","statsEmpty":"最近 7 天还没有完成记录。","notificationHelp":"查看开启方法","diagnostics":"诊断与支持","dataTools":"其他数据工具","taskScope":"当前任务范围","formBasics":"任务内容","noDayTasks":"这一天没有安排。","calendarUndated":"未安排日期","captureDraft":"继续添加","captureHint":"日期、时间、#标签、/项目请用空格分隔。默认沿用当前项目范围（全部项目为 Inbox）。","captureParsedTitle":"任务","captureProject":"项目","captureTags":"标签","advancedHint":"按需设置标签、提醒和重复。","dateDetails":"新设截止时间使用设备当前时区。时钟跳变中不存在的时间会向后顺延，重复出现的时间使用第一次；请核对保存后的实际时间。只修改其他字段时，会保留原截止时间点。","notificationHelpTitle":"如何开启任务通知","notificationHelpBody":"请在浏览器的网站设置中允许通知，再回到这里开启。若没有此选项，请查看系统通知设置。","helpQuickStart":"常用操作","helpDetails":"详细说明","viewListDescription":"按项目整理任务，逐项推进。","viewCalendarDescription":"按截止日期查看安排和当日日程。","viewTimelineDescription":"按时间顺序查看有截止日期的任务。","viewStatsDescription":"按项目与搜索范围查看完成情况和趋势。","captureRetained":"未提交的记录保留在当前页面；刷新或关闭前请先保存。","savedOutsideView":"任务已保存，未在当前视图显示。","openSavedTask":"打开任务","captureDateCheck":"请核对日期；过去的截止时间也可以用于补记任务。","calendarChooseDay":"选择日期，查看当天的任务。","statsRangeHint":"统计按项目和搜索范围汇总，不使用任务状态下拉筛选。"},"craft":{"accentLabel":"工作区主题","accentDescription":"可搭配浅色或深色外观。","accentIris":"墨青","accentOcean":"海湾","accentPine":"松林","accentBerry":"莓暮","batchMore":"更多操作","batchMoveProject":"移动到项目","batchMoveTitle":"移动选中的任务","batchProjectLabel":"目标项目","batchProjectHint":"选择已有项目，或输入新项目名称。","batchProjectRequired":"请输入或选择一个项目。","batchProjectAction":"移动任务","batchProjectUndo":"移动项目","batchProjectMoved":"已将 {count} 个任务移至 {project}","batchProjectMovedOne":"已将 {count} 个任务移至 {project}","snoozedUntil":"再次提醒：{date}","snoozeNotificationsOff":"通知未开启","snoozeAction":"{minutes} 分钟后再提醒","snoozeActionOne":"{minutes} 分钟后再提醒","viewUpdateTitle":"重命名视图","viewUpdateDescription":"相同条件的视图已存在，将更新它的名称并保留原入口。","viewUpdateAction":"保存名称","viewUpdated":"视图已更新","deleteTaskTitle":"删除任务？","deleteTaskMessage":"删除“{task}”？可以撤销此次删除。","snoozeDeliveryHint":"提醒需要浏览器通知权限，且依赖应用打开或被浏览器唤醒；无法保证关闭应用后的通知。","returnToStats":"返回回顾","themeChooser":"选择工作区主题","themeIrisDescription":"暖纸底面，墨青层次","themeOceanDescription":"蓝灰底面，海湾导航","themePineDescription":"浅绿底面，松林导航","themeBerryDescription":"灰粉底面，莓色导航"},"statsInsights":{"workloadTitle":"待处理","workloadDescription":"今天截止的任务也可能已经逾期。","overdueTitle":"逾期待处理","overdueHint":"已超过截止时间的未完成任务","todayTitle":"今天截止","todayHint":"截止日期为今天的未完成任务","undatedTitle":"无截止日期","undatedHint":"未安排日期","viewTasks":"查看任务","nothingHere":"当前范围没有这类待办","scopeRecords":"共 {count} 项任务 · 其中 {archived} 项已归档","scopeRecordsOne":"共 {count} 项任务 · 其中 {archived} 项已归档","searchApplied":"已应用当前搜索","emptyWorkspace":"还没有任务。","clearWorkload":"当前范围没有待办任务。","reviewTitle":"最近 7 天回顾","reviewCompleted":"完成 {count} 项","reviewCompletedOne":"完成 {count} 项","openReviewWeek":"查看最近 7 天完成的任务：{count} 项","openReviewDay":"查看 {date} 完成的任务：{count} 项","todayReview":"今天完成 {count} 项","todayReviewOne":"今天完成 {count} 项","reviewMethod":"根据保留任务的完成时间统计，包含已归档任务；未记录完成时间的任务不计入每日回顾。","projectsTitle":"项目待办","projectPending":"{count} 项待办","projectPendingOne":"{count} 项待办","projectOverdue":"{count} 项逾期","projectOverdueOne":"{count} 项逾期","moreProjects":"另有 {count} 个项目，查看全部待办","moreProjectsOne":"另有 {count} 个项目，查看全部待办","inventoryTitle":"任务汇总","inventoryDescription":"任务数与完成率仅统计未归档任务，归档数单独列出。完成率不代表某段时间的效率。","inventoryTotal":"未归档任务","inventoryCompleted":"已完成（未归档）","noInventory":"当前范围没有未归档任务","noScheduled":"当前没有带截止日期的未完成任务","methodLabel":"统计口径"},"dataReview":{"importModeTitle":"选择导入方式","importReplaceHint":"替换模式会用文件中的任务替换当前全部任务。","importOutcomeTitle":"变更预览","replaceSummary":"当前 {current} 项任务将替换为文件中的 {incoming} 项，完成后共 {after} 项。","mergeSummary":"新增 {added} 项，替换本地 {replaced} 项，跳过 {skipped} 项；保留 {kept} 项当前任务，完成后共 {after} 项。","importMergeAction":"合并导入 {count} 个任务","importReplaceAction":"替换为 {count} 个任务","importNoChanges":"没有需要导入的任务","passedChecks":"已通过 {count} 项检查","importDetails":"查看任务","recoveryImpact":"当前 {current} 项任务 → 所选恢复点 {target} 项任务","restoreAction":"恢复 {count} 个任务","viewsCount":"当前保存 {count} 个视图","viewsEmpty":"暂无保存的视图","maintenanceCount":"可整理 {count} 个已完成任务","maintenanceEmpty":"暂无可整理的已完成任务","archiveAction":"归档 {count} 个任务","deleteAction":"删除 {count} 个任务","importMergeActionOne":"合并导入 {count} 个任务","importReplaceActionOne":"替换为 {count} 个任务","restoreActionOne":"恢复 {count} 个任务","archiveActionOne":"归档 {count} 个任务","deleteActionOne":"删除 {count} 个任务","mergeSnapshot":"合并更改时，会先将当前任务保留为本地恢复点。","mergeSnapshotTitle":"合并前恢复点"},"editor":{"properties":"任务属性","datePresets":"快捷安排","today":"今天","tomorrow":"明天","pickDate":"选择日期","scheduling":"提醒与重复","requiresDate":"设置截止日期后可使用提醒与重复。","setDate":"设置日期","weekdayRequired":"请至少选择一个重复星期。","chooseDate":"选择","dateRequired":"请选择截止日期，或勾选“无截止日期”。","intervalRequired":"请输入1至365之间的整数天数。"},"settingsRefinement":{"storageTitle":"浏览器存储保护","storageDescription":"查看存储用量、持久保存状态与浏览器能提供的保护。","storageAction":"查看存储状态","importReplaceTitle":"替换全部当前任务","recoveryPreviewToggle":"查看恢复点中的任务"},"v5.nav.today":"今天","v5.nav.tasks":"任务","v5.nav.projects":"项目","v5.nav.review":"回顾","v5.nav.label":"工作台","v5.back.today":"返回今天","v5.back.tasks":"返回任务","v5.back.projects":"返回项目","v5.back.review":"返回回顾","v5.moduleUnavailable":"工作台加载失败，已打开任务库。可检查更新后重试。","v5.common.storageUnavailable":"任务暂不可用","v5.common.actionFailed":"操作未完成，请重试","v5.common.showMore":"再显示 {count} 项","v5.common.taskCount":"{count} 个任务","v5.common.taskCountOne":"{count} 个任务","v5.today.title":"今天","v5.today.plan":"今日计划","v5.today.pendingCount":"{count} 项待办","v5.today.pendingCountOne":"{count} 项待办","v5.today.progress":"已完成 {completed} / {total}","v5.today.completedHeading":"已完成 · {count}","v5.today.planDone":"今天的计划已完成","v5.today.planEmpty":"今天还没有安排任务","v5.today.chooseTasks":"选择任务","v5.today.reviewActivity":"查看回顾","v5.today.candidates":"需要安排","v5.today.carryover":"此前未完成","v5.today.candidatesEmpty":"暂无待安排任务","v5.today.addToPlan":"加入今天","v5.today.addTaskToPlan":"加入今日计划：{name}","v5.today.removeTaskFromPlan":"移出今日计划：{name}","v5.today.completeTask":"标记完成：{name}","v5.today.reopenTask":"重新打开：{name}","v5.projects.title":"项目","v5.projects.unassigned":"无项目","v5.projects.projectCount":"{count} 个项目","v5.projects.projectCountOne":"{count} 个项目","v5.projects.pending":"待办","v5.projects.completed":"已完成","v5.projects.archived":"已归档","v5.projects.openProject":"查看项目：{name}","v5.projects.rename":"重命名","v5.projects.renameLabel":"重命名项目：{name}","v5.projects.renameTitle":"重命名项目","v5.projects.nameLabel":"项目名称","v5.projects.nameRequired":"请输入项目名称。","v5.projects.nameExists":"已有同名项目。","v5.projects.renamed":"已重命名项目：{name}","v5.projects.renameUndo":"重命名项目","v5.projects.renameFailed":"未能重命名项目，请重试。","v5.projects.nextDue":"最近截止","v5.projects.nextTask":"下一任务","v5.projects.allDone":"全部完成","v5.projects.allArchived":"已归档","v5.projects.overdue":"{count} 项逾期","v5.projects.countSummary":"待办 {pending}，已完成 {completed}，已归档 {archived}","v5.projects.search":"搜索项目","v5.projects.sort":"排序","v5.projects.sort.pending":"待办数量","v5.projects.sort.name":"项目名称","v5.projects.sort.due":"最近截止","v5.projects.empty":"还没有项目任务","v5.projects.noResults":"没有匹配的项目","v5.projects.clearSearch":"清除搜索","v5.editor.descriptionPlaceholder":"添加描述…","v5.settings.license":"许可","v5.planning.title":"选择今日计划","v5.planning.done":"完成选择","v5.planning.add":"加入今天","v5.planning.remove":"移出今天"},"en":{"app":{"language":"English","title":"Task Tracer","toolbar":"Task tools"},"actions":{"exportBackup":"Download task backup","exportBackupTitle":"Download a restorable JSON task backup, excluding saved views and app preferences","import":"Import task backup","importTitle":"Choose a JSON task backup to preview before merging or replacing","addTask":"Add task","openMenu":"Open Settings & data","confirm":"Confirm","cancel":"Cancel","updateTask":"Save changes","archiveCompletedTitle":"Archive completed, unarchived tasks across the workspace","archiveCompleted":"Archive completed","clearCompletedTitle":"Delete completed, unarchived tasks across the workspace","clearCompleted":"Delete completed"},"search":{"placeholder":"Search tasks, projects or tags…","clear":"Clear search","syntaxTitle":"Supports project:work, tag:study, status:completed, due:today, and #tag","syntaxHint":"Supports scoped search: project:name, tag:name, status:value, and due:value."},"quickAdd":{"label":"Quick capture","placeholder":"For example: tomorrow 14:00 Discuss the plan #work /Project","submit":"Add","hint":"Separate the date, time, #tags and /project with spaces. The current project scope is used by default (All projects uses Inbox).","captureReady":"Review the text, then press Enter to add the task."},"tools":{"label":"Filters & sorting","done":"Done","collapse":"Collapse filters and sorting","expand":"Expand filters and sorting","pin":"Pin filters and sorting","unpin":"Unpin filters and sorting"},"savedViews":{"label":"Saved views","saveCurrent":"Save view","saveCurrentTitle":"Save the current search, filters, and view","saveTitle":"Save view","nameLabel":"View name","namePlaceholder":"For example: Study this week","defaultName":"Saved view {index}","nameFromSearch":"Search: {query}","saved":"View saved","deleted":"View deleted: {name}","applied":"View opened: {name}","applyLabel":"Open saved view: {name}","deleteLabel":"Delete saved view: {name}","updateError":"Could not change saved views. Your previous saved views were kept.","limitReached":"You already have 12 saved views. Delete one before saving a new view; your draft was kept.","deleteConfirmTitle":"Delete saved view?","deleteConfirmMessage":"Delete “{name}”? This removes only this saved view; task data is unchanged. This action cannot be undone.","deleteConfirmAction":"Delete view","emptyHint":"Use Save view in the task workspace to keep searches and filters you use often."},"focus":{"openTitle":"Open today’s plan","activeTitle":"Leave today’s plan","openShort":"Today’s plan","activeShort":"Today’s plan","title":"Today’s plan","summary":"{completed}/{total} tasks completed","summaryOne":"{completed}/{total} task completed","exit":"Leave today’s plan","added":"Added to today’s plan","removed":"Removed from today’s plan","emptyTitle":"Nothing planned for today","emptyDescription":"Add tasks with “Add to today’s plan” or select several tasks to add together."},"batch":{"menu":"Select tasks","menuTitle":"Select tasks for batch actions","activeTitle":"Leave task selection","selected":"{count} tasks selected","selectedOne":"{count} task selected","selectVisible":"Select all matching tasks","clearSelection":"Clear selection","addToFocus":"Add to today’s plan","complete":"Complete","archive":"Archive","delete":"Delete","exit":"Exit","selectTask":"Select task: {taskName}","noneSelected":"Select tasks first","nothingToComplete":"No selected tasks can be marked complete","confirmDelete":"Delete {count} selected tasks? You can undo this deletion.","confirmDeleteOne":"Delete {count} selected task? You can undo this deletion.","error":"Batch action failed. Please try again","success":{"focus":"{count} tasks added to today’s plan","focusOne":"{count} task added to today’s plan","complete":"{count} tasks marked complete","completeOne":"{count} task marked complete","archive":"{count} tasks archived","archiveOne":"{count} task archived","delete":"{count} tasks deleted","deleteOne":"{count} task deleted"},"undo":{"focus":"batch add to today’s plan","complete":"batch complete","archive":"batch archive","delete":"batch delete"},"selectTasks":"Select"},"undo":{"menu":"Undo last action","menuTitle":"Undo the most recent task action","availableTitle":"Undo: {action}","unavailableTitle":"No action to undo","action":"Undo","restored":"Undone: {action}","error":"Undo failed. Please try again","labels":{"add":"add task","edit":"edit task","delete":"delete task","complete":"update completion","skipRepeat":"skip repeat","clearCompleted":"delete completed tasks","archiveCompleted":"archive completed","archive":"update archive state","focus":"update today’s plan","snooze":"snooze reminder","import":"import tasks"}},"commandPalette":{"title":"Command palette","close":"Close command palette","searchLabel":"Search commands","placeholder":"Search commands, views, or projects","hint":"Use the arrow keys to choose a command, then press Enter.","listLabel":"Available commands","empty":"No matching commands","groups":{"tasks":"Tasks","views":"Views","data":"Data","projects":"Projects","savedViews":"Saved views"},"commands":{"newTask":"Add task","quickAdd":"Open quick capture","search":"Search tasks","focusMode":"Open today’s plan","batchMode":"Select tasks","undo":"Undo last action","exportBackup":"Download task backup","project":"Switch project: {project}","savedView":"Open saved view: {name}","view":{"list":"Switch to list view","calendar":"Switch to calendar view","timeline":"Switch to timeline view","stats":"Switch to stats view"}}},"pwa":{"install":{"menu":"Install app","menuTitle":"Install the app or view install steps","title":"Install Task Tracer","installed":"App installed","accepted":"App installation started","manualIntro":"If the browser does not show an install window automatically, use the matching browser path:","desktop":"Chrome or Edge on desktop: use the install icon in the address bar, or choose Install app from the browser menu.","android":"Open the browser menu, then choose Install app or Add to Home screen.","ios":"Safari on iPhone or iPad: tap Share, then choose Add to Home Screen.","macSafari":"In Safari, choose File → Add to Dock.","unavailable":"This browser has no desktop install option. Open this app in Chrome or Edge to install it."},"update":{"label":"App update","message":"A new version is ready. Refresh to use the latest app.","reload":"Refresh","dismiss":"Not now","check":"Check for updates","checking":"Checking for updates…","latest":"You’re up to date ({version}).","ready":"An update is ready. Reload when you’re ready.","offline":"You’re offline. Connect to check for updates.","error":"Couldn’t check or prepare an update. Try again shortly.","unsupported":"This browser doesn’t support in-app update checks.","description":"Check for a new version. Save your work before reloading.","saveFirst":"Save or resolve unfinished input and drafts before reloading.","busy":"Saving is in progress. Try updating afterward."}},"projects":{"filterLabel":"Filter by project","all":"All projects","none":"No project","groupTitle":"{project} · {count} tasks","groupTitleOne":"{project} · {count} task"},"views":{"label":"View switcher","list":"List","calendar":"Calendar","timeline":"Timeline","stats":"Review"},"calendar":{"previousYear":"Previous year","previous":"Previous month","next":"Next month","nextYear":"Next year","today":"Today","addTaskOnDate":"Add task on {date}","showDayTasks":"View all {count} tasks on {date}","showDayTasksOne":"View {count} task on {date}","closeDayTasks":"Close daily tasks","more":"+{count} more","taskCount":"{count} tasks","taskCountOne":"{count} task","noDeadline":"No deadline"},"stats":{"title":"Task overview","completionRate":"Completion rate","overdueRate":"Overdue rate","streakDays":"Completion streak","daysValue":"{count} days","daysValueOne":"{count} day","completedDetail":"{completed} / {total} unarchived tasks","completedDetailOne":"{completed} / {total} unarchived task","overdueDetail":"{overdue} / {total} scheduled to-dos","overdueDetailOne":"{overdue} / {total} scheduled to-do","streakDetail":"Completions on {count} consecutive days","streakDetailOne":"Completions on {count} day","totalTasks":"Total tasks","completedTasks":"Completed","overdueTasks":"Active overdue tasks","archivedTasks":"Archived","todayCompleted":"Completed today","openFilter":"View {label}: {count}","completionTrend":"Completions over the last 7 days","trendCount":"{date}: {count} completed"},"filters":{"all":"All","active":"Active","completed":"Completed","archived":"Archived","overdue":"Overdue","noDeadline":"No deadline"},"modal":{"addTitle":"Add task","editTitle":"Edit task"},"tooltips":{"addTask":"Add task (Ctrl+I)","menu":"Settings & data (Ctrl+M)","theme":"Change appearance","backToTop":"Back to top (Alt + T)","searchShortcut":"Search shortcut: Ctrl/Cmd + K"},"form":{"taskName":{"label":"Task name","placeholder":"What needs to get done?"},"description":{"label":"Description","placeholder":"Add context, links, or steps"},"project":{"label":"Project","placeholder":"e.g. Work / Personal"},"tags":{"label":"Tags","formatLabel":"Tag format","placeholder":"Work, Personal","hint":"Separate tags with commas. Wrap a tag containing a comma in double quotes; write a double quote inside a tag twice. Tags are included in search."},"dueDate":{"label":"Due date"},"noDeadline":"No deadline","reminder":{"label":"Reminder","options":{"none":"None","atTime":"At the deadline","min15":"15 minutes before","hour1":"1 hour before","day1":"1 day before","customBefore":"{minutes} minutes before","customBeforeOne":"{minutes} minute before","customAfter":"{minutes} minutes after","customAfterOne":"{minutes} minute after"}},"reminderRepeat":{"label":"Repeat reminder","backgroundLimit":"The browser checks reminders while the app is open or wakes up; system-level background delivery is not guaranteed.","options":{"none":"Do not repeat","min15":"Every 15 minutes","hour1":"Every hour","day1":"Daily","custom":"Every {minutes} minutes","customOne":"Every {minutes} minute"}},"repeat":{"label":"Repeat task","helpLabel":"How repeating tasks work","hint":"Creates the next occurrence after completion.","customDays":"Days between repeats","options":{"none":"Do not repeat","daily":"Daily","weekly":"Weekly","weeklyDays":"Specific weekdays","monthly":"Monthly","monthlyLast":"Last day of each month","custom":"Custom interval"},"weekdaysLabel":"Repeat weekdays","weekdays":{"mon":"Mon","tue":"Tue","wed":"Wed","thu":"Thu","fri":"Fri","sat":"Sat","sun":"Sun"},"pause":"Pause repeating task"},"subtasks":{"label":"Subtasks","placeholder":"What is the next step?","add":"Add subtask","edit":"Edit subtask: {text}","editInput":"Edit subtask text","delete":"Delete subtask: {text}"},"dueTime":{"label":"Due time","clockChangeHint":"New deadlines in a clock change move nonexistent times forward and use the first occurrence of repeated times. Check the saved time on the task."}},"task":{"subtasks":"Subtasks","deadline":"Due","noDeadline":"No deadline","actions":{"markComplete":"Mark as complete","markIncomplete":"Mark as incomplete","snooze":"Remind again in 10 minutes","skipRepeat":"Skip this occurrence","addFocus":"Add to today’s plan","removeFocus":"Remove from today’s plan","archive":"Archive task","restoreArchive":"Restore from archive","edit":"Edit task","delete":"Delete task","reorder":"Move task: {taskName}. Use the up and down arrow keys to reorder"},"importedFallback":"Imported task {index}","repeat":{"daily":"Repeats daily","weekly":"Repeats weekly","weeklyDays":"Repeats on {days}","monthly":"Repeats monthly","monthly-last":"Repeats on the last day of each month","custom":"Repeats every {days} days","customOne":"Repeats every {days} day","paused":"paused","weekdaySeparator":", "}},"empty":{"noTasks":{"title":"No tasks yet","description":"Use Add task above to capture your first task."},"noMatches":{"title":"No matching tasks","description":"No tasks match the current search or filters. Clear them to see tasks in this view."}},"storage":{"unavailable":{"title":"Local storage is unavailable","message":"Tasks cannot be read or saved. Check browser storage permissions and retry.","emptyDescription":"Check browser storage permissions and retry.","snapshotDescription":"{count} tasks are retained. Download an emergency backup first.","snapshotDescriptionOne":"{count} task is retained. Download an emergency backup first.","retry":"Retry","retrying":"Retrying…","retryFailed":"Local storage is still unavailable","short":"Local storage is unavailable; task actions are paused","actionsDisabled":"Local storage is unavailable, so task actions are paused","emergencyBackup":"Emergency backup","emergencyBackupTitle":"Download available task data","emergencyBackupSuccess":"Emergency backup download started for {count} tasks. Check that the file was saved.","emergencyBackupSuccessOne":"Emergency backup download started for {count} task. Check that the file was saved.","noSnapshot":"No task data is available to download"},"conflict":"Tasks have changed. Refreshing the latest data; review it before trying again.","editConflict":"This task has changed or was deleted. Your draft is still here; copy any changes you need, cancel, and reopen the latest task.","upgradeBlocked":"Another app window is blocking a storage upgrade. Close older Task Tracer tabs and installed windows, then retry. Your existing data has not been replaced.","versionChanged":"Storage was upgraded or removed in another window. Editing is paused to protect your data. Download an emergency backup if available, then reopen the latest app.","health":{"menu":"Data safety","description":"Tasks and recovery history stay in this browser. Persistent storage can reduce automatic eviction, but cannot prevent device loss or deliberate site-data deletion. Export a separate backup regularly.","persistent":"Persistent storage is enabled","bestEffort":"Persistent storage is not enabled","usage":"Used: {used} MiB / quota: {quota} MiB","estimateUnavailable":"Storage usage is unavailable","request":"Request persistent storage","enabled":"Persistent storage enabled","unsupported":"Persistence request unavailable","granted":"Persistent storage enabled. Keep exporting separate backups.","notGranted":"The browser did not grant persistence. Your existing data is unchanged; keep a separate backup.","requestError":"Could not request persistent storage. You can still export a backup."},"quotaExceeded":"Browser storage is full. Export an emergency backup first. You can clear recovery history to free space without deleting current tasks, then retry.","clearRecovery":"Clear recovery history","clearRecoveryConfirm":"This permanently removes all local recovery points to free space. Current tasks, settings and downloaded backups will remain. Export an emergency backup before continuing.","clearRecoveryError":"Could not clear recovery history. Keep an emergency backup and free browser storage before retrying.","staleConfirmation":"Tasks changed while this confirmation was open. Review the latest tasks and start the action again."},"status":{"completed":"Completed","archived":"Archived","safe":"Safe","warning":"Warning","danger":"Urgent","overdue":"Overdue","noDeadline":"No deadline"},"messages":{"task":{"confirmDelete":"Delete this task?","added":"Task added","updated":"Task updated","deleted":"Task deleted","markedComplete":"Task marked complete","markedIncomplete":"Task marked incomplete","repeatCreated":"Task completed and next occurrence created","repeatSkipped":"This occurrence was skipped and moved to the next one","repeatAlreadyScheduled":"This occurrence already has a later task. Continue with that task; your changes were kept.","nameRequired":"Please enter a task name","snoozed":"Reminder snoozed for {minutes} minutes","snoozedOne":"Reminder snoozed for {minutes} minute","saveError":"Failed to save task, please try again","deleteError":"Failed to delete task, please try again","updateError":"Failed to update task status, please try again"},"backup":{"success":"Backup download started. Check that the file was saved.","error":"Export/backup failed. Please try again","reminder":"Download a recent backup to avoid losing tasks if browser data is cleared."},"import":{"success":"Imported {count} tasks","successOne":"Imported {count} task","successMerged":"Merged {count} tasks","successMergedOne":"Merged {count} task","confirm":"Import {count} tasks and replace current data?","confirmOne":"Import {count} task and replace current data?","previewTitle":"Import preview","previewTasks":"Tasks to import","previewReplace":"Replacement impact","previewReplaceValue":"{current} current tasks will be replaced, including {completed} completed and {archived} archived","previewReplaceValueOne":"{current} current task will be replaced, including {completed} completed and {archived} archived","previewDuplicates":"Duplicate names","previewFileDuplicates":"Repeated inside file","previewDuplicateIds":"Repeated task IDs","previewExistingMatches":"Matches current tasks","restoreCheckTitle":"Restore checklist","restoreCheckSummary":"Needs attention: {warnings}/{total}","restoreStatusPass":"Pass","restoreStatusWarn":"Attention","restoreStatusRisk":"High impact","restoreUnknownVersion":"unknown version","restoreSourceLabel":"File source","restoreSourceTemplate":"Task Tracer {type}, version {version}","restoreSourceLegacy":"Legacy task array or unversioned JSON; tasks will be normalized before import.","restoreSchemaLabel":"Backup template version","restoreSchemaOk":"Matches the current restore template {version}.","restoreSchemaWarn":"File version is {version}; current template is {current}. Task Tracer will try a compatible import.","restoreSchemaCompatible":"Task Tracer will read the {from} file with compatibility rules and import it into the current template {to}.","restoreIntegrityLabel":"File integrity","restoreIntegrityOk":"Integrity check passed; the file content matches its checksum.","restoreIntegrityMissing":"The file has no checksum; Task Tracer can still import compatible task content.","restoreIntegrityInvalid":"Integrity check failed. This file may have been changed.","restoreIntegrityLegacy":"Legacy task arrays do not include an integrity check; tasks will be normalized before import.","restoreTasksLabel":"Task payload","restoreTasksOk":"The file contains {count} importable tasks.","restoreTasksOkOne":"The file contains {count} importable task.","restoreTasksEmpty":"The file has no importable tasks; replace mode will clear the current list.","restoreIdsLabel":"Task IDs","restoreIdsOk":"No repeated task IDs were found.","restoreIdsWarn":"{count} repeated task IDs found; import will regenerate IDs and clear ambiguous links.","restoreIdsWarnOne":"{count} repeated task ID found; import will regenerate IDs and clear ambiguous links.","restoreNamesLabel":"Local name matches","restoreNamesOk":"No imported tasks match current task names.","restoreNamesWarn":"{count} imported tasks match current names; merge mode can handle them one by one.","restoreNamesWarnOne":"{count} imported task matches a current name; merge mode can handle it individually.","restoreImpactLabel":"Current data impact","restoreImpactOk":"There are no local tasks, so replace mode will not overwrite existing data.","restoreImpactWarn":"Replace mode will overwrite {count} current tasks; choose merge mode to keep them.","restoreImpactWarnOne":"Replace mode will overwrite {count} current task; choose merge mode to keep it.","restoreSnapshotLabel":"Pre-replace snapshot","restoreSnapshotAuto":"Before replacing, Task Tracer will download a restore snapshot with {count} current tasks and require another confirmation.","restoreSnapshotAutoOne":"Before replacing, Task Tracer will download a restore snapshot with {count} current task and require another confirmation.","restoreSnapshotEmpty":"There are no local tasks, so no extra restore snapshot is needed.","importSafetyTitle":"Replace import protection","importSafetyReplace":"The first confirmation downloads a pre-import snapshot with {count} current tasks; the next confirmation replaces data.","importSafetyReplaceOne":"The first confirmation downloads a pre-import snapshot with {count} current task; the next confirmation replaces data.","importSafetySnapshotReady":"Your current-task backup has started downloading. Confirm it is saved before replacing tasks.","importSafetyChecksumRisk":"Integrity check failed. This file may have been changed.","importSafetyChecksumSnapshot":"File risk confirmed. Next, back up your {count} current tasks.","importSafetyChecksumSnapshotOne":"File risk confirmed. Next, back up your {count} current task.","importSafetyChecksumConfirmed":"File risk confirmed.","importSafetyClean":"There are no local tasks, so replace mode will not overwrite existing data.","snapshotDownloaded":"Pre-import snapshot download was triggered. Confirm the file is saved, then confirm replacement again.","integrityReplaceConfirm":"Integrity check failed. Switch to merge mode, or confirm the risk again to continue replacing.","confirmChecksumRisk":"Confirm Integrity Risk","downloadSnapshot":"Download current backup","continueReplace":"Continue Replace Import","diffTitle":"Task preview","diffNew":"New tasks","diffConflicts":"Name conflicts","diffReplace":"Current tasks","diffNone":"None","diffMore":"{names}, plus {count} more","diffSeparator":", ","sourceType":{"backup":"backup file","emergency-backup":"emergency backup","pre-import-backup":"pre-import snapshot","legacy-array":"legacy task array","unknown":"{type}"},"mergeMode":"Merge into current tasks","mergeModeHint":"New names are added. For matching names, review Keep both, Skip import or Replace local before confirming.","conflictTitle":"Same-name conflict handling","conflictHint":"These choices are used only when merge import is selected.","conflictExistingCount":"{count} current tasks use this name","conflictExistingCountOne":"{count} current task uses this name","conflictActionLabel":"Choose how to import {name}","conflictKeep":"Keep both","conflictSkip":"Skip import","conflictReplace":"Replace local","formatError":"Import failed: Invalid file format","readError":"Import failed: File read error","stalePreview":"Tasks changed while the preview was open. Review the new preview and confirm again; the previous safety approvals have been reset.","reading":"Reading the task file. You can cancel before the preview is ready.","readingTitle":"Reading task import","conflictDefaultLabel":"Action for all matching task names","conflictDefaultHint":"Changing this resets all individual choices, including tasks not shown yet. You can change individual rows afterward.","conflictMore":"Show {count} more matching tasks","conflictMoreOne":"Show {count} more matching task","conflictShowing":"Showing {shown}/{total} matching tasks","conflictShowingOne":"Showing {shown}/{total} matching tasks"},"clearCompleted":{"none":"There are no completed tasks to clear","confirm":"Delete {count} completed tasks? You can undo this deletion.","confirmOne":"Delete {count} completed task? You can undo this deletion.","success":"Deleted {count} completed tasks","successOne":"Deleted {count} completed task","error":"Error while clearing tasks"},"archive":{"none":"There are no completed tasks to archive","confirm":"Archive {count} completed tasks?","confirmOne":"Archive {count} completed task?","success":"{count} completed tasks archived","successOne":"{count} completed task archived","taskArchived":"Task archived","taskRestored":"Task restored from archive","error":"Failed to update archive status"},"sampleTasks":{"added":"Sample tasks added"},"reorder":{"moved":"{taskName} moved to position {position} of {total}","first":"{taskName} is already first","last":"{taskName} is already last"},"view":{"summary":"{view} updated, {count} tasks in the current scope","summaryOne":"{view} updated, {count} task in the current scope"},"initDBError":"Failed to init Database, Please refresh the page and try again."},"time":{"minutesAgo":"{minutes} minutes ago","minutesAgoOne":"{minutes} minute ago","hoursAgo":"{hours} hours ago","hoursAgoOne":"{hours} hour ago","daysAgo":"{days} days ago","daysAgoOne":"{days} day ago","minutesLeft":"{minutes} minutes","minutesLeftOne":"{minutes} minute","hoursLeft":"{hours} hours","hoursLeftOne":"{hours} hour","daysLeft":"{days} days","daysLeftOne":"{days} day"},"samples":{"task1":{"name":"Complete project report","description":"Write and submit quarterly project summary report","project":"Work","tag":"report"},"task2":{"name":"Team meeting preparation","description":"Prepare presentation materials for next week's team meeting","project":"Work","tag":"meeting"},"task3":{"name":"Learning plan development","description":"Develop personal learning plan for next month","project":"Personal","tag":"learning"}},"sort":{"smart":"Smart order","created":"Newest first","due":"Due date","alpha":"Name (A–Z)","manual":"Manual order"},"notifications":{"enable":"Enable notifications","disable":"Disable notifications","permissionDenied":"Notification permission denied. Please enable in browser settings.","notSupported":"This browser does not support desktop notifications","error":"Error requesting notification permission","taskDue":"Task due soon: {taskName}","missedReminder":"Missed reminder: {taskName}","backgroundLimit":"Notifications are enabled. The browser checks reminders while the app is open or wakes up, so background delivery is not fully guaranteed.","reminderSet":"Reminder set"},"backup":{"health":{"empty":"No task data to back up","never":"No backup yet. Export/back up now","ok":"Current tasks exported · {age}","due":"Backup recommended · {age}","today":"exported today","yesterday":"exported yesterday","daysAgo":"exported {days} days ago","daysAgoOne":"exported {days} day ago","changed":"Tasks changed since the last export · {age}. Export again","coverageUnknown":"Previous export coverage is unknown · {age}. Export again"},"versionNotes":{"schema":"Backup 2.4 includes an integrity checksum, export ID, local due dates, exact reminder instants, tasks, subtasks, projects, tags, advanced repeat rules, completion dates, archive state, and today’s plan.","compatibility":"The importer reads the tasks array; older export files remain importable through compatibility rules.","emergency":"This file was created from an in-memory snapshot in protected storage-unavailable mode. Restore browser storage and import it as soon as practical."}},"recovery":{"menu":"Recovery history","title":"Restore a local recovery point","description":"Keep up to 10 recovery points in this browser. Changes are saved at most every five minutes, with an extra point before deletion, import, undo or restore. These points are lost if site data is cleared; export a backup to protect against device loss.","empty":"No recovery points yet.","choose":"Recovery point","point":"{date} · {count} tasks","pointOne":"{date} · {count} task","confirm":"Replace all current tasks","confirmRequired":"Confirm the replacement before restoring.","restored":"Tasks restored. The previous state is available in Recovery history.","error":"Could not finish recovery. Review current tasks and recovery history before retrying.","privacy":"Deleted tasks may remain in local recovery points. Export a selected point or clear the recovery history when needed.","previewTitle":"Selected recovery point","previewSummary":"Showing {shown}/{count} tasks · {completed} completed · {archived} archived","previewSummaryOne":"Showing {shown}/{count} task · {completed} completed · {archived} archived","previewEmpty":"This recovery point contains no tasks.","exportPoint":"Export this recovery point","exported":"Download started for {count} tasks from this recovery point. Check the file; current task-backup status is unchanged.","exportedOne":"Download started for {count} task from this recovery point. Check the file; current task-backup status is unchanged.","exportError":"Could not export this recovery point.","clearHistory":"Clear recovery history","clearTitle":"Clear all local recovery points?","clearConfirm":"Permanently clear all local recovery points? Current tasks will remain. This cannot be undone.","cleared":"Recovery history cleared. Current tasks are unchanged.","clearError":"Could not clear recovery history. Existing recovery points were kept.","historyChanged":"Recovery history changed in another action or window. Review the updated points before confirming again."},"pagination":{"more":"Show more tasks","summary":"Showing {shown} of {total} matching tasks. Search includes the entire workspace.","summaryOne":"Showing {shown} of {total} matching task. Search includes the entire workspace."},"csv":{"menu":"Export all tasks as CSV","title":"Spreadsheet report of all tasks, including archives. Use JSON Export/Backup for full restoration.","success":"CSV exported with {count} tasks. Use JSON Export/Backup for a restorable backup.","successOne":"CSV exported with {count} task. Use JSON Export/Backup for a restorable backup.","error":"Could not export the CSV report."},"help":{"menu":"Help and support","intro":"Task Tracer {version} · Your tasks stay in this browser profile. Start with a task, then organize it as needed.","captureTitle":"Capture and plan","captureBody":"Choose Add task in the top bar to open the full form and continue any unfinished draft. Use the arrow beside it to open Quick capture. Separate a date, time, #tag and /project with spaces, for example: tomorrow 14:00 Discuss the plan #work /Project. Check the preview before adding. Open Full form to continue editing a description, subtasks, reminders or recurrence. Use a task’s Task actions menu to add it to today’s plan; you can also add tasks in bulk.","findTitle":"Find your work","findBody":"Use the left navigation for List, Calendar, Timeline and Stats, or the bottom navigation on mobile. Search supports project:work, tag:study, status:completed, due:today and #tag; combine terms to narrow the results. Save view keeps searches, filters and layouts you use often. Clear the conditions directly when no tasks match.","backupTitle":"Protect and move tasks","backupBody":"Use Backups & transfer in Settings & data to download a backup or choose a backup file. JSON backups contain all tasks and can restore them on another browser or device. They exclude saved views, preferences and recovery history. CSV is for reports only. Recovery history shares browser storage with your tasks; keep a separate backup before clearing site data or moving devices. Transfer saved views in their separate file.","offlineTitle":"Offline use and reminders","offlineBody":"Open the app online and let it finish caching before using it offline. Use Settings & data to install the app or find your browser’s installation steps. Enable notifications there too. If permission is blocked, first allow notifications in your browser’s site settings. Reminders depend on the browser, operating system and app lifecycle; they are not guaranteed alarms when the app is closed.","privacyTitle":"Support and privacy","privacyBody":"Reports open on GitHub, outside this app. Use synthetic tasks and review any files or screenshots before posting. Never attach your personal task backup to a public issue. For security vulnerabilities, follow SECURITY.md in the repository. Text captured through URL links may appear in browser history or hosting request logs.","shortcuts":"Keyboard shortcuts","newTask":"Add a task","search":"Focus search","commands":"Commands","undo":"Undo last action","close":"Close","diagnostics":"Review diagnostic information","diagnosticEntryDescription":"Preview a report before downloading. Nothing is sent automatically.","diagnosticDescription":"Review this report before downloading or sharing it. It contains app and browser versions, capabilities and storage status. It excludes task contents, saved views, preferences, page URLs and error messages. Nothing is sent automatically.","downloadDiagnostics":"Download report","diagnosticError":"Could not prepare the diagnostic report. Try again.","support":"Report an issue","datesTitle":"Dates and clock changes","datesBody":"Separate dates, times, #tags and /projects with spaces. Chinese weekday shorthand such as 周三 uses the nearest occurrence, including today; 本周三 uses the Monday-based current week, even when the date is past, and 下周三 uses the following week. A month/day without a year uses the nearest valid date on or after today; February 29 skips non-leap years. Today/tomorrow use the local date when submitted. Existing deadlines keep their task time zone after a device-zone change. Times skipped by a clock change move forward; repeated times use the first occurrence. Editing other fields preserves the saved instant. Repeating tasks advance from the previous saved local date and time.","settings":"Open Settings & data","appearanceBody":"Use Appearance & language in Settings & data for Light, Dark, System, Chinese and English. Changing the interface language does not rewrite your tasks, projects or tags.","quickStartDescription":"Find the task you need, then open more detail if needed.","userGuide":"User guide","diagnosticVersion":"App version","diagnosticBrowser":"Browser","diagnosticConnection":"Connection","diagnosticStorage":"Local storage","diagnosticOnline":"Online","diagnosticOffline":"Offline","diagnosticAvailable":"Available","diagnosticUnavailable":"Unavailable"},"onboarding":{"examplesAction":"Add 3 example tasks","examplesHint":"Examples are ordinary tasks that you can edit or delete.","examplePrefix":"Example: {name}","examplesAdded":"3 example tasks added. Edit or delete them like your own tasks.","examplesError":"Could not add example tasks. Existing tasks were kept.","examplesUndo":"add example tasks"},"viewsTransfer":{"menu":"Transfer saved views","title":"Transfer saved views","description":"Move saved searches, filters and layouts with a separate JSON file. Task data uses Export/Backup; app preferences stay on this device.","privacy":"View files may contain private search terms, project names and tags. Review them before sharing.","export":"Export views JSON","import":"Import views JSON","exported":"Exported {count} saved views.","exportedOne":"Exported {count} saved view.","invalid":"This is not a valid, unchanged Task Tracer saved-view file (version 1.0 or 1.1). Task backups must use Import.","fileTooLarge":"View files must be 1 MiB or smaller.","error":"Could not transfer saved views. Existing data was kept.","previewTitle":"Review view import","previewSummary":"File: {incoming} views · Add: {add} · Duplicates skipped: {duplicate} · No space: {capacity}","confirm":"Add {count} views","confirmOne":"Add {count} view","changed":"Saved views changed in another window. Review the updated preview and confirm again.","imported":"Added {count} saved views. Task data and app preferences were kept.","importedOne":"Added {count} saved view. Task data and app preferences were kept.","close":"Close"},"drafts":{"title":"Discard unsaved changes?","description":"Unsaved changes will be lost.","keepEditing":"Continue editing","discard":"Discard changes","saving":"Saving…","recoveryTitle":"Unsaved task draft retained","recoveryDescription":"{count} unsaved drafts. Download before leaving.","recoveryDescriptionOne":"{count} unsaved draft. Download before leaving.","recoveryDownload":"Download unsaved drafts","recoveryRestore":"Resume editing","recoveryWaiting":"Restore browser storage, then resume editing.","recoveryBlocked":"Finish or discard the current task form before resuming another draft.","recoveryReady":"Storage is available. Your unsaved drafts are ready to resume.","recoveryDiscard":"Discard next draft","recoveryDiscardTitle":"Discard this retained draft?","recoveryDiscardDescription":"This draft will be discarded. Saved tasks stay unchanged.","quickAddReady":"Text retained. You can continue adding the task.","quickAddRetained":"Text retained. Copy it before leaving."},"dialogs":{"loading":"Loading local information…"},"workspace":{"allTasks":"All tasks","navigation":"Navigation","projects":"Projects","views":"Views","savedViews":"Saved views","noSavedViews":"No saved views yet","localStorage":"Stored in this browser","language":"Interface language","appearance":"Appearance","themeLight":"Light","themeDark":"Dark","themeSystem":"System","openNavigation":"Open navigation","closeNavigation":"Close navigation","taskCount":"{count} tasks","taskCountOne":"{count} task","selectionLabel":"Task selection","upcoming":"Upcoming","overview":"Overview","settings":"Settings","dueToday":"Due today","openSchedule":"Show schedule","closeSchedule":"Hide schedule","noUpcoming":"No upcoming deadlines","nextSevenDays":"Next 7 days","taskActions":"Task actions","progressScope":"Entire workspace (excluding archived)","skipToContent":"Skip to content"},"settings":{"title":"Settings & data","subtitle":"Manage appearance, reminders and local data.","backToTasks":"Back to tasks","open":"Open settings","navigation":"Settings sections","appearanceTitle":"Appearance & language","appearanceDescription":"Set your appearance and interface language.","themeLabel":"Appearance","themeDescription":"Choose light, dark or your system setting.","languageLabel":"Interface language","languageDescription":"Your task, project and tag text stays as written.","dataTitle":"Backups & transfer","dataDescription":"Keep a backup, then restore or transfer when needed.","backupTitle":"Task backup","backupDescription":"Download a restorable backup of all tasks, including archived tasks. Saved views, preferences and recovery history are not included.","csvTitle":"Spreadsheet export","csvDescription":"Download a CSV report of all tasks, including archived tasks. Reports cannot restore tasks.","importTitle":"Restore from a backup","importDescription":"Choose a JSON task backup. Preview it before deciding to merge or replace.","viewsTitle":"Transfer saved views","viewsTransferDescription":"Export or import saved searches, filters and layouts in a separate file. Your tasks stay unchanged.","downloadReminder":"After a download starts, check that the file was saved and keep it somewhere safe.","storageTitle":"Storage & recovery","storageDescription":"Review usage, persistence and the protection your browser can provide.","recoveryTitle":"Local recovery history","recoveryDescription":"Review recovery points in this browser, then export or restore the selected tasks.","recoveryCaution":"Recovery history shares local storage with your tasks. Keep a separate JSON backup.","notificationsTitle":"Reminders & installation","notificationsDescription":"Manage browser notifications and app installation.","notificationEnabled":"Notifications are on","notificationDisabled":"Notifications are off","notificationBlocked":"Notifications blocked by your browser","notificationUnsupported":"Notifications are not supported in this browser","notificationBlockedHelp":"Allow notifications in your browser’s site settings, then return here to turn them on.","installTitle":"Install the app","installDescription":"Install on your device, or view installation steps for your browser.","maintenanceTitle":"Task maintenance","maintenanceDescription":"Tidy up completed tasks across your workspace.","archiveTitle":"Archive completed tasks","archiveDescription":"Archive completed, unarchived tasks across the workspace. Find them later in Archived.","clearTitle":"Delete completed tasks","deleteDescription":"Delete completed, unarchived tasks across the workspace. You will be asked to confirm first.","scopeAll":"Applies to the entire workspace, regardless of your current search, project or status filters.","helpTitle":"Help & about","guideTitle":"User guide","helpDescription":"Find common tasks, or prepare diagnostic information for feedback.","aboutDescription":"Task Tracer is a local-first personal task workspace. No account is required.","versionLabel":"Version","privacyDescription":"Tasks stay in this browser profile. Save a separate JSON backup before clearing site data or moving to another browser or device.","offlineDescription":"Open the app online first to finish caching it for offline use. Reminders still depend on the browser and app state.","allTasksScope":"All tasks","notificationTaskTitle":"Task notifications"},"usability":{"captureTitle":"Add task","quickCapture":"Quick capture","capturePlaceholder":"For example: tomorrow 14:00 Discuss the plan #work /Project","captureDetails":"Full form","captureClose":"Close capture","capturePreview":"Before adding","captureNoDate":"No deadline","captureOverdue":"Deadline has passed","filters":"Filters","advanced":"More settings","timingHelp":"About dates and time zones","reminderDetails":"Reminders and repeat","resetFilters":"Clear search & filters","clearSearch":"Clear search","emptyHint":"Use Add task above to capture your first task.","examplesAction":"Add example tasks","statsEmpty":"No completed tasks in the last 7 days.","notificationHelp":"How to enable","diagnostics":"Diagnostics and support","dataTools":"Other data tools","taskScope":"Current task scope","formBasics":"Task details","noDayTasks":"Nothing scheduled for this day.","calendarUndated":"No date assigned","captureDraft":"Continue draft","captureHint":"Separate the date, time, #tags and /project with spaces. The current project scope is used by default (All projects uses Inbox).","captureParsedTitle":"Task","captureProject":"Project","captureTags":"Tags","advancedHint":"Add tags, reminders or recurrence when needed.","dateDetails":"New deadlines use your device’s current time zone. Times skipped by a clock change move forward; repeated times use the first occurrence. Check the saved time. Editing other fields keeps the existing deadline’s exact instant.","notificationHelpTitle":"How to enable task notifications","notificationHelpBody":"Allow notifications in your browser’s site settings, then return here to turn them on. If the option is unavailable, check your system notification settings.","helpQuickStart":"Common tasks","helpDetails":"More detail","viewListDescription":"Organize tasks by project and work through them.","viewCalendarDescription":"See deadlines and the tasks scheduled for each day.","viewTimelineDescription":"Follow tasks with deadlines in chronological order.","viewStatsDescription":"Review completion and trends for your current project and search.","captureRetained":"Unsubmitted text stays in this page. Save it before refreshing or closing.","savedOutsideView":"Saved. This task isn’t shown in the current view.","openSavedTask":"Open task","captureDateCheck":"Check the date. A past deadline can also be used to record earlier work.","calendarChooseDay":"Choose a date to see that day’s tasks.","statsRangeHint":"Statistics use your project and search scope, not the task-status dropdown."},"craft":{"accentLabel":"Workspace theme","accentDescription":"Works with light or dark appearance.","accentIris":"Ink","accentOcean":"Ocean","accentPine":"Pine","accentBerry":"Berry","batchMore":"More actions","batchMoveProject":"Move to project","batchMoveTitle":"Move selected tasks","batchProjectLabel":"Destination project","batchProjectHint":"Choose an existing project or enter a new project name.","batchProjectRequired":"Enter or choose a project.","batchProjectAction":"Move tasks","batchProjectUndo":"Move project","batchProjectMoved":"Moved {count} tasks to {project}","batchProjectMovedOne":"Moved {count} task to {project}","snoozedUntil":"Reminder postponed to {date}","snoozeNotificationsOff":"Notifications are off","snoozeAction":"Remind again in {minutes} minutes","snoozeActionOne":"Remind again in {minutes} minute","viewUpdateTitle":"Rename view","viewUpdateDescription":"A view with the same conditions already exists. Update its name and keep the same shortcut.","viewUpdateAction":"Save name","viewUpdated":"View updated","deleteTaskTitle":"Delete task?","deleteTaskMessage":"Delete “{task}”? You can undo this deletion.","snoozeDeliveryHint":"Reminders need notification permission and depend on the app being open or woken by the browser. Delivery after closing the app is not guaranteed.","returnToStats":"Back to Review","themeChooser":"Choose a workspace theme","themeIrisDescription":"Warm paper and ink teal.","themeOceanDescription":"Blue-grey surfaces with a deep coastal sidebar.","themePineDescription":"Muted green surfaces with a forest sidebar.","themeBerryDescription":"Dusty rose surfaces with a berry sidebar."},"statsInsights":{"workloadTitle":"Needs attention","workloadDescription":"Tasks due today can also be overdue.","overdueTitle":"Overdue","overdueHint":"Unfinished tasks past their deadline","todayTitle":"Due today","todayHint":"Unfinished tasks with today's due date","undatedTitle":"No deadline","undatedHint":"No date set","viewTasks":"View tasks","nothingHere":"No matching to-dos in this scope","scopeRecords":"{count} tasks · {archived} archived","scopeRecordsOne":"{count} task · {archived} archived","searchApplied":"Current search applied","emptyWorkspace":"No tasks yet.","clearWorkload":"No to-dos in this scope.","reviewTitle":"Last 7 days","reviewCompleted":"{count} tasks completed","reviewCompletedOne":"{count} task completed","openReviewWeek":"View tasks completed in the last 7 days: {count}","openReviewDay":"View tasks completed on {date}: {count}","todayReview":"{count} completed today","todayReviewOne":"{count} completed today","reviewMethod":"Based on completion dates of retained tasks, including archived tasks. Tasks without a completion date are excluded from daily totals.","projectsTitle":"To-dos by project","projectPending":"{count} to-dos","projectPendingOne":"{count} to-do","projectOverdue":"{count} overdue","projectOverdueOne":"{count} overdue","moreProjects":"{count} more projects · View all to-dos","moreProjectsOne":"{count} more project · View all to-dos","inventoryTitle":"Task summary","inventoryDescription":"Task counts and completion rate exclude archived tasks, which are counted separately. Completion rate does not measure efficiency over a time period.","inventoryTotal":"Unarchived tasks","inventoryCompleted":"Completed (unarchived)","noInventory":"No unarchived tasks in this scope","noScheduled":"No unfinished tasks with a deadline","methodLabel":"How this is counted"},"dataReview":{"importModeTitle":"Choose how to import","importReplaceHint":"Replace mode replaces all current tasks with the tasks in this file.","importOutcomeTitle":"What will change","replaceSummary":"Current tasks: {current}. File tasks: {incoming}. All current tasks will be replaced. Total afterward: {after}.","mergeSummary":"Add: {added}. Local tasks replaced: {replaced}. File entries skipped: {skipped}. Current tasks retained: {kept}. Total afterward: {after}.","importMergeAction":"Merge {count} tasks","importReplaceAction":"Replace with {count} tasks","importNoChanges":"No tasks to import","passedChecks":"Passed checks: {count}","importDetails":"Review tasks","recoveryImpact":"Current tasks: {current} → recovery point: {target}","restoreAction":"Restore {count} tasks","viewsCount":"Saved views: {count}","viewsEmpty":"No saved views yet","maintenanceCount":"Completed tasks to tidy: {count}","maintenanceEmpty":"No completed tasks to tidy","archiveAction":"Archive {count} tasks","deleteAction":"Delete {count} tasks","importMergeActionOne":"Merge {count} task","importReplaceActionOne":"Replace with {count} task","restoreActionOne":"Restore {count} task","archiveActionOne":"Archive {count} task","deleteActionOne":"Delete {count} task","mergeSnapshot":"When merging changes, the current tasks are first kept as a local recovery point.","mergeSnapshotTitle":"Recovery point before merging"},"editor":{"properties":"Task details","datePresets":"Quick date choices","today":"Today","tomorrow":"Tomorrow","pickDate":"Choose a date","scheduling":"Reminders & repeat","requiresDate":"Set a due date to use reminders and repeat.","setDate":"Set a date","weekdayRequired":"Choose at least one repeat day.","chooseDate":"Choose","dateRequired":"Choose a due date, or select No deadline.","intervalRequired":"Enter a whole number from 1 to 365 days."},"settingsRefinement":{"storageTitle":"Browser storage protection","storageDescription":"Review storage usage, persistent storage and the protection your browser can provide.","storageAction":"Review storage status","importReplaceTitle":"Replace all current tasks","recoveryPreviewToggle":"Review recovery point tasks"},"v5.nav.today":"Today","v5.nav.tasks":"Tasks","v5.nav.projects":"Projects","v5.nav.review":"Review","v5.nav.label":"Workbench","v5.back.today":"Back to Today","v5.back.tasks":"Back to Tasks","v5.back.projects":"Back to Projects","v5.back.review":"Back to Review","v5.moduleUnavailable":"The workbench could not load. Your task library is available; check for updates and try again.","v5.common.storageUnavailable":"Tasks are unavailable","v5.common.actionFailed":"Could not complete the action. Try again.","v5.common.showMore":"Show {count} more","v5.common.taskCount":"{count} tasks","v5.common.taskCountOne":"{count} task","v5.today.title":"Today","v5.today.plan":"My plan","v5.today.pendingCount":"{count} to do","v5.today.pendingCountOne":"{count} to do","v5.today.progress":"{completed} of {total} completed","v5.today.completedHeading":"Completed · {count}","v5.today.planDone":"Today’s plan is complete","v5.today.planEmpty":"Nothing planned for today","v5.today.chooseTasks":"Choose tasks","v5.today.reviewActivity":"Review activity","v5.today.candidates":"Needs planning","v5.today.carryover":"Previously planned","v5.today.candidatesEmpty":"Nothing needs planning","v5.today.addToPlan":"Add to today","v5.today.addTaskToPlan":"Add to today: {name}","v5.today.removeTaskFromPlan":"Remove from today: {name}","v5.today.completeTask":"Complete: {name}","v5.today.reopenTask":"Reopen: {name}","v5.projects.title":"Projects","v5.projects.unassigned":"No project","v5.projects.projectCount":"{count} projects","v5.projects.projectCountOne":"{count} project","v5.projects.pending":"To do","v5.projects.completed":"Completed","v5.projects.archived":"Archived","v5.projects.openProject":"Open project: {name}","v5.projects.rename":"Rename","v5.projects.renameLabel":"Rename project: {name}","v5.projects.renameTitle":"Rename project","v5.projects.nameLabel":"Project name","v5.projects.nameRequired":"Enter a project name.","v5.projects.nameExists":"A project with this name already exists.","v5.projects.renamed":"Project renamed: {name}","v5.projects.renameUndo":"rename project","v5.projects.renameFailed":"The project could not be renamed. Try again.","v5.projects.nextDue":"Next deadline","v5.projects.nextTask":"Next task","v5.projects.allDone":"All done","v5.projects.allArchived":"Archived","v5.projects.overdue":"{count} overdue","v5.projects.countSummary":"{pending} to do, {completed} completed, {archived} archived","v5.projects.search":"Search projects","v5.projects.sort":"Sort","v5.projects.sort.pending":"To-do count","v5.projects.sort.name":"Project name","v5.projects.sort.due":"Next deadline","v5.projects.empty":"No project tasks yet","v5.projects.noResults":"No matching projects","v5.projects.clearSearch":"Clear search","v5.editor.descriptionPlaceholder":"Add a description…","v5.settings.license":"License","v5.planning.title":"Choose tasks for today","v5.planning.done":"Done","v5.planning.add":"Add to today","v5.planning.remove":"Remove"}}}</script>
+<script src="./app/domain/task-input.js?v=5.2.0"></script>
+<script src="./app/domain/task-dates.js?v=5.2.0"></script>
+<script src="./app/platform/local-calendar.js?v=5.2.0"></script>
+<script src="./app/infrastructure/task-repository.js?v=5.2.0"></script>
+<script src="./resources/workbench.js?v=5.2.0"></script>
+<script src="./app/features/review.js?v=5.2.0"></script>
+<script src="./app/application.js?v=5.2.0"></script>
+<script>
+    (function() {
+        const CONFIG = {
+            APP: {
+                VERSION: '5.2.0'
+            },
+            DB: {
+                NAME: 'TaskTrackerDB',
+                VERSION: 2,
+                STORES: {
+                    TASKS: 'tasks',
+                    CONFIG: 'config'
+                }
+            },
+            STORAGE: {
+                THEME: 'theme',
+                ACCENT: 'accent',
+                LANG: 'language',
+                NOTIFICATIONS: 'notifications_enabled',
+                NOTIFIED_TASKS: 'notifiedTasks',
+                LAST_BACKUP_AT: 'lastBackupAt',
+                LAST_TASK_BACKUP: 'lastTaskBackup',
+                SAVED_VIEWS: 'savedViews',
+                TOOLS_DRAWER_COLLAPSED: 'toolsDrawerCollapsed',
+                TOOLS_DRAWER_PINNED: 'toolsDrawerPinned',
+                PROBE: '__task_tracer_storage_probe__'
+            },
+            UI: {
+                CLASSES: {
+                    SHOW: 'show',
+                    OPEN: 'open',
+                    ACTIVE: 'active',
+                    SELECTED: 'selected',
+                    EXPANDED: 'expanded',
+                    COMPLETED: 'completed',
+                    ANIMATE: 'animate-complete'
+                },
+                STATUS: {
+                    SAFE: 'status-safe',
+                    WARNING: 'status-warning',
+                    DANGER: 'status-danger',
+                    OVERDUE: 'status-overdue',
+                    NO_DEADLINE: 'status-no-deadline',
+                    COMPLETED: 'status-completed',
+                    ARCHIVED: 'status-archived'
+                },
+                THEME: {
+                    TRANSITIONING: 'theme-transitioning',
+                    LIGHT_COLOR: '#f7f8f6',
+                    DARK_COLOR: '#181c19',
+                    SWITCH_DURATION: 260
+                }
+            },
+            DEFAULTS: {
+                LANG: 'zh-CN',
+                TIME: '23:59',
+                ORDER_STEP: 10000,
+                MANUAL_ORDER_STEP: 1000
+            },
+            I18N: {
+                RESOURCE_PATH: './resources',
+                RESOURCE_VERSION: '5.2'
+            },
+            CAPTURE: {
+                INBOX_PROJECT: '',
+                MAX_TEXT_LENGTH: 300,
+                PARAMS: ['capture', 'add', 'save', 'title', 'text', 'url']
+            },
+            BACKUP: {
+                FILE_VERSION: '2.4',
+                REMINDER_DAYS: 7,
+                RECOVERY_LIMIT: 10,
+                RECOVERY_INTERVAL_MS: 300000
+            },
+            NOTIFICATIONS: {
+                DEFAULT_OFFSET_MINUTES: 15,
+                DELIVERY_WINDOW_MINUTES: 30,
+                SNOOZE_MINUTES: 10,
+                ICON: './fav/android-chrome-192x192.png',
+                VIBRATE_PATTERN: [200, 100, 200],
+                SOUND_SRC: 'data:audio/mp3;base64,//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDiMcCBcH3Cc+CDv/7cQBMNJjoDbET4QOgle43gQTAALnipZOg+RIqJQ0YMHgpGYFYxP7yY0/w/iUcaQ2YMaVD+p31Z7//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDiMcCBcH3Cc+CDv/7cQBMNJjoDbET4QOgle43gQTAALnipZOg+RIqJQ0YMHgpGYFYxP7yY0/w/iUcaQ2YMaVD+p31Z7'
+            },
+            DRAG: {
+                EDGE_SCROLL_THRESHOLD: 80,
+                MAX_SCROLL_SPEED: 12,
+                MIN_SCROLL_SPEED: 2
+            },
+            LANGUAGES: [
+                { code: 'zh-CN', name: '简体中文' },
+                { code: 'en', name: 'English' }
+            ]
+        };
+        window.TaskTracer.start(CONFIG, {
+            taskInput: window.TaskTracer.TaskInput,
+            taskDates: window.TaskTracer.TaskDates,
+            localCalendar: window.TaskTracer.LocalCalendar,
+            createTaskRepository: window.TaskTracer.createTaskRepository,
+            createWorkbench: window.TaskTracer.createWorkbench,
+            createReviewView: window.TaskTracer.createReviewView
+        });
+    })();
+</script>
+</body>
+</html>

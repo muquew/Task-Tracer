@@ -1,0 +1,2856 @@
+"""End-to-end Chromium smoke scenarios for the built application."""
+from __future__ import annotations
+from tests.support.paths import (
+    REPO_ROOT,
+    SOURCE_HTML,
+    SITE_ROOT,
+    input_path,
+    source_path,
+    read_application_source,
+    read_source_html,
+)
+import contextlib
+from datetime import datetime, timedelta, timezone
+import http.server
+import json
+import os
+import re
+import socket
+import socketserver
+import sys
+import tempfile
+import threading
+import time
+from pathlib import Path
+from typing import Any, Iterator
+from urllib.parse import urlencode, urljoin, urlparse
+from playwright.sync_api import (
+    Browser,
+    BrowserContext,
+    Locator,
+    Page,
+    Playwright,
+    Request,
+    TimeoutError,
+    expect,
+    sync_playwright,
+)
+
+from tests.support.browser import (
+    DEFAULT_HOST,
+    REPO_ROOT,
+    SW_CACHE_NAME,
+    _preference_origin,
+    _return_from_preference,
+    add_task,
+    assert_accessibility_baseline,
+    assert_backup_payload_integrity,
+    assert_empty_task_list,
+    assert_pwa_resources,
+    assert_service_worker_and_offline_load,
+    assert_task_action_focus_visible,
+    assert_theme_chrome,
+    browser_launch_options,
+    calendar_month_title,
+    clear_app_data,
+    click_batch_action,
+    click_task_action,
+    close_mobile_filters,
+    close_workspace_navigation,
+    complete_task,
+    delete_task,
+    discard_task_draft,
+    due_fields_from_now,
+    edit_task,
+    ensure_capture,
+    ensure_conda_library_path,
+    ensure_task_control_workspace,
+    enter_batch_mode,
+    future_date,
+    get_task_records,
+    help_entry,
+    import_payload_replace,
+    is_workbench_v5,
+    iso_minutes_from_now,
+    navigate_workbench,
+    open_help,
+    open_settings,
+    open_task_editor,
+    read_service_worker_cache_name,
+    return_to_task_workspace,
+    reveal_batch_action,
+    reveal_filters,
+    reveal_task_action,
+    reveal_task_field,
+    reveal_workspace_control,
+    select_accent_preference,
+    select_filter,
+    select_language,
+    select_project,
+    select_sort,
+    select_theme_preference,
+    select_view,
+    select_visible_option,
+    snooze_task_reminder,
+    stable_fnv1a32,
+    stable_json,
+    task_locator,
+    visible_task_names,
+    wait_for_app_ready,
+    wait_for_notification,
+    workbench_screen,
+)
+from tests.support.http import StaticHandler, ThreadingHTTPServer, reserve_port, local_server
+from tests.support.scenarios import (
+    exercise_export_backup,
+    exercise_import,
+    exercise_language,
+    exercise_workspace_navigation,
+)
+
+def assert_installability_in_regular_profile(playwright: Playwright, url: str) -> None:
+    with tempfile.TemporaryDirectory(prefix="task-tracer-pwa-") as profile:
+        context = playwright.chromium.launch_persistent_context(
+            profile, **browser_launch_options()
+        )
+        try:
+            page = context.pages[0] if context.pages else context.new_page()
+            clear_app_data(page, url)
+            assert_service_worker_and_offline_load(context, page)
+            assert_pwa_installability(page)
+        finally:
+            context.close()
+
+def assert_no_page_errors(errors: list[str]) -> None:
+    if errors:
+        joined = "\n".join(f"- {error}" for error in errors)
+        raise AssertionError(f"Browser page errors were raised:\n{joined}")
+
+def is_ignored_resource(url: str) -> bool:
+    path = urlparse(url).path
+    return path.startswith("/_vercel/") or path == "/favicon.ico"
+
+def describe_request_failure(request: Request) -> str:
+    failure = request.failure
+    if isinstance(failure, str):
+        error_text = failure
+    elif isinstance(failure, dict):
+        error_text = str(failure.get("errorText", "unknown"))
+    else:
+        error_text = "unknown"
+
+    return f"{error_text} {request.url}"
+
+def get_origin(url: str) -> str:
+    parsed = urlparse(url)
+    return f"{parsed.scheme}://{parsed.netloc}"
+
+def future_js_weekday(js_weekday: int, min_days: int = 1) -> str:
+    today = datetime.now(timezone.utc).date()
+    for offset in range(min_days, min_days + 8):
+        target = today + timedelta(days=offset)
+        if (target.weekday() + 1) % 7 == js_weekday:
+            return target.strftime("%Y-%m-%d")
+    raise AssertionError(f"Could not resolve future weekday: {js_weekday}")
+
+def wait_for_class(page: Page, selector: str, class_name: str, present: bool = True) -> None:
+    page.wait_for_function(
+        """({ selector, className, present }) => {
+            const el = document.querySelector(selector);
+            return Boolean(el) && el.classList.contains(className) === present;
+        }""",
+        arg={"selector": selector, "className": class_name, "present": present},
+    )
+
+def press_control_shortcut(page: Page, key: str) -> None:
+    page.keyboard.down("Control")
+    page.keyboard.press(key)
+    page.keyboard.up("Control")
+
+def exercise_shortcuts_and_modal_closing(page: Page) -> None:
+    page.locator("body").click(position={"x": 10, "y": 10})
+    press_control_shortcut(page, "k")
+    expect(page.locator("#searchInput")).to_be_focused()
+    page.locator("#searchInput").fill("temporary query")
+    expect(page.locator("#clearSearchBtn")).to_be_visible()
+    page.keyboard.press("Escape")
+    expect(page.locator("#searchInput")).to_have_value("")
+    expect(page.locator("#clearSearchBtn")).to_be_hidden()
+    page.keyboard.press("Escape")
+
+    press_control_shortcut(page, "i")
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.keyboard.press("Escape")
+    expect(page.locator("#taskModal")).to_be_hidden()
+
+    open_task_editor(page)
+    expect(page.locator("#taskModal")).to_be_visible()
+    assert_accessibility_baseline(page, "new-task modal")
+    exercise_modal_focus_trap(page)
+    page.locator("#cancelBtn").click()
+    discard_task_draft(page)
+    expect(page.locator("#taskModal")).to_be_hidden()
+
+    open_task_editor(page)
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#closeModalBtn").click()
+    expect(page.locator("#taskModal")).to_be_hidden()
+
+    open_task_editor(page)
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#taskModal").click(position={"x": 5, "y": 5})
+    expect(page.locator("#taskModal")).to_be_hidden()
+
+    press_control_shortcut(page, "m")
+    expect(page.locator('#settingsWorkspace')).to_be_visible()
+    page.keyboard.press("Escape")
+    expect(page.locator('#settingsWorkspace')).to_be_hidden()
+    expect(page.locator('#tasksWorkspace')).to_be_visible()
+
+def exercise_keyboard_navigation_patterns(page: Page) -> None:
+    # Primary pages are native buttons: every destination is reachable by Tab,
+    # and Enter/Space activates it without a partially retained tablist model.
+    page.locator("#viewTab-list").focus()
+    page.keyboard.press("Tab")
+    expect(page.locator("#viewTab-calendar")).to_be_focused()
+    page.keyboard.press("Enter")
+    expect(page.locator("#viewTab-calendar")).to_have_attribute("aria-current", "page")
+    expect(page.locator("#taskList")).to_have_attribute("aria-labelledby", "viewTab-calendar")
+    page.keyboard.press("Tab")
+    expect(page.locator("#viewTab-timeline")).to_be_focused()
+    page.keyboard.press("Space")
+    expect(page.locator("#viewTab-timeline")).to_have_attribute("aria-current", "page")
+    if is_workbench_v5(page):
+        primary = ('#mobileTodayBtn', '#mobileTasksBtn', '#mobileProjectsBtn', '#mobileReviewBtn') if page.locator('#mobileTodayBtn').is_visible() else ('#workspaceTodayBtn', '#workspaceAllTasks', '#workspaceProjectsBtn', '#viewTab-stats')
+        page.locator(primary[0]).focus()
+        for selector in primary[1:]:
+            page.keyboard.press('Tab')
+            expect(page.locator(selector)).to_be_focused()
+        review_entry = page.locator(primary[-1])
+    else:
+        page.keyboard.press('Tab')
+        review_entry = page.locator('#viewTab-stats')
+        expect(review_entry).to_be_focused()
+    page.keyboard.press("Enter")
+    expect(review_entry).to_have_attribute('aria-current', 'page')
+    select_view(page, 'list')
+
+    reveal_filters(page)
+    page.locator("#sortBtn").focus()
+    page.keyboard.press("ArrowDown")
+    wait_for_class(page, "#sortDropdown", "show")
+    expect(page.locator('#sortDropdown .dropdown-option[data-sort="smart"]')).to_be_focused()
+    page.keyboard.press("ArrowDown")
+    expect(page.locator('#sortDropdown .dropdown-option[data-sort="created-desc"]')).to_be_focused()
+    page.keyboard.press("Enter")
+    expect(page.locator("#sortBtn")).to_be_focused()
+    expect(page.locator("#sortBtn")).to_have_attribute("aria-expanded", "false")
+    expect(page.locator('#sortDropdown .dropdown-option[data-sort="created-desc"]')).to_have_attribute("aria-selected", "true")
+
+    page.locator("#filterBtn").focus()
+    page.keyboard.press("ArrowDown")
+    wait_for_class(page, "#filterDropdown", "show")
+    page.keyboard.press("Escape")
+    expect(page.locator("#filterBtn")).to_be_focused()
+    expect(page.locator("#filterBtn")).to_have_attribute("aria-expanded", "false")
+
+    settings_entry = reveal_workspace_control(page, '#workspaceSettingsBtn') if is_workbench_v5(page) else page.locator('#openMenuBtn')
+    settings_entry.focus()
+    page.keyboard.press("Enter")
+    expect(page.locator('#settingsWorkspace')).to_be_visible()
+    expect(page.locator('#settingsBackBtn')).to_be_visible()
+    expect(page.locator('#settingsWorkspace')).not_to_have_role('dialog')
+    expect(page.locator('#menu [role="menuitem"]')).to_have_count(0)
+    open_settings(page, 'appearance')
+    page.locator('#themeToggleBtn').focus()
+    page.keyboard.press('Tab')
+    expect(page.locator('#languageSelect')).to_be_focused()
+    page.locator('#settingsBackBtn').focus()
+    page.keyboard.press("Escape")
+    expect(page.locator('#settingsWorkspace')).to_be_hidden()
+    if is_workbench_v5(page):
+        expect(settings_entry if settings_entry.is_visible() else page.locator('#workspaceTitle')).to_be_focused()
+    else:
+        expect(page.locator('#openMenuBtn')).to_be_focused()
+    open_settings(page, 'appearance')
+    language_select = reveal_workspace_control(page, '#languageSelect')
+    language_select.focus()
+    expect(language_select).to_be_focused()
+    expect(language_select).to_have_role('combobox')
+    select_sort(page, "smart")
+
+def exercise_custom_select_escape_keeps_modal_open(page: Page) -> None:
+    before = get_task_records(page)
+    open_task_editor(page, independent=True)
+    expect(page.locator("#taskModal")).to_be_visible()
+    if is_workbench_v5(page):
+        # New tasks are undated in 5.0. This dropdown scenario explicitly
+        # opts into a deadline, where reminders are available to the user.
+        page.locator('#noDeadline').uncheck()
+        page.locator('#dueDate').fill(future_date(1))
+    reveal_task_field(page, '#reminderOffset')
+    expect(page.locator("#reminderOffset-custom-button")).to_have_attribute("aria-label", re.compile("提醒设置.*15|Reminder.*15", re.I))
+    page.locator("#reminderOffset-custom-button").click()
+    page.wait_for_function(
+        "() => document.querySelector('#reminderOffset')?.closest('.custom-select')?.classList.contains('open')"
+    )
+    page.keyboard.press("Escape")
+    expect(page.locator("#taskModal")).to_be_visible()
+    expect(page.locator("#reminderOffset-custom-button")).to_be_focused()
+    select_is_open = page.evaluate(
+        "() => document.querySelector('#reminderOffset')?.closest('.custom-select')?.classList.contains('open')"
+    )
+    if select_is_open:
+        raise AssertionError("Custom select stayed open after Escape")
+    page.keyboard.press("Escape")
+    if is_workbench_v5(page):
+        discard_task_draft(page)
+    expect(page.locator("#taskModal")).to_be_hidden()
+    assert get_task_records(page) == before, 'Escaping the reminder dropdown and discarding its dated draft changed stored tasks'
+
+def exercise_modal_focus_trap(page: Page) -> None:
+    expect(page.locator("#taskName")).to_be_focused()
+    page.keyboard.press("Shift+Tab")
+    expect(page.locator("#closeModalBtn")).to_be_focused()
+    page.keyboard.press("Tab")
+    expect(page.locator("#taskName")).to_be_focused()
+
+    page.locator("#submitBtn").focus()
+    page.keyboard.press("Tab")
+    expect(page.locator("#closeModalBtn")).to_be_focused()
+
+    page.locator("#taskName").focus()
+    press_control_shortcut(page, "k")
+    expect(page.locator("#taskName")).to_be_focused()
+    page.locator("#taskName").fill("Shortcut selection source")
+    press_control_shortcut(page, "a")
+    page.keyboard.type("Shortcut selection target")
+    expect(page.locator("#taskName")).to_have_value("Shortcut selection target")
+
+def exercise_task_name_validation(page: Page) -> None:
+    open_task_editor(page)
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#taskName").fill("   ")
+    page.locator("#submitBtn").click()
+    wait_for_notification(page, re.compile("请输入任务名称|enter a task name", re.I))
+    expect(page.locator("#taskModal")).to_be_visible()
+    expect(page.locator("#taskName")).to_be_focused()
+    expect(page.locator(".task-item")).to_have_count(0)
+    page.locator("#cancelBtn").click()
+    discard_task_draft(page)
+    expect(page.locator("#taskModal")).to_be_hidden()
+
+def exercise_empty_state_actions(page: Page) -> None:
+    before = get_task_records(page)
+    open_settings(page, 'cleanup')
+    if page.locator('#settingsWorkspace').count():
+        eligible = [task for task in before if task.get('completed') and not task.get('archived')]
+        assert not eligible, f'Empty maintenance fixture has completed, unarchived tasks: {eligible}'
+        expect(page.locator('#clearCompletedBtn')).to_be_disabled()
+        expect(page.locator('#clearCompletedBtn')).to_have_attribute('aria-disabled', 'true')
+        language = page.locator('html').get_attribute('lang')
+        empty_status = json.loads((input_path('resources' + '/' + f'{language}.json')).read_text())['dataReview']['maintenanceEmpty']
+        expect(page.locator('#maintenanceStatus')).to_have_text(empty_status)
+        expect(page.locator('#taskModal')).to_be_hidden()
+        assert get_task_records(page) == before, 'Empty maintenance navigation changed task records'
+    else:
+        page.locator("#clearCompletedBtn").click()
+        wait_for_notification(page, re.compile("没有已完成的任务可清除|no completed tasks", re.I))
+    page.keyboard.press("Escape")
+    if page.locator('#settingsWorkspace').count():
+        expect(page.locator('#taskModal')).to_be_hidden()
+        assert get_task_records(page) == before, 'Leaving empty maintenance changed task records'
+
+def exercise_search_empty_state(page: Page, query: str) -> None:
+    page.locator("#searchInput").fill(query)
+    page.wait_for_timeout(350)
+    expect(page.locator("#taskList .empty-state")).to_be_visible()
+    expect(page.locator(".task-item")).to_have_count(0)
+    clear_search(page)
+
+def exercise_subtask_draft_editor(page: Page) -> None:
+    before = get_task_records(page)
+    open_task_editor(page)
+    expect(page.locator("#taskModal")).to_be_visible()
+    reveal_task_field(page, '#subtaskInput').fill('Draft subtask')
+    page.locator("#addSubtaskBtn").click()
+    page.locator("#subtaskInput").fill("Subtask to delete")
+    page.locator("#addSubtaskBtn").click()
+    expect(page.locator("#subtaskListPreview .subtask-preview-item")).to_have_count(2)
+    assert_accessibility_baseline(page, "subtask draft editor")
+
+    for index in range(10):
+        expected_text = f"Edited draft subtask {index + 1}"
+        page.locator("#subtaskListPreview .subtask-preview-text").first.focus()
+        page.keyboard.press("Enter")
+        page.locator("#subtaskListPreview .subtask-edit-input").fill(expected_text)
+        page.keyboard.press("Enter")
+        expect(page.locator("#subtaskListPreview .subtask-preview-text").first).to_have_text(expected_text)
+
+    page.locator("#subtaskListPreview .subtask-delete-btn").last.click()
+    expect(page.locator("#subtaskListPreview .subtask-preview-item")).to_have_count(1)
+    page.locator("#cancelBtn").click()
+    discard_task_draft(page)
+    expect(page.locator("#taskModal")).to_be_hidden()
+
+    assert get_task_records(page) == before, 'Editing and discarding inline subtask drafts changed saved task records'
+
+def exercise_quick_add(page: Page, task_name: str) -> None:
+    return_to_task_workspace(page)
+    ensure_capture(page)
+    page.locator("#quickAddInput").fill(f"tomorrow 20:00 {task_name} #quick /SmokeQuick")
+    ensure_capture(page)
+    page.locator("#quickAddInput").press("Enter")
+    expect(task_locator(page, task_name)).to_have_count(1)
+    record = page.evaluate(
+        """async (taskName) => {
+            const request = indexedDB.open('TaskTrackerDB', 2);
+            return await new Promise((resolve, reject) => {
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readonly');
+                    const getAll = tx.objectStore('tasks').getAll();
+                    getAll.onsuccess = () => {
+                        const task = getAll.result.find((item) => item.name === taskName);
+                        db.close();
+                        resolve(task || null);
+                    };
+                    getAll.onerror = () => reject(getAll.error);
+                };
+            });
+        }""",
+        task_name,
+    )
+    if not record:
+        raise AssertionError("Quick add did not create a task record")
+    if record["project"] != "SmokeQuick" or "quick" not in record["tags"]:
+        raise AssertionError(f"Quick add did not parse project/tags: {record}")
+    if record["dueLocalTime"] != "20:00" or not record["dueLocalDate"]:
+        raise AssertionError(f"Quick add did not parse due date/time: {record}")
+    delete_task_records_by_name(page, task_name)
+
+def exercise_quick_capture_entries(page: Page, base_url: str, prefix: str) -> None:
+    clear_app_data(page, base_url)
+    page.goto(urljoin(base_url, "?capture=1"), wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    page.wait_for_function("() => document.activeElement && document.activeElement.id === 'quickAddInput'")
+    if page.evaluate("location.search") != "":
+        raise AssertionError("Capture URL parameters were not cleared")
+    if get_task_records(page):
+        raise AssertionError("Capture focus should not create a task")
+
+    prefill_name = f"{prefix} Prefill"
+    page.goto(urljoin(base_url, "?" + urlencode({"add": prefill_name})), wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    expect(page.locator("#quickAddInput")).to_have_value(prefill_name)
+    page.wait_for_function("() => document.activeElement && document.activeElement.id === 'quickAddInput'")
+    if page.evaluate("location.search") != "":
+        raise AssertionError("Add URL parameters were not cleared")
+    if get_task_records(page):
+        raise AssertionError("Prefill capture should wait for user confirmation")
+
+    # Discard the already-checked prefill before navigating to an independent capture.
+    # Pending quick-add text now correctly requests a browser departure warning.
+    ensure_capture(page)
+    page.locator("#quickAddInput").fill("")
+    expect(page.locator("#quickAddInput")).to_have_value("")
+    if get_task_records(page):
+        raise AssertionError("Discarding an unsaved prefill unexpectedly created a task")
+
+    auto_name = f"{prefix} Auto Save"
+    page.goto(urljoin(base_url, "?" + urlencode({"add": auto_name, "save": "1"})), wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    return_to_task_workspace(page)
+    expect(task_locator(page, auto_name)).to_have_count(1)
+    records = [task for task in get_task_records(page) if task.get("name") == auto_name]
+    default_project = "" if is_workbench_v5(page) else "Inbox"
+    if len(records) != 1 or records[0].get("project") != default_project:
+        raise AssertionError(f"Auto capture should create one task in its default project {default_project!r}: {records}")
+    if page.evaluate("location.search") != "":
+        raise AssertionError("Auto-save capture URL parameters were not cleared")
+    page.reload(wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    records_after_reload = [task for task in get_task_records(page) if task.get("name") == auto_name]
+    if len(records_after_reload) != 1:
+        raise AssertionError(f"Auto capture repeated after reload: {records_after_reload}")
+
+    shared_title = f"{prefix} Shared Title"
+    shared_url = "https://example.com/article"
+    page.goto(
+        urljoin(base_url, "?" + urlencode({
+            "capture": "1",
+            "title": shared_title,
+            "text": "Shared body",
+            "url": shared_url,
+        })),
+        wait_until="domcontentloaded",
+    )
+    wait_for_app_ready(page)
+    expect(page.locator("#quickAddInput")).to_have_value(shared_title)
+    if page.evaluate("location.search") != "":
+        raise AssertionError("Share target URL parameters were not cleared")
+    ensure_capture(page)
+    page.locator("#quickAddInput").press("Enter")
+    return_to_task_workspace(page)
+    expect(task_locator(page, shared_title)).to_have_count(1)
+    shared_records = [task for task in get_task_records(page) if task.get("name") == shared_title]
+    if len(shared_records) != 1:
+        raise AssertionError(f"Share target capture should create one task: {shared_records}")
+    shared_record = shared_records[0]
+    if shared_record.get("project") != default_project:
+        raise AssertionError(f"Share target capture should retain the default project {default_project!r}: {shared_record}")
+    shared_description = shared_record.get("description") or ""
+    if "Shared body" not in shared_description or shared_url not in shared_description:
+        raise AssertionError(f"Share target capture did not preserve text/url in description: {shared_record}")
+    page.reload(wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    records_after_share_reload = [task for task in get_task_records(page) if task.get("name") == shared_title]
+    if len(records_after_share_reload) != 1:
+        raise AssertionError(f"Share target capture repeated after reload: {records_after_share_reload}")
+
+    replacement_name = f"{prefix} Manual Replacement"
+    page.goto(
+        urljoin(base_url, "?" + urlencode({
+            "capture": "1",
+            "title": f"{prefix} Ignored Share",
+            "text": "This shared body should not be attached",
+            "url": shared_url,
+        })),
+        wait_until="domcontentloaded",
+    )
+    wait_for_app_ready(page)
+    ensure_capture(page)
+    page.locator("#quickAddInput").fill(replacement_name)
+    ensure_capture(page)
+    page.locator("#quickAddInput").press("Enter")
+    return_to_task_workspace(page)
+    expect(task_locator(page, replacement_name)).to_have_count(1)
+    replacement_records = [task for task in get_task_records(page) if task.get("name") == replacement_name]
+    if len(replacement_records) != 1 or replacement_records[0].get("description"):
+        raise AssertionError(f"Replacing shared quick-add text should drop stale shared details: {replacement_records}")
+    clear_app_data(page, base_url)
+
+def exercise_project_tags(page: Page, alpha_name: str, beta_name: str) -> None:
+    return_to_task_workspace(page)
+    alpha = task_locator(page, alpha_name)
+    if page.locator('#workspaceSidebarScroll').count() and not alpha.locator('.project-chip').count():
+        expect(page.locator('#viewTab-list')).to_have_attribute('aria-current', 'page')
+        expect(page.locator('#searchInput')).to_have_value('')
+        record = get_task_record_by_name(page, alpha_name)
+        assert record.get('project') == 'Smoke Work', f'Implicit project context lost the task project: {record}'
+        group_label = alpha.evaluate("""node => {
+            let previous = node.previousElementSibling;
+            while (previous && !previous.classList.contains('task-group-header')) previous = previous.previousElementSibling;
+            return previous?.textContent.trim() || '';
+        }""")
+        title = page.locator('#workspaceTitle').inner_text().strip()
+        assert re.match(r'^Smoke Work\s*·\s*\S', group_label) or title == 'Smoke Work', \
+            f'The hidden project chip has no matching group or workspace context: {group_label!r}, {title!r}'
+    else:
+        expect(alpha.locator(".project-chip")).to_contain_text("Smoke Work")
+    expect(alpha.locator(".tag-chip").first).to_contain_text("#focus")
+    page.locator("#searchInput").fill("focus")
+    expect(task_locator(page, alpha_name)).to_have_count(1)
+    expect(task_locator(page, beta_name)).to_have_count(0)
+    expect(task_locator(page, alpha_name).locator('.project-chip')).to_contain_text('Smoke Work')
+    clear_search(page)
+    page.locator("#searchInput").fill("  Smoke Work focus  ")
+    expect(task_locator(page, alpha_name)).to_have_count(1)
+    expect(task_locator(page, beta_name)).to_have_count(0)
+    clear_search(page)
+    page.locator("#searchInput").fill("tag:focus")
+    expect(task_locator(page, alpha_name)).to_have_count(1)
+    expect(task_locator(page, beta_name)).to_have_count(0)
+    clear_search(page)
+    page.locator("#searchInput").fill("#docs project:work")
+    expect(task_locator(page, alpha_name)).to_have_count(1)
+    expect(task_locator(page, beta_name)).to_have_count(0)
+    clear_search(page)
+    page.locator("#searchInput").fill("due:tomorrow")
+    expect(task_locator(page, alpha_name)).to_have_count(0)
+    expect(task_locator(page, beta_name)).to_have_count(1)
+    clear_search(page)
+    select_project(page, "Smoke Work")
+    expect(task_locator(page, alpha_name)).to_have_count(1)
+    expect(task_locator(page, beta_name)).to_have_count(0)
+    select_project(page, "all")
+
+def exercise_command_palette(page: Page, alpha_name: str, beta_name: str) -> None:
+    language = page.locator('html').get_attribute('lang') or 'zh-CN'
+    commands = json.loads((input_path('resources' + '/' + f'{language}.json')).read_text())['commandPalette']['commands']
+    page.keyboard.press("Control+P")
+    expect(page.locator("#commandPalette")).to_be_visible()
+    page.locator("#commandPaletteInput").fill("calendar")
+    page.keyboard.press("Enter")
+    expect(page.locator("#commandPalette")).to_be_hidden()
+    expect(page.locator('#viewTab-calendar')).to_have_attribute("aria-current", "page")
+    expect(page.locator('#viewTab-calendar')).to_be_focused()
+
+    page.keyboard.press("Control+P")
+    page.locator("#commandPaletteInput").fill("Smoke Work")
+    page.keyboard.press("Enter")
+    expect(page.locator("#currentProjectLabel")).to_have_text("Smoke Work")
+    expect(task_locator(page, alpha_name)).to_have_count(1)
+    expect(task_locator(page, beta_name)).to_have_count(0)
+
+    page.keyboard.press("Control+P")
+    page.locator("#commandPaletteInput").fill(commands["newTask"])
+    page.keyboard.press("Enter")
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#cancelBtn").click()
+
+    page.keyboard.press("Control+P")
+    page.locator("#commandPaletteInput").fill("backup")
+    expect(page.locator("#commandPaletteList .command-item").first).to_contain_text(commands["exportBackup"])
+    page.keyboard.press("Escape")
+    expect(page.locator("#commandPalette")).to_be_hidden()
+
+    page.locator("#viewTab-list").click()
+    select_project(page, "all")
+
+def exercise_smart_views_batch_focus_undo(page: Page, alpha_name: str, beta_name: str, overdue_name: str) -> None:
+    language = page.locator('html').get_attribute('lang')
+    saved_message = json.loads((input_path('resources' + '/' + f'{language}.json')).read_text())['savedViews']['saved']
+    select_project(page, "all")
+    select_filter(page, "active")
+    clear_search(page)
+    if page.locator('#workspaceSidebarScroll').count():
+        expect(page.locator('#savedViewsBar')).to_have_js_property('hidden', True)
+        expect(page.locator('#savedViewsEmptyHint')).to_have_count(0)
+    else:
+        expect(page.locator("#savedViewsBar")).to_be_visible()
+        expect(page.locator('#savedViewsEmptyHint')).to_be_visible()
+    expect(page.locator('#savedViewsList .saved-view-chip')).to_have_count(0)
+
+    page.locator("#saveSmartViewBtn").click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#submitBtn").click()
+    wait_for_notification(page, saved_message)
+    if page.locator('#workspaceSidebarScroll').count():
+        expect(page.locator('#savedViewsBar')).to_have_js_property('hidden', False)
+    expect(page.locator("#savedViewsList .saved-view-chip")).to_have_count(1)
+    expect(page.locator("#savedViewsList .saved-view-meta")).to_have_count(0)
+    reveal_workspace_control(page, page.locator("#savedViewsList .saved-view-delete").first).click()
+    expect(page.locator("#savedViewDeleteConfirm")).to_be_visible()
+    page.locator("#submitBtn").click()
+    wait_for_notification(page, re.compile("删除|deleted", re.I))
+    if page.locator('#workspaceSidebarScroll').count():
+        expect(page.locator('#savedViewsBar')).to_have_js_property('hidden', True)
+        expect(page.locator('#savedViewsEmptyHint')).to_have_count(0)
+    else:
+        expect(page.locator("#savedViewsBar")).to_be_visible()
+        expect(page.locator('#savedViewsEmptyHint')).to_be_visible()
+    expect(page.locator('#savedViewsList .saved-view-chip')).to_have_count(0)
+
+    page.locator("#searchInput").fill("tag:deadline")
+    expect(task_locator(page, beta_name)).to_have_count(1)
+    expect(task_locator(page, alpha_name)).to_have_count(0)
+    page.locator("#saveSmartViewBtn").click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#savedViewNameInput").fill("Smoke Deadline View")
+    page.locator("#submitBtn").click()
+    wait_for_notification(page, saved_message)
+    expect(page.locator("#savedViewsList .saved-view-chip")).to_have_count(1)
+    expect(page.locator("#savedViewsList .saved-view-meta")).to_have_count(1)
+    chip = page.locator('#savedViewsList .saved-view-chip').first
+    if page.locator('#workspaceSidebarScroll').count():
+        reveal_workspace_control(page, chip.locator('.saved-view-apply'))
+        chip.scroll_into_view_if_needed()
+        expect(chip).to_be_visible()
+        expect(chip.locator('.saved-view-name')).to_have_text('Smoke Deadline View')
+        translations = json.loads((input_path('resources' + '/' + f'{language}.json')).read_text())
+        expected_meta = ' · '.join((translations['projects']['all'], translations['filters']['active'], translations['views']['list']))
+        expect(chip.locator('.saved-view-meta')).to_have_text(expected_meta)
+        geometry = chip.evaluate("""node => {
+            const box = element => {
+                const r = element.getBoundingClientRect();
+                return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height,
+                    scrollWidth:element.scrollWidth,clientWidth:element.clientWidth,
+                    scrollHeight:element.scrollHeight,clientHeight:element.clientHeight};
+            };
+            return {chip:box(node),apply:box(node.querySelector('.saved-view-apply')),
+                remove:box(node.querySelector('.saved-view-delete')),name:box(node.querySelector('.saved-view-name')),
+                meta:box(node.querySelector('.saved-view-meta'))};
+        }""")
+        for name, box in geometry.items():
+            assert box['width'] > 0 and box['height'] > 0, f'Saved view {name} has no visible area: {geometry}'
+            assert box['scrollWidth'] <= box['clientWidth'] + 1 and box['scrollHeight'] <= box['clientHeight'] + 1, \
+                f'Saved view {name} clips or overflows its content: {geometry}'
+        for name, parent in (('apply', 'chip'), ('remove', 'chip'), ('name', 'apply'), ('meta', 'apply')):
+            box, bounds = geometry[name], geometry[parent]
+            assert (box['left'] >= bounds['left'] - 1 and box['right'] <= bounds['right'] + 1
+                    and box['top'] >= bounds['top'] - 1 and box['bottom'] <= bounds['bottom'] + 1), \
+                f'Saved view {name} extends outside {parent}: {geometry}'
+        apply, remove = geometry['apply'], geometry['remove']
+        overlap_width = min(apply['right'], remove['right']) - max(apply['left'], remove['left'])
+        overlap_height = min(apply['bottom'], remove['bottom']) - max(apply['top'], remove['top'])
+        assert overlap_width <= 1 or overlap_height <= 1, f'Saved view apply and delete buttons overlap: {geometry}'
+        close_workspace_navigation(page)
+    else:
+        chip_box = chip.bounding_box()
+        if not chip_box or chip_box["height"] > 44:
+            raise AssertionError(f"Saved smart view chip should stay compact: {chip_box}")
+    clear_search(page)
+    expect(task_locator(page, alpha_name)).to_have_count(1)
+    reveal_workspace_control(page, page.locator("#savedViewsList .saved-view-apply").first).click()
+    expect(page.locator("#searchInput")).to_have_value("tag:deadline")
+    expect(task_locator(page, beta_name)).to_have_count(1)
+    expect(task_locator(page, alpha_name)).to_have_count(0)
+
+    clear_search(page)
+    enter_batch_mode(page)
+    expect(page.locator("#batchToolbar")).to_be_visible()
+    expect(page.locator("#batchModeBtn")).to_have_attribute("aria-pressed", "true")
+    page.locator("#batchSelectVisibleBtn").click()
+    expect(page.locator("#batchSelectionSummary")).to_contain_text(re.compile(r"3|三个|three", re.I))
+    click_batch_action(page, 'focus')
+    wait_for_notification(page, re.compile("今日|today", re.I))
+    for name in (alpha_name, beta_name, overdue_name):
+        record = get_task_record_by_name(page, name)
+        if not record.get("focusDate"):
+            raise AssertionError(f"Batch add to today plan did not set focusDate for {name}: {record}")
+    expect(page.locator("#undoBtn")).to_be_enabled()
+    expect(page.locator("#undoBtn")).to_have_attribute("aria-label", re.compile("撤销|Undo", re.I))
+    page.locator("#undoBtn").click()
+    wait_for_notification(page, re.compile("撤销|Undone", re.I))
+    for name in (alpha_name, beta_name, overdue_name):
+        record = get_task_record_by_name(page, name)
+        if record.get("focusDate"):
+            raise AssertionError(f"Undo did not restore focusDate for {name}: {record}")
+
+    expect(page.locator("#batchToolbar")).to_be_visible()
+    page.locator("#exitBatchModeBtn").click()
+    expect(page.locator("#batchToolbar")).to_be_hidden()
+    expect(page.locator("#batchModeBtn")).to_have_attribute("aria-pressed", "false")
+    click_task_action(task_locator(page, beta_name), 'focus')
+    wait_for_notification(page, re.compile("今日|today", re.I))
+    assert_task_action_focus_visible(page)
+    reveal_workspace_control(page, '#focusModeToggleBtn').click()
+    expect(page.locator("#focusModeBar")).to_be_visible()
+    expect(page.locator("#focusModeToggleBtn")).to_have_attribute("aria-pressed", "true")
+    expect(task_locator(page, beta_name)).to_have_count(1)
+    expect(task_locator(page, alpha_name)).to_have_count(0)
+    page.locator("#exitFocusModeBtn").click()
+    expect(page.locator("#focusModeBar")).to_be_hidden()
+    expect(page.locator("#focusModeToggleBtn")).to_have_attribute("aria-pressed", "false")
+
+def search_task(page: Page, task_name: str) -> None:
+    return_to_task_workspace(page)
+    page.locator("#searchInput").fill(task_name)
+    expect(task_locator(page, task_name)).to_have_count(1)
+
+def clear_search(page: Page) -> None:
+    return_to_task_workspace(page)
+    if page.locator("#clearSearchBtn").is_visible():
+        page.locator("#clearSearchBtn").click()
+    else:
+        page.locator("#searchInput").fill("")
+    page.wait_for_timeout(350)
+
+def put_task_record(page: Page, task: dict[str, Any]) -> None:
+    page.evaluate(
+        """async (task) => {
+            await new Promise((resolve, reject) => {
+                const request = indexedDB.open('TaskTrackerDB', 2);
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readwrite');
+                    tx.objectStore('tasks').put(task);
+                    tx.oncomplete = () => {
+                        db.close();
+                        resolve();
+                    };
+                    tx.onerror = () => reject(tx.error);
+                    tx.onabort = () => reject(tx.error);
+                };
+            });
+        }""",
+        task,
+    )
+    page.reload(wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+
+def add_overdue_task_record(page: Page, task_name: str, order: int) -> None:
+    now_ms = int(time.time() * 1000)
+    put_task_record(
+        page,
+        {
+            "id": now_ms + order,
+            "name": task_name,
+            "description": "Created directly to cover overdue state.",
+            **due_fields_from_now(-90),
+            "reminderOffset": -1,
+            "subtasks": [],
+            "completed": False,
+            "createdAt": iso_minutes_from_now(0),
+            "order": order,
+        },
+    )
+
+def cancel_delete_task(page: Page, task_name: str) -> None:
+    task = task_locator(page, task_name)
+    click_task_action(task.first, 'delete')
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#cancelBtn").click()
+    expect(task_locator(page, task_name)).to_have_count(1)
+
+def assert_task_order(page: Page, expected_names: list[str]) -> None:
+    actual_names = visible_task_names(page)
+    if actual_names != expected_names:
+        raise AssertionError(f"Expected task order {expected_names}, got {actual_names}")
+
+def exercise_task_action_menu_keyboard(page: Page, task: Locator) -> None:
+    trigger = task.locator('.task-more-toggle')
+    expect(trigger).to_have_count(1)
+    expect(trigger).to_have_attribute('aria-haspopup', 'menu')
+    trigger.focus()
+    trigger.press('Enter')
+    expect(trigger).to_have_attribute('aria-expanded', 'true')
+    menu = task.locator('.task-action-menu')
+    expect(menu).to_be_visible()
+    expect(menu).to_have_role('menu')
+    expect(trigger).to_have_attribute('aria-controls', menu.get_attribute('id'))
+    items = menu.locator('[role="menuitem"]:visible')
+    assert items.count() >= 2
+    expect(items.first).to_be_focused()
+    page.keyboard.press('ArrowDown')
+    expect(items.nth(1)).to_be_focused()
+    page.keyboard.press('End')
+    expect(items.last).to_be_focused()
+    page.keyboard.press('Home')
+    expect(items.first).to_be_focused()
+    assert_accessibility_baseline(page, 'task action menu')
+    page.keyboard.press('Escape')
+    expect(menu).to_be_hidden()
+    expect(trigger).to_have_attribute('aria-expanded', 'false')
+    expect(trigger).to_be_focused()
+
+def exercise_task_action_menu_viewport(page: Page) -> None:
+    """Keep the tail menu and its Delete pointer target visible without scrolling."""
+    assert get_task_records(page) == [], 'Task-menu geometry fixture requires the existing empty workspace'
+    select_view(page, 'list')
+    select_filter(page, 'all')
+    for index in range(18):
+        add_task(page, f'Task menu viewport {index + 1:02}', no_deadline=True)
+    expect(page.locator('#taskList .task-item')).to_have_count(18)
+    before = get_task_records(page)
+    original_viewport = page.viewport_size
+    language = page.locator('html').get_attribute('lang')
+    translations = json.loads((input_path('resources' + '/' + f'{language}.json')).read_text())
+    for viewport in ({'width': 1280, 'height': 720}, {'width': 390, 'height': 844}):
+        page.set_viewport_size(viewport)
+        task = page.locator('#taskList .task-item').last
+        trigger = task.locator('.task-more-toggle')
+        trigger.scroll_into_view_if_needed()
+        trigger.evaluate('node => window.scrollBy(0, node.getBoundingClientRect().bottom - innerHeight + 80)')
+        page.evaluate('() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))')
+        bottom = trigger.evaluate('node => node.getBoundingClientRect().bottom')
+        assert abs(bottom - (viewport['height'] - 80)) <= 2, f'Tail task did not reach the intended viewport edge: {bottom}, {viewport}'
+        trigger.click()
+        menu = task.locator('.task-action-menu')
+        expect(menu).to_be_visible()
+        expect(menu.locator('[role="menuitem"]:visible').first).to_be_focused()
+        geometry = menu.evaluate('node => { const r=node.getBoundingClientRect(); return {left:r.left, top:r.top, right:r.right, bottom:r.bottom, width:innerWidth, height:innerHeight}; }')
+        assert (geometry['left'] >= -1 and geometry['top'] >= -1
+                and geometry['right'] <= geometry['width'] + 1
+                and geometry['bottom'] <= geometry['height'] + 1), f'Tail task menu extends outside the viewport: {geometry}'
+        target = menu.locator('[data-action="delete"]').evaluate('''node => {
+            const r=node.getBoundingClientRect(); const x=r.left+r.width/2, y=r.top+r.height/2;
+            const hit=document.elementFromPoint(x,y);
+            return {x,y,hit:Boolean(hit && (node === hit || node.contains(hit)))};
+        }''')
+        assert target['hit'], f'Tail task Delete is not directly reachable by the pointer: {target}, {geometry}'
+        page.mouse.click(target['x'], target['y'])
+        expect(page.locator('#taskModal')).to_be_visible()
+        if page.locator('#workspaceSidebarScroll').count():
+            expect(page.locator('#modalTitle')).to_have_text(translations['craft']['deleteTaskTitle'])
+            expect(page.locator('#submitBtn')).to_have_text(translations['task']['actions']['delete'])
+            expect(page.locator('#confirm-message-text')).to_contain_text('Task menu viewport 18')
+        else:
+            expect(page.locator('#modalTitle')).to_have_text(translations['task']['actions']['delete'])
+        page.locator('#cancelBtn').click()
+        expect(page.locator('#taskModal')).to_be_hidden()
+        expect(menu).to_be_hidden()
+        expect(trigger).to_have_attribute('aria-expanded', 'false')
+        expect(trigger).to_be_focused()
+        assert get_task_records(page) == before, 'Opening or cancelling tail task Delete changed stored task records'
+        print(f'Task menu viewport passed: {viewport["width"]}px tail menu and Delete are directly visible; cancel preserves all 18 tasks', flush=True)
+    if original_viewport:
+        page.set_viewport_size(original_viewport)
+
+def exercise_edit_focus_restore(page: Page, task_name: str) -> None:
+    task = task_locator(page, task_name)
+    exercise_task_action_menu_keyboard(page, task.first)
+    more_button = task.first.locator('.task-more-toggle')
+    uses_action_menu = more_button.count() > 0
+    edit_button = reveal_task_action(task.first, 'edit')
+    edit_button.focus()
+    expect(edit_button).to_be_focused()
+    edit_button.click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#cancelBtn").click()
+    expect(page.locator("#taskModal")).to_be_hidden()
+    if uses_action_menu:
+        expect(more_button).to_be_focused()
+        expect(more_button).to_have_attribute('aria-expanded', 'false')
+    else:
+        expect(edit_button).to_be_focused()
+
+def exercise_subtasks(page: Page, task_name: str) -> None:
+    task = task_locator(page, task_name)
+    expect(task.locator(".subtasks-wrapper .progress-text")).to_contain_text("0/2")
+    task.locator(".subtask-summary-bar").click()
+    expect(task.locator(".subtasks-wrapper")).to_have_class(re.compile(r"(^|\s)expanded(\s|$)"))
+    expect(task.locator(".subtasks-wrapper .subtask-display-item")).to_have_count(2)
+    task.locator(".subtasks-wrapper .subtask-display-item").first.click()
+    expect(task.locator(".subtasks-wrapper .progress-text")).to_contain_text("1/2")
+    page.locator("#searchInput").fill("  Second   smoke subtask  ")
+    expect(task_locator(page, task_name)).to_have_count(1)
+    clear_search(page)
+
+def exercise_theme(page: Page) -> None:
+    before = page.locator('html').get_attribute('data-theme')
+    target = 'light' if before == 'dark' else 'dark'
+    select_theme_preference(page, target)
+    assert page.evaluate("localStorage.getItem('theme')") == target
+    assert_theme_chrome(page)
+
+def exercise_theme_fallback_transition(page: Page) -> None:
+    page.evaluate("""() => {
+        window.themeTestOriginalViewTransition = document.startViewTransition;
+        Object.defineProperty(document, 'startViewTransition', {configurable: true, value: undefined});
+    }""")
+    try:
+        before_tasks = get_task_records(page)
+        before = page.locator('html').get_attribute('data-theme')
+        target = 'light' if before == 'dark' else 'dark'
+        modern_settings = bool(page.locator('#settingsWorkspace').count())
+        if modern_settings:
+            return_to_task_workspace(page)
+            open_settings(page, 'appearance')
+        elif page.locator('#captureShelf').count():
+            open_settings(page, 'appearance')
+        select = reveal_workspace_control(page, '#themeToggleBtn')
+        select.focus()
+        if modern_settings:
+            select.select_option(target)
+            expect(select).to_have_value(target)
+            expect(page.locator('html')).to_have_attribute('data-theme', target)
+            expect(select).to_be_enabled()
+            expect(select).to_be_visible()
+        else:
+            select_theme_preference(page, target)
+        expect(select).to_be_focused()
+        assert_theme_chrome(page)
+        assert page.evaluate("localStorage.getItem('theme')") == target
+        return_to_task_workspace(page)
+        if modern_settings:
+            if is_workbench_v5(page):
+                expect(page.locator('body')).to_have_attribute('data-workspace-screen', 'tasks')
+                focused = page.locator(':focus')
+                expect(focused).to_be_visible()
+                expect(focused).to_be_in_viewport()
+                assert focused.evaluate("node => node !== document.body && !node.closest('[hidden],[inert],[aria-hidden=true]')"), 'Theme fallback left focus outside usable navigation'
+            else:
+                expect(page.locator('#openMenuBtn')).to_be_visible()
+                expect(page.locator('#openMenuBtn')).to_be_focused()
+            assert get_task_records(page) == before_tasks, 'Changing theme without View Transitions changed stored tasks'
+    finally:
+        page.evaluate("""() => {
+            Object.defineProperty(document, 'startViewTransition', {
+                configurable: true, value: window.themeTestOriginalViewTransition
+            });
+            delete window.themeTestOriginalViewTransition;
+        }""")
+
+def exercise_filters_and_sort(page: Page, alpha_name: str, beta_name: str, overdue_name: str) -> None:
+    select_filter(page, "all")
+    select_sort(page, "alpha-asc")
+    assert_task_order(page, [alpha_name, beta_name, overdue_name])
+
+    select_sort(page, "created-desc")
+    expect(page.locator('#sortDropdown .dropdown-option[data-sort="created-desc"]')).to_have_class(
+        re.compile(r"(^|\s)selected(\s|$)")
+    )
+
+    select_sort(page, "due-asc")
+    assert_task_order(page, [overdue_name, beta_name, alpha_name])
+
+    select_filter(page, "no-deadline")
+    expect(task_locator(page, alpha_name)).to_have_count(1)
+    expect(task_locator(page, beta_name)).to_have_count(0)
+    expect(task_locator(page, overdue_name)).to_have_count(0)
+
+    select_filter(page, "overdue")
+    expect(task_locator(page, overdue_name)).to_have_count(1)
+    expect(task_locator(page, alpha_name)).to_have_count(0)
+    expect(task_locator(page, beta_name)).to_have_count(0)
+
+    select_filter(page, "active")
+    expect(page.locator(".task-item")).to_have_count(3)
+
+    select_filter(page, "all")
+
+def exercise_workspace_date_focus(page: Page, *, zero_matches: bool = False) -> None:
+    select_view(page, 'list')
+    original_search = page.locator('#searchInput').input_value()
+    before = get_task_records(page)
+    if zero_matches:
+        assert before, 'The zero-matches calendar case requires stored tasks'
+        page.locator('#searchInput').fill('_no_matching_workspace_date_probe_')
+    else:
+        assert before == [], 'The empty-workspace calendar case requires no stored tasks'
+    expect(page.locator('.task-item')).to_have_count(0)
+    try:
+        if is_workbench_v5(page):
+            # 5.0 exposes the full calendar in Tasks instead of the retired
+            # sidebar mini-calendar. Exercise its actual month/Today controls
+            # with the same empty/zero-match scope and no record writes.
+            select_view(page, 'calendar')
+            if zero_matches:
+                # A retained query with no matches uses the same empty-result
+                # state in every task view; it must not clear that scope merely
+                # to display a calendar. The visible Calendar tab is the entry.
+                expect(page.locator('#searchInput')).to_have_value('_no_matching_workspace_date_probe_')
+                expect(page.locator('#taskList .empty-state')).to_be_visible()
+                expect(page.locator('.task-item')).to_have_count(0)
+            else:
+                month_title = page.locator('.calendar-title').inner_text()
+                for action, returns_to_original in (('next', False), ('prev', True),
+                                                    ('prev-year', False), ('next-year', True),
+                                                    ('today', True)):
+                    button = page.locator(f'[data-calendar-action="{action}"]')
+                    button.click()
+                    if returns_to_original:
+                        expect(page.locator('.calendar-title')).to_have_text(month_title)
+                    else:
+                        expect(page.locator('.calendar-title')).not_to_have_text(month_title)
+                    # Each calendar render replaces its controls. Keyboard users
+                    # must retain the same actual action, rather than land on body.
+                    expect(button).to_be_focused()
+                    expect(button).to_be_in_viewport(ratio=1)
+                    assert get_task_records(page) == before, f'Calendar {action} navigation modified stored tasks'
+        else:
+            target = page.locator('#workspaceCalendarGrid [data-workspace-date][aria-current="date"]')
+            if not target.is_visible():
+                page.locator('#workspaceScheduleToggle').click()
+                expect(page.locator('#workspaceScheduleDialog')).to_be_visible()
+            target.click()
+        expect(page.locator('#viewTab-calendar')).to_have_attribute("aria-current", "page")
+        expect(page.locator('#taskList')).to_be_visible()
+        expect(page.locator('#workspaceScheduleDialog')).to_be_hidden()
+        page.wait_for_function("""() => {
+            const element = document.activeElement;
+            if (!element || element === document.body || element === document.documentElement
+                || element.closest('[inert], [hidden], [aria-hidden="true"]')) return false;
+            if (element.id !== 'viewTab-calendar' && !document.getElementById('taskList').contains(element)) return false;
+            const box = element.getBoundingClientRect();
+            const style = getComputedStyle(element);
+            return box.width > 0 && box.height > 0 && style.visibility !== 'hidden'
+                && box.left >= -1 && box.right <= innerWidth + 1
+                && box.top >= -1 && box.bottom <= innerHeight + 1;
+        }""", polling=50, timeout=5000)
+        assert get_task_records(page) == before, 'Schedule date navigation modified stored tasks'
+    finally:
+        page.locator('#searchInput').fill(original_search)
+        select_view(page, 'list')
+
+def exercise_date_views(page: Page, alpha_name: str, beta_name: str, overdue_name: str) -> None:
+    modern_calendar = bool(page.locator('#workspaceSidebarScroll').count())
+    original_records = get_task_records(page) if modern_calendar else None
+
+    def open_calendar_day_form(button: Locator) -> None:
+        day_key = button.get_attribute('data-calendar-add-date') or button.get_attribute('data-calendar-detail-date')
+        opens_agenda = button.get_attribute('data-calendar-detail-date') is not None
+        button.click()
+        modal = page.locator('#taskModal')
+        if not modal.is_visible():
+            shelf = page.locator('#captureShelf')
+            agenda_add = page.locator(f'.calendar-agenda-add[data-calendar-add-date="{day_key}"]')
+            if agenda_add.is_visible() and (opens_agenda or not shelf.is_visible()):
+                agenda_add.click()
+            if shelf.is_visible():
+                page.locator('#captureDetailsBtn').click()
+        expect(modal).to_be_visible()
+
+    extra_names = [f"Calendar Overflow Extra {index} {int(time.time())}" for index in range(1, 4)]
+    month_end_name = f"Calendar Month End {int(time.time())}"
+    for index, extra_name in enumerate(extra_names, start=1):
+        put_task_record(
+            page,
+            {
+                "id": int(time.time() * 1000) + 40_000 + index,
+                "name": extra_name,
+                "description": "Extra same-day task for calendar overflow.",
+                "dueDate": None,
+                "dueAt": None,
+                "dueLocalDate": future_date(1),
+                "dueLocalTime": f"13:{index:02d}",
+                "dueTimeZone": None,
+                "reminderOffset": -1,
+                "subtasks": [],
+                "completed": False,
+                "createdAt": iso_minutes_from_now(index),
+                "order": 40_000 + index,
+            },
+        )
+    select_filter(page, "all")
+    select_view(page, "calendar")
+    expect(page.locator(".calendar-view")).to_be_visible()
+    expect(page.locator(".calendar-day")).to_have_count(42)
+    expect(page.locator(".calendar-task").filter(has_text=beta_name)).to_have_count(1)
+    expect(page.locator(".calendar-task").filter(has_text=overdue_name)).to_have_count(1)
+    expect(page.locator(".date-view-undated")).to_contain_text(alpha_name)
+    month_title = page.locator(".calendar-title").inner_text()
+    page.locator('[data-calendar-action="next-year"]').click()
+    next_year_title = page.locator(".calendar-title").inner_text()
+    if next_year_title == month_title:
+        raise AssertionError("Calendar next-year navigation did not change the visible month title")
+    page.locator('[data-calendar-action="prev-year"]').click()
+    expect(page.locator(".calendar-title")).to_have_text(month_title)
+    calendar_task = page.locator(".calendar-task").filter(has_text=beta_name).first
+    if modern_calendar:
+        expect(calendar_task).to_have_text(beta_name)
+        expect(calendar_task).to_have_attribute('title', beta_name)
+        title_geometry = calendar_task.evaluate("""element => {
+            const box = element.getBoundingClientRect();
+            const cell = element.closest('.calendar-day').getBoundingClientRect();
+            const range = document.createRange(); range.selectNodeContents(element);
+            const lines = [...range.getClientRects()];
+            return {
+                width: box.width, height: box.height, lineCount: lines.length,
+                contentFits: element.scrollWidth <= element.clientWidth + 1
+                    && element.scrollHeight <= element.clientHeight + 1,
+                textFits: lines.every(line => line.left >= box.left - 1
+                    && line.right <= box.right + 1 && line.top >= box.top - 1
+                    && line.bottom <= box.bottom + 1),
+                fitsDay: box.left >= cell.left - 1 && box.right <= cell.right + 1
+                    && box.top >= cell.top - 1 && box.bottom <= cell.bottom + 1
+            };
+        }""")
+        if not (title_geometry['width'] > 0 and title_geometry['height'] > 0
+                and title_geometry['lineCount'] > 0 and title_geometry['contentFits']
+                and title_geometry['textFits'] and title_geometry['fitsDay']):
+            raise AssertionError(f"Calendar task title is clipped or escapes its date cell: {title_geometry}")
+    else:
+        calendar_task_style = calendar_task.evaluate(
+            """(element) => {
+                const style = getComputedStyle(element);
+                return {
+                    overflow: style.overflow,
+                    textOverflow: style.textOverflow,
+                    whiteSpace: style.whiteSpace,
+                    title: element.getAttribute('title')
+                };
+            }"""
+        )
+        if calendar_task_style != {"overflow": "hidden", "textOverflow": "ellipsis", "whiteSpace": "nowrap", "title": beta_name}:
+            raise AssertionError(f"Calendar task title is not constrained to one-line ellipsis: {calendar_task_style}")
+    before_navigation = get_task_records(page) if modern_calendar else None
+    page.locator(".calendar-more-btn").click()
+    expect(page.locator(".calendar-day-detail")).to_be_visible()
+    expect(page.locator(".calendar-detail-task")).to_have_count(4)
+    expect(page.locator(".calendar-day-detail")).to_contain_text(beta_name)
+    expect(page.locator(".calendar-day-detail")).to_contain_text(extra_names[0])
+    page.locator(".calendar-detail-task").filter(has_text=extra_names[0]).click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    expect(page.locator("#taskName")).to_have_value(extra_names[0])
+    page.locator("#cancelBtn").click()
+    page.locator(".calendar-more-btn").click()
+    expect(page.locator(".calendar-day-detail")).to_be_visible()
+    page.locator('[data-calendar-action="next"]').click()
+    expect(page.locator(".calendar-day-detail")).to_have_count(0)
+    page.locator('[data-calendar-action="prev"]').click()
+    expect(page.locator(".calendar-day-detail")).to_have_count(0)
+    page.locator(".calendar-more-btn").click()
+    expect(page.locator(".calendar-day-detail")).to_be_visible()
+    page.locator(".calendar-detail-close").click()
+    expect(page.locator(".calendar-day-detail")).to_have_count(0)
+    add_button = page.locator(".calendar-day:not(.outside-month) .calendar-date-number[data-calendar-add-date], "
+                              ".calendar-day:not(.outside-month) .calendar-date-number[data-calendar-detail-date]").first
+    selected_date = add_button.get_attribute("data-calendar-add-date") or add_button.get_attribute('data-calendar-detail-date')
+    open_calendar_day_form(add_button)
+    expect(page.locator("#dueDate")).to_have_value(selected_date)
+    page.locator("#cancelBtn").click()
+    if page.locator('#captureShelf').is_visible():
+        page.locator('#captureCloseBtn').click()
+    page.locator(".calendar-task").filter(has_text=beta_name).first.click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    expect(page.locator("#taskName")).to_have_value(beta_name)
+    page.locator("#cancelBtn").click()
+    if modern_calendar:
+        assert get_task_records(page) == before_navigation, 'Calendar navigation or cancelling day/task forms changed task records'
+
+    put_task_record(
+        page,
+        {
+            "id": int(time.time() * 1000) + 50_000,
+            "name": month_end_name,
+            "description": "Month-end navigation regression check.",
+            "dueDate": None,
+            "dueAt": None,
+            "dueLocalDate": "2025-01-31",
+            "dueLocalTime": "12:00",
+            "dueTimeZone": None,
+            "reminderOffset": -1,
+            "subtasks": [],
+            "completed": False,
+            "createdAt": iso_minutes_from_now(2),
+            "order": 50_000,
+        },
+    )
+    select_view(page, "list")
+    page.locator("#searchInput").fill(month_end_name)
+    page.wait_for_timeout(350)
+    select_view(page, "calendar")
+    expect(page.locator(".calendar-title")).to_have_text(calendar_month_title(page, 2025, 0))
+    page.locator('[data-calendar-action="next"]').click()
+    expect(page.locator(".calendar-title")).to_have_text(calendar_month_title(page, 2025, 1))
+    page.locator('[data-calendar-action="prev"]').click()
+    expect(page.locator(".calendar-title")).to_have_text(calendar_month_title(page, 2025, 0))
+
+    for extra_name in extra_names:
+        delete_task_records_by_name(page, extra_name)
+    delete_task_records_by_name(page, month_end_name)
+    clear_search(page)
+
+    select_filter(page, "all")
+    select_view(page, "timeline")
+    expect(page.locator(".timeline-view")).to_be_visible()
+    expect(page.locator(".timeline-group")).to_have_count(3)
+    expect(task_locator(page, alpha_name)).to_have_count(1)
+    expect(task_locator(page, beta_name)).to_have_count(1)
+    expect(task_locator(page, overdue_name)).to_have_count(1)
+    assert_accessibility_baseline(page, "date views")
+
+    select_view(page, "list")
+    expect(page.locator(".task-item")).to_have_count(3)
+    if modern_calendar:
+        assert get_task_records(page) == original_records, 'Calendar/timeline checks changed an original task field'
+
+def exercise_stats_view(page: Page, completed_name: str) -> None:
+    modern_stats = bool(page.locator('#workspaceSidebarScroll').count())
+    before = get_task_records(page) if modern_stats else None
+    select_view(page, "stats")
+    if modern_stats:
+        origin_query = page.locator('#searchInput').input_value()
+        origin_filter = page.locator('#filterDropdown .dropdown-option[aria-selected="true"]').get_attribute('data-filter')
+        origin_project = page.locator('#projectDropdown .dropdown-option[aria-selected="true"]').get_attribute('data-project')
+    expect(page.locator(".stats-view")).to_be_visible()
+    if modern_stats:
+        inventory = page.locator('.stats-inventory')
+        if not inventory.evaluate('element => element.open'):
+            inventory.locator(':scope > summary').click()
+        expect(inventory).to_have_js_property('open', True)
+        expect(inventory.locator('.stat-card')).to_have_count(2)
+        expect(inventory.locator('.stat-value')).to_have_text(['33%', '50%'])
+        expect(inventory.locator('.stats-mini')).to_have_count(4)
+        for filter_value, count in (('all', 3), ('completed', 1), ('overdue', 1), ('archived', 0)):
+            mini = inventory.locator(f'.stats-mini[data-stats-filter="{filter_value}"]')
+            expect(mini.locator('strong')).to_have_text(str(count))
+            if count:
+                expect(mini).to_be_enabled()
+            else:
+                expect(mini).to_be_disabled()
+        language = page.locator('html').get_attribute('lang') or 'zh-CN'
+        translations = json.loads((input_path('resources' + '/' + f'{language}.json')).read_text())
+        review_total = translations['statsInsights']['reviewCompletedOne'].replace('{count}', '1')
+        review_today = translations['statsInsights']['todayReviewOne'].replace('{count}', '1')
+        review_streak = translations['stats']['streakDetailOne'].replace('{count}', '1')
+        expect(page.locator('.stats-review-total')).to_have_text(review_total)
+        expect(page.locator('#workspaceSummary')).to_contain_text(review_today)
+        expect(page.locator('.stats-review-meta')).to_have_text(review_streak)
+    else:
+        expect(page.locator(".stat-card").nth(0).locator(".stat-value")).to_have_text("33%")
+        expect(page.locator(".stat-card").nth(1).locator(".stat-value")).to_have_text("50%")
+        expect(page.locator(".stat-card").nth(2).locator(".stat-value")).to_contain_text("1")
+        expect(page.locator(".stats-mini")).to_have_count(5)
+    expect(page.locator(".stats-trend")).to_be_visible()
+    expect(page.locator(".stats-trend-bar")).to_have_count(7)
+    trend_counts = page.locator(".stats-trend-bar").evaluate_all(
+        "bars => bars.map((bar) => Number(bar.dataset.trendCount || 0))"
+    )
+    if sum(trend_counts) != 1:
+        raise AssertionError(f"Completion trend did not reflect the completed task: {trend_counts}")
+    assert_accessibility_baseline(page, "stats view")
+    page.locator('.stats-mini[data-stats-filter="completed"]').click()
+    expect(page.locator("#currentFilterLabel")).to_have_text(re.compile("已完成|Completed", re.I))
+    expect(task_locator(page, completed_name)).to_have_count(1)
+    if modern_stats:
+        expect(page.locator('#viewTab-list')).to_have_attribute('aria-current', 'page')
+        expect(page.locator('#searchInput')).to_have_value(re.compile(r'(^|\s)status:completed(\s|$)'))
+        expect(page.locator('#workspaceTitle')).to_be_focused()
+        assert get_task_records(page) == before, 'Statistics completed-task navigation changed stored task records'
+        expect(page.locator('#statsReturnBtn')).to_be_visible()
+        page.locator('#statsReturnBtn').click()
+        expect(page.locator('#viewTab-stats')).to_have_attribute('aria-current', 'page')
+        expect(page.locator('#searchInput')).to_have_value(origin_query)
+        expect(page.locator('#filterDropdown .dropdown-option[aria-selected="true"]')).to_have_attribute('data-filter', origin_filter)
+        expect(page.locator('#projectDropdown .dropdown-option[aria-selected="true"]')).to_have_attribute('data-project', origin_project)
+        expect(page.locator('#statsReturnBar')).to_be_hidden()
+        assert get_task_records(page) == before, 'Returning from the completed-task drilldown changed stored task records'
+        select_view(page, 'list')
+        clear_search(page)
+    else:
+        expect(page.locator("#filterBtn")).to_be_focused()
+
+def exercise_repeating_task(page: Page, task_name: str) -> None:
+    add_task(
+        page,
+        task_name,
+        description="Repeating task smoke test.",
+        due_date=future_date(1),
+        due_time="08:45",
+        repeat_type="custom",
+        repeat_interval="3",
+        project="Smoke Routine",
+        tags=["routine"],
+    )
+    expect(task_locator(page, task_name).locator(".repeat-chip")).to_contain_text(re.compile("3"))
+    task_locator(page, task_name).locator('[data-action="toggle"]').click()
+    wait_for_notification(page, re.compile("下一期|next occurrence", re.I))
+    records = page.evaluate(
+        """async (taskName) => {
+            const request = indexedDB.open('TaskTrackerDB', 2);
+            return await new Promise((resolve, reject) => {
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readonly');
+                    const getAll = tx.objectStore('tasks').getAll();
+                    getAll.onsuccess = () => {
+                        const tasks = getAll.result
+                            .filter((item) => item.name === taskName)
+                            .map((item) => ({
+                                completed: item.completed,
+                                repeatType: item.repeatType,
+                                repeatInterval: item.repeatInterval,
+                                repeatCreatedFrom: item.repeatCreatedFrom,
+                                dueDate: item.dueDate,
+                                dueAt: item.dueAt,
+                                dueLocalDate: item.dueLocalDate,
+                                dueLocalTime: item.dueLocalTime,
+                                dueTimeZone: item.dueTimeZone,
+                                nextRepeatTaskId: item.nextRepeatTaskId
+                            }));
+                        db.close();
+                        resolve(tasks);
+                    };
+                    getAll.onerror = () => reject(getAll.error);
+                };
+            });
+        }""",
+        task_name,
+    )
+    completed = [record for record in records if record["completed"]]
+    active = [record for record in records if not record["completed"]]
+    if len(records) != 2 or len(completed) != 1 or len(active) != 1:
+        raise AssertionError(f"Repeating completion did not create exactly one next task: {records}")
+    if active[0]["repeatType"] != "custom" or active[0]["repeatInterval"] != 3 or not active[0]["repeatCreatedFrom"]:
+        raise AssertionError(f"Next repeating task did not preserve repeat metadata: {records}")
+    if active[0]["dueDate"] <= completed[0]["dueDate"] or completed[0]["nextRepeatTaskId"] is None:
+        raise AssertionError(f"Next repeating task did not advance due date/linkage: {records}")
+    if active[0]["dueDate"] != active[0]["dueAt"] or completed[0]["dueDate"] != completed[0]["dueAt"]:
+        raise AssertionError(f"Repeating tasks did not keep dueDate/dueAt compatibility: {records}")
+    if active[0]["dueLocalTime"] != completed[0]["dueLocalTime"] or not active[0]["dueTimeZone"]:
+        raise AssertionError(f"Repeating tasks did not preserve local due time metadata: {records}")
+    completed_due = datetime.strptime(completed[0]["dueLocalDate"], "%Y-%m-%d").date()
+    active_due = datetime.strptime(active[0]["dueLocalDate"], "%Y-%m-%d").date()
+    if active_due != completed_due + timedelta(days=3):
+        raise AssertionError(f"Repeating task did not advance the local due date by 3 days: {records}")
+    delete_task_records_by_name(page, task_name)
+
+def exercise_batch_repeat_completion_order(page: Page, prefix: str) -> None:
+    names = [f"{prefix} Batch Repeat A", f"{prefix} Batch Repeat B"]
+    project = f"{prefix} Batch Repeat Project"
+    for index, name in enumerate(names, start=1):
+        add_task(
+            page,
+            name,
+            description="Batch repeating completion smoke test.",
+            due_date=future_date(index + 1),
+            due_time="09:15",
+            repeat_type="daily",
+            project=project,
+            tags=["batch-repeat"],
+        )
+
+    select_project(page, project)
+    select_filter(page, "active")
+    clear_search(page)
+    enter_batch_mode(page)
+    page.locator("#batchSelectVisibleBtn").click()
+    expect(page.locator("#batchSelectionSummary")).to_contain_text(re.compile(r"2|two|两个", re.I))
+    page.locator("#batchCompleteBtn").click()
+    wait_for_notification(page, re.compile("完成|completed", re.I))
+
+    records = [record for record in get_task_records(page) if record.get("name") in names]
+    completed = [record for record in records if record.get("completed")]
+    active = [record for record in records if not record.get("completed")]
+    orders = [record.get("order") for record in active]
+    if len(records) != 4 or len(completed) != 2 or len(active) != 2:
+        raise AssertionError(f"Batch repeating completion did not create next occurrences: {records}")
+    if len(set(orders)) != len(orders):
+        raise AssertionError(f"Batch-created repeat tasks should have unique manual orders: {records}")
+
+    for name in names:
+        delete_task_records_by_name(page, name)
+    select_project(page, "all")
+    select_filter(page, "active")
+
+def exercise_advanced_repeat_task(page: Page, weekly_name: str, paused_name: str) -> None:
+    start_date = future_js_weekday(1)
+    add_task(
+        page,
+        weekly_name,
+        description="Advanced weekly repeat smoke test.",
+        due_date=start_date,
+        due_time="08:45",
+        repeat_type="weekly-days",
+        repeat_weekdays=["1", "3", "5"],
+        project="Smoke Routine",
+        tags=["routine"],
+    )
+    weekly_task = task_locator(page, weekly_name)
+    expect(weekly_task.locator(".repeat-chip")).to_contain_text(re.compile("一|Mon"))
+    expect(reveal_task_action(weekly_task, 'skip-repeat')).to_be_visible()
+    click_task_action(weekly_task, 'skip-repeat')
+    wait_for_notification(page, re.compile("跳过|skipped", re.I))
+    record = page.evaluate(
+        """async (taskName) => {
+            const request = indexedDB.open('TaskTrackerDB', 2);
+            return await new Promise((resolve, reject) => {
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readonly');
+                    const getAll = tx.objectStore('tasks').getAll();
+                    getAll.onsuccess = () => {
+                        const task = getAll.result.find((item) => item.name === taskName);
+                        db.close();
+                        resolve(task || null);
+                    };
+                    getAll.onerror = () => reject(getAll.error);
+                };
+            });
+        }""",
+        weekly_name,
+    )
+    if not record or record["completed"]:
+        raise AssertionError(f"Skipped repeat task should stay active: {record}")
+    skipped_date = datetime.strptime(record["dueLocalDate"], "%Y-%m-%d").date()
+    original_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+    if skipped_date <= original_date or (skipped_date.weekday() + 1) % 7 not in {1, 3, 5}:
+        raise AssertionError(f"Weekly skip did not advance to a selected weekday: {record}")
+    delete_task_records_by_name(page, weekly_name)
+
+    add_task(
+        page,
+        paused_name,
+        description="Paused repeating task smoke test.",
+        due_date=future_date(1),
+        due_time="09:15",
+        repeat_type="daily",
+        repeat_paused=True,
+    )
+    paused_task = task_locator(page, paused_name)
+    expect(paused_task.locator(".repeat-chip")).to_contain_text(re.compile("暂停|paused", re.I))
+    expect(reveal_task_action(paused_task, 'skip-repeat')).to_be_hidden()
+    paused_task.locator('[data-action="toggle"]').click()
+    wait_for_notification(page, re.compile("完成|completed", re.I))
+    records = page.evaluate(
+        """async (taskName) => {
+            const request = indexedDB.open('TaskTrackerDB', 2);
+            return await new Promise((resolve, reject) => {
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readonly');
+                    const getAll = tx.objectStore('tasks').getAll();
+                    getAll.onsuccess = () => {
+                        const tasks = getAll.result.filter((item) => item.name === taskName);
+                        db.close();
+                        resolve(tasks);
+                    };
+                    getAll.onerror = () => reject(getAll.error);
+                };
+            });
+        }""",
+        paused_name,
+    )
+    if len(records) != 1 or not records[0]["completed"]:
+        raise AssertionError(f"Paused repeat should not create a next occurrence: {records}")
+    delete_task_records_by_name(page, paused_name)
+
+def exercise_time_zone_stable_repeat(page: Page, task_name: str) -> None:
+    put_task_record(
+        page,
+        {
+            "id": int(time.time() * 1000) + 401,
+            "name": task_name,
+            "description": "Imported timezone-stable repeat smoke test.",
+            "dueDate": "2025-05-11T03:30:00.000Z",
+            "dueAt": "2025-05-11T03:30:00.000Z",
+            "dueLocalDate": "2025-05-10",
+            "dueLocalTime": "23:30",
+            "dueTimeZone": "America/New_York",
+            "reminderOffset": -1,
+            "reminderRepeat": -1,
+            "repeatType": "daily",
+            "repeatInterval": 1,
+            "repeatWeekdays": [],
+            "repeatPaused": False,
+            "repeatSourceId": None,
+            "repeatCreatedFrom": None,
+            "nextRepeatTaskId": None,
+            "subtasks": [],
+            "completed": False,
+            "completedAt": None,
+            "archived": False,
+            "archivedAt": None,
+            "snoozedUntil": None,
+            "lastReminderAt": None,
+            "createdAt": "2025-05-01T00:00:00.000Z",
+            "order": 24_000,
+        },
+    )
+    select_filter(page, "all")
+    task = task_locator(page, task_name)
+    expect(task).to_have_count(1)
+    expect(reveal_task_action(task, 'skip-repeat')).to_be_visible()
+    click_task_action(task, 'skip-repeat')
+    wait_for_notification(page, re.compile("跳过|skipped", re.I))
+    record = next((item for item in get_task_records(page) if item["name"] == task_name), None)
+    expected = {
+        "dueDate": "2025-05-12T03:30:00.000Z",
+        "dueAt": "2025-05-12T03:30:00.000Z",
+        "dueLocalDate": "2025-05-11",
+        "dueLocalTime": "23:30",
+        "dueTimeZone": "America/New_York",
+    }
+    if not record or any(record.get(key) != value for key, value in expected.items()):
+        raise AssertionError(f"Timezone-stable repeat did not preserve task timezone: {record}")
+    delete_task_records_by_name(page, task_name)
+
+def delete_task_records_by_name(page: Page, task_name: str) -> None:
+    page.evaluate(
+        """async (taskName) => {
+            await new Promise((resolve, reject) => {
+                const request = indexedDB.open('TaskTrackerDB', 2);
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readwrite');
+                    const store = tx.objectStore('tasks');
+                    const getAll = store.getAll();
+                    getAll.onsuccess = () => {
+                        getAll.result
+                            .filter((item) => item.name === taskName)
+                            .forEach((item) => store.delete(item.id));
+                    };
+                    tx.oncomplete = () => {
+                        db.close();
+                        resolve();
+                    };
+                    tx.onerror = () => reject(tx.error);
+                    tx.onabort = () => reject(tx.error);
+                };
+            });
+        }""",
+        task_name,
+    )
+    page.reload(wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+
+def clear_completed_tasks(page: Page, completed_name: str) -> None:
+    open_settings(page, 'cleanup')
+    page.locator("#clearCompletedBtn").click()
+    expect(page.locator("#taskModal")).to_be_visible()
+    page.locator("#submitBtn").click()
+    expect(page.locator('#taskModal')).to_be_hidden()
+    return_to_task_workspace(page)
+    expect(task_locator(page, completed_name)).to_have_count(0)
+
+def archive_and_restore_task(page: Page, completed_name: str) -> None:
+    modern_stats = bool(page.locator('#workspaceSidebarScroll').count())
+    completed_before = get_task_record_by_name(page, completed_name) if modern_stats else None
+    select_filter(page, "completed")
+    task = task_locator(page, completed_name)
+    expect(reveal_task_action(task, 'archive')).to_be_visible()
+    click_task_action(task, 'archive')
+    wait_for_notification(page, re.compile("已归档|archived", re.I))
+    assert_task_action_focus_visible(page)
+    select_view(page, "stats")
+    if modern_stats:
+        inventory = page.locator('.stats-inventory')
+        if not inventory.evaluate('element => element.open'):
+            inventory.locator(':scope > summary').click()
+        expect(inventory).to_have_js_property('open', True)
+    archived_shortcut = page.locator('.stats-mini[data-stats-filter="archived"]')
+    expect(archived_shortcut.locator("strong")).to_have_text("1")
+    if modern_stats:
+        expect(page.locator('.stats-mini')).to_have_count(4)
+        expect(page.locator('.stats-mini[data-stats-filter="completed"] strong')).to_have_text('0')
+        archived_record = get_task_record_by_name(page, completed_name)
+        assert archived_record['archived'] and archived_record['archivedAt'], archived_record
+        assert {k: v for k, v in archived_record.items() if k not in {'archived', 'archivedAt'}} == {
+            k: v for k, v in completed_before.items() if k not in {'archived', 'archivedAt'}
+        }, 'Archiving changed completion history or another task field'
+    else:
+        expect(page.locator(".stats-mini").nth(4).locator("strong")).to_have_text("0")
+    archived_trend_counts = page.locator(".stats-trend-bar").evaluate_all(
+        "bars => bars.map((bar) => Number(bar.dataset.trendCount || 0))"
+    )
+    expected_trend_count = 1 if modern_stats else 0
+    if sum(archived_trend_counts) != expected_trend_count:
+        raise AssertionError(f"Archived completion history differs from the statistics contract: {archived_trend_counts}")
+    archived_shortcut.click()
+    expect(page.locator("#currentFilterLabel")).to_have_text(re.compile("已归档|Archived", re.I))
+    archived = task_locator(page, completed_name)
+    expect(archived).to_have_count(1)
+    expect(archived.locator(".status-text")).to_have_text(re.compile("已归档|Archived", re.I))
+    expect(archived.locator('[data-action="toggle"]')).to_be_hidden()
+    select_filter(page, "active")
+    page.locator("#searchInput").fill("status:archived")
+    expect(task_locator(page, completed_name)).to_have_count(1)
+    page.locator("#searchInput").fill("status:no-deadline")
+    expect(task_locator(page, completed_name)).to_have_count(0)
+    select_view(page, "stats")
+    if is_workbench_v5(page):
+        page.locator('#searchInput').fill('status:no-deadline')
+    expect(page.locator('.stats-mini[data-stats-filter="archived"] strong')).to_have_text("0")
+    page.locator("#searchInput").fill("status:archived")
+    expect(page.locator('.stats-mini[data-stats-filter="archived"] strong')).to_have_text("1")
+    select_view(page, "list")
+    page.locator("#searchInput").fill("status:archived")
+    expect(task_locator(page, completed_name)).to_have_count(1)
+    clear_search(page)
+    select_filter(page, "archived")
+    archived = task_locator(page, completed_name)
+    click_task_action(archived, 'archive')
+    wait_for_notification(page, re.compile("恢复|restored", re.I))
+    assert_task_action_focus_visible(page)
+    select_filter(page, "completed")
+    expect(task_locator(page, completed_name)).to_have_count(1)
+
+def exercise_manual_reorder(page: Page, first_name: str, second_name: str, third_name: str) -> None:
+    select_filter(page, "all")
+    select_sort(page, "manual")
+    expect(page.locator(".task-item.draggable-item .drag-handle")).to_have_count(3)
+    assert_task_order(page, [first_name, second_name, third_name])
+    page.wait_for_timeout(150)
+
+    drag_task_before(page, third_name, first_name)
+    page.wait_for_timeout(500)
+    assert_task_order(page, [third_name, first_name, second_name])
+
+    page.reload(wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    select_filter(page, "all")
+    select_sort(page, "manual")
+    assert_task_order(page, [third_name, first_name, second_name])
+    task_locator(page, first_name).locator(".drag-handle").focus()
+    page.keyboard.press("ArrowUp")
+    expect(page.locator("#srStatus")).to_contain_text("第 1 位")
+    assert_task_order(page, [first_name, third_name, second_name])
+    assert_accessibility_baseline(page, "manual reorder")
+
+def drag_task_before(page: Page, source_name: str, target_name: str) -> None:
+    source = task_locator(page, source_name)
+    handle = source.locator(".drag-handle")
+    handle.hover(position={"x": 14, "y": 20})
+    box = handle.bounding_box()
+    if not box:
+        raise AssertionError("Could not resolve the visible task drag handle")
+    start = {"x": box["x"] + 14, "y": box["y"] + 20}
+    assert handle.evaluate("(node, point) => node.contains(document.elementFromPoint(point.x, point.y))", start), 'Pointer does not hit the task drag handle'
+    page.mouse.down()
+    try:
+        page.mouse.move(start["x"] + 8, start["y"], steps=3)
+        expect(source).to_have_class(re.compile(r"(^|\s)dragging(\s|$)"))
+        target = task_locator(page, target_name).locator(".task-header")
+        target.scroll_into_view_if_needed()
+        target_box = target.bounding_box()
+        if not target_box:
+            raise AssertionError("Could not resolve the visible task drop target")
+        x = target_box["x"] + target_box["width"] / 2
+        y = target_box["y"] + min(10, target_box["height"] / 2)
+        assert page.evaluate("point => point.x >= 0 && point.x < innerWidth && point.y >= 0 && point.y < innerHeight", {"x": x, "y": y}), 'Task drop target is outside the viewport'
+        page.mouse.move(x, y, steps=12)
+        page.mouse.move(x, y + 1, steps=2)
+    finally:
+        page.mouse.up()
+
+def exercise_filtered_manual_reorder_guard(page: Page, completed_name: str, first_active: str, second_active: str) -> None:
+    select_filter(page, "active")
+    select_sort(page, "manual")
+    expect(page.locator(".task-item.draggable-item .drag-handle")).to_have_count(2)
+    assert_task_order(page, [first_active, second_active])
+    drag_task_before(page, second_active, first_active)
+    page.wait_for_timeout(500)
+    assert_task_order(page, [second_active, first_active])
+    select_filter(page, "all")
+    expect(page.locator(".task-item.draggable-item .drag-handle")).to_have_count(3)
+    assert_task_order(page, [completed_name, second_active, first_active])
+
+def exercise_back_to_top(page: Page) -> None:
+    page.evaluate(
+        """() => {
+            const spacer = document.createElement('div');
+            spacer.id = 'smoke-scroll-spacer';
+            spacer.style.height = '1200px';
+            document.body.appendChild(spacer);
+        }"""
+    )
+    page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+    wait_for_class(page, "#backToTopBtn", "show")
+    page.locator("#backToTopBtn").click()
+    page.wait_for_function("() => window.scrollY === 0")
+    page.evaluate("document.getElementById('smoke-scroll-spacer')?.remove()")
+
+def exercise_notifications(page: Page) -> None:
+    open_settings(page, 'experience')
+    expect(page.locator('#settingsWorkspace')).to_be_visible()
+    page.locator("#notificationToggleBtn").click()
+    expect(page.locator("#notificationToggleBtn")).to_have_attribute("aria-label", "关闭通知")
+    expect(page.locator("#notificationToggleBtn")).to_have_class(re.compile(r"(^|\s)notifications-enabled(\s|$)"))
+    page.locator("#notificationToggleBtn").click()
+    expect(page.locator("#notificationToggleBtn")).to_have_attribute("aria-label", "开启通知")
+    expect(page.locator("#notificationToggleBtn")).not_to_have_class(re.compile(r"(^|\s)notifications-enabled(\s|$)"))
+    return_to_task_workspace(page)
+
+def exercise_one_time_reminder_persists_across_reload(page: Page) -> None:
+    task_name = f"Smoke One Time Reminder {int(time.time() * 1000)}"
+    page.add_init_script(
+        """(() => {
+            window.__taskTracerNotificationEvents = [];
+            const record = (title, options = {}) => {
+                window.__taskTracerNotificationEvents.push(String(options.body || title || ''));
+            };
+            const NativeNotification = window.Notification;
+            if (NativeNotification && !NativeNotification.__taskTracerSmokeWrapped) {
+                function SmokeNotification(title, options = {}) {
+                    record(title, options);
+                    return { close() {}, onclick: null };
+                }
+                Object.defineProperty(SmokeNotification, 'permission', {
+                    configurable: true,
+                    get: () => 'granted'
+                });
+                SmokeNotification.requestPermission = () => Promise.resolve('granted');
+                SmokeNotification.__taskTracerSmokeWrapped = true;
+                try {
+                    Object.defineProperty(window, 'Notification', {
+                        configurable: true,
+                        writable: true,
+                        value: SmokeNotification
+                    });
+                } catch (error) {
+                    window.Notification = SmokeNotification;
+                }
+            }
+            const registrationPrototype = window.ServiceWorkerRegistration && window.ServiceWorkerRegistration.prototype;
+            if (registrationPrototype && !registrationPrototype.__taskTracerSmokeWrapped) {
+                registrationPrototype.showNotification = function(title, options = {}) {
+                    record(title, options);
+                    return Promise.resolve();
+                };
+                registrationPrototype.__taskTracerSmokeWrapped = true;
+            }
+        })();"""
+    )
+    task = {
+        "id": int(time.time() * 1000) + 1557,
+        "name": task_name,
+        "description": "One-time reminder reload regression.",
+        **due_fields_from_now(-90),
+        "reminderOffset": 15,
+        "reminderRepeat": -1,
+        "snoozedUntil": None,
+        "lastReminderAt": None,
+        "repeatType": "none",
+        "repeatInterval": 1,
+        "repeatWeekdays": [],
+        "repeatPaused": False,
+        "repeatSourceId": None,
+        "repeatCreatedFrom": None,
+        "nextRepeatTaskId": None,
+        "subtasks": [],
+        "completed": False,
+        "completedAt": None,
+        "archived": False,
+        "archivedAt": None,
+        "createdAt": iso_minutes_from_now(-120),
+        "order": 100,
+    }
+    page.evaluate(
+        """async (task) => {
+            await new Promise((resolve, reject) => {
+                const request = indexedDB.open('TaskTrackerDB', 2);
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks', 'config'], 'readwrite');
+                    tx.objectStore('tasks').put(task);
+                    const config = tx.objectStore('config');
+                    config.put({ key: 'notifications_enabled', value: true });
+                    tx.oncomplete = () => {
+                        db.close();
+                        resolve();
+                    };
+                    tx.onerror = () => reject(tx.error);
+                    tx.onabort = () => reject(tx.error);
+                };
+            });
+            sessionStorage.clear();
+        }""",
+        task,
+    )
+    page.reload(wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    page.wait_for_function("() => (window.__taskTracerNotificationEvents || []).length === 1")
+    first_last_reminder = wait_for_task_last_reminder(page, task_name)
+    page.evaluate("sessionStorage.clear()")
+    page.reload(wait_until="domcontentloaded")
+    wait_for_app_ready(page)
+    page.wait_for_timeout(1200)
+    second_count = page.evaluate("() => (window.__taskTracerNotificationEvents || []).length")
+    second_last_reminder = get_task_record_by_name(page, task_name).get("lastReminderAt")
+    return_to_task_workspace(page)
+    reminder_color = task_locator(page, task_name).locator(".task-reminder-icon").evaluate("(el) => el.style.color")
+    if second_count != 0:
+        raise AssertionError("One-time reminder was delivered again after session reload")
+    if second_last_reminder != first_last_reminder:
+        raise AssertionError("One-time reminder timestamp changed after reload")
+    if "text-tertiary" not in reminder_color:
+        raise AssertionError(f"One-time reminder icon did not reflect persisted delivery: {reminder_color}")
+    delete_task_records_by_name(page, task_name)
+
+def get_task_record_by_name(page: Page, task_name: str) -> dict[str, Any]:
+    records = get_task_records(page)
+    return next((record for record in records if record.get("name") == task_name), {})
+
+def wait_for_task_last_reminder(page: Page, task_name: str) -> str:
+    deadline = time.monotonic() + 5
+    while time.monotonic() < deadline:
+        value = get_task_record_by_name(page, task_name).get("lastReminderAt")
+        if value:
+            return str(value)
+        page.wait_for_timeout(100)
+    raise AssertionError("One-time reminder did not persist lastReminderAt")
+
+def exercise_import_error(page: Page) -> None:
+    with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
+        json.dump({"notTasks": []}, temp_file)
+        temp_path = temp_file.name
+
+    try:
+        open_settings(page)
+        with page.expect_file_chooser() as chooser_info:
+            page.locator("#importBtn").click()
+        chooser_info.value.set_files(temp_path)
+        wait_for_notification(page, re.compile("导入失败|Import failed", re.I))
+    finally:
+        Path(temp_path).unlink(missing_ok=True)
+    page.keyboard.press("Escape")
+
+def exercise_import_preview_details(page: Page, existing_name: str) -> None:
+    payload = {
+        "version": "2.4",
+        "type": "backup",
+        "exportId": "invalid-preview-checksum",
+        "date": "2025-05-10T00:00:00.000Z",
+        "app": "Task Tracer",
+        "schema": {
+            "version": "2.4",
+            "storage": "indexeddb",
+            "includes": ["tasks", "subtasks", "projects", "tags", "todayPlan"],
+        },
+        "checksum": "fnv1a32:00000000",
+        "tasks": [
+            {"id": 91001, "name": existing_name, "createdAt": "2025-05-10T00:00:00.000Z"},
+            {"id": 91002, "name": "Preview Duplicate", "createdAt": "2025-05-10T00:00:00.000Z"},
+            {"id": 91002, "name": "Preview Duplicate", "createdAt": "2025-05-10T00:00:00.000Z"},
+        ],
+    }
+
+    with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
+        json.dump(payload, temp_file)
+        temp_path = temp_file.name
+
+    try:
+        before_import = get_task_records(page)
+        open_settings(page)
+        with page.expect_file_chooser() as chooser_info:
+            page.locator("#importBtn").click()
+        chooser_info.value.set_files(temp_path)
+        expect(page.locator("#taskModal")).to_be_visible()
+        expect(page.locator("#modalTitle")).to_have_text(re.compile("导入预览|Import Preview", re.I))
+        expect(page.locator("#mergeImportMode")).not_to_be_checked()
+        expect(page.locator("#confirm-message-text")).to_contain_text(re.compile("合并到当前任务|Merge into current tasks", re.I))
+        expect(page.locator('[data-import-preview]')).to_have_attribute('data-checksum-status', 'invalid')
+        expect(page.locator('#importOutcomeSummary')).to_be_visible()
+        assert get_task_records(page) == before_import, 'Import preview changed tasks before approval'
+        if page.locator('.import-reference').count():
+            reference = page.locator('.import-reference')
+            if not reference.evaluate('element => element.open'):
+                reference.locator(':scope > summary').click()
+            expect(reference).to_have_js_property('open', True)
+        expect(page.locator(".import-diff-preview")).to_be_visible()
+        expect(page.locator('[data-import-safety-gate]')).to_be_visible()
+        expect(page.locator('[data-import-safety-detail]')).to_contain_text(re.compile("文件校验失败|Integrity check failed", re.I))
+        metadata = page.locator('[data-import-preview]').evaluate('node => node.importPreviewData')
+        assert metadata['sourceInfo']['version'] == '2.4'
+        assert metadata['duplicateIds'] == [91002]
+        assert metadata['importCount'] == 3 and len(metadata['conflicts']) == 1
+        duplicate_heading = page.locator('.confirm-list-title').filter(
+            has_text=re.compile(r'(文件内重复|Repeated inside file)', re.I))
+        expect(duplicate_heading).to_be_visible()
+        expect(duplicate_heading).to_have_text(re.compile(r'(文件内重复|Repeated inside file)\s*\(1\)', re.I))
+        expect(page.locator(".confirm-list")).to_have_count(1)
+        expect(page.locator('.confirm-list li')).to_have_text(['Preview Duplicate'])
+        expect(page.locator('.import-diff-item').nth(1)).to_contain_text(existing_name)
+        expect(page.locator('.import-diff-item').nth(1).locator('.import-diff-count')).to_have_text('1')
+        expect(page.locator(".import-conflict-select")).to_have_count(0)
+        page.locator("#mergeImportMode").check()
+        expect(page.locator(".import-conflict-select")).to_have_count(1)
+        expect(page.locator(".import-conflict-select")).to_have_value("keep")
+        expect(page.locator('[data-import-safety-gate]')).to_be_visible()
+        expect(page.locator('[data-import-safety-detail]')).to_contain_text(re.compile("文件校验失败|Integrity check failed", re.I))
+        if page.locator("#mergeImportMode").get_attribute("type") == "radio":
+            page.locator("#replaceImportMode").check()
+        else:
+            page.locator("#mergeImportMode").uncheck()
+        expect(page.locator("#confirm-message-text")).to_contain_text("Preview Duplicate")
+        expect(page.locator("#confirm-message-text")).to_contain_text(existing_name)
+        expect(page.locator("#submitBtn")).to_have_text(re.compile("确认完整性风险|Confirm Integrity Risk", re.I))
+        page.locator("#submitBtn").click()
+        expect(page.locator("[data-import-safety-detail]")).to_contain_text(re.compile("文件风险已确认|File risk confirmed", re.I))
+        expect(page.locator("#taskModal")).to_be_visible()
+        expect(page.locator('[data-import-preview]')).to_have_attribute('data-checksum-risk-confirmed', 'true')
+        assert get_task_records(page) == before_import, 'Acknowledging checksum risk changed tasks'
+        expect(page.locator("#submitBtn")).to_have_text(re.compile("下载当前任务备份|Download current backup", re.I))
+        with page.expect_download() as snapshot_info:
+            page.locator("#submitBtn").click()
+        snapshot_path = snapshot_info.value.path()
+        if not snapshot_path:
+            raise AssertionError("Invalid-checksum replace import did not download a pre-import snapshot")
+        snapshot = json.loads(Path(snapshot_path).read_text(encoding="utf-8"))
+        assert_backup_payload_integrity(snapshot, "pre-import-backup")
+        assert snapshot['tasks'] == before_import, 'Pre-import snapshot differs from current task data'
+        assert get_task_records(page) == before_import, 'Downloading snapshot prematurely imported tasks'
+        if page.locator('#workspaceSidebarScroll').count():
+            language = page.locator('html').get_attribute('lang') or 'zh-CN'
+            translations = json.loads((input_path('resources' + '/' + f'{language}.json')).read_text())
+            expect(page.locator('#submitBtn')).to_have_text(translations['dataReview']['importReplaceAction'].replace('{count}', '3'))
+            expect(page.locator('#submitBtn')).to_have_class(re.compile(r'(^|\s)btn-danger(\s|$)'))
+        else:
+            expect(page.locator("#submitBtn")).to_have_text(re.compile("继续替换导入|Continue Replace Import", re.I))
+        page.locator("#submitBtn").click()
+        wait_for_notification(page, re.compile("导入|import", re.I))
+        expect(page.locator("#taskModal")).to_be_hidden()
+        select_filter(page, "all")
+        expect(page.locator(".task-item")).to_have_count(3)
+        expect(task_locator(page, existing_name)).to_have_count(1)
+        imported = get_task_records(page)
+        assert len({task['id'] for task in imported}) == 3, 'Duplicate input IDs were not remapped uniquely'
+        assert sum(task['name'] == 'Preview Duplicate' for task in imported) == 2, 'ID remapping dropped a duplicate-named task'
+    finally:
+        Path(temp_path).unlink(missing_ok=True)
+
+def exercise_restore_compatibility_previews(page: Page) -> None:
+    legacy_payload = [
+        {"id": 92001, "name": "Legacy Array Restore", "createdAt": "2025-05-10T00:00:00.000Z"}
+    ]
+    old_backup_payload = {
+        "version": "2.1",
+        "type": "backup",
+        "date": "2025-05-10T00:00:00.000Z",
+        "app": "Task Tracer",
+        "schema": {
+            "version": "2.1",
+            "storage": "indexeddb",
+            "includes": ["tasks", "subtasks"],
+        },
+        "tasks": [
+            {"id": 92002, "name": "Old Backup Restore", "createdAt": "2025-05-10T00:00:00.000Z"}
+        ],
+    }
+    assert_import_preview_text(page, legacy_payload, 'legacy-array')
+    assert_import_preview_text(page, old_backup_payload, '2.1')
+
+def assert_import_preview_text(page: Page, payload: Any, source_version: str) -> None:
+    with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
+        json.dump(payload, temp_file)
+        temp_path = temp_file.name
+
+    try:
+        before = get_task_records(page)
+        open_settings(page)
+        with page.expect_file_chooser() as chooser_info:
+            page.locator("#importBtn").click()
+        chooser_info.value.set_files(temp_path)
+        expect(page.locator("#taskModal")).to_be_visible()
+        expect(page.locator('#importOutcomeSummary')).to_be_visible()
+        metadata = page.locator('[data-import-preview]').evaluate('node => node.importPreviewData')
+        assert metadata['sourceInfo']['compatibilitySteps'] == [{'from': source_version, 'to': '2.4'}]
+        assert metadata['importCount'] == len(payload if isinstance(payload, list) else payload['tasks'])
+        if page.locator('.import-reference').count():
+            reference = page.locator('.import-reference')
+            if not reference.evaluate('element => element.open'):
+                reference.locator(':scope > summary').click()
+            expect(reference).to_have_js_property('open', True)
+        expect(page.locator(".import-diff-preview")).to_be_visible()
+        expected_tasks = payload if isinstance(payload, list) else payload['tasks']
+        for task in expected_tasks:
+            expect(page.locator('.import-diff-preview')).to_contain_text(task['name'])
+        assert get_task_records(page) == before, 'Reading a compatible file prematurely imported it'
+        page.locator("#cancelBtn").click()
+        expect(page.locator("#taskModal")).to_be_hidden()
+        assert get_task_records(page) == before, 'Cancelling a compatible import changed task data'
+    finally:
+        Path(temp_path).unlink(missing_ok=True)
+
+def exercise_import_merge(page: Page, merged_name: str, existing_name: str) -> None:
+    existing_id = page.evaluate(
+        """async (taskName) => {
+            const request = indexedDB.open('TaskTrackerDB', 2);
+            return await new Promise((resolve, reject) => {
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction(['tasks'], 'readonly');
+                    const getAll = tx.objectStore('tasks').getAll();
+                    getAll.onsuccess = () => {
+                        const task = getAll.result.find((item) => item.name === taskName);
+                        db.close();
+                        resolve(task ? task.id : null);
+                    };
+                    getAll.onerror = () => reject(getAll.error);
+                };
+            });
+        }""",
+        existing_name,
+    )
+    if existing_id is None:
+        raise AssertionError(f"Could not find existing task id for {existing_name}")
+
+    payload = [
+        {
+            "id": existing_id,
+            "name": merged_name,
+            "description": "Merged by Playwright smoke test.",
+            "dueDate": None,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": False,
+            "order": 1000,
+        }
+    ]
+
+    with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
+        json.dump(payload, temp_file)
+        temp_path = temp_file.name
+
+    try:
+        open_settings(page)
+        with page.expect_file_chooser() as chooser_info:
+            page.locator("#importBtn").click()
+        chooser_info.value.set_files(temp_path)
+        expect(page.locator("#taskModal")).to_be_visible()
+        page.locator("#mergeImportMode").check()
+        page.locator("#submitBtn").click()
+        wait_for_notification(page, re.compile("合并|merged", re.I))
+        select_filter(page, "all")
+        expect(task_locator(page, existing_name)).to_have_count(1)
+        expect(task_locator(page, merged_name)).to_have_count(1)
+        expect(page.locator(".task-item")).to_have_count(3)
+        merged_id = page.evaluate(
+            """async (taskName) => {
+                const request = indexedDB.open('TaskTrackerDB', 2);
+                return await new Promise((resolve, reject) => {
+                    request.onerror = () => reject(request.error);
+                    request.onsuccess = () => {
+                        const db = request.result;
+                        const tx = db.transaction(['tasks'], 'readonly');
+                        const getAll = tx.objectStore('tasks').getAll();
+                        getAll.onsuccess = () => {
+                            const task = getAll.result.find((item) => item.name === taskName);
+                            db.close();
+                            resolve(task ? task.id : null);
+                        };
+                        getAll.onerror = () => reject(getAll.error);
+                    };
+                });
+            }""",
+            merged_name,
+        )
+        if merged_id == existing_id:
+            raise AssertionError("Merged import reused an existing task id")
+    finally:
+        Path(temp_path).unlink(missing_ok=True)
+    delete_task_records_by_name(page, merged_name)
+    select_filter(page, "all")
+
+def exercise_imported_zero_id_edit(page: Page, imported_name: str) -> None:
+    edited_name = f"{imported_name} Edited"
+    import_payload_replace(page, [
+        {
+            "id": 0,
+            "name": imported_name,
+            "description": "Imported zero id task.",
+            "dueDate": None,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": False,
+            "order": 1000,
+        }
+    ])
+
+    expect(page.locator('.task-item[data-task-id="0"]')).to_have_count(1)
+    edit_task(page, imported_name, edited_name)
+    records = get_task_records(page)
+    if len(records) != 1 or records[0]["id"] != 0 or records[0]["name"] != edited_name:
+        raise AssertionError(f"Editing imported task id 0 should update in place: {records}")
+    delete_task(page, edited_name)
+
+def exercise_import_repeat_reference_remap(page: Page, prefix: str) -> None:
+    holder_name = f"{prefix} Holder"
+    source_name = f"{prefix} Source"
+    next_name = f"{prefix} Next"
+    import_payload_replace(page, [
+        {
+            "id": 8,
+            "name": holder_name,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": False,
+            "order": 1000,
+        },
+        {
+            "id": 7,
+            "name": source_name,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": True,
+            "repeatType": "daily",
+            "nextRepeatTaskId": 8,
+            "order": 2000,
+        },
+        {
+            "id": 8,
+            "name": next_name,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": False,
+            "repeatType": "daily",
+            "repeatCreatedFrom": 7,
+            "order": 3000,
+        },
+    ])
+
+    records = get_task_records(page)
+    source = next((task for task in records if task["name"] == source_name), None)
+    next_task = next((task for task in records if task["name"] == next_name), None)
+    if not source or not next_task:
+        raise AssertionError(f"Repeat duplicate-id import did not create expected tasks: {records}")
+    if next_task["id"] == 8:
+        raise AssertionError(f"Duplicate imported task id was not normalized: {records}")
+    if source.get("nextRepeatTaskId") is not None:
+        raise AssertionError(f"Ambiguous duplicate-id repeat reference should be cleared: {records}")
+    if next_task.get("repeatCreatedFrom") != source["id"]:
+        raise AssertionError(f"Unambiguous repeat reference should be preserved: {records}")
+
+def exercise_import_dangling_repeat_reference_cleanup(page: Page, prefix: str) -> None:
+    task_name = f"{prefix} Dangling"
+    import_payload_replace(page, [
+        {
+            "id": 201,
+            "name": task_name,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": False,
+            "repeatType": "daily",
+            "repeatSourceId": 999,
+            "repeatCreatedFrom": 999,
+            "nextRepeatTaskId": 202,
+            "order": 1000,
+        }
+    ])
+
+    records = get_task_records(page)
+    record = next((task for task in records if task["name"] == task_name), None)
+    if not record:
+        raise AssertionError(f"Dangling repeat reference import did not create expected task: {records}")
+    dangling_values = {key: record.get(key) for key in ("repeatSourceId", "repeatCreatedFrom", "nextRepeatTaskId")}
+    if any(value is not None for value in dangling_values.values()):
+        raise AssertionError(f"Dangling repeat references should be cleared: {records}")
+    delete_task_records_by_name(page, task_name)
+
+def exercise_import_merge_skip_reference_cleanup(page: Page, prefix: str) -> None:
+    source_name = f"{prefix} Local Source"
+    child_name = f"{prefix} Child"
+    put_task_record(page, {
+        "id": 77,
+        "name": source_name,
+        "createdAt": "2025-05-10T00:00:00.000Z",
+        "completed": False,
+        "order": 1000,
+    })
+    payload = [
+        {
+            "id": 77,
+            "name": source_name,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": False,
+            "repeatType": "daily",
+            "order": 1000,
+        },
+        {
+            "id": 101,
+            "name": child_name,
+            "createdAt": "2025-05-10T00:00:00.000Z",
+            "completed": False,
+            "repeatType": "daily",
+            "repeatCreatedFrom": 77,
+            "order": 2000,
+        },
+    ]
+
+    with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as temp_file:
+        json.dump(payload, temp_file)
+        temp_path = temp_file.name
+
+    try:
+        open_settings(page)
+        with page.expect_file_chooser() as chooser_info:
+            page.locator("#importBtn").click()
+        chooser_info.value.set_files(temp_path)
+        expect(page.locator("#taskModal")).to_be_visible()
+        page.locator("#mergeImportMode").check()
+        page.locator(".import-conflict-select").select_option("skip")
+        page.locator("#submitBtn").click()
+        wait_for_notification(page, re.compile("合并|merged", re.I))
+        select_filter(page, "all")
+        records = get_task_records(page)
+        child = next((task for task in records if task["name"] == child_name), None)
+        if not child:
+            raise AssertionError(f"Merge skip reference import did not create child task: {records}")
+        if child.get("repeatCreatedFrom") is not None:
+            raise AssertionError(f"Skipped imported source should not remain referenced: {records}")
+        if len([task for task in records if task["name"] == source_name]) != 1:
+            raise AssertionError(f"Merge skip should keep exactly one local source task: {records}")
+    finally:
+        Path(temp_path).unlink(missing_ok=True)
+    delete_task_records_by_name(page, child_name)
+    delete_task_records_by_name(page, source_name)
+
+def assert_pwa_installability(page: Page) -> None:
+    session = page.context.new_cdp_session(page)
+    manifest_result = session.send("Page.getAppManifest")
+    manifest_errors = manifest_result.get("errors", [])
+    if manifest_errors:
+        raise AssertionError(f"Manifest has browser parse errors: {manifest_errors}")
+
+    manifest_data = json.loads(manifest_result.get("data") or "{}")
+    required_values = {
+        "id": "./",
+        "start_url": "./",
+        "scope": "./",
+        "display": "standalone",
+    }
+    for key, expected in required_values.items():
+        if manifest_data.get(key) != expected:
+            raise AssertionError(f"Manifest {key} changed: expected {expected!r}, got {manifest_data.get(key)!r}")
+    shortcuts = manifest_data.get("shortcuts") or []
+    if not any(item.get("name") == "Quick Capture" and item.get("url") == "./?capture=1" for item in shortcuts):
+        raise AssertionError(f"Manifest Quick Capture shortcut is missing: {shortcuts}")
+    share_target = manifest_data.get("share_target") or {}
+    if (
+        share_target.get("action") != "./?capture=1"
+        or share_target.get("method") != "GET"
+        or share_target.get("enctype") != "application/x-www-form-urlencoded"
+    ):
+        raise AssertionError(f"Manifest share_target changed: {share_target}")
+
+    installability_result = session.send("Page.getInstallabilityErrors")
+    installability_errors = installability_result.get("installabilityErrors", [])
+    if installability_errors:
+        raise AssertionError(f"PWA installability errors: {installability_errors}")
+
+def assert_storage_unavailable_mode(browser: Browser, base_url: str) -> None:
+    context = browser.new_context()
+    context.add_init_script(
+        """(() => {
+            const blocked = (name) => {
+                throw new DOMException(`${name} blocked by test`, 'SecurityError');
+            };
+            Object.defineProperty(window, 'indexedDB', {
+                configurable: true,
+                value: {
+                    open() {
+                        blocked('IndexedDB');
+                    }
+                }
+            });
+            Object.defineProperty(window, 'localStorage', {
+                configurable: true,
+                get() {
+                    blocked('localStorage');
+                }
+            });
+            Object.defineProperty(window, 'sessionStorage', {
+                configurable: true,
+                get() {
+                    blocked('sessionStorage');
+                }
+            });
+        })();"""
+    )
+    page_errors: list[str] = []
+    page = context.new_page()
+    page.on("pageerror", lambda error: page_errors.append(str(error)))
+    try:
+        page.goto(base_url, wait_until="domcontentloaded")
+        expect(page.locator("#storageUnavailableBanner")).to_be_visible()
+        if is_workbench_v5(page):
+            expect(page.locator('body')).to_have_attribute('data-workspace-screen', 'today')
+            language = page.locator('html').get_attribute('lang') or 'zh-CN'
+            unavailable = json.loads((input_path('resources' + '/' + f'{language}.json')).read_text())['v5.common.storageUnavailable']
+            expect(page.locator('#todayWorkspace .workbench-empty-title:visible')).to_have_text(unavailable)
+        else:
+            expect(page.locator('#taskList .storage-empty-state')).to_be_visible()
+        expect(page.locator("#openModalBtn")).to_be_disabled()
+        expect(page.locator("#quickAddInput")).to_be_disabled()
+        expect(page.locator("#notificationToggleBtn")).to_be_disabled()
+        expect(page.locator('#workspaceSettingsBtn') if is_workbench_v5(page) else page.locator('#openMenuBtn')).to_be_enabled()
+        expect(page.locator("#viewTab-list")).to_be_disabled()
+        expect(page.locator("#retryStorageBtn")).to_be_enabled()
+        open_settings(page, 'help')
+        expect(page.locator('#helpMenuBtn')).to_be_enabled()
+        expect(page.locator('#backupBtn')).to_be_disabled()
+        assert_accessibility_baseline(page, "storage unavailable settings")
+        return_to_task_workspace(page)
+        assert_accessibility_baseline(page, "storage unavailable mode")
+        page.locator("#retryStorageBtn").click()
+        wait_for_notification(page, re.compile("本地存储仍不可用|still unavailable", re.I))
+        expect(page.locator("#retryStorageBtn")).to_be_enabled()
+        assert_no_page_errors(page_errors)
+    finally:
+        context.close()
+
+def assert_runtime_storage_fallback_preserves_snapshot(browser: Browser, base_url: str) -> None:
+    context = browser.new_context(accept_downloads=True)
+    page_errors: list[str] = []
+    page = context.new_page()
+    page.on("pageerror", lambda error: page_errors.append(str(error)))
+    task_name = f"Storage fallback snapshot {int(time.time())}"
+    try:
+        clear_app_data(page, base_url)
+        add_task(page, task_name, no_deadline=True)
+        page.evaluate(
+            """() => {
+                IDBDatabase.prototype.transaction = function () {
+                    throw new DOMException('transaction blocked by test', 'SecurityError');
+                };
+            }"""
+        )
+        open_settings(page)
+        expect(page.locator('#settingsWorkspace')).to_be_visible()
+        return_to_task_workspace(page)
+        expect(page.locator("#storageUnavailableBanner")).to_be_visible()
+        expect(page.locator("#taskList .storage-empty-state")).to_contain_text(re.compile("1"))
+        expect(page.locator("#emergencyBackupBtn")).to_be_visible()
+        expect(page.locator('#workspaceSettingsBtn') if is_workbench_v5(page) else page.locator('#openMenuBtn')).to_be_enabled()
+        for shortcut in ["p", "i", "k", "m", "z"]:
+            press_control_shortcut(page, shortcut)
+            expect(page.locator("#commandPalette")).to_be_hidden()
+            expect(page.locator("#taskModal")).to_be_hidden()
+            if shortcut == 'm':
+                expect(page.locator('#settingsWorkspace')).to_be_visible()
+                return_to_task_workspace(page)
+        assert_accessibility_baseline(page, "runtime storage fallback")
+        with page.expect_download() as download_info:
+            page.locator("#emergencyBackupBtn").click()
+        download = download_info.value
+        path = download.path()
+        if not path:
+            raise AssertionError("Emergency backup did not produce a readable download file")
+        payload = json.loads(Path(path).read_text(encoding="utf-8"))
+        if payload.get("type") != "emergency-backup" or payload.get("schema", {}).get("storage") != "memory-fallback":
+            raise AssertionError(f"Emergency backup metadata is incomplete: {payload}")
+        names = {task.get("name") for task in payload.get("tasks", [])}
+        if task_name not in names:
+            raise AssertionError(f"Emergency backup did not include the in-memory task snapshot: {payload}")
+        assert_no_page_errors(page_errors)
+    finally:
+        context.close()
+
+def assert_notification_does_not_cover_header(browser: Browser, base_url: str) -> None:
+    for width in (1280, 900):
+        context = browser.new_context(viewport={"width": width, "height": 800}, reduced_motion="reduce")
+        try:
+            page = context.new_page()
+            page_errors: list[str] = []
+            page.on("pageerror", lambda error: page_errors.append(str(error)))
+            clear_app_data(page, base_url)
+            task_name = f"Toast pointer access {width}"
+            add_task(page, task_name, no_deadline=True)
+            expect(page.locator("#taskModal")).to_be_hidden()
+            expect(page.locator("#notification")).to_have_class(re.compile(r"\bsuccess\b.*\bshow\b"))
+            expect(page.locator("#notificationUndoBtn")).to_be_visible()
+            before = get_task_records(page)
+            entry = page.locator('#workspaceSettingsBtn') if is_workbench_v5(page) else page.locator('#openMenuBtn')
+            expect(entry).to_be_visible()
+            menu_box = entry.bounding_box()
+            if not menu_box:
+                raise AssertionError('Settings entry has no clickable bounds')
+            # Coordinate clicks expose overlap instead of waiting for a covering toast to disappear.
+            page.mouse.click(menu_box["x"] + menu_box["width"] / 2, menu_box["y"] + menu_box["height"] / 2)
+            expect(page.locator('#settingsWorkspace')).to_be_visible()
+            expect(page.locator("#notificationUndoBtn")).to_be_visible()
+            assert get_task_records(page) == before, "Opening the menu changed the added task"
+            page.locator("#notificationUndoBtn").click()
+            expect(page.locator('#settingsWorkspace')).to_be_visible()
+            return_to_task_workspace(page)
+            expect(task_locator(page, task_name)).to_have_count(0)
+            assert get_task_records(page) == [], "Toast Undo did not remove the added task"
+            assert_no_page_errors(page_errors)
+            print(f"Notification pointer access passed: {width}px settings entry and toast Undo remain usable", flush=True)
+        finally:
+            context.close()
+
+def exercise_legacy_boolean_normalization(page: Page) -> None:
+    task_name = f"Legacy Boolean {int(time.time())}"
+    put_task_record(
+        page,
+        {
+            "id": int(time.time() * 1000) + 77,
+            "name": task_name,
+            "description": "Legacy dirty boolean smoke test.",
+            "completed": "false",
+            "archived": "false",
+            "createdAt": iso_minutes_from_now(0),
+            "order": 777,
+            "subtasks": [
+                {"id": 1, "text": "Legacy subtask", "completed": "false"},
+            ],
+        },
+    )
+    select_filter(page, "active")
+    expect(task_locator(page, task_name)).to_have_count(1)
+    record = next((item for item in get_task_records(page) if item["name"] == task_name), None)
+    if not record:
+        raise AssertionError("Legacy boolean task was not preserved after normalization")
+    if record.get("completed") is not False or record.get("archived") is not False:
+        raise AssertionError(f"Legacy task booleans were not normalized: {record}")
+    subtasks = record.get("subtasks") or []
+    if not subtasks or subtasks[0].get("completed") is not False:
+        raise AssertionError(f"Legacy subtask boolean was not normalized: {record}")
+    delete_task_records_by_name(page, task_name)
+
+def assert_visual_layout(context: BrowserContext, base_url: str, errors: list[str]) -> None:
+    visual_page = context.new_page()
+    visual_page.on("pageerror", lambda error: errors.append(str(error)))
+    try:
+        for label, viewport in (
+            ("desktop", {"width": 1280, "height": 720}),
+            ("wide tablet", {"width": 1100, "height": 844}),
+            ("tablet", {"width": 900, "height": 844}),
+            ("narrow tablet", {"width": 700, "height": 844}),
+            ("large mobile", {"width": 600, "height": 844}),
+            ("mobile", {"width": 390, "height": 844}),
+            ("compact mobile", {"width": 320, "height": 568}),
+        ):
+            visual_page.set_viewport_size(viewport)
+            visual_page.goto(base_url, wait_until="domcontentloaded")
+            wait_for_app_ready(visual_page)
+            select_filter(visual_page, "all")
+            expect(visual_page.locator(".task-item")).to_have_count(3)
+            exercise_workspace_navigation(visual_page)
+            if viewport['width'] == 390:
+                exercise_workspace_date_focus(visual_page, zero_matches=True)
+                expect(visual_page.locator('.task-item')).to_have_count(3)
+            # Main navigation has its own sidebar/dock container, independent of
+            # the auxiliary toolbar. Check usable labels/targets at every width.
+            if is_workbench_v5(visual_page):
+                mobile = visual_page.locator('#mobileTodayBtn').is_visible()
+                destinations = [f'#viewTab-{view}' for view in ('list', 'calendar', 'timeline')]
+                destinations += ['#mobileTodayBtn', '#mobileTasksBtn', '#mobileProjectsBtn', '#mobileReviewBtn'] if mobile else ['#workspaceTodayBtn', '#workspaceAllTasks', '#workspaceProjectsBtn', '#viewTab-stats']
+            else:
+                destinations = [f'#viewTab-{view}' for view in ('list', 'calendar', 'timeline', 'stats')]
+            for selector in destinations:
+                destination = visual_page.locator(selector)
+                expect(destination).to_be_visible()
+                expect(destination.locator('span[data-i18n]')).to_be_visible()
+                destination.click(trial=True)
+                expect(destination).to_be_in_viewport()
+                destination_box = destination.bounding_box()
+                if not destination_box or destination_box['width'] < 44 or destination_box['height'] < 44:
+                    raise AssertionError(f'{label} navigation target is undersized: {selector}: {destination_box}')
+            if visual_page.locator('#workspaceSidebarScroll').count():
+                mobile_sheet = viewport['width'] <= 779 and visual_page.locator('#mobileFiltersDialog').count()
+                if not mobile_sheet:
+                    reveal_filters(visual_page)
+                expect(visual_page.locator('#toolsDrawerToggleBtn')).to_have_attribute('aria-expanded', 'false' if mobile_sheet else 'true')
+                control_selectors = ['#searchInput', '#saveSmartViewBtn', '#toolsDrawerToggleBtn', '#batchModeBtn',
+                                     '#projectFilterBtn', '#filterBtn', '#sortBtn']
+                for selector in control_selectors:
+                    if mobile_sheet and selector == '#projectFilterBtn':
+                        reveal_filters(visual_page)
+                        expect(visual_page.locator('#mobileFiltersDialog')).to_be_visible()
+                        expect(visual_page.locator('#mobileFiltersBody #toolsDrawerContent')).to_have_count(1)
+                    control = visual_page.locator(selector)
+                    expect(control).to_be_visible()
+                    expect(control).to_be_enabled()
+                    control.scroll_into_view_if_needed()
+                    expect(control).to_be_in_viewport()
+                    notification_covers_control = control.evaluate("""node => {
+                        const r = node.getBoundingClientRect();
+                        const hit = document.elementFromPoint((r.left+r.right)/2, (r.top+r.bottom)/2);
+                        return Boolean(hit?.closest('#notification'));
+                    }""")
+                    if notification_covers_control:
+                        dismiss = visual_page.locator('#workspaceNotificationClose')
+                        expect(dismiss).to_be_visible()
+                        expect(dismiss).to_be_enabled()
+                        dismiss.click()
+                        expect(visual_page.locator('#notification')).not_to_have_class(re.compile(r'\bshow\b'))
+                        control.scroll_into_view_if_needed()
+                    assert control.evaluate("""node => {
+                        const r = node.getBoundingClientRect();
+                        const hit = document.elementFromPoint((r.left+r.right)/2, (r.top+r.bottom)/2);
+                        return hit === node || node.contains(hit);
+                    }"""), f'{label} toolbar control is obscured: {selector}'
+                if mobile_sheet:
+                    close_mobile_filters(visual_page)
+            visual_page.locator(".task-item").first.scroll_into_view_if_needed()
+
+            metrics = visual_page.evaluate(
+                """(label) => {
+                    const viewportWidth = window.innerWidth;
+                    const doc = document.documentElement;
+                    const selectors = ['header', '.controls-bar', '.task-item', '.task-actions'];
+                    const modernToolbar = Boolean(document.querySelector('#workspaceSidebarScroll'));
+                    const mobileFilterSheet = Boolean(document.querySelector('#mobileFiltersDialog')) && viewportWidth <= 779;
+                    const controlSelectors = modernToolbar
+                        ? ['.search-box', '#saveSmartViewBtn', '#toolsDrawerToggleBtn', '#batchModeBtn',
+                           ...(!mobileFilterSheet ? ['#projectDropdown', '#filterDropdown', '#sortDropdown'] : [])]
+                        : ['.search-box', '#projectDropdown', '#filterDropdown', '#sortDropdown', '#saveSmartViewBtn'];
+                    const controlBar = document.querySelector('.controls-bar');
+                    const controlRect = controlBar.getBoundingClientRect();
+                    const boxes = selectors.map((selector) => {
+                        const el = document.querySelector(selector);
+                        if (!el) return { selector, missing: true };
+                        const rect = el.getBoundingClientRect();
+                        return {
+                            selector,
+                            left: rect.left,
+                            right: rect.right,
+                            top: rect.top,
+                            bottom: rect.bottom,
+                            width: rect.width,
+                            height: rect.height
+                        };
+                    });
+                    const controlItems = controlSelectors.map((selector) => {
+                        const el = document.querySelector(selector);
+                        if (!el) return { selector, missing: true };
+                        const rect = el.getBoundingClientRect();
+                        return {
+                            selector,
+                            left: rect.left,
+                            right: rect.right,
+                            top: rect.top,
+                            bottom: rect.bottom,
+                            width: rect.width,
+                            height: rect.height
+                        };
+                    });
+                    const controlRows = [];
+                    controlItems
+                        .filter((item) => !item.missing)
+                        .map((item) => item.top)
+                        .sort((a, b) => a - b)
+                        .forEach((top) => {
+                            if (!controlRows.some((rowTop) => Math.abs(rowTop - top) <= 18)) controlRows.push(top);
+                        });
+                    const controlOverlaps = [];
+                    for (let i = 0; i < controlItems.length; i += 1) {
+                        for (let j = i + 1; j < controlItems.length; j += 1) {
+                            const a = controlItems[i];
+                            const b = controlItems[j];
+                            if (a.missing || b.missing) continue;
+                            const overlapX = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left));
+                            const overlapY = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+                            if (overlapX > 1 && overlapY > 1) controlOverlaps.push(`${a.selector}<->${b.selector}`);
+                        }
+                    }
+                    const controlOutside = controlItems.filter((item) => item.missing
+                        || item.width <= 0
+                        || item.height <= 0
+                        || item.left < controlRect.left - 1
+                        || item.right > controlRect.right + 1
+                        || item.top < controlRect.top - 1
+                        || item.bottom > controlRect.bottom + 1);
+                    const structureIssues = [];
+                    if (modernToolbar) {
+                        const groups = [
+                            ['.toolbar-main-row', ['.search-box', '#saveSmartViewBtn', '#toolsDrawerToggleBtn', '#batchModeBtn']],
+                            ...(!mobileFilterSheet ? [['#toolsDrawerContent .toolbar-filter-row', ['#projectDropdown', '#filterDropdown', '#sortDropdown']]] : [])
+                        ];
+                        const groupRects = [];
+                        for (const [selector, children] of groups) {
+                            const group = controlBar.querySelector(selector);
+                            if (!group) { structureIssues.push(`Missing toolbar group: ${selector}`); continue; }
+                            const r = group.getBoundingClientRect();
+                            groupRects.push(r);
+                            if (r.width <= 0 || r.height <= 0 || r.left < controlRect.left - 1
+                                || r.right > controlRect.right + 1 || r.top < controlRect.top - 1
+                                || r.bottom > controlRect.bottom + 1
+                                || group.scrollWidth > group.clientWidth + 1 || group.scrollHeight > group.clientHeight + 1)
+                                structureIssues.push(`Toolbar group clips or overflows: ${selector}`);
+                            for (const childSelector of children) {
+                                const child = group.querySelector(childSelector);
+                                if (!child) { structureIssues.push(`${childSelector} is outside ${selector}`); continue; }
+                                const c = child.getBoundingClientRect();
+                                if (c.left < r.left - 1 || c.right > r.right + 1
+                                    || c.top < r.top - 1 || c.bottom > r.bottom + 1)
+                                    structureIssues.push(`${childSelector} extends beyond ${selector}`);
+                            }
+                        }
+                        if (groupRects.length === 2) {
+                            const [main, filters] = groupRects;
+                            if (Math.min(main.right, filters.right) - Math.max(main.left, filters.left) > 1
+                                && Math.min(main.bottom, filters.bottom) - Math.max(main.top, filters.top) > 1)
+                                structureIssues.push('Main and expanded filter groups overlap');
+                        }
+                    }
+
+                    return {
+                        label,
+                        viewportWidth,
+                        scrollWidth: doc.scrollWidth,
+                        boxes,
+                        controlRows: controlRows.length,
+                        controlOverlaps,
+                        controlOutside,
+                        modernToolbar,
+                        mobileFilterSheet,
+                        structureIssues,
+                        hasTaskName: Boolean(document.querySelector('.task-name')?.textContent.trim()),
+                        hasVisibleActions: [...document.querySelectorAll('.task-actions button, .task-header [data-action="toggle"]')]
+                            .filter((button) => !button.hidden && button.offsetParent !== null)
+                            .some((button) => button.getBoundingClientRect().width >= 30)
+                            && [...document.querySelectorAll('.task-actions button, .task-header [data-action="toggle"]')]
+                                .filter((button) => !button.hidden && button.offsetParent !== null)
+                                .every((button) => button.getBoundingClientRect().width >= 30)
+                    };
+                }""",
+                label,
+            )
+
+            overflow = metrics["scrollWidth"] - metrics["viewportWidth"]
+            if overflow > 1:
+                raise AssertionError(f"{label} layout has horizontal overflow: {metrics}")
+
+            bad_boxes = [
+                box for box in metrics["boxes"]
+                if box.get("missing")
+                or box["width"] <= 0
+                or box["height"] <= 0
+                or box["left"] < -1
+                or box["right"] > metrics["viewportWidth"] + 1
+            ]
+            if bad_boxes or not metrics["hasTaskName"] or not metrics["hasVisibleActions"]:
+                raise AssertionError(f"{label} layout metrics failed: {metrics}")
+
+            max_control_rows = 4 if viewport["width"] <= 640 else 3 if viewport["width"] <= 900 else 2
+            if (
+                (not metrics['modernToolbar'] and metrics["controlRows"] > max_control_rows)
+                or metrics["controlOverlaps"]
+                or metrics["controlOutside"]
+                or metrics['structureIssues']
+            ):
+                raise AssertionError(f"{label} controls layout failed: {metrics}")
+
+            screenshot = visual_page.screenshot(full_page=True)
+            if len(screenshot) < 10_000:
+                raise AssertionError(f"{label} screenshot looks unexpectedly small")
+
+            if label == "compact mobile":
+                open_task_editor(visual_page)
+                expect(visual_page.locator("#taskModal")).to_be_visible()
+                visual_page.wait_for_timeout(350)
+                modal_box = visual_page.locator(".modal-content").bounding_box()
+                if not modal_box:
+                    raise AssertionError("Compact mobile modal did not render")
+                if modal_box["y"] < -1 or modal_box["y"] + modal_box["height"] > viewport["height"] + 1:
+                    raise AssertionError(f"Compact mobile modal is clipped: {modal_box}")
+                visual_page.locator("#cancelBtn").click()
+    finally:
+        visual_page.close()
+
+def smoke(url: str) -> None:
+    errors: list[str] = []
+    console_errors: list[str] = []
+    bad_resources: list[str] = []
+    failed_requests: list[str] = []
+    task_name = f"Smoke Task {int(time.time())}"
+    alpha_name = f"{task_name} Alpha"
+    alpha_edited = f"{task_name} Alpha Edited"
+    beta_name = f"{task_name} Beta"
+    overdue_name = f"{task_name} Overdue"
+    imported_name = f"{task_name} Imported"
+    quick_name = f"{task_name} Quick"
+    repeat_name = f"{task_name} Repeat"
+    advanced_repeat_name = f"{task_name} Advanced Repeat"
+    paused_repeat_name = f"{task_name} Paused Repeat"
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(**browser_launch_options())
+        context = browser.new_context(accept_downloads=True, timezone_id='UTC')
+        context.grant_permissions(["notifications"], origin=get_origin(url))
+        page = context.new_page()
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        page.on(
+            "console",
+            lambda message: console_errors.append(message.text)
+            if message.type == "error"
+            and not message.text.startswith("Failed to load resource")
+            else None,
+        )
+        page.on(
+            "response",
+            lambda response: bad_resources.append(
+                f"{response.status} {response.url}"
+            )
+            if response.status >= 400 and not is_ignored_resource(response.url)
+            else None,
+        )
+        page.on(
+            "requestfailed",
+            lambda request: failed_requests.append(describe_request_failure(request))
+            if request.failure and not is_ignored_resource(request.url)
+            else None,
+        )
+
+        assert_pwa_resources(context, url)
+        assert_storage_unavailable_mode(browser, url)
+        assert_runtime_storage_fallback_preserves_snapshot(browser, url)
+        assert_notification_does_not_cover_header(browser, url)
+        clear_app_data(page, url)
+        assert_empty_task_list(page)
+        assert_accessibility_baseline(page, "empty task list")
+        exercise_legacy_boolean_normalization(page)
+        assert_empty_task_list(page)
+        exercise_workspace_date_focus(page)
+
+        exercise_shortcuts_and_modal_closing(page)
+        exercise_keyboard_navigation_patterns(page)
+        exercise_custom_select_escape_keeps_modal_open(page)
+        exercise_task_name_validation(page)
+        exercise_empty_state_actions(page)
+        exercise_import_error(page)
+        exercise_theme(page)
+        exercise_language(page)
+        exercise_notifications(page)
+        assert_service_worker_and_offline_load(context, page)
+        exercise_one_time_reminder_persists_across_reload(page)
+        assert_installability_in_regular_profile(playwright, url)
+
+        exercise_quick_capture_entries(page, url, f"{task_name} Capture")
+        exercise_quick_add(page, quick_name)
+        exercise_subtask_draft_editor(page)
+        exercise_repeating_task(page, repeat_name)
+        exercise_batch_repeat_completion_order(page, task_name)
+        exercise_advanced_repeat_task(page, advanced_repeat_name, paused_repeat_name)
+        exercise_time_zone_stable_repeat(page, f"{task_name} Timezone Repeat")
+        add_task(page, alpha_name, no_deadline=True, project="Smoke Work", tags=["focus", "docs"], subtasks=["First smoke subtask", "Second smoke subtask"])
+        add_task(page, beta_name, due_date=future_date(1), due_time="12:30", reminder_offset="15", project="Smoke Personal", tags=["deadline"])
+        exercise_edit_focus_restore(page, alpha_name)
+        exercise_command_palette(page, alpha_name, beta_name)
+        expect(task_locator(page, beta_name).locator(".task-reminder-icon")).to_be_visible()
+        snooze_task_reminder(page, beta_name)
+        add_overdue_task_record(page, overdue_name, order=30_000)
+        exercise_project_tags(page, alpha_name, beta_name)
+        exercise_smart_views_batch_focus_undo(page, alpha_name, beta_name, overdue_name)
+        exercise_theme_fallback_transition(page)
+        exercise_search_empty_state(page, f"{task_name} Missing")
+        exercise_subtasks(page, alpha_name)
+        assert_visual_layout(context, url, errors)
+
+        edit_task(page, alpha_name, alpha_edited)
+        search_task(page, alpha_edited)
+        clear_search(page)
+
+        exercise_filters_and_sort(page, alpha_edited, beta_name, overdue_name)
+        exercise_date_views(page, alpha_edited, beta_name, overdue_name)
+        exercise_workspace_date_focus(page, zero_matches=True)
+        exercise_manual_reorder(page, alpha_edited, beta_name, overdue_name)
+        exercise_back_to_top(page)
+        complete_task(page, alpha_edited)
+        exercise_stats_view(page, alpha_edited)
+        select_filter(page, "active")
+        expect(task_locator(page, beta_name)).to_have_count(1)
+        expect(task_locator(page, overdue_name)).to_have_count(1)
+        exercise_filtered_manual_reorder_guard(page, alpha_edited, overdue_name, beta_name)
+        archive_and_restore_task(page, alpha_edited)
+        clear_completed_tasks(page, alpha_edited)
+
+        select_filter(page, "all")
+        expect(task_locator(page, beta_name)).to_have_count(1)
+        expect(task_locator(page, overdue_name)).to_have_count(1)
+        backup = exercise_export_backup(page)
+        backup_names = {task["name"] for task in backup["tasks"]}
+        if backup_names != {beta_name, overdue_name}:
+            raise AssertionError(f"Export/backup tasks did not match remaining tasks: {backup}")
+
+        exercise_import_merge(page, f"{task_name} Merged", beta_name)
+        exercise_import_preview_details(page, beta_name)
+        exercise_import(page, imported_name)
+        cancel_delete_task(page, imported_name)
+        delete_task(page, imported_name)
+        assert_empty_task_list(page)
+        exercise_restore_compatibility_previews(page)
+        exercise_import_repeat_reference_remap(page, f"{task_name} Repeat Import")
+        exercise_import_dangling_repeat_reference_cleanup(page, f"{task_name} Repeat Import")
+        assert_empty_task_list(page)
+        exercise_import_merge_skip_reference_cleanup(page, f"{task_name} Repeat Import")
+        exercise_imported_zero_id_edit(page, f"{task_name} Zero Id")
+        assert_empty_task_list(page)
+        exercise_task_action_menu_viewport(page)
+
+        context.close()
+        browser.close()
+
+    assert_no_page_errors(errors)
+    if bad_resources:
+        joined = "\n".join(f"- {resource}" for resource in bad_resources)
+        raise AssertionError(f"Unexpected HTTP errors were loaded:\n{joined}")
+    if failed_requests:
+        joined = "\n".join(f"- {request}" for request in failed_requests)
+        raise AssertionError(f"Unexpected browser requests failed:\n{joined}")
+    if console_errors:
+        joined = "\n".join(f"- {error}" for error in console_errors)
+        raise AssertionError(f"Browser console errors were logged:\n{joined}")
+
+    print(f"Smoke passed: {url}")
+
+def main() -> int:
+    ensure_conda_library_path()
+    url = os.environ.get("TASK_TRACER_URL")
+
+    try:
+        if url:
+            smoke(url)
+        else:
+            with local_server() as local_url:
+                smoke(local_url)
+    except TimeoutError as error:
+        print(f"Smoke failed: timed out waiting for UI state\n{error}", file=sys.stderr)
+        return 1
+    except Exception as error:
+        print(f"Smoke failed: {error}", file=sys.stderr)
+        return 1
+
+    return 0
+
+if __name__ == "__main__":
+    raise SystemExit(main())
