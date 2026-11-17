@@ -202,15 +202,30 @@
             if (!isFocusableReturnElement(element)) return false;
             const rect = element.getBoundingClientRect();
             const shell = element.closest('.workspace-sidebar, #workspaceMobileDock, .workspace-topbar');
-            const dock = document.getElementById('workspaceMobileDock').getBoundingClientRect();
             const top = shell ? 0 : document.querySelector('.workspace-topbar').getBoundingClientRect().bottom;
-            const bottom = shell || !dock.height || dock.top >= window.innerHeight ? window.innerHeight : dock.top;
+            const bottom = shell ? window.innerHeight : workspaceViewportBottom();
             if (rect.left < 0 || rect.right > window.innerWidth || rect.top < top || rect.bottom > bottom) return false;
             const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
             return Boolean(hit && (hit === element || element.contains(hit)));
         }
+        function workspaceViewportBottom() {
+            const viewport = window.visualViewport;
+            let bottom = Math.min(innerHeight, (viewport?.offsetTop || 0) + (viewport?.height || innerHeight));
+            const dock = document.getElementById('workspaceMobileDock');
+            const rect = dock?.getBoundingClientRect();
+            if (rect?.height && rect.width && getComputedStyle(dock).position === 'fixed'
+                && rect.bottom >= bottom - 1 && rect.top < bottom) bottom = rect.top;
+            return bottom;
+        }
         function setWorkspaceScreen(screen, { focus = false, restoreFocus = false, render = true, planning = null } = {}) {
             if (!['today', 'tasks', 'projects', 'review', 'settings'].includes(screen)) return false;
+            if (isFloatingTaskEditor()) {
+                if (isTaskFormDirty()) {
+                    requestCloseTaskDialog(() => setWorkspaceScreen(screen, { focus, restoreFocus, render, planning }));
+                    return false;
+                }
+                closeDialog({ restoreFocus: false });
+            }
             if (screen !== workspaceUI.screen) closeMobileFilters({ restoreFocus: false });
             if (isDialogOpen()) return false;
             if (['today', 'projects'].includes(screen) && typeof createWorkbench !== 'function') screen = 'tasks';
@@ -570,6 +585,7 @@
             DOM.notification.el.addEventListener('focusout', () => requestAnimationFrame(resumeNotificationTimer));
             document.getElementById('workspaceNavToggle').addEventListener('click', () => setWorkspaceNavigationOpen(!workspaceUI.navigationOpen));
             document.getElementById('workspaceNavBackdrop').addEventListener('click', () => setWorkspaceNavigationOpen(false, { restoreFocus: true }));
+            document.getElementById('workspaceNavClose').addEventListener('click', () => setWorkspaceNavigationOpen(false, { restoreFocus: true }));
             document.querySelectorAll('[data-workbench-screen]').forEach(button => button.addEventListener('click', () => {
                 const screen = button.dataset.workbenchScreen;
                 if (screen === 'review') setViewMode('stats');
@@ -622,23 +638,22 @@
             if (open && isDialogOpen()) return;
             const sidebar = document.getElementById('workspaceSidebar');
             const button = document.getElementById('workspaceNavToggle');
-            const mobile = !window.matchMedia('(min-width: 780px)').matches;
-            workspaceUI.navigationOpen = Boolean(open && mobile);
+            workspaceUI.navigationOpen = Boolean(open);
             document.querySelector('.container').classList.toggle('workspace-navigation-open', workspaceUI.navigationOpen);
             button.setAttribute('aria-expanded', String(workspaceUI.navigationOpen));
-            sidebar.hidden = mobile && !workspaceUI.navigationOpen;
-            sidebar.inert = mobile && !workspaceUI.navigationOpen;
+            sidebar.hidden = !workspaceUI.navigationOpen;
+            sidebar.inert = !workspaceUI.navigationOpen;
             document.querySelector('.workspace-stage').inert = workspaceUI.navigationOpen;
-            sidebar.setAttribute('aria-hidden', String(mobile && !workspaceUI.navigationOpen));
+            sidebar.setAttribute('aria-hidden', String(!workspaceUI.navigationOpen));
             document.getElementById('workspaceNavBackdrop').hidden = !workspaceUI.navigationOpen;
             if (workspaceUI.navigationOpen) requestAnimationFrame(() => {
                 if (!workspaceUI.navigationOpen) return;
-                const target = (workspaceUI.screen === 'settings' ? document.getElementById('workspaceSettingsBtn') : sidebar.querySelector('.workspace-scope-navigation [aria-current="page"]') || sidebar.querySelector('.workspace-nav-button[aria-pressed="true"]'))
-                    || document.getElementById('workspaceAllTasks');
+                const target = sidebar.querySelector('.workspace-nav-button[aria-pressed="true"]')
+                    || sidebar.querySelector('.workspace-nav-button') || document.getElementById('workspaceNavClose');
                 target.focus({ preventScroll: true });
                 if (document.getElementById('workspaceSidebarScroll').contains(target)) target.scrollIntoView({ block: 'nearest', inline: 'nearest' });
             });
-            else if (restoreFocus || (mobile && sidebar.contains(document.activeElement))) button.focus({ preventScroll: true });
+            else if (restoreFocus || sidebar.contains(document.activeElement)) button.focus({ preventScroll: true });
         }
 
         function syncWorkspaceOverviewVisibility() {
@@ -686,6 +701,8 @@
             const scope = normalizeProjectFilter(state.projectFilter);
             const title = workspaceUI.planning ? utils.translate('v5.planning.title') : workspaceUI.screen === 'review' ? utils.translate('v5.nav.review') : state.focusMode ? utils.translate('focus.title') : scope.kind === 'all' ? utils.translate('workspace.allTasks') : getProjectFilterLabel(scope);
             document.getElementById('workspaceTitle').textContent = title;
+            document.getElementById('workspaceTitle').dataset.longTitle = String(Array.from(title).length > 48);
+            document.getElementById('workspaceTitle').title = title;
             document.getElementById('tasksWorkspace').dataset.planning = String(workspaceUI.planning);
             document.getElementById('planningDoneBtn').hidden = !workspaceUI.planning;
             const countText = translateCount('workspace.taskCount', count).replace('{count}', count);
@@ -1313,6 +1330,13 @@
             if (isTaskDialogOpen()) closeDialog();
         }
         function runAppAction(action, payload = {}, options = {}) {
+            if (isFloatingTaskEditor() && action !== 'task.save') {
+                if (isTaskFormDirty()) {
+                    requestCloseTaskDialog(() => runAppAction(action, payload, options));
+                    return false;
+                }
+                closeDialog({ restoreFocus: false });
+            }
             if (DOM.mobileFiltersDialog?.open && ![
                 'dropdown.open', 'dropdown.toggle', 'filter.set', 'project.filter', 'sort.set',
                 'focus.enter', 'focus.exit', 'focus.toggle', 'tools.drawer.toggle', 'tools.drawer.pin'
@@ -1758,6 +1782,21 @@
             DOM.closeModalBtn.addEventListener('click', requestCloseTaskDialog);
             DOM.cancelBtn.addEventListener('click', requestCloseTaskDialog);
             DOM.modal.addEventListener('click', e => { if (e.target === DOM.modal) requestCloseTaskDialog(); });
+            document.addEventListener('click', guardContextualEditorAction, true);
+            window.addEventListener('resize', scheduleContextualEditor);
+            window.addEventListener('scroll', scheduleContextualEditor, { passive: true });
+            window.visualViewport?.addEventListener('resize', scheduleContextualEditor);
+            window.visualViewport?.addEventListener('scroll', scheduleContextualEditor);
+            DOM.inputs.name.addEventListener('input', resizeTaskTitle);
+            DOM.inputs.desc.addEventListener('input', resizeTaskTitle);
+            DOM.form.addEventListener('input', syncTaskPropertySummaries);
+            DOM.form.addEventListener('change', syncTaskPropertySummaries);
+            DOM.inputs.name.addEventListener('keydown', event => {
+                if (event.key === 'Enter' && !event.shiftKey && !isCompositionKey(event)) {
+                    event.preventDefault();
+                    DOM.form.requestSubmit();
+                }
+            });
             window.addEventListener('beforeunload', handleTaskDraftBeforeUnload);
             DOM.taskDraftRecoveryDownloadBtn.addEventListener('click', downloadRecoverableTaskDrafts);
             DOM.taskDraftRecoveryRestoreBtn.addEventListener('click', restoreRecoverableTaskDraft);
@@ -1863,6 +1902,7 @@
                 if (preset !== 'pick') DOM.inputs.date.value = getRelativeDateKey(Number(preset));
                 DOM.inputs.noDeadline.dispatchEvent(new Event('change', { bubbles: true }));
                 if (preset === 'pick') {
+                    DOM.inputs.date.closest('details').open = true;
                     DOM.inputs.date.focus();
                     try { DOM.inputs.date.showPicker?.(); } catch {}
                 }
@@ -2125,8 +2165,7 @@
             const panel = more.querySelector('.batch-more-panel');
             const toolbar = DOM.batchToolbar.getBoundingClientRect();
             const headerBottom = document.querySelector('.workspace-topbar')?.getBoundingClientRect().bottom || 0;
-            const dock = document.querySelector('.workspace-mobile-dock')?.getBoundingClientRect();
-            const viewportBottom = dock && dock.width > 0 && dock.height > 0 && dock.top < window.innerHeight ? dock.top : window.innerHeight;
+            const viewportBottom = workspaceViewportBottom();
             const below = Math.max(0, viewportBottom - toolbar.bottom - 18);
             const above = Math.max(0, toolbar.top - Math.max(12, headerBottom) - 6);
             const opensUp = below < panel.scrollHeight && above > below;
@@ -2212,8 +2251,7 @@
                         target.focus({ preventScroll: true });
                         const rect = target.getBoundingClientRect();
                         const top = document.querySelector('.workspace-topbar').getBoundingClientRect().bottom + 12;
-                        const dock = document.getElementById('workspaceMobileDock').getBoundingClientRect();
-                        const bottom = dock.height && dock.top < window.innerHeight ? dock.top - 12 : window.innerHeight - 12;
+                        const bottom = workspaceViewportBottom() - 12;
                         if (rect.top < top || rect.bottom > bottom) target.scrollIntoView({ block: 'center', behavior: 'instant' });
                     } else document.getElementById('workspaceTitle').focus({ preventScroll: true });
                 });
@@ -2576,19 +2614,26 @@
         function renderSavedViews() {
             if (!DOM.savedViewsBar || !DOM.savedViewsList) return;
             DOM.savedViewsBar.hidden = !state.storageAvailable || state.savedViews.length === 0;
-            DOM.savedViewsList.textContent = '';
+            const chips = new Map([...DOM.savedViewsList.children].map(item => [item.dataset.savedViewChipId, item]));
+            const ids = new Set(state.savedViews.map(view => view.id));
+            for (const [id, item] of chips) if (!ids.has(id)) item.remove();
             if (state.savedViews.length === 0) {
                 DOM.savedViewsList.removeAttribute('role');
                 return;
             }
             DOM.savedViewsList.setAttribute('role', 'list');
-            const fragment = document.createDocumentFragment();
-            state.savedViews.forEach(view => fragment.appendChild(createSavedViewChip(view)));
-            DOM.savedViewsList.appendChild(fragment);
+            let next = DOM.savedViewsList.firstElementChild;
+            for (const view of state.savedViews) {
+                const item = chips.get(view.id) || createSavedViewChip(view);
+                updateSavedViewChip(item, view);
+                if (item !== next) DOM.savedViewsList.insertBefore(item, next);
+                next = item.nextElementSibling;
+            }
         }
         function createSavedViewChip(view) {
             const item = document.createElement('div');
             item.className = 'saved-view-chip';
+            item.dataset.savedViewChipId = view.id;
             item.setAttribute('role', 'listitem');
             const apply = document.createElement('button');
             apply.type = 'button';
@@ -2596,24 +2641,31 @@
             apply.dataset.savedViewId = view.id;
             const name = document.createElement('span');
             name.className = 'saved-view-name';
-            name.textContent = view.name;
             apply.appendChild(name);
-            const metaText = getSavedViewMeta(view);
-            if (metaText) {
-                const meta = document.createElement('span');
-                meta.className = 'saved-view-meta';
-                meta.textContent = metaText;
-                apply.appendChild(meta);
-            }
-            apply.title = utils.translate('savedViews.applyLabel').replace('{name}', view.name);
             const remove = document.createElement('button');
             remove.type = 'button';
             remove.className = 'saved-view-delete';
             remove.dataset.savedViewDeleteId = view.id;
-            remove.setAttribute('aria-label', utils.translate('savedViews.deleteLabel').replace('{name}', view.name));
             remove.innerHTML = '<svg class="icon icon-sm" aria-hidden="true"><use href="#icon-x"></use></svg>';
             item.append(apply, remove);
             return item;
+        }
+        function updateSavedViewChip(item, view) {
+            const apply = item.querySelector('.saved-view-apply');
+            const name = apply.querySelector('.saved-view-name');
+            if (name.textContent !== view.name) name.textContent = view.name;
+            const metaText = getSavedViewMeta(view);
+            let meta = apply.querySelector('.saved-view-meta');
+            if (metaText) {
+                if (!meta) {
+                    meta = document.createElement('span');
+                    meta.className = 'saved-view-meta';
+                    apply.appendChild(meta);
+                }
+                if (meta.textContent !== metaText) meta.textContent = metaText;
+            } else meta?.remove();
+            apply.title = utils.translate('savedViews.applyLabel').replace('{name}', view.name);
+            item.querySelector('.saved-view-delete').setAttribute('aria-label', utils.translate('savedViews.deleteLabel').replace('{name}', view.name));
         }
         function getSavedViewMeta(view) {
             const meta = [
@@ -3263,9 +3315,11 @@
             if (host && DOM.notification.el.parentElement !== host) host.appendChild(DOM.notification.el);
         }
         function syncPageModalOpenState() {
-            const open = isDialogOpen();
+            const open = Boolean(isDialogOpen() && (!isFloatingTaskEditor() || state.taskFormSession?.prompt || state.taskFormSession?.saving));
             document.documentElement.classList.toggle('modal-open', open);
             document.body.classList.toggle('modal-open', open);
+            if (isTaskDialogOpen()) DOM.modal.setAttribute('aria-modal', String(open));
+            document.querySelector('.container').inert = open;
             syncDialogFeedbackPlacement();
         }
         function bindNotificationEvents() {
@@ -3612,9 +3666,8 @@
                     if (state.viewMode !== 'list' || isDialogOpen() || document.activeElement !== control || !control.isConnected) return;
                     const rect = control.getBoundingClientRect();
                     const header = document.querySelector('.workspace-topbar').getBoundingClientRect();
-                    const dock = document.getElementById('workspaceMobileDock').getBoundingClientRect();
                     const top = header.bottom + 8;
-                    const bottom = Math.min(innerHeight, dock.height && dock.top < innerHeight ? dock.top : innerHeight) - 8;
+                    const bottom = workspaceViewportBottom() - 8;
                     if (rect.top < top) window.scrollBy({ top: rect.top - top, behavior: 'instant' });
                     else if (rect.bottom > bottom) window.scrollBy({ top: rect.bottom - bottom, behavior: 'instant' });
                 });
@@ -3724,7 +3777,7 @@
                 return;
             }
             if (isTaskDialogOpen()) {
-                if (e.key === 'Tab') trapDialogFocus(e);
+                if (e.key === 'Tab' && (!isFloatingTaskEditor() || state.taskFormSession?.prompt || state.taskFormSession?.saving)) trapDialogFocus(e);
                 else if (e.key === 'Escape') {
                     e.preventDefault();
                     if (state.taskFormSession?.prompt) dismissTaskDraftDiscard();
@@ -3771,6 +3824,97 @@
         }
         function isTaskDialogOpen() {
             return DOM.modal && DOM.modal.style.display === 'flex';
+        }
+        const contextualEditor = { anchor: null, frame: 0, measurements: new WeakMap() };
+        function isFloatingTaskEditor() {
+            return isTaskDialogOpen() && state.modalMode === 'form' && DOM.modal.dataset.layout === 'floating';
+        }
+        function resizeTaskTitle() {
+            for (const field of [DOM.inputs.name, DOM.inputs.desc]) {
+                const width = field.getBoundingClientRect().width;
+                const previous = contextualEditor.measurements.get(field);
+                if (!width || (previous?.width === width && previous.value === field.value)) continue;
+                const scroll = DOM.form.scrollTop;
+                field.style.height = '0px';
+                const style = getComputedStyle(field);
+                const border = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+                field.style.height = `${field.scrollHeight + border}px`;
+                DOM.form.scrollTop = scroll;
+                contextualEditor.measurements.set(field, { width, value: field.value });
+            }
+        }
+        function syncTaskPropertySummaries() {
+            const date = normalizeDueDateValue(DOM.inputs.date.value);
+            const dateText = DOM.inputs.noDeadline.checked ? utils.translate('form.noDeadline')
+                : date ? new Intl.DateTimeFormat(state.currentLanguage, { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(new Date(`${date}T12:00:00Z`))
+                    + (DOM.inputs.time.value ? ` ${DOM.inputs.time.value}` : '') : '—';
+            const summaries = { date: dateText, project: DOM.inputs.project.value.trim() || utils.translate('projects.none'), tags: DOM.inputs.tags.value.trim() || '—' };
+            for (const [key, text] of Object.entries(summaries)) {
+                const value = DOM.modal.querySelector(`[data-editor-property-summary="${key}"]`);
+                if (value) value.textContent = text;
+            }
+        }
+        function findEditorAnchor() {
+            if (state.editingTaskId === null) return null;
+            const key = CSS.escape(String(state.editingTaskId));
+            return Array.from(document.querySelectorAll(`.workbench-task[data-workbench-task="${key}"], .task-item[data-task-id="${key}"]`))
+                .find(element => !element.closest('[hidden], [inert]') && element.getClientRects().length) || null;
+        }
+        function clearEditorAnchor() {
+            contextualEditor.anchor?.classList.remove('is-editor-selected');
+            contextualEditor.anchor?.querySelectorAll('[aria-controls="taskModal"]').forEach(control => control.setAttribute('aria-expanded', 'false'));
+            contextualEditor.anchor = null;
+        }
+        function scheduleContextualEditor() {
+            if (contextualEditor.frame) cancelAnimationFrame(contextualEditor.frame);
+            contextualEditor.frame = requestAnimationFrame(() => { contextualEditor.frame = 0; syncContextualEditor(); });
+        }
+        function syncContextualEditor() {
+            if (!isTaskDialogOpen() || state.modalMode !== 'form') return;
+            const anchor = findEditorAnchor() || contextualEditor.anchor;
+            const floating = innerWidth > 1000 && anchor?.isConnected
+                && ['today', 'tasks'].includes(workspaceUI.screen) && (workspaceUI.screen === 'today' || state.viewMode === 'list');
+            DOM.modal.dataset.layout = floating ? 'floating' : 'sheet';
+            document.body.dataset.contextualEditor = String(Boolean(floating));
+            if (contextualEditor.anchor !== anchor) clearEditorAnchor();
+            contextualEditor.anchor = anchor;
+            anchor?.classList.add('is-editor-selected');
+            const source = anchor?.querySelector('.workbench-task-name, [data-task-open]');
+            source?.setAttribute('aria-controls', 'taskModal');
+            source?.setAttribute('aria-expanded', 'true');
+            if (floating) {
+                const viewport = window.visualViewport;
+                const viewportTop = viewport?.offsetTop || 0;
+                const viewportHeight = viewport?.height || innerHeight;
+                const rect = anchor.getBoundingClientRect();
+                const edge = Math.max(24, (innerWidth - 1340) / 2);
+                const width = Math.min(600, Math.max(360, innerWidth - rect.right - edge - 24));
+                const left = Math.min(rect.right + 24, innerWidth - width - edge);
+                const height = Math.min(744, viewportHeight - 32);
+                const topbar = document.querySelector('.workspace-topbar').getBoundingClientRect();
+                const top = Math.max(viewportTop + 16, Math.min(Math.max(topbar.bottom + 28, rect.top - 126), viewportTop + viewportHeight - height - 16));
+                DOM.modal.style.setProperty('--editor-left', `${left}px`);
+                DOM.modal.style.setProperty('--editor-top', `${top}px`);
+                DOM.modal.style.setProperty('--editor-width', `${width}px`);
+                DOM.modal.style.setProperty('--editor-height', `${height}px`);
+                DOM.modal.style.setProperty('--editor-pointer-y', `${Math.max(52, Math.min(height - 52, rect.top + Math.min(rect.height / 2, 55) - top))}px`);
+                DOM.modal.dataset.anchorVisible = String(rect.bottom > topbar.bottom && rect.top < viewportTop + viewportHeight);
+            }
+            DOM.modal.style.setProperty('--editor-viewport-height', `${window.visualViewport?.height || innerHeight}px`);
+            DOM.modal.style.setProperty('--editor-viewport-top', `${window.visualViewport?.offsetTop || 0}px`);
+            resizeTaskTitle();
+            syncPageModalOpenState();
+            if (DOM.form.contains(document.activeElement)) revealEditorElement(document.activeElement);
+        }
+        function guardContextualEditorAction(event) {
+            if (!isFloatingTaskEditor() || DOM.modal.contains(event.target)) return;
+            const control = event.target.closest('button, a[href], input[type="checkbox"], summary');
+            if (!control || !document.querySelector('.container').contains(control)) return;
+            if (state.taskFormSession?.saving) { event.preventDefault(); event.stopImmediatePropagation(); return; }
+            if (!isTaskFormDirty()) { closeDialog({ restoreFocus: false }); return; }
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            requestCloseTaskDialog(() => { if (control.isConnected) control.click(); });
         }
         function isCommandPaletteOpen() {
             return DOM.commandPalette && !DOM.commandPalette.el.hidden;
@@ -3953,6 +4097,7 @@
             }
             state.taskFormSaving = true;
             session.saving = true;
+            syncPageModalOpenState();
             lockTaskDraftForm(session);
             session.status = document.createElement('p');
             session.status.id = 'taskDraftSavingStatus';
@@ -3999,6 +4144,7 @@
                 session.saving = false;
                 if (state.taskFormSession === session && state.modalMode === 'form') {
                     state.taskFormSaving = false;
+                    syncPageModalOpenState();
                     const restoreFocus = document.activeElement === session.status;
                     session.status?.remove();
                     session.status = null;
@@ -6406,6 +6552,7 @@
             const planning = workspaceUI.planning && workspaceUI.screen === 'tasks' && state.viewMode === 'list';
             const planned = isTaskInTodayPlan(task);
             el.querySelector('.task-plan-badge').hidden = !planned || planning || Boolean(task.archived);
+            setTranslatedText(el.querySelector('.task-plan-badge [data-i18n]'), 'focus.title');
             const button = el.querySelector('[data-task-plan]');
             button.id = `task-plan-${task.id}`;
             button.hidden = !planning || Boolean(task.archived);
@@ -6912,6 +7059,7 @@
             workspaceUI.captureFormText = options.captureText ?? null;
             resetDialogToFormMode();
             DOM.form.reset();
+            DOM.form.querySelectorAll('.editor-property-row').forEach(details => { details.open = false; });
             document.getElementById('taskAdvancedDetails').open = Boolean((editingTask && ((editingTask.repeatType || 'none') !== 'none' || Number(editingTask.reminderRepeat ?? -1) !== -1 || (hasTaskDueDate(editingTask) && Number(editingTask.reminderOffset ?? CONFIG.NOTIFICATIONS.DEFAULT_OFFSET_MINUTES) !== CONFIG.NOTIFICATIONS.DEFAULT_OFFSET_MINUTES))));
             state.editingSubtaskIndex = -1;
             if (editingTask) {
@@ -6924,8 +7072,10 @@
             document.getElementById('taskSubtasksDetails').open = Boolean(state.tempSubtasks.length || state.editingSubtaskIndex >= 0);
             utils.applyTranslations();
             enhanceSelectControls(DOM.modal);
+            syncTaskPropertySummaries();
             state.taskFormSession = { baseline: captureTaskFormDraft(), creationFocusDate: editingTask ? null : options.quickPayload?.focusDate || null, lastFocus: DOM.inputs.name, saving: false, prompt: null, lock: null, status: null };
             DOM.modal.style.display = 'flex';
+            syncContextualEditor();
             syncPageModalOpenState();
             syncTaskDraftRecoveryUI();
             DOM.inputs.name.focus();
@@ -7075,8 +7225,21 @@
             const header = DOM.modal.querySelector('.modal-header').getBoundingClientRect();
             const top = Math.max(form.top, header.bottom) + 12;
             const bottom = Math.min(form.bottom, footer.top, window.innerHeight) - 12;
-            const rect = element.getBoundingClientRect();
-            if (rect.height > bottom - top || rect.top < top) DOM.form.scrollTop += rect.top - top;
+            let rect = element.getBoundingClientRect();
+            if (element instanceof HTMLTextAreaElement && document.activeElement === element && rect.height > bottom - top) {
+                const style = getComputedStyle(element);
+                const mirror = document.createElement('div');
+                for (const key of ['fontFamily', 'fontSize', 'fontWeight', 'fontStyle', 'lineHeight', 'letterSpacing', 'textIndent', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth', 'wordBreak', 'overflowWrap', 'tabSize']) mirror.style[key] = style[key];
+                Object.assign(mirror.style, { position: 'fixed', left: '-10000px', top: '0', width: `${rect.width}px`, boxSizing: 'border-box', whiteSpace: 'pre-wrap', visibility: 'hidden', pointerEvents: 'none', borderStyle: 'solid', borderColor: 'transparent' });
+                const caret = document.createElement('span');
+                caret.textContent = '\u200b';
+                mirror.append(document.createTextNode(element.value.slice(0, element.selectionEnd)), caret);
+                document.body.append(mirror);
+                const caretTop = rect.top + caret.getBoundingClientRect().top - mirror.getBoundingClientRect().top;
+                rect = { top: caretTop, bottom: caretTop + (parseFloat(style.lineHeight) || 28) };
+                mirror.remove();
+            }
+            if (rect.top < top) DOM.form.scrollTop += rect.top - top;
             else if (rect.bottom > bottom) DOM.form.scrollTop += rect.bottom - bottom;
         }
         function clearRepeatWeekdayError() {
@@ -7248,6 +7411,8 @@
             syncAllCustomSelects(DOM.modal);
             syncTaskDraftRecoveryUI();
             renderSubtaskPreview();
+            syncTaskPropertySummaries();
+            syncContextualEditor();
             if (!DOM.subtaskListPreview.querySelector('.subtask-edit-input')) DOM.inputs.name.focus();
         }
         function discardRecoverableTaskDraft() {
@@ -7287,15 +7452,19 @@
             if (!session?.prompt) return;
             session.prompt.remove();
             session.prompt = null;
+            session.afterDiscard = null;
             unlockTaskDraftForm(session);
+            syncPageModalOpenState();
             const focus = session.lastFocus?.isConnected && !session.lastFocus.disabled ? session.lastFocus : DOM.inputs.name;
             focus.focus();
         }
-        function requestCloseTaskDialog() {
+        function requestCloseTaskDialog(afterDiscard = null) {
+            if (typeof afterDiscard !== 'function') afterDiscard = null;
             const session = state.taskFormSession;
             if (session?.saving && state.modalMode === 'form') return;
-            if (!isTaskFormDirty()) { closeDialog(); return; }
+            if (!isTaskFormDirty()) { closeDialog({ restoreFocus: !afterDiscard }); afterDiscard?.(); return; }
             if (session.prompt) { document.getElementById('draftKeepEditingBtn').focus(); return; }
+            session.afterDiscard = afterDiscard;
             closeAllCustomSelects();
             lockTaskDraftForm(session, true);
             const prompt = document.createElement('div');
@@ -7319,12 +7488,17 @@
             discard.id = 'draftDiscardBtn';
             discard.className = 'btn btn-secondary';
             discard.textContent = utils.translate('drafts.discard');
-            discard.addEventListener('click', closeDialog);
+            discard.addEventListener('click', () => {
+                const next = session.afterDiscard;
+                closeDialog({ restoreFocus: !next });
+                next?.();
+            });
             prompt.append(title, description, keep, discard);
             session.prompt = prompt;
             DOM.form.prepend(prompt);
             DOM.modal.setAttribute('aria-labelledby', title.id);
             DOM.modal.setAttribute('aria-describedby', description.id);
+            syncPageModalOpenState();
             keep.focus();
         }
         function retireTaskFormSession() {
@@ -7336,7 +7510,7 @@
             state.taskFormSession = null;
             state.taskFormSaving = false;
         }
-        function closeDialog() {
+        function closeDialog({ restoreFocus = true } = {}) {
             const returnToCapture = workspaceUI.captureFormText !== null;
             retireTaskFormSession();
             if (state.pendingTaskImportReader) {
@@ -7346,6 +7520,10 @@
             }
             closeAllCustomSelects();
             DOM.modal.style.display = 'none';
+            cancelAnimationFrame(contextualEditor.frame);
+            clearEditorAnchor();
+            delete document.body.dataset.contextualEditor;
+            DOM.modal.dataset.layout = 'sheet';
             syncPageModalOpenState();
             syncTaskDraftRecoveryUI();
             state.editingTaskId = null;
@@ -7364,7 +7542,7 @@
             state.tempSubtasks = [];
             state.editingSubtaskIndex = -1;
             resetDialogToFormMode();
-            restoreFocusReturnTarget(state.elementToFocusOnClose);
+            if (restoreFocus) restoreFocusReturnTarget(state.elementToFocusOnClose);
             state.elementToFocusOnClose = null;
             if (returnToCapture) setCaptureShelf(true, { focus: true });
         }
@@ -7724,8 +7902,7 @@
                 return;
             }
             const header = document.querySelector('.workspace-topbar')?.getBoundingClientRect();
-            const dock = document.querySelector('.workspace-mobile-dock')?.getBoundingClientRect();
-            const viewportBottom = dock && dock.width > 0 && dock.height > 0 ? Math.min(innerHeight, dock.top) : innerHeight;
+            const viewportBottom = workspaceViewportBottom();
             const below = Math.max(0, viewportBottom - button.bottom - 12);
             const above = Math.max(0, button.top - Math.max(12, header?.bottom || 0) - 12);
             const opensUp = below < Math.min(menu.scrollHeight, 410) && above > below;

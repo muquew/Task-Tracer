@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Exercise real calendar edits, cross-month search and keyboard return targets."""
 from __future__ import annotations
+from tests.support.browser import reveal_task_field
 
 import argparse
 import json
@@ -36,7 +37,7 @@ def verify_edit_return_focus(page, url):
     edited_id = int(entry.get_attribute('data-calendar-task-id'))
     entry.click()
     expect(page.locator('#taskName')).to_have_value(before[edited_id]['name'])
-    page.locator('#noDeadline').check()
+    reveal_task_field(page, '#noDeadline').check()
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
     expect(page.locator('.calendar-detail-task')).to_have_count(3)

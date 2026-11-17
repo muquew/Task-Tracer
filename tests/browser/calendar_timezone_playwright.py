@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Keep calendar civil dates stable through skipped days and live device-zone changes."""
 from __future__ import annotations
+from tests.support.browser import reveal_task_field
 from tests.support.calendar_timezone import open_day_task_form
 
 import argparse
@@ -105,7 +106,7 @@ def verify_skipped_day_add_policy(page,url):
         expect(page.locator('#dueTime')).to_have_value('23:59')
         # Enter the skipped civil day explicitly to keep exercising the full
         # form's original forward-gap policy, not only capture's conversion.
-        page.locator('#dueDate').fill('2011-12-30')
+        reveal_task_field(page, '#dueDate').fill('2011-12-30')
     expect(page.locator('#dueDate')).to_have_value('2011-12-30')
     page.locator('#taskName').fill('Explicit Apia skipped-day add')
     page.locator('#submitBtn').click()

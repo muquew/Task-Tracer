@@ -92,7 +92,7 @@ def quoted_tags(page, url, template):
     open_task_editor(page)
     page.locator('#taskName').fill('New quoted tags')
     reveal_task_field(page, '#taskTags').fill('literal"quote, "comma,tag", "escaped ""quote""", "unfinished')
-    page.locator('#noDeadline').check()
+    reveal_task_field(page, '#noDeadline').check()
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
     current = get_task_records(page)
@@ -109,7 +109,7 @@ def formatting(page, url, template):
     # HTML single-line inputs and textareas normalize these imported line breaks.
     assert page.locator('#taskName').input_value() != baseline[0]['name']
     assert page.locator('#taskDesc').input_value() != baseline[0]['description']
-    page.locator('#taskProject').fill('Changed project')
+    reveal_task_field(page, '#taskProject').fill('Changed project')
     expected = [{**baseline[0], 'project': 'Changed project'}]
     save_and_assert(page, expected)
     open_edit(page)
@@ -134,7 +134,7 @@ def normalization(page, url, template):
     open_task_editor(page)
     for selector, value in inputs.items():
         reveal_task_field(page, selector).fill(value.replace('Explicit name', 'New name'))
-    page.locator('#noDeadline').check()
+    reveal_task_field(page, '#noDeadline').check()
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
     current = get_task_records(page)
@@ -149,7 +149,7 @@ def recovery(page, url, template):
     baseline = import_fixture(page, url, template, text_fixture())
     page.evaluate('window.importedTextOriginalDocument = true')
     open_edit(page)
-    page.locator('#taskProject').fill('Recovered project')
+    reveal_task_field(page, '#taskProject').fill('Recovered project')
     inject_quota_failure(page, 'put')
     page.locator('#submitBtn').click()
     expect(page.locator('#storageUnavailableBanner')).to_be_visible()
@@ -176,7 +176,7 @@ def stale_edit(page, url, template):
         other.goto(url)
         wait_for_app_ready(other)
         open_edit(other)
-        other.locator('#taskProject').fill('Newer remote project')
+        reveal_task_field(other, '#taskProject').fill('Newer remote project')
         other.locator('#submitBtn').click()
         expect(other.locator('#taskModal')).to_be_hidden()
         remote = [{**baseline[0], 'project': 'Newer remote project'}]

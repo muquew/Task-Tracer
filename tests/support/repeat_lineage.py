@@ -1,5 +1,6 @@
 """Shared repeat lineage fixtures and assertions; no test entry point."""
 from __future__ import annotations
+from tests.support.browser import reveal_task_field
 from playwright.sync_api import expect
 from tests.support.import_reference import finish_occurrence
 from tests.support.browser import click_task_action
@@ -57,8 +58,8 @@ def edit_future(page, identity, extra_subtask='Future-only checklist'):
     click_task_action(row(page, identity), 'edit')
     page.locator('#taskName').fill('Manually planned future')
     page.locator('#taskDesc').fill('Preserve future-only description and checklist')
-    page.locator('#dueDate').fill('2026-12-15')
-    page.locator('#dueTime').fill('15:45')
+    reveal_task_field(page, '#dueDate').fill('2026-12-15')
+    reveal_task_field(page, '#dueTime').fill('15:45')
     page.locator('#subtaskInput').fill(extra_subtask)
     page.locator('#addSubtaskBtn').click()
     page.locator('#submitBtn').click()

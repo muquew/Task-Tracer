@@ -92,7 +92,7 @@ def audit_skin_surfaces(page, axe_source, accent, theme, violations):
     audit('mobile navigation drawer')
     close_workspace_navigation(page)
     open_task_editor(page)
-    page.locator('#noDeadline').uncheck()
+    reveal_task_field(page, '#noDeadline').uncheck()
     reveal_task_field(page, '#taskTags')
     audit('complete task editor')
     page.locator('#cancelBtn').click()

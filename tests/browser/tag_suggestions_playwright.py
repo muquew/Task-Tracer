@@ -4,6 +4,7 @@
 Composition checks cover browser DOM events; they do not emulate an OS keyboard.
 """
 from __future__ import annotations
+from tests.support.browser import reveal_task_field
 
 import argparse
 import json
@@ -30,7 +31,7 @@ def exercise(page, output):
     known = ['设计评审', '重点, 复盘', '引用"标签', '深度 工作', '本周重点']
     add_task(page, '已有标签资料', no_deadline=True)
     task_locator(page, '已有标签资料').locator('[data-task-open]').click()
-    field = page.locator('#taskTags')
+    field = reveal_task_field(page, '#taskTags')
     field.fill('设计评审, "重点, 复盘", "引用""标签", 深度 工作, 本周重点')
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
@@ -38,6 +39,7 @@ def exercise(page, output):
     assert before[0]['tags'] == known
 
     open_task_editor(page)
+    reveal_task_field(page, '#taskTags')
     expect(field).to_have_attribute('aria-expanded', 'false')
     field.focus()
     options = page.locator('#taskTagSuggestions [role="option"]')
@@ -48,8 +50,10 @@ def exercise(page, output):
     assert get_task_records(page) == before, 'Focusing tag candidates wrote a task or tag'
 
     open_task_editor(page)
+    reveal_task_field(page, '#taskTags')
     page.locator('#taskName').fill('复用标签验收')
-    page.locator('#noDeadline').check()
+    reveal_task_field(page, '#noDeadline').check()
+    reveal_task_field(page, '#taskTags')
     field.fill('自由输入, 设计')
     expect(options).to_have_count(1)
     field.press('ArrowDown')
@@ -152,8 +156,9 @@ def exercise(page, output):
     page.locator('#cancelBtn').click()
 
     open_task_editor(page)
+    reveal_task_field(page, '#taskTags')
     page.locator('#taskName').fill('未选任何候选')
-    page.locator('#noDeadline').check()
+    reveal_task_field(page, '#noDeadline').check()
     field.focus()
     expect(options).to_have_count(5)
     field.press('Enter')
@@ -164,6 +169,7 @@ def exercise(page, output):
     import_payload_replace(page, [{'id': 31, 'name': '导入后标签资料', 'tags': ['导入的新标签']}])
     return_to_task_workspace(page)
     open_task_editor(page)
+    reveal_task_field(page, '#taskTags')
     field.fill('设计')
     expect(page.locator('#taskTagSuggestions')).to_be_hidden()
     field.fill('导入')
@@ -174,6 +180,7 @@ def exercise(page, output):
     wait_for_app_ready(page)
     return_to_task_workspace(page)
     open_task_editor(page)
+    reveal_task_field(page, '#taskTags')
     field.fill('导入')
     expect(options).to_have_text(['导入的新标签'])
     page.screenshot(path=str(output / '05-imported-candidate-after-reload.png'), animations='disabled')

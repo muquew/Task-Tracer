@@ -68,7 +68,7 @@ def assert_only_selected_removed(page, before, selected):
     return after
 
 
-def click_paused_clock_control(page, control):
+def paused_clock_control_point(page, control):
     expect(control).to_be_visible()
     expect(control).to_be_enabled()
     point = control.evaluate("""node => {
@@ -79,6 +79,11 @@ def click_paused_clock_control(page, control):
         return {x,y,hit:Boolean(target && (target === node || node.contains(target)))};
     }""")
     assert point['hit'], 'The pointer target is covered or outside the visible viewport'
+    return point
+
+
+def click_paused_clock_control(page, control):
+    point = paused_clock_control_point(page,control)
     page.mouse.click(point['x'],point['y'])
 
 
@@ -138,7 +143,7 @@ def confirmed_delete(page, url):
 def deferred_search_focus(page, url):
     page.clock.install()
     prepare(page,url)
-    view = save_named(page,'Focus survives a pending search','project:before-focus-rebuild')
+    view = save_named(page,'Focus survives a pending search','project:before-focus-refresh')
     page.clock.run_for(1000)
     before = stored(page)
     # Pause after setup, then queue the real input handler's 300 ms debounce.
@@ -146,17 +151,39 @@ def deferred_search_focus(page, url):
     # the clock is paused; hit-testing still rejects covered or disabled controls.
     page.clock.pause_at(page.evaluate('Date.now()') / 1000 + 1)
     try:
-        page.locator('#searchInput').fill('project:after-focus-rebuild')
+        page.locator('#searchInput').fill('Tasks remain unchanged')
         button = delete_button(page,view)
         expect(button).to_be_visible()
         old_button = button.element_handle()
         assert old_button is not None
+        point = paused_clock_control_point(page,button)
+        page.mouse.move(point['x'],point['y'])
+        page.mouse.down()
+        try:
+            page.clock.run_for(350)
+            expect(page.locator('#taskList .task-name')).to_have_text(['Tasks remain unchanged when deleting a view'])
+            assert old_button.evaluate('node => node.isConnected'), 'Deferred search detached the pressed view control'
+            assert button.evaluate('(node, original) => node === original',old_button), 'Deferred search replaced the pressed view control'
+            expect(button).to_be_focused()
+        finally:
+            page.mouse.up()
+        expect(page.locator('#savedViewDeleteName')).to_have_text(view['name'])
+        expect(page.locator('#cancelBtn')).to_be_focused()
+        assert stored(page) == before, 'A deferred search or opening confirmation changed stored data'
+        click_paused_clock_control(page,page.locator('#cancelBtn'))
+        expect(page.locator('#taskModal')).to_be_hidden()
+        expect(button).to_be_focused()
+        assert stored(page) == before, 'Cancelling the pressed-view confirmation changed stored data'
+
+        # The same pending refresh must also preserve a confirmation already open.
+        page.locator('#searchInput').fill('project:after-focus-refresh')
         click_paused_clock_control(page,button)
         expect(page.locator('#savedViewDeleteName')).to_have_text(view['name'])
         expect(page.locator('#cancelBtn')).to_be_focused()
-        assert old_button.evaluate('node => node.isConnected'), 'The pending-search fixture already rebuilt the view before opening its confirmation'
         page.clock.run_for(350)
-        assert not old_button.evaluate('node => node.isConnected'), 'The real deferred search did not rebuild the original view control'
+        expect(page.locator('#taskList .task-name')).to_have_count(0)
+        assert old_button.evaluate('node => node.isConnected'), 'Deferred search detached the confirmation return target'
+        assert button.evaluate('(node, original) => node === original',old_button), 'Deferred search replaced the confirmation return target'
         expect(page.locator('#savedViewDeleteConfirm')).to_be_visible()
         expect(page.locator('#cancelBtn')).to_be_focused()
         click_paused_clock_control(page,page.locator('#cancelBtn'))
@@ -165,7 +192,7 @@ def deferred_search_focus(page, url):
         assert stored(page) == before, 'A deferred search or cancelled confirmation changed stored data'
     finally:
         page.clock.resume()
-    print('View deletion passed: a real deferred-search rebuild during confirmation returns Cancel focus to the new matching delete control',flush=True)
+    print('View deletion passed: deferred search between pointerdown/up opens the exact confirmation; refresh during confirmation preserves Cancel, return focus and all stored data',flush=True)
 
 
 def duplicate_names(page, url):

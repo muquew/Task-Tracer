@@ -39,6 +39,8 @@ def browser_launch_options(browser: str = 'chromium') -> dict[str, Any]:
     if browser not in {'chromium', 'firefox', 'webkit'}:
         raise ValueError(f'Unsupported browser engine: {browser}')
     options: dict[str, Any] = {"headless": True}
+    if browser == 'chromium':
+        options['chromium_sandbox'] = True
     executable = os.environ.get(f'TASK_TRACER_{browser.upper()}_EXECUTABLE')
     if browser == 'chromium' and not executable:
         executable = os.environ.get('TASK_TRACER_BROWSER_EXECUTABLE')
@@ -87,8 +89,7 @@ def navigate_workbench(page: Page, screen: str) -> None:
     close_mobile_filters(page)
     assert screen in {'today', 'tasks', 'projects', 'review', 'settings'}, screen
     assert is_workbench_v5(page), 'The five-page workbench is not present'
-    if screen != 'settings':
-        close_workspace_navigation(page)
+    close_workspace_navigation(page)
     if workbench_screen(page) != screen:
         if screen == 'settings':
             control = reveal_workspace_control(page, '#workspaceSettingsBtn')
@@ -262,8 +263,10 @@ def return_to_task_workspace(page: Page) -> None:
         page.keyboard.press('Escape')
 
 def reveal_workspace_control(page: Page, selector: str | Locator) -> Locator:
-    """Reach a global control through the actual mobile navigation when needed."""
+    """Reach a global control through the actual navigation drawer when needed."""
     control = page.locator(selector) if isinstance(selector, str) else selector
+    if control.count() and not control.evaluate("node => Boolean(node.closest('#workspaceSidebar'))"):
+        close_workspace_navigation(page)
     if control.count() and control.evaluate("node => Boolean(node.closest('#tasksWorkspace'))"):
         if is_workbench_v5(page) and control.get_attribute('id') in {'focusModeToggleBtn', 'exitFocusModeBtn'}:
             return_to_task_workspace(page)
@@ -302,7 +305,7 @@ def select_language(page: Page, language: str) -> None:
     _return_from_preference(page, origin)
 
 def close_workspace_navigation(page: Page) -> None:
-    """Return to the main workspace through the mobile navigation's real key path."""
+    """Return to the main workspace through the navigation drawer's Escape path."""
     toggle = page.locator('#workspaceNavToggle')
     if toggle.get_attribute('aria-expanded') == 'true':
         page.keyboard.press('Escape')
@@ -637,7 +640,19 @@ def assert_accessibility_baseline(page: Page, label: str) -> None:
 
             const visibleDialog = Array.from(document.querySelectorAll('[role="dialog"]')).find((dialog) => !isHidden(dialog));
             if (visibleDialog) {
-                if (visibleDialog.getAttribute('aria-modal') !== 'true') issues.push('visible dialog must set aria-modal=true');
+                const blockingEditorLayer = ['draftDiscardPrompt', 'taskDraftSavingStatus'].some(id => {
+                    const layer = document.getElementById(id);
+                    return layer && !isHidden(layer);
+                });
+                const contextual = visibleDialog.id === 'taskModal' && visibleDialog.dataset.dialogMode === 'editor'
+                    && visibleDialog.dataset.layout === 'floating' && !blockingEditorLayer;
+                const expectedModal = contextual ? 'false' : 'true';
+                if (visibleDialog.getAttribute('aria-modal') !== expectedModal) {
+                    issues.push(`visible dialog must set aria-modal=${expectedModal} for its actual interaction mode`);
+                }
+                if (contextual && (document.querySelector('.container')?.inert || document.querySelector('.workspace-stage')?.inert)) {
+                    issues.push('contextual task editor leaves its background workspace inert');
+                }
                 const titleId = visibleDialog.getAttribute('aria-labelledby');
                 if (!titleId || !normalize(document.getElementById(titleId)?.textContent)) {
                     issues.push('visible dialog must be labelled by visible title text');
@@ -683,23 +698,23 @@ def add_task(
     page.locator("#taskName").fill(task_name)
     page.locator("#taskDesc").fill(description)
     if project:
-        page.locator("#taskProject").fill(project)
+        reveal_task_field(page, "#taskProject").fill(project)
     if tags:
         reveal_task_field(page, "#taskTags").fill(", ".join(tags))
 
     if no_deadline:
-        page.locator("#noDeadline").check()
+        reveal_task_field(page, "#noDeadline").check()
         expect(page.locator("#dueDate")).to_be_disabled()
         expect(page.locator("#dueTime")).to_be_disabled()
         expect(page.locator("#reminderOffset")).to_be_disabled()
         expect(page.locator("#reminderRepeat")).to_be_disabled()
         expect(page.locator("#repeatType")).to_be_disabled()
     else:
-        page.locator('#noDeadline').uncheck()
+        reveal_task_field(page, '#noDeadline').uncheck()
         if due_date:
-            page.locator("#dueDate").fill(due_date)
+            reveal_task_field(page, "#dueDate").fill(due_date)
         if due_time:
-            page.locator("#dueTime").fill(due_time)
+            reveal_task_field(page, "#dueTime").fill(due_time)
         if reminder_offset is not None:
             reveal_task_field(page, "#reminderOffset").select_option(reminder_offset)
             if reminder_offset == "-1":

@@ -6,6 +6,7 @@ context. Database access is read-only evidence; no app state, task fixtures,
 clock, notification timeout or pagination threshold is replaced by this tool.
 """
 from __future__ import annotations
+from tests.support.browser import reveal_task_field
 
 import argparse
 from contextlib import contextmanager
@@ -65,13 +66,13 @@ def create_task(page, name, *, project='反馈检查', due_date=None):
     open_task_editor(page)
     page.locator('#taskName').fill(name)
     page.locator('#taskDesc').fill('Synthetic workflow feedback regression: ' + name)
-    page.locator('#taskProject').fill(project)
+    reveal_task_field(page, '#taskProject').fill(project)
     if due_date:
-        page.locator('#noDeadline').uncheck()
-        page.locator('#dueDate').fill(due_date)
-        page.locator('#dueTime').fill('12:00')
+        reveal_task_field(page, '#noDeadline').uncheck()
+        reveal_task_field(page, '#dueDate').fill(due_date)
+        reveal_task_field(page, '#dueTime').fill('12:00')
     else:
-        page.locator('#noDeadline').check()
+        reveal_task_field(page, '#noDeadline').check()
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
     after = records(page)
@@ -188,7 +189,7 @@ def edit_project(page, output):
     scope = current_scope(page)
     before = records(page)
     click_task_action(task_locator(page, saved['name']), 'edit')
-    page.locator('#taskProject').fill('另一个项目')
+    reveal_task_field(page, '#taskProject').fill('另一个项目')
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
     expect(task_locator(page, saved['name'])).to_have_count(0)
@@ -214,7 +215,7 @@ def edit_calendar_date(page, output):
     task_button.click()
     expect(page.locator('#taskModal')).to_be_visible()
     target_date = (today + timedelta(days=70)).isoformat()
-    page.locator('#dueDate').fill(target_date)
+    reveal_task_field(page, '#dueDate').fill(target_date)
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
     expect(task_button).to_have_count(0)

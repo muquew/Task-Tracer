@@ -2,7 +2,7 @@
 
 A local-first task workspace for capturing work, planning your day and reviewing progress. No account required.
 
-[Open app](https://todo.muquew.com/) · [Download](https://todo.muquew.com/downloads/task-tracer-5.2.1.zip) · [Releases](https://github.com/muquew/Task-Tracer/releases) · [简体中文](README_zh_cn.md)
+[Open app](https://todo.muquew.com/) · [Download](https://todo.muquew.com/downloads/task-tracer-5.3.0.zip) · [Releases](https://github.com/muquew/Task-Tracer/releases) · [简体中文](README_zh_cn.md)
 
 | Workspace | Task editor |
 | --- | --- |
@@ -23,7 +23,9 @@ A local-first task workspace for capturing work, planning your day and reviewing
 
 1. Choose **Add task** in the top bar. The adjacent arrow opens Quick capture, for example `tomorrow 20:00 Read #study /Personal`.
 2. Plan in **Today**, organize in **Tasks** and **Projects**, and check progress in **Review**.
-3. Open **Settings & data** at the bottom of the sidebar for appearance, backups, reminders, installation and updates.
+3. Open **Settings & data** in the top bar for appearance, backups, reminders, installation and updates. Use the adjacent workspace menu for projects and saved views.
+
+Open a task to edit it beside the list in a contextual panel. On narrow screens, the editor becomes a scrollable sheet with its save action kept visible.
 
 Quick capture accepts dates, times, `#tags` and `/projects`. Reuse existing names with spaces, or quote a new name: `Read /"Personal learning" #"Deep work"`. In task search, use `project:"Personal learning" tag:"Deep work"` to find those exact names; ordinary words still search across task text.
 

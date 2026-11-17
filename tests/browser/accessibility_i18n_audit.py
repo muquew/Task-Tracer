@@ -115,7 +115,7 @@ def audit_page_state(page: Page, axe_source: str, label: str) -> None:
 
 
 def audit_workspace_navigation(page: Page, axe_source: str, label: str) -> None:
-    """Audit the real coloured sidebar, including its mobile drawer state."""
+    """Audit the real project drawer and the global navigation that opens it."""
     before = stored(page)
     sidebar = page.locator('#workspaceSidebar')
     toggle = page.locator('#workspaceNavToggle')
@@ -126,12 +126,20 @@ def audit_workspace_navigation(page: Page, axe_source: str, label: str) -> None:
         expect(toggle).to_have_attribute('aria-expanded', 'true')
     expect(sidebar).to_be_visible()
     assert not sidebar.evaluate('node => Boolean(node.closest("[hidden],[inert],[aria-hidden=true]"))')
-    for selector in ('#workspaceAllTasks', '#workspaceSettingsBtn'):
+    contextual = bool(page.locator('#workspaceScopeNav').count())
+    selectors = ('#workspaceNavClose',) if contextual else ('#workspaceAllTasks', '#workspaceSettingsBtn')
+    if contextual and page.locator('#workspaceProjects [data-workspace-project]').count():
+        selectors += ('#workspaceProjects [data-workspace-project] >> nth=0',)
+    for selector in selectors:
         if page.locator(selector).is_visible() and page.locator(selector).is_enabled():
             assert_focus_visible(page, selector, label)
     audit_page_state(page, axe_source, label)
     if mobile and not was_open:
         close_workspace_navigation(page)
+        if contextual:
+            for selector in ('#workspaceAllTasks', '#mobileTasksBtn', '#workspaceSettingsBtn'):
+                if page.locator(selector).is_visible() and page.locator(selector).is_enabled():
+                    assert_focus_visible(page, selector, label)
     assert stored(page) == before, 'Auditing navigation changed task or configuration data'
 
 

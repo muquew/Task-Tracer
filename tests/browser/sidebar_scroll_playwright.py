@@ -64,7 +64,7 @@ def project_control(page, project):
 
 def open_navigation(page):
     toggle = page.locator('#workspaceNavToggle')
-    if page.viewport_size['width'] < 780:
+    if page.locator('#workspaceScopeNav').count() or page.viewport_size['width'] < 780:
         expect(toggle).to_be_visible()
         if toggle.get_attribute('aria-expanded') != 'true':
             toggle.click()
@@ -87,6 +87,7 @@ def snapshot_geometry(page):
             documentWidth:document.documentElement.scrollWidth,
             sidebar:box('#workspaceSidebar'), pane:box('#workspaceSidebarScroll'),
             settings:box('#workspaceSettingsBtn'), footer:box('.workspace-sidebar-footer'),
+            close:box(document.querySelector('#workspaceNavClose') ? '#workspaceNavClose' : '#workspaceSettingsBtn'),
             brand:box('.workspace-brand'), viewHost:box('#workspaceViewNavHost'),
             primary:document.querySelector('#workspaceTodayBtn') ? Object.fromEntries(
                 ['#workspaceTodayBtn','#workspaceAllTasks','#workspaceProjectsBtn','#viewTab-stats']
@@ -95,7 +96,7 @@ def snapshot_geometry(page):
 
 
 def assert_fixed(before, after, *, mobile):
-    for name in ('settings', 'footer', 'brand') + (() if mobile else ('viewHost',)):
+    for name in ('settings', 'footer', 'brand', 'close') + (() if mobile else ('viewHost',)):
         for edge in ('top', 'bottom', 'left', 'right'):
             assert abs(before[name][edge] - after[name][edge]) <= 1, \
                 f'{name} moved while the sidebar content scrolled: {before[name]} -> {after[name]}'
@@ -109,13 +110,15 @@ def assert_fixed(before, after, *, mobile):
 
 
 def assert_footer(page, geometry):
-    sidebar, footer, settings, pane = [geometry[key] for key in ('sidebar', 'footer', 'settings', 'pane')]
+    sidebar, footer, action, pane = [geometry[key] for key in ('sidebar', 'footer', 'close', 'pane')]
     assert footer['bottom'] <= sidebar['bottom'] + 1
     assert sidebar['bottom'] - footer['bottom'] <= 36, f'Footer is not anchored near the sidebar bottom: {geometry}'
-    assert settings['top'] >= pane['bottom'] - 1, 'Settings overlaps the scrollable project area'
-    assert settings['bottom'] <= sidebar['bottom'] + 1
-    assert sidebar['bottom'] - settings['bottom'] <= 110, f'Settings is far from the sidebar bottom: {geometry}'
-    expect(page.locator('#workspaceSettingsBtn')).to_be_in_viewport(ratio=1)
+    assert action['top'] >= pane['bottom'] - 1, 'The fixed drawer action overlaps the scrollable project area'
+    assert action['bottom'] <= sidebar['bottom'] + 1
+    assert sidebar['bottom'] - action['bottom'] <= 110, f'The fixed drawer action is far from its bottom: {geometry}'
+    entry = '#workspaceNavClose' if page.locator('#workspaceNavClose').count() else '#workspaceSettingsBtn'
+    expect(page.locator(entry)).to_be_in_viewport(ratio=1)
+    page.locator(entry).click(trial=True)
 
 
 def assert_reachable(page, control):
@@ -197,10 +200,15 @@ def check_scroll_and_reachability(page, entry):
     open_navigation(page)
     pane = page.locator('#workspaceSidebarScroll')
     expect(pane).to_have_count(1)
-    assert page.locator('#workspaceSettingsBtn').evaluate("node => Boolean(node.closest('.workspace-sidebar-footer'))")
+    contextual = bool(page.locator('#workspaceScopeNav').count())
+    if contextual:
+        assert page.locator('#workspaceNavClose').evaluate("node => Boolean(node.closest('.workspace-sidebar-footer'))")
+        assert page.locator('#workspaceSettingsBtn').evaluate("node => Boolean(node.closest('.workspace-topbar'))")
+    else:
+        assert page.locator('#workspaceSettingsBtn').evaluate("node => Boolean(node.closest('.workspace-sidebar-footer'))")
     assert not page.locator('#workspaceSettingsBtn').evaluate("node => Boolean(node.closest('#workspaceSidebarScroll'))")
     if is_workbench_v5(page):
-        primary = page.locator('#workspaceSidebar > .workspace-scope-navigation')
+        primary = page.locator('#workspaceScopeNav' if contextual else '#workspaceSidebar > .workspace-scope-navigation')
         expect(primary).to_have_count(1)
         for selector in ('#workspaceTodayBtn', '#workspaceAllTasks', '#workspaceProjectsBtn', '#viewTab-stats'):
             assert primary.locator(selector).count() == 1, f'Primary workbench destination missing from fixed navigation: {selector}'
@@ -263,7 +271,7 @@ def check_filter_targets(page):
         expect(page.locator('.task-item .task-name')).to_have_count(1)
         assert visible_task_names(page) == [TASKS[index]], 'Sidebar project opened the wrong task scope'
         reached.append(PROJECTS[index])
-        if page.viewport_size['width'] < 780:
+        if page.locator('#workspaceScopeNav').count() or page.viewport_size['width'] < 780:
             expect(page.locator('#workspaceNavToggle')).to_have_attribute('aria-expanded', 'false')
             if is_workbench_v5(page):
                 heading = page.locator('#workspaceTitle')
@@ -277,9 +285,13 @@ def check_filter_targets(page):
 
 def check_keyboard(page):
     open_navigation(page)
-    page.locator('#workspaceAllTasks').focus()
+    contextual = bool(page.locator('#workspaceScopeNav').count())
+    if contextual:
+        project_control(page, PROJECTS[0]).focus()
+    else:
+        page.locator('#workspaceAllTasks').focus()
     focused = [assert_focus_visible(page)]
-    reached_projects = set()
+    reached_projects = {PROJECTS[0]} if contextual else set()
     for _ in range(70):
         page.keyboard.press('Tab')
         settle(page)
@@ -287,11 +299,17 @@ def check_keyboard(page):
         focused.append(current)
         if current['project']:
             reached_projects.add(json.loads(current['project'])['name'])
-        if current['id'] == 'workspaceSettingsBtn':
+        if current['id'] == ('workspaceNavClose' if contextual else 'workspaceSettingsBtn'):
             break
-    assert focused[-1]['id'] == 'workspaceSettingsBtn', 'Keyboard did not reach the fixed Settings entry'
+    assert focused[-1]['id'] == ('workspaceNavClose' if contextual else 'workspaceSettingsBtn'), \
+        'Keyboard did not reach the fixed navigation action'
     assert reached_projects == set(PROJECTS), 'Keyboard skipped project controls in the scrollable sidebar'
     page.keyboard.press('Enter')
+    if contextual:
+        expect(page.locator('#workspaceNavToggle')).to_have_attribute('aria-expanded', 'false')
+        expect(page.locator('#workspaceNavToggle')).to_be_focused()
+        page.locator('#workspaceSettingsBtn').focus()
+        page.keyboard.press('Enter')
     expect(page.locator('#settingsWorkspace')).to_be_visible()
     return_to_task_workspace(page)
     return {'focus_stops':len(focused), 'project_controls_reached':len(reached_projects), 'settings_enter_activated':True}
@@ -304,11 +322,15 @@ def check_views_and_settings(page):
         if is_workbench_v5(page):
             select_view(page, view)
         button = page.locator('#mobileReviewBtn' if is_workbench_v5(page) and mobile and view == 'stats' else f'#viewTab-{view}')
+        button.scroll_into_view_if_needed()
+        button.click(trial=True)
         expect(button).to_be_in_viewport(ratio=1)
         if not is_workbench_v5(page):
             button.click()
         expect(button).to_have_attribute('aria-current', 'page')
     open_navigation(page)
+    if page.locator('#workspaceScopeNav').count():
+        close_workspace_navigation(page)
     settings = page.locator('#workspaceSettingsBtn')
     settings.click()
     expect(page.locator('#settingsWorkspace')).to_be_visible()
@@ -318,7 +340,8 @@ def check_views_and_settings(page):
 
 
 def check_mobile_reopen(page):
-    if page.viewport_size['width'] >= 780:
+    contextual = bool(page.locator('#workspaceScopeNav').count())
+    if not contextual and page.viewport_size['width'] >= 780:
         return None
     open_navigation(page)
     selected = project_control(page, LONG_PROJECT)
@@ -326,7 +349,7 @@ def check_mobile_reopen(page):
     modern = is_workbench_v5(page)
 
     def reach_selected():
-        if modern:
+        if modern and not contextual:
             expect(page.locator('#workspaceAllTasks')).to_be_focused()
             for _ in range(len(PROJECTS) + 12):
                 if selected.evaluate('node => node === document.activeElement'):
@@ -350,7 +373,7 @@ def check_mobile_reopen(page):
     page.locator('#workspaceNavBackdrop').click(position={'x':page.viewport_size['width'] - 4, 'y':100})
     expect(toggle).to_have_attribute('aria-expanded', 'false')
     expect(toggle).to_be_focused()
-    return {'selected_scope_focused_on_open':not modern, 'current_page_focused_on_open':modern,
+    return {'selected_scope_focused_on_open':contextual or not modern, 'current_page_focused_on_open':modern and not contextual,
             'selected_scope_keyboard_reachable':True, 'selected_scroll_top':scroll_before,
             'escape_and_backdrop_restore_toggle_focus':True}
 
@@ -371,11 +394,16 @@ def check_notice_does_not_cover_settings(page, output):
     expect(page.locator('#notificationText')).to_contain_text(SAVED_NAMES[0])
     expect(notice).to_be_visible()
     mobile = page.viewport_size['width'] < 780
-    if mobile:
+    contextual = bool(page.locator('#workspaceScopeNav').count())
+    if mobile or contextual:
         open_navigation(page)
         # The notice remains active, while the real drawer suppresses its background overlay.
         expect(notice).to_have_class(re.compile(r'\bshow\b'))
         expect(notice).to_be_hidden()
+        if contextual:
+            page.locator('#workspaceNavClose').click()
+            expect(page.locator('#workspaceNavToggle')).to_have_attribute('aria-expanded', 'false')
+            expect(page.locator('#workspaceNavToggle')).to_be_focused()
     observed = page.locator('#workspaceSettingsBtn').evaluate("""node => {
         const r = node.getBoundingClientRect(), x = (r.left+r.right)/2, y = (r.top+r.bottom)/2;
         const hit = document.elementFromPoint(x,y), notice = document.querySelector('#notification');
@@ -387,8 +415,13 @@ def check_notice_does_not_cover_settings(page, output):
     }""")
     assert observed['notice']['active'], 'The success notice expired before the Settings overlap check'
     assert observed['hit'], f'The active success notice blocks the fixed Settings entry: {observed}'
-    if mobile:
+    if mobile and not contextual:
         assert observed['notice']['visibility'] == 'hidden', 'The background notice stays visible over the open drawer'
+    elif contextual:
+        settings, notification = observed['settings'], observed['notice']
+        assert (notification['right'] <= settings['left'] or notification['left'] >= settings['right']
+                or notification['bottom'] <= settings['top'] or notification['top'] >= settings['bottom']), \
+            'The active notice overlaps the global Settings entry'
     else:
         assert observed['notice']['left'] >= observed['settings']['right'], 'Desktop notice still overlaps the sidebar column'
     width, height = page.viewport_size['width'], page.viewport_size['height']
@@ -398,7 +431,10 @@ def check_notice_does_not_cover_settings(page, output):
     observed['pointer_settings_opened'] = True
     return_to_task_workspace(page)
     open_navigation(page)
-    all_tasks = page.locator('#workspaceAllTasks')
+    if contextual:
+        close_workspace_navigation(page)
+    mobile_tasks = page.locator('#mobileTasksBtn')
+    all_tasks = mobile_tasks if contextual and mobile_tasks.is_visible() else page.locator('#workspaceAllTasks')
     if is_workbench_v5(page):
         expect(all_tasks).to_be_in_viewport(ratio=1)
         all_tasks.click(trial=True)
@@ -447,9 +483,9 @@ def run(args):
                              lambda:entry.update(filter_targets=check_filter_targets(page))),
                             ('every project is keyboard reachable with visible focus and Enter opens fixed Settings',
                              lambda:entry.update(keyboard=check_keyboard(page))),
-                            ('four task views and bottom Settings remain actionable',
+                            ('four task views and global Settings remain actionable',
                              lambda:check_views_and_settings(page)),
-                            ('mobile reopen focuses the current destination, selected project stays reachable; Escape and backdrop restore toggle focus',
+                            ('reopened drawer focuses the current selection; Escape and backdrop restore toggle focus',
                              lambda:entry.update(mobile_reopen=check_mobile_reopen(page))),
                             ('active saved-view success notice leaves fixed Settings directly pointer actionable',
                              lambda:entry.update(notice_overlay=check_notice_does_not_cover_settings(page, args.output))),

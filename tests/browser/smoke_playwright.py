@@ -286,8 +286,8 @@ def exercise_custom_select_escape_keeps_modal_open(page: Page) -> None:
     if is_workbench_v5(page):
         # New tasks are undated in 5.0. This dropdown scenario explicitly
         # opts into a deadline, where reminders are available to the user.
-        page.locator('#noDeadline').uncheck()
-        page.locator('#dueDate').fill(future_date(1))
+        reveal_task_field(page, '#noDeadline').uncheck()
+        reveal_task_field(page, '#dueDate').fill(future_date(1))
     reveal_task_field(page, '#reminderOffset')
     expect(page.locator("#reminderOffset-custom-button")).to_have_attribute("aria-label", re.compile("提醒设置.*15|Reminder.*15", re.I))
     page.locator("#reminderOffset-custom-button").click()

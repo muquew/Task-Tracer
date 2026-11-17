@@ -63,9 +63,9 @@ def open_unsaved_draft(page: Page) -> None:
     expect(page.locator('#taskModal')).to_be_visible()
     page.locator('#taskName').fill('Unsaved appearance draft 中文 e\u0301')
     page.locator('#taskDesc').fill('Unsaved description line one.\nSecond line stays selected.')
-    page.locator('#taskProject').fill('Unsaved project')
+    reveal_task_field(page, '#taskProject').fill('Unsaved project')
     reveal_task_field(page, '#taskTags').fill('draft, appearance')
-    page.locator('#noDeadline').check()
+    reveal_task_field(page, '#noDeadline').check()
     reveal_task_field(page, '#subtaskInput')
     for text in ('Draft child to edit', 'Second unsaved child'):
         page.locator('#subtaskInput').fill(text)

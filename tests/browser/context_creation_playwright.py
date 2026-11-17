@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Protect project and Today-plan context when creating or recovering tasks."""
 from __future__ import annotations
+from tests.support.browser import reveal_task_field
 from tests.support.paths import (
     REPO_ROOT,
     SOURCE_HTML,
@@ -61,7 +62,7 @@ def save_form(page, name, project, focus_date=None, *, override_project=None):
     expect(page.locator('#taskProject')).to_have_value(project)
     page.locator('#taskName').fill(name)
     if override_project is not None:
-        page.locator('#taskProject').fill(override_project)
+        reveal_task_field(page, '#taskProject').fill(override_project)
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
     if page.locator('#captureShelf').is_visible():

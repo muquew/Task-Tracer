@@ -48,7 +48,7 @@ def palette(page, mode):
 def subtasks(page, mode):
     open_task_editor(page)
     page.locator('#taskName').fill('Composition task 中文')
-    page.locator('#noDeadline').check()
+    reveal_task_field(page, '#noDeadline').check()
     field = reveal_task_field(page, '#subtaskInput')
     field.fill('第一项中文组词')
     if mode == 'tracked':
@@ -124,7 +124,7 @@ def forms(page, mode):
             open_task_editor(page)
             field = page.locator('#taskName')
             field.fill('完整表单中文')
-            page.locator('#noDeadline').check()
+            reveal_task_field(page, '#noDeadline').check()
             field.focus()
             form = page.locator('#taskForm')
         else:

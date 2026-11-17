@@ -69,10 +69,10 @@ def fill_schedule(page: Page, name: str, repeat_type: str) -> None:
     open_task_editor(page)
     page.locator('#taskName').fill(name)
     page.locator('#taskDesc').fill('第一行原始描述。\n第二行保留。')
-    page.locator('#taskProject').fill('编辑安全审查')
-    page.locator('#noDeadline').uncheck()
-    page.locator('#dueDate').fill('2032-05-06')
-    page.locator('#dueTime').fill('16:35')
+    reveal_task_field(page, '#taskProject').fill('编辑安全审查')
+    reveal_task_field(page, '#noDeadline').uncheck()
+    reveal_task_field(page, '#dueDate').fill('2032-05-06')
+    reveal_task_field(page, '#dueTime').fill('16:35')
     reveal_task_field(page, '#taskTags').fill('review, "tag, with comma"')
     choose(page, '#reminderOffset', '60')
     choose(page, '#reminderRepeat', '15')
@@ -138,11 +138,11 @@ def date_roundtrip(page: Page, evidence: Path) -> None:
         original = raw_form(page)
         save_json(evidence / f'{repeat_type}-raw-before.json', original)
         for _ in range(2):
-            page.locator('#noDeadline').check()
+            reveal_task_field(page, '#noDeadline').check()
             expect(page.locator('#dueDate')).to_be_disabled()
             assert_same_except_no_deadline(raw_form(page), original)
             assert stored(page) == before, 'Disabling a schedule committed data'
-            page.locator('#noDeadline').uncheck()
+            reveal_task_field(page, '#noDeadline').uncheck()
             expect(page.locator('#dueDate')).to_be_enabled()
             assert raw_form(page) == original, 'The original schedule did not return after a second toggle'
             assert stored(page) == before
@@ -151,7 +151,7 @@ def date_roundtrip(page: Page, evidence: Path) -> None:
             page.screenshot(path=str(evidence / 'roundtrip-restored.png'), full_page=True)
         else:
             # Preserve raw values while disabled; normalize only the submitted record.
-            page.locator('#noDeadline').check()
+            reveal_task_field(page, '#noDeadline').check()
             assert_same_except_no_deadline(raw_form(page), original)
         save_json(evidence / f'{repeat_type}-raw-before-save.json', raw_form(page))
         page.locator('#submitBtn').click()
@@ -346,7 +346,7 @@ def assert_corrected_custom_schedule(page: Page, before, name: str, date_key: st
 def missing_date(page: Page, evidence: Path) -> None:
     name = '未勾无日期时空日期必须阻止保存'
     prepare_invalid_schedule_draft(page, name)
-    page.locator('#dueDate').fill('')
+    reveal_task_field(page, '#dueDate').fill('')
     before, values = stored(page), raw_form(page)
     assert values['noDeadline'] is False and values['dueDate'] == ''
     assert values['repeatType'] == 'custom' and values['repeatInterval'] == '5'
@@ -355,7 +355,7 @@ def missing_date(page: Page, evidence: Path) -> None:
     for _ in range(2):
         page.locator('#submitBtn').click()
         assert_editor_input_error(page, evidence, '#dueDate', '#dueDateError', values, before)
-    page.locator('#dueDate').fill('2032-05-07')
+    reveal_task_field(page, '#dueDate').fill('2032-05-07')
     page.locator('#submitBtn').click()
     assert_corrected_custom_schedule(page, before, name, '2032-05-07')
     save_json(evidence / 'corrected-save-db.json', stored(page))

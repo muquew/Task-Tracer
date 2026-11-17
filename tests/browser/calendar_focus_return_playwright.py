@@ -5,6 +5,7 @@ Uses fresh contexts, synthetic tasks and real UI edits/imports. Every run retain
 its report and failure screenshots/trace in a unique directory under --output.
 """
 from __future__ import annotations
+from tests.support.browser import reveal_task_field
 from tests.support.paths import (
     REPO_ROOT,
     SOURCE_HTML,
@@ -139,7 +140,7 @@ def check_calendar_focus(page, url, width, scope_dir, checks):
     date_heading = page.locator('.calendar-detail-title').inner_text().rsplit(' · ', 1)[0]
     move_before = records_by_id(page)
     agenda_task(page, task_id).click()
-    page.locator('#dueDate').fill(MOVED_DAY)
+    reveal_task_field(page, '#dueDate').fill(MOVED_DAY)
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
     expect(agenda_task(page, task_id)).to_have_count(0)

@@ -132,12 +132,19 @@ def assert_view_destinations(page, current):
 
 
 def assert_mobile_targets(page):
-    """Verify four usable equal dock columns and hit-test their actual pointer targets."""
+    """Verify four usable equal navigation columns and their real pointer targets."""
     modern = is_workbench_v5(page)
     selectors = primary_entries(page) if modern else tuple(f'#viewTab-{view}' for view in VIEWS)
     dock = page.locator('#workspaceMobileDock' if modern else '#viewSwitcher').bounding_box()
     viewport = page.viewport_size
-    assert dock and viewport and dock['width'] >= viewport['width'] - 32, ('Dock does not fill its viewport', dock)
+    if page.locator('#workspaceScopeNav').count():
+        available_width = page.locator('.workspace-topbar').evaluate('''node => {
+            const style = getComputedStyle(node);
+            return node.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+        }''')
+    else:
+        available_width = viewport['width'] - 32
+    assert dock and viewport and dock['width'] >= available_width - 1, ('Navigation does not fill its available width', dock)
     boxes = [page.locator(selector).bounding_box() for selector in selectors]
     assert all(box and box['width'] >= 44 and box['height'] >= 44 for box in boxes), ('Undersized dock targets', boxes)
     assert max(box['width'] for box in boxes) - min(box['width'] for box in boxes) <= 2, ('Unequal dock columns', boxes)
@@ -281,8 +288,13 @@ def exercise_workspace(browser, url, width, language):
             page.locator('#helpMenuBtn').click(trial=True)
             action_box = page.locator('#helpMenuBtn').bounding_box()
             dock_box = page.locator('#workspaceMobileDock' if is_workbench_v5(page) else '#viewSwitcher').bounding_box()
-            assert action_box and dock_box and action_box['y'] + action_box['height'] <= dock_box['y'] + 1, \
-                'The final settings action is obscured by the mobile dock'
+            assert action_box and dock_box
+            if page.locator('#workspaceScopeNav').count():
+                assert action_box['y'] >= dock_box['y'] + dock_box['height'] - 1, \
+                    'The final settings action is obscured by the top navigation'
+            else:
+                assert action_box['y'] + action_box['height'] <= dock_box['y'] + 1, \
+                    'The final settings action is obscured by the mobile dock'
         return_to_task_workspace(page)
         ensure_capture(page)
         expect(page.locator('#searchInput')).to_have_value(preserved['query'])
@@ -402,11 +414,13 @@ def exercise_update_prompt_settings(browser):
                             const rect = node.getBoundingClientRect();
                             const prompt = document.getElementById('updatePrompt').getBoundingClientRect();
                             const dock = document.getElementById('workspaceMobileDock').getBoundingClientRect();
+                            const contextual = Boolean(document.getElementById('workspaceScopeNav'));
+                            const clearTop = contextual ? document.querySelector('.workspace-topbar').getBoundingClientRect().bottom : 0;
                             const hit = document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2);
                             return {top: rect.top, bottom: rect.bottom,
-                                clearBottom: Math.min(prompt.top, dock.top), hit: node.contains(hit)};
+                                clearTop, clearBottom: contextual ? prompt.top : Math.min(prompt.top, dock.top), hit: node.contains(hit)};
                         }''')
-                        assert geometry['hit'] and geometry['top'] >= 0 and geometry['bottom'] <= geometry['clearBottom'], geometry
+                        assert geometry['hit'] and geometry['top'] >= geometry['clearTop'] and geometry['bottom'] <= geometry['clearBottom'], geometry
                     assert stored(page) == preserved, 'Navigating settings behind an update changed task or backup records'
                     assert page.locator('#quickAddInput').input_value() == draft, 'An update prompt changed the unsaved capture'
                     assert not errors, errors

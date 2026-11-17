@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Choose today's tasks through a temporary, accessible planning context."""
 from __future__ import annotations
+from tests.support.browser import reveal_task_field
 
 import argparse
 import json
@@ -120,9 +121,9 @@ def exercise(page, output):
     assert planned[undated] == {**before[undated], 'focusDate': today}
     page.locator('#openModalBtn').click()
     page.locator('#taskName').fill('规划中用编辑器新增')
-    page.locator('#noDeadline').uncheck()
-    page.locator('#dueDate').fill('2035-07-18')
-    page.locator('#dueTime').fill('18:15')
+    reveal_task_field(page, '#noDeadline').uncheck()
+    reveal_task_field(page, '#dueDate').fill('2035-07-18')
+    reveal_task_field(page, '#dueTime').fill('18:15')
     page.locator('#submitBtn').click()
     expect(plan_button(page, '规划中用编辑器新增')).to_have_attribute('aria-pressed', 'true')
     created = records(page)['规划中用编辑器新增']

@@ -1,5 +1,6 @@
 """Shared workbench navigation fixtures and assertions; no test entry point."""
 from __future__ import annotations
+from tests.support.browser import reveal_task_field
 import json
 from playwright.sync_api import expect
 from tests.support.browser import get_task_records, open_task_editor, workbench_screen
@@ -14,12 +15,12 @@ def create_on_current_page(page, name, *, project=None, deadline=None):
     if project is None:
         expect(page.locator('#taskProject')).to_have_value('')
     else:
-        page.locator('#taskProject').fill(project)
+        reveal_task_field(page, '#taskProject').fill(project)
     page.locator('#taskName').fill(name)
     if deadline:
-        page.locator('#noDeadline').uncheck()
-        page.locator('#dueDate').fill(deadline)
-        page.locator('#dueTime').fill('10:00')
+        reveal_task_field(page, '#noDeadline').uncheck()
+        reveal_task_field(page, '#dueDate').fill(deadline)
+        reveal_task_field(page, '#dueTime').fill('10:00')
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
     expect(page.locator('body')).to_have_attribute('data-workspace-screen', origin)

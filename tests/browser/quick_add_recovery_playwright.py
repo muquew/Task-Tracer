@@ -132,7 +132,7 @@ def coexist_with_form(page, url):
     open_task_editor(page)
     page.locator('#taskName').fill('Coexisting full form 保留')
     page.locator('#taskDesc').fill('  Keep this separate raw form text  ')
-    page.locator('#noDeadline').check()
+    reveal_task_field(page, '#noDeadline').check()
     reveal_task_field(page, '#subtaskInput').fill('Unsubmitted partial subtask')
     # Retain an independent form before starting a separate quick capture.
     inject_quota_failure(page)

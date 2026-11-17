@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Exercise literal project names and versioned saved-view scopes through the UI."""
 from __future__ import annotations
+from tests.support.browser import reveal_task_field
 from tests.support.paths import (
     REPO_ROOT,
     SOURCE_HTML,
@@ -91,7 +92,7 @@ def select_sentinel(page, index):
 def add_unassigned_task(page, name):
     add_task(page, name, no_deadline=True)
     click_task_action(task_locator(page, name), 'edit')
-    page.locator('#taskProject').fill('')
+    reveal_task_field(page, '#taskProject').fill('')
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
 

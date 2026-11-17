@@ -199,7 +199,10 @@ def exercise_workspace_navigation(page: Page) -> None:
     expect(sidebar).to_have_attribute('aria-hidden', 'false')
     expect(sidebar).to_have_js_property('inert', False)
     if page.locator('#workspaceSidebarScroll').count():
-        if is_workbench_v5(page):
+        if page.locator('#workspaceScopeNav').count():
+            selected = sidebar.locator('.workspace-nav-button[aria-pressed="true"]')
+            current = selected if selected.count() else sidebar.locator('.workspace-nav-button').first
+        elif is_workbench_v5(page):
             current = sidebar.locator('.workspace-nav-button[aria-current="page"]')
         else:
             current = (sidebar.locator('.workspace-sidebar-footer #workspaceSettingsBtn')

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Preserve imported reminder durations through editing and draft recovery."""
 from __future__ import annotations
+from tests.support.browser import reveal_task_field
 
 from tests.support.browser import open_task_editor
 
@@ -66,13 +67,13 @@ def change_settings(page, url, template):
     changed = {**changed, 'reminderOffset': -1, 'reminderRepeat': -1}
     save_and_assert(page, [changed])
     open_edit(page)
-    page.locator('#noDeadline').check()
+    reveal_task_field(page, '#noDeadline').check()
     expected = {**changed, **{key: None for key in ('dueAt', 'dueDate', 'dueLocalDate', 'dueLocalTime', 'dueTimeZone')}}
     save_and_assert(page, [expected])
     baseline = import_fixture(page, url, template, fixture_overrides())
     open_edit(page)
-    page.locator('#dueDate').fill('')
-    page.locator('#noDeadline').check()
+    reveal_task_field(page, '#dueDate').fill('')
+    reveal_task_field(page, '#noDeadline').check()
     expected = {**baseline[0], **{key: None for key in ('dueAt', 'dueDate', 'dueLocalDate', 'dueLocalTime', 'dueTimeZone')},
                 'reminderOffset': -1, 'reminderRepeat': -1, 'snoozedUntil': None, 'lastReminderAt': None}
     save_and_assert(page, [expected])

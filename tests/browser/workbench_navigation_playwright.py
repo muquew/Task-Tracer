@@ -226,9 +226,9 @@ def check_review_and_settings_return(page, output, checks):
     expect(task_locator(page, NAMES['library'])).to_be_visible()
     expect(page.locator('#statsReturnBar')).to_be_visible()
     page.locator('#statsReturnBtn').click()
+    expect(drilldown).to_be_focused()
     assert_active_page(page, 'review')
     expect(page.locator('#searchInput')).to_have_value('Library')
-    expect(drilldown).to_be_focused()
     assert stored(page) == baseline, 'Review drilldown/return changed task/configuration records'
     checks.append('Review drills into the matching task and returns to its own query and keyboard focus')
 

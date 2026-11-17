@@ -8,9 +8,22 @@ The following notices apply to bundled third-party assets.
 The route, checkpoints and check mark in `fav/task-tracer.svg` are original
 Task Tracer artwork covered by [LICENSE](LICENSE). The header, favicon and
 installation icons use this artwork. It uses geometric paths and circles,
-with no font or third-party icon artwork. `tools/build_icons.py` generates the
+with no font or third-party icon artwork. `scripts/build_icons.py` generates the
 PNG and ICO variants from that source; the maskable and Apple touch icons use
 an opaque background.
+
+## Geist
+
+`resources/fonts/Geist-Variable.woff2` is the unmodified variable Geist font
+from Vercel's official `geist-font` repository, release v1.9.2, commit
+`ef2597cfc42f4797676df105517ccc0a1cfa6569`. It supplies Latin UI text;
+Chinese text uses the device's system fonts.
+
+- Project: <https://github.com/vercel/geist-font>
+- Source: <https://github.com/vercel/geist-font/blob/ef2597cfc42f4797676df105517ccc0a1cfa6569/fonts/Geist/webfonts/Geist%5Bwght%5D.woff2>
+- Font SHA-256: `2ffebe993e969069a9789d15164b7715d42491b5835516c5e3b935d5f81b05f1`
+- Copyright 2026 The Geist Project Authors; Copyright (c) 2023 Vercel, in collaboration with basement.studio.
+- License: SIL Open Font License 1.1. Both official notices are bundled unchanged as [Geist-OFL.txt](resources/fonts/Geist-OFL.txt) and [Geist-LICENSE.txt](resources/fonts/Geist-LICENSE.txt).
 
 ## Tabler Icons
 

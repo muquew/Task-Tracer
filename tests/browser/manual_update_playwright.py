@@ -5,6 +5,7 @@ The current application and worker are read unchanged. Candidate versions exist
 only in UpdateServer memory; no release, source, or existing test is rewritten.
 """
 from __future__ import annotations
+from tests.support.browser import reveal_task_field
 from tests.support.paths import (
     REPO_ROOT,
     SOURCE_HTML,
@@ -118,8 +119,8 @@ def seed_workspace(page, server, release):
     expect(page.locator('#taskModal')).to_be_visible()
     page.locator('#taskName').fill(TASK_NAME)
     page.locator('#taskDesc').fill('Keep committed tasks and view metadata unchanged.')
-    page.locator('#taskProject').fill('Manual update')
-    page.locator('#noDeadline').check()
+    reveal_task_field(page, '#taskProject').fill('Manual update')
+    reveal_task_field(page, '#noDeadline').check()
     page.locator('#submitBtn').click()
     expect(page.locator('#taskModal')).to_be_hidden()
     expect(task_locator(page, TASK_NAME)).to_have_count(1)
