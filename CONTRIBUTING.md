@@ -51,6 +51,8 @@ Add `--list` to inspect scope without launching a browser. An installed browser 
 
 ## Source ownership
 
+The opt-in Taste classic skill is installed at `.agents/skills/minimalist-ui/`, with its upstream revision pinned in `skills-lock.json`. Invoke `minimalist-ui` explicitly for visual direction work. Apply its typography and control principles within the task application's scope, accessibility and local-first constraints; marketing layouts, decorative assets and animation examples are not application requirements.
+
 See [architecture and responsibilities](docs/architecture.md) before introducing a module. Input and date rules belong in the domain layer; database operations belong in the repository; view modules receive data and action ports. Do not pass the entire application state to a new feature.
 
 After changing translations, run `python -m scripts.translation_fallback --write`. After changing inline startup code, run `python -m scripts.security_policy --write`; both deployment configurations must remain in sync. After changing runtime assets, update the single site-file contract and matching offline-cache entries.
