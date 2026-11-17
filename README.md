@@ -2,7 +2,7 @@
 
 A local-first task workspace for capturing work, planning your day and reviewing progress. No account required.
 
-[Open app](https://todo.muquew.com/) · [Download](https://todo.muquew.com/downloads/task-tracer-5.0.1.zip) · [Releases](https://github.com/muquew/Task-Tracer/releases) · [简体中文](README_zh_cn.md)
+[Open app](https://todo.muquew.com/) · [Download published 5.0.1](https://todo.muquew.com/downloads/task-tracer-5.0.1.zip) · [Releases](https://github.com/muquew/Task-Tracer/releases) · [简体中文](README_zh_cn.md)
 
 | Workspace | Task editor |
 | --- | --- |
@@ -10,10 +10,10 @@ A local-first task workspace for capturing work, planning your day and reviewing
 
 ## Features
 
-- **Today:** choose a daily plan, finish tasks and review urgent work waiting to be scheduled.
-- **Tasks:** list, calendar and timeline with search, tags, saved views, batch actions and archives.
-- **Projects:** real workloads, completed and archived counts, project search and upcoming tasks.
-- **Review:** completion, overdue work and seven-day activity, with direct links to the relevant tasks.
+- **Today:** choose existing tasks, add or remove them from today's plan, then return to Today and finish work. Unfinished earlier plans remain available.
+- **Tasks:** list, calendar and timeline with search, reusable tags, saved views, batch actions and archives. Open a task directly from its title.
+- **Projects:** browse workloads and upcoming tasks, search projects and rename them with Undo.
+- **Review:** start with completion activity over the last seven days. Open a total or day bar to inspect matching tasks, then return to the same review.
 - **Capture:** quick text entry, descriptions, subtasks, due dates, reminders and recurring tasks.
 - **Back up:** JSON export, import previews, merge, recovery history and CSV reports.
 - **Personalize:** four themes, light/dark appearance, Chinese and English, keyboard controls and responsive layouts.
@@ -25,13 +25,17 @@ A local-first task workspace for capturing work, planning your day and reviewing
 2. Plan in **Today**, organize in **Tasks** and **Projects**, and check progress in **Review**.
 3. Open **Settings & data** at the bottom of the sidebar for appearance, backups, reminders, installation and updates.
 
+Quick capture accepts dates, times, `#tags` and `/projects`. Reuse existing names with spaces, or quote a new name: `Read /"Personal learning" #"Deep work"`. In task search, use `project:"Personal learning" tag:"Deep work"` to find those exact names; ordinary words still search across task text.
+
+Search completed work with `completed:week` for the last seven local calendar days, including today, or `completed:2026-11-17` for one day. These conditions also include completed archive records; explicit status and project filters still apply.
+
 ## Back up and restore
 
-- Tasks stay in the current browser profile; there is no account or automatic cross-device sync.
+- Tasks stay in the current site's browser storage; there is no account, server backup, automatic cross-device sync or shared workspace. Another browser profile, domain or port has separate data.
 - Under **Settings & data → Backups & transfer**, export **task JSON** and a separate **saved-views JSON**. Keep downloaded copies outside the browser before clearing site data, changing devices or downgrading.
 - Task JSON excludes saved views, appearance preferences and recovery history. CSV is a report and cannot restore tasks.
 - To restore, inspect the import preview and choose merge or replace. Export the current tasks before replacing them; import saved views separately.
-- Local recovery history shares browser storage. Confirm your downloaded files exist; drafts and recovery history do not replace an external backup.
+- Local recovery history shares browser storage. Clearing site data, private browsing sessions ending or browser storage cleanup can remove it along with your tasks. Confirm your downloaded files exist; drafts and recovery history do not replace an external backup.
 
 ## Common questions
 
@@ -43,13 +47,13 @@ A local-first task workspace for capturing work, planning your day and reviewing
 
 ## Run locally or deploy
 
-Download and extract the complete archive, or use this repository. No build or backend is required:
+Download and extract the complete archive, or open a source checkout. Run this command **inside the extracted app or repository directory**. No Node.js packages, build or backend are needed to use the app:
 
 ```bash
 python3 -m http.server 8080 --bind 127.0.0.1
 ```
 
-Open [localhost:8080](http://127.0.0.1:8080/). Serve through HTTP rather than opening `index.html` as a file.
+Open [localhost:8080](http://127.0.0.1:8080/). Serve through HTTP rather than opening `index.html` as a file. On Windows, use `py -3 -m http.server 8080 --bind 127.0.0.1` if `python3` is unavailable. Stop the server with Ctrl+C.
 
 - For hosting, deploy the complete app to a dedicated HTTPS origin. On Vercel, retain `vercel.json` so its security headers are applied.
 - Keep the service worker, language files and icons together. A different domain or port has separate browser storage; transfer tasks with JSON backups.
@@ -57,22 +61,39 @@ Open [localhost:8080](http://127.0.0.1:8080/). Serve through HTTP rather than op
 
 ## Development and contributions
 
-Use Python 3.12+ and Node.js 22+ in a **source checkout**. Development tools are not included in the downloadable app:
+This checkout is the 5.1.0 candidate; the download above remains the published 5.0.1 release.
+
+Use Python 3.12+ and Node.js 22+ in a **source checkout**. Development tools are not included in the downloadable app. Run the following from the repository root in a POSIX shell:
 
 ```bash
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r requirements-dev.txt
 npm ci --ignore-scripts
-python -m playwright install --with-deps chromium firefox webkit
-python tools/check.py --static-only
+python -m playwright install --with-deps chromium
+npm run check
 ```
 
-- After editing `styles/workspace.css`, run `npm run styles`; use `npm run styles:check` before committing the generated stylesheet.
-- Run the full checks with `python tools/check.py --keep-going --report dist/check-results.json`; use `python tools/browser_matrix.py --browser all --keep-going --report dist/browser-matrix.json` for changes requiring all engines.
+- In Windows PowerShell, create the environment with `py -3 -m venv .venv` and activate it with `.venv\Scripts\Activate.ps1`, then run the remaining setup commands. The npm wrappers expect `python3`; if that command is unavailable, run the underlying command from `package.json` with the activated environment's `python`, for example `python tools/check.py --static-only`.
+- Run `npm run dev` or `npm run preview` and open [localhost:8080](http://127.0.0.1:8080/). Both serve the current app files without compilation or hot reload. After editing, refresh the page; if a service worker still serves an earlier copy, use the browser's development tools to unregister it for this local origin and reload. Keep test data separate from personal tasks.
+- After editing `styles/workspace.css`, run `npm run styles`; use `npm run styles:check` before committing `resources/workspace.css`.
+- The original brand source is `fav/task-tracer.svg`. After changing it, run `npm run icons` with Chromium installed. `npm run icons:check` verifies source/output hashes, PNG dimensions and ICO frames without launching a browser; it does not render a fresh comparison.
+- Themes share neutral surfaces, typography and spacing tokens; use accents for actions and status. Keep the header and install icons derived from the same original SVG.
+
+| Command | Scope and output |
+| --- | --- |
+| `npm run check` | Static consistency, release/security contracts, syntax and date semantics; no browser launch. |
+| `npm test` | Full registered checks, including Chromium workflows; stops after a failure. |
+| `npm run test:report` | Full registered checks, continues after failures and writes `dist/check-results.json`; failures still return a nonzero exit code. |
+| `npm run test:browsers` | Registered Chromium, Firefox and WebKit workflows; writes `dist/browser-matrix.json` and per-program logs. |
+| `npm run test:a11y` | Dedicated accessibility and language audit using Chromium and the local axe-core dependency. |
+
+- Before running all engines, install them with `python -m playwright install --with-deps chromium firefox webkit`. For a targeted run, use `npm run test:browsers -- --browser chromium --group capture --report dist/capture-chromium.json`; list the selected scope without launching browsers by adding `--list`.
+- For local Chromium checks, select an installed executable with `export TASK_TRACER_BROWSER_EXECUTABLE=/absolute/path/to/chromium` (PowerShell: `$env:TASK_TRACER_BROWSER_EXECUTABLE = 'C:\path\to\chrome.exe'`), then run the checks. This affects Chromium only; CI installs the browsers pinned by Playwright. Synthetic browser viewports do not replace testing on real phones or Safari/iOS.
+- Compatibility checks and the Today carryover/selection/planning/review, mobile filters, input names, direct task opening, tag suggestions, review-history and project-renaming checks also accept `TASK_TRACER_CHROMIUM_EXECUTABLE`, `TASK_TRACER_FIREFOX_EXECUTABLE` or `TASK_TRACER_WEBKIT_EXECUTABLE` for their selected engine. The Chromium-specific value takes precedence over the older `TASK_TRACER_BROWSER_EXECUTABLE` alias. Supply any native-library paths required by a custom executable in the test process environment.
 - Review interface changes in Chinese and English, with keyboard navigation and a narrow screen. Test imports and recovery using disposable profiles and synthetic data.
 - After inline-script changes, regenerate CSP with `python tools/security_policy.py --write`. After translation changes, run `python tools/translation_fallback.py --write` before regenerating CSP.
-- Build a distribution with `python tools/build_release.py`; output goes to `dist/`. Preserve published downloads and their checksums.
+- Build a distribution with `npm run build`; the ZIP and SHA-256 checksum go to `dist/`, with `integrity.json` inside the ZIP. The build checks static files and CSP; it does not run the browser suite, publish or deploy. Run the relevant checks before packaging and preserve published downloads and their checksums.
 
 ## Feedback and license
 

@@ -38,6 +38,8 @@ jobs:
         run: npm ci --ignore-scripts
       - name: Verify checked-in stylesheet
         run: npm run styles:check
+      - name: Verify checked-in brand assets without a browser
+        run: npm run icons:check
       - name: Install test dependencies
         run: python -m pip install -r requirements-dev.txt
       - name: Install pinned Chromium and system dependencies

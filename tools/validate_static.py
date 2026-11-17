@@ -11,6 +11,7 @@ from html.parser import HTMLParser
 from pathlib import Path, PurePosixPath
 from typing import Any
 from urllib.parse import unquote, urlsplit
+import xml.etree.ElementTree as ET
 
 from translation_fallback import check as check_translation_fallback, main_script
 
@@ -465,6 +466,59 @@ def manifest_icon_paths(manifest: dict[str, Any]) -> list[str]:
     return paths
 
 
+def validate_manifest_images(manifest: dict[str, Any], errors: list[str]) -> None:
+    groups = [('icon', manifest.get('icons')), ('screenshot', manifest.get('screenshots'))]
+    shortcuts = manifest.get('shortcuts', [])
+    if isinstance(shortcuts, list):
+        groups.extend(('shortcut icon', shortcut.get('icons', [])) for shortcut in shortcuts
+                      if isinstance(shortcut, dict))
+    for label, entries in groups:
+        if not isinstance(entries, list):
+            errors.append(f'Manifest {label} entries must be a list')
+            continue
+        for entry in entries:
+            try:
+                if not isinstance(entry, dict) or not isinstance(entry.get('src'), str):
+                    raise AssertionError(f'Manifest {label} requires a local PNG source')
+                src = entry['src']
+                parsed = urlsplit(src)
+                path = PurePosixPath(src)
+                if (parsed.scheme or parsed.netloc or parsed.query or parsed.fragment or path.is_absolute()
+                        or '..' in path.parts or path.as_posix() != src or '\\' in src):
+                    raise AssertionError(f'Manifest {label} must use a local asset path: {src}')
+                data = (REPO_ROOT / path).read_bytes()
+                if entry.get('type') != 'image/png' or len(data) < 24 or data[:8] != b'\x89PNG\r\n\x1a\n' or data[12:16] != b'IHDR':
+                    raise AssertionError(f'Manifest {label} is not a PNG: {src}')
+                width, height = struct.unpack('>II', data[16:24])
+                if entry.get('sizes') != f'{width}x{height}':
+                    raise AssertionError(f'Manifest {label} sizes do not match its PNG: {src} is {width}x{height}')
+            except (AssertionError, OSError, ValueError) as error:
+                errors.append(str(error))
+    icons = manifest.get('icons', [])
+    if not isinstance(icons, list):
+        return
+    any_icons = {icon.get('src') for icon in icons if isinstance(icon, dict) and isinstance(icon.get('src'), str)
+                 and 'any' in str(icon.get('purpose', 'any')).split()}
+    maskable_icons = {icon.get('src') for icon in icons if isinstance(icon, dict) and isinstance(icon.get('src'), str)
+                      and 'maskable' in str(icon.get('purpose', '')).split()}
+    if not maskable_icons or any_icons & maskable_icons:
+        errors.append('Manifest must use a separate maskable icon from its any-purpose icons')
+
+
+def validate_brand_mark(index_html: str, errors: list[str]) -> None:
+    try:
+        source = ET.fromstring((REPO_ROOT / 'fav/task-tracer.svg').read_bytes())
+        if source.tag != '{http://www.w3.org/2000/svg}svg' or source.get('viewBox') != '0 0 64 64':
+            raise AssertionError('The original brand source must use its 64 by 64 SVG viewBox')
+        if source.find('.//{http://www.w3.org/2000/svg}text') is not None:
+            raise AssertionError('The original brand mark must not depend on a font')
+        brand = re.search(r'<a\b[^>]*class="workspace-brand"[^>]*>(.*?)</a>', index_html, re.DOTALL)
+        if not brand or 'src="./fav/task-tracer.svg"' not in brand.group(1):
+            raise AssertionError('The header brand must use the original fav/task-tracer.svg source')
+    except (AssertionError, OSError, ET.ParseError) as error:
+        errors.append(str(error))
+
+
 def validate_pwa(index_html: str, errors: list[str]) -> None:
     try:
         sw_source = read_text(SW_PATH)
@@ -474,6 +528,8 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
         runtime_version = app_version(index_html)
         assets = service_worker_assets(sw_source)
         cache_name = service_worker_cache_name(sw_source)
+        validate_manifest_images(manifest, errors)
+        validate_brand_mark(index_html, errors)
 
         if (REPO_ROOT / "fav" / "site.webmanifest").exists():
             errors.append("Use only manifest.json; fav/site.webmanifest must not exist")
@@ -490,7 +546,7 @@ def validate_pwa(index_html: str, errors: list[str]) -> None:
         if "orientation" in manifest:
             errors.append("manifest.json must not force a screen orientation")
 
-        required_assets = {"./", "./index.html", "./manifest.json"}
+        required_assets = {"./", "./index.html", "./manifest.json", "./fav/task-tracer.svg"}
         stylesheets = stylesheet_assets(index_html)
         expected_stylesheet = f'./resources/workspace.css?v={runtime_version}'
         if expected_stylesheet not in stylesheets:
@@ -582,12 +638,14 @@ def validate_seo(index_html: str, errors: list[str]) -> None:
         '<meta property="og:site_name" content="Task Tracer">',
         f'<meta property="og:url" content="{SEO_URL}">',
         '<meta property="og:image" content="https://todo.muquew.com/screenshots/task-list-en.png">',
+        '<meta property="og:image:alt" content="Task Tracer Today workspace">',
         f'<meta property="og:image:width" content="{struct.unpack(">II", (REPO_ROOT / "screenshots/task-list-en.png").read_bytes()[16:24])[0]}">',
         f'<meta property="og:image:height" content="{struct.unpack(">II", (REPO_ROOT / "screenshots/task-list-en.png").read_bytes()[16:24])[1]}">',
         '<meta property="og:locale" content="en_US">',
         '<meta property="og:locale:alternate" content="zh_CN">',
         '<meta name="twitter:card" content="summary_large_image">',
         '<meta name="twitter:image" content="https://todo.muquew.com/screenshots/task-list-en.png">',
+        '<meta name="twitter:image:alt" content="Task Tracer Today workspace">',
     ]
     for fragment in required_head_fragments:
         if fragment not in index_html:

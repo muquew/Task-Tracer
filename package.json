@@ -1,11 +1,17 @@
 {
   "name": "task-tracer-quality-tools",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "private": true,
   "description": "Development tools and checked-in static assets for the local-first Task Tracer PWA.",
   "scripts": {
+    "dev": "python3 -m http.server 8080 --bind 127.0.0.1 --directory .",
+    "preview": "npm run dev",
+    "icons": "python3 tools/build_icons.py",
+    "icons:check": "python3 tools/build_icons.py --check",
     "test:a11y": "python3 tools/accessibility_i18n_audit.py",
     "test": "python3 tools/check.py",
+    "test:report": "python3 tools/check.py --keep-going --report dist/check-results.json",
+    "test:browsers": "python3 tools/browser_matrix.py --keep-going",
     "check": "python3 tools/check.py --static-only",
     "build": "python3 tools/build_release.py",
     "styles": "python3 tools/build_styles.py",

@@ -11,7 +11,7 @@ import re
 import traceback
 import uuid
 
-from playwright.sync_api import expect, sync_playwright
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError, expect, sync_playwright
 
 from check import source_identity, verification_identity
 from recovery_management_playwright import stored
@@ -36,7 +36,11 @@ NAMES = {
 def dismiss_notice(page):
     close = page.locator('#workspaceNotificationClose')
     if close.is_visible():
-        close.click()
+        try:
+            close.click(timeout=5000)
+        except PlaywrightTimeoutError:
+            if close.is_visible():
+                raise
 
 
 def capture(page, output, name):
@@ -200,7 +204,7 @@ def check_projects_and_independent_scopes(page, output, checks):
     baseline = stored(page)
     navigate_workbench(page, 'projects')
     projects = page.locator('#projectsWorkspace')
-    studio = projects.get_by_role('button', name=re.compile('Studio'))
+    studio = projects.locator('button[data-workbench-action="open-project"]').filter(has_text='Studio')
     expect(studio).to_have_count(1)
     studio.click()
     assert_active_page(page, 'tasks')

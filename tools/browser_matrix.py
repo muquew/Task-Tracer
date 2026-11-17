@@ -23,6 +23,16 @@ BROWSERS = ('chromium', 'firefox', 'webkit')
 PROGRAMS = (
     'compatibility_playwright.py',
     'workbench_navigation_playwright.py',
+    'today_carryover_playwright.py',
+    'today_planning_playwright.py',
+    'today_selection_playwright.py',
+    'today_review_playwright.py',
+    'review_history_playwright.py',
+    'project_rename_playwright.py',
+    'mobile_filters_playwright.py',
+    'task_input_names_playwright.py',
+    'task_open_playwright.py',
+    'tag_suggestions_playwright.py',
     'inclusive_navigation_playwright.py',
     'appearance_preferences_playwright.py',
     'settings_navigation_playwright.py',
@@ -59,10 +69,14 @@ PROGRAMS = (
 )
 GROUPS = {
     'core': ('compatibility_playwright.py',),
-    'workbench': ('workbench_navigation_playwright.py', 'inclusive_navigation_playwright.py'),
+    'workbench': ('workbench_navigation_playwright.py', 'inclusive_navigation_playwright.py',
+                  'today_carryover_playwright.py', 'today_planning_playwright.py', 'today_selection_playwright.py', 'today_review_playwright.py', 'review_history_playwright.py', 'project_rename_playwright.py', 'mobile_filters_playwright.py'),
     'appearance': ('appearance_preferences_playwright.py', 'settings_navigation_playwright.py'),
     'capture': (
         'task_draft_playwright.py', 'quick_add_recovery_playwright.py',
+        'task_input_names_playwright.py',
+        'task_open_playwright.py',
+        'tag_suggestions_playwright.py',
         'quick_add_date_playwright.py', 'imported_text_edit_playwright.py',
         'imported_reminder_edit_playwright.py', 'dialog_lifecycle_playwright.py',
         'onboarding_playwright.py', 'help_playwright.py', 'ime_input_playwright.py',
@@ -95,7 +109,7 @@ def probe_browser(engine: str) -> int:
     from smoke_playwright import browser_launch_options
 
     with sync_playwright() as playwright:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         options['timeout'] = 30000
         browser = getattr(playwright, engine).launch(**options)
         try:

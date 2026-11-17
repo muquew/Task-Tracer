@@ -3,10 +3,20 @@
 Task Tracer's own source and distribution remain subject to [LICENSE](LICENSE).
 The following notices apply to bundled third-party assets.
 
+## Task Tracer brand mark
+
+The route, checkpoints and check mark in `fav/task-tracer.svg` are original
+Task Tracer artwork covered by [LICENSE](LICENSE). The header, favicon and
+installation icons use this artwork. It uses geometric paths and circles,
+with no font or third-party icon artwork. `tools/build_icons.py` generates the
+PNG and ICO variants from that source; the maskable and Apple touch icons use
+an opaque background.
+
 ## Tabler Icons
 
-Inline SVG icon definitions in `index.html` use the Tabler Icons outline
-collection.
+Interface SVG icon definitions in `index.html` use the Tabler Icons outline
+collection. These interface icons are separate from the original Task Tracer
+brand mark above.
 
 - Project: <https://github.com/tabler/tabler-icons>
 - Official SVG sources: <https://github.com/tabler/tabler-icons/tree/main/icons/outline>

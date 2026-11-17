@@ -126,13 +126,23 @@ def main() -> int:
     parser.add_argument('--report', type=Path, help='Write machine-readable program outcomes, including failures')
     parser.add_argument('--keep-going', action='store_true', help='Run remaining programs after a failure and still return a failing exit code')
     args = parser.parse_args()
-    checks = ["validate_static.py", "date_semantics_test.py", "security_policy.py",
+    checks = ["validate_static.py", "icon_assets_test.py", "date_semantics_test.py", "security_policy.py",
               "release_payload_test.py", "release_versions_test.py", "check_runner_test.py", "static_syntax_test.py"]
     if not args.static_only:
         checks.extend([
             "verify_deployment_test.py",
             "smoke_playwright.py",
             "workbench_navigation_playwright.py",
+            "today_carryover_playwright.py",
+            "today_planning_playwright.py",
+            "today_selection_playwright.py",
+            "today_review_playwright.py",
+            "review_history_playwright.py",
+            "project_rename_playwright.py",
+            "mobile_filters_playwright.py",
+            "task_input_names_playwright.py",
+            "task_open_playwright.py",
+            "tag_suggestions_playwright.py",
             "inclusive_navigation_playwright.py",
             "appearance_preferences_playwright.py",
             "craft_accent_playwright.py",

@@ -8,8 +8,8 @@
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f3f5fa",
-  "theme_color": "#f3f5fa",
+  "background_color": "#f7f8f6",
+  "theme_color": "#f7f8f6",
   "categories": ["productivity", "utilities"],
   "icons": [
     {
@@ -22,21 +22,27 @@
       "src": "fav/android-chrome-512x512.png",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "fav/android-chrome-maskable-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
   ],
   "screenshots": [
     {
       "src": "screenshots/task-list-en.png",
       "type": "image/png",
-      "sizes": "1365x1227",
-      "label": "Task Tracer task list"
+      "sizes": "1440x960",
+      "label": "Task Tracer Today workspace"
     },
     {
       "src": "screenshots/add-task-en.png",
       "type": "image/png",
-      "sizes": "1365x1227",
-      "label": "Task Tracer add task dialog"
+      "sizes": "1440x960",
+      "label": "Task Tracer task editor"
     }
   ],
   "shortcuts": [
