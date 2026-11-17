@@ -167,6 +167,84 @@
             });
         }
 
+        async function renameProject(database, previous, next, {
+            expectedRevision, undo = null, normalizeProject, renameReferences
+        } = {}) {
+            let receipt;
+            const result = await writeTaskTransaction(database, (store, tasks) => {
+                const affected = tasks.filter(task => normalizeProject(task.project) === previous);
+                if (!affected.length) throw new DOMException('Project changed before rename', 'TaskConflictError');
+                if (tasks.some(task => normalizeProject(task.project) === next)) {
+                    throw new DOMException('Project name already exists', 'ProjectNameConflictError');
+                }
+                const names = [...new Set(tasks.map(task => normalizeProject(task.project)).filter(Boolean))].sort((a, b) => b.length - a.length);
+                if (undo) {
+                    const current = new Map(tasks.map(task => [task.id, task]));
+                    if (undo.afterTasks.some(task => JSON.stringify(current.get(task.id)) !== JSON.stringify(task))) {
+                        throw new DOMException('Project tasks changed after rename', 'TaskConflictError');
+                    }
+                }
+                const config = store.transaction.objectStore(stores.config);
+                const request = config.get(keys.savedViews);
+                request.onsuccess = () => {
+                    try {
+                        const currentViews = request.result?.value;
+                        let views = currentViews;
+                        const viewChanges = [];
+                        if (undo) {
+                            if (!Array.isArray(currentViews) && undo.viewChanges.length) throw new DOMException('Saved views changed after rename', 'TaskConflictError');
+                            if (Array.isArray(currentViews)) views = currentViews.slice();
+                            const restored = new Set();
+                            for (const change of undo.viewChanges) {
+                                const index = currentViews.findIndex((view, position) => !restored.has(position)
+                                    && JSON.stringify(view) === JSON.stringify(change.after));
+                                if (index < 0) throw new DOMException('Saved view changed after rename', 'TaskConflictError');
+                                restored.add(index);
+                                views[index] = change.before;
+                            }
+                            if (Array.isArray(currentViews) && currentViews.some((view, position) => !restored.has(position)
+                                && JSON.stringify(renameReferences(view, previous, next, names)) !== JSON.stringify(view))) {
+                                throw new DOMException('A saved view now refers to the renamed project', 'TaskConflictError');
+                            }
+                        } else if (!undo && Array.isArray(currentViews)) {
+                            views = currentViews.map(view => {
+                                const updated = renameReferences(view, previous, next, names);
+                                if (JSON.stringify(updated) !== JSON.stringify(view)) viewChanges.push({ before: view, after: updated });
+                                return updated;
+                            });
+                        }
+                        const updatedTasks = undo ? undo.beforeTasks : affected.map(task => ({ ...task, project: next }));
+                        updatedTasks.forEach(task => store.put(task));
+                        if (undo ? undo.viewChanges.length : viewChanges.length) config.put({ key: keys.savedViews, value: views });
+                        receipt = { previous, next, beforeTasks: affected, afterTasks: updatedTasks, names, viewChanges, views };
+                    } catch (error) {
+                        store.transaction.taskConflictError = error;
+                        store.transaction.abort();
+                    }
+                };
+            }, { expectedRevision, abortMessage: 'Rename project transaction aborted', forceCheckpoint: true });
+            return { ...receipt, taskRevision: result.taskRevision };
+        }
+
+        function addTasksIfEmpty(database, tasks, writeOptions) {
+            return writeTaskTransaction(database, store => {
+                const count = store.count();
+                count.onsuccess = () => {
+                    if (count.result !== 0) {
+                        store.transaction.taskConflictError = new DOMException('Tasks changed before adding examples', 'TaskConflictError');
+                        store.transaction.abort();
+                        return;
+                    }
+                    try {
+                        tasks.forEach(task => store.add(task));
+                    } catch (error) {
+                        store.transaction.taskConflictError = error;
+                        store.transaction.abort();
+                    }
+                };
+            }, { ...writeOptions, abortMessage: 'Add example tasks transaction aborted' });
+        }
+
         function recordReminderDelivery(database, expected, lastReminderAt, { getNotificationKey } = {}) {
             if (typeof getNotificationKey !== 'function') return Promise.reject(new TypeError('A notification identity function is required'));
             return transaction(database, [stores.tasks, stores.config], 'readwrite', 'Record reminder delivery transaction aborted', (tx, setResult, abort) => {
@@ -272,6 +350,8 @@
             recordTaskBackup,
             recordReminderDelivery,
             writeTaskTransaction,
+            renameProject,
+            addTasksIfEmpty,
             addTask: (database, task, writeOptions) => writeTaskTransaction(database, store => store.add(task),
                 { ...writeOptions, abortMessage: 'Add task transaction aborted' }),
             updateTask: (database, task, writeOptions) => writeTaskTransaction(database, store => store.put(task),

@@ -55,18 +55,18 @@ def settle_animations(page: Page, label: str) -> None:
         raise AssertionError(f'{label}: finite animations did not settle within 10 seconds:\n{json.dumps(result, ensure_ascii=False, indent=2)}')
 
 def inject_axe(page: Page, axe_source: str) -> None:
-    if urlparse(page.url).hostname in {'127.0.0.1', 'localhost'}:
-        assert find_axe_source().read_text() == axe_source, 'Local axe source changed during the audit'
-        page.add_script_tag(url=urljoin(page.url, './node_modules/axe-core/axe.min.js'))
-        return
+    assert find_axe_source().read_text() == axe_source, 'Pinned axe source changed during the audit'
     url = urljoin(page.url, './__task_tracer_audit__/axe.min.js')
+    if urlparse(page.url).hostname in {'127.0.0.1', 'localhost'}:
+        page.add_script_tag(url=url)
+        return
     def serve_audit(route):
         route.fulfill(status=200, content_type='application/javascript', body=axe_source)
-    page.route(url, serve_audit)
+    page.context.route(url, serve_audit)
     try:
         page.add_script_tag(url=url)
     finally:
-        page.unroute(url, serve_audit)
+        page.context.unroute(url, serve_audit)
 
 def run_axe(page: Page, axe_source: str, label: str) -> None:
     inject_axe(page, axe_source)

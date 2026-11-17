@@ -867,8 +867,11 @@ def validate_task_state_styles(index_html: str, errors: list[str]) -> None:
         state_consistency_checks.update({
             "Task controller must capture its observed revision before repository writes": (
                 "const taskWriteOptions = () => ({ expectedRevision: state.taskRevision });",
-                "writeTaskTransaction: (write, abortMessage, forceCheckpoint = false) => observeTaskWrite(repository.writeTaskTransaction(",
-                "state.db, write, { ...taskWriteOptions(), abortMessage, forceCheckpoint }"),
+                "addTasksIfEmpty: tasks => observeTaskWrite(repository.addTasksIfEmpty(state.db, tasks, taskWriteOptions())),",
+                "renameProject: (previous, next, undo) => repository.renameProject(",
+                "state.db, previous, next, { ...taskWriteOptions(), undo,",
+                "normalizeProject: normalizeTaskProject, renameReferences: renameProjectReferences }",
+                ").then(result => { state.taskRevision = result.taskRevision; return result; })"),
             "Reminder controller must pass its notification identity to the repository": (
                 "recordReminderDelivery: (expected, time) => repository.recordReminderDelivery(state.db, expected, time,",
                 "{ getNotificationKey: getTaskNotificationKey }).then(result => result.recorded)"),

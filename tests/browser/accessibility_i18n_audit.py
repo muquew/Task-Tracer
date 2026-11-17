@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+import tests.support.accessibility_i18n_audit as audit_support
 from tests.support.accessibility_i18n_audit import (
-    AXE_FAILURES,
     assert_focus_visible,
     assert_layout,
     assert_workspace_theme_gallery,
@@ -479,13 +479,12 @@ def audit_context(url: str, axe_source: str, reduced_motion: bool = False, *, in
 
 
 def main() -> int:
-    global AXE_FAILURES
     parser = argparse.ArgumentParser(description='Audit task and settings surfaces with axe and real keyboard focus.')
     parser.add_argument('--skip-scaled', action='store_true', help='Audit normal task/settings workflows without the separate pagination workload')
     parser.add_argument('--collect-axe', action='store_true', help='Report all normal-workflow axe violations, then fail the run if any occurred')
     parser.add_argument('--viewport', choices=('both', 'desktop', 'mobile'), default='both', help='Resume only the affected viewport after a focused fix')
     args = parser.parse_args()
-    AXE_FAILURES = [] if args.collect_axe else None
+    audit_support.AXE_FAILURES = [] if args.collect_axe else None
     ensure_conda_library_path()
     axe_source = find_axe_source().read_text(encoding="utf-8")
     modes = (False, True) if args.viewport == 'both' else (args.viewport == 'mobile',)
@@ -497,8 +496,8 @@ def main() -> int:
         with local_server() as local_url:
             for reduced in modes:
                 audit_context(local_url, axe_source, reduced_motion=reduced, include_scaled=not args.skip_scaled)
-    if AXE_FAILURES:
-        raise AssertionError(f'{len(AXE_FAILURES)} audited states had axe violations; every violation is printed above')
+    if audit_support.AXE_FAILURES:
+        raise AssertionError(f'{len(audit_support.AXE_FAILURES)} audited states had axe violations; every violation is printed above')
     print("Accessibility/i18n audit passed")
     return 0
 

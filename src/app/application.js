@@ -362,61 +362,8 @@
             syncSearchClearButton();
             return changes;
         }
-        async function writeProjectRename(previous, next, undo = null) {
-            let receipt;
-            await dbActions.writeTaskTransaction((store, tasks) => {
-                const affected = tasks.filter(task => normalizeTaskProject(task.project) === previous);
-                if (!affected.length) throw new DOMException('Project changed before rename', 'TaskConflictError');
-                if (tasks.some(task => normalizeTaskProject(task.project) === next)) {
-                    throw new DOMException('Project name already exists', 'ProjectNameConflictError');
-                }
-                const names = [...new Set(tasks.map(task => normalizeTaskProject(task.project)).filter(Boolean))].sort((a, b) => b.length - a.length);
-                if (undo) {
-                    const current = new Map(tasks.map(task => [task.id, task]));
-                    if (undo.afterTasks.some(task => JSON.stringify(current.get(task.id)) !== JSON.stringify(task))) {
-                        throw new DOMException('Project tasks changed after rename', 'TaskConflictError');
-                    }
-                }
-                const config = store.transaction.objectStore(CONFIG.DB.STORES.CONFIG);
-                const request = config.get(CONFIG.STORAGE.SAVED_VIEWS);
-                request.onsuccess = () => {
-                    try {
-                        const currentViews = request.result?.value;
-                        let views = currentViews;
-                        const viewChanges = [];
-                        if (undo) {
-                            if (!Array.isArray(currentViews) && undo.viewChanges.length) throw new DOMException('Saved views changed after rename', 'TaskConflictError');
-                            if (Array.isArray(currentViews)) views = currentViews.slice();
-                            const restored = new Set();
-                            for (const change of undo.viewChanges) {
-                                const index = currentViews.findIndex((view, position) => !restored.has(position)
-                                    && JSON.stringify(view) === JSON.stringify(change.after));
-                                if (index < 0) throw new DOMException('Saved view changed after rename', 'TaskConflictError');
-                                restored.add(index);
-                                views[index] = change.before;
-                            }
-                            if (Array.isArray(currentViews) && currentViews.some((view, position) => !restored.has(position)
-                                && JSON.stringify(renameProjectReferences(view, previous, next, names)) !== JSON.stringify(view))) {
-                                throw new DOMException('A saved view now refers to the renamed project', 'TaskConflictError');
-                            }
-                        } else if (!undo && Array.isArray(currentViews)) {
-                            views = currentViews.map(view => {
-                                const updated = renameProjectReferences(view, previous, next, names);
-                                if (JSON.stringify(updated) !== JSON.stringify(view)) viewChanges.push({ before: view, after: updated });
-                                return updated;
-                            });
-                        }
-                        const updatedTasks = undo ? undo.beforeTasks : affected.map(task => ({ ...task, project: next }));
-                        updatedTasks.forEach(task => store.put(task));
-                        if (undo ? undo.viewChanges.length : viewChanges.length) config.put({ key: CONFIG.STORAGE.SAVED_VIEWS, value: views });
-                        receipt = { previous, next, beforeTasks: affected, afterTasks: updatedTasks, names, viewChanges, views };
-                    } catch (error) {
-                        store.transaction.taskConflictError = error;
-                        store.transaction.abort();
-                    }
-                };
-            }, 'Rename project transaction aborted', true);
-            return { ...receipt, taskRevision: state.taskRevision };
+        function writeProjectRename(previous, next, undo = null) {
+            return dbActions.renameProject(previous, next, undo);
         }
         function registerProjectRenameUndo(receipt) {
             state.undoAction = {
@@ -7434,6 +7381,7 @@
             getTaskBackupStatus: () => repository.getTaskBackupStatus(state.db),
             recordTaskBackup: (date, taskRevision) => repository.recordTaskBackup(state.db, date, taskRevision).then(() => {}),
             addTask: task => observeTaskWrite(repository.addTask(state.db, task, taskWriteOptions())),
+            addTasksIfEmpty: tasks => observeTaskWrite(repository.addTasksIfEmpty(state.db, tasks, taskWriteOptions())),
             updateTask: task => observeTaskWrite(repository.updateTask(state.db, task, taskWriteOptions())),
             updateTasks: tasks => observeTaskWrite(repository.updateTasks(state.db, tasks, taskWriteOptions())),
             deleteTask: id => observeTaskWrite(repository.deleteTask(state.db, id, deletionWriteOptions())),
@@ -7448,13 +7396,13 @@
             deleteConfig: key => repository.deleteConfig(state.db, key),
             updateSavedViews: change => repository.updateSavedViews(state.db, raw => change(normalizeSavedViews(raw))),
             clearReviewedRecoveryHistory: keys => repository.clearReviewedRecoveryHistory(state.db, keys),
-            writeTaskTransaction: (write, abortMessage, forceCheckpoint = false) => observeTaskWrite(repository.writeTaskTransaction(
-                state.db, write, { ...taskWriteOptions(), abortMessage, forceCheckpoint }
-            ))
+            renameProject: (previous, next, undo) => repository.renameProject(
+                state.db, previous, next, { ...taskWriteOptions(), undo,
+                    normalizeProject: normalizeTaskProject, renameReferences: renameProjectReferences }
+            ).then(result => { state.taskRevision = result.taskRevision; return result; })
         };
         const initDB = dbActions.init;
         const utils = {
-            dbOp: (storeName, mode, callback) => repository.dbOp(state.db, storeName, mode, callback),
             debounce: (func, delay = 300) => {
                 let id;
                 const debounced = (...args) => {
@@ -9901,22 +9849,7 @@
                 createSampleTask({ name: t['samples.task2.name'] || "团队会议准备", description: t['samples.task2.description'] || "准备下周团队会议的演示材料", project: t['samples.task2.project'] || "工作", tags: [t['samples.task2.tag'] || "会议"], ...createDueFieldsFromDate(new Date(Date.now() + 864000000)) }),
                 createSampleTask({ name: t['samples.task3.name'] || "学习计划制定", description: t['samples.task3.description'] || "制定下个月的个人学习计划", project: t['samples.task3.project'] || "个人", tags: [t['samples.task3.tag'] || "学习"], ...clearDueFields() })
             ]).tasks;
-            await dbActions.writeTaskTransaction(store => {
-                const count = store.count();
-                count.onsuccess = () => {
-                    if (count.result !== 0) {
-                        store.transaction.taskConflictError = new DOMException('Tasks changed before adding examples', 'TaskConflictError');
-                        store.transaction.abort();
-                        return;
-                    }
-                    try {
-                        samples.forEach(task => store.add(task));
-                    } catch (error) {
-                        store.transaction.taskConflictError = error;
-                        store.transaction.abort();
-                    }
-                };
-            }, 'Add example tasks transaction aborted');
+            await dbActions.addTasksIfEmpty(samples);
             registerUndoSnapshot(t['onboarding.examplesUndo'], beforeTasks);
             await refreshTasks();
             utils.notify(t['onboarding.examplesAdded'], 'success', { undo: true });

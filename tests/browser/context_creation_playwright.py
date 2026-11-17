@@ -28,6 +28,7 @@ from tests.support.browser import (
     REPO_ROOT,
     browser_launch_options,
     clear_app_data,
+    close_mobile_filters,
     ensure_capture,
     get_task_records,
     return_to_task_workspace,
@@ -133,6 +134,7 @@ def enter_today(page):
         reveal_workspace_control(page, '#focusModeToggleBtn').click()
     expect(page.locator('#focusModeBar')).to_be_visible()
     expect(page.locator('#focusModeToggleBtn')).to_have_attribute('aria-pressed', 'true')
+    close_mobile_filters(page)
 
 
 def today_key(page):
