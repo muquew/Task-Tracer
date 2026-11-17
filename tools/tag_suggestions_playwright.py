@@ -12,6 +12,7 @@ import traceback
 import uuid
 
 from playwright.sync_api import expect, sync_playwright
+from ime_input_playwright import key as composition_key
 from smoke_playwright import (
     add_task, browser_launch_options, get_task_records, import_payload_replace,
     local_server, open_task_editor, return_to_task_workspace, task_locator,
@@ -119,10 +120,8 @@ def exercise(page, output):
     page.set_viewport_size({'width': 390, 'height': 844})
     field.fill('设计')
     field.dispatch_event('compositionstart', {'data': '设'})
-    field.fill('设计')
-    field.press('ArrowDown')
-    field.press('Enter')
-    field.press('Escape')
+    for value in ('ArrowDown', 'Enter', 'Escape'):
+        composition_key(field, value, 'tracked')
     expect(field).to_have_value('设计')
     expect(page.locator('#taskTagSuggestions')).to_be_hidden()
     expect(page.locator('#taskModal')).to_be_visible()

@@ -9,7 +9,7 @@ import re
 
 from playwright.sync_api import expect, sync_playwright
 from saved_views_playwright import save_view, stored_views
-from smoke_playwright import click_task_action, reveal_filters, reveal_workspace_control, select_filter, select_language, task_locator
+from smoke_playwright import click_task_action, close_mobile_filters, reveal_filters, reveal_workspace_control, select_filter, select_language, task_locator
 from smoke_playwright import (
     add_task, browser_launch_options, clear_app_data, get_task_records, local_server,
     visible_task_names, wait_for_app_ready,
@@ -49,12 +49,14 @@ def select_literal_project(page, name):
         has=page.locator('span').filter(has_text=re.compile('^' + re.escape(name) + '$'))
     ).last.click()
     expect(page.locator('#projectFilterBtn')).to_have_attribute('aria-expanded', 'false')
+    close_mobile_filters(page)
 
 
 def select_sentinel(page, index):
     reveal_filters(page)
     page.locator('#projectFilterBtn').click()
     page.locator('#projectFilterMenu .dropdown-option').nth(index).click()
+    close_mobile_filters(page)
 
 
 def add_unassigned_task(page, name):
@@ -150,7 +152,7 @@ def assert_sidebar_project_exits_today_plan(page, url):
 
 def run(engine, grouping_only=False):
     with local_server() as url, sync_playwright() as p:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(p, engine).launch(timeout=30000, **options)
         print(f'Project scope {engine}: {browser.version}', flush=True)
         context = browser.new_context(accept_downloads=True, locale='en-US', reduced_motion='reduce')
