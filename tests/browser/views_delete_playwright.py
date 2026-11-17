@@ -87,6 +87,21 @@ def click_paused_clock_control(page, control):
     page.mouse.click(point['x'],point['y'])
 
 
+def set_paused_clock_navigation(page, opened):
+    toggle = page.locator('#workspaceNavToggle')
+    expect(toggle).to_have_attribute('aria-expanded', 'false' if opened else 'true')
+    control = toggle if opened else page.locator('#workspaceNavClose')
+    click_paused_clock_control(page,control)
+    # Let the drawer's existing animation-frame focus callback finish before
+    # pressing a view; 20 ms stays before the real 300 ms search debounce.
+    page.clock.run_for(20)
+    expect(toggle).to_have_attribute('aria-expanded', 'true' if opened else 'false')
+    expect(page.locator('#workspaceSidebar')).to_have_js_property('inert', not opened)
+    expect(page.locator('.workspace-stage')).to_have_js_property('inert', opened)
+    if not opened:
+        expect(toggle).to_be_focused()
+
+
 def cancellation(page, url):
     prepare(page,url)
     view = save_named(page,'<img src=x onerror=window.viewDeleteXss=1>','project:cancel-deletion')
@@ -158,6 +173,7 @@ def deferred_search_focus(page, url):
     page.clock.pause_at(page.evaluate('Date.now()') / 1000 + 1)
     try:
         page.locator('#searchInput').fill('Tasks remain unchanged')
+        set_paused_clock_navigation(page,True)
         button = delete_button(page,view)
         expect(button).to_be_visible()
         old_button = button.element_handle()
@@ -182,7 +198,9 @@ def deferred_search_focus(page, url):
         assert stored(page) == before, 'Cancelling the pressed-view confirmation changed stored data'
 
         # The same pending refresh must also preserve a confirmation already open.
+        set_paused_clock_navigation(page,False)
         page.locator('#searchInput').fill('project:after-focus-refresh')
+        set_paused_clock_navigation(page,True)
         click_paused_clock_control(page,button)
         expect(page.locator('#savedViewDeleteName')).to_have_text(view['name'])
         expect(page.locator('#cancelBtn')).to_be_focused()
