@@ -192,7 +192,7 @@ html[data-theme="dark"] .workspace-theme-option[data-theme-preview="berry"] { --
 
 /* Native semantics, controls and their states. */
 * { box-sizing: border-box; }
-html { color-scheme: light; scroll-padding-top: 92px; scrollbar-color: var(--border-base) transparent; scrollbar-width: thin; }
+html { color-scheme: light; scroll-padding-top: 92px; scroll-padding-bottom: max(var(--workspace-dock-space),var(--workspace-update-clearance,0px)); scrollbar-color: var(--border-base) transparent; scrollbar-width: thin; }
 body { margin: 0; min-height: 100dvh; font: 14px/1.55 var(--font-ui); color: var(--text-main); background: var(--page-bg); -webkit-font-smoothing: antialiased; transition: background-color var(--motion-theme-duration), color var(--motion-theme-duration); }
 h1,h2,h3,h4,p,ul,ol,dl,dd { margin: 0; }
 button,input,select,textarea { font: inherit; color: inherit; }
@@ -263,7 +263,7 @@ input[type="radio"]:checked { border: 5px solid var(--color-primary); }
 .workspace-sidebar-footer { flex: 0 0 auto; padding-top: 12px; border-top: 1px solid var(--nav-border); }
 .workspace-settings-entry { margin: 0; }
 .workspace-all-projects { width: 100%; min-height: 40px; border: 0; padding: 8px 12px; color: var(--nav-secondary); background: transparent; font: inherit; font-size: 12px; text-align: start; }
-.workspace-stage { min-width: 0; padding-bottom: var(--workspace-dock-space); }
+.workspace-stage { min-width: 0; padding-bottom: max(var(--workspace-dock-space),var(--workspace-update-clearance,0px)); }
 header.workspace-topbar { position: sticky; top: 0; z-index: var(--z-header); display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); min-height: 68px; padding: var(--space-3) var(--space-8); background: var(--chrome-bg); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
 .workspace-breadcrumbs { display: flex; align-items: center; gap: 10px; min-width: 0; color: var(--text-secondary); font-size: 13px; }
 .workspace-breadcrumb-chevron { width: 14px; height: 14px; }

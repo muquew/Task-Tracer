@@ -3284,7 +3284,21 @@
             DOM.updatePrompt.dismissBtn.addEventListener('click', hideUpdatePrompt);
             document.getElementById('checkUpdateBtn').addEventListener('click', checkForAppUpdate);
             document.getElementById('settingsUpdateNowBtn').addEventListener('click', applyServiceWorkerUpdate);
+            if ('ResizeObserver' in window) new ResizeObserver(syncUpdatePromptClearance).observe(DOM.updatePrompt.el);
+            window.addEventListener('resize', syncUpdatePromptClearance);
+            window.visualViewport?.addEventListener('resize', syncUpdatePromptClearance);
+            syncUpdatePromptClearance();
             syncUpdateControls();
+        }
+        function syncUpdatePromptClearance() {
+            const prompt = DOM.updatePrompt.el;
+            const bounds = prompt.getBoundingClientRect();
+            if (prompt.hidden || !bounds.height) {
+                document.documentElement.style.removeProperty('--workspace-update-clearance');
+                return;
+            }
+            const clearance = Math.max(0, Math.ceil(window.innerHeight - bounds.top) + 12);
+            document.documentElement.style.setProperty('--workspace-update-clearance', `${clearance}px`);
         }
         function initInstallPrompt() {
             window.addEventListener('beforeinstallprompt', (e) => {
@@ -3497,11 +3511,13 @@
         function showUpdatePrompt() {
             if (state.updatePromptDismissed) return;
             DOM.updatePrompt.el.hidden = false;
+            syncUpdatePromptClearance();
             utils.announce(utils.translate('pwa.update.message'));
         }
         function hideUpdatePrompt() {
             state.updatePromptDismissed = true;
             DOM.updatePrompt.el.hidden = true;
+            syncUpdatePromptClearance();
         }
         function canReloadForAppUpdate() {
             const busy = state.quickAddSaving || state.taskFormSaving || state.pendingTaskActions.size;

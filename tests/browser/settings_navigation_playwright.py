@@ -27,6 +27,8 @@ from playwright.sync_api import expect, sync_playwright
 from tests.support.http import ProductionHeaderHandler
 from tests.support.drafts import inject_quota_failure
 from tests.support.http import ThreadingHTTPServer
+from tests.support.service_worker_update import UpdateServer, current_bundle, next_bundle
+from tests.support.storage import stored
 from tests.support.browser import (
     add_task,
     assert_accessibility_baseline,
@@ -40,6 +42,7 @@ from tests.support.browser import (
     select_project,
     select_view,
     task_locator,
+    wait_for_app_ready,
     is_workbench_v5,
     navigate_workbench,
     reveal_workspace_control,
@@ -358,6 +361,62 @@ def exercise_empty_backup_language(browser, url, width):
         context.close()
 
 
+def exercise_update_prompt_settings(browser):
+    release = current_bundle()
+    candidate = next_bundle(release)
+    server = UpdateServer(release)
+    server.start()
+    try:
+        for width in (320, 390):
+            for language in ('zh-CN', 'en'):
+                server.bundle = release
+                context = browser.new_context(viewport={'width': width, 'height': 844},
+                                              locale='en-US', timezone_id='Asia/Shanghai',
+                                              accept_downloads=True, reduced_motion='reduce')
+                try:
+                    page = context.new_page()
+                    errors = []
+                    page.on('pageerror', lambda error: errors.append(str(error)))
+                    page.goto(server.url, wait_until='domcontentloaded')
+                    wait_for_app_ready(page)
+                    page.wait_for_function("async () => navigator.serviceWorker.controller && (await navigator.serviceWorker.ready).active?.state === 'activated'")
+                    select_language(page, language)
+                    add_task(page, 'Task retained behind a real update prompt', no_deadline=True, project='Settings update')
+                    draft = 'Keep this unsaved capture while an update is ready #settings'
+                    ensure_capture(page).fill(draft)
+                    open_settings(page, 'data')
+                    with page.expect_download() as pending:
+                        page.locator('#backupBtn').click()
+                    assert json.loads(pending.value.path().read_bytes())['tasks'] == get_task_records(page)
+                    translations = json.loads(input_path(f'resources/{language}.json').read_text())
+                    health = translations['backup']['health']
+                    expect(page.locator('#backupHealthText')).to_have_text(health['ok'].replace('{age}', health['today']))
+                    preserved = stored(page)
+                    server.bundle = candidate
+                    page.evaluate('async () => (await navigator.serviceWorker.getRegistration()).update()')
+                    expect(page.locator('#updatePrompt')).to_be_visible(timeout=30000)
+                    for action, content in (('#helpMenuBtn', '.help-guide'), ('#storageHealthBtn', '#storageUsage')):
+                        assert_dialog_return(page, action, content)
+                        expect(page.locator('#updatePrompt')).to_be_visible()
+                        geometry = page.locator(action).evaluate('''node => {
+                            const rect = node.getBoundingClientRect();
+                            const prompt = document.getElementById('updatePrompt').getBoundingClientRect();
+                            const dock = document.getElementById('workspaceMobileDock').getBoundingClientRect();
+                            const hit = document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2);
+                            return {top: rect.top, bottom: rect.bottom,
+                                clearBottom: Math.min(prompt.top, dock.top), hit: node.contains(hit)};
+                        }''')
+                        assert geometry['hit'] and geometry['top'] >= 0 and geometry['bottom'] <= geometry['clearBottom'], geometry
+                    assert stored(page) == preserved, 'Navigating settings behind an update changed task or backup records'
+                    assert page.locator('#quickAddInput').input_value() == draft, 'An update prompt changed the unsaved capture'
+                    assert not errors, errors
+                    print(f'{width}px {language}: real {release.version} to {candidate.version} update stays visible; settings actions scroll clear of prompt/dock, dialogs return focus, tasks/draft/backup stay unchanged', flush=True)
+                finally:
+                    context.close()
+    finally:
+        server.stop()
+
+
 def exercise_unavailable_storage(browser, url):
     context = browser.new_context(viewport={'width': 390, 'height': 844}, reduced_motion='reduce')
     errors = []
@@ -458,7 +517,7 @@ def exercise_language_rollback(browser, url):
 
 def run(engine, case='all'):
     with production_server() as url, sync_playwright() as p:
-        options = browser_launch_options() if engine == 'chromium' else {'headless': True}
+        options = browser_launch_options(engine)
         browser = getattr(p, engine).launch(timeout=30000, **options)
         try:
             print(f'Settings/navigation {engine}: {browser.version}; deployment CSP enforced', flush=True)
@@ -467,6 +526,8 @@ def run(engine, case='all'):
                     for language in ('zh-CN', 'en'):
                         exercise_workspace(browser, url, width, language)
                     exercise_empty_backup_language(browser, url, width)
+            if case in ('all', 'updates'):
+                exercise_update_prompt_settings(browser)
             if case in ('all', 'storage'):
                 exercise_unavailable_storage(browser, url)
             if case in ('all', 'language'):
@@ -478,6 +539,6 @@ def run(engine, case='all'):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--browser', choices=('chromium', 'firefox', 'webkit'), default='chromium')
-    parser.add_argument('--case', choices=('all', 'storage', 'language'), default='all')
+    parser.add_argument('--case', choices=('all', 'storage', 'language', 'updates'), default='all')
     args = parser.parse_args()
     run(args.browser, args.case)

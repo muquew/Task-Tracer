@@ -1,17 +1,17 @@
 const CACHE_PREFIX = 'task-tracer-';
-const CACHE_NAME = 'task-tracer-v5.2.0';
+const CACHE_NAME = 'task-tracer-v5.2.1';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './manifest.json',
-    './resources/workspace.css?v=5.2.0',
-    './app/domain/task-input.js?v=5.2.0',
-    './app/domain/task-dates.js?v=5.2.0',
-    './app/platform/local-calendar.js?v=5.2.0',
-    './app/infrastructure/task-repository.js?v=5.2.0',
-    './resources/workbench.js?v=5.2.0',
-    './app/features/review.js?v=5.2.0',
-    './app/application.js?v=5.2.0',
+    './resources/workspace.css?v=5.2.1',
+    './app/domain/task-input.js?v=5.2.1',
+    './app/domain/task-dates.js?v=5.2.1',
+    './app/platform/local-calendar.js?v=5.2.1',
+    './app/infrastructure/task-repository.js?v=5.2.1',
+    './resources/workbench.js?v=5.2.1',
+    './app/features/review.js?v=5.2.1',
+    './app/application.js?v=5.2.1',
     './THIRD_PARTY_NOTICES.md',
     './resources/en.json?v=5.2',
     './resources/zh-CN.json?v=5.2',
